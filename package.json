@@ -32,7 +32,8 @@
 		"pack:core": "bun scripts/pack.ts",
 		"verify": "bun scripts/verify.ts",
 		"context:eval": "bun examples/contextstill/eval-kit.ts",
-		"context:eval-scenarios": "bun examples/contextstill/scenario-eval.ts"
+		"context:eval-scenarios": "bun examples/contextstill/scenario-eval.ts",
+		"context:scoreboard": "bun examples/contextstill/scoreboard.ts"
 	},
 	"dependencies": {
 		"zod": "4.4.3"
