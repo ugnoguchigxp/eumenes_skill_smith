@@ -1,0 +1,276 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "bm25",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "bm25",
+		"assemblyMode": "baseline",
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 4,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"queryToSource": "exclude .env and API keys from commits and prevent secrets appearing in logs or responses"
+		},
+		{
+			"searchTask": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"queryToSource": "fix pre-commit verify failures without bypassing hooks and do not force push without explicit approval"
+		},
+		{
+			"searchTask": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"queryToSource": "smoke test packed artifacts in a clean project without calling live providers"
+		},
+		{
+			"searchTask": "Format Python source using 4-space indentation and limit line length.",
+			"queryToSource": "format Python source using 4-space indentation and limit line length"
+		}
+	],
+	"summary": {
+		"compose": {
+			"tasks": 4,
+			"allRequiredHitAt8": {
+				"hit": 4,
+				"of": 4,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 4,
+				"of": 4,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 2
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+					"title": "Never expose long-lived credentials in URLs"
+				},
+				{
+					"ref": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+					"title": "Never transport long-lived credentials in URL query parameters"
+				},
+				{
+					"ref": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+					"title": "Exclude Codex internal/provider prompt logs from distillation"
+				},
+				{
+					"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+					"title": "Desktop runtime mode must override repo-local env defaults for writable state"
+				},
+				{
+					"ref": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+					"title": "Azure OpenAI の secret は deployment ごとに個別に参照する"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 2
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+					"title": "Never send notifications or emails from tests without sandboxing"
+				},
+				{
+					"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+					"title": "Never rewrite branch history on shared branches without confirmation"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_qjzl335nmog5sualntuwg6ztfm",
+					"title": "Never truncate tables without explicit approval and backup"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": 1
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": 3
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"title": "Package Release Smoke Test with Packed Artifacts"
+				},
+				{
+					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+					"title": "Verify And Clean Persistent Test Data Before Commit"
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
+				},
+				{
+					"ref": "contextstill:kn_ugebpij7zcdpk5zbb67sevwtbu",
+					"title": "Monorepo npm publish readiness check without workspace protocol leaks"
+				},
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				},
+				{
+					"ref": "contextstill:kn_vmariive5cmef3xwhbhgjzfxqy",
+					"title": "Distillation Queue v2 への移行は、freeze/backup → schema & code 切替 → one-time migration → live smoke → final cleanup drop の順で進める"
+				},
+				{
+					"ref": "contextstill:kn_vdxy37fpwburanyw4cyzqc5mje",
+					"title": "Run destructive test-data cleanup with dry-run confirmation"
+				},
+				{
+					"ref": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+					"title": "Run existing smoke tests after adding a new E2E harness"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 2
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"title": "Limit Line Length"
+				},
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+					"title": "Use gofmt for Standard Go Code Formatting"
+				},
+				{
+					"ref": "contextstill:kn_2rxxzxakx2vifhika7dp2eenhq",
+					"title": "Access token scope normalization should support both space-delimited scope and array scp claims"
+				},
+				{
+					"ref": "contextstill:kn_sbpgwtipkjns76p6fe3iccbe6u",
+					"title": "Split large files by ownership boundaries, then verify size after formatting"
+				},
+				{
+					"ref": "contextstill:kn_5m7nabnpqprbc5qbmnoyjxr3iy",
+					"title": "Namespace は責務や環境ごとに分離し、namespace 単位の統制を前提にする"
+				},
+				{
+					"ref": "contextstill:kn_b4ze46y77fc77fuausarwmrjha",
+					"title": "Structure Inspection Should Avoid Returning Full Values By Default"
+				},
+				{
+					"ref": "contextstill:kn_tb7usr577ratzzba6ji64c57wa",
+					"title": "Use Standard Continuation Layouts"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (bm25-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

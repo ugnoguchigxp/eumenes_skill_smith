@@ -1,0 +1,276 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"assemblyMode": "baseline",
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 4,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"queryToSource": "exclude .env and API keys from commits and prevent secrets appearing in logs or responses"
+		},
+		{
+			"searchTask": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"queryToSource": "fix pre-commit verify failures without bypassing hooks and do not force push without explicit approval"
+		},
+		{
+			"searchTask": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"queryToSource": "smoke test packed artifacts in a clean project without calling live providers"
+		},
+		{
+			"searchTask": "Format Python source using 4-space indentation and limit line length.",
+			"queryToSource": "format Python source using 4-space indentation and limit line length"
+		}
+	],
+	"summary": {
+		"compose": {
+			"tasks": 4,
+			"allRequiredHitAt8": {
+				"hit": 0,
+				"of": 4,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 0,
+				"of": 4,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 7
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				},
+				{
+					"ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+					"title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+					"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+				},
+				{
+					"ref": "contextstill:kn_26dfuzwndrusudl3z774ccj66i",
+					"title": "unmanaged table は構造表示のみで、row 操作 API の対象にしない"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (handle-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

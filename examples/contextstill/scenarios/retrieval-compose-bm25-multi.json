@@ -1,0 +1,2652 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "bm25",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "bm25",
+		"assemblyMode": "baseline",
+		"queryReformulation": "multi",
+		"reformulationInstructionsDigest": "2672d3ece4f2ceccbea9ecf17b64c620e0fef726fce05f3da1e9db36810e174e",
+		"reformulationSchemaDigest": "edd7766ed5f0af3134260c7b26f6d5b798e386a100b3bcc39bb6e13db7c2f9c7",
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 4,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"queries": [
+				"exclude .env and API keys from commits",
+				"prevent secrets from appearing in logs or responses"
+			],
+			"queryToSource": [
+				"exclude .env and API keys from commits",
+				"prevent secrets from appearing in logs or responses"
+			],
+			"perQuery": [
+				{
+					"query": "exclude .env and API keys from commits",
+					"cards": [
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+							"version": {
+								"id": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+								"version": "2",
+								"digest": "9f20f3f63b30f78bf1131eca048c5ad82f6f0a31d2af3a1b1a3a28fc9def5c11",
+								"generation": 0
+							},
+							"title": "Separate shared app settings from local secret runtime settings",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_nlvi5dccag5ivma5fivgmffwtu",
+							"version": {
+								"id": "contextstill:kn_nlvi5dccag5ivma5fivgmffwtu",
+								"version": "2",
+								"digest": "b29276b8d3b629ab74de4a9e6e85d38fd289972a634904bffd40bd69889d3a3a",
+								"generation": 0
+							},
+							"title": "Roll out API-key auth without breaking browser clients",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_nwxnv4cuhbniktthfvlyfvo7xu",
+							"version": {
+								"id": "contextstill:kn_nwxnv4cuhbniktthfvlyfvo7xu",
+								"version": "2",
+								"digest": "1d860d46d81a80d4c8cea57d4dbd529a1d4014e2db4eb4079b81a4ca9718fc94",
+								"generation": 0
+							},
+							"title": "Keep secret masking independent from login requirements",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_caooc6cj7dvqprfubqxrlghs7u",
+							"version": {
+								"id": "contextstill:kn_caooc6cj7dvqprfubqxrlghs7u",
+								"version": "2",
+								"digest": "c7f0f10ec5ef8b6699f0c482661750a592df97fe1c01591769f88168d7d7a2bf",
+								"generation": 0
+							},
+							"title": "Keep Temporary Verification Artifacts Out Of Commits",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+							"version": {
+								"id": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+								"version": "2",
+								"digest": "aa068503a8b043849b86624b248575a7505b10ec97c5326402e526da996dae9d",
+								"generation": 0
+							},
+							"title": "Exclude Codex internal/provider prompt logs from distillation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_77wrmjf6mnq3nm5iia5dwm7g5u",
+							"version": {
+								"id": "contextstill:kn_77wrmjf6mnq3nm5iia5dwm7g5u",
+								"version": "2",
+								"digest": "e140004b6dae5b972d04a0d0bfec036fa19fabe45869c483d575fcbef5644ff7",
+								"generation": 0
+							},
+							"title": "Separate shared agent notes from raw log views",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_lulbemsm5sdphynmerfxdd4hqm",
+							"version": {
+								"id": "contextstill:kn_lulbemsm5sdphynmerfxdd4hqm",
+								"version": "2",
+								"digest": "feafcf11b9ed635fdab266092c54f4e6b494487d13d8f6c60f816478f0b34f73",
+								"generation": 0
+							},
+							"title": "guidance applicability の構造化条件に projects/domains/environments/repos を追加する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_qxy5et6svtql6n3wum43ygp3ni",
+							"version": {
+								"id": "contextstill:kn_qxy5et6svtql6n3wum43ygp3ni",
+								"version": "2",
+								"digest": "d0f32074b31e7c1b5e42bea6e194372709363fc0b6dbca35bacaeb6ee990e101",
+								"generation": 0
+							},
+							"title": "Diagnose local env validation failures by importing backend config without ambient env",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ozkucuwxmil2xydh7woo7atthu",
+							"version": {
+								"id": "contextstill:kn_ozkucuwxmil2xydh7woo7atthu",
+								"version": "2",
+								"digest": "1972206a26a7dcd5f00f733dc9660a28e538536f8962a6956a979009f7560717",
+								"generation": 0
+							},
+							"title": "Candidate Draft Creation Filtering Rule",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_psnirl2sswlzbbc464ul6efltq",
+							"version": {
+								"id": "contextstill:kn_psnirl2sswlzbbc464ul6efltq",
+								"version": "2",
+								"digest": "8822ae5e6dabe7a3dcf102873542f0f92526b317006e90efb7898cd60386d6ff",
+								"generation": 0
+							},
+							"title": "Azure OpenAI の provider 生成は AppEnv からの factory 経由に統一する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+							"version": {
+								"id": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+								"version": "2",
+								"digest": "174a8a052909d4b8ea9c9868e40fadfa01f8beed14dff715bfde3b6be62e2c86",
+								"generation": 0
+							},
+							"title": "Never transport long-lived credentials in URL query parameters",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ma7fzsrgno22lkvjwj74awfs3m",
+							"version": {
+								"id": "contextstill:kn_ma7fzsrgno22lkvjwj74awfs3m",
+								"version": "2",
+								"digest": "fc72ca59c917a5efc5e5d0dddae87ea2a49a83d2f7296a1a283b2cfddaa4e641",
+								"generation": 0
+							},
+							"title": "Application modules should read runtime settings from typed config, not directly from process.env",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+							"version": {
+								"id": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+								"version": "2",
+								"digest": "e5f2e594f381c731c6d1bfeabbca71429d572c2a26004d61061c37a7ea2a3f5f",
+								"generation": 0
+							},
+							"title": "Azure OpenAI の secret は deployment ごとに個別に参照する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+							"version": {
+								"id": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+								"version": "2",
+								"digest": "72d7a7d20b2e19d3cc45d3ba964d0a63bb40923c4740e356b4fadaee092a8052",
+								"generation": 0
+							},
+							"title": "Never rewrite branch history on shared branches without confirmation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+							"version": {
+								"id": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+								"version": "2",
+								"digest": "33b1253eeeba1d610619facd3adf6feabd6997e6e572479afc58897aadbc09db",
+								"generation": 0
+							},
+							"title": "Desktop runtime mode must override repo-local env defaults for writable state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_gnto6g35pre6odoimrfyll7lsy",
+							"version": {
+								"id": "contextstill:kn_gnto6g35pre6odoimrfyll7lsy",
+								"version": "2",
+								"digest": "97c37ddcd532ea95bf0e05491416ed41f9ac74268480b73b654f786005ee3098",
+								"generation": 0
+							},
+							"title": "Runtime env access through focused config helpers",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ov5cwbgrc3xkutnxipfptz6ucq",
+							"version": {
+								"id": "contextstill:kn_ov5cwbgrc3xkutnxipfptz6ucq",
+								"version": "2",
+								"digest": "4f6173ce4c8e32b2b38162be23f68de5afc671281f4b9495870fd1109e3fcd24",
+								"generation": 0
+							},
+							"title": "Never change primary keys or unique constraints without migration plan",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_4z7e7wsf2cbh4bswyuyh74nbjm",
+							"version": {
+								"id": "contextstill:kn_4z7e7wsf2cbh4bswyuyh74nbjm",
+								"version": "2",
+								"digest": "91c71e402f726aa9e323b640f576511dbb1ca2ea7c4f9cecc54b52988686f37b",
+								"generation": 0
+							},
+							"title": "Fallback from tsx to standalone tsc verification",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_muc77pns6headksqiv6yb6w3w4",
+							"version": {
+								"id": "contextstill:kn_muc77pns6headksqiv6yb6w3w4",
+								"version": "2",
+								"digest": "e61824804af02b827d8f67ba3021e1cb73cfb1aef2f6946dd82bde8f5cf4c4fd",
+								"generation": 0
+							},
+							"title": "Never store credentials in plaintext",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "prevent secrets from appearing in logs or responses",
+					"cards": [
+						{
+							"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+							"version": {
+								"id": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+								"version": "2",
+								"digest": "a084c1557fb24e893c8354611887bceb1deaf7866dcdeb68f1f2adcfeab33789",
+								"generation": 0
+							},
+							"title": "Never print secrets into logs or responses",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_phc6v2rnkq4f7n3wmlfnfyfcgq",
+							"version": {
+								"id": "contextstill:kn_phc6v2rnkq4f7n3wmlfnfyfcgq",
+								"version": "2",
+								"digest": "e9fb53c7306113eed6fd10d4a81d86166f901f130bf86228f19ab79336b31bb6",
+								"generation": 0
+							},
+							"title": "Assert Ownership in Authenticated API Checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+							"version": {
+								"id": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+								"version": "2",
+								"digest": "212da466a7f1d764e1acf6e529f2a3b7d0f28d6b593f40b276e96620aacf24d8",
+								"generation": 0
+							},
+							"title": "Never expose long-lived credentials in URLs",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+							"version": {
+								"id": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+								"version": "2",
+								"digest": "174a8a052909d4b8ea9c9868e40fadfa01f8beed14dff715bfde3b6be62e2c86",
+								"generation": 0
+							},
+							"title": "Never transport long-lived credentials in URL query parameters",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+							"version": {
+								"id": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+								"version": "2",
+								"digest": "33b1253eeeba1d610619facd3adf6feabd6997e6e572479afc58897aadbc09db",
+								"generation": 0
+							},
+							"title": "Desktop runtime mode must override repo-local env defaults for writable state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+							"version": {
+								"id": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+								"version": "2",
+								"digest": "9f20f3f63b30f78bf1131eca048c5ad82f6f0a31d2af3a1b1a3a28fc9def5c11",
+								"generation": 0
+							},
+							"title": "Separate shared app settings from local secret runtime settings",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bs3azz4ofeqzquxoom6thzy6w4",
+							"version": {
+								"id": "contextstill:kn_bs3azz4ofeqzquxoom6thzy6w4",
+								"version": "2",
+								"digest": "0246fc7fb3820d5bc18e145c0fc7cac017658251028129ef437240c39399b0a7",
+								"generation": 0
+							},
+							"title": "機密情報（secrets）の取り扱いに関する原則",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_j7xqrgnw4sa5sztykj5irnpsqi",
+							"version": {
+								"id": "contextstill:kn_j7xqrgnw4sa5sztykj5irnpsqi",
+								"version": "2",
+								"digest": "1938e8dfc2c40ee3120f68ceb3430e98e351945e7547d29b16bc8ebc551fa82c",
+								"generation": 0
+							},
+							"title": "Non-admin users must be redirected away from the admin tab",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+							"version": {
+								"id": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+								"version": "2",
+								"digest": "aa068503a8b043849b86624b248575a7505b10ec97c5326402e526da996dae9d",
+								"generation": 0
+							},
+							"title": "Exclude Codex internal/provider prompt logs from distillation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_37ar4e3scgow2zy4yk4m5x464y",
+							"version": {
+								"id": "contextstill:kn_37ar4e3scgow2zy4yk4m5x464y",
+								"version": "2",
+								"digest": "21edd2e60c68cd3dd0019f0869947ceea83dd32bca4506148b3e35ebdc793f42",
+								"generation": 0
+							},
+							"title": "秘密情報の redaction はネストした metadata や diff 値にも適用する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bsftgq7woctylgu224doej3sga",
+							"version": {
+								"id": "contextstill:kn_bsftgq7woctylgu224doej3sga",
+								"version": "2",
+								"digest": "e924f4d103c43ee5e392e704b766e2115a14842654792ba6f3b07c614d454c56",
+								"generation": 0
+							},
+							"title": "GitHub Actions 経由のデプロイでは secrets/vars から env を生成する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pcvbef2zy7uensvoh5fwzsdwbi",
+							"version": {
+								"id": "contextstill:kn_pcvbef2zy7uensvoh5fwzsdwbi",
+								"version": "2",
+								"digest": "cb48f4f55839d38ae82ed8342898567458583673dc51bc4b33c2365bad11923f",
+								"generation": 0
+							},
+							"title": "Validate non-JSON LLM handling by running the queue-emptying test flow",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_xvikv2dmqiqhvckvqnfvlhr6jm",
+							"version": {
+								"id": "contextstill:kn_xvikv2dmqiqhvckvqnfvlhr6jm",
+								"version": "2",
+								"digest": "94472e090a78bb64fc2d067d15ea2d4d577667ed3cb4f0fd3ecf946c3b63e726",
+								"generation": 0
+							},
+							"title": "Masked update flow for secret settings",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_6g3tqy5lx2bcdvg7hgyfqtatdi",
+							"version": {
+								"id": "contextstill:kn_6g3tqy5lx2bcdvg7hgyfqtatdi",
+								"version": "2",
+								"digest": "90061c0bbc3743334235483fb3f2248e94d8b7e80fe0312bfe57df438da8447e",
+								"generation": 0
+							},
+							"title": "Diagnose E2E API failures from server logs and direct repros",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3n4na7afzvplxphxttx2id7ma4",
+							"version": {
+								"id": "contextstill:kn_3n4na7afzvplxphxttx2id7ma4",
+								"version": "2",
+								"digest": "b352b6636c89a8a9988623797e4675bdcea52ce5dda3a7a027bcd2865fd3b670",
+								"generation": 0
+							},
+							"title": "Provider optional field null handling rule",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_etrgithiinwjkxzoxwf7olzxdq",
+							"version": {
+								"id": "contextstill:kn_etrgithiinwjkxzoxwf7olzxdq",
+								"version": "2",
+								"digest": "f1f7f6ab74243740932f557cb7e599ccc36c57340802e5e88ed1eee6163a4f2d",
+								"generation": 0
+							},
+							"title": "Azure OpenAI Responses API における AZURE_OPENAI_API_VERSION の取り扱い",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_77wrmjf6mnq3nm5iia5dwm7g5u",
+							"version": {
+								"id": "contextstill:kn_77wrmjf6mnq3nm5iia5dwm7g5u",
+								"version": "2",
+								"digest": "e140004b6dae5b972d04a0d0bfec036fa19fabe45869c483d575fcbef5644ff7",
+								"generation": 0
+							},
+							"title": "Separate shared agent notes from raw log views",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_yodeuccnkqclmog5fxyywthvne",
+							"version": {
+								"id": "contextstill:kn_yodeuccnkqclmog5fxyywthvne",
+								"version": "2",
+								"digest": "e23f5e75fd16d574926000c0c3db34221dbd1223e61203c6411d05ed874bdcf0",
+								"generation": 0
+							},
+							"title": "Lighten workbook upload responses by separating preview from paged rows",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_p3e2b643d7qanyae7xlw5le5tu",
+							"version": {
+								"id": "contextstill:kn_p3e2b643d7qanyae7xlw5le5tu",
+								"version": "2",
+								"digest": "a28d314b1e59329c3fc549a4f8175c9838e16097b4c6f7041b9f349ce9df2044",
+								"generation": 0
+							},
+							"title": "クラウド認証ではOIDCによる短期トークン認証を優先し、長期シークレットの使用を避ける",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"queries": [
+				"fix pre-commit verify failures without bypassing hooks",
+				"do not force push without explicit approval; push normally"
+			],
+			"queryToSource": [
+				"fix pre-commit verify failures without bypassing hooks",
+				"do not force push without explicit approval; push normally"
+			],
+			"perQuery": [
+				{
+					"query": "fix pre-commit verify failures without bypassing hooks",
+					"cards": [
+						{
+							"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+							"version": {
+								"id": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+								"version": "2",
+								"digest": "0bca53d4609e456f8fa9db81fefd060b084388fa57701e61c0bbb8eb399be4fa",
+								"generation": 0
+							},
+							"title": "Fix pre-commit verify failures instead of bypassing hooks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+							"version": {
+								"id": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+								"version": "2",
+								"digest": "4e972d59d7486ca91bef5791191d561332cc61e19d9410e91f4971aa132e61f0",
+								"generation": 0
+							},
+							"title": "Verify before committing despite commit hooks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3hf5iakewawygz4cznzrwo3pvy",
+							"version": {
+								"id": "contextstill:kn_3hf5iakewawygz4cznzrwo3pvy",
+								"version": "2",
+								"digest": "018352509a5d07190f323dec0c24c35e1fe0eb279a874602cad1d433d26ad579",
+								"generation": 0
+							},
+							"title": "Triaging Verify Failures Efficiently",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+							"version": {
+								"id": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+								"version": "2",
+								"digest": "e457ad09cc4f65b1f2b598f8dbbcd8f5053632a36466eed293f7047df8ec5f8e",
+								"generation": 0
+							},
+							"title": "Hook failure triage before push",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+							"version": {
+								"id": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+								"version": "2",
+								"digest": "fba79b5c72909e33be46c3e2ce49fd38b7810f61ac9e44ca2c7171181650c2cd",
+								"generation": 0
+							},
+							"title": "Keep Git hooks as minimum quality gates, not full verification substitutes",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+							"version": {
+								"id": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+								"version": "2",
+								"digest": "3cf3aaf78255b5944045fa8fa32122481b86fc7dfbe6c87ab1a5d0d90908186d",
+								"generation": 0
+							},
+							"title": "Split verification gates into daily fast checks and explicit full checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+							"version": {
+								"id": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+								"version": "2",
+								"digest": "d2db9c0d1b741dcdc331f736e51dddd1f15ac85792014962b9be1bb7073a8fff",
+								"generation": 0
+							},
+							"title": "Verify And Clean Persistent Test Data Before Commit",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+							"version": {
+								"id": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+								"version": "2",
+								"digest": "994bb207ec9d8e97981fd99f980124d3872d3905f9ce62fcd5d78823437c3d90",
+								"generation": 0
+							},
+							"title": "Incremental gate validation for large changes",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_k4ddtfqpwx74y7pofxmachmw7i",
+							"version": {
+								"id": "contextstill:kn_k4ddtfqpwx74y7pofxmachmw7i",
+								"version": "2",
+								"digest": "22c1221e8918dda691c6051dc70626e8d874df981afbe118ef0722bbec010983",
+								"generation": 0
+							},
+							"title": "Never discard uncommitted changes without inspecting ownership",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bj66kozrcppmxpmytlyeuzy5oi",
+							"version": {
+								"id": "contextstill:kn_bj66kozrcppmxpmytlyeuzy5oi",
+								"version": "2",
+								"digest": "a2e12b804f779d477c7075c7c360f01e49fec5188d1db94b1e3a7fc37b888217",
+								"generation": 0
+							},
+							"title": "Playwright Fixture 型エラー修正とテスト実行フロー",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+							"version": {
+								"id": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+								"version": "2",
+								"digest": "1c5f5031642b6066603b74c07f5f97b469e52a80567490cb5fd90ff4403decbd",
+								"generation": 0
+							},
+							"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+							"version": {
+								"id": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+								"version": "2",
+								"digest": "72d7a7d20b2e19d3cc45d3ba964d0a63bb40923c4740e356b4fadaee092a8052",
+								"generation": 0
+							},
+							"title": "Never rewrite branch history on shared branches without confirmation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_r3ha45nz6izlbh2urxy7ubxm5y",
+							"version": {
+								"id": "contextstill:kn_r3ha45nz6izlbh2urxy7ubxm5y",
+								"version": "2",
+								"digest": "584aa7eaf5f792d27d0ec62b87870abe4be41ca06fb260705a9ae75e528454e4",
+								"generation": 0
+							},
+							"title": "Use canonical bad fixtures to harden validation evidence",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_woukarx4it542gkaser24ebwya",
+							"version": {
+								"id": "contextstill:kn_woukarx4it542gkaser24ebwya",
+								"version": "2",
+								"digest": "e18e013821aac29585b3f295021529d8133e97ff51e5789cc2e8e788b7fb1374",
+								"generation": 0
+							},
+							"title": "Honor explicit full-worktree commit requests",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ih7w2ywsh7d27jhiuwwyuidbdq",
+							"version": {
+								"id": "contextstill:kn_ih7w2ywsh7d27jhiuwwyuidbdq",
+								"version": "2",
+								"digest": "83439450c0dfd61e307d4c369973a901ffd6fcdc92707042167f30c7ac4dd246",
+								"generation": 0
+							},
+							"title": "Design Safe Cleanup for Persistent E2E Test Data",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_x5xv7qecwish2w4m6hwvdklkbm",
+							"version": {
+								"id": "contextstill:kn_x5xv7qecwish2w4m6hwvdklkbm",
+								"version": "2",
+								"digest": "baec4e726b5eb1359e1d96837b7638ab8791a007ae25415dcc5ed539798b38f4",
+								"generation": 0
+							},
+							"title": "KnowFlow 変更後の verify と commit の進め方",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_p2xh64jpgjtkvznktddu4fdhhu",
+							"version": {
+								"id": "contextstill:kn_p2xh64jpgjtkvznktddu4fdhhu",
+								"version": "2",
+								"digest": "f69ca1dec805365c2e57ce500bb1f0e250f33b188f1c06d17fcffd8e6ef810b9",
+								"generation": 0
+							},
+							"title": "計画書の進捗更新と関連修正をまとめて commit する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_o5zp74wcjyqrjrcaqcr6kzwo3m",
+							"version": {
+								"id": "contextstill:kn_o5zp74wcjyqrjrcaqcr6kzwo3m",
+								"version": "2",
+								"digest": "254f3ed4dfcf5db777f26e57650dc534ae1b0716bf45b59a0be1d3ca0987ddba",
+								"generation": 0
+							},
+							"title": "Local list screens should keep create/edit state explicit and verify formatting first when checks fail",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_6tjxlkaw42ckzqlh4ia3noxjpu",
+							"version": {
+								"id": "contextstill:kn_6tjxlkaw42ckzqlh4ia3noxjpu",
+								"version": "2",
+								"digest": "a48f38bd08e1e64ad08245a7d51d5a3ff33815e9325988b7052090e8f9b18e32",
+								"generation": 0
+							},
+							"title": "Failure Firewall の候補生成は verify 合格後かつユーザーの commit 承認後にのみ行う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+							"version": {
+								"id": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+								"version": "2",
+								"digest": "94f668c9ed5850f67b5570aabb7768fce6b45b71d61169fdb80a5908599fc412",
+								"generation": 0
+							},
+							"title": "Never send notifications or emails from tests without sandboxing",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "do not force push without explicit approval; push normally",
+					"cards": [
+						{
+							"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+							"version": {
+								"id": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+								"version": "2",
+								"digest": "8be16703e8c80b96082048030eca70ae87eb2a343b7032bc909fe092c9d287ef",
+								"generation": 0
+							},
+							"title": "Never force push without explicit approval",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+							"version": {
+								"id": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+								"version": "2",
+								"digest": "94f668c9ed5850f67b5570aabb7768fce6b45b71d61169fdb80a5908599fc412",
+								"generation": 0
+							},
+							"title": "Never send notifications or emails from tests without sandboxing",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+							"version": {
+								"id": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+								"version": "2",
+								"digest": "72d7a7d20b2e19d3cc45d3ba964d0a63bb40923c4740e356b4fadaee092a8052",
+								"generation": 0
+							},
+							"title": "Never rewrite branch history on shared branches without confirmation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_qjzl335nmog5sualntuwg6ztfm",
+							"version": {
+								"id": "contextstill:kn_qjzl335nmog5sualntuwg6ztfm",
+								"version": "2",
+								"digest": "2a2daeddae34a6344e20fb29d1673b89d9fa9829c5c350e26ad51e3005e2e509",
+								"generation": 0
+							},
+							"title": "Never truncate tables without explicit approval and backup",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_wd6omdogekjaqwuimm3f2a25jq",
+							"version": {
+								"id": "contextstill:kn_wd6omdogekjaqwuimm3f2a25jq",
+								"version": "2",
+								"digest": "889c3b5895d7a894baca44ef77129c7c7c0bf04a70ef6708fcf38ac66fc11d58",
+								"generation": 0
+							},
+							"title": "Never chmod or chown broad paths without explicit approval",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_xdxkd3nscyb7wgrtrqc66eec6q",
+							"version": {
+								"id": "contextstill:kn_xdxkd3nscyb7wgrtrqc66eec6q",
+								"version": "2",
+								"digest": "c866812298f37a219442d36b55034d23a2702f1bf92cf448906bc6f5b9f9222d",
+								"generation": 0
+							},
+							"title": "Never delete audit logs or historical records without retention review",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_nmqv627vgpu5kxbzcvk7d6bdza",
+							"version": {
+								"id": "contextstill:kn_nmqv627vgpu5kxbzcvk7d6bdza",
+								"version": "2",
+								"digest": "2f26b857416c1b97dc92de2464e472f95d739ea26c747a16ebbe1b40660fca30",
+								"generation": 0
+							},
+							"title": "Never drop production database objects without backup and approval",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_jknol3pf5culhtve7ndhbm2iga",
+							"version": {
+								"id": "contextstill:kn_jknol3pf5culhtve7ndhbm2iga",
+								"version": "2",
+								"digest": "dd9eefe0dd83c48d995053c2389884a4bea212fde10b0fb1dca5dfa9eb5d7609",
+								"generation": 0
+							},
+							"title": "Never rotate or revoke credentials without coordination",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
+							"version": {
+								"id": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
+								"version": "2",
+								"digest": "5b704377a1affe7cbc89b02917eabc8f3e8f8a9c9d3cf3bb597660396684b66d",
+								"generation": 0
+							},
+							"title": "Never make live network calls that mutate external systems without approval",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pjhwg6qbxjxtkw4gsuvsrqpcqm",
+							"version": {
+								"id": "contextstill:kn_pjhwg6qbxjxtkw4gsuvsrqpcqm",
+								"version": "2",
+								"digest": "e5deceab3aba6cb0815e5c325fd245fa9cd0e99699740681cd7fad27fb7a8bf8",
+								"generation": 0
+							},
+							"title": "Never delete unrelated user files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_niohjsjn2hfwxtpb3fcnstv3bq",
+							"version": {
+								"id": "contextstill:kn_niohjsjn2hfwxtpb3fcnstv3bq",
+								"version": "2",
+								"digest": "0b701e86346ac834adef25ca1538f4bca5722a2b6a9aef7bd7ad8fea74da6c50",
+								"generation": 0
+							},
+							"title": "Never copy production data into local tools without sanitization",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+							"version": {
+								"id": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+								"version": "2",
+								"digest": "fba79b5c72909e33be46c3e2ce49fd38b7810f61ac9e44ca2c7171181650c2cd",
+								"generation": 0
+							},
+							"title": "Keep Git hooks as minimum quality gates, not full verification substitutes",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_5qjsf7tntpw56arxzs7vuo7g5i",
+							"version": {
+								"id": "contextstill:kn_5qjsf7tntpw56arxzs7vuo7g5i",
+								"version": "2",
+								"digest": "94f597b4fd8fd2dd2f0531401d37b2350cd516a51ff10e569d3209f3a4dffe81",
+								"generation": 0
+							},
+							"title": "Autonomous MCP tools should not require per-tool approval",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bgucilhydtepjzrosj36husr7u",
+							"version": {
+								"id": "contextstill:kn_bgucilhydtepjzrosj36husr7u",
+								"version": "2",
+								"digest": "d1560815d6401054cc3e63eabd0ecf50b51b213dfff7b20cb36c6c31962c22d8",
+								"generation": 0
+							},
+							"title": "Never mark work complete without running the closest relevant verification",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_hb5xqnzj4xplnlmo237o4ybdlm",
+							"version": {
+								"id": "contextstill:kn_hb5xqnzj4xplnlmo237o4ybdlm",
+								"version": "2",
+								"digest": "9d7767147a592ec7b09b10c056799ad743bd7e61c0464f5e072aa441f7e2c8b0",
+								"generation": 0
+							},
+							"title": "Never broaden permissions without explicit security rationale",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_tv4ouw7c6egb5j2u35r7vvesii",
+							"version": {
+								"id": "contextstill:kn_tv4ouw7c6egb5j2u35r7vvesii",
+								"version": "2",
+								"digest": "794420fbe97a7de81aa9354756ca1ca0c01b79055bb54641816a61ded6f10675",
+								"generation": 0
+							},
+							"title": "Never trigger paid API calls or billing changes without confirmation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_aikeggt524laezguymmor4pmsy",
+							"version": {
+								"id": "contextstill:kn_aikeggt524laezguymmor4pmsy",
+								"version": "2",
+								"digest": "98756ed2c61a0402da2cc5cee0e94ca48c986a66de6f79ba29784d343188feb4",
+								"generation": 0
+							},
+							"title": "Never change infrastructure capacity or cost settings without confirmation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3mfbpe2bsyhk2mycbyd6cvja4m",
+							"version": {
+								"id": "contextstill:kn_3mfbpe2bsyhk2mycbyd6cvja4m",
+								"version": "2",
+								"digest": "4121b836657aabe851c03172f36aff2772f1871a2910245f70be9cafba86b287",
+								"generation": 0
+							},
+							"title": "Approval-gated durable memory registration",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+							"version": {
+								"id": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+								"version": "2",
+								"digest": "9074ff075f39a3135673e3f3a795549613eafe65ba8f01e90a981d7ddd7b54af",
+								"generation": 0
+							},
+							"title": "Never deploy to production without explicit release intent",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+							"version": {
+								"id": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+								"version": "2",
+								"digest": "e457ad09cc4f65b1f2b598f8dbbcd8f5053632a36466eed293f7047df8ec5f8e",
+								"generation": 0
+							},
+							"title": "Hook failure triage before push",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"queries": [
+				"package release smoke test using packed artifacts in a clean project",
+				"run smoke tests without implicitly calling live providers"
+			],
+			"queryToSource": [
+				"package release smoke test using packed artifacts in a clean project",
+				"run smoke tests without implicitly calling live providers"
+			],
+			"perQuery": [
+				{
+					"query": "package release smoke test using packed artifacts in a clean project",
+					"cards": [
+						{
+							"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+							"version": {
+								"id": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+								"version": "2",
+								"digest": "5d976c48a3c65ee3c36f8fc1f8ef7a4694705728c98ee4d1872bbdad513ff85c",
+								"generation": 0
+							},
+							"title": "Package Release Smoke Test with Packed Artifacts",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_enxkwb6srfr4saw2cfyywzizr4",
+							"version": {
+								"id": "contextstill:kn_enxkwb6srfr4saw2cfyywzizr4",
+								"version": "2",
+								"digest": "9d93628909f9187f3440d217bdc081e559086b6f4d696ecece9289678bdb8003",
+								"generation": 0
+							},
+							"title": "Publish-critical artifacts must be tracked or reproducibly generated",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ugebpij7zcdpk5zbb67sevwtbu",
+							"version": {
+								"id": "contextstill:kn_ugebpij7zcdpk5zbb67sevwtbu",
+								"version": "2",
+								"digest": "5df53d260a531caaf0249dc8833e272f31604ea9448f1bb70828e00e1351f2e7",
+								"generation": 0
+							},
+							"title": "Monorepo npm publish readiness check without workspace protocol leaks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+							"version": {
+								"id": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+								"version": "2",
+								"digest": "457a04c8ec1ddb5647f427cb1106c840133fe60d50990993af0b8e6ef487d658",
+								"generation": 0
+							},
+							"title": "Verify desktop packaging with real app launch, not artifact existence",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+							"version": {
+								"id": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+								"version": "2",
+								"digest": "d2db9c0d1b741dcdc331f736e51dddd1f15ac85792014962b9be1bb7073a8fff",
+								"generation": 0
+							},
+							"title": "Verify And Clean Persistent Test Data Before Commit",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_mwmmaja6mhpn4cktx4xujlzuqu",
+							"version": {
+								"id": "contextstill:kn_mwmmaja6mhpn4cktx4xujlzuqu",
+								"version": "2",
+								"digest": "b628925364a83f4f883a71d26df7ac2cdc204d36c7e36b490348a85b4b3d9ece",
+								"generation": 0
+							},
+							"title": "Validate package installability from packed artifacts in a clean environment",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_a2d2sn26bgis6pf5wyw3xkq2ci",
+							"version": {
+								"id": "contextstill:kn_a2d2sn26bgis6pf5wyw3xkq2ci",
+								"version": "2",
+								"digest": "6c37844a60967e2eb96afe1cca638f39015c44157b7b2721ba1858f01ba18030",
+								"generation": 0
+							},
+							"title": "release gate には agentic_search の protocol 回帰防止として CLI smoke・MCP smoke・focused tests を含める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+							"version": {
+								"id": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+								"version": "2",
+								"digest": "160e2b6529c8cf0c0707e6c51d2559f95a6354fab248b1663084ea23261928fb",
+								"generation": 0
+							},
+							"title": "Python wheel hygiene check for mixed Rust/Python packages",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_gnxwyqtgngkd7zdjnz4ad5ceki",
+							"version": {
+								"id": "contextstill:kn_gnxwyqtgngkd7zdjnz4ad5ceki",
+								"version": "2",
+								"digest": "3ee90daccfcff484ff9ab9b9af60d823488446a7abf2b1f5581e1402843ac2fe",
+								"generation": 0
+							},
+							"title": "Package Node sidecars for desktop without copying full node_modules",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_wnd6v7qsvw6kapuyv7r3bnk43m",
+							"version": {
+								"id": "contextstill:kn_wnd6v7qsvw6kapuyv7r3bnk43m",
+								"version": "2",
+								"digest": "e749bbe77f0a69a5c2df02167a139e3eba70491f8823dab6fd216a192cd19ed4",
+								"generation": 0
+							},
+							"title": "nightWorkers リポジトリの全変更コミット手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_rw2yq6pqfiutqhyjtemhp2rswq",
+							"version": {
+								"id": "contextstill:kn_rw2yq6pqfiutqhyjtemhp2rswq",
+								"version": "2",
+								"digest": "1d0f12f72399efef5374be1eaa5471cc163a21f0ad1933972e4d6db53a496cab",
+								"generation": 0
+							},
+							"title": "Build-Free Monorepo Testing Rule",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+							"version": {
+								"id": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+								"version": "2",
+								"digest": "ed05c409395920baaf219136760981afa48e59250326df9800e4230fb67f09b6",
+								"generation": 0
+							},
+							"title": "Monorepo Package Purity and Dry-Run Audit",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+							"version": {
+								"id": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+								"version": "2",
+								"digest": "81ce9f18bdb82a731d606646fdd5ffd32af21fea33ae6dbc9521136ef76b4840",
+								"generation": 0
+							},
+							"title": "Separate fast verification from operational integration gates",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3jmundk3tmmgtl2rayu3soiryu",
+							"version": {
+								"id": "contextstill:kn_3jmundk3tmmgtl2rayu3soiryu",
+								"version": "2",
+								"digest": "3648711b9596612ed212d8c533bb36ced1d22bc2c324b1e874c5a41866bfbf37",
+								"generation": 0
+							},
+							"title": "verify/smoke を package.json に統合してから CLI 本体へ機能をつなぐ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3xcaku6yh6yp4p47yovsv5naqm",
+							"version": {
+								"id": "contextstill:kn_3xcaku6yh6yp4p47yovsv5naqm",
+								"version": "2",
+								"digest": "64116fa022b6b7e5d2617471667ece83fdddcdf36cf3ec9ad2ad0ca0e7574fbe",
+								"generation": 0
+							},
+							"title": "NightWorkers プロジェクトでのコミット手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_guetxauxttxav6ijoppspzuj2a",
+							"version": {
+								"id": "contextstill:kn_guetxauxttxav6ijoppspzuj2a",
+								"version": "2",
+								"digest": "2abcdc075c685ddf9d0e8600db60f44fae31b1e9e47339c57047a655cfdcbb8d",
+								"generation": 0
+							},
+							"title": "MCP smoke test は HTTP endpoint 専用コマンドに差し替える",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_glbb3xgqiluda5nzbncjctyqye",
+							"version": {
+								"id": "contextstill:kn_glbb3xgqiluda5nzbncjctyqye",
+								"version": "2",
+								"digest": "fd3d96f2732e6580e6d1d0be1bd3ade65a1c28a83c6ba44a52f7d72b9b7f726b",
+								"generation": 0
+							},
+							"title": "Standardize Execution Environment with Bun",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_yh2hqjdpvokejmaq2uf5ef5hre",
+							"version": {
+								"id": "contextstill:kn_yh2hqjdpvokejmaq2uf5ef5hre",
+								"version": "2",
+								"digest": "7388936edc0f520d90ee8114e42d15169c4c6dba7f86d0fc2df30cb59e45ddb1",
+								"generation": 0
+							},
+							"title": "Playwright E2E を smoke/regression に分離して CI 運用する手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_5ieicnjgydo7h3hmiga6f6r7om",
+							"version": {
+								"id": "contextstill:kn_5ieicnjgydo7h3hmiga6f6r7om",
+								"version": "2",
+								"digest": "2c6133cde83d6a9a4d0c0c032d5a600493e379bf1fbf93dde98b8a968aee9345",
+								"generation": 0
+							},
+							"title": "pnpm verify による Desktop 統合検証フロー",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+							"version": {
+								"id": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+								"version": "2",
+								"digest": "47b27decb4834deda3570c529128dded9ff44b3b7ab4514f6e4c521ad2231263",
+								"generation": 0
+							},
+							"title": "Integrate native desktop checks into the main verification gate deliberately",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "run smoke tests without implicitly calling live providers",
+					"cards": [
+						{
+							"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+							"version": {
+								"id": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+								"version": "2",
+								"digest": "5aeab87b6ee4335396fbf5fcd6f5304de677c66ae2485135d23ec89335763457",
+								"generation": 0
+							},
+							"title": "Smoke tests must not implicitly call live providers",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+							"version": {
+								"id": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+								"version": "2",
+								"digest": "81ce9f18bdb82a731d606646fdd5ffd32af21fea33ae6dbc9521136ef76b4840",
+								"generation": 0
+							},
+							"title": "Separate fast verification from operational integration gates",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+							"version": {
+								"id": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+								"version": "2",
+								"digest": "e3549f30981533867802f3121bf79216cb39ba42d02eb7ab583b2f2499fc1931",
+								"generation": 0
+							},
+							"title": "Run existing smoke tests after adding a new E2E harness",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_cfp7vm2t56tbwvaocknqt5tmpi",
+							"version": {
+								"id": "contextstill:kn_cfp7vm2t56tbwvaocknqt5tmpi",
+								"version": "2",
+								"digest": "0f4942d4d907077a4412131f340db5c88d662f92f7f23ab7019579c606a35855",
+								"generation": 0
+							},
+							"title": "Tests must not mutate shared runtime provider settings",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_4svsurpndmnannamjejjk4ioby",
+							"version": {
+								"id": "contextstill:kn_4svsurpndmnannamjejjk4ioby",
+								"version": "2",
+								"digest": "48cd61cbbb87c220f9bc81b5b288373df9f1dfc3bf6c513250739e9914d30738",
+								"generation": 0
+							},
+							"title": "実 LLM テストの分離構成と実行条件",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
+							"version": {
+								"id": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
+								"version": "2",
+								"digest": "833b051d883ffa16f57472c1d9e74184bbad65d10c173ba8ee3616dbac8437c4",
+								"generation": 0
+							},
+							"title": "Decouple E2E agent runs from external providers",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_vmariive5cmef3xwhbhgjzfxqy",
+							"version": {
+								"id": "contextstill:kn_vmariive5cmef3xwhbhgjzfxqy",
+								"version": "2",
+								"digest": "c7564e40ee8177d751f7babfed7a1085256a27c010a0aea9cf4ad2df17e39914",
+								"generation": 0
+							},
+							"title": "Distillation Queue v2 への移行は、freeze/backup → schema & code 切替 → one-time migration → live smoke → final cleanup drop の順で進める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_emxrlqsrf5zxxm6knmqpuhagy4",
+							"version": {
+								"id": "contextstill:kn_emxrlqsrf5zxxm6knmqpuhagy4",
+								"version": "2",
+								"digest": "764fdea9c21cec797f175aca080c76a650358067baab7fa35bd7d809de0268e6",
+								"generation": 0
+							},
+							"title": "Keep connectivity tests isolated from live clients",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pgy6hm45mysd24oj66d2pq66ky",
+							"version": {
+								"id": "contextstill:kn_pgy6hm45mysd24oj66d2pq66ky",
+								"version": "2",
+								"digest": "a2f90b981a43efe1019174d1300e32c0a56c835a71909238bea93c470d7af443",
+								"generation": 0
+							},
+							"title": "設定変更およびロジック修正後の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_rzuizkosjckiq25k2f4d5bseoq",
+							"version": {
+								"id": "contextstill:kn_rzuizkosjckiq25k2f4d5bseoq",
+								"version": "2",
+								"digest": "ef769feaf8fa695055484b452b065103543b12a52c4cdd108a71792e83204539",
+								"generation": 0
+							},
+							"title": "Consumer-driven contracts should test only consumer-used communication",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+							"version": {
+								"id": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+								"version": "2",
+								"digest": "94f668c9ed5850f67b5570aabb7768fce6b45b71d61169fdb80a5908599fc412",
+								"generation": 0
+							},
+							"title": "Never send notifications or emails from tests without sandboxing",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+							"version": {
+								"id": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+								"version": "2",
+								"digest": "47b27decb4834deda3570c529128dded9ff44b3b7ab4514f6e4c521ad2231263",
+								"generation": 0
+							},
+							"title": "Integrate native desktop checks into the main verification gate deliberately",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_hwisd72nyicjgjlq6ldiew3hvu",
+							"version": {
+								"id": "contextstill:kn_hwisd72nyicjgjlq6ldiew3hvu",
+								"version": "2",
+								"digest": "3d87f6d56ac110693d99dbb305365f053411b64426b44a1be5894b284bff1eab",
+								"generation": 0
+							},
+							"title": "Handle Multi-Run Evaluation Without Relying on Latest-Only Resolution",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_v2z3tutriwxcztwarm2o7jtnky",
+							"version": {
+								"id": "contextstill:kn_v2z3tutriwxcztwarm2o7jtnky",
+								"version": "2",
+								"digest": "9f818c9516bf10ec74de030912a5a47e8d366e0e9860bf2937f148738cb60529",
+								"generation": 0
+							},
+							"title": "Repo-aligned implementation plans should start from live schema and tool anchors",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+							"version": {
+								"id": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+								"version": "2",
+								"digest": "3cf3aaf78255b5944045fa8fa32122481b86fc7dfbe6c87ab1a5d0d90908186d",
+								"generation": 0
+							},
+							"title": "Split verification gates into daily fast checks and explicit full checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_4wlxjwts3243ecgzrvewbzjtxm",
+							"version": {
+								"id": "contextstill:kn_4wlxjwts3243ecgzrvewbzjtxm",
+								"version": "2",
+								"digest": "fb5deea39af12701bb5f336de3e006f8f04a51411e0fc24c40a92e7d8f5afba6",
+								"generation": 0
+							},
+							"title": "Normalize relative SQLite DATABASE_URLs before libsql client creation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_sxlgrwnwj5ztsz7tjqiwtr2b5q",
+							"version": {
+								"id": "contextstill:kn_sxlgrwnwj5ztsz7tjqiwtr2b5q",
+								"version": "2",
+								"digest": "4826bb18b5c3170bf8add6f255dfc29bdfdff76d77146067ad8661d666e3cfa0",
+								"generation": 0
+							},
+							"title": "Harden destructive integration tests",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3jgf2xwc5v4lewdlvxhmtloh7q",
+							"version": {
+								"id": "contextstill:kn_3jgf2xwc5v4lewdlvxhmtloh7q",
+								"version": "2",
+								"digest": "1cd4d08fef225739400f2e66e18ed4ec0dee56a1500a04df3e9c431e8f6ad927",
+								"generation": 0
+							},
+							"title": "変更時の verify gate と docs/snapshot 更新手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2qfezqg5tfdachd64n5ro5snyy",
+							"version": {
+								"id": "contextstill:kn_2qfezqg5tfdachd64n5ro5snyy",
+								"version": "2",
+								"digest": "e2a77c37a97652dead4f48a38771fafbcc310b466630d3ee21362f008040c524",
+								"generation": 0
+							},
+							"title": "Queue migration の preflight と write cutover は旧実行系を温存したまま段階的に行う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_py3of4ll5txekkxgfv3yffbaqe",
+							"version": {
+								"id": "contextstill:kn_py3of4ll5txekkxgfv3yffbaqe",
+								"version": "2",
+								"digest": "b8f34ba12f93549daa7df5c4aaf45c36b494eb5d7127d16436f013e6198c5adb",
+								"generation": 0
+							},
+							"title": "Agentic Search Prefetch: Compact Context Injection and Tool Call Integrity",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Format Python source using 4-space indentation and limit line length.",
+			"queries": [
+				"format Python source using 4-space indentation",
+				"limit line length in Python source"
+			],
+			"queryToSource": [
+				"format Python source using 4-space indentation",
+				"limit line length in Python source"
+			],
+			"perQuery": [
+				{
+					"query": "format Python source using 4-space indentation",
+					"cards": [
+						{
+							"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+							"version": {
+								"id": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+								"version": "2",
+								"digest": "e0dc6b238a383b670211e3866eefa75054e6fe13ec746385b915c13bf293fa6f",
+								"generation": 0
+							},
+							"title": "Use 4-Space Indentation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+							"version": {
+								"id": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+								"version": "2",
+								"digest": "81b4874a5bda7396f14f1b5c6cc0947019a1e02b6c7e28d94cfead52dab2f800",
+								"generation": 0
+							},
+							"title": "Use gofmt for Standard Go Code Formatting",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2rxxzxakx2vifhika7dp2eenhq",
+							"version": {
+								"id": "contextstill:kn_2rxxzxakx2vifhika7dp2eenhq",
+								"version": "2",
+								"digest": "5b41e46d415907dd5e682432ff9566f501e7bc9885842f08768f3439085cea26",
+								"generation": 0
+							},
+							"title": "Access token scope normalization should support both space-delimited scope and array scp claims",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_s36op3fbs2uluvueyhk2g3hj4u",
+							"version": {
+								"id": "contextstill:kn_s36op3fbs2uluvueyhk2g3hj4u",
+								"version": "2",
+								"digest": "d7eb8b82a1284bd3fb2a0d0580f81a70115d7ff46e06dfdd7e37a049c4bdc172",
+								"generation": 0
+							},
+							"title": "Use snake_case for JSON properties",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_y7tso3uqoh36eppoc3lnqqbfja",
+							"version": {
+								"id": "contextstill:kn_y7tso3uqoh36eppoc3lnqqbfja",
+								"version": "2",
+								"digest": "3c372d5c6afde7ac57fadcb40a84f738bfc058588debd662dd4d712beac50dcd",
+								"generation": 0
+							},
+							"title": "Verification workflow for Bun-based TypeScript projects with Biome",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_5m7nabnpqprbc5qbmnoyjxr3iy",
+							"version": {
+								"id": "contextstill:kn_5m7nabnpqprbc5qbmnoyjxr3iy",
+								"version": "2",
+								"digest": "c3932459437cd65a429244f3e0ba4cab7dc31f73ac5f062542602bcbdf8d31b0",
+								"generation": 0
+							},
+							"title": "Namespace は責務や環境ごとに分離し、namespace 単位の統制を前提にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ijf3eqiyqjmmqkatitbwg3y6ay",
+							"version": {
+								"id": "contextstill:kn_ijf3eqiyqjmmqkatitbwg3y6ay",
+								"version": "2",
+								"digest": "8cf2d0088e28abcf92501ae5e614997e709ba403def13568c60f8a888c57c301",
+								"generation": 0
+							},
+							"title": "Verification workflow for code changes in contextStill",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+							"version": {
+								"id": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+								"version": "2",
+								"digest": "7a5ca5eaa9e60cb8867b815754aa6f78439fed34d3169dbd03f5937a4a824e4a",
+								"generation": 0
+							},
+							"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_sbfvyaiokaoxl67oh5kgu7h6fa",
+							"version": {
+								"id": "contextstill:kn_sbfvyaiokaoxl67oh5kgu7h6fa",
+								"version": "2",
+								"digest": "fb2902b0155cad36b9b8fbdd3a674aeb5e4ad43fd4e11f61f39c99a182fd033c",
+								"generation": 0
+							},
+							"title": "PromptWorkspace では ComposePanel と SourceList を並べて表示する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+							"version": {
+								"id": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+								"version": "2",
+								"digest": "33dafaae21352a0264b975e08a31cc547ad5ac16383780750aaa0601fff943b2",
+								"generation": 0
+							},
+							"title": "Python 側の責務は MLX 推論に限定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_m5du7za5dzldz57cnkr4v2iali",
+							"version": {
+								"id": "contextstill:kn_m5du7za5dzldz57cnkr4v2iali",
+								"version": "2",
+								"digest": "e1b8a68bd5a677fa82a1c28fadd6c7461a20d416aa2e610d9b047381eeb04b25",
+								"generation": 0
+							},
+							"title": "SQLite での CURRENT_TIMESTAMP と文字列比較のズレ回避",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+							"version": {
+								"id": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+								"version": "2",
+								"digest": "160e2b6529c8cf0c0707e6c51d2559f95a6354fab248b1663084ea23261928fb",
+								"generation": 0
+							},
+							"title": "Python wheel hygiene check for mixed Rust/Python packages",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+							"version": {
+								"id": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+								"version": "2",
+								"digest": "435450b7ef494348a7762aea90885381fc834a67518b225c08c5990118efabc6",
+								"generation": 0
+							},
+							"title": "分析処理はPython側に寄せ、OpenAIはレビューと改善提案に限定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+							"version": {
+								"id": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+								"version": "2",
+								"digest": "ed05c409395920baaf219136760981afa48e59250326df9800e4230fb67f09b6",
+								"generation": 0
+							},
+							"title": "Monorepo Package Purity and Dry-Run Audit",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_k4mbstuht644efmtyoifxpa5um",
+							"version": {
+								"id": "contextstill:kn_k4mbstuht644efmtyoifxpa5um",
+								"version": "2",
+								"digest": "2f90e8e8973760627419dc680d891b60b86265afe146152cf2a6e99f1f8b3c0a",
+								"generation": 0
+							},
+							"title": "SimpleTreeTable のインデント分岐は非展開行で固定余白を確認する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_wirme572zynghxomtg7bbrfrjy",
+							"version": {
+								"id": "contextstill:kn_wirme572zynghxomtg7bbrfrjy",
+								"version": "2",
+								"digest": "7fb4a84323cb3c05a31dcb6203459d3751ebbba97e31234641d1709334ebd591",
+								"generation": 0
+							},
+							"title": "Reject sandbox workspace overrides that overlap the target workspace",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_eelewcqzlk56bobdrtmuaagzgu",
+							"version": {
+								"id": "contextstill:kn_eelewcqzlk56bobdrtmuaagzgu",
+								"version": "2",
+								"digest": "ec4fa93d83c31aa300a3e2491e6207ba8981e1114a7c90a190fe1cc1bbca3c37",
+								"generation": 0
+							},
+							"title": "Separate agent decision workspaces from target workspaces",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_xmhsr4gcbcpsthrhzeoivv5jci",
+							"version": {
+								"id": "contextstill:kn_xmhsr4gcbcpsthrhzeoivv5jci",
+								"version": "2",
+								"digest": "7457edfc097341a560e9410285d64be34a2efb526807c167f470e544364a2c7e",
+								"generation": 0
+							},
+							"title": "PromptWorkspace からソースを手動更新できるようにする手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+							"version": {
+								"id": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+								"version": "2",
+								"digest": "de678e0ff3ab75cd0793625143a7a98b69e40035c71aee19d986284fd158a10b",
+								"generation": 0
+							},
+							"title": "Use ABI3 for resilient Python extension builds",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_xofpv3dgbqpzixdpqlfi3ph27a",
+							"version": {
+								"id": "contextstill:kn_xofpv3dgbqpzixdpqlfi3ph27a",
+								"version": "2",
+								"digest": "1cd1c0848ec8a2733c2397b81c5d380bef4639aef839f07cee602ad7a4790c7d",
+								"generation": 0
+							},
+							"title": "Failure Firewall 変更後の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "limit line length in Python source",
+					"cards": [
+						{
+							"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+							"version": {
+								"id": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+								"version": "2",
+								"digest": "885848e2cc9d77dc17c104d82430332223c59ecc501ad109c1e9ec8d307e9073",
+								"generation": 0
+							},
+							"title": "Limit Line Length",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_h42dvr4inbtwrz7s5lv3geaxle",
+							"version": {
+								"id": "contextstill:kn_h42dvr4inbtwrz7s5lv3geaxle",
+								"version": "2",
+								"digest": "7c56c8b0c6901ef9b3e7a6216ad55724e4aef7d7d003695eb533ab264b3fa625",
+								"generation": 0
+							},
+							"title": "distillation pipeline の claim limit は未指定時に groupedConfig の値を使う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_qg6dtinbukm3hj6kuj2xd5fmze",
+							"version": {
+								"id": "contextstill:kn_qg6dtinbukm3hj6kuj2xd5fmze",
+								"version": "2",
+								"digest": "1108921666a79ed18b4272092bb73a4af092f20174ccedac3f7cce6224f9c6cb",
+								"generation": 0
+							},
+							"title": "監査ログ一覧のページ情報はサーバー値を優先して表示する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_tb7usr577ratzzba6ji64c57wa",
+							"version": {
+								"id": "contextstill:kn_tb7usr577ratzzba6ji64c57wa",
+								"version": "2",
+								"digest": "f956551c8d8b8594b27b9d51d1ec1e69b4056568fe60f32c94667dca3c286268",
+								"generation": 0
+							},
+							"title": "Use Standard Continuation Layouts",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_sbpgwtipkjns76p6fe3iccbe6u",
+							"version": {
+								"id": "contextstill:kn_sbpgwtipkjns76p6fe3iccbe6u",
+								"version": "2",
+								"digest": "c1b69533951e1c5225d7b52cfa42ee25f615d7207f1817dd510a71a5bef3ee5d",
+								"generation": 0
+							},
+							"title": "Split large files by ownership boundaries, then verify size after formatting",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_b4ze46y77fc77fuausarwmrjha",
+							"version": {
+								"id": "contextstill:kn_b4ze46y77fc77fuausarwmrjha",
+								"version": "2",
+								"digest": "ef46041a0d56c06c691e62907ad26db7c1db55cf4fd3cd04aede5cc879985055",
+								"generation": 0
+							},
+							"title": "Structure Inspection Should Avoid Returning Full Values By Default",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_7wb7z7ncwdnd2ebfw37r4jdpqu",
+							"version": {
+								"id": "contextstill:kn_7wb7z7ncwdnd2ebfw37r4jdpqu",
+								"version": "2",
+								"digest": "33e5184d1fa287b6645a06e8580f3fed3a1183edc31221d71d7abd2d229762ae",
+								"generation": 0
+							},
+							"title": "Persist candidate trace rows with limit handling and failure logging",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_blkt6gvuffjtzqdmfubr72qokq",
+							"version": {
+								"id": "contextstill:kn_blkt6gvuffjtzqdmfubr72qokq",
+								"version": "2",
+								"digest": "c18e36870de34571b259032257bc9fd5e38a34218e9096eda8ab1470771261f8",
+								"generation": 0
+							},
+							"title": "すべてのコンテナにリソースリクエストを設定し、必要に応じてリミットを設定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+							"version": {
+								"id": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+								"version": "2",
+								"digest": "7a5ca5eaa9e60cb8867b815754aa6f78439fed34d3169dbd03f5937a4a824e4a",
+								"generation": 0
+							},
+							"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_nzknnoyt2xh77ebo2myzki4fui",
+							"version": {
+								"id": "contextstill:kn_nzknnoyt2xh77ebo2myzki4fui",
+								"version": "2",
+								"digest": "8339d5e1b5c38f57e215b4666d79de1e1c978972facc67ce9692ad5046d336fe",
+								"generation": 0
+							},
+							"title": "Landscape review item の一覧取得は status/source/reason/proposedAction/priorityMin/limit をクエリで指定でき、未指定時は pending/all/all/all/0/50 を使う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+							"version": {
+								"id": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+								"version": "2",
+								"digest": "33dafaae21352a0264b975e08a31cc547ad5ac16383780750aaa0601fff943b2",
+								"generation": 0
+							},
+							"title": "Python 側の責務は MLX 推論に限定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_hpyfuxcd2sdtwwytvvjp326cve",
+							"version": {
+								"id": "contextstill:kn_hpyfuxcd2sdtwwytvvjp326cve",
+								"version": "2",
+								"digest": "7cefe8002c22b037a0a35f1c27e37309511ce0d78a3425fbfb649a2bd11bdc4a",
+								"generation": 0
+							},
+							"title": "findCandidate 実行前に provider usage を記録し、rate limit エラー時は rate limit 記録を行う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_whwgucgtohydp4m6bd6vwsjpm4",
+							"version": {
+								"id": "contextstill:kn_whwgucgtohydp4m6bd6vwsjpm4",
+								"version": "2",
+								"digest": "43261ba927a3eba6d2875953cbec848f15d5f3252268befac688f7a4ee049c4f",
+								"generation": 0
+							},
+							"title": "DataTableSection の表示行数をカスタマイズする手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+							"version": {
+								"id": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+								"version": "2",
+								"digest": "160e2b6529c8cf0c0707e6c51d2559f95a6354fab248b1663084ea23261928fb",
+								"generation": 0
+							},
+							"title": "Python wheel hygiene check for mixed Rust/Python packages",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_yivlvkek3g4gmu4xxg4idku6d4",
+							"version": {
+								"id": "contextstill:kn_yivlvkek3g4gmu4xxg4idku6d4",
+								"version": "2",
+								"digest": "9c118156ff4b8bdf1419c37d1141cc558a77d5cb7e28bcac673b9b1d08b3b236",
+								"generation": 0
+							},
+							"title": "204 No Content を返すときは Content-Length を 0 にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_k4wqwiyewz34xnl4lxpih5xhjq",
+							"version": {
+								"id": "contextstill:kn_k4wqwiyewz34xnl4lxpih5xhjq",
+								"version": "2",
+								"digest": "db2ca1390b820520bd3d742a78a6b36f58f2b11cd06a7697a060f005d5486233",
+								"generation": 0
+							},
+							"title": "ShiftSelector では選択スタッフ ID を配列で扱い、件数判定は length で行う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+							"version": {
+								"id": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+								"version": "2",
+								"digest": "435450b7ef494348a7762aea90885381fc834a67518b225c08c5990118efabc6",
+								"generation": 0
+							},
+							"title": "分析処理はPython側に寄せ、OpenAIはレビューと改善提案に限定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_qoknwo53xw62am2q7trgvsolzq",
+							"version": {
+								"id": "contextstill:kn_qoknwo53xw62am2q7trgvsolzq",
+								"version": "2",
+								"digest": "61afc6441f1591421505d33a426d2ae19375ded09550c35bb13aa54e7d67bb4b",
+								"generation": 0
+							},
+							"title": "Classify LLM job failures before tuning token budgets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+							"version": {
+								"id": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+								"version": "2",
+								"digest": "de678e0ff3ab75cd0793625143a7a98b69e40035c71aee19d986284fd158a10b",
+								"generation": 0
+							},
+							"title": "Use ABI3 for resilient Python extension builds",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_ofq2jgjl6s3aydcyxtztiw6nia",
+							"version": {
+								"id": "contextstill:kn_ofq2jgjl6s3aydcyxtztiw6nia",
+								"version": "2",
+								"digest": "f249a1acfa2e89a8d20431e5b0595ab03db2b05d52297c6e451cfd7dd0fb5d52",
+								"generation": 0
+							},
+							"title": "Document review チャンクサイズは 3000 トークン相当（概算 12000 文字）以内に制限する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		}
+	],
+	"summary": {
+		"compose": {
+			"tasks": 4,
+			"allRequiredHitAt8": {
+				"hit": 4,
+				"of": 4,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 4,
+				"of": 4,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 4
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 7
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+					"title": "Exclude Codex internal/provider prompt logs from distillation"
+				},
+				{
+					"ref": "contextstill:kn_gdrbcxbozbzgp74j5vmvl5xwge",
+					"title": "Never transport long-lived credentials in URL query parameters"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+					"title": "Desktop runtime mode must override repo-local env defaults for writable state"
+				},
+				{
+					"ref": "contextstill:kn_77wrmjf6mnq3nm5iia5dwm7g5u",
+					"title": "Separate shared agent notes from raw log views"
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_phc6v2rnkq4f7n3wmlfnfyfcgq",
+					"title": "Assert Ownership in Authenticated API Checks"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 5
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": 6
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+					"title": "Never rewrite branch history on shared branches without confirmation"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_pd5v3gysvcceh4cej7mf37kb44",
+					"title": "Never send notifications or emails from tests without sandboxing"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_3hf5iakewawygz4cznzrwo3pvy",
+					"title": "Triaging Verify Failures Efficiently"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": 3
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": 4
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				},
+				{
+					"ref": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+					"title": "Integrate native desktop checks into the main verification gate deliberately"
+				},
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"title": "Package Release Smoke Test with Packed Artifacts"
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
+				},
+				{
+					"ref": "contextstill:kn_enxkwb6srfr4saw2cfyywzizr4",
+					"title": "Publish-critical artifacts must be tracked or reproducibly generated"
+				},
+				{
+					"ref": "contextstill:kn_ugebpij7zcdpk5zbb67sevwtbu",
+					"title": "Monorepo npm publish readiness check without workspace protocol leaks"
+				},
+				{
+					"ref": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+					"title": "Run existing smoke tests after adding a new E2E harness"
+				},
+				{
+					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+					"title": "Verify desktop packaging with real app launch, not artifact existence"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 6
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": 7
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+					"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
+				},
+				{
+					"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+					"title": "Python 側の責務は MLX 推論に限定する"
+				},
+				{
+					"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+					"title": "Python wheel hygiene check for mixed Rust/Python packages"
+				},
+				{
+					"ref": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+					"title": "分析処理はPython側に寄せ、OpenAIはレビューと改善提案に限定する"
+				},
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+					"title": "Use ABI3 for resilient Python extension builds"
+				},
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"title": "Limit Line Length"
+				},
+				{
+					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+					"title": "Use gofmt for Standard Go Code Formatting"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (bm25-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

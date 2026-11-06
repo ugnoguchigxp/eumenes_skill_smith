@@ -1,0 +1,2652 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"assemblyMode": "baseline",
+		"queryReformulation": "multi",
+		"reformulationInstructionsDigest": "2672d3ece4f2ceccbea9ecf17b64c620e0fef726fce05f3da1e9db36810e174e",
+		"reformulationSchemaDigest": "edd7766ed5f0af3134260c7b26f6d5b798e386a100b3bcc39bb6e13db7c2f9c7",
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 4,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"queries": [
+				"exclude .env and API keys from commits",
+				"prevent secrets from appearing in logs or responses"
+			],
+			"queryToSource": [
+				"exclude .env and API keys from commits",
+				"prevent secrets from appearing in logs or responses"
+			],
+			"perQuery": [
+				{
+					"query": "exclude .env and API keys from commits",
+					"cards": [
+						{
+							"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+							"version": {
+								"id": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+								"version": "2",
+								"digest": "2741b0df8a85ec478ce08e714bca02bc5ade14321bf3847f5fb8fcce4f7114ff",
+								"generation": 0
+							},
+							"title": "Test in a Production Clone",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+							"version": {
+								"id": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+								"version": "2",
+								"digest": "c5a02602d4b306f5c3777120e1b2d94fd1e8efd88597e45694e1244cfbb46fa0",
+								"generation": 0
+							},
+							"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+							"version": {
+								"id": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+								"version": "2",
+								"digest": "ce7b8b67f5a2de445d3cf0a77a2f119d364976dd255f69b8174072b7e3821c7f",
+								"generation": 0
+							},
+							"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+							"version": {
+								"id": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+								"version": "2",
+								"digest": "1de749fb7db4106d283f1311a08e98fc10648cedfb236ccb39c795ebcd4b535c",
+								"generation": 0
+							},
+							"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+							"version": {
+								"id": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+								"version": "2",
+								"digest": "8485acea8a8cd2ed16e8ede9adc8ce8c12b7ba51e38b0d7fbe0ddb88f88e2261",
+								"generation": 0
+							},
+							"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26dfuzwndrusudl3z774ccj66i",
+							"version": {
+								"id": "contextstill:kn_26dfuzwndrusudl3z774ccj66i",
+								"version": "2",
+								"digest": "8bec3d537903df842b45b04ac72ab4634cbd9b64c6b94455cf27df419b264096",
+								"generation": 0
+							},
+							"title": "unmanaged table は構造表示のみで、row 操作 API の対象にしない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+							"version": {
+								"id": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+								"version": "2",
+								"digest": "f340f0a17b4c768168349171cded487f787780f67b39ac242a1625669b81c3f1",
+								"generation": 0
+							},
+							"title": "キューAPIルーティングのセットアップ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+							"version": {
+								"id": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+								"version": "2",
+								"digest": "231fba0f46b9467fd5c79a2a89e88bc26e9435cb08c480b7457996aa77d5dcba",
+								"generation": 0
+							},
+							"title": "Distillation Candidate Workflow実行時のモック設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+							"version": {
+								"id": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+								"version": "2",
+								"digest": "ee437f1aa33efe646b4e8a3a022f367632c0320ae2933cf2637d4d697c441255",
+								"generation": 0
+							},
+							"title": "Use Screenshot Feedback To Identify The Correct Layer",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2agacut533okpagexwlu3rmt6e",
+							"version": {
+								"id": "contextstill:kn_2agacut533okpagexwlu3rmt6e",
+								"version": "2",
+								"digest": "b895c22599ba33583ea8bf0d4699bb00bc3ad40324b24fb3b0c81e417c0baf18",
+								"generation": 0
+							},
+							"title": "Selenium Manager handles driver and browser management by default",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+							"version": {
+								"id": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+								"version": "2",
+								"digest": "d5260268060d7a4ad0b60d734c575596bc26260b359e78aeb25015c8dc768077",
+								"generation": 0
+							},
+							"title": "Gate global 401 login redirects by auth-required state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2bdf5c4ysovpnujlpbgzuzc33i",
+							"version": {
+								"id": "contextstill:kn_2bdf5c4ysovpnujlpbgzuzc33i",
+								"version": "2",
+								"digest": "80ee17c5737cdfef7b3d576df9c46228a1e43de4d639baeca7ca8f7bbec6f852",
+								"generation": 0
+							},
+							"title": "BBS の service/repository/component に対するフロントエンドテストを追加する手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2cxipsuehbh3vg4vxi2bjha42e",
+							"version": {
+								"id": "contextstill:kn_2cxipsuehbh3vg4vxi2bjha42e",
+								"version": "2",
+								"digest": "fc12317ee624e9f615868f78120a2d2cb3311391936a177bc30d8454668bc901",
+								"generation": 0
+							},
+							"title": "LocalLlm API mode requires apiBaseUrl",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ddz65m7meo3o7lka5izhqgthy",
+							"version": {
+								"id": "contextstill:kn_2ddz65m7meo3o7lka5izhqgthy",
+								"version": "2",
+								"digest": "65c76e7e3393462332b8ec8d8ab1fe2a24e0a082d196501ac004629e84747e0b",
+								"generation": 0
+							},
+							"title": "Use machine-readable CCM artifacts for automation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+							"version": {
+								"id": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+								"version": "2",
+								"digest": "13848dac5966cfb730545019f080a9c7e3f420dd33a05414e7ccea32ed6c52a5",
+								"generation": 0
+							},
+							"title": "Make automated usefulness scoring pure model judgment guided by context",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "prevent secrets from appearing in logs or responses",
+					"cards": [
+						{
+							"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+							"version": {
+								"id": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+								"version": "2",
+								"digest": "2741b0df8a85ec478ce08e714bca02bc5ade14321bf3847f5fb8fcce4f7114ff",
+								"generation": 0
+							},
+							"title": "Test in a Production Clone",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+							"version": {
+								"id": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+								"version": "2",
+								"digest": "2636cd58659b4f9a2c1835dc5b3ee72f68fbc109a5b56307264046d79e5aab5a",
+								"generation": 0
+							},
+							"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+							"version": {
+								"id": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+								"version": "2",
+								"digest": "c5a02602d4b306f5c3777120e1b2d94fd1e8efd88597e45694e1244cfbb46fa0",
+								"generation": 0
+							},
+							"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+							"version": {
+								"id": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+								"version": "2",
+								"digest": "a6cb2a5fc4c3b368299d7e6a9e57a939bf8fe1c3e1140973aa5281760866dd69",
+								"generation": 0
+							},
+							"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+							"version": {
+								"id": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+								"version": "2",
+								"digest": "7de756170f2249f19d02e3a7dcd21782407301b919dcffc85448bc6b8ef21ed4",
+								"generation": 0
+							},
+							"title": "distillation runtime では親 Abort は fallback しない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+							"version": {
+								"id": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+								"version": "2",
+								"digest": "593216a010dbbd459e7b102117150bb7a5bd5e9a63b64faaa4c0fc09ad26ceeb",
+								"generation": 0
+							},
+							"title": "タイポグラフィは複合トークンとして管理する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+							"version": {
+								"id": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+								"version": "2",
+								"digest": "ce7b8b67f5a2de445d3cf0a77a2f119d364976dd255f69b8174072b7e3821c7f",
+								"generation": 0
+							},
+							"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+							"version": {
+								"id": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+								"version": "2",
+								"digest": "f28f8c7ca4bb388641d9315fe03df31d590482e095525cb34fc98e84ca9461df",
+								"generation": 0
+							},
+							"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+							"version": {
+								"id": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+								"version": "2",
+								"digest": "1de749fb7db4106d283f1311a08e98fc10648cedfb236ccb39c795ebcd4b535c",
+								"generation": 0
+							},
+							"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24milsmlhrjvwu5qscjlyytvoq",
+							"version": {
+								"id": "contextstill:kn_24milsmlhrjvwu5qscjlyytvoq",
+								"version": "2",
+								"digest": "a9708959cb6dd383023b86995b6ae225baa2d48405cc953a4dc3175fc3eae51d",
+								"generation": 0
+							},
+							"title": "保存後のクエリ再検証と選択ページ切り替え",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+							"version": {
+								"id": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+								"version": "2",
+								"digest": "8485acea8a8cd2ed16e8ede9adc8ce8c12b7ba51e38b0d7fbe0ddb88f88e2261",
+								"generation": 0
+							},
+							"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+							"version": {
+								"id": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+								"version": "2",
+								"digest": "0fd7a0b6129176a5c8b7ff6b25a007655c0d2c46aadaceceaf74ea46f71fe66e",
+								"generation": 0
+							},
+							"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25ph5zbhgkwmdhl53vvleuboiq",
+							"version": {
+								"id": "contextstill:kn_25ph5zbhgkwmdhl53vvleuboiq",
+								"version": "2",
+								"digest": "9980813ad8248bfe0dd7ef0785e45bafc785f8dc679de463450b640f2f98de40",
+								"generation": 0
+							},
+							"title": "memory_search は vector と LIKE を並べて検索し、hybrid では同一 ID を merge する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+							"version": {
+								"id": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+								"version": "2",
+								"digest": "f340f0a17b4c768168349171cded487f787780f67b39ac242a1625669b81c3f1",
+								"generation": 0
+							},
+							"title": "キューAPIルーティングのセットアップ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+							"version": {
+								"id": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+								"version": "2",
+								"digest": "d799baa595d3069fd1c8da6851e8d37d46f124b5714383a8d765e4e097a9865b",
+								"generation": 0
+							},
+							"title": "SQLite DB のダンプ・復元・整合性検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+							"version": {
+								"id": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+								"version": "2",
+								"digest": "d2c8e82073ad81805d9781d4819f5a166d847ad07f228f822cdf0535641eb85e",
+								"generation": 0
+							},
+							"title": "Compile run knowledge feedback 保存手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"queries": [
+				"fix pre-commit verify failures without bypassing hooks",
+				"do not force push without explicit approval; push normally"
+			],
+			"queryToSource": [
+				"fix pre-commit verify failures without bypassing hooks",
+				"do not force push without explicit approval; push normally"
+			],
+			"perQuery": [
+				{
+					"query": "fix pre-commit verify failures without bypassing hooks",
+					"cards": [
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+							"version": {
+								"id": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+								"version": "2",
+								"digest": "b8575e5b4e38838bdc41ba0b72ca185b6129e4c6e12b52aa92c26ea6ceedb7bd",
+								"generation": 0
+							},
+							"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+							"version": {
+								"id": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+								"version": "2",
+								"digest": "0fd7a0b6129176a5c8b7ff6b25a007655c0d2c46aadaceceaf74ea46f71fe66e",
+								"generation": 0
+							},
+							"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+							"version": {
+								"id": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+								"version": "2",
+								"digest": "d799baa595d3069fd1c8da6851e8d37d46f124b5714383a8d765e4e097a9865b",
+								"generation": 0
+							},
+							"title": "SQLite DB のダンプ・復元・整合性検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+							"version": {
+								"id": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+								"version": "2",
+								"digest": "8cbb19258277696fdf39c179fd99b3643a130944f5eb22ca1aa1bb70b2535b73",
+								"generation": 0
+							},
+							"title": "Local LLM 関連変更の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27kulm6e6tukcgfbhrjygfkpou",
+							"version": {
+								"id": "contextstill:kn_27kulm6e6tukcgfbhrjygfkpou",
+								"version": "2",
+								"digest": "49f31b6dfd70ecda14d7d1c9de3d0b90d2a1a94755e01d7ffaf93ccc3db963a6",
+								"generation": 0
+							},
+							"title": "計算ロジックにおける境界条件の厳密なチェック",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+							"version": {
+								"id": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+								"version": "2",
+								"digest": "ee437f1aa33efe646b4e8a3a022f367632c0320ae2933cf2637d4d697c441255",
+								"generation": 0
+							},
+							"title": "Use Screenshot Feedback To Identify The Correct Layer",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2bqbxqkuzzls25du5uhqqsjl2y",
+							"version": {
+								"id": "contextstill:kn_2bqbxqkuzzls25du5uhqqsjl2y",
+								"version": "2",
+								"digest": "6e08f1efbec28eea761053e3a12377ca7efa4ff6ac126c211278a096a7e650b1",
+								"generation": 0
+							},
+							"title": "Prepare 済みデータを使って Workflow を実行し、成果物を確認する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2calpl5uztuyamun4afowcven4",
+							"version": {
+								"id": "contextstill:kn_2calpl5uztuyamun4afowcven4",
+								"version": "2",
+								"digest": "cc4b4af70eeec5593b37e5bcfb84352c07b6bccfcde0738aaa2d29dffc435285",
+								"generation": 0
+							},
+							"title": "dashboardAdapter の血圧参照は currentBp ではなく vitals.bp を使う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ddz65m7meo3o7lka5izhqgthy",
+							"version": {
+								"id": "contextstill:kn_2ddz65m7meo3o7lka5izhqgthy",
+								"version": "2",
+								"digest": "65c76e7e3393462332b8ec8d8ab1fe2a24e0a082d196501ac004629e84747e0b",
+								"generation": 0
+							},
+							"title": "Use machine-readable CCM artifacts for automation",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+							"version": {
+								"id": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+								"version": "2",
+								"digest": "13848dac5966cfb730545019f080a9c7e3f420dd33a05414e7ccea32ed6c52a5",
+								"generation": 0
+							},
+							"title": "Make automated usefulness scoring pure model judgment guided by context",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+							"version": {
+								"id": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+								"version": "2",
+								"digest": "e3497b28be76501c01712466a3787c56341f3d79974692c3e893a8d9efa57bf6",
+								"generation": 0
+							},
+							"title": "Route-specific fallback settings must be threaded through all runtime call sites",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fsawo4am4erjtazddfkhvsoyu",
+							"version": {
+								"id": "contextstill:kn_2fsawo4am4erjtazddfkhvsoyu",
+								"version": "2",
+								"digest": "68da10b8678bfdcf66e350f0f3e362bbce0003b491a81a665ce3fc84eac549e1",
+								"generation": 0
+							},
+							"title": "コンポーネントと Hook は純粋に保つ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+							"version": {
+								"id": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+								"version": "2",
+								"digest": "3eeec4a5421cc147f3fd7c6f5ec1ed57b7a805de784bc9620933241ce73dea08",
+								"generation": 0
+							},
+							"title": "MCP client bridge compatibility checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fwgixy56pgbc7qup7e2cviz74",
+							"version": {
+								"id": "contextstill:kn_2fwgixy56pgbc7qup7e2cviz74",
+								"version": "2",
+								"digest": "fae0af4dfff3b49da1739e460d3cd16041fc48714752e8631ddef25c833f79ed",
+								"generation": 0
+							},
+							"title": "Queue interpretation should separate runtime health from backlog state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2gggbq5wyeyb25msiv4r4mervy",
+							"version": {
+								"id": "contextstill:kn_2gggbq5wyeyb25msiv4r4mervy",
+								"version": "2",
+								"digest": "134bb0293355297fe6edbaeb451648c88b1eb18dfd689f610b2379114c975d8c",
+								"generation": 0
+							},
+							"title": "React Query の hooks を apiClient 直叩きから専用 API ラッパーへ置き換える",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ha4ptg3ldn6pockg3cavo6fle",
+							"version": {
+								"id": "contextstill:kn_2ha4ptg3ldn6pockg3cavo6fle",
+								"version": "2",
+								"digest": "0f190b5514bbe9cbd1486145699340c54181708c3c34febccacf14adbf77ad91",
+								"generation": 0
+							},
+							"title": "変更タイプに応じた最小限の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "do not force push without explicit approval; push normally",
+					"cards": [
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+							"version": {
+								"id": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+								"version": "2",
+								"digest": "1de749fb7db4106d283f1311a08e98fc10648cedfb236ccb39c795ebcd4b535c",
+								"generation": 0
+							},
+							"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+							"version": {
+								"id": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+								"version": "2",
+								"digest": "9579054aec951705d1f91b8b8219f44f2f52c0d66e780bae3d258de02751ab61",
+								"generation": 0
+							},
+							"title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+							"version": {
+								"id": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+								"version": "2",
+								"digest": "44818f64210ed5969598ab18f504939566448931ee89da996563d8bdc65c35bc",
+								"generation": 0
+							},
+							"title": "doctor-reasons の理由コード収集テストを実装に合わせて更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+							"version": {
+								"id": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+								"version": "2",
+								"digest": "ee437f1aa33efe646b4e8a3a022f367632c0320ae2933cf2637d4d697c441255",
+								"generation": 0
+							},
+							"title": "Use Screenshot Feedback To Identify The Correct Layer",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2agacut533okpagexwlu3rmt6e",
+							"version": {
+								"id": "contextstill:kn_2agacut533okpagexwlu3rmt6e",
+								"version": "2",
+								"digest": "b895c22599ba33583ea8bf0d4699bb00bc3ad40324b24fb3b0c81e417c0baf18",
+								"generation": 0
+							},
+							"title": "Selenium Manager handles driver and browser management by default",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+							"version": {
+								"id": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+								"version": "2",
+								"digest": "d5260268060d7a4ad0b60d734c575596bc26260b359e78aeb25015c8dc768077",
+								"generation": 0
+							},
+							"title": "Gate global 401 login redirects by auth-required state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2brslsagxuh26ex6ryymgd3rl4",
+							"version": {
+								"id": "contextstill:kn_2brslsagxuh26ex6ryymgd3rl4",
+								"version": "2",
+								"digest": "eb81115e9cc9a3edd4934bee4da8f99385b3d2eec7efd94aa03c6f3fe3a879bc",
+								"generation": 0
+							},
+							"title": "locked post response では閲覧権限のない情報を返さない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2cfyfuqzzvmui4gyanft4lnmui",
+							"version": {
+								"id": "contextstill:kn_2cfyfuqzzvmui4gyanft4lnmui",
+								"version": "2",
+								"digest": "cd72ae82f0851bd505e4dd5ffe65ef1e5051b872494e8f24a651e1b87ddf0883",
+								"generation": 0
+							},
+							"title": "Responsive UI 導入の進め方",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2djniimptyocc6ghqtzoxsqg7a",
+							"version": {
+								"id": "contextstill:kn_2djniimptyocc6ghqtzoxsqg7a",
+								"version": "2",
+								"digest": "764874a2cf40018e89d9d5827f226c70974d821e7b23fc6fab1942889e8ead0c",
+								"generation": 0
+							},
+							"title": "DatePickerおよびDropdownMenuのテストの安定化",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2dwpo4h4fdz4rkg6kfyqhpf5iy",
+							"version": {
+								"id": "contextstill:kn_2dwpo4h4fdz4rkg6kfyqhpf5iy",
+								"version": "2",
+								"digest": "243836d1251fc9f66e6c8c6a9a914879ac91192f41fe1c22eac33cfa7b0852e7",
+								"generation": 0
+							},
+							"title": "Biome の severity は用途に応じて error / warn / off を使い分ける",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+							"version": {
+								"id": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+								"version": "2",
+								"digest": "13848dac5966cfb730545019f080a9c7e3f420dd33a05414e7ccea32ed6c52a5",
+								"generation": 0
+							},
+							"title": "Make automated usefulness scoring pure model judgment guided by context",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2eo2ubg7xhsksqbg7w2b7svyfa",
+							"version": {
+								"id": "contextstill:kn_2eo2ubg7xhsksqbg7w2b7svyfa",
+								"version": "2",
+								"digest": "664abc3b8cf79a3a6c508b8874bb49b96838f9c5dcf3878273e54e076bdad642",
+								"generation": 0
+							},
+							"title": "同一 user と title の documents は重複作成せず、force なしでは 409 を返す",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2f3dqi4f4dc27jfm6pdlnegzea",
+							"version": {
+								"id": "contextstill:kn_2f3dqi4f4dc27jfm6pdlnegzea",
+								"version": "2",
+								"digest": "e8042de8e1701b3cdab7563635bfb57dd1f290a2c3d8f0361b5db53cdf1614fe",
+								"generation": 0
+							},
+							"title": "Temporary directories are not evidence",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+							"version": {
+								"id": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+								"version": "2",
+								"digest": "e3497b28be76501c01712466a3787c56341f3d79974692c3e893a8d9efa57bf6",
+								"generation": 0
+							},
+							"title": "Route-specific fallback settings must be threaded through all runtime call sites",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fvjf6gfiouozq35yja7mjahom",
+							"version": {
+								"id": "contextstill:kn_2fvjf6gfiouozq35yja7mjahom",
+								"version": "2",
+								"digest": "f273a3dc8f3f42bc0e6c8d1fa1ffb272ca695226b6069e4765df2fb21e5c49a4",
+								"generation": 0
+							},
+							"title": "LLM の JSON 出力が壊れた場合のフォールバック処理",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"queries": [
+				"package release smoke test using packed artifacts in a clean project",
+				"run smoke tests without implicitly calling live providers"
+			],
+			"queryToSource": [
+				"package release smoke test using packed artifacts in a clean project",
+				"run smoke tests without implicitly calling live providers"
+			],
+			"perQuery": [
+				{
+					"query": "package release smoke test using packed artifacts in a clean project",
+					"cards": [
+						{
+							"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+							"version": {
+								"id": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+								"version": "2",
+								"digest": "2741b0df8a85ec478ce08e714bca02bc5ade14321bf3847f5fb8fcce4f7114ff",
+								"generation": 0
+							},
+							"title": "Test in a Production Clone",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+							"version": {
+								"id": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+								"version": "2",
+								"digest": "c5a02602d4b306f5c3777120e1b2d94fd1e8efd88597e45694e1244cfbb46fa0",
+								"generation": 0
+							},
+							"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+							"version": {
+								"id": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+								"version": "2",
+								"digest": "a6cb2a5fc4c3b368299d7e6a9e57a939bf8fe1c3e1140973aa5281760866dd69",
+								"generation": 0
+							},
+							"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+							"version": {
+								"id": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+								"version": "2",
+								"digest": "593216a010dbbd459e7b102117150bb7a5bd5e9a63b64faaa4c0fc09ad26ceeb",
+								"generation": 0
+							},
+							"title": "タイポグラフィは複合トークンとして管理する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+							"version": {
+								"id": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+								"version": "2",
+								"digest": "ce7b8b67f5a2de445d3cf0a77a2f119d364976dd255f69b8174072b7e3821c7f",
+								"generation": 0
+							},
+							"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+							"version": {
+								"id": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+								"version": "2",
+								"digest": "f28f8c7ca4bb388641d9315fe03df31d590482e095525cb34fc98e84ca9461df",
+								"generation": 0
+							},
+							"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+							"version": {
+								"id": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+								"version": "2",
+								"digest": "1de749fb7db4106d283f1311a08e98fc10648cedfb236ccb39c795ebcd4b535c",
+								"generation": 0
+							},
+							"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+							"version": {
+								"id": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+								"version": "2",
+								"digest": "0fd7a0b6129176a5c8b7ff6b25a007655c0d2c46aadaceceaf74ea46f71fe66e",
+								"generation": 0
+							},
+							"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25rjhssp64i2ftoove5pfzx25u",
+							"version": {
+								"id": "contextstill:kn_25rjhssp64i2ftoove5pfzx25u",
+								"version": "2",
+								"digest": "78adf119b402d2e1aa8a14dd7feec25ac6cf6a7229fb634cdf510dda306e16f3",
+								"generation": 0
+							},
+							"title": "Node/Vitest 環境での Bun 固有ランタイム依存の分離",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+							"version": {
+								"id": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+								"version": "2",
+								"digest": "f340f0a17b4c768168349171cded487f787780f67b39ac242a1625669b81c3f1",
+								"generation": 0
+							},
+							"title": "キューAPIルーティングのセットアップ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+							"version": {
+								"id": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+								"version": "2",
+								"digest": "d799baa595d3069fd1c8da6851e8d37d46f124b5714383a8d765e4e097a9865b",
+								"generation": 0
+							},
+							"title": "SQLite DB のダンプ・復元・整合性検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+							"version": {
+								"id": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+								"version": "2",
+								"digest": "d2c8e82073ad81805d9781d4819f5a166d847ad07f228f822cdf0535641eb85e",
+								"generation": 0
+							},
+							"title": "Compile run knowledge feedback 保存手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26kgbqsw2y6n2jsjcha7egibnu",
+							"version": {
+								"id": "contextstill:kn_26kgbqsw2y6n2jsjcha7egibnu",
+								"version": "2",
+								"digest": "d4ad75463378d248bd2d4c316bf389718535a2f76182e09de479432614e99b79",
+								"generation": 0
+							},
+							"title": "DB 依存の関数は override 引数でテスト可能にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+							"version": {
+								"id": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+								"version": "2",
+								"digest": "8cbb19258277696fdf39c179fd99b3643a130944f5eb22ca1aa1bb70b2535b73",
+								"generation": 0
+							},
+							"title": "Local LLM 関連変更の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+							"version": {
+								"id": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+								"version": "2",
+								"digest": "231fba0f46b9467fd5c79a2a89e88bc26e9435cb08c480b7457996aa77d5dcba",
+								"generation": 0
+							},
+							"title": "Distillation Candidate Workflow実行時のモック設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "run smoke tests without implicitly calling live providers",
+					"cards": [
+						{
+							"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+							"version": {
+								"id": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+								"version": "2",
+								"digest": "c5a02602d4b306f5c3777120e1b2d94fd1e8efd88597e45694e1244cfbb46fa0",
+								"generation": 0
+							},
+							"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+							"version": {
+								"id": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+								"version": "2",
+								"digest": "7de756170f2249f19d02e3a7dcd21782407301b919dcffc85448bc6b8ef21ed4",
+								"generation": 0
+							},
+							"title": "distillation runtime では親 Abort は fallback しない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+							"version": {
+								"id": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+								"version": "2",
+								"digest": "9579054aec951705d1f91b8b8219f44f2f52c0d66e780bae3d258de02751ab61",
+								"generation": 0
+							},
+							"title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+							"version": {
+								"id": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+								"version": "2",
+								"digest": "d799baa595d3069fd1c8da6851e8d37d46f124b5714383a8d765e4e097a9865b",
+								"generation": 0
+							},
+							"title": "SQLite DB のダンプ・復元・整合性検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+							"version": {
+								"id": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+								"version": "2",
+								"digest": "d2c8e82073ad81805d9781d4819f5a166d847ad07f228f822cdf0535641eb85e",
+								"generation": 0
+							},
+							"title": "Compile run knowledge feedback 保存手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+							"version": {
+								"id": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+								"version": "2",
+								"digest": "8cbb19258277696fdf39c179fd99b3643a130944f5eb22ca1aa1bb70b2535b73",
+								"generation": 0
+							},
+							"title": "Local LLM 関連変更の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+							"version": {
+								"id": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+								"version": "2",
+								"digest": "231fba0f46b9467fd5c79a2a89e88bc26e9435cb08c480b7457996aa77d5dcba",
+								"generation": 0
+							},
+							"title": "Distillation Candidate Workflow実行時のモック設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+							"version": {
+								"id": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+								"version": "2",
+								"digest": "ee437f1aa33efe646b4e8a3a022f367632c0320ae2933cf2637d4d697c441255",
+								"generation": 0
+							},
+							"title": "Use Screenshot Feedback To Identify The Correct Layer",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+							"version": {
+								"id": "contextstill:kn_2baupju2i2pdbtm6hk5p4jumq4",
+								"version": "2",
+								"digest": "d5260268060d7a4ad0b60d734c575596bc26260b359e78aeb25015c8dc768077",
+								"generation": 0
+							},
+							"title": "Gate global 401 login redirects by auth-required state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2bdf5c4ysovpnujlpbgzuzc33i",
+							"version": {
+								"id": "contextstill:kn_2bdf5c4ysovpnujlpbgzuzc33i",
+								"version": "2",
+								"digest": "80ee17c5737cdfef7b3d576df9c46228a1e43de4d639baeca7ca8f7bbec6f852",
+								"generation": 0
+							},
+							"title": "BBS の service/repository/component に対するフロントエンドテストを追加する手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2crm32qhce62nv5gz6ehrnfhz4",
+							"version": {
+								"id": "contextstill:kn_2crm32qhce62nv5gz6ehrnfhz4",
+								"version": "2",
+								"digest": "4e2b2147e44d8d21c4ce754f9014d511f5ebccc5625bd6d978bdd9607c1b2041",
+								"generation": 0
+							},
+							"title": "Azure OpenAI deployment 編集時は配列を更新してから provider 全体を同期する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+							"version": {
+								"id": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+								"version": "2",
+								"digest": "13848dac5966cfb730545019f080a9c7e3f420dd33a05414e7ccea32ed6c52a5",
+								"generation": 0
+							},
+							"title": "Make automated usefulness scoring pure model judgment guided by context",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+							"version": {
+								"id": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+								"version": "2",
+								"digest": "e3497b28be76501c01712466a3787c56341f3d79974692c3e893a8d9efa57bf6",
+								"generation": 0
+							},
+							"title": "Route-specific fallback settings must be threaded through all runtime call sites",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+							"version": {
+								"id": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+								"version": "2",
+								"digest": "3eeec4a5421cc147f3fd7c6f5ec1ed57b7a805de784bc9620933241ce73dea08",
+								"generation": 0
+							},
+							"title": "MCP client bridge compatibility checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fvjf6gfiouozq35yja7mjahom",
+							"version": {
+								"id": "contextstill:kn_2fvjf6gfiouozq35yja7mjahom",
+								"version": "2",
+								"digest": "f273a3dc8f3f42bc0e6c8d1fa1ffb272ca695226b6069e4765df2fb21e5c49a4",
+								"generation": 0
+							},
+							"title": "LLM の JSON 出力が壊れた場合のフォールバック処理",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fwgixy56pgbc7qup7e2cviz74",
+							"version": {
+								"id": "contextstill:kn_2fwgixy56pgbc7qup7e2cviz74",
+								"version": "2",
+								"digest": "fae0af4dfff3b49da1739e460d3cd16041fc48714752e8631ddef25c833f79ed",
+								"generation": 0
+							},
+							"title": "Queue interpretation should separate runtime health from backlog state",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2gbmxlp2hgu2flz6pxvxjkw5im",
+							"version": {
+								"id": "contextstill:kn_2gbmxlp2hgu2flz6pxvxjkw5im",
+								"version": "2",
+								"digest": "e3b4ae3eb53b7bf4e301d6b74bf1f39eee5f3495bf67f68eaa2e5058f905cdf6",
+								"generation": 0
+							},
+							"title": "Add a new pack section or polarity routing end-to-end",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		},
+		{
+			"searchTask": "Format Python source using 4-space indentation and limit line length.",
+			"queries": [
+				"format Python source using 4-space indentation",
+				"limit line length in Python source"
+			],
+			"queryToSource": [
+				"format Python source using 4-space indentation",
+				"limit line length in Python source"
+			],
+			"perQuery": [
+				{
+					"query": "format Python source using 4-space indentation",
+					"cards": [
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+							"version": {
+								"id": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+								"version": "2",
+								"digest": "0fd7a0b6129176a5c8b7ff6b25a007655c0d2c46aadaceceaf74ea46f71fe66e",
+								"generation": 0
+							},
+							"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+							"version": {
+								"id": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+								"version": "2",
+								"digest": "44818f64210ed5969598ab18f504939566448931ee89da996563d8bdc65c35bc",
+								"generation": 0
+							},
+							"title": "doctor-reasons の理由コード収集テストを実装に合わせて更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+							"version": {
+								"id": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+								"version": "2",
+								"digest": "231fba0f46b9467fd5c79a2a89e88bc26e9435cb08c480b7457996aa77d5dcba",
+								"generation": 0
+							},
+							"title": "Distillation Candidate Workflow実行時のモック設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27eziawauw2b743lcvy5dzelce",
+							"version": {
+								"id": "contextstill:kn_27eziawauw2b743lcvy5dzelce",
+								"version": "2",
+								"digest": "18b30e9b24053507ea91a3a3d0bf08902c18528d2e8f553d29a9e5da41e6e722",
+								"generation": 0
+							},
+							"title": "Packaged App 実行時の Resource Path と NODE_PATH の設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2axjxsooupr67pg66dvdtip3e4",
+							"version": {
+								"id": "contextstill:kn_2axjxsooupr67pg66dvdtip3e4",
+								"version": "2",
+								"digest": "05b7c2426cf1fc6618be037e68e6f6e750516db105c4df02fb8d8fe7fe5f994f",
+								"generation": 0
+							},
+							"title": "Section selection priority for generated catalogs",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2axnboovflcfklzozbe5tjzrne",
+							"version": {
+								"id": "contextstill:kn_2axnboovflcfklzozbe5tjzrne",
+								"version": "2",
+								"digest": "b79f880d7a7c748bf96de2f079f54025ce718044336810098bfd19648429e6a7",
+								"generation": 0
+							},
+							"title": "Storybook は section 単位で個別 story を出し、catalog 追加漏れは parity test で検出する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2dgnw5ju447k4xhqbfkvpy2th4",
+							"version": {
+								"id": "contextstill:kn_2dgnw5ju447k4xhqbfkvpy2th4",
+								"version": "2",
+								"digest": "d3ca06182041afa9c49f248e4674470fa6dc8b216c112d053ac531c68953419b",
+								"generation": 0
+							},
+							"title": "特定の1ファイルだけを翻訳対象にして再実行する手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2f3dqi4f4dc27jfm6pdlnegzea",
+							"version": {
+								"id": "contextstill:kn_2f3dqi4f4dc27jfm6pdlnegzea",
+								"version": "2",
+								"digest": "e8042de8e1701b3cdab7563635bfb57dd1f290a2c3d8f0361b5db53cdf1614fe",
+								"generation": 0
+							},
+							"title": "Temporary directories are not evidence",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+							"version": {
+								"id": "contextstill:kn_2fsfhmjfnqoazudhiif5tcgmjq",
+								"version": "2",
+								"digest": "3eeec4a5421cc147f3fd7c6f5ec1ed57b7a805de784bc9620933241ce73dea08",
+								"generation": 0
+							},
+							"title": "MCP client bridge compatibility checks",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2jrebars4wxekdvq2tvmnitlba",
+							"version": {
+								"id": "contextstill:kn_2jrebars4wxekdvq2tvmnitlba",
+								"version": "2",
+								"digest": "6fe06d7775d001d5985fa0ab03442e9d0192109ccf665599fc292ec5d760e942",
+								"generation": 0
+							},
+							"title": "finalizeDistille の再実行時は既存 knowledge を先に検出し、embedding/upsert を再実行せず source link 補完だけ行う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2jym4cafgxuk5hb3ejjzuw233u",
+							"version": {
+								"id": "contextstill:kn_2jym4cafgxuk5hb3ejjzuw233u",
+								"version": "2",
+								"digest": "15a1b55958b53fb85f81537a509cdb4fd16a6225ab4ef94af095875c6e358ac0",
+								"generation": 0
+							},
+							"title": "live 自動化を広げる前に replay を設計する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2k7afesytq6qflgzthf44pvjbm",
+							"version": {
+								"id": "contextstill:kn_2k7afesytq6qflgzthf44pvjbm",
+								"version": "2",
+								"digest": "80c4b110a93b1ea699615d26d56f4dddeeddfff099a56881f113a1c490beaac2",
+								"generation": 0
+							},
+							"title": "repo scope / appliesTo 変更後の回帰確認手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2kllu6rt6j5cqejsflp3qix3qe",
+							"version": {
+								"id": "contextstill:kn_2kllu6rt6j5cqejsflp3qix3qe",
+								"version": "2",
+								"digest": "f62d3e7bc8e8f931adfc1a0e2e1889964e975a51e3e4fa4103d0a65bad13d75d",
+								"generation": 0
+							},
+							"title": "Lint cleanup は自動修正後に意味の崩れをレビューする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2m6vkbgnwvtgwas4hlijay2vma",
+							"version": {
+								"id": "contextstill:kn_2m6vkbgnwvtgwas4hlijay2vma",
+								"version": "2",
+								"digest": "94d16d8e3916ab25f835fc651ebc3c9c15a1e2c68a9e615ddfbeba0e1328018d",
+								"generation": 0
+							},
+							"title": "テンプレートリポジトリにおけるDesign SystemのVendored Snapshot運用方針",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2n3u6rrz3tt4gta35kwohab55e",
+							"version": {
+								"id": "contextstill:kn_2n3u6rrz3tt4gta35kwohab55e",
+								"version": "2",
+								"digest": "e4295f63dc8602ffa1fe418c1d7010d1645290bace4a890a3967a5d9ef56852e",
+								"generation": 0
+							},
+							"title": "todolist リポジトリの新機能追加標準手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+							"version": {
+								"id": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+								"version": "2",
+								"digest": "f2e38d2b0d7732e5799b2003f8747203c3252da8a3258f0ad00e6356e7a77fa8",
+								"generation": 0
+							},
+							"title": "Workspace .env values must not leak into process.env during MCP service execution",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2penwpnpkepa72ugxxtpumbc3q",
+							"version": {
+								"id": "contextstill:kn_2penwpnpkepa72ugxxtpumbc3q",
+								"version": "2",
+								"digest": "f88258bfd9afb6e7c96d5b0370ca83684db8441c6f0f7cc9dbe7f05bad2f5102",
+								"generation": 0
+							},
+							"title": "NightWorkers におけるコンテキスト投入の最適化手順（resumeThread利用とdelta化）",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				},
+				{
+					"query": "limit line length in Python source",
+					"cards": [
+						{
+							"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+							"version": {
+								"id": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+								"version": "2",
+								"digest": "2741b0df8a85ec478ce08e714bca02bc5ade14321bf3847f5fb8fcce4f7114ff",
+								"generation": 0
+							},
+							"title": "Test in a Production Clone",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+							"version": {
+								"id": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+								"version": "2",
+								"digest": "c5a02602d4b306f5c3777120e1b2d94fd1e8efd88597e45694e1244cfbb46fa0",
+								"generation": 0
+							},
+							"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+							"version": {
+								"id": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+								"version": "2",
+								"digest": "a6cb2a5fc4c3b368299d7e6a9e57a939bf8fe1c3e1140973aa5281760866dd69",
+								"generation": 0
+							},
+							"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+							"version": {
+								"id": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+								"version": "2",
+								"digest": "593216a010dbbd459e7b102117150bb7a5bd5e9a63b64faaa4c0fc09ad26ceeb",
+								"generation": 0
+							},
+							"title": "タイポグラフィは複合トークンとして管理する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+							"version": {
+								"id": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+								"version": "2",
+								"digest": "7e0939ebdc5f72cb291cac7ec18eb8e09a7292a93a5939666fd0930dcff53317",
+								"generation": 0
+							},
+							"title": "Never commit secrets or local environment files",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+							"version": {
+								"id": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+								"version": "2",
+								"digest": "ce7b8b67f5a2de445d3cf0a77a2f119d364976dd255f69b8174072b7e3821c7f",
+								"generation": 0
+							},
+							"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+							"version": {
+								"id": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+								"version": "2",
+								"digest": "f28f8c7ca4bb388641d9315fe03df31d590482e095525cb34fc98e84ca9461df",
+								"generation": 0
+							},
+							"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+							"version": {
+								"id": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+								"version": "2",
+								"digest": "854d4784912e5fd39170f3098a294d4f91da5597d16e82185b4bca39c2effa17",
+								"generation": 0
+							},
+							"title": "Treat Empty Project Roots As Valid New-Project Targets",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+							"version": {
+								"id": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+								"version": "2",
+								"digest": "1de749fb7db4106d283f1311a08e98fc10648cedfb236ccb39c795ebcd4b535c",
+								"generation": 0
+							},
+							"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+							"version": {
+								"id": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+								"version": "2",
+								"digest": "0fd7a0b6129176a5c8b7ff6b25a007655c0d2c46aadaceceaf74ea46f71fe66e",
+								"generation": 0
+							},
+							"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+							"version": {
+								"id": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+								"version": "2",
+								"digest": "b715f41d251696599633fd7ef0e822af42d3b36297474cdaf10dc012d8de89f6",
+								"generation": 0
+							},
+							"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+							"version": {
+								"id": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+								"version": "2",
+								"digest": "394f8319213a8961748c9c645d485c9b76bfdc785f324991020d18b883d5e53b",
+								"generation": 0
+							},
+							"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+							"version": {
+								"id": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+								"version": "2",
+								"digest": "f340f0a17b4c768168349171cded487f787780f67b39ac242a1625669b81c3f1",
+								"generation": 0
+							},
+							"title": "キューAPIルーティングのセットアップ",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+							"version": {
+								"id": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+								"version": "2",
+								"digest": "d799baa595d3069fd1c8da6851e8d37d46f124b5714383a8d765e4e097a9865b",
+								"generation": 0
+							},
+							"title": "SQLite DB のダンプ・復元・整合性検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+							"version": {
+								"id": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+								"version": "2",
+								"digest": "d2c8e82073ad81805d9781d4819f5a166d847ad07f228f822cdf0535641eb85e",
+								"generation": 0
+							},
+							"title": "Compile run knowledge feedback 保存手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+							"version": {
+								"id": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+								"version": "2",
+								"digest": "8ebd78061242eb2c64cd16b8edbf48ed09954ccf7b0e3d13b0635ddda0fbcb1c",
+								"generation": 0
+							},
+							"title": "Review Decision Queue Actions Safely",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+							"version": {
+								"id": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+								"version": "2",
+								"digest": "8cbb19258277696fdf39c179fd99b3643a130944f5eb22ca1aa1bb70b2535b73",
+								"generation": 0
+							},
+							"title": "Local LLM 関連変更の検証手順",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+							"version": {
+								"id": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+								"version": "2",
+								"digest": "44818f64210ed5969598ab18f504939566448931ee89da996563d8bdc65c35bc",
+								"generation": 0
+							},
+							"title": "doctor-reasons の理由コード収集テストを実装に合わせて更新する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+							"version": {
+								"id": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+								"version": "2",
+								"digest": "231fba0f46b9467fd5c79a2a89e88bc26e9435cb08c480b7457996aa77d5dcba",
+								"generation": 0
+							},
+							"title": "Distillation Candidate Workflow実行時のモック設定",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						},
+						{
+							"ref": "contextstill:kn_27e47wgeyicwk5tgme4knylyde",
+							"version": {
+								"id": "contextstill:kn_27e47wgeyicwk5tgme4knylyde",
+								"version": "2",
+								"digest": "92fdb6ffcfcfb8688e41714a65caa053a149508b5df20deb391c3ce99fe72e55",
+								"generation": 0
+							},
+							"title": "非同期ワーカーはキュー種別ごとに独立実行設計を先に固定する",
+							"status": "active",
+							"complete": true,
+							"external": true,
+							"scope": "shared"
+						}
+					],
+					"warnings": [],
+					"degraded": [
+						"mock_lexical_only",
+						"vector_unavailable",
+						"source_details_omitted"
+					],
+					"truncated": false
+				}
+			],
+			"fusionNote": "RRF k=60; one vote per version ref per query; stable first-seen tie break; limit after fusion; all source notices retained."
+		}
+	],
+	"summary": {
+		"compose": {
+			"tasks": 4,
+			"allRequiredHitAt8": {
+				"hit": 0,
+				"of": 4,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 0,
+				"of": 4,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 3
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				},
+				{
+					"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+					"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+					"title": "Review Decision Queue Actions Safely"
+				},
+				{
+					"ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+					"title": "Use Screenshot Feedback To Identify The Correct Layer"
+				},
+				{
+					"ref": "contextstill:kn_2ehhouq3eenrwzcdpxdr5g3dey",
+					"title": "Make automated usefulness scoring pure model judgment guided by context"
+				},
+				{
+					"ref": "contextstill:kn_2fl5kfsdlfdfuhijv2vxoizmjq",
+					"title": "Route-specific fallback settings must be threaded through all runtime call sites"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+					"title": "SQLite DB のダンプ・復元・整合性検証手順"
+				},
+				{
+					"ref": "contextstill:kn_26insmco5qrzpwvcr7u7q2ns2a",
+					"title": "Compile run knowledge feedback 保存手順"
+				},
+				{
+					"ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+					"title": "Review Decision Queue Actions Safely"
+				},
+				{
+					"ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+					"title": "Local LLM 関連変更の検証手順"
+				},
+				{
+					"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+					"title": "Distillation Candidate Workflow実行時のモック設定"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"queryStyle": null,
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+					"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+				},
+				{
+					"ref": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+					"title": "doctor-reasons の理由コード収集テストを実装に合わせて更新する"
+				},
+				{
+					"ref": "contextstill:kn_2775l4n6kc5k7muds6udvo2lge",
+					"title": "Distillation Candidate Workflow実行時のモック設定"
+				},
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (handle-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

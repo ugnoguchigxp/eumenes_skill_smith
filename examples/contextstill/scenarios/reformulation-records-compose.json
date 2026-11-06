@@ -1,0 +1,30 @@
+[
+	{
+		"inputDigest": "2d18812be18a3c00e4246ba9d478bbfac7c0fa779e8d1a1bf4aea2041fb0d526",
+		"provider": "grok_bot",
+		"value": {
+			"query": "exclude .env and API keys from commits and prevent secrets appearing in logs or responses"
+		}
+	},
+	{
+		"inputDigest": "f1a8db4b5d461a999044541859d13da997dde35a053a770c824a2bfdc9425e83",
+		"provider": "grok_bot",
+		"value": {
+			"query": "fix pre-commit verify failures without bypassing hooks and do not force push without explicit approval"
+		}
+	},
+	{
+		"inputDigest": "a9dcd65ec7576f7101f5e642375f900657f32cfb267bfbacc3f69b93ed05e3b4",
+		"provider": "grok_bot",
+		"value": {
+			"query": "smoke test packed artifacts in a clean project without calling live providers"
+		}
+	},
+	{
+		"inputDigest": "78820a7de94a66a2769c454b071d5ca72cc6e7215c8270a4fe8d39d6e3c408ae",
+		"provider": "grok_bot",
+		"value": {
+			"query": "format Python source using 4-space indentation and limit line length"
+		}
+	}
+]
