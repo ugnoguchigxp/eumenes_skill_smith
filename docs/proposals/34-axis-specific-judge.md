@@ -23,4 +23,10 @@ retrieval（元5件 assembly 判定、expectedSkillUsed）、compose（提案31�
 軸の判定は `task.axis`（suite の型付き軸）に依存する。`comparison-slice` は retrieval 軸として扱う。提案33の対比判定（opt-in）は retrieval / compose タスクにも適用されるが、軸は task.axis のまま集計する。対比平均 8 は 4.2 を置き換えない（対比 on の実行は別記録）。
 
 ## 実装結果
-報告側の変更のみ。新しい SKILL 本文や評点は作っていない。製品経路は判定器を混ぜないので、指示の変更は対象外。品質改善は主張しない。
+報告側の変更のみを測定基盤として採用した。新しい SKILL 本文や評点は作っていない。製品経路は判定器を混ぜないので、指示の変更は対象外。品質改善は主張しない。`INSTRUCTION_VERSION` は `build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623` のまま。
+
+- **単軸 CLI**: 元5件 handle は meanScore 4.2、`mixedAxes` false、`axisMeans` {retrieval 4.2, compose null, absent null}。compose BM25 natural は meanScore 8、{null, 8, null}。absent handle baseline は meanScore 8、{null, null, 8}。token は null のまま。
+- **混合 CLI**（`suite-3axis.json` を `--axis` なし、handle の既存記録を結合）: 61 件中 8 件が scored（compose 4 + absent 4）。元5件は build 記録を再利用したが、suite-3axis の課題メタデータで judge digest が異なり `awaiting_judge`（34 の退行ではない）。`mixedAxes` true、meanScore null、`axisMeans` {retrieval null, compose 1, absent 8}。採点 8 件を混ぜると 4.5 になるが、その値は出していない。
+- **完了した混合**（試験 `axis-means.test.ts`）: 元5件 + absent 4 件で 9 scored、meanScore null、`axisMeans` {4.2, null, 8}。混ぜると (21+32)/9 になる値は出していない。
+- **未採点の軸**: その軸の全件が scored でない限り、軸平均も null。
+- **残る点**: 実行が incomplete のときの note は「未採点のため meanScore を出さない」とだけ書き、mixedAxes への言及は JSON フィールド側に残る。平均の漏れではない。
