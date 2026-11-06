@@ -33,3 +33,30 @@ export {
 	type RecallObservation,
 	type RecallResult,
 } from "./recall.js";
+
+export {
+	humanLabelSchema,
+	judgePredictionSchema,
+	calibrationReportSchema,
+	calibrateJudge,
+	type HumanLabel,
+	type JudgePrediction,
+	type CalibrationReport,
+} from "./judge.js";
+export {
+	auxiliaryMetricsSchema,
+	auxiliaryMetrics,
+	type AuxiliaryMetrics,
+} from "./metrics.js";
+export {
+	workflowCandidateSchema,
+	workflowInstructions,
+	induceWorkflowCandidate,
+	type WorkflowCandidate,
+} from "./workflow.js";
+export {
+	evalSuiteSchema,
+	runEvalSuite,
+	type EvalSuite,
+	type ConditionRunner,
+} from "./kit.js";

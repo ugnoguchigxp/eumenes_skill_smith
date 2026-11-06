@@ -36,3 +36,8 @@ Ragas 型の faithfulness と context relevance を record ごとに算出し、
 
 前提: 提案 14。
 
+## 実装結果
+
+- **採否**: 採用（評価キット補助）
+- **内容**: `auxiliaryMetrics` は token overlap の明示ヒューリスティック。製品の意味判断には使わない。受入判定の代替にしない。
+- **パス**: `src/eval/metrics.ts`, `src/test/eval-judge-metrics.test.ts`
