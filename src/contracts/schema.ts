@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CONTRACT = "skillsmith.v1" as const;
-export const INSTRUCTION_VERSION = "build.v3" as const;
+export { INSTRUCTION_VERSION } from "../instructions/build.js";
 const id = z.string().min(1).max(160);
 const text = z.string().trim().min(1).max(8000);
 const unique = <T>(xs: T[]) => new Set(xs).size === xs.length;

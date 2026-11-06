@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 import { fixture, ready } from "./fixture.js";
-import { requestSchema, digest } from "../index.js";
+import { requestSchema, digest, INSTRUCTION_VERSION } from "../index.js";
+import { buildInstructions } from "../instructions/build.js";
 
 test("a saved acceptance returns pending, then a complete body with unchanged conditions", async () => {
 	const f = fixture(),
@@ -294,4 +295,12 @@ test("well-formed evidence still builds after boundary validation", async () => 
 	const f = fixture();
 	const r = await ready(f);
 	expect(r.build.content.dependencies[0]!.ref).toBe("skill:compare@1");
+});
+
+test("instruction version is the digest of the live instruction text", () => {
+	expect(INSTRUCTION_VERSION).toBe("build." + digest(buildInstructions));
+	expect(INSTRUCTION_VERSION).not.toBe(
+		"build." + digest(buildInstructions + "\n"),
+	);
+	expect(INSTRUCTION_VERSION).not.toBe("build.v3");
 });
