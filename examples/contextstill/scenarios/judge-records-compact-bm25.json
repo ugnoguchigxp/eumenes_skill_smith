@@ -1,0 +1,47 @@
+[
+  {
+    "inputDigest": "dad90f1bcdc8be882385e3a5c33b55bbb558c5e13d7efdd3a213f4ea1bb61f9c",
+    "provider": "grok_bot",
+    "value": {
+      "score": 9,
+      "rationale": "期待Skill「Never commit secrets or local environment files」が BM25 で検索1位に届き、compact 経路でも coverage を sufficient として reuse している。本文は .env・APIキー・トークン等をコミットせず、露出時は伏せるかローテーションするという目的と受入条件に沿う。reuse の指針本文はフィクスチャの JSON 包みのため 10 にはしない。",
+      "expectedSkillUsed": true
+    }
+  },
+  {
+    "inputDigest": "7bea4e2942083ce8d86e83d6717d66830dd9a0f0b60862c07166bade7f0d9cce",
+    "provider": "grok_bot",
+    "value": {
+      "score": 9,
+      "rationale": "期待Skill「Test in a Production Clone」が BM25 で検索1位に届き、compact 経路でも coverage を sufficient として reuse している。本文はリリース前に本番環境の複製で変更を試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+      "expectedSkillUsed": true
+    }
+  },
+  {
+    "inputDigest": "b551c87916d29e44bdeb6fd1037834d9b7196ab5c86d11f2a453d8dcb71ed0d6",
+    "provider": "grok_bot",
+    "value": {
+      "score": 9,
+      "rationale": "期待Skill「Never print secrets into logs or responses」が BM25 で検索1位に届き、compact 経路でも coverage を sufficient として reuse している。本文は生の秘密情報・トークン・APIキー等を印刷・保存・返却せず、診断出力の前に伏せるという目的と受入条件に沿う。フィクスチャの JSON 包みのため 10 にはしない。",
+      "expectedSkillUsed": true
+    }
+  },
+  {
+    "inputDigest": "9a829d369385a06f8271dc914c3972ebf42ea02ebb4497d901e8607bfda1826d",
+    "provider": "grok_bot",
+    "value": {
+      "score": 9,
+      "rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が BM25 で検索1位に届き、compact 経路でも coverage を sufficient として reuse している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、明示されない限り bypass しない手順である。フィクスチャの JSON 包みのため 10 にはしない。",
+      "expectedSkillUsed": true
+    }
+  },
+  {
+    "inputDigest": "d43eab1e8e8b0aaa24a52fad00ac7fcd520784d121774d7d163f5cdb9b56709a",
+    "provider": "grok_bot",
+    "value": {
+      "score": 7,
+      "rationale": "期待Skill「Use 4-Space Indentation」が BM25 で検索1位に届き、compact 経路では coverage を partial として reuse している。本文は Python コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせる規則であり、題名だけから任意言語へ4スペースを課してはいない。前提でも Python 向けであることとリポジトリの言語が未指定であることを残している。期待Skillは使われているが「このリポジトリ」へ無条件に答えてはいないため 7 とする。名前付き節の無い本文だけを持つ Skill では adapt の sections が本体を置き換えてしまうため、部分追記ではなく reuse に留めた。",
+      "expectedSkillUsed": true
+    }
+  }
+]

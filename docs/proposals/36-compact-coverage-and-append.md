@@ -63,10 +63,14 @@
 
 ## 実装結果
 
-opt-in として実装（`--assembly-mode compact` / `ExampleHostOptions.assemblyMode: "compact"`）。**既定採用は PENDING**（親が compact 用 recorded-inference を埋め、品質と実測 provider token を測ってから採否する）。
+opt-in として実装（`--assembly-mode compact` / `ExampleHostOptions.assemblyMode: "compact"`）。**既定にはしない**。選択経路として残す。品質は同じ検索 profile の比較スライスで下がらなかったが、provider の出力トークン削減は未測定で、探索フォーマット経路も旧 5 件では使われていない。
 
 - 既定 `baseline` の指示・schema・`INSTRUCTION_VERSION` はバイト一致のまま。compact は別指示（`compactBuildInstructions` / `COMPACT_INSTRUCTION_VERSION`）と `compactModelTurnSchema`（`coverage` + 任意の `exploration` 欄）。
 - 意味判断はモデル側。コードは形・予算と、開示本文の丸写し拒否（構造）だけを見る。語句辞書ルーティングは入れていない。
 - eval `identity` に `assemblyMode` を含め、baseline 記録と compact 記録の黙った混用を防ぐ（提案 35）。
-- baseline 再生（新 LLM 評点なし）は従来どおり meanScore 4.2 / BM25 8.6。compact 用の新スコアや invented disclose/reuse 記録は作っていない。
-- recordedInference の token null は null のまま。token 削減は未測定のため主張しない。
+- 旧 5 件の compact 評点（recorded-inference、旧 rubric）: handle 平均 4.2（9、9、1、1、1）、BM25 平均 8.6（9、9、9、9、7）。同じ profile の baseline と同じ。記録は `examples/contextstill/scenarios/{build,judge,scores}-records-compact.json` および `*-compact-bm25.json`（既存の `scores.json` / `scores-bm25.json` は上書きしていない）。
+- handle の 3 件の検索漏れは needs_input のまま。公式 Skill が集合に無いことを世界に無いとして探索テンプレートへは流していない。BM25 では期待 Skill を開示のあと reuse（four-space-indent は coverage `partial` と Python 範囲の前提）。
+- 制限: 本文だけの Skill に対する adapt の sections は本体を置き換える（部分追記にならない）。four-space-indent はそのため reuse + coverage `partial` に留めた。
+- 呼び出し回数は同じ（handle は build 8 + judge 5、BM25 は build 10 + judge 5）。`usage.inputTokens` / `outputTokens` は null のまま。token 削減は未測定であり、主張しない。
+- 決定 JSON の UTF-8 バイト数（トークンではない）: handle 2476 → 2797（主に needs_input の説明文）、BM25 4141 → 3938（reuse 本文の書き方の差が大きく、削減機構の効果とは言えない）。
+- 複合 4 件・真の不在 4 件での探索 SKILL 品質と実測 token は、このスライスでは未測定。

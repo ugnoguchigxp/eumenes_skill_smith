@@ -1,0 +1,129 @@
+[
+  {
+    "inputDigest": "2d97a8130d0f77f5ca589dea4c7f20387b3717fafc6d108dc8944147a544bd56",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "disclose",
+      "items": [
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+        }
+      ]
+    }
+  },
+  {
+    "inputDigest": "8d6e5d337b4a136edb4519764065e4050019a3d777718477a9c7cc173278c639",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "disclose",
+      "items": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+        }
+      ]
+    }
+  },
+  {
+    "inputDigest": "bdb01d8a1c36861da4c007b0e2b91d683896913fd9d172777197d98d120d9c07",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "needs_input",
+      "missing": [
+        "ログやHTTPレスポンスへ秘密情報を出さない手順を述べた既存Skill。今回の候補は本番clone試験、見た目、コミット時の秘密情報、OAuth などで、目的に合うものが見当たらない。検索集合に無いことは世界に存在しない証明ではないため、探索テンプレートでは埋めない。"
+      ]
+    }
+  },
+  {
+    "inputDigest": "384c4615edf6191783346bba443b66202ef676d1bfd84cc73c6803a571f295a1",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "disclose",
+      "items": [
+        {
+          "ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq"
+        }
+      ]
+    }
+  },
+  {
+    "inputDigest": "5c70a7adb6e963e0edb70070fd15f207cf4327d7451a19d65d3dd59ae4499257",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "needs_input",
+      "missing": [
+        "このリポジトリのインデント幅（何スペースか）を定めた既存Skill。今回の候補は本番clone試験、Questionnaire、タイポグラフィトークン、秘密情報のコミット禁止などで、コードのインデント幅を述べたものが見当たらない。検索集合に無いことは世界に存在しない証明ではないため、探索テンプレートでは埋めない。"
+      ]
+    }
+  },
+  {
+    "inputDigest": "19006b73b25acf22c713ab511942633ec9425b590191a9de159b44b25f80956a",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "ready",
+      "strategy": "reuse",
+      "sourceRefs": [
+        "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+      ],
+      "sections": [],
+      "patches": [],
+      "requiredCapabilities": [],
+      "verification": [
+        "秘密情報・APIキー・ローカル .env をコミットしていない",
+        "露出が見つかった場合は伏せるかローテーションしている"
+      ],
+      "assumptions": [
+        {
+          "text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+          "mandatory": false,
+          "resolved": false
+        },
+        {
+          "text": "出典詳細は省略されている（source_details_omitted）。",
+          "mandatory": false,
+          "resolved": false
+        }
+      ],
+      "coverage": "sufficient"
+    }
+  },
+  {
+    "inputDigest": "61bfa0e6333a5f435086ed9099a20ad6a174d0cf09c001c717622077a858bda8",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "ready",
+      "strategy": "reuse",
+      "sourceRefs": [
+        "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+      ],
+      "sections": [],
+      "patches": [],
+      "requiredCapabilities": [],
+      "verification": [
+        "本番相当の clone 環境で変更を試験してからリリースする"
+      ],
+      "assumptions": [
+        {
+          "text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+          "mandatory": false,
+          "resolved": false
+        },
+        {
+          "text": "出典詳細は省略されている（source_details_omitted）。",
+          "mandatory": false,
+          "resolved": false
+        }
+      ],
+      "coverage": "sufficient"
+    }
+  },
+  {
+    "inputDigest": "efeb6dfa3ffcf0e824c2f904f8c9092ae51ce04150b8dd2284d2ca2fe4d15b35",
+    "provider": "grok_bot",
+    "value": {
+      "kind": "needs_input",
+      "missing": [
+        "pre-commit / Git hook の失敗を bypass せず直す手順を述べた既存 Skill。開示した context_compile の verify 手順は関連テストを先に直す局所修正であり、フックを bypass してよいかという目的には足りない。検索集合に無いことは世界に存在しない証明ではないため、探索テンプレートでは埋めない。"
+      ]
+    }
+  }
+]
