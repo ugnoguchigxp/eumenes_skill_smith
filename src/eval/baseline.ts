@@ -80,7 +80,13 @@ export interface BaselineResult {
 export async function runAgentSkillsBaseline(
 	ports: BaselinePorts,
 	input: {
-		task: { goal: string; acceptance: { id: string; text: string }[] };
+		task: {
+			goal: string;
+			acceptance: { id: string; text: string }[];
+			constraints?: { id: string; text: string }[];
+		};
+		/** Optional shared environment/policy ids for fair A/B/C comparison; not meaning rules. */
+		environment?: { id: string; capabilityIds?: string[]; policyId?: string };
 		cards: EvidenceCard[];
 		evidence: Evidence[];
 		requestRef: string;
@@ -103,7 +109,12 @@ export async function runAgentSkillsBaseline(
 
 	for (let attempt = 0; attempt < maxCalls; attempt++) {
 		const data = {
-			task: input.task,
+			task: {
+				goal: input.task.goal,
+				acceptance: input.task.acceptance,
+				constraints: input.task.constraints ?? [],
+			},
+			environment: input.environment ?? null,
 			candidateCards: input.cards.map((c) => ({
 				ref: c.ref,
 				title: c.title,

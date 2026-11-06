@@ -8,6 +8,7 @@ import {
 	type EvalTask,
 } from "./task.js";
 import { compareConditionRuns, synthesisNotClearlyBetter } from "./compare.js";
+import { assertEvalSuiteAudited } from "./audit.js";
 export interface InferenceRecord {
 	inputDigest: string;
 	value: unknown;
@@ -52,11 +53,16 @@ export interface ConditionRunner {
 export async function runEvalSuite(
 	suite: EvalSuite,
 	runner: ConditionRunner,
+	audit?: {
+		expectedDigests?: Record<string, string>;
+		requireRecords?: boolean;
+	},
 ): Promise<{
 	comparisons: EvalComparison[];
 	synthesisNotClearlyBetter: boolean[];
 }> {
 	const parsed = evalSuiteSchema.parse(suite);
+	if (audit) assertEvalSuiteAudited(parsed, audit);
 	const comparisons: EvalComparison[] = [];
 	const flags: boolean[] = [];
 	for (const task of parsed.tasks) {

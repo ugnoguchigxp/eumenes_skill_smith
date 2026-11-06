@@ -61,7 +61,7 @@ test("auxiliary metrics are labeled heuristics and never claim acceptance", () =
 		usedRefs: ["a"],
 		expectedContextRefs: ["a", "b"],
 	});
-	expect(m.method).toBe("eval_kit_token_overlap_v1");
-	expect(m.faithfulnessOverlap).toBeGreaterThan(0);
+	expect(m.method).toBe("eval_kit_lexical_overlap_v1");
+	expect(m.lexicalOverlap).toBeGreaterThan(0);
 	expect(m.contextRelevanceAtUsed).toBe(0.5);
 });

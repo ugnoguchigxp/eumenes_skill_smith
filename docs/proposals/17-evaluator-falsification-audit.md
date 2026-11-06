@@ -35,3 +35,12 @@ baseline を意図的に弱めること、replay の不一致を fixture で埋�
 ## 依存・前提
 
 既存の recordedInference、runEvalSuite、baseline でリポジトリ内実装が可能です。コーパスの前に負例監査はできます。提案 16 の公平比較の前提です。
+
+## 実装結果
+
+- **採否**: 採用（評価キットの信用検査）
+- **内容**: `auditEvalSuite` で missing/duplicate/tamper/empty record を失敗にする。CLI は companion expected-digests で改竄を検出。`faithfulnessOverlap` を `lexicalOverlap`（字面一致）へ改名。baseline が constraints/environment を共通 manifest として渡せるようにした。意味的 faithfulness・ARES 訓練は未実施。
+- **パス**: `src/eval/audit.ts`, `src/eval/metrics.ts`, `src/eval/baseline.ts`, `src/eval/kit.ts`, `src/eval/index.ts`, `examples/contextstill/eval-kit.ts`, `examples/contextstill/seed/eval-suite.fixture.expected-digests.json`, `src/test/eval-audit.test.ts`, `integration-contract.md`
+- **試験**: `bun test src/test/eval-audit.test.ts`（8 pass）。改竄 suite で CLI exit 1 を確認。`bun run verify` 予定。
+- **未実施**: 人手ラベル付き semantic 判定、実製品 execute を常時 CLI に結ぶこと（contract fixture のみ）
+- **理由**: 改竄を改善として報告しない検査が入り、名称の誤認を正した。品質点の圧縮や judge 訓練はしていない。

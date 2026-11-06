@@ -1,0 +1,5 @@
+{
+	"task:compare:none": "fixture-none",
+	"task:compare:agent_skills": "fixture-baseline",
+	"task:compare:skillsmith": "fixture-smith"
+}

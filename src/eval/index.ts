@@ -60,3 +60,12 @@ export {
 	type EvalSuite,
 	type ConditionRunner,
 } from "./kit.js";
+
+export {
+	auditEvalSuite,
+	assertEvalSuiteAudited,
+	taskManifest,
+	evalAuditReportSchema,
+	type EvalAuditFinding,
+	type EvalAuditReport,
+} from "./audit.js";

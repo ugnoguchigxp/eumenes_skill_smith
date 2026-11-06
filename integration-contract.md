@@ -66,6 +66,10 @@ SourcePort.searchは `SourceSearch = { cards, warnings: {kind, refs}[], degraded
 
 EvidenceCard／Evidenceは任意の `supersededBy`（同じ取得元のref）を持てる。コアは取得したsupersededの文書に後継があれば、同じ取得元から documents上限とsourceCalls予算の内で取得する。結果は推論入力の `search.successors` に `{ref, successor, outcome}` として渡す。outcomeは fetched／unavailable（取得失敗・ref不一致・scope外）／cycle／limit。予算超過・中断・コアの拒否は従来どおりビルド失敗とする。後継が今回の目的に合うか、不足を補えるかはLLMが判断する。指示版は `build.v3`。ContextStill疑似adapterは `item.supersededBy` のhandleをrefへ変換する。実ContextStillでの後継の公開性は未照合。
 
+### 3.1c 評価キットの負例監査（2026-11-06追加）
+
+`examples/contextstill/eval-kit.ts` は比較の前に `auditEvalSuite` を行う。同一 task の A/B/C 条件欠け・重複、`--require-records` 時の空 record、および companion の `*.expected-digests.json` と一致しない `inputDigest` 改竄は失敗とする。補助指標の token overlap は `lexicalOverlap`（字面一致）と呼び、意味的 faithfulness とは扱わない。評価結果 JSON と推論 record は別物であり、CLI の整形出力を品質スコアとしない。
+
 ### 3.2 推論providerの注入
 
 本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。

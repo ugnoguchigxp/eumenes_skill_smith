@@ -1,5 +1,6 @@
-// Quality-eval kit entry: replays recorded-inference records through proposal 01 suite schema.
-// Usage: bun examples/contextstill/eval-kit.ts [suite.json]
+// Quality-eval kit entry: audits suite integrity, then compares recorded results.
+// Usage: bun examples/contextstill/eval-kit.ts [suite.json] [--require-records]
+// Inference records (inputDigest-bound) and comparison result JSON are separate concerns.
 // Does not treat the default wiring query 「検証」 as a quality score.
 import "../../scripts/test-preload.js";
 import { readFileSync } from "node:fs";
@@ -7,18 +8,37 @@ import { resolve } from "node:path";
 import {
 	runEvalSuite,
 	evalSuiteSchema,
+	auditEvalSuite,
 	type EvalRunResult,
 } from "../../src/eval/index.js";
 
+const args = process.argv.slice(2).filter((a) => a !== "--require-records");
+const requireRecords = process.argv.includes("--require-records");
 const path = resolve(
-	process.argv[2] ?? "examples/contextstill/seed/eval-suite.fixture.json",
+	args[0] ?? "examples/contextstill/seed/eval-suite.fixture.json",
 );
 const suite = evalSuiteSchema.parse(JSON.parse(readFileSync(path, "utf8")));
+
+// Optional companion file: expected digests for tamper detection.
+// Shape: { "taskId:condition": "expectedInputDigest", ... }
+const digestPath = path.replace(/\.json$/, ".expected-digests.json");
+let expectedDigests: Record<string, string> | undefined;
+try {
+	expectedDigests = JSON.parse(readFileSync(digestPath, "utf8"));
+} catch {
+	expectedDigests = undefined;
+}
+
+const audit = auditEvalSuite(suite, { expectedDigests, requireRecords });
+if (!audit.ok) {
+	console.error(JSON.stringify({ ok: false, audit }, null, 2));
+	process.exit(1);
+}
 
 const { comparisons, synthesisNotClearlyBetter } = await runEvalSuite(
 	suite,
 	async (task, condition) => {
-		// Fixture runner: records are comparison inputs only; no live inference here.
+		// Fixture runner: comparison inputs only; live product/baseline execute is in contract tests.
 		const pack = suite.records.find(
 			(r) => r.taskId === task.id && r.condition === condition,
 		);
@@ -36,19 +56,22 @@ const { comparisons, synthesisNotClearlyBetter } = await runEvalSuite(
 			judgment: canned?.judgment,
 		};
 	},
+	{ expectedDigests, requireRecords },
 );
 
 console.log(
 	JSON.stringify(
 		{
+			ok: true,
 			suite: suite.id,
 			tasks: suite.tasks.length,
+			audit,
 			comparisons: comparisons.map((c) => ({
 				taskId: c.taskId,
 				deltas: c.deltas,
 			})),
 			synthesisNotClearlyBetter,
-			note: "wiring query 検証 is not a quality score",
+			note: "wiring query 検証 is not a quality score; lexicalOverlap is 字面一致 not faithfulness",
 		},
 		null,
 		2,
