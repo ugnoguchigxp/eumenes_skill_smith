@@ -1,0 +1,286 @@
+import type { Database } from "bun:sqlite";
+import type { Repository } from "../contracts/ports.js";
+import type {
+	Build,
+	Delivery,
+	Proposal,
+	Report,
+	RequestRecord,
+} from "../contracts/types.js";
+import { requireThat } from "../service/identity.js";
+
+export const migrations = [
+	{
+		id: "knowledge/0001-init",
+		sql: `
+CREATE TABLE knowledge_requests(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,request_id TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL,UNIQUE(scope,request_id));
+CREATE TABLE knowledge_builds(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,cache_key TEXT NOT NULL,revoked INTEGER NOT NULL DEFAULT 0,data_json TEXT NOT NULL);
+CREATE INDEX knowledge_cache ON knowledge_builds(scope,cache_key);
+CREATE TABLE knowledge_dependencies(owner TEXT NOT NULL,source TEXT NOT NULL,PRIMARY KEY(owner,source));
+CREATE INDEX knowledge_dependants ON knowledge_dependencies(source);
+CREATE TABLE knowledge_revoked(ref TEXT PRIMARY KEY);
+CREATE TABLE knowledge_uses(scope TEXT NOT NULL,build_ref TEXT NOT NULL,execution_ref TEXT NOT NULL,PRIMARY KEY(scope,build_ref,execution_ref));
+CREATE TABLE knowledge_deliveries(id TEXT PRIMARY KEY,request_ref TEXT NOT NULL,scope TEXT NOT NULL,epoch INTEGER NOT NULL,acknowledged INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE knowledge_results(scope TEXT NOT NULL,execution_ref TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL,PRIMARY KEY(scope,execution_ref));
+CREATE TABLE knowledge_report_receipts(scope TEXT NOT NULL,report_id TEXT NOT NULL,digest TEXT NOT NULL,revision INTEGER NOT NULL,execution_ref TEXT NOT NULL,PRIMARY KEY(scope,report_id));
+CREATE TABLE knowledge_reflections(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,report_digest TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL,UNIQUE(scope,report_digest));
+CREATE TABLE knowledge_proposals(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL);
+`,
+	},
+] as const;
+function json<T>(db: Database, sql: string, ...args: string[]): T | null {
+	const r = db.query(sql).get(...args) as { data_json: string } | null;
+	return r ? (JSON.parse(r.data_json) as T) : null;
+}
+export function blocked(db: Database, ref: string): boolean {
+	return !!db
+		.query(
+			`
+WITH RECURSIVE ancestry(ref) AS (
+ SELECT ? UNION SELECT d.source FROM knowledge_dependencies d JOIN ancestry a ON d.owner=a.ref
+) SELECT 1 FROM ancestry a JOIN knowledge_revoked r ON r.ref=a.ref LIMIT 1
+`,
+		)
+		.get(ref);
+}
+export const sqliteRepository: Repository<Database> = {
+	blocked,
+	reflection: (db, ref) =>
+		json<import("../contracts/types.js").Reflection>(
+			db,
+			"SELECT data_json FROM knowledge_reflections WHERE ref=?",
+			ref,
+		),
+	reflectionByReport: (db, scope, hash) =>
+		json<import("../contracts/types.js").Reflection>(
+			db,
+			"SELECT data_json FROM knowledge_reflections WHERE scope=? AND report_digest=?",
+			scope,
+			hash,
+		),
+	putReflection(db, row, expected) {
+		requireThat(!blocked(db, row.ref), "reference_revoked");
+		if (expected === null)
+			db.query("INSERT INTO knowledge_reflections VALUES(?,?,?,?,?)").run(
+				row.ref,
+				row.scope,
+				row.reportDigest,
+				row.revision,
+				JSON.stringify(row),
+			);
+		else
+			requireThat(
+				db
+					.query(
+						"UPDATE knowledge_reflections SET revision=?,data_json=? WHERE ref=? AND revision=?",
+					)
+					.run(row.revision, JSON.stringify(row), row.ref, expected).changes ===
+					1,
+				"reflection_conflict",
+			);
+	},
+	request: (db, ref) =>
+		json<RequestRecord>(
+			db,
+			"SELECT data_json FROM knowledge_requests WHERE ref=?",
+			ref,
+		),
+	requestByKey: (db, scope, id) =>
+		json<RequestRecord>(
+			db,
+			"SELECT data_json FROM knowledge_requests WHERE scope=? AND request_id=?",
+			scope,
+			id,
+		),
+	putRequest(db, row, expected) {
+		requireThat(!blocked(db, row.ref), "reference_revoked");
+		const data = JSON.stringify(row);
+		if (expected === null)
+			db.query("INSERT INTO knowledge_requests VALUES(?,?,?,?,?)").run(
+				row.ref,
+				row.authority.scope,
+				row.request.requestId,
+				row.revision,
+				data,
+			);
+		else
+			requireThat(
+				db
+					.query(
+						"UPDATE knowledge_requests SET revision=?,data_json=? WHERE ref=? AND revision=?",
+					)
+					.run(row.revision, data, row.ref, expected).changes === 1,
+				"request_conflict",
+			);
+	},
+	openRequests(db, limit) {
+		return (
+			db
+				.query(
+					"SELECT data_json FROM knowledge_requests WHERE json_extract(data_json,'$.outcome') IS NULL ORDER BY rowid LIMIT ?",
+				)
+				.all(limit) as { data_json: string }[]
+		).map((r) => JSON.parse(r.data_json) as RequestRecord);
+	},
+	build(db, ref) {
+		const b = json<Build>(
+			db,
+			"SELECT data_json FROM knowledge_builds WHERE ref=?",
+			ref,
+		);
+		return b ? { ...b, revoked: blocked(db, ref) } : null;
+	},
+	cached(db, scope, key) {
+		const rows = db
+			.query(
+				"SELECT ref,data_json FROM knowledge_builds WHERE scope=? AND cache_key=? AND revoked=0 ORDER BY rowid DESC",
+			)
+			.all(scope, key) as { ref: string; data_json: string }[];
+		const r = rows.find((x) => !blocked(db, x.ref));
+		return r ? (JSON.parse(r.data_json) as Build) : null;
+	},
+	putBuild(db, b) {
+		requireThat(!blocked(db, b.ref), "reference_revoked");
+		db.query("INSERT INTO knowledge_builds VALUES(?,?,?,?,?)").run(
+			b.ref,
+			b.scope,
+			b.key,
+			0,
+			JSON.stringify(b),
+		);
+	},
+	revokeBuild(db, ref) {
+		db.query("INSERT OR IGNORE INTO knowledge_revoked VALUES(?)").run(ref);
+		db.query("UPDATE knowledge_builds SET revoked=1 WHERE ref=?").run(ref);
+	},
+	link(db, owner, source) {
+		db.query("INSERT OR IGNORE INTO knowledge_dependencies VALUES(?,?)").run(
+			owner,
+			source,
+		);
+	},
+	dependants: (db, ref) =>
+		(
+			db
+				.query("SELECT owner FROM knowledge_dependencies WHERE source=?")
+				.all(ref) as { owner: string }[]
+		).map((r) => r.owner),
+	erase(db, ref) {
+		db.query("INSERT OR IGNORE INTO knowledge_revoked VALUES(?)").run(ref);
+		db.query("DELETE FROM knowledge_requests WHERE ref=?").run(ref);
+		db.query("DELETE FROM knowledge_builds WHERE ref=?").run(ref);
+		db.query("DELETE FROM knowledge_proposals WHERE ref=?").run(ref);
+		db.query("DELETE FROM knowledge_reflections WHERE ref=?").run(ref);
+		const executions = db
+			.query("SELECT scope,execution_ref FROM knowledge_uses WHERE build_ref=?")
+			.all(ref) as { scope: string; execution_ref: string }[];
+		for (const e of executions) {
+			db.query(
+				"DELETE FROM knowledge_results WHERE scope=? AND execution_ref=?",
+			).run(e.scope, e.execution_ref);
+			db.query(
+				"DELETE FROM knowledge_report_receipts WHERE scope=? AND execution_ref=?",
+			).run(e.scope, e.execution_ref);
+		}
+		db.query("DELETE FROM knowledge_uses WHERE build_ref=?").run(ref);
+		db.query("DELETE FROM knowledge_deliveries WHERE request_ref=?").run(ref);
+		db.query("DELETE FROM knowledge_dependencies WHERE owner=?").run(ref);
+	},
+	bindUse(db, scope, build, execution) {
+		db.query("INSERT OR IGNORE INTO knowledge_uses VALUES(?,?,?)").run(
+			scope,
+			build,
+			execution,
+		);
+	},
+	hasUse: (db, scope, build, execution) =>
+		!!db
+			.query(
+				"SELECT 1 FROM knowledge_uses WHERE scope=? AND build_ref=? AND execution_ref=?",
+			)
+			.get(scope, build, execution),
+	putDelivery(db, d) {
+		db.query(
+			"INSERT INTO knowledge_deliveries VALUES(?,?,?,?,?) ON CONFLICT(id) DO NOTHING",
+		).run(d.id, d.requestRef, d.scope, d.epoch, Number(d.acknowledged));
+	},
+	deliveries: (db, limit) =>
+		(
+			db
+				.query(
+					"SELECT id,request_ref,scope,epoch,acknowledged FROM knowledge_deliveries WHERE acknowledged=0 LIMIT ?",
+				)
+				.all(limit) as {
+				id: string;
+				request_ref: string;
+				scope: string;
+				epoch: number;
+				acknowledged: number;
+			}[]
+		).map(
+			(r) =>
+				({
+					id: r.id,
+					requestRef: r.request_ref,
+					scope: r.scope,
+					epoch: r.epoch,
+					acknowledged: !!r.acknowledged,
+				}) satisfies Delivery,
+		),
+	ackDelivery(db, id) {
+		db.query("UPDATE knowledge_deliveries SET acknowledged=1 WHERE id=?").run(
+			id,
+		);
+	},
+	report: (db, scope, execution) =>
+		json<Report>(
+			db,
+			"SELECT data_json FROM knowledge_results WHERE scope=? AND execution_ref=?",
+			scope,
+			execution,
+		),
+	reportReceipt(db, scope, id) {
+		return db
+			.query(
+				"SELECT digest,revision FROM knowledge_report_receipts WHERE scope=? AND report_id=?",
+			)
+			.get(scope, id) as { digest: string; revision: number } | null;
+	},
+	putReport(db, r) {
+		db.query(
+			"INSERT INTO knowledge_results VALUES(?,?,?,?) ON CONFLICT(scope,execution_ref) DO UPDATE SET revision=excluded.revision,data_json=excluded.data_json",
+		).run(r.scope, r.input.executionRef, r.revision, JSON.stringify(r));
+		db.query("INSERT INTO knowledge_report_receipts VALUES(?,?,?,?,?)").run(
+			r.scope,
+			r.input.reportId,
+			r.digest,
+			r.revision,
+			r.input.executionRef,
+		);
+	},
+	proposal: (db, ref) =>
+		json<Proposal>(
+			db,
+			"SELECT data_json FROM knowledge_proposals WHERE ref=?",
+			ref,
+		),
+	putProposal(db, p, expected) {
+		requireThat(!blocked(db, p.ref), "reference_revoked");
+		if (expected === null)
+			db.query("INSERT INTO knowledge_proposals VALUES(?,?,?,?)").run(
+				p.ref,
+				p.scope,
+				p.revision,
+				JSON.stringify(p),
+			);
+		else
+			requireThat(
+				db
+					.query(
+						"UPDATE knowledge_proposals SET revision=?,data_json=? WHERE ref=? AND revision=?",
+					)
+					.run(p.revision, JSON.stringify(p), p.ref, expected).changes === 1,
+				"proposal_conflict",
+			);
+	},
+};

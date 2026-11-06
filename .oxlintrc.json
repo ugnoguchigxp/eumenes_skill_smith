@@ -1,0 +1,5 @@
+{
+	"plugins": ["typescript", "unicorn", "oxc"],
+	"categories": { "correctness": "error" },
+	"ignorePatterns": ["node_modules/**", "dist/**", "artifacts/**"]
+}

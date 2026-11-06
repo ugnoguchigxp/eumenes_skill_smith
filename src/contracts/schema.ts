@@ -1,0 +1,180 @@
+import { z } from "zod";
+
+export const CONTRACT = "skillsmith.v1" as const;
+export const INSTRUCTION_VERSION = "build.v1" as const;
+const id = z.string().min(1).max(160);
+const text = z.string().trim().min(1).max(8000);
+const unique = <T>(xs: T[]) => new Set(xs).size === xs.length;
+export const versionRefSchema = z.strictObject({
+	id,
+	version: id,
+	digest: id,
+	generation: z.number().int().nonnegative(),
+});
+export const sectionSchema = z.strictObject({ id, body: text });
+const clause = z.strictObject({ id, text });
+export const requestSchema = z
+	.strictObject({
+		contractVersion: z.literal(CONTRACT),
+		requestId: id,
+		task: z.strictObject({
+			goal: text,
+			acceptance: z.array(clause).min(1).max(32),
+			constraints: z.array(clause).max(32),
+			references: z.array(id).max(32),
+		}),
+		audience: z.enum(["conversation", "worker", "pursuit", "external"]),
+		environment: z.strictObject({
+			id,
+			capabilities: z.array(versionRefSchema).max(128),
+			policy: versionRefSchema,
+		}),
+		limits: z.strictObject({
+			deadlineAt: z.number().int().positive(),
+			modelCalls: z.number().int().min(1).max(2),
+			sourceCalls: z.number().int().min(1).max(32),
+			candidates: z.number().int().min(1).max(20),
+			documents: z.number().int().min(1).max(8),
+			outputBytes: z.number().int().min(256).max(32768),
+			inputBytes: z.number().int().min(1024).max(131072),
+			outputTokens: z.number().int().min(1).max(8192),
+		}),
+		prior: z
+			.strictObject({ requestRef: id.optional(), buildRef: id.optional() })
+			.optional(),
+	})
+	.superRefine((r, ctx) => {
+		for (const items of [
+			r.task.acceptance,
+			r.task.constraints,
+			r.environment.capabilities,
+		]) {
+			if (!unique(items.map((x) => x.id)))
+				ctx.addIssue({ code: "custom", message: "duplicate_ids" });
+		}
+	});
+export type GuidanceRequest = z.infer<typeof requestSchema>;
+export type VersionRef = z.infer<typeof versionRefSchema>;
+export type Section = z.infer<typeof sectionSchema>;
+
+export const authoritySchema = z.strictObject({
+	scope: id,
+	principal: id,
+	epoch: z.number().int().nonnegative(),
+	sourceRefs: z.array(id).max(64),
+	parentRef: id.optional(),
+	searchTask: z.string().trim().min(1).max(512).optional(),
+	permissions: z.array(z.enum(["build", "report", "manage"])).max(3),
+});
+export type Authority = z.infer<typeof authoritySchema>;
+const ready = z.strictObject({
+	kind: z.literal("ready"),
+	strategy: z.enum(["reuse", "adapt", "compose", "provisional"]),
+	sourceRefs: z.array(id).max(8).refine(unique),
+	sections: z.array(sectionSchema).max(16),
+	patches: z
+		.array(z.strictObject({ sourceRef: id, sectionId: id, body: text }))
+		.max(16),
+	requiredCapabilities: z.array(id).max(128).refine(unique),
+	verification: z.array(text).min(1).max(16),
+	assumptions: z
+		.array(
+			z.strictObject({
+				text,
+				mandatory: z.boolean(),
+				resolved: z.boolean(),
+			}),
+		)
+		.max(16),
+});
+export const decisionSchema = z.discriminatedUnion("kind", [
+	ready,
+	z.strictObject({
+		kind: z.literal("needs_input"),
+		missing: z.array(text).min(1).max(16),
+	}),
+	z.strictObject({ kind: z.literal("unavailable"), code: id }),
+]);
+export type Decision = z.infer<typeof decisionSchema>;
+export type ReadyDecision = Extract<Decision, { kind: "ready" }>;
+export const resultSchema = z.strictObject({
+	reportId: id,
+	buildRef: id,
+	executionRef: id,
+	outcome: z.enum([
+		"succeeded",
+		"failed",
+		"cancelled",
+		"incomplete",
+		"explained",
+	]),
+	evidence: z.array(id).max(32),
+	summary: text,
+	improvement: text.optional(),
+	expectedRevision: z.number().int().nonnegative(),
+});
+export type ResultInput = z.infer<typeof resultSchema>;
+
+export const policySchema = z.strictObject({
+	version: versionRefSchema,
+	body: z.string().max(32768),
+	alreadyPresent: z.boolean(),
+});
+export const evidenceCardSchema = z.strictObject({
+	ref: id,
+	version: versionRefSchema,
+	title: z.string().min(1).max(500),
+	status: z.enum(["active", "superseded", "retracted"]),
+	complete: z.boolean(),
+	external: z.boolean(),
+	scope: id,
+});
+export const usageSchema = z.strictObject({
+	modelCalls: z.number().int().nonnegative(),
+	sourceCalls: z.number().int().nonnegative(),
+	inputTokens: z.number().int().nonnegative().nullable(),
+	outputTokens: z.number().int().nonnegative().nullable(),
+});
+export const buildSchema = z.strictObject({
+	ref: id,
+	requestRef: id,
+	scope: id,
+	key: id,
+	digest: id,
+	content: z.strictObject({
+		contractVersion: z.literal(CONTRACT),
+		task: requestSchema.shape.task,
+		audience: requestSchema.shape.audience,
+		environment: requestSchema.shape.environment,
+		body: z.string().min(1).max(32768),
+		decision: ready,
+		dependencies: z.array(evidenceCardSchema).max(8),
+		policy: policySchema,
+	}),
+	createdAt: z.number().int().nonnegative(),
+	expiresAt: z.number().int().positive(),
+	usage: usageSchema,
+	revoked: z.boolean(),
+});
+const envelope = {
+	contractVersion: z.literal(CONTRACT),
+	requestRef: id.optional(),
+};
+export const replySchema = z.discriminatedUnion("kind", [
+	z.strictObject({ ...envelope, kind: z.literal("ready"), build: buildSchema }),
+	z.strictObject({
+		...envelope,
+		kind: z.literal("pending"),
+		deadlineAt: z.number().int().positive(),
+		retryAfterMs: z.number().int().positive(),
+	}),
+	z.strictObject({
+		...envelope,
+		kind: z.literal("needs_input"),
+		missing: z.array(text).min(1).max(16),
+	}),
+	z.strictObject({ ...envelope, kind: z.literal("unavailable"), code: id }),
+	z.strictObject({ ...envelope, kind: z.literal("rejected"), code: id }),
+	z.strictObject({ ...envelope, kind: z.literal("cancelled"), code: id }),
+	z.strictObject({ ...envelope, kind: z.literal("expired"), code: id }),
+]);

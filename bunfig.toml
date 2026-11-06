@@ -1,0 +1,7 @@
+[fmt]
+useTabs = true
+printWidth = 80
+ignorePatterns = ["**/*.md", "node_modules/**", "dist/**", "artifacts/**"]
+
+[test]
+preload = ["./scripts/test-preload.ts"]

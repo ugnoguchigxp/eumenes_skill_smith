@@ -1,0 +1,40 @@
+{
+	"name": "eumenes-skill-smith",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"sideEffects": false,
+	"packageManager": "bun@1.4.4",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./sqlite": {
+			"types": "./dist/sqlite/index.d.ts",
+			"import": "./dist/sqlite/index.js"
+		}
+	},
+	"scripts": {
+		"typecheck": "bun check",
+		"lint": "oxlint --deny-warnings",
+		"format": "bun fmt",
+		"format:check": "bun fmt --check",
+		"test": "bun test src/test",
+		"test:examples": "bun test examples/contextstill/test",
+		"context:snapshot": "python3 examples/contextstill/snapshot.py",
+		"context:check": "bun examples/contextstill/check.ts",
+		"build": "bun scripts/build.ts",
+		"pack:core": "bun scripts/pack.ts",
+		"verify": "bun scripts/verify.ts"
+	},
+	"dependencies": {
+		"zod": "4.4.3"
+	},
+	"devDependencies": {
+		"@types/bun": "1.3.14",
+		"@types/node": "25.9.3",
+		"typescript": "7.0.2",
+		"oxlint": "1.86.0"
+	}
+}

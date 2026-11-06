@@ -1,0 +1,7 @@
+node_modules/
+dist/
+artifacts/
+coverage/
+*.sqlite*
+data/
+__pycache__/
