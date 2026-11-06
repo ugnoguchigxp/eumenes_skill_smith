@@ -35,3 +35,12 @@ keyword による PII 検出器を製品判定に使いません。モデルの�
 ## 依存・前提
 
 fixture だけで開始できます。隔離に追加推論が必要なら提案 22 で使用量を測ります。host 統合は不要です。仮定: 公開入力だけでも役立つ再検索が可能であること。未測定: 安全分離後の達成率。
+
+## 実装結果
+
+- **採否**: 採用（境界修正）
+- **内容**: `re_search` 時、ローカル Registry にはモデル `query`、外部 SourcePort には TrustedContext.`searchTask` のみを渡すよう分離。`search.reSearch` に `externalQuery` を記録。searchTask 欠如時はローカルのみ。指示・design・integration-contract に境界を明記。keyword PII 検出は未導入。
+- **パス**: `src/service/build.ts`, `src/instructions/build.ts`, `src/test/re-search.test.ts`, `src/test/external-query-noninterference.test.ts`, `design.md`, `integration-contract.md`
+- **試験**: `PATH=/home/box/.bun/bin:$PATH bun test src/test/external-query-noninterference.test.ts src/test/re-search.test.ts`（5 pass）、`bun run verify`（コア 101 / examples 26）
+- **未実施**: 安全分離後の実課題達成率、実モデルが敵対 query を出す頻度
+- **理由**: 再現していた canary 流出経路を構造的に閉じ、公開 searchTask による外部再検索到達性は維持。契約（外部 query は searchTask のみ）に整合。

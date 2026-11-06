@@ -51,12 +51,23 @@ test("model can request one budgeted re_search without keyword gating", async ()
 	const got = f.service.get(f.db, pending.requestRef!, f.auth);
 	expect(got.kind).toBe("ready");
 	expect(searches.length).toBe(2);
-	expect(searches[1]).toBe("資料 比較 手順");
+	// External SourcePort keeps TrustedContext.searchTask; model query is local-only.
+	expect(searches[0]).toBe(f.auth.searchTask);
+	expect(searches[1]).toBe(f.auth.searchTask);
 	const re = (
-		seen[1] as { search: { reSearch: { query: string; cardsAdded: number }[] } }
+		seen[1] as {
+			search: {
+				reSearch: {
+					query: string;
+					externalQuery: string | null;
+					cardsAdded: number;
+				}[];
+			};
+		}
 	).search.reSearch;
 	expect(re).toHaveLength(1);
 	expect(re[0]!.query).toBe("資料 比較 手順");
+	expect(re[0]!.externalQuery).toBe(f.auth.searchTask!);
 	expect(re[0]!.cardsAdded).toBeGreaterThanOrEqual(0);
 	// First model turn saw degraded search data (not keyword-gated by product code).
 	expect(

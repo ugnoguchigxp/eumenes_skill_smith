@@ -58,6 +58,10 @@ SourcePort.searchは `SourceSearch = { cards, warnings: {kind, refs}[], degraded
 
 ホスト側の未確定事項: 実ContextStillのsearch_knowledgeが返すwarningsの実schemaとkindの語彙、degradedの語彙は未照合（疑似APIは `{kind:"unresolved_conflict", handles}` と `mock_lexical_only` 等）。実adapterはhandle→refの変換と語彙の検査を製品接続前に確定する。
 
+### 3.1b 再検索の外部query境界（2026-11-06追加）
+
+モデルが返す `kind=re_search` の `query` はローカル RegistryPort.search にだけ渡す。SourcePort.search へ渡す外部queryは、初回と同様に TrustedContext.searchTask のみとする。モデルquery・task.goal・constraints・記憶・未信頼本文を外部へ流用しない。searchTask が無い／SourcePort が無い場合は外部再検索を行わず、ローカル再検索だけを実施し、`search.reSearch[].externalQuery` は null とする。keyword による PII 検出はこの境界の代用にしない。
+
 ### 3.1a 撤回済み資料の後継（2026-11-06追加）
 
 EvidenceCard／Evidenceは任意の `supersededBy`（同じ取得元のref）を持てる。コアは取得したsupersededの文書に後継があれば、同じ取得元から documents上限とsourceCalls予算の内で取得する。結果は推論入力の `search.successors` に `{ref, successor, outcome}` として渡す。outcomeは fetched／unavailable（取得失敗・ref不一致・scope外）／cycle／limit。予算超過・中断・コアの拒否は従来どおりビルド失敗とする。後継が今回の目的に合うか、不足を補えるかはLLMが判断する。指示版は `build.v3`。ContextStill疑似adapterは `item.supersededBy` のhandleをrefへ変換する。実ContextStillでの後継の公開性は未照合。

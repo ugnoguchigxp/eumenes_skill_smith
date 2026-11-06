@@ -188,7 +188,11 @@ export async function executeBuild<Tx>(
 		}[];
 		externalUsed: boolean;
 		sourceSearch: z.infer<typeof sourceSearchSchema> | undefined;
-		reSearch: { query: string; cardsAdded: number }[];
+		reSearch: {
+			query: string;
+			externalQuery: string | null;
+			cardsAdded: number;
+		}[];
 	};
 
 	async function runSearch(
@@ -303,7 +307,11 @@ export async function executeBuild<Tx>(
 		}
 		const reSearch = state?.reSearch ? [...state.reSearch] : [];
 		if (state)
-			reSearch.push({ query: queryExternal ?? queryLocal, cardsAdded });
+			reSearch.push({
+				query: queryLocal,
+				externalQuery: queryExternal ?? null,
+				cardsAdded,
+			});
 		return {
 			candidates,
 			evidence,
@@ -435,7 +443,8 @@ export async function executeBuild<Tx>(
 			}
 			reSearchUsed = true;
 			repair = undefined;
-			state = await runSearch(turn.query, turn.query, state);
+			// Local registry may use the model query; external SourcePort must keep TrustedContext.searchTask only.
+			state = await runSearch(turn.query, r.authority.searchTask, state);
 			continue;
 		}
 		if (turn.kind === "disclose") {
