@@ -3,6 +3,15 @@
 	"mode": "full",
 	"suite": "seed-skill-assembly",
 	"searchProfile": "bm25",
+	"identity": {
+		"searchProfile": "bm25",
+		"suiteId": "seed-skill-assembly",
+		"suiteFileSha256": "b86a8041d2d4d58baa7de63a0075739a5d7db52a84b086b618641f5b65d0597e",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
 	"filter": {
 		"axis": null,
 		"queryStyle": null
@@ -44,8 +53,12 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
-			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"usedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+			],
+			"expectedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+			],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Never commit secrets or local environment files」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は .env・APIキー・トークン・秘密鍵・cookie・機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用である。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -56,8 +69,12 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
-			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"usedRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+			],
+			"expectedRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+			],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Test in a Production Clone」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で変更を試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -68,8 +85,12 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
-			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"usedRefs": [
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"expectedRefs": [
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Never print secrets into logs or responses」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを印刷・保存・返却せず、診断出力の記録や要約の前にマスキングするという目的と受入条件に沿う。handle 順では到達せず needs_input になっていた案件で、今回は指針が出力されている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -80,8 +101,12 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
-			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"usedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+			],
+			"expectedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+			],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、ユーザーが明示しない限り --no-verify を使わない手順になっており、bypass せず直すという目的に沿う。handle 順では到達せず needs_input になっていた。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -92,14 +117,76 @@
 			"score": 7,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
-			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"usedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+			],
+			"expectedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+			],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Use 4-Space Indentation」が BM25 で検索1位に届き、reuse でその参照を採用している。本文は Python コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせるという規則であり、題名だけから任意言語へ4スペースを課してはいない。前提でも Python 向けであることとリポジトリ言語が未指定であることを残している。目的は「このリポジトリ」のインデント幅であり言語が無いため、Python 以外への適用は未確定である。期待Skillは使われ指針も出ているが、リポジトリ全体への無条件回答にはなっていないので 9 にはしない。",
 			"judge": "llm"
 		}
 	],
+	"recordProvenance": [
+		{
+			"taskId": "commit-no-secrets",
+			"builderInputDigests": [
+				"6ff035e0aa35bf295acf0837f017e399e6b5336dcf9d24abff5b5b489c30e9bc",
+				"024564951eb8299efe8503b2c594965de4e8ea9791614ffc4d73a49f8a3e9ce9"
+			],
+			"judgeInputDigest": "3aa877a3fbe30f5a3f0008ce44f437274b2b7378188023bfd74a98201a146aba",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "test-production-clone",
+			"builderInputDigests": [
+				"98e2732aae1137299ec755161ac81e8ec1d9f5d4e95ec76a6c944d624f881348",
+				"575c21e28db260f7eb1ba097900e7800792c9bd66c8fa5b8958b174afcb2cb5f"
+			],
+			"judgeInputDigest": "77bfb51bfca6e765c4547f3e8b249cae92193f57d5c0e9624576b7abc8b713e0",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"builderInputDigests": [
+				"4077f18b57e471479f8478e69777298b0c5eaaf950b44ae8fc80681b8263a711",
+				"2b3e452bbf5942230168435d0441c957f8af58ad8cf84539aee42653571a0628"
+			],
+			"judgeInputDigest": "01d9f1009a65b3ea96d1fa1c8c12915c11a0ea23181fbd7b2d01a9190d5e6c8a",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"builderInputDigests": [
+				"ab6a61780ea6f17313f19feed82454ad52cf7f052e574116d610f88194799d27",
+				"139bbc455bae5581fd039ddb70d87987112ecaa6007cadf55cdde395e5822787"
+			],
+			"judgeInputDigest": "74d257c73064fc6c1182eb4785ebeaa58380e6435911d02c71dbfbf9635487dc",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "four-space-indent",
+			"builderInputDigests": [
+				"d3faff962f79c0fd0efb52c96b6267f24f757075145105c6edec7632d3472da1",
+				"f81dcd9e4de589ac4eb090609f061186cdd9ecbf54d01aec916aa4295b11a52f"
+			],
+			"judgeInputDigest": "d43eab1e8e8b0aaa24a52fad00ac7fcd520784d121774d7d163f5cdb9b56709a",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 10,
+		"judgeInferenceTasks": 5,
+		"inputTokens": null,
+		"outputTokens": null
+	},
 	"pendingFiles": [],
 	"searchPreview": [
 		{

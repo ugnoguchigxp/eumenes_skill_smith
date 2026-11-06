@@ -1,4 +1,4 @@
-// Scenario eval (proposal 26): typed three-axis suite, two modes.
+// Scenario eval (proposal 26/35): typed three-axis suite, two modes.
 // Usage:
 //   bun examples/contextstill/scenario-eval.ts                       # full: legacy 5-task suite, LLM judge replay
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
@@ -8,7 +8,8 @@
 // retrieval-only: SourcePort search only, zero inference, no 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
 // New reports go to --output-dir (default data/contextstill/scenario-reports); the repo scores.json is
-// written only for the legacy suite in full mode without --output-dir.
+// written only for the legacy suite in full mode without --output-dir when complete.
+// Proposal 35: reports carry identity (profile/suite/seed/instruction digests), recordProvenance, measured usage.
 import "../../scripts/test-preload.js";
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -18,6 +19,7 @@ import { createFixtureSource } from "./source.js";
 import { recordedInference, type InferenceRecord } from "./recorded.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
+	buildEvalIdentity,
 	parseSearchProfile,
 	runFull,
 	runRetrievalOnly,
@@ -65,6 +67,12 @@ const fixture = new ContextStillFixture(dbPath, searchProfile);
 const token = crypto.randomUUID();
 const source = createFixtureSource(createMcpHandler(fixture, token), token);
 const filter = { axis: axis ?? null, queryStyle: queryStyle ?? null };
+const identity = buildEvalIdentity({
+	searchProfile,
+	suiteId: suite.id,
+	suitePath,
+	seedPath: dbPath,
+});
 
 try {
 	mkdirSync(reportDir, { recursive: true });
@@ -75,6 +83,7 @@ try {
 			mode: "retrieval-only",
 			suite: suite.id,
 			searchProfile,
+			identity,
 			filter,
 			inferenceCalls: 0,
 			summary: summarizeRetrieval(rows),
@@ -123,6 +132,7 @@ try {
 			mode: "full",
 			suite: suite.id,
 			searchProfile,
+			identity,
 			filter,
 			status: result.complete ? "complete" : "incomplete",
 			tasks: tasks.length,
@@ -130,6 +140,8 @@ try {
 			meanScore: result.meanScore,
 			statuses: result.statuses,
 			scores: result.scores,
+			recordProvenance: result.recordProvenance,
+			usage: result.usage,
 			pendingFiles,
 			searchPreview: result.searchPreview,
 			note: result.complete
@@ -147,6 +159,7 @@ try {
 			: legacyDefault
 				? resolve("examples/contextstill/scenarios/scores.json")
 				: resolve(reportDir, `full-${suite.id}.json`);
+		// Incomplete runs must not write score files as if complete (proposal 26/35).
 		if (result.complete)
 			writeFileSync(scorePath, JSON.stringify(report, null, 2));
 		console.log(

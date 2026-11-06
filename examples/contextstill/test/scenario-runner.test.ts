@@ -1,7 +1,17 @@
 import { expect, test } from "bun:test";
-import { runFull, runRetrievalOnly } from "../scenario-runner.js";
-import { recordedInference } from "../recorded.js";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import {
+	buildEvalIdentity,
+	runFull,
+	runRetrievalOnly,
+} from "../scenario-runner.js";
+import { inferenceTask, recordedInference } from "../recorded.js";
 import type { NormalizedScenarioTask } from "../../../src/eval/scenario-score.js";
+import { ContextStillFixture } from "../database.js";
+import { createMcpHandler } from "../mcp.js";
+import { createFixtureSource } from "../source.js";
+import { parseAnyScenarioSuite } from "../../../src/eval/scenario-score.js";
 import { handle, setup } from "./fixture.js";
 
 const task = (
@@ -19,6 +29,55 @@ const task = (
 	legacy: null,
 	...over,
 });
+
+/** Fixture build model: same shape as createExampleHost's default wiring inference. */
+function wiringBuild(onTask: (task: ReturnType<typeof inferenceTask>) => void) {
+	const receipts = new Set<string>();
+	return {
+		complete: async (
+			input: Parameters<ReturnType<typeof recordedInference>["complete"]>[0],
+			signal: AbortSignal,
+		) => {
+			signal.throwIfAborted();
+			onTask(inferenceTask(input));
+			const index = (
+				input.data as {
+					evidenceIndex: {
+						ref: string;
+						status: string;
+						complete: boolean;
+					}[];
+				}
+			).evidenceIndex;
+			const card = index?.find((e) => e.status === "active" && e.complete);
+			const receipt = crypto.randomUUID();
+			receipts.add(receipt);
+			return {
+				value: card
+					? {
+							kind: "ready",
+							strategy: "compose",
+							sourceRefs: [card.ref],
+							sections: [
+								{
+									id: "wiring-only",
+									body: "固定モデルによる接続確認。実作業の指針として使用しない。",
+								},
+							],
+							patches: [],
+							requiredCapabilities: [],
+							verification: ["取得した依存版を再検査する"],
+							assumptions: [],
+						}
+					: { kind: "unavailable", code: "fixture_no_complete_evidence" },
+				receipt,
+				inputTokens: null,
+				outputTokens: null,
+			};
+		},
+		validReceipt: (_tx: unknown, receipt: string) => receipts.has(receipt),
+	};
+}
 
 test("retrieval-only makes zero inference calls and reports per-ref ranks", async () => {
 	const f = setup();
@@ -82,4 +141,180 @@ test("full mode with missing records is incomplete and withholds the mean", asyn
 	expect(result.complete).toBe(false);
 	expect(result.meanScore).toBeNull();
 	expect(result.statuses[0]!.status).toBe("awaiting_build_inference");
+	expect(result.usage.inputTokens).toBeNull();
+	expect(result.usage.outputTokens).toBeNull();
+});
+
+test("source.search throw isolates to one status row; later tasks still run", async () => {
+	const f = setup();
+	let searches = 0;
+	const source = {
+		search: async (...a: Parameters<typeof f.source.search>) => {
+			searches++;
+			if (searches === 1) throw new Error("source_boom");
+			return f.source.search(...a);
+		},
+		get: f.source.get.bind(f.source),
+		validate: f.source.validate.bind(f.source),
+	};
+	const result = await runFull({
+		tasks: [
+			task({
+				id: "boom",
+				expectedRefs: ["contextstill:a"],
+				expectedTitles: ["a"],
+			}),
+			task({
+				id: "later",
+				expectedRefs: ["contextstill:b"],
+				expectedTitles: ["b"],
+			}),
+		],
+		source,
+		createInference: (_role, onTask) => recordedInference([], onTask),
+		hasBuildRecord: () => false,
+	});
+	expect(result.statuses).toHaveLength(2);
+	expect(result.statuses[0]).toMatchObject({
+		taskId: "boom",
+		status: "error",
+		detail: "source_boom",
+	});
+	expect(result.statuses[1]!.status).toBe("awaiting_build_inference");
+	expect(result.complete).toBe(false);
+	expect(result.meanScore).toBeNull();
+	expect(result.scores).toEqual([]);
+});
+
+test("invalid judge value is status invalid; other tasks can still score; mean withheld", async () => {
+	const f = setup();
+	const first = (await f.source.search("検証", 1, f.signal)).cards[0]!.ref;
+	const result = await runFull({
+		tasks: [
+			task({
+				id: "good",
+				goal: "検証",
+				expectedRefs: [first],
+				expectedTitles: ["x"],
+			}),
+			task({
+				id: "bad",
+				goal: "検証",
+				expectedRefs: [first],
+				expectedTitles: ["x"],
+			}),
+		],
+		source: f.source,
+		createInference: (role, onTask) => {
+			if (role === "build") return wiringBuild(onTask);
+			const receipts = new Set<string>();
+			return {
+				complete: async (input, signal) => {
+					signal.throwIfAborted();
+					onTask(inferenceTask(input));
+					const receipt = crypto.randomUUID();
+					receipts.add(receipt);
+					const invalid = input.requestRef.includes("bad");
+					return {
+						value: invalid
+							? { score: 99, expectedSkillUsed: "yes", rationale: "" }
+							: {
+									score: 8,
+									expectedSkillUsed: true,
+									rationale: "配線試験の妥当な評点本文",
+								},
+						receipt,
+						inputTokens: null,
+						outputTokens: null,
+					};
+				},
+				validReceipt: (_tx, receipt) => receipts.has(receipt),
+			};
+		},
+		hasBuildRecord: () => true,
+	});
+	expect(result.statuses).toHaveLength(2);
+	const byId = Object.fromEntries(
+		result.statuses.map((s) => [s.taskId, s.status]),
+	);
+	expect(byId.good).toBe("scored");
+	expect(byId.bad).toBe("invalid");
+	expect(result.scores).toHaveLength(1);
+	expect(result.scores[0]!.taskId).toBe("good");
+	expect(result.scores[0]!.score).toBe(8);
+	expect(result.complete).toBe(false);
+	expect(result.meanScore).toBeNull();
+	const badProv = result.recordProvenance.find((p) => p.taskId === "bad")!;
+	expect(badProv.judgeInputDigest).not.toBeNull();
+	expect(badProv.judgeRecordPresent).toBe(true);
+	expect(result.usage.inputTokens).toBeNull();
+	expect(result.usage.outputTokens).toBeNull();
+});
+
+test("buildEvalIdentity populates profile, file hashes, and instruction digests", () => {
+	const suitePath = resolve("examples/contextstill/scenarios/suite.json");
+	const seedPath = resolve("data/contextstill/seed.sqlite");
+	const identity = buildEvalIdentity({
+		searchProfile: "handle",
+		suiteId: "seed-skill-assembly",
+		suitePath,
+		seedPath,
+	});
+	expect(identity.searchProfile).toBe("handle");
+	expect(identity.suiteId).toBe("seed-skill-assembly");
+	expect(identity.suiteFileSha256).toMatch(/^[a-f0-9]{64}$/);
+	expect(identity.seedFileSha256).toMatch(/^[a-f0-9]{64}$/);
+	expect(identity.buildInstructionsDigest).toMatch(/^[a-f0-9]{64}$/);
+	expect(identity.judgeInstructionsDigest).toMatch(/^[a-f0-9]{64}$/);
+	expect(identity.judgeSchemaDigest).toMatch(/^[a-f0-9]{64}$/);
+	expect(identity.suiteFileSha256).not.toBe(identity.seedFileSha256);
+});
+
+test("handle-profile records under bm25 do not silently reuse as scored", async () => {
+	const suite = parseAnyScenarioSuite(
+		JSON.parse(
+			readFileSync("examples/contextstill/scenarios/suite.json", "utf8"),
+		),
+	);
+	const buildRecords = JSON.parse(
+		readFileSync("examples/contextstill/scenarios/build-records.json", "utf8"),
+	) as { inputDigest: string; value: unknown; provider: string }[];
+	const judgeRecords = JSON.parse(
+		readFileSync("examples/contextstill/scenarios/judge-records.json", "utf8"),
+	) as { inputDigest: string; value: unknown; provider: string }[];
+	const fixture = new ContextStillFixture(
+		"data/contextstill/seed.sqlite",
+		"bm25",
+	);
+	const token = crypto.randomUUID();
+	const source = createFixtureSource(createMcpHandler(fixture, token), token);
+	try {
+		const result = await runFull({
+			tasks: suite.tasks,
+			source,
+			createInference: (role, onTask) =>
+				recordedInference(
+					role === "build" ? buildRecords : judgeRecords,
+					onTask,
+				),
+			hasBuildRecord: (d) => buildRecords.some((r) => r.inputDigest === d),
+		});
+		expect(result.complete).toBe(false);
+		expect(result.meanScore).toBeNull();
+		expect(result.scores).toEqual([]);
+		expect(
+			result.statuses.every(
+				(s) =>
+					s.status === "awaiting_build_inference" ||
+					s.status === "awaiting_judge" ||
+					s.status === "error",
+			),
+		).toBe(true);
+		expect(
+			result.statuses.some((s) => s.status === "awaiting_build_inference"),
+		).toBe(true);
+		expect(result.statuses.some((s) => s.status === "scored")).toBe(false);
+	} finally {
+		fixture.close();
+	}
 });
