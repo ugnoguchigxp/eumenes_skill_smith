@@ -7,7 +7,19 @@ import { multiQueryDigests } from "./multi-query.js";
 import type { SearchProfile } from "./database.js";
 import { createExampleHost } from "./host.js";
 import type { SourcePort } from "./source.js";
-import type { InferenceTask, recordedInference } from "./recorded.js";
+import {
+	COMPOSE_JUDGE_INSTRUCTIONS,
+	composeJudgeSchema,
+	composeJudgeOutputSchema,
+	composeJudgeDigests,
+	oracleEvidenceSource,
+	type EvidenceSupply,
+} from "./compose-isolation.js";
+import type {
+	InferenceTask,
+	RecordContext,
+	recordedInference,
+} from "./recorded.js";
 import {
 	reformulationDigests,
 	type QueryReformulation,
@@ -194,6 +206,9 @@ export type TaskStatus =
 export interface RunIdentity {
 	searchProfile: SearchProfile;
 	assemblyMode: AssemblyMode;
+	evidenceSupply: EvidenceSupply;
+	composeJudgeInstructionsDigest: string;
+	composeJudgeSchemaDigest: string;
 	/** Proposals 28/29 opt-in; records with and without it must not mix. */
 	queryReformulation: QueryReformulation;
 	reformulationInstructionsDigest: string | null;
@@ -228,11 +243,14 @@ export function buildEvalIdentity(input: {
 	seedPath: string;
 	assemblyMode?: AssemblyMode;
 	queryReformulation?: QueryReformulation;
+	evidenceSupply?: EvidenceSupply;
 }): RunIdentity {
 	const assemblyMode = input.assemblyMode ?? "baseline";
 	const queryReformulation = input.queryReformulation ?? "off";
 	return {
 		searchProfile: input.searchProfile,
+		evidenceSupply: input.evidenceSupply ?? "natural",
+		...composeJudgeDigests(),
 		assemblyMode,
 		queryReformulation,
 		...(queryReformulation === "on"
@@ -272,6 +290,8 @@ export interface RunUsage {
 	/** recordedInference leaves tokens null; never coerce to 0. */
 	inputTokens: null;
 	outputTokens: null;
+	/** Eval-only document reads for oracle cards and compose judge reference bodies. */
+	evalEvidenceGetCalls: number;
 }
 
 export interface FullDeps {
@@ -281,10 +301,13 @@ export interface FullDeps {
 	createInference: (
 		role: "build" | "judge",
 		onTask: (task: InferenceTask) => void,
+		/** Replay namespace only; must not be sent to the builder model. */
+		recordContext?: RecordContext,
 	) => Inference;
 	hasBuildRecord: (digest: string) => boolean;
 	/** Opt-in compact assembly (proposal 36). Default baseline. */
 	assemblyMode?: AssemblyMode;
+	evidenceSupply?: EvidenceSupply;
 	/** Proposal 28 ledger; present only when the source is the reformulating wrapper. */
 	reformulation?: ReformulationLedger;
 }
@@ -301,6 +324,14 @@ export async function runFull(deps: FullDeps) {
 	const pendingBuild: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const pendingJudge: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const scores: AssemblyScore[] = [];
+	const composeScores: {
+		taskId: string;
+		coverage: number;
+		coherence: number;
+		conflictHandling: number;
+		actionability: number;
+	}[] = [];
+	let evalEvidenceGetCalls = 0;
 	const searchPreview: {
 		taskId: string;
 		retrievalRank: number | null;
@@ -322,6 +353,9 @@ export async function runFull(deps: FullDeps) {
 	let buildInferenceTasks = 0;
 	let judgeInferenceTasks = 0;
 	const assemblyMode = deps.assemblyMode ?? "baseline";
+	const evidenceSupply = deps.evidenceSupply ?? "natural";
+	const recordContext =
+		evidenceSupply === "oracle" ? ({ evidenceSupply } as const) : undefined;
 	for (const task of deps.tasks) {
 		const status = (s: TaskStatus, detail?: string) =>
 			statuses.push({
@@ -339,7 +373,18 @@ export async function runFull(deps: FullDeps) {
 		};
 		recordProvenance.push(provenance);
 		try {
-			const search = await deps.source.search(
+			const taskSource =
+				evidenceSupply === "oracle"
+					? await oracleEvidenceSource(
+							deps.source,
+							task.expectedRefs,
+							new AbortController().signal,
+							() => {
+								evalEvidenceGetCalls++;
+							},
+						)
+					: deps.source;
+			const search = await taskSource.search(
 				task.goal,
 				PRIMARY_K,
 				new AbortController().signal,
@@ -360,12 +405,16 @@ export async function runFull(deps: FullDeps) {
 			const collected: InferenceTask[] = [];
 			const view = builderView(task);
 			const host = createExampleHost(
-				deps.source,
+				taskSource,
 				view.goal,
-				deps.createInference("build", (item) => {
-					collected.push(item);
-					provenance.builderInputDigests.push(item.inputDigest);
-				}),
+				deps.createInference(
+					"build",
+					(item) => {
+						collected.push(item);
+						provenance.builderInputDigests.push(item.inputDigest);
+					},
+					recordContext,
+				),
 				{
 					goal: view.goal,
 					acceptance: view.acceptance,
@@ -410,41 +459,76 @@ export async function runFull(deps: FullDeps) {
 						? reply.kind
 						: "error";
 				const judgeTasks: InferenceTask[] = [];
-				const judge = deps.createInference("judge", (item) => {
-					judgeTasks.push(item);
-					provenance.judgeInputDigest = item.inputDigest;
-				});
+				const judge = deps.createInference(
+					"judge",
+					(item) => {
+						judgeTasks.push(item);
+						provenance.judgeInputDigest = item.inputDigest;
+					},
+					recordContext,
+				);
 				try {
+					const compose = task.axis === "compose";
+					// Judge-only ground truth documents; never inserted into builder task/data.
+					const referenceEvidence = [];
+					if (compose)
+						for (const ref of task.expectedRefs) {
+							evalEvidenceGetCalls++;
+							const doc = await deps.source.get(
+								ref,
+								new AbortController().signal,
+							);
+							referenceEvidence.push({
+								ref: doc.ref,
+								title: doc.title,
+								body: doc.body,
+							});
+						}
+					const data = judgeData({
+						task,
+						retrievalRank: rank,
+						retrieved,
+						usedRefs,
+						strategy,
+						kind,
+						sections,
+						body,
+						missing,
+					});
 					const judged = await judge.complete(
 						{
-							system: JUDGE_INSTRUCTIONS,
-							data: judgeData({
-								task,
-								retrievalRank: rank,
-								retrieved,
-								usedRefs,
-								strategy,
-								kind,
-								sections,
-								body,
-								missing,
-							}),
-							schema: judgeOutputSchema,
+							system: compose ? COMPOSE_JUDGE_INSTRUCTIONS : JUDGE_INSTRUCTIONS,
+							data: compose
+								? { ...data, evidenceSupply, referenceEvidence }
+								: data,
+							schema: compose ? composeJudgeOutputSchema : judgeOutputSchema,
 							requestRef: `scenario-judge:${task.id}`,
-							maxOutputTokens: 400,
+							maxOutputTokens: compose ? 1200 : 400,
 							deadlineAt: fixedDeadline,
 						},
 						new AbortController().signal,
 					);
 					judgeInferenceTasks += judgeTasks.length;
 					provenance.judgeRecordPresent = true;
-					const parsed = assemblyJudgeSchema.safeParse(judged.value);
+					const parsed = (
+						compose ? composeJudgeSchema : assemblyJudgeSchema
+					).safeParse(judged.value);
 					if (!parsed.success) {
 						status(
 							"invalid",
 							parsed.error.issues[0]?.message ?? "judge_schema_invalid",
 						);
 						continue;
+					}
+					if (compose) {
+						const detailed = composeJudgeSchema.parse(judged.value);
+						composeScores.push({
+							taskId: task.id,
+							coverage: detailed.coverage,
+							coherence: detailed.coherence,
+							conflictHandling: detailed.conflictHandling,
+							actionability: detailed.actionability,
+						});
 					}
 					scores.push(
 						scoreFromJudge(
@@ -492,9 +576,12 @@ export async function runFull(deps: FullDeps) {
 		reformulationInferenceTasks,
 		inputTokens: null,
 		outputTokens: null,
+		evalEvidenceGetCalls,
 	};
 	return {
 		complete,
+		evidenceSupply,
+		composeScores,
 		statuses,
 		scores,
 		pendingBuild,

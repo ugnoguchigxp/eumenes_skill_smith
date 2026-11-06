@@ -4,6 +4,7 @@
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
 //            --search-profile handle|bm25 (default handle)
+//            --evidence-supply natural|oracle (default natural; oracle is full eval only)
 //            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
 //            --query-reformulation off|on|multi (default off; proposals 28/29 opt-in, not adopted)
 //            --reformulation-records path (on default: examples/contextstill/scenarios/reformulation-records.json)
@@ -31,6 +32,7 @@ import {
 	type ReformulationTrace,
 } from "./query-reformulation.js";
 import { createMultiQuerySource, type MultiQueryTrace } from "./multi-query.js";
+import { parseEvidenceSupply } from "./compose-isolation.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
 	buildEvalIdentity,
@@ -59,8 +61,11 @@ function loadRecords(path: string): InferenceRecord[] {
 
 const searchProfile = parseSearchProfile(process.argv);
 const assemblyMode = parseAssemblyMode(process.argv);
+const evidenceSupply = parseEvidenceSupply(process.argv);
 const queryReformulation = parseQueryReformulation(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
+if (retrievalOnly && evidenceSupply !== "natural")
+	throw new Error("--evidence-supply oracle requires full evaluation");
 const suitePath = arg("--suite", "examples/contextstill/scenarios/suite.json");
 const dbPath = arg("--db", "data/contextstill/seed.sqlite");
 const outputDir = raw("--output-dir") ? resolve(raw("--output-dir")!) : null;
@@ -138,6 +143,7 @@ const identity = buildEvalIdentity({
 	suitePath,
 	seedPath: dbPath,
 	queryReformulation,
+	evidenceSupply,
 });
 
 try {
@@ -203,15 +209,17 @@ try {
 			tasks,
 			source,
 			assemblyMode,
-			createInference: (role, onTask) =>
+			evidenceSupply,
+			createInference: (role, onTask, recordContext) =>
 				recordedInference(
 					role === "build" ? buildRecords : judgeRecords,
 					onTask,
+					recordContext,
 				),
 			hasBuildRecord: (d) => buildRecords.some((r) => r.inputDigest === d),
 			reformulation: reformulationLedger,
 		});
-		const pendingDir = resolve("data/contextstill");
+		const pendingDir = outputDir ?? resolve("data/contextstill");
 		const pendingFiles: string[] = [];
 		for (const [name, items] of [
 			["scenario-build-pending.json", result.pendingBuild],
@@ -237,6 +245,8 @@ try {
 			meanScore: result.meanScore,
 			statuses: result.statuses,
 			scores: result.scores,
+			composeScores: result.composeScores,
+			evidenceSupply,
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,
 			pendingFiles,
@@ -253,7 +263,8 @@ try {
 			!queryStyle &&
 			searchProfile === "handle" &&
 			assemblyMode === "baseline" &&
-			queryReformulation === "off";
+			queryReformulation === "off" &&
+			evidenceSupply === "natural";
 		const scorePath = raw("--scores")
 			? resolve(raw("--scores")!)
 			: legacyDefault

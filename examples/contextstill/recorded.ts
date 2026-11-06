@@ -4,13 +4,18 @@ import { digest } from "../../src/index.js";
 type Inference = Ports<unknown>["inference"];
 type Input = Parameters<Inference["complete"]>[0];
 
-/** Exact payload a live provider (e.g. Grok Bot in the parent chat) must judge. */
-export const inferenceTask = (input: Input) => ({
+/** Eval-only replay namespace, never part of the model data/system/schema. */
+export type RecordContext = { evidenceSupply: "oracle" };
+
+/** Exact model payload plus optional host-side replay context. Omitted preserves legacy digests. */
+export const inferenceTask = (input: Input, recordContext?: RecordContext) => ({
 	inputDigest: digest({
 		system: input.system,
 		data: input.data,
 		schema: input.schema,
+		...(recordContext ? { recordContext } : {}),
 	}),
+	...(recordContext ? { recordContext } : {}),
 	requestRef: input.requestRef,
 	system: input.system,
 	data: input.data,
@@ -32,12 +37,13 @@ export interface InferenceRecord {
 export function recordedInference(
 	records: InferenceRecord[],
 	onTask: (task: InferenceTask) => void = () => {},
+	recordContext?: RecordContext,
 ): Inference {
 	const receipts = new Set<string>();
 	return {
 		complete: async (input, signal) => {
 			signal.throwIfAborted();
-			const task = inferenceTask(input);
+			const task = inferenceTask(input, recordContext);
 			onTask(task);
 			const record = records.find((r) => r.inputDigest === task.inputDigest);
 			if (!record) throw new Error("inference_record_missing");
