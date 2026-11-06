@@ -5,6 +5,8 @@
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
 //            --search-profile handle|bm25 (default handle)
 //            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
+//            --query-reformulation off|on (default off; proposal 28 opt-in, not adopted)
+//            --reformulation-records path (default examples/contextstill/scenarios/reformulation-records.json)
 //            --build-records path --judge-records path --scores path --db path
 // retrieval-only: SourcePort search only, zero inference, no 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
@@ -17,7 +19,16 @@ import { resolve } from "node:path";
 import { ContextStillFixture } from "./database.js";
 import { createMcpHandler } from "./mcp.js";
 import { createFixtureSource } from "./source.js";
-import { recordedInference, type InferenceRecord } from "./recorded.js";
+import {
+	recordedInference,
+	type InferenceRecord,
+	type InferenceTask,
+} from "./recorded.js";
+import {
+	createReformulatingSource,
+	parseQueryReformulation,
+	type ReformulationTrace,
+} from "./query-reformulation.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
 	buildEvalIdentity,
@@ -26,6 +37,8 @@ import {
 	runFull,
 	runRetrievalOnly,
 	summarizeRetrieval,
+	type PendingReformulation,
+	type ReformulationLedger,
 } from "./scenario-runner.js";
 
 function raw(name: string) {
@@ -44,6 +57,7 @@ function loadRecords(path: string): InferenceRecord[] {
 
 const searchProfile = parseSearchProfile(process.argv);
 const assemblyMode = parseAssemblyMode(process.argv);
+const queryReformulation = parseQueryReformulation(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
 const suitePath = arg("--suite", "examples/contextstill/scenarios/suite.json");
 const dbPath = arg("--db", "data/contextstill/seed.sqlite");
@@ -68,7 +82,46 @@ if (!tasks.length)
 	throw new Error("no tasks after --axis/--query-style filter");
 const fixture = new ContextStillFixture(dbPath, searchProfile);
 const token = crypto.randomUUID();
-const source = createFixtureSource(createMcpHandler(fixture, token), token);
+const fixtureSource = createFixtureSource(
+	createMcpHandler(fixture, token),
+	token,
+);
+// Proposal 28: off leaves the fixture source untouched (default path unchanged).
+const reformulationTraces: ReformulationTrace[] = [];
+let reformulationCalls = 0;
+let reformulationLedger: ReformulationLedger | undefined;
+let source = fixtureSource;
+if (queryReformulation === "on") {
+	const records = loadRecords(
+		arg(
+			"--reformulation-records",
+			"examples/contextstill/scenarios/reformulation-records.json",
+		),
+	);
+	const collected: InferenceTask[] = [];
+	reformulationLedger = {
+		drain: () => collected.splice(0),
+		hasRecord: (d) => records.some((r) => r.inputDigest === d),
+	};
+	source = createReformulatingSource(
+		fixtureSource,
+		recordedInference(records, (item) => {
+			reformulationCalls += 1;
+			collected.push(item);
+		}),
+		{
+			deadlineAt: 1_700_000_000_000 + 120_000,
+			onTrace: (trace) => reformulationTraces.push(trace),
+		},
+	);
+}
+const pendingReformulation: PendingReformulation[] = [];
+function writePendingReformulation(items: PendingReformulation[]) {
+	if (!items.length) return null;
+	const path = resolve("data/contextstill/scenario-reformulation-pending.json");
+	writeFileSync(path, JSON.stringify(items, null, 2));
+	return path;
+}
 const filter = { axis: axis ?? null, queryStyle: queryStyle ?? null };
 const identity = buildEvalIdentity({
 	searchProfile,
@@ -76,28 +129,55 @@ const identity = buildEvalIdentity({
 	suiteId: suite.id,
 	suitePath,
 	seedPath: dbPath,
+	queryReformulation,
 });
 
 try {
 	mkdirSync(reportDir, { recursive: true });
 	if (retrievalOnly) {
-		const rows = await runRetrievalOnly(tasks, source);
+		const rows = await runRetrievalOnly(
+			tasks,
+			source,
+			reformulationLedger,
+			pendingReformulation,
+		);
+		const pendingFile = writePendingReformulation(pendingReformulation);
 		const report = {
-			ok: true,
+			ok: !pendingFile,
+			...(pendingFile
+				? { status: "awaiting_reformulation_inference", pendingFile }
+				: {}),
 			mode: "retrieval-only",
 			suite: suite.id,
 			searchProfile,
 			assemblyMode,
 			identity,
 			filter,
+			// Search-only: zero build/judge inference; reformulation calls are counted separately.
 			inferenceCalls: 0,
+			...(queryReformulation === "on"
+				? {
+						reformulationInferenceTasks: reformulationCalls,
+						inputTokens: null,
+						outputTokens: null,
+						reformulationTraces,
+					}
+				: {}),
 			summary: summarizeRetrieval(rows),
 			rows,
 			note: `Search ranks only (${searchProfile}-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality.`,
 		};
 		const path = resolve(reportDir, `retrieval-${suite.id}.json`);
-		writeFileSync(path, JSON.stringify(report, null, 2));
-		console.log(JSON.stringify({ ...report, reportFile: path }, null, 2));
+		// Pending runs must not write a ranks report as if complete.
+		if (!pendingFile) writeFileSync(path, JSON.stringify(report, null, 2));
+		console.log(
+			JSON.stringify(
+				{ ...report, reportFile: pendingFile ? null : path },
+				null,
+				2,
+			),
+		);
+		if (pendingFile) process.exitCode = 2;
 	} else {
 		const buildRecords = loadRecords(
 			arg(
@@ -121,12 +201,14 @@ try {
 					onTask,
 				),
 			hasBuildRecord: (d) => buildRecords.some((r) => r.inputDigest === d),
+			reformulation: reformulationLedger,
 		});
 		const pendingDir = resolve("data/contextstill");
 		const pendingFiles: string[] = [];
 		for (const [name, items] of [
 			["scenario-build-pending.json", result.pendingBuild],
 			["scenario-judge-pending.json", result.pendingJudge],
+			["scenario-reformulation-pending.json", result.pendingReformulation],
 		] as const) {
 			if (!items.length) continue;
 			const path = resolve(pendingDir, name);
@@ -150,6 +232,7 @@ try {
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,
 			pendingFiles,
+			...(queryReformulation === "on" ? { reformulationTraces } : {}),
 			searchPreview: result.searchPreview,
 			note: result.complete
 				? "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
@@ -161,7 +244,8 @@ try {
 			!axis &&
 			!queryStyle &&
 			searchProfile === "handle" &&
-			assemblyMode === "baseline";
+			assemblyMode === "baseline" &&
+			queryReformulation === "off";
 		const scorePath = raw("--scores")
 			? resolve(raw("--scores")!)
 			: legacyDefault

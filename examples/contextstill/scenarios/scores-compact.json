@@ -1,413 +1,399 @@
 {
-  "ok": true,
-  "mode": "full",
-  "suite": "seed-skill-assembly",
-  "searchProfile": "handle",
-  "assemblyMode": "compact",
-  "identity": {
-    "searchProfile": "handle",
-    "assemblyMode": "compact",
-    "suiteId": "seed-skill-assembly",
-    "suiteFileSha256": "b86a8041d2d4d58baa7de63a0075739a5d7db52a84b086b618641f5b65d0597e",
-    "seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
-    "buildInstructionsDigest": "f642bbdc268a63dca599f06efa79da4a1457765c60a962064c324681d13ff71d",
-    "judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
-    "judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
-  },
-  "filter": {
-    "axis": null,
-    "queryStyle": null
-  },
-  "status": "complete",
-  "tasks": 5,
-  "scored": 5,
-  "meanScore": 4.2,
-  "statuses": [
-    {
-      "taskId": "commit-no-secrets",
-      "axis": "retrieval",
-      "status": "scored"
-    },
-    {
-      "taskId": "test-production-clone",
-      "axis": "retrieval",
-      "status": "scored"
-    },
-    {
-      "taskId": "no-secrets-in-logs",
-      "axis": "retrieval",
-      "status": "scored"
-    },
-    {
-      "taskId": "no-hook-bypass",
-      "axis": "retrieval",
-      "status": "scored"
-    },
-    {
-      "taskId": "four-space-indent",
-      "axis": "retrieval",
-      "status": "scored"
-    }
-  ],
-  "scores": [
-    {
-      "taskId": "commit-no-secrets",
-      "score": 9,
-      "expectedSkillUsed": true,
-      "retrievalRank": 6,
-      "usedRefs": [
-        "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-      ],
-      "expectedRefs": [
-        "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-      ],
-      "strategy": "reuse",
-      "kind": "ready",
-      "rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、compact 経路でも coverage を sufficient として reuse している。本文は .env や APIキー等をコミットせず、露出時は伏せるかローテーションするという目的に沿う。指針本文は Skill フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。探索テンプレートへ逃げていない。",
-      "judge": "llm"
-    },
-    {
-      "taskId": "test-production-clone",
-      "score": 9,
-      "expectedSkillUsed": true,
-      "retrievalRank": 1,
-      "usedRefs": [
-        "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-      ],
-      "expectedRefs": [
-        "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-      ],
-      "strategy": "reuse",
-      "kind": "ready",
-      "rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、compact 経路でも coverage を sufficient として reuse している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
-      "judge": "llm"
-    },
-    {
-      "taskId": "no-secrets-in-logs",
-      "score": 1,
-      "expectedSkillUsed": false,
-      "retrievalRank": null,
-      "usedRefs": [],
-      "expectedRefs": [
-        "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
-      ],
-      "strategy": null,
-      "kind": "needs_input",
-      "rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用しておらず、検索集合に無いことを世界に無いとして探索テンプレートへも流していない。期待Skillは組み上がっておらず評点は低い。",
-      "judge": "llm"
-    },
-    {
-      "taskId": "no-hook-bypass",
-      "score": 1,
-      "expectedSkillUsed": false,
-      "retrievalRank": null,
-      "usedRefs": [],
-      "expectedRefs": [
-        "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
-      ],
-      "strategy": null,
-      "kind": "needs_input",
-      "rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。開示した context_compile 向け verify 手順は本文を読んだうえで採用せず needs_input としている。探索テンプレートへも流していない。期待Skillは組み上がっていない。",
-      "judge": "llm"
-    },
-    {
-      "taskId": "four-space-indent",
-      "score": 1,
-      "expectedSkillUsed": false,
-      "retrievalRank": null,
-      "usedRefs": [],
-      "expectedRefs": [
-        "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
-      ],
-      "strategy": null,
-      "kind": "needs_input",
-      "rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用も、検索漏れを欠落と見なした探索テンプレートへの逃避もしていないが、期待Skillは組み上がっていない。",
-      "judge": "llm"
-    }
-  ],
-  "recordProvenance": [
-    {
-      "taskId": "commit-no-secrets",
-      "builderInputDigests": [
-        "2d97a8130d0f77f5ca589dea4c7f20387b3717fafc6d108dc8944147a544bd56",
-        "19006b73b25acf22c713ab511942633ec9425b590191a9de159b44b25f80956a"
-      ],
-      "judgeInputDigest": "0f2fc5ea3e1d8cfaa34ba9cda239e24f1d4633991360f9936a02c889e8fd73bf",
-      "builderRecordsPresent": true,
-      "judgeRecordPresent": true
-    },
-    {
-      "taskId": "test-production-clone",
-      "builderInputDigests": [
-        "8d6e5d337b4a136edb4519764065e4050019a3d777718477a9c7cc173278c639",
-        "61bfa0e6333a5f435086ed9099a20ad6a174d0cf09c001c717622077a858bda8"
-      ],
-      "judgeInputDigest": "e844d1f8d996b19307fc4aaa44b3168a085454427de3c75a6e47a243b7e8a24d",
-      "builderRecordsPresent": true,
-      "judgeRecordPresent": true
-    },
-    {
-      "taskId": "no-secrets-in-logs",
-      "builderInputDigests": [
-        "bdb01d8a1c36861da4c007b0e2b91d683896913fd9d172777197d98d120d9c07"
-      ],
-      "judgeInputDigest": "6de333d978d1dae975cc2642b42277ab0310766c7662adccecc4c3690b2f6c47",
-      "builderRecordsPresent": true,
-      "judgeRecordPresent": true
-    },
-    {
-      "taskId": "no-hook-bypass",
-      "builderInputDigests": [
-        "384c4615edf6191783346bba443b66202ef676d1bfd84cc73c6803a571f295a1",
-        "efeb6dfa3ffcf0e824c2f904f8c9092ae51ce04150b8dd2284d2ca2fe4d15b35"
-      ],
-      "judgeInputDigest": "559a91187e250da5d779700340663981ef59e069b2cf914f8f5a715c90299696",
-      "builderRecordsPresent": true,
-      "judgeRecordPresent": true
-    },
-    {
-      "taskId": "four-space-indent",
-      "builderInputDigests": [
-        "5c70a7adb6e963e0edb70070fd15f207cf4327d7451a19d65d3dd59ae4499257"
-      ],
-      "judgeInputDigest": "3d6915ab4864c5547ffd50bd1d7bfee588ba817e5d4b89c4a54f503dfa50c615",
-      "builderRecordsPresent": true,
-      "judgeRecordPresent": true
-    }
-  ],
-  "usage": {
-    "buildInferenceTasks": 8,
-    "judgeInferenceTasks": 5,
-    "inputTokens": null,
-    "outputTokens": null
-  },
-  "pendingFiles": [],
-  "searchPreview": [
-    {
-      "taskId": "commit-no-secrets",
-      "retrievalRank": 6,
-      "ranks": [
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "rank": 6
-        }
-      ],
-      "allRequiredHitAt8": true,
-      "retrieved": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "title": "Test in a Production Clone"
-        },
-        {
-          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
-          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
-        },
-        {
-          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
-          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
-        },
-        {
-          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
-          "title": "distillation runtime では親 Abort は fallback しない"
-        },
-        {
-          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
-          "title": "タイポグラフィは複合トークンとして管理する"
-        },
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "title": "Never commit secrets or local environment files"
-        },
-        {
-          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
-          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
-        },
-        {
-          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
-          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
-        }
-      ]
-    },
-    {
-      "taskId": "test-production-clone",
-      "retrievalRank": 1,
-      "ranks": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "rank": 1
-        }
-      ],
-      "allRequiredHitAt8": true,
-      "retrieved": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "title": "Test in a Production Clone"
-        },
-        {
-          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
-          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
-        },
-        {
-          "ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
-          "title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
-        },
-        {
-          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
-          "title": "タイポグラフィは複合トークンとして管理する"
-        },
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "title": "Never commit secrets or local environment files"
-        },
-        {
-          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
-          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
-        },
-        {
-          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
-          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
-        },
-        {
-          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
-          "title": "Treat Empty Project Roots As Valid New-Project Targets"
-        }
-      ]
-    },
-    {
-      "taskId": "no-secrets-in-logs",
-      "retrievalRank": null,
-      "ranks": [
-        {
-          "ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
-          "rank": null
-        }
-      ],
-      "allRequiredHitAt8": false,
-      "retrieved": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "title": "Test in a Production Clone"
-        },
-        {
-          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
-          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
-        },
-        {
-          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
-          "title": "distillation runtime では親 Abort は fallback しない"
-        },
-        {
-          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
-          "title": "タイポグラフィは複合トークンとして管理する"
-        },
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "title": "Never commit secrets or local environment files"
-        },
-        {
-          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
-          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
-        },
-        {
-          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
-          "title": "Treat Empty Project Roots As Valid New-Project Targets"
-        },
-        {
-          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
-          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
-        }
-      ]
-    },
-    {
-      "taskId": "no-hook-bypass",
-      "retrievalRank": null,
-      "ranks": [
-        {
-          "ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
-          "rank": null
-        }
-      ],
-      "allRequiredHitAt8": false,
-      "retrieved": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "title": "Test in a Production Clone"
-        },
-        {
-          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
-          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
-        },
-        {
-          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
-          "title": "タイポグラフィは複合トークンとして管理する"
-        },
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "title": "Never commit secrets or local environment files"
-        },
-        {
-          "ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
-          "title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
-        },
-        {
-          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
-          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
-        },
-        {
-          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
-          "title": "Treat Empty Project Roots As Valid New-Project Targets"
-        },
-        {
-          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
-          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
-        }
-      ]
-    },
-    {
-      "taskId": "four-space-indent",
-      "retrievalRank": null,
-      "ranks": [
-        {
-          "ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
-          "rank": null
-        }
-      ],
-      "allRequiredHitAt8": false,
-      "retrieved": [
-        {
-          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
-          "title": "Test in a Production Clone"
-        },
-        {
-          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
-          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
-        },
-        {
-          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
-          "title": "タイポグラフィは複合トークンとして管理する"
-        },
-        {
-          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
-          "title": "Never commit secrets or local environment files"
-        },
-        {
-          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
-          "title": "Treat Empty Project Roots As Valid New-Project Targets"
-        },
-        {
-          "ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
-          "title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
-        },
-        {
-          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
-          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
-        },
-        {
-          "ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
-          "title": "キューAPIルーティングのセットアップ"
-        }
-      ]
-    }
-  ],
-  "note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-skill-assembly",
+	"searchProfile": "handle",
+	"assemblyMode": "compact",
+	"identity": {
+		"searchProfile": "handle",
+		"assemblyMode": "compact",
+		"suiteId": "seed-skill-assembly",
+		"suiteFileSha256": "b86a8041d2d4d58baa7de63a0075739a5d7db52a84b086b618641f5b65d0597e",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "f642bbdc268a63dca599f06efa79da4a1457765c60a962064c324681d13ff71d",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": null,
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 5,
+	"scored": 5,
+	"meanScore": 4.2,
+	"statuses": [
+		{
+			"taskId": "commit-no-secrets",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "test-production-clone",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "four-space-indent",
+			"axis": "retrieval",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "commit-no-secrets",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 6,
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、compact 経路でも coverage を sufficient として reuse している。本文は .env や APIキー等をコミットせず、露出時は伏せるかローテーションするという目的に沿う。指針本文は Skill フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。探索テンプレートへ逃げていない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "test-production-clone",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、compact 経路でも coverage を sufficient として reuse している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"score": 1,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用しておらず、検索集合に無いことを世界に無いとして探索テンプレートへも流していない。期待Skillは組み上がっておらず評点は低い。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"score": 1,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。開示した context_compile 向け verify 手順は本文を読んだうえで採用せず needs_input としている。探索テンプレートへも流していない。期待Skillは組み上がっていない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "four-space-indent",
+			"score": 1,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用も、検索漏れを欠落と見なした探索テンプレートへの逃避もしていないが、期待Skillは組み上がっていない。",
+			"judge": "llm"
+		}
+	],
+	"recordProvenance": [
+		{
+			"taskId": "commit-no-secrets",
+			"builderInputDigests": [
+				"2d97a8130d0f77f5ca589dea4c7f20387b3717fafc6d108dc8944147a544bd56",
+				"19006b73b25acf22c713ab511942633ec9425b590191a9de159b44b25f80956a"
+			],
+			"judgeInputDigest": "0f2fc5ea3e1d8cfaa34ba9cda239e24f1d4633991360f9936a02c889e8fd73bf",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "test-production-clone",
+			"builderInputDigests": [
+				"8d6e5d337b4a136edb4519764065e4050019a3d777718477a9c7cc173278c639",
+				"61bfa0e6333a5f435086ed9099a20ad6a174d0cf09c001c717622077a858bda8"
+			],
+			"judgeInputDigest": "e844d1f8d996b19307fc4aaa44b3168a085454427de3c75a6e47a243b7e8a24d",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"builderInputDigests": [
+				"bdb01d8a1c36861da4c007b0e2b91d683896913fd9d172777197d98d120d9c07"
+			],
+			"judgeInputDigest": "6de333d978d1dae975cc2642b42277ab0310766c7662adccecc4c3690b2f6c47",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"builderInputDigests": [
+				"384c4615edf6191783346bba443b66202ef676d1bfd84cc73c6803a571f295a1",
+				"efeb6dfa3ffcf0e824c2f904f8c9092ae51ce04150b8dd2284d2ca2fe4d15b35"
+			],
+			"judgeInputDigest": "559a91187e250da5d779700340663981ef59e069b2cf914f8f5a715c90299696",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "four-space-indent",
+			"builderInputDigests": [
+				"5c70a7adb6e963e0edb70070fd15f207cf4327d7451a19d65d3dd59ae4499257"
+			],
+			"judgeInputDigest": "3d6915ab4864c5547ffd50bd1d7bfee588ba817e5d4b89c4a54f503dfa50c615",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 8,
+		"judgeInferenceTasks": 5,
+		"inputTokens": null,
+		"outputTokens": null
+	},
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "commit-no-secrets",
+			"retrievalRank": 6,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 6
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				}
+			]
+		},
+		{
+			"taskId": "test-production-clone",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				}
+			]
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				}
+			]
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				}
+			]
+		},
+		{
+			"taskId": "four-space-indent",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+					"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+					"title": "キューAPIルーティングのセットアップ"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
 }

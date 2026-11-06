@@ -1,47 +1,47 @@
 [
-  {
-    "inputDigest": "0f2fc5ea3e1d8cfaa34ba9cda239e24f1d4633991360f9936a02c889e8fd73bf",
-    "provider": "grok_bot",
-    "value": {
-      "score": 9,
-      "rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、compact 経路でも coverage を sufficient として reuse している。本文は .env や APIキー等をコミットせず、露出時は伏せるかローテーションするという目的に沿う。指針本文は Skill フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。探索テンプレートへ逃げていない。",
-      "expectedSkillUsed": true
-    }
-  },
-  {
-    "inputDigest": "e844d1f8d996b19307fc4aaa44b3168a085454427de3c75a6e47a243b7e8a24d",
-    "provider": "grok_bot",
-    "value": {
-      "score": 9,
-      "rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、compact 経路でも coverage を sufficient として reuse している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
-      "expectedSkillUsed": true
-    }
-  },
-  {
-    "inputDigest": "6de333d978d1dae975cc2642b42277ab0310766c7662adccecc4c3690b2f6c47",
-    "provider": "grok_bot",
-    "value": {
-      "score": 1,
-      "rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用しておらず、検索集合に無いことを世界に無いとして探索テンプレートへも流していない。期待Skillは組み上がっておらず評点は低い。",
-      "expectedSkillUsed": false
-    }
-  },
-  {
-    "inputDigest": "559a91187e250da5d779700340663981ef59e069b2cf914f8f5a715c90299696",
-    "provider": "grok_bot",
-    "value": {
-      "score": 1,
-      "rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。開示した context_compile 向け verify 手順は本文を読んだうえで採用せず needs_input としている。探索テンプレートへも流していない。期待Skillは組み上がっていない。",
-      "expectedSkillUsed": false
-    }
-  },
-  {
-    "inputDigest": "3d6915ab4864c5547ffd50bd1d7bfee588ba817e5d4b89c4a54f503dfa50c615",
-    "provider": "grok_bot",
-    "value": {
-      "score": 1,
-      "rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用も、検索漏れを欠落と見なした探索テンプレートへの逃避もしていないが、期待Skillは組み上がっていない。",
-      "expectedSkillUsed": false
-    }
-  }
+	{
+		"inputDigest": "0f2fc5ea3e1d8cfaa34ba9cda239e24f1d4633991360f9936a02c889e8fd73bf",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、compact 経路でも coverage を sufficient として reuse している。本文は .env や APIキー等をコミットせず、露出時は伏せるかローテーションするという目的に沿う。指針本文は Skill フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。探索テンプレートへ逃げていない。",
+			"expectedSkillUsed": true
+		}
+	},
+	{
+		"inputDigest": "e844d1f8d996b19307fc4aaa44b3168a085454427de3c75a6e47a243b7e8a24d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、compact 経路でも coverage を sufficient として reuse している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"expectedSkillUsed": true
+		}
+	},
+	{
+		"inputDigest": "6de333d978d1dae975cc2642b42277ab0310766c7662adccecc4c3690b2f6c47",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用しておらず、検索集合に無いことを世界に無いとして探索テンプレートへも流していない。期待Skillは組み上がっておらず評点は低い。",
+			"expectedSkillUsed": false
+		}
+	},
+	{
+		"inputDigest": "559a91187e250da5d779700340663981ef59e069b2cf914f8f5a715c90299696",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。開示した context_compile 向け verify 手順は本文を読んだうえで採用せず needs_input としている。探索テンプレートへも流していない。期待Skillは組み上がっていない。",
+			"expectedSkillUsed": false
+		}
+	},
+	{
+		"inputDigest": "3d6915ab4864c5547ffd50bd1d7bfee588ba817e5d4b89c4a54f503dfa50c615",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用も、検索漏れを欠落と見なした探索テンプレートへの逃避もしていないが、期待Skillは組み上がっていない。",
+			"expectedSkillUsed": false
+		}
+	}
 ]

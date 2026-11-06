@@ -7,6 +7,10 @@ import type { SearchProfile } from "./database.js";
 import { createExampleHost } from "./host.js";
 import type { SourcePort } from "./source.js";
 import type { InferenceTask, recordedInference } from "./recorded.js";
+import {
+	reformulationDigests,
+	type QueryReformulation,
+} from "./query-reformulation.js";
 import { digest } from "../../src/index.js";
 import {
 	buildInstructions,
@@ -110,9 +114,23 @@ export function summarizeRetrieval(rows: RetrievalRow[]) {
 	);
 }
 
+/** Optional proposal 28 auxiliary-inference ledger; absent when reformulation is off. */
+export interface ReformulationLedger {
+	/** Returns and clears InferenceTasks the reformulation port requested since the last drain. */
+	drain: () => InferenceTask[];
+	hasRecord: (digest: string) => boolean;
+}
+
+export interface PendingReformulation {
+	taskId: string;
+	tasks: InferenceTask[];
+}
+
 export async function runRetrievalOnly(
 	tasks: NormalizedScenarioTask[],
 	source: SourcePort,
+	reformulation?: ReformulationLedger,
+	pending: PendingReformulation[] = [],
 ): Promise<RetrievalRow[]> {
 	const rows: RetrievalRow[] = [];
 	for (const task of tasks) {
@@ -151,6 +169,13 @@ export async function runRetrievalOnly(
 				top8: [],
 				error: error instanceof Error ? error.message : String(error),
 			});
+		} finally {
+			if (reformulation) {
+				const missing = reformulation
+					.drain()
+					.filter((item) => !reformulation.hasRecord(item.inputDigest));
+				if (missing.length) pending.push({ taskId: task.id, tasks: missing });
+			}
 		}
 	}
 	return rows;
@@ -159,6 +184,7 @@ export async function runRetrievalOnly(
 export type TaskStatus =
 	| "scored"
 	| "awaiting_build_inference"
+	| "awaiting_reformulation_inference"
 	| "awaiting_judge"
 	| "invalid"
 	| "error";
@@ -167,6 +193,10 @@ export type TaskStatus =
 export interface RunIdentity {
 	searchProfile: SearchProfile;
 	assemblyMode: AssemblyMode;
+	/** Proposal 28 opt-in; records with and without it must not mix. */
+	queryReformulation: QueryReformulation;
+	reformulationInstructionsDigest: string | null;
+	reformulationSchemaDigest: string | null;
 	suiteId: string;
 	suiteFileSha256: string;
 	seedFileSha256: string;
@@ -196,11 +226,20 @@ export function buildEvalIdentity(input: {
 	suitePath: string;
 	seedPath: string;
 	assemblyMode?: AssemblyMode;
+	queryReformulation?: QueryReformulation;
 }): RunIdentity {
 	const assemblyMode = input.assemblyMode ?? "baseline";
+	const queryReformulation = input.queryReformulation ?? "off";
 	return {
 		searchProfile: input.searchProfile,
 		assemblyMode,
+		queryReformulation,
+		...(queryReformulation === "on"
+			? reformulationDigests()
+			: {
+					reformulationInstructionsDigest: null,
+					reformulationSchemaDigest: null,
+				}),
 		suiteId: input.suiteId,
 		suiteFileSha256: fileSha256(input.suitePath),
 		seedFileSha256: fileSha256(input.seedPath),
@@ -225,6 +264,8 @@ export interface RunUsage {
 	buildInferenceTasks: number;
 	/** Collected judge InferenceTask count (measured). */
 	judgeInferenceTasks: number;
+	/** Proposal 28 auxiliary reformulation InferenceTask count (measured; 0 only when off/never called). */
+	reformulationInferenceTasks: number;
 	/** recordedInference leaves tokens null; never coerce to 0. */
 	inputTokens: null;
 	outputTokens: null;
@@ -241,6 +282,8 @@ export interface FullDeps {
 	hasBuildRecord: (digest: string) => boolean;
 	/** Opt-in compact assembly (proposal 36). Default baseline. */
 	assemblyMode?: AssemblyMode;
+	/** Proposal 28 ledger; present only when the source is the reformulating wrapper. */
+	reformulation?: ReformulationLedger;
 }
 
 const fixedDeadline = 1_700_000_000_000 + 120_000;
@@ -263,6 +306,16 @@ export async function runFull(deps: FullDeps) {
 		retrieved: { ref: string; title: string }[];
 	}[] = [];
 	const recordProvenance: RecordProvenance[] = [];
+	const pendingReformulation: PendingReformulation[] = [];
+	let reformulationInferenceTasks = 0;
+	const drainReformulation = (taskId: string) => {
+		const ledger = deps.reformulation;
+		if (!ledger) return;
+		const items = ledger.drain();
+		reformulationInferenceTasks += items.length;
+		const missing = items.filter((item) => !ledger.hasRecord(item.inputDigest));
+		if (missing.length) pendingReformulation.push({ taskId, tasks: missing });
+	};
 	let buildInferenceTasks = 0;
 	let judgeInferenceTasks = 0;
 	const assemblyMode = deps.assemblyMode ?? "baseline";
@@ -418,13 +471,22 @@ export async function runFull(deps: FullDeps) {
 				host.close();
 			}
 		} catch (error) {
-			status("error", error instanceof Error ? error.message : String(error));
+			if (
+				error instanceof Error &&
+				error.message === "reformulation_record_missing"
+			)
+				status("awaiting_reformulation_inference");
+			else
+				status("error", error instanceof Error ? error.message : String(error));
+		} finally {
+			drainReformulation(task.id);
 		}
 	}
 	const complete = statuses.every((s) => s.status === "scored");
 	const usage: RunUsage = {
 		buildInferenceTasks,
 		judgeInferenceTasks,
+		reformulationInferenceTasks,
 		inputTokens: null,
 		outputTokens: null,
 	};
@@ -434,6 +496,7 @@ export async function runFull(deps: FullDeps) {
 		scores,
 		pendingBuild,
 		pendingJudge,
+		pendingReformulation,
 		searchPreview,
 		recordProvenance,
 		usage,
