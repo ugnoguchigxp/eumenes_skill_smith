@@ -3,6 +3,7 @@
 // Proposal 35: per-task isolation, status vocabulary, run identity, record provenance, measured usage only.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { multiQueryDigests } from "./multi-query.js";
 import type { SearchProfile } from "./database.js";
 import { createExampleHost } from "./host.js";
 import type { SourcePort } from "./source.js";
@@ -114,7 +115,7 @@ export function summarizeRetrieval(rows: RetrievalRow[]) {
 	);
 }
 
-/** Optional proposal 28 auxiliary-inference ledger; absent when reformulation is off. */
+/** Optional proposals 28/29 auxiliary-inference ledger; absent when reformulation is off. */
 export interface ReformulationLedger {
 	/** Returns and clears InferenceTasks the reformulation port requested since the last drain. */
 	drain: () => InferenceTask[];
@@ -193,7 +194,7 @@ export type TaskStatus =
 export interface RunIdentity {
 	searchProfile: SearchProfile;
 	assemblyMode: AssemblyMode;
-	/** Proposal 28 opt-in; records with and without it must not mix. */
+	/** Proposals 28/29 opt-in; records with and without it must not mix. */
 	queryReformulation: QueryReformulation;
 	reformulationInstructionsDigest: string | null;
 	reformulationSchemaDigest: string | null;
@@ -236,10 +237,12 @@ export function buildEvalIdentity(input: {
 		queryReformulation,
 		...(queryReformulation === "on"
 			? reformulationDigests()
-			: {
-					reformulationInstructionsDigest: null,
-					reformulationSchemaDigest: null,
-				}),
+			: queryReformulation === "multi"
+				? multiQueryDigests()
+				: {
+						reformulationInstructionsDigest: null,
+						reformulationSchemaDigest: null,
+					}),
 		suiteId: input.suiteId,
 		suiteFileSha256: fileSha256(input.suitePath),
 		seedFileSha256: fileSha256(input.seedPath),
@@ -264,7 +267,7 @@ export interface RunUsage {
 	buildInferenceTasks: number;
 	/** Collected judge InferenceTask count (measured). */
 	judgeInferenceTasks: number;
-	/** Proposal 28 auxiliary reformulation InferenceTask count (measured; 0 only when off/never called). */
+	/** Proposals 28/29 auxiliary reformulation InferenceTask count (measured; 0 only when off/never called). */
 	reformulationInferenceTasks: number;
 	/** recordedInference leaves tokens null; never coerce to 0. */
 	inputTokens: null;

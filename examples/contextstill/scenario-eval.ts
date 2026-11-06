@@ -5,10 +5,11 @@
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
 //            --search-profile handle|bm25 (default handle)
 //            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
-//            --query-reformulation off|on (default off; proposal 28 opt-in, not adopted)
-//            --reformulation-records path (default examples/contextstill/scenarios/reformulation-records.json)
+//            --query-reformulation off|on|multi (default off; proposals 28/29 opt-in, not adopted)
+//            --reformulation-records path (on default: examples/contextstill/scenarios/reformulation-records.json)
+//            multi default: data/contextstill/multi-query-records.json (missing means pending)
 //            --build-records path --judge-records path --scores path --db path
-// retrieval-only: SourcePort search only, zero inference, no 0-10 scores.
+// retrieval-only: SourcePort search only; optional auxiliary inference, no build/judge or 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
 // New reports go to --output-dir (default data/contextstill/scenario-reports); the repo scores.json is
 // written only for the legacy suite in full mode without --output-dir when complete.
@@ -29,6 +30,7 @@ import {
 	parseQueryReformulation,
 	type ReformulationTrace,
 } from "./query-reformulation.js";
+import { createMultiQuerySource, type MultiQueryTrace } from "./multi-query.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
 	buildEvalIdentity,
@@ -87,15 +89,17 @@ const fixtureSource = createFixtureSource(
 	token,
 );
 // Proposal 28: off leaves the fixture source untouched (default path unchanged).
-const reformulationTraces: ReformulationTrace[] = [];
+const reformulationTraces: (ReformulationTrace | MultiQueryTrace)[] = [];
 let reformulationCalls = 0;
 let reformulationLedger: ReformulationLedger | undefined;
 let source = fixtureSource;
-if (queryReformulation === "on") {
+if (queryReformulation !== "off") {
 	const records = loadRecords(
 		arg(
 			"--reformulation-records",
-			"examples/contextstill/scenarios/reformulation-records.json",
+			queryReformulation === "multi"
+				? "data/contextstill/multi-query-records.json"
+				: "examples/contextstill/scenarios/reformulation-records.json",
 		),
 	);
 	const collected: InferenceTask[] = [];
@@ -103,7 +107,11 @@ if (queryReformulation === "on") {
 		drain: () => collected.splice(0),
 		hasRecord: (d) => records.some((r) => r.inputDigest === d),
 	};
-	source = createReformulatingSource(
+	const wrap =
+		queryReformulation === "multi"
+			? createMultiQuerySource
+			: createReformulatingSource;
+	source = wrap(
 		fixtureSource,
 		recordedInference(records, (item) => {
 			reformulationCalls += 1;
@@ -155,7 +163,7 @@ try {
 			filter,
 			// Search-only: zero build/judge inference; reformulation calls are counted separately.
 			inferenceCalls: 0,
-			...(queryReformulation === "on"
+			...(queryReformulation !== "off"
 				? {
 						reformulationInferenceTasks: reformulationCalls,
 						inputTokens: null,
@@ -232,7 +240,7 @@ try {
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,
 			pendingFiles,
-			...(queryReformulation === "on" ? { reformulationTraces } : {}),
+			...(queryReformulation !== "off" ? { reformulationTraces } : {}),
 			searchPreview: result.searchPreview,
 			note: result.complete
 				? "Scores are LLM judgments of skill assembly, not canned fixture verdicts."

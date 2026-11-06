@@ -1,114 +1,114 @@
 [
-  {
-    "inputDigest": "ab1ecad5edb8184ed50a4ca55902c773b70150d4a7fe7f8bcc771a6cc5dce534",
-    "provider": "grok_bot",
-    "value": {
-      "query": "do not commit API keys or environment files"
-    }
-  },
-  {
-    "inputDigest": "eddb058c1f469a16949cb8cedcf1bfc549b104e9b8a7e1e1f2635349b845dfb4",
-    "provider": "grok_bot",
-    "value": {
-      "query": "test changes in a production clone before release"
-    }
-  },
-  {
-    "inputDigest": "8af794f3f1df8243eeec0ab2f2d229e8d305ee48a4c7f99d9969fabc3f40ea14",
-    "provider": "grok_bot",
-    "value": {
-      "query": "do not print secrets in logs or HTTP responses; redact credentials"
-    }
-  },
-  {
-    "inputDigest": "45c4f05524c8da1ead2e9d55880cd0247689aa9e96f9d75991ec8c5b6fdf0ecf",
-    "provider": "grok_bot",
-    "value": {
-      "query": "fix pre-commit hook verify failures instead of bypassing"
-    }
-  },
-  {
-    "inputDigest": "89abadbd5607610cf860da3a18cc6988c4188077cb10ca0bf3a3557e01a6eee8",
-    "provider": "grok_bot",
-    "value": {
-      "query": "indent Python code with four spaces not tabs"
-    }
-  },
-  {
-    "inputDigest": "03aeb341648e211b0a8c31664c67383aa6190bb23c0109551d2c3448a21b7f2f",
-    "provider": "grok_bot",
-    "value": {
-      "query": "get explicit permission before force-pushing remote history"
-    }
-  },
-  {
-    "inputDigest": "a17789473e1f8ba93e7a969118968c36ff8adceb8f3bb4acc6e524367f75b73c",
-    "provider": "grok_bot",
-    "value": {
-      "query": "do not weaken secret redaction even for debugging"
-    }
-  },
-  {
-    "inputDigest": "637be7f64ec0ea01971847875ff75f2cc1d615c849ab0aa90e1030e1a77c9a01",
-    "provider": "grok_bot",
-    "value": {
-      "query": "verify hook changes through the real execution path"
-    }
-  },
-  {
-    "inputDigest": "58457a813e8f3dbf033a657766ce47f0aaa54f88f1c2a4cebeabbfff55aad8cd",
-    "provider": "grok_bot",
-    "value": {
-      "query": "do not run destructive git reset without explicit user request"
-    }
-  },
-  {
-    "inputDigest": "207ede0556bc212ebd853d862cc0fe8b8101ac60f68568200d765e79ae39e7cd",
-    "provider": "grok_bot",
-    "value": {
-      "query": "do not casually change generated dependency lockfiles"
-    }
-  },
-  {
-    "inputDigest": "177f915d38fb85ffa7809c0dccbfef501f7d4a6b65cbd4549f5f6090075b8c2c",
-    "provider": "grok_bot",
-    "value": {
-      "query": "smoke tests should run deterministically without external providers or credentials"
-    }
-  },
-  {
-    "inputDigest": "90765e146d61841365a4ac822ddd627cfea306014c7ae992b76b3e17f0f94b10",
-    "provider": "grok_bot",
-    "value": {
-      "query": "build Python extensions with the stable ABI for multiple versions"
-    }
-  },
-  {
-    "inputDigest": "9f7c98d8c1b5d07b91a21869a9ef0a2087e21b206422f010f50cbc2685b65eb4",
-    "provider": "grok_bot",
-    "value": {
-      "query": "use OpenAPI format for API specifications"
-    }
-  },
-  {
-    "inputDigest": "65e74a0f5f15286ef55b704b0e4bbfcfd69ee04761808be2feed01a614271558",
-    "provider": "grok_bot",
-    "value": {
-      "query": "normalize NaN to null when converting a dataframe to JSON"
-    }
-  },
-  {
-    "inputDigest": "75318655a30945f1a898ab22b0cbc5a3aff2b40e1b3ff9a0527a9e9aa54335ca",
-    "provider": "grok_bot",
-    "value": {
-      "query": "prevent workspace environment variables from leaking to the whole process when running an MCP service"
-    }
-  },
-  {
-    "inputDigest": "b1b501a1d868c9157e90cb12bf1ef3bdd039153713386ff002104fc199ff5531",
-    "provider": "grok_bot",
-    "value": {
-      "query": "when porting to Go, use idiomatic Go rather than a literal translation"
-    }
-  }
+	{
+		"inputDigest": "ab1ecad5edb8184ed50a4ca55902c773b70150d4a7fe7f8bcc771a6cc5dce534",
+		"provider": "grok_bot",
+		"value": {
+			"query": "do not commit API keys or environment files"
+		}
+	},
+	{
+		"inputDigest": "eddb058c1f469a16949cb8cedcf1bfc549b104e9b8a7e1e1f2635349b845dfb4",
+		"provider": "grok_bot",
+		"value": {
+			"query": "test changes in a production clone before release"
+		}
+	},
+	{
+		"inputDigest": "8af794f3f1df8243eeec0ab2f2d229e8d305ee48a4c7f99d9969fabc3f40ea14",
+		"provider": "grok_bot",
+		"value": {
+			"query": "do not print secrets in logs or HTTP responses; redact credentials"
+		}
+	},
+	{
+		"inputDigest": "45c4f05524c8da1ead2e9d55880cd0247689aa9e96f9d75991ec8c5b6fdf0ecf",
+		"provider": "grok_bot",
+		"value": {
+			"query": "fix pre-commit hook verify failures instead of bypassing"
+		}
+	},
+	{
+		"inputDigest": "89abadbd5607610cf860da3a18cc6988c4188077cb10ca0bf3a3557e01a6eee8",
+		"provider": "grok_bot",
+		"value": {
+			"query": "indent Python code with four spaces not tabs"
+		}
+	},
+	{
+		"inputDigest": "03aeb341648e211b0a8c31664c67383aa6190bb23c0109551d2c3448a21b7f2f",
+		"provider": "grok_bot",
+		"value": {
+			"query": "get explicit permission before force-pushing remote history"
+		}
+	},
+	{
+		"inputDigest": "a17789473e1f8ba93e7a969118968c36ff8adceb8f3bb4acc6e524367f75b73c",
+		"provider": "grok_bot",
+		"value": {
+			"query": "do not weaken secret redaction even for debugging"
+		}
+	},
+	{
+		"inputDigest": "637be7f64ec0ea01971847875ff75f2cc1d615c849ab0aa90e1030e1a77c9a01",
+		"provider": "grok_bot",
+		"value": {
+			"query": "verify hook changes through the real execution path"
+		}
+	},
+	{
+		"inputDigest": "58457a813e8f3dbf033a657766ce47f0aaa54f88f1c2a4cebeabbfff55aad8cd",
+		"provider": "grok_bot",
+		"value": {
+			"query": "do not run destructive git reset without explicit user request"
+		}
+	},
+	{
+		"inputDigest": "207ede0556bc212ebd853d862cc0fe8b8101ac60f68568200d765e79ae39e7cd",
+		"provider": "grok_bot",
+		"value": {
+			"query": "do not casually change generated dependency lockfiles"
+		}
+	},
+	{
+		"inputDigest": "177f915d38fb85ffa7809c0dccbfef501f7d4a6b65cbd4549f5f6090075b8c2c",
+		"provider": "grok_bot",
+		"value": {
+			"query": "smoke tests should run deterministically without external providers or credentials"
+		}
+	},
+	{
+		"inputDigest": "90765e146d61841365a4ac822ddd627cfea306014c7ae992b76b3e17f0f94b10",
+		"provider": "grok_bot",
+		"value": {
+			"query": "build Python extensions with the stable ABI for multiple versions"
+		}
+	},
+	{
+		"inputDigest": "9f7c98d8c1b5d07b91a21869a9ef0a2087e21b206422f010f50cbc2685b65eb4",
+		"provider": "grok_bot",
+		"value": {
+			"query": "use OpenAPI format for API specifications"
+		}
+	},
+	{
+		"inputDigest": "65e74a0f5f15286ef55b704b0e4bbfcfd69ee04761808be2feed01a614271558",
+		"provider": "grok_bot",
+		"value": {
+			"query": "normalize NaN to null when converting a dataframe to JSON"
+		}
+	},
+	{
+		"inputDigest": "75318655a30945f1a898ab22b0cbc5a3aff2b40e1b3ff9a0527a9e9aa54335ca",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent workspace environment variables from leaking to the whole process when running an MCP service"
+		}
+	},
+	{
+		"inputDigest": "b1b501a1d868c9157e90cb12bf1ef3bdd039153713386ff002104fc199ff5531",
+		"provider": "grok_bot",
+		"value": {
+			"query": "when porting to Go, use idiomatic Go rather than a literal translation"
+		}
+	}
 ]

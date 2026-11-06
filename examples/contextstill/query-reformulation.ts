@@ -11,14 +11,14 @@ import type { SourcePort } from "./source.js";
 
 type Inference = Ports<unknown>["inference"];
 
-export type QueryReformulation = "off" | "on";
+export type QueryReformulation = "off" | "on" | "multi";
 
 /** Strict CLI parsing; omitted means off (default search path unchanged). */
 export function parseQueryReformulation(argv: string[]): QueryReformulation {
 	const index = argv.indexOf("--query-reformulation");
 	if (index < 0) return "off";
 	const value = argv[index + 1];
-	if (value !== "off" && value !== "on")
+	if (value !== "off" && value !== "on" && value !== "multi")
 		throw new Error(`unknown --query-reformulation ${value ?? "(missing)"}`);
 	return value;
 }
