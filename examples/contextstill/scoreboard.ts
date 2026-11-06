@@ -39,7 +39,7 @@ export const SLICES: SliceDef[] = [
 		axis: "retrieval",
 		queryStyle: "exact",
 		label: "題名どおり16件",
-		scoreFiles: { handle: null, bm25: null },
+		scoreFiles: { handle: "scores-exact-handle.json", bm25: null },
 		retrievalFiles: {
 			handle: "retrieval-exact-handle.json",
 			bm25: "retrieval-exact-bm25.json",

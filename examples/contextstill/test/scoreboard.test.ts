@@ -36,8 +36,22 @@ test("original five bm25 8.6 (9,9,9,9,7), hit@8 5/5", () => {
 	expect(c.hitAt8).toEqual({ hit: 5, of: 5 });
 });
 
+test("exact handle SKILL mean 2 (two 9s and fourteen 1s), hit@8 2/16", () => {
+	const c = cell("retrieval/exact", "handle");
+	expect(c.scored).toBe(16);
+	expect(c.meanScore).toBe(2);
+	expect(c.scores.map((s) => s.score)).toEqual([
+		9, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	]);
+	expect(c.hitAt8).toEqual({ hit: 2, of: 16 });
+});
+
 test("slices without SKILL records report 0/n and null mean", () => {
-	for (const id of ["retrieval/exact", "retrieval/en", "retrieval/jp"])
+	expect([
+		cell("retrieval/exact", "bm25").scored,
+		cell("retrieval/exact", "bm25").meanScore,
+	]).toEqual([0, null]);
+	for (const id of ["retrieval/en", "retrieval/jp"])
 		for (const p of ["handle", "bm25"] as const) {
 			const c = cell(id, p);
 			expect([c.scored, c.unscored, c.meanScore]).toEqual([0, 16, null]);

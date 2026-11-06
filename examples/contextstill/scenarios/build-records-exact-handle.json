@@ -1,0 +1,219 @@
+[
+	{
+		"inputDigest": "74f0b2ecb10395c8a8a0665f5fb68ec1222da28ecea3ded25d32d4613fcea7f4",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "1c6f789c34eac1501d6ccf0dce2b926a7812d9e33b54bf45f169e30e3e60e4ca",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "74e3f586953b45b5a3706cddff7cd02eee6c786b30bf1604bebf9602f2ee16b9",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"ログや応答へ秘密情報を出さない手順を述べた既存Skill。今回の候補は本番clone試験、見た目、計画書、コミット時の秘密情報、OAuth などで、ログやレスポンスへの出力禁止を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "9bc4ccd7b853a38516f1e495c3fd1871c82fbd1446a6bde04b6ef4c000268ceb",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"pre-commit の hook 失敗を回避せず修正する手順を述べた既存Skill。今回の候補は本番clone試験、秘密情報のコミット禁止、context_compile 向け verify、別用途の verify 手順などで、hook 回避そのものを禁じたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "3bca5bf78b3d0f14c2c2d93ef5467bc912dc51b95f6530132037518f86b1e932",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"インデントをスペース4つにする手順を述べた既存Skill。今回の候補は計画書、タイポグラフィトークン、空プロジェクト、アップロード、DataFrame、キュー、SQLite、feedback 保存などで、字下げ幅を定めたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "26314f8ae49551705e0c26484f108be4c4986b861aa9ee01741356e45fb53cf8",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"明示的な承認なしに force push しない手順を述べた既存Skill。今回の候補は秘密情報のコミット禁止、DataFrame、レビュー操作、スクリーンショット、Biome、documents の force、fallback 設定などで、git の force push 禁止を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "04dcce0675bb3a043926b281e2acd62d2bac52b3ff5cd30b47aa106781faa330",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"デバッグ簡単化のために redaction を弱めない手順を述べた既存Skill。今回の候補は見た目、タイポグラフィ、秘密情報のコミット禁止、OAuth、空プロジェクト、Label、保存後再検証、setup CLI などで、redaction 維持を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "76d957a92757e80cabb0f2403b95c282a944aef1e80f6e636f064686610eae97",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"hook 変更を端到端で検証する手順を述べた既存Skill。今回の候補は本番clone試験、見た目、タイポグラフィ、秘密情報のコミット禁止、OAuth、依存関係の分類、空プロジェクト、Label などで、hook 変更の end-to-end 検証を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "5aa26daf432e01030c1e2a6f102ce38314cb3d01be219eb8e89b61c5d43a9d7b",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"利用者の明示的な要請なしに破壊的な git reset をしない手順を述べた既存Skill。今回の候補は Abort fallback、秘密情報のコミット禁止、空プロジェクト、review hook、DataFrame、SQLite、feedback 保存、レビュー操作などで、git reset の制限を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "539269bf9d14555223dabf07944dc9fec6fac0300170f2eb9aac2ccb81877e91",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"生成された lockfile を安易に変更しない手順を述べた既存Skill。今回の候補は秘密情報のコミット禁止、生成カタログ、usefulness 採点、force push、成果物の採用、redaction、SOURCE_DISTILLATION、ExplorationReport などで、lockfile 変更の制限を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "8d34fd4bb20e46a9f4da0bc0ee766440744276a9496b2124711c49ba1ced2cb3",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"smoke test が暗黙にライブ provider を呼ばない手順を述べた既存Skill。今回の候補は計画書、秘密情報のコミット禁止、空プロジェクト、Label、DataFrame、レビュー操作、スクリーンショット、Selenium Manager などで、smoke test のライブ呼び出し禁止を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "1f0a65a832692979ff966731393140f97468b44ef2707e9fe8aac52775640e37",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"耐性のある Python 拡張ビルドに ABI3 を使う手順を述べた既存Skill。今回の候補は本番clone試験、計画書、タイポグラフィ、空プロジェクト、アップロード、setup CLI、DataFrame、キューなどで、ABI3 を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "bf5e98b03b879f9de3e0cf2b08b903126d3cf46ed2026eebb50b15414ed89e22",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"API 記述形式として OpenAPI を使う手順を述べた既存Skill。今回の候補は本番clone試験、計画書、タイポグラフィ、秘密情報のコミット禁止、キュー migration、OAuth、空プロジェクト、アップロードなどで、OpenAPI を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "ee2b1567162091583a08fb63928f2b55f30bb72b9de2b511ca349769a4516688",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"DataFrame を JSON にするとき NaN を None に正規化する手順を述べた既存Skill。今回の候補は本番clone試験、見た目、タイポグラフィ、Responsive UI、秘密情報のコミット禁止、OAuth、空プロジェクト、Label などで、NaN 正規化を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "2408e3b3782aa4490160712c7a6f2e1d5b107d61dc81f15ca3337b9b3f4a0400",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"MCP 実行中に workspace の .env が process.env へ漏れない手順を述べた既存Skill。今回の候補は本番clone試験、秘密情報のコミット禁止、空プロジェクト、Label、DataFrame、MCP 公開面、レビュー操作、Local LLM 検証などで、process.env への漏洩防止を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "ef8869c4a5206ff11957ce1ab4a7efda8a18f38d3c15c31e274d69537fe37b51",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"直訳ではなく Idiomatic Go を優先する手順を述べた既存Skill。今回の候補は秘密情報のコミット禁止、キュー migration、dashboard 集約、キュー API、DB override、レビュー操作、MCP initialize、local-llm などで、Go の書き方を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "5f39fdd5faa7b6c5a833facc9cc5527a19f5ffb4dbb0a1a9ed0157aa117027b7",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"すでに露出している認証情報があれば無効化またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "2663336196f4e8064b61d4d25ab2b566db62b0081276f18212847166b66944c5",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["リリース前に本番環境の複製（clone）で変更を試験した"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	}
+]

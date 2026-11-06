@@ -1,0 +1,146 @@
+[
+	{
+		"inputDigest": "1888fb3650388cc5c723cf74ad0be7537c10876ef210046a2e861a191d5259a3",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets or local environment files」を誤用していない点は妥当だが、期待Skillは組み上がっておらず評点は低い。"
+		}
+	},
+	{
+		"inputDigest": "43f9ce45deb4b6dff65f2fceab37a724289c62c490a83c0c94387545edb97e20",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。組み立ては needs_input で、届いた context_compile 向け verify 手順も採用していない。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "22ac4c1882eed36ce68d0ae8fef34e4c917e5c3fcc854c60d311614a5bb8392d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用もしていないが、期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "0b699795b1400c19864a73dd29648233b479218fd0787fd3189533baed3c1444",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never force push without explicit approval」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。documents の force や別用途の候補を誤用していない点は妥当だが、期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "c3e51a69463fba664a86acc43a1d077b3a6f65c3a00a2a4900194f96c67975b8",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never weaken redaction to simplify debugging」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。秘密情報のコミット禁止など近くの候補を誤用していないが、期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "473139002a5299b5bb83eb10333b0097ca9cc84c00b33d27a6a4df85ded2e3aa",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Validate Hook Changes End-to-End」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。本番clone試験など無関係な候補の誤用もしておらず、期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "11eb5e0d54067d8f2a138162ffe498cf6762f192db76abd395e8a91248dc040f",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never run destructive git reset without explicit user request」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。破壊的 reset の指針は無く、期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "98022de6c1713a4035ecce8effcc44cd4f39c1ead64eb85a58e345477aa95de4",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never modify generated lockfiles casually」は検索結果に無い。組み立ては needs_input で、届いた force push 禁止や redaction、生成カタログの候補も採用していない。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "b11f17776e2b1b96dc043b980012135d03634399e613a6283cfb7e6f0a609784",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Smoke tests must not implicitly call live providers」は検索結果に無い。組み立ては needs_input で、Selenium Manager など近くの候補も採用していない。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "395a1438e6d93a55f222dfb059e63586349a0e12b07398faf7aa40e67f6cf768",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Use ABI3 for resilient Python extension builds」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "c2fd8d8139a9d42fe32185c199c170fce2e931033871da3cc4eab6c250c2441a",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Use OpenAPI as the API description format」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "868b4135c6e66eadc9cb8975916a2c25d6735bba0703da11d736fb2ae29c59a9",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「DataFrame to JSON: Normalize NaN to None for Valid JSON Output」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "9bf45f41b41006df11311db1cfd832a367ba74e7dbeff9f4709ca174dab383da",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Workspace .env values must not leak into process.env during MCP service execution」は検索結果に無い。組み立ては needs_input で、秘密情報のコミット禁止や MCP 公開面の候補を誤用していない。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "6be14539467ed5142293a5a4b8b5e6253c8eb95e4a859ddbb7f231ff1efed8a0",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Prefer Idiomatic Go Over Direct Translation」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "f4ae4722033b28dc331383e7df2925e2b074c07bb0b7a6205c3907c0d281009f",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never commit secrets or local environment files」が検索5位で届き、reuse でその参照だけを採用している。本文は秘密情報、APIキー、トークン、秘密鍵、cookie、ローカル .env、機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的に沿った規則である。sections は reuse 契約どおり空で、指針本文は Skill 本体の再利用になっている。"
+		}
+	},
+	{
+		"inputDigest": "bcef4f493e8f07ce7c0620df4868202ec9ea0064cf06035bc7d19eb919248298",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で試験するという目的に一致する。sections は reuse 契約どおり空である。"
+		}
+	}
+]

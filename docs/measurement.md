@@ -12,7 +12,7 @@ bun run context:scoreboard -- --json  # JSON（digest や出典ファイルは�
 | 区分 | n | 測るもの |
 |---|---|---|
 | retrieval/original | 5 | 当初の課題文で、該当 Skill を検索で引き当て、本文として使えるか |
-| retrieval/exact | 16 | 題名どおりの問い合わせでの検索的中 |
+| retrieval/exact | 16 | 題名どおりの問い合わせで、該当 Skill を検索で引き当て、本文として使えるか |
 | retrieval/en | 16 | 英語言い換えでの検索的中 |
 | retrieval/jp | 16 | 日本語言い換えでの検索的中 |
 | compose | 4 | 複数 Skill を合わせた手順を組み立てられるか |
@@ -35,7 +35,8 @@ compact、oracle、言い換え on / multi、弃権対比は診断用で、こ�
 
 ## 未測定
 
-- retrieval/exact・en・jp の SKILL 組み立て点（handle・bm25 とも）
+- retrieval/exact の BM25 の SKILL 点
+- retrieval/en・jp の SKILL 組み立て点（handle・bm25 とも）
 - absent の BM25 の SKILL 点
 - provider の入出力トークン
 
