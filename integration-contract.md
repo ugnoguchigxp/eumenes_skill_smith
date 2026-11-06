@@ -74,6 +74,10 @@ EvidenceCard／Evidenceは任意の `supersededBy`（同じ取得元のref）を
 
 Request の `usage` は modelCalls／sourceCalls に加え、観測済みの inputTokens／outputTokens、および提供元が返す場合のみの reasoningTokens／cachedInputTokens（欠測は null、0 にしない）を持つ。ビルド中は ExecutionContext.noteUsage で試行ごとの累計をコミットし、失敗で settle に至らなくても観測値を残す。評価用の per-call 台帳は `src/eval/usage-ledger.ts` に置き、reasoning が output に内包される場合は二重加算しない。token 数を金額へ換算するゲートは設けない。
 
+### 3.1e workflow の snapshot 保存（2026-11-06追加）
+
+製品の workflow 誘導は reflection と同様に `prepareWorkflow`（同期）→ `induceWorkflow`（transaction 外の推論）→ `saveWorkflow`（同期・再照合）に分ける。推論中に authority 失効・report 訂正・根拠失効があれば保存しない。観測付き trajectories／failedSummaries は任意入力であり、品質優位は未測定のまま候補を proposed に留める。
+
 ### 3.2 推論providerの注入
 
 本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。

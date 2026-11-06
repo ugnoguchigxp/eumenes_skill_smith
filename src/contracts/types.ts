@@ -160,3 +160,24 @@ export interface PreparedReflection {
 	report: Report;
 	grounding?: ImprovementGrounding;
 }
+
+export interface WorkflowTrajectoryStep {
+	action: string;
+	observation: string;
+	outcome: "succeeded" | "failed" | "incomplete" | "cancelled";
+}
+export interface PreparedWorkflow {
+	buildRef: string;
+	executionRef: string;
+	taskGoal: string;
+	succeededSummaries: string[];
+	/** Optional failed peer summaries for contrast experiments; quality 未測定. */
+	failedSummaries: string[];
+	/** Optional action/observation pairs; not hidden chain-of-thought. */
+	trajectories: WorkflowTrajectoryStep[];
+	evidence: string[];
+	reportDigest: string | null;
+	reportRevision: number | null;
+	authority: Pick<Authority, "scope" | "principal" | "epoch">;
+	inputDigest: string;
+}

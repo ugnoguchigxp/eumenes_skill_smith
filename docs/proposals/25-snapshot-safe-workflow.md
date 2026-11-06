@@ -35,3 +35,12 @@ stale 保存が 0、重複候補が 0、根拠削除が派生へ伝播し、観�
 ## 依存・前提
 
 既存の reflection 操作を再利用できます。構造部分はコーパスなしで着手でき、品質比較は観測付き record と提案 16 の held-out 課題が必要です。P4 は不要です。仮定: 思考を含まない観測 / action 記録を用意できること。
+
+## 実装結果
+
+- **採否**: 部分採用（lifecycle 安全化を採用、観測対比の品質効果は未測定のため保留）
+- **内容**: `induceAndSaveWorkflow` を廃止し `prepareWorkflow` / `induceWorkflow` / `saveWorkflow` に分割。推論中の authority 失効・report 訂正では保存拒否。任意の `failedSummaries` / `trajectories` を入力できるが、対比が要約より良いかは未測定のため製品既定の必須化はしない。
+- **パス**: `src/service/results.ts`, `src/contracts/types.ts`, `src/instructions/build.ts`, `src/test/workflow-product.test.ts`, `integration-contract.md`
+- **試験**: `bun test src/test/workflow-product.test.ts`（3 pass）。権限失効・報告訂正の stale 保存拒否を確認。
+- **未実施**: held-out 課題での観測付き対比の品質比較（提案 16 コーパス待ち）
+- **理由**: stale 保存 0 の安全条件を満たす。対比の「よくなった」条件はコーパスなしでは判定不能なため対比必須化は保留。

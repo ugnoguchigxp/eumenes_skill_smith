@@ -26,5 +26,6 @@ buildBody・sourceRefs・dependencyVersions・contrast が付く場合はそれ�
 
 export const workflowInstructions = `
 成功した実行報告の要約から、再利用できる共通手順の候補を作る。
-個別事例を超えて一般化しすぎない。正式 Skill にはしない。sections / conditions / evidence だけを返す。
+failedSummaries や trajectories（action／observation／outcome）が付く場合は、成功要約だけに頼らず対比してよい。
+個別事例を超えて一般化しすぎない。非公開の思考本文は要求しない。正式 Skill にはしない。sections / conditions / evidence だけを返す。
 `.trim();

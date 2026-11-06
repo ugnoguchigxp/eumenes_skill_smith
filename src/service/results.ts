@@ -3,6 +3,7 @@ import { resultSchema, sectionSchema } from "../contracts/schema.js";
 import type {
 	Authority,
 	PreparedReflection,
+	PreparedWorkflow,
 	Proposal,
 	Report,
 } from "../contracts/types.js";
@@ -304,18 +305,23 @@ export function createResultOperations<Tx>(
 		repo.putProposal(tx, proposal, expectedRevision);
 		return proposal;
 	}
-	async function induceAndSaveWorkflow(
+	function prepareWorkflow(
 		tx: Tx,
 		input: {
 			buildRef: string;
 			executionRef: string;
 			taskGoal: string;
 			succeededSummaries: string[];
+			failedSummaries?: string[];
+			trajectories?: {
+				action: string;
+				observation: string;
+				outcome: "succeeded" | "failed" | "incomplete" | "cancelled";
+			}[];
 			evidence: string[];
 		},
 		auth: Authority,
-		context: { signal: AbortSignal; reserve(): Promise<void> },
-	) {
+	): PreparedWorkflow {
 		requireThat(
 			auth.permissions.includes("report") &&
 				p.authority.valid(tx, auth, input.evidence) &&
@@ -324,12 +330,51 @@ export function createResultOperations<Tx>(
 			"permission_denied",
 		);
 		requireThat(input.succeededSummaries.length >= 1, "verification_required");
+		const report = repo.report(tx, auth.scope, input.executionRef);
+		const trajectories = (input.trajectories ?? []).slice(0, 16).map((t) => ({
+			action: t.action,
+			observation: t.observation,
+			outcome: t.outcome,
+		}));
+		const snapshot = {
+			buildRef: input.buildRef,
+			executionRef: input.executionRef,
+			taskGoal: input.taskGoal,
+			succeededSummaries: input.succeededSummaries.slice(0, 16),
+			failedSummaries: (input.failedSummaries ?? []).slice(0, 16),
+			trajectories,
+			evidence: [...input.evidence],
+			reportDigest: report?.digest ?? null,
+			reportRevision: report?.revision ?? null,
+		};
+		return {
+			...snapshot,
+			authority: {
+				scope: auth.scope,
+				principal: auth.principal,
+				epoch: auth.epoch,
+			},
+			inputDigest: digest(snapshot),
+		};
+	}
+	async function induceWorkflow(
+		s: PreparedWorkflow,
+		context: { signal: AbortSignal; reserve(): Promise<void> },
+	) {
 		context.signal.throwIfAborted();
 		await context.reserve();
 		const data = {
-			taskGoal: input.taskGoal,
-			succeededSummaries: input.succeededSummaries.slice(0, 16),
-			evidence: input.evidence,
+			taskGoal: s.taskGoal,
+			succeededSummaries: s.succeededSummaries,
+			...(s.failedSummaries.length
+				? { failedSummaries: s.failedSummaries }
+				: {}),
+			...(s.trajectories.length ? { trajectories: s.trajectories } : {}),
+			evidence: s.evidence,
+			reportDigest: s.reportDigest,
+			reportRevision: s.reportRevision,
+			verification:
+				"実行側の要約・観測。ホストで候補そのものを実証したという意味ではない",
 		};
 		requireThat(
 			bytes(data) <= limits.reflectionMaxDataBytes,
@@ -342,22 +387,52 @@ export function createResultOperations<Tx>(
 				schema: z.toJSONSchema(proposalContent),
 				deadlineAt: p.now() + limits.reflectionDeadlineMs,
 				maxOutputTokens: limits.reflectionMaxOutputTokens,
-				requestRef: input.executionRef,
+				requestRef: s.executionRef,
 			},
 			context.signal,
 		);
 		const content = proposalContent.parse(response.value);
+		requireThat(bytes(content) <= 16384, "context_budget_exceeded");
+		return {
+			content,
+			receipt: response.receipt,
+			inputTokens: response.inputTokens,
+			outputTokens: response.outputTokens,
+		};
+	}
+	function saveWorkflow(
+		tx: Tx,
+		s: PreparedWorkflow,
+		result: Awaited<ReturnType<typeof induceWorkflow>>,
+		auth: Authority,
+	) {
 		requireThat(
-			content.evidence.every((e) => input.evidence.includes(e)),
+			auth.permissions.includes("report") &&
+				auth.scope === s.authority.scope &&
+				auth.principal === s.authority.principal &&
+				auth.epoch === s.authority.epoch &&
+				p.authority.valid(tx, auth, s.evidence) &&
+				repo.hasUse(tx, auth.scope, s.buildRef, s.executionRef) &&
+				!repo.blocked(tx, s.buildRef) &&
+				p.inference.validReceipt(tx, result.receipt),
+			"stale_result",
+		);
+		const current = repo.report(tx, auth.scope, s.executionRef);
+		requireThat(
+			(current?.digest ?? null) === s.reportDigest &&
+				(current?.revision ?? null) === s.reportRevision,
+			"stale_result",
+		);
+		requireThat(
+			result.content.evidence.every((e) => s.evidence.includes(e)),
 			"evidence_unavailable",
 		);
-		requireThat(p.inference.validReceipt(tx, response.receipt), "stale_result");
 		const proposal: Proposal = {
 			ref: p.id(),
 			scope: auth.scope,
-			buildRef: input.buildRef,
-			executionRef: input.executionRef,
-			...content,
+			buildRef: s.buildRef,
+			executionRef: s.executionRef,
+			...result.content,
 			status: "proposed",
 			revision: 0,
 		};
@@ -375,6 +450,8 @@ export function createResultOperations<Tx>(
 		failReflection,
 		reviewProposal,
 		markExecutionVerified,
-		induceAndSaveWorkflow,
+		prepareWorkflow,
+		induceWorkflow,
+		saveWorkflow,
 	};
 }
