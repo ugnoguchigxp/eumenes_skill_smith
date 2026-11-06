@@ -191,6 +191,16 @@ export function fixture(
 			reserve: async (kind) => {
 				write(() => service.reserve(db, prepared, kind, a));
 			},
+			noteUsage: async (observed) => {
+				write(() =>
+					service.noteUsage(db, prepared, a, {
+						inputTokens: observed.inputTokens,
+						outputTokens: observed.outputTokens,
+						reasoningTokens: observed.reasoningTokens,
+						cachedInputTokens: observed.cachedInputTokens,
+					}),
+				);
+			},
 		});
 		return {
 			prepared,

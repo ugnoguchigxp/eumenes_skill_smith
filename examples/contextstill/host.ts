@@ -163,6 +163,16 @@ export function createExampleHost(
 				reserve: async (kind) => {
 					write(() => service.reserve(db, prepared, kind, authority));
 				},
+				noteUsage: async (observed) => {
+					write(() =>
+						service.noteUsage(db, prepared, authority, {
+							inputTokens: observed.inputTokens,
+							outputTokens: observed.outputTokens,
+							reasoningTokens: observed.reasoningTokens,
+							cachedInputTokens: observed.cachedInputTokens,
+						}),
+					);
+				},
 			});
 			write(() => service.settle(db, prepared, result, authority));
 			return service.getValidated(

@@ -106,6 +106,9 @@ export interface Ports<Tx> {
 			receipt: string;
 			inputTokens: number | null;
 			outputTokens: number | null;
+			/** Present only when the provider reports it; do not invent. */
+			reasoningTokens?: number | null;
+			cachedInputTokens?: number | null;
 		}>;
 		validReceipt(tx: Tx, receipt: string): boolean;
 	};
@@ -125,10 +128,24 @@ export interface Ports<Tx> {
 	/** Optional overrides; omitted fields keep package defaults. */
 	limits?: Partial<ServiceLimits>;
 }
+export interface ObservedUsage {
+	inputTokens: number | null;
+	outputTokens: number | null;
+	reasoningTokens?: number | null;
+	cachedInputTokens?: number | null;
+	receipt?: string;
+	callKind: "build" | "reflection" | "workflow" | "delivery_validate";
+}
 export interface ExecutionContext {
 	signal: AbortSignal;
 	/** Each reservation must commit before any external call. */
 	reserve(kind: "modelCalls" | "sourceCalls"): Promise<void>;
+	/**
+	 * Optional committed usage note after a provider call.
+	 * Hosts should persist observed totals so failures still keep a ledger.
+	 * Pass nulls through; never substitute 0 for unknown.
+	 */
+	noteUsage?(usage: ObservedUsage): Promise<void>;
 }
 export interface SkillSmith<Tx> {
 	submit(

@@ -163,6 +163,8 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				sourceCalls: 0,
 				inputTokens: null,
 				outputTokens: null,
+				reasoningTokens: null,
+				cachedInputTokens: null,
 			},
 		};
 		const cached = request.prior?.buildRef
@@ -265,6 +267,36 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		row.usage[kind]++;
 		update(tx, row);
 	}
+	function noteUsage(
+		tx: Tx,
+		s: Prepared,
+		auth: Authority,
+		observed: {
+			inputTokens: number | null;
+			outputTokens: number | null;
+			reasoningTokens?: number | null;
+			cachedInputTokens?: number | null;
+		},
+	) {
+		const row = repo.request(tx, s.record.ref);
+		if (
+			!row ||
+			!valid(tx, row, auth) ||
+			row.outcome ||
+			row.epoch !== s.record.epoch ||
+			row.runToken !== s.runToken
+		)
+			return false;
+		// Absolute observed totals from the in-flight executor; do not add again.
+		row.usage.inputTokens = observed.inputTokens;
+		row.usage.outputTokens = observed.outputTokens;
+		if ("reasoningTokens" in observed)
+			row.usage.reasoningTokens = observed.reasoningTokens ?? null;
+		if ("cachedInputTokens" in observed)
+			row.usage.cachedInputTokens = observed.cachedInputTokens ?? null;
+		update(tx, row);
+		return true;
+	}
 	function settle(tx: Tx, s: Prepared, result: Executed, auth: Authority) {
 		const row = repo.request(tx, s.record.ref);
 		if (
@@ -286,6 +318,12 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		}
 		row.usage.inputTokens = result.tokens?.input ?? null;
 		row.usage.outputTokens = result.tokens?.output ?? null;
+		if (result.tokens) {
+			if ("reasoningTokens" in result.tokens)
+				row.usage.reasoningTokens = result.tokens.reasoningTokens ?? null;
+			if ("cachedInputTokens" in result.tokens)
+				row.usage.cachedInputTokens = result.tokens.cachedInputTokens ?? null;
+		}
 		if (result.decision.kind !== "ready") {
 			finish(tx, row, result.decision);
 			return true;
@@ -466,12 +504,34 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		execute: (s: Prepared, c: ExecutionContext) => executeBuild(p, s, c),
 		cancel: (tx: Tx, ref: string, auth: Authority) =>
 			terminate(tx, ref, auth, "user_cancelled", "cancelled"),
-		fail: (tx: Tx, s: Prepared, auth: Authority, code: string) => {
+		noteUsage,
+		fail: (
+			tx: Tx,
+			s: Prepared,
+			auth: Authority,
+			code: string,
+			tokens?: {
+				input: number | null;
+				output: number | null;
+				reasoningTokens?: number | null;
+				cachedInputTokens?: number | null;
+			},
+		) => {
 			const current = repo.request(tx, s.record.ref);
-			return current?.epoch === s.record.epoch &&
-				current.runToken === s.runToken
-				? terminate(tx, s.record.ref, auth, code)
-				: false;
+			if (!(
+				current?.epoch === s.record.epoch && current.runToken === s.runToken
+			))
+				return false;
+			if (tokens) {
+				current.usage.inputTokens = tokens.input;
+				current.usage.outputTokens = tokens.output;
+				if ("reasoningTokens" in tokens)
+					current.usage.reasoningTokens = tokens.reasoningTokens ?? null;
+				if ("cachedInputTokens" in tokens)
+					current.usage.cachedInputTokens = tokens.cachedInputTokens ?? null;
+				update(tx, current);
+			}
+			return terminate(tx, s.record.ref, auth, code);
 		},
 		pending: (tx: Tx, limit = 100) => repo.openRequests(tx, limit),
 		...createResultOperations(p, limits),

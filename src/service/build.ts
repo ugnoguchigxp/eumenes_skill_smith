@@ -152,7 +152,7 @@ export async function executeBuild<Tx>(
 ): Promise<Executed> {
 	const r = p.record,
 		request = r.request,
-		{ signal, reserve } = context;
+		{ signal, reserve, noteUsage } = context;
 	const checkpoint = () => {
 		signal.throwIfAborted();
 		requireThat(ports.now() < request.limits.deadlineAt, "deadline_exceeded");
@@ -384,7 +384,14 @@ export async function executeBuild<Tx>(
 	};
 
 	let decision: Decision | undefined, receipt: string | undefined;
-	const tokens = { input: 0 as number | null, output: 0 as number | null };
+	const tokens = {
+		input: 0 as number | null,
+		output: 0 as number | null,
+		reasoningTokens: null as number | null,
+		cachedInputTokens: null as number | null,
+	};
+	let reasoningReported = false;
+	let cachedReported = false;
 	let repair: { code: string; instruction: string } | undefined;
 	let lastFailure = "invalid_model_output";
 	let reSearchUsed = false;
@@ -420,6 +427,40 @@ export async function executeBuild<Tx>(
 			tokens.output === null || answer.outputTokens === null
 				? null
 				: tokens.output + answer.outputTokens;
+		if (answer.reasoningTokens !== undefined) {
+			const reasoning = answer.reasoningTokens;
+			if (!reasoningReported) {
+				tokens.reasoningTokens = reasoning;
+				reasoningReported = true;
+			} else {
+				tokens.reasoningTokens =
+					tokens.reasoningTokens === null || reasoning === null
+						? null
+						: tokens.reasoningTokens + reasoning;
+			}
+		}
+		if (answer.cachedInputTokens !== undefined) {
+			const cached = answer.cachedInputTokens;
+			if (!cachedReported) {
+				tokens.cachedInputTokens = cached;
+				cachedReported = true;
+			} else {
+				tokens.cachedInputTokens =
+					tokens.cachedInputTokens === null || cached === null
+						? null
+						: tokens.cachedInputTokens + cached;
+			}
+		}
+		if (noteUsage) {
+			await noteUsage({
+				inputTokens: tokens.input,
+				outputTokens: tokens.output,
+				reasoningTokens: tokens.reasoningTokens,
+				cachedInputTokens: tokens.cachedInputTokens,
+				receipt: answer.receipt,
+				callKind: "build",
+			});
+		}
 		const parsed = modelTurnSchema.safeParse(answer.value);
 		if (!parsed.success) {
 			lastFailure = "invalid_model_output";

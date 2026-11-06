@@ -174,6 +174,10 @@ export const usageSchema = z.strictObject({
 	sourceCalls: z.number().int().nonnegative(),
 	inputTokens: z.number().int().nonnegative().nullable(),
 	outputTokens: z.number().int().nonnegative().nullable(),
+	/** Provider reasoning tokens when separately reported; null if unknown. Never invent. */
+	reasoningTokens: z.number().int().nonnegative().nullable().default(null),
+	/** Provider cached-input tokens when separately reported; null if unknown. */
+	cachedInputTokens: z.number().int().nonnegative().nullable().default(null),
 });
 export const buildSchema = z.strictObject({
 	ref: id,

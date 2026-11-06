@@ -23,6 +23,8 @@ function prepared(f: ReturnType<typeof fixture>): Prepared {
 				sourceCalls: 0,
 				inputTokens: null,
 				outputTokens: null,
+				reasoningTokens: null,
+				cachedInputTokens: null,
 			},
 		},
 		runToken: "t",

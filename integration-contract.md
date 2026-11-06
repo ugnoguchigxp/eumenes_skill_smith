@@ -70,6 +70,10 @@ EvidenceCard／Evidenceは任意の `supersededBy`（同じ取得元のref）を
 
 `examples/contextstill/eval-kit.ts` は比較の前に `auditEvalSuite` を行う。同一 task の A/B/C 条件欠け・重複、`--require-records` 時の空 record、および companion の `*.expected-digests.json` と一致しない `inputDigest` 改竄は失敗とする。補助指標の token overlap は `lexicalOverlap`（字面一致）と呼び、意味的 faithfulness とは扱わない。評価結果 JSON と推論 record は別物であり、CLI の整形出力を品質スコアとしない。
 
+### 3.1d 使用量台帳（2026-11-06追加）
+
+Request の `usage` は modelCalls／sourceCalls に加え、観測済みの inputTokens／outputTokens、および提供元が返す場合のみの reasoningTokens／cachedInputTokens（欠測は null、0 にしない）を持つ。ビルド中は ExecutionContext.noteUsage で試行ごとの累計をコミットし、失敗で settle に至らなくても観測値を残す。評価用の per-call 台帳は `src/eval/usage-ledger.ts` に置き、reasoning が output に内包される場合は二重加算しない。token 数を金額へ換算するゲートは設けない。
+
 ### 3.2 推論providerの注入
 
 本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。

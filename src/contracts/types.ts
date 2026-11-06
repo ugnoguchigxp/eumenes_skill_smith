@@ -45,6 +45,8 @@ export interface Usage {
 	sourceCalls: number;
 	inputTokens: number | null;
 	outputTokens: number | null;
+	reasoningTokens: number | null;
+	cachedInputTokens: number | null;
 }
 export interface Build {
 	ref: string;
@@ -101,7 +103,12 @@ export interface Executed {
 	decision: Decision;
 	evidence: Evidence[];
 	receipt?: string;
-	tokens?: { input: number | null; output: number | null };
+	tokens?: {
+		input: number | null;
+		output: number | null;
+		reasoningTokens?: number | null;
+		cachedInputTokens?: number | null;
+	};
 }
 export interface Delivery {
 	id: string;

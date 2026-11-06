@@ -35,3 +35,12 @@ usage 取得のため推論を増やすこと、欠測を推定で埋めるこ�
 ## 依存・前提
 
 fixture から開始できます。実 reasoning metadata を持つ record は別途必要で、なければ null のままです。提案 16・20 の評価前提です。仮定: provider が usage を返すこと。
+
+## 実装結果
+
+- **採否**: 採用（失敗時の観測値保存と評価台帳）
+- **内容**: `ExecutionContext.noteUsage` でビルド試行の累計 token を失敗前にコミット。`usage` に reasoningTokens／cachedInputTokens（欠測は null）。評価用 `aggregateUsageLedger` は内包 reasoning を二重加算しない。金額換算・費用ゲートなし。
+- **パス**: `src/contracts/{schema,types,ports}.ts`, `src/service/{build,index}.ts`, `src/test/fixture.ts`, `examples/contextstill/host.ts`, `src/eval/usage-ledger.ts`, `src/test/usage-ledger.test.ts`, `integration-contract.md`
+- **試験**: `bun test src/test/usage-ledger.test.ts`（5 pass）。失敗 multi-call で inputTokens=40 / outputTokens=60 を確認（以前は null）。`bun run verify` 通過。
+- **未実施**: 実 provider の reasoning metadata 付き record、delivery validate の別列集計の本番接続
+- **理由**: 再現していた「失敗で token が消える」を閉じ、欠測を 0 にしない。意味挙動は変えていない。
