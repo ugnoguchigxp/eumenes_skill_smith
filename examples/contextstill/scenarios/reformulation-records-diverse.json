@@ -1,0 +1,72 @@
+[
+	{
+		"inputDigest": "e88f7dc354c0020885f8ad482b953db7fc3d6d8f3b51851a1800c14bbd8c789f",
+		"provider": "grok_bot",
+		"value": {
+			"query": "avoid committing .env files or API keys"
+		}
+	},
+	{
+		"inputDigest": "3b61c08353898e3e785e974a275416d9dc24f7c58de6fdd8f4a9d3b13d8e0f27",
+		"provider": "grok_bot",
+		"value": {
+			"query": "test changes in a production-like environment first"
+		}
+	},
+	{
+		"inputDigest": "5b2bf168fdd713fad1941bceadf52dee91b0c142fb7f8414f787a4a823a1e7b8",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent secrets remaining in logs or HTTP responses"
+		}
+	},
+	{
+		"inputDigest": "67b4b63d94d98848f4d21d38ec08e58cefe6794e29fb82146ef0db56eb88162d",
+		"provider": "grok_bot",
+		"value": {
+			"query": "fix pre-commit hook failures without skipping checks"
+		}
+	},
+	{
+		"inputDigest": "814eed0b54b002df3a335da6ccb735f2c16639c008ee6deb8e6e27966863e9a7",
+		"provider": "grok_bot",
+		"value": {
+			"query": "validate changed git hook by running it in a real commit workflow"
+		}
+	},
+	{
+		"inputDigest": "783d309c7baa533750362c38f89b2343382bb3d88c6cb97992306fdc8784f5b6",
+		"provider": "grok_bot",
+		"value": {
+			"query": "port service to idiomatic Go instead of line-by-line translation"
+		}
+	},
+	{
+		"inputDigest": "43fdfe5d35ef29dc242d2d943f342f887588a059e910fc23154e922a3b1a5789",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent workspace .env values leaking into process.env when starting MCP server"
+		}
+	},
+	{
+		"inputDigest": "f21c36b499fd7d5d02f9f086f3f53461408b8eb6b9b33258651f73b7d7c02f78",
+		"provider": "grok_bot",
+		"value": {
+			"query": "Python indentation 4 spaces no tabs"
+		}
+	},
+	{
+		"inputDigest": "90212ec06a6fa5619d53701cbb0efcf04352b152899f506a9250fc8272776ce0",
+		"provider": "grok_bot",
+		"value": {
+			"query": "require explicit permission before git force push"
+		}
+	},
+	{
+		"inputDigest": "26fff83a5147fd069481bbce50e05f7375387eea0e7ee5f489b71ff2fe5109e0",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent smoke tests accidentally calling live model APIs"
+		}
+	}
+]

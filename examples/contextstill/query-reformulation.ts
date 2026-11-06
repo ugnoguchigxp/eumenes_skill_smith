@@ -5,6 +5,7 @@
 // No dictionary, keyword table, or translation rule decides the query; meaning stays with the model.
 // The rewritten query is untrusted search input only; it is never promoted to authority.searchTask.
 import { z } from "zod";
+import { titleKey } from "./database.js";
 import type { Ports } from "../../src/index.js";
 import { digest } from "../../src/index.js";
 import type { SourcePort } from "./source.js";
@@ -21,7 +22,7 @@ export function containsJapanese(text: string): boolean {
 	);
 }
 
-/** Strict CLI parsing; omitted means auto (reformulate only Japanese searchTasks). */
+/** Strict CLI parsing; omitted means auto (Japanese or non-title searchTasks). */
 export function parseQueryReformulation(
 	argv: string[],
 ): QueryReformulationMode {
@@ -129,7 +130,9 @@ export function createReformulatingSource(
 
 /**
  * Product default: routes a searchTask through the reformulating source only when it contains
- * Japanese script; otherwise the inner source receives the searchTask unchanged.
+ * Japanese script or does not exactly match a filtered title. The plain search uses
+ * the same title pin and visibility filters, so an exact match appears first; no
+ * private task fields or gold labels enter the decision or auxiliary model input.
  */
 export function createAutoReformulatingSource(
 	inner: SourcePort,
@@ -137,9 +140,16 @@ export function createAutoReformulatingSource(
 	onFire?: () => void,
 ): SourcePort {
 	return {
-		search: (searchTask, limit, signal) => {
-			if (!containsJapanese(searchTask))
-				return inner.search(searchTask, limit, signal);
+		search: async (searchTask, limit, signal) => {
+			if (!containsJapanese(searchTask)) {
+				const plain = await inner.search(searchTask, limit, signal);
+				if (
+					plain.cards.some(
+						(card) => titleKey(card.title) === titleKey(searchTask),
+					)
+				)
+					return plain;
+			}
 			onFire?.();
 			return reformulating.search(searchTask, limit, signal);
 		},

@@ -1,0 +1,322 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "bm25",
+	"assemblyMode": "baseline",
+	"queryReformulationMode": "on",
+	"identity": {
+		"searchProfile": "bm25",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"abstentionContrast": "off",
+		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
+		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
+		"assemblyMode": "baseline",
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "retrieval",
+		"queryStyle": "original"
+	},
+	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 5,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "I need to commit my work, but the working tree contains a .env file and API keys. How should I avoid committing secrets or local environment files?",
+			"queryToSource": "avoid committing .env files API keys secrets local environment files"
+		},
+		{
+			"searchTask": "Test these changes in a production clone before we release.",
+			"queryToSource": "test changes in production clone before release"
+		},
+		{
+			"searchTask": "Make sure the app never prints secrets into logs or HTTP responses.",
+			"queryToSource": "prevent secrets in app logs and HTTP responses"
+		},
+		{
+			"searchTask": "pre-commit verify failed. Should I bypass the hooks to push anyway?",
+			"queryToSource": "pre-commit verify failure bypass hooks or fix before push"
+		},
+		{
+			"searchTask": "When editing this repository, how many spaces should indentation use?",
+			"queryToSource": "repository indentation number of spaces"
+		}
+	],
+	"summary": {
+		"comparison-slice": {
+			"tasks": 5,
+			"allRequiredHitAt8": {
+				"hit": 5,
+				"of": 5,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 5,
+				"of": 5,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "commit-no-secrets",
+			"axis": "retrieval",
+			"queryStyle": "original",
+			"tags": ["original-five", "comparison-slice"],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_or3oizrtkeqjztiqzdz6detake",
+					"title": "Desktop Runtime Must Override Repo-Local Environment Defaults"
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+					"title": "Azure OpenAI の secret は deployment ごとに個別に参照する"
+				},
+				{
+					"ref": "contextstill:kn_qxy5et6svtql6n3wum43ygp3ni",
+					"title": "Diagnose local env validation failures by importing backend config without ambient env"
+				},
+				{
+					"ref": "contextstill:kn_muc77pns6headksqiv6yb6w3w4",
+					"title": "Never store credentials in plaintext"
+				},
+				{
+					"ref": "contextstill:kn_bsftgq7woctylgu224doej3sga",
+					"title": "GitHub Actions 経由のデプロイでは secrets/vars から env を生成する"
+				}
+			]
+		},
+		{
+			"taskId": "test-production-clone",
+			"axis": "retrieval",
+			"queryStyle": "original",
+			"tags": ["original-five", "comparison-slice"],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+					"title": "Never deploy to production without explicit release intent"
+				},
+				{
+					"ref": "contextstill:kn_ll6fskowwjrkwm3hozbc4ipzma",
+					"title": "Use targeted tests before the full verification gate for broad changes"
+				},
+				{
+					"ref": "contextstill:kn_ircsuea4oaulpqm7skqy55jina",
+					"title": "Use feature toggles to change behavior without code changes"
+				},
+				{
+					"ref": "contextstill:kn_msj5xtbap2cw2pygg42dthb7mu",
+					"title": "Review dirty worktrees by preserving unrelated user changes"
+				},
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				},
+				{
+					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+					"title": "Verify And Clean Persistent Test Data Before Commit"
+				},
+				{
+					"ref": "contextstill:kn_mqgwqc7wxfblxu6k7uuvywtkvi",
+					"title": "clone は必要な場合だけ使い、借用回避目的では使わない"
+				}
+			]
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"axis": "retrieval",
+			"queryStyle": "original",
+			"tags": ["original-five", "comparison-slice"],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_sszzdarvqjx3wqgmpvsbphlm2i",
+					"title": "Constrain tool inputs by allowed URI schemes"
+				},
+				{
+					"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
+					"title": "Desktop runtime mode must override repo-local env defaults for writable state"
+				},
+				{
+					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+					"title": "Verify desktop packaging with real app launch, not artifact existence"
+				},
+				{
+					"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+					"title": "Never expose long-lived credentials in URLs"
+				},
+				{
+					"ref": "contextstill:kn_su6m6wnpljuv263vazzdj2brou",
+					"title": "Bun/Hono shutdown: close WebSocket clients before HTTP server close"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_kowdmxwmqobiie3e3gg4glwwki",
+					"title": "Packaged app startup failures need shell and sidecar logs before panic handling"
+				}
+			]
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"axis": "retrieval",
+			"queryStyle": "original",
+			"tags": ["original-five", "comparison-slice"],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
+				},
+				{
+					"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+					"title": "Incremental gate validation for large changes"
+				},
+				{
+					"ref": "contextstill:kn_wyurf7v5wxbkm3p3d3hm3qg5te",
+					"title": "Never disable authentication or authorization in production paths"
+				},
+				{
+					"ref": "contextstill:kn_6tjxlkaw42ckzqlh4ia3noxjpu",
+					"title": "Failure Firewall の候補生成は verify 合格後かつユーザーの commit 承認後にのみ行う"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				}
+			]
+		},
+		{
+			"taskId": "four-space-indent",
+			"axis": "retrieval",
+			"queryStyle": "original",
+			"tags": ["original-five", "comparison-slice"],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_eelewcqzlk56bobdrtmuaagzgu",
+					"title": "Separate agent decision workspaces from target workspaces"
+				},
+				{
+					"ref": "contextstill:kn_s2ngfza4pi734455kwvxpmnxke",
+					"title": "relations.weight は数値または数値文字列を受け、保存時に数値化して扱う"
+				},
+				{
+					"ref": "contextstill:kn_4v6psz6lmsecv77pvumuxaolui",
+					"title": "markdownlint の基本ルールを守る"
+				},
+				{
+					"ref": "contextstill:kn_k4mbstuht644efmtyoifxpa5um",
+					"title": "SimpleTreeTable のインデント分岐は非展開行で固定余白を確認する"
+				},
+				{
+					"ref": "contextstill:kn_idyytrtn2s24iuli224ukczycm",
+					"title": "CLI 引数の数値検証には Number.isNaN を使用する"
+				},
+				{
+					"ref": "contextstill:kn_h7kmxxysugppqxxxzo7gyrcl3u",
+					"title": "小数計測値の表示を NumberFormat に置き換える手順"
+				},
+				{
+					"ref": "contextstill:kn_lrelkpwtykgf5zra5s2qycatua",
+					"title": "Calendar の無効日付判定は Number.isNaN を使う"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (bm25-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

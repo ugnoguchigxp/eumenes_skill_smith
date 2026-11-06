@@ -1,0 +1,114 @@
+[
+	{
+		"inputDigest": "f4e02a1c8e9cda26c5f1775532f7feda78a661a49e1b74d969d6fd7d2c305e11",
+		"provider": "grok_bot",
+		"value": {
+			"query": "exclude API keys and .env files from git commits"
+		}
+	},
+	{
+		"inputDigest": "dd7d4101eeab23c6df84279c3b0aa951017764fbabab6e9850c541160a2ef80f",
+		"provider": "grok_bot",
+		"value": {
+			"query": "test release in a replica production environment"
+		}
+	},
+	{
+		"inputDigest": "82a7cfd1b5c57cadea9213793cb0b41cd40fe0373fb437020f0f88428e73a8b0",
+		"provider": "grok_bot",
+		"value": {
+			"query": "redact credentials from diagnostic logs and HTTP responses"
+		}
+	},
+	{
+		"inputDigest": "b5cad32c7a5f8d4ccc1cfe2979dadb564bde755a277c0ea63bed01bc9f9d6aa3",
+		"provider": "grok_bot",
+		"value": {
+			"query": "fix failing pre-commit checks without bypass flags"
+		}
+	},
+	{
+		"inputDigest": "cf212cdec3f57f79b9ef6dec9fb1be7d60a5d6c9964ccd83e1e9434f9f27583b",
+		"provider": "grok_bot",
+		"value": {
+			"query": "Python indentation four spaces not tabs"
+		}
+	},
+	{
+		"inputDigest": "a18a7e81a9d713f24aad2268114537214f5bd01f4447fe00a12b2736364365f5",
+		"provider": "grok_bot",
+		"value": {
+			"query": "require permission before overwriting remote git history"
+		}
+	},
+	{
+		"inputDigest": "1641c44ae585fb80f904d250985c521f2cce115c47ade908519fd3259ae9c95c",
+		"provider": "grok_bot",
+		"value": {
+			"query": "keep credential masking enabled during debugging"
+		}
+	},
+	{
+		"inputDigest": "9c1d92db21f59c9c2dba3282df17db0af9b2512362ddb69cf1340cd0f0b919f2",
+		"provider": "grok_bot",
+		"value": {
+			"query": "test modified hooks through full execution flow"
+		}
+	},
+	{
+		"inputDigest": "21b7d7d8e6472c386def8526c9fff8eed2490b3cb2a6cde4a770cbb92e42cf37",
+		"provider": "grok_bot",
+		"value": {
+			"query": "explicit permission before destructive git reset"
+		}
+	},
+	{
+		"inputDigest": "13ed844295b988471e3d23fb46c718a5a7bc7d62cb620a1a6a9cb604486e59af",
+		"provider": "grok_bot",
+		"value": {
+			"query": "avoid unnecessary edits to generated dependency lock files"
+		}
+	},
+	{
+		"inputDigest": "de39d3cb0b86498fa82b01042290431afddedfd7b722aedea98346ed94657c2d",
+		"provider": "grok_bot",
+		"value": {
+			"query": "deterministic smoke checks independent of external model credentials"
+		}
+	},
+	{
+		"inputDigest": "4188b9ed8a79748fa7fea106f0b509a847fc54ba5f0e81e5d5e62c47ceb8ed00",
+		"provider": "grok_bot",
+		"value": {
+			"query": "Python extensions stable binary interface compatibility"
+		}
+	},
+	{
+		"inputDigest": "709a3ae2dae9210241e777b2cec82257a2bb8b4a60deab9be80b7b65fb964808",
+		"provider": "grok_bot",
+		"value": {
+			"query": "describe HTTP endpoints using OpenAPI"
+		}
+	},
+	{
+		"inputDigest": "a651c23d86cbf567f16166074166b1afb8cf904dea5419c6c17a625a67b97961",
+		"provider": "grok_bot",
+		"value": {
+			"query": "convert missing numeric DataFrame values to null before JSON serialization"
+		}
+	},
+	{
+		"inputDigest": "b343de39eebc5d6af9b4861c1da21f19fc9df75848781f2ff90654c4bc0f99e4",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent MCP workspace dotenv values leaking into server process environment"
+		}
+	},
+	{
+		"inputDigest": "6a51fe2d59b4a83dfc7dec60b1ccf17371e3a704e5da2c5ff0d568fbe8341862",
+		"provider": "grok_bot",
+		"value": {
+			"query": "port code to idiomatic Go rather than translating directly"
+		}
+	}
+]

@@ -217,7 +217,7 @@ test("multi identity differs from single, baseline and compact instructions stay
 	);
 });
 
-test("CLI replay: 28 single JP BM25 remains 15/16; omitted/off original-five ranks unchanged", () => {
+test("CLI replay: single JP BM25 stays 15/16; off keeps old ranks and auto reformulates original five", () => {
 	const f = setup();
 	for (const profile of ["handle", "bm25"]) {
 		for (const mode of [undefined, "off", "on"]) {
@@ -262,9 +262,15 @@ test("CLI replay: 28 single JP BM25 remains 15/16; omitted/off original-five ran
 						(r: { ranks: { rank: number | null }[] }) => r.ranks[0]!.rank,
 					),
 				).toEqual(
-					profile === "handle" ? [6, 1, null, null, null] : [1, 1, 1, 1, 1],
+					profile === "handle"
+						? [mode === "off" ? 6 : 4, 1, null, null, null]
+						: [1, 1, 1, 1, 1],
 				);
-				expect(report.identity.queryReformulation).toBe("off");
+				expect(report.identity.queryReformulation).toBe(
+					mode === "off" ? "off" : "on",
+				);
+				if (mode === undefined)
+					expect(report.reformulationInferenceTasks).toBe(5);
 			}
 		}
 	}

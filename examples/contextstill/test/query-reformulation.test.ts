@@ -20,7 +20,7 @@ import {
 	type PendingReformulation,
 } from "../scenario-runner.js";
 import type { NormalizedScenarioTask } from "../../../src/eval/scenario-score.js";
-import { setup } from "./fixture.js";
+import { setup, item, handle } from "./fixture.js";
 
 const CANARY = "PRIVATE_CANARY_42";
 const deadlineAt = 1_700_000_000_000 + 120_000;
@@ -260,12 +260,12 @@ test("parse: omitted is auto; auto/off/on explicit; unknown errors", () => {
 	);
 });
 
-test("auto fires only on Japanese script and passes only the public searchTask", async () => {
+test("auto fires on Japanese and non-title English, skips normalized title matches", async () => {
 	expect(containsJapanese("APIキー")).toBe(true);
 	expect(containsJapanese("ｶﾀｶﾅ")).toBe(true);
 	expect(containsJapanese("検証")).toBe(true);
 	expect(containsJapanese("Never commit secrets")).toBe(false);
-	const f = setup();
+	const f = setup([item({ title: "Never commit secrets" })]);
 	const inputs: unknown[] = [];
 	const db: string[] = [];
 	let fired = 0;
@@ -285,7 +285,7 @@ test("auto fires only on Japanese script and passes only the public searchTask",
 		),
 		() => fired++,
 	);
-	await source.search("Never commit secrets", 8, f.signal);
+	await source.search("  ＮＥＶＥＲ commit SECRETS  ", 8, f.signal);
 	expect(fired).toBe(0);
 	expect(inputs).toEqual([]);
 	await source.search(`APIキー ${CANARY}`, 8, f.signal);
@@ -294,5 +294,28 @@ test("auto fires only on Japanese script and passes only the public searchTask",
 	expect((inputs[0] as { data: unknown }).data).toEqual({
 		searchTask: `APIキー ${CANARY}`,
 	});
-	expect(db).toEqual(["Never commit secrets", `APIキー ${CANARY}`]);
+	expect(db).toEqual(["  ＮＥＶＥＲ commit SECRETS  ", `APIキー ${CANARY}`]);
+	await source.search("Keep my credentials out of git", 8, f.signal);
+	expect(fired).toBe(2);
+	expect(inputs).toHaveLength(2);
+	expect((inputs[1] as { data: unknown }).data).toEqual({
+		searchTask: "Keep my credentials out of git",
+	});
+});
+
+test("auto does not skip reformulation for a filtered-out title", async () => {
+	const f = setup([
+		item({ title: "Hidden title", handle: handle("c"), status: "superseded" }),
+	]);
+	const inputs: unknown[] = [];
+	const source = createAutoReformulatingSource(
+		f.source,
+		createReformulatingSource(
+			f.source,
+			echoModel((i) => inputs.push(i)),
+			{ deadlineAt },
+		),
+	);
+	await source.search("Hidden title", 8, f.signal);
+	expect(inputs).toHaveLength(1);
 });

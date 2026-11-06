@@ -1,0 +1,37 @@
+[
+	{
+		"inputDigest": "e6f529ee4097406c6563d4637509067afab4e4512c57c6bd16e4a2e183a7b38f",
+		"provider": "grok_bot",
+		"value": {
+			"query": "avoid committing .env files API keys secrets local environment files"
+		}
+	},
+	{
+		"inputDigest": "dc0b36692c88504d173251ae5565041cdd762ffa4a3f6e4432054b172eb75cfd",
+		"provider": "grok_bot",
+		"value": {
+			"query": "test changes in production clone before release"
+		}
+	},
+	{
+		"inputDigest": "cf16ae3a8f1d7a1080b9befd00d2a1c38690197a1a194a6b3bcf7903fe31abb3",
+		"provider": "grok_bot",
+		"value": {
+			"query": "prevent secrets in app logs and HTTP responses"
+		}
+	},
+	{
+		"inputDigest": "bc1e32360f3419b56ca9ffbe6d9642765b251c07c1c3a12d4c8aeda4601ecc9d",
+		"provider": "grok_bot",
+		"value": {
+			"query": "pre-commit verify failure bypass hooks or fix before push"
+		}
+	},
+	{
+		"inputDigest": "1768c06e39b1b92977aaa3bb3ec42b666919639f8b4011f7bd62f05719630e59",
+		"provider": "grok_bot",
+		"value": {
+			"query": "repository indentation number of spaces"
+		}
+	}
+]

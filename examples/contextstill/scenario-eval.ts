@@ -6,7 +6,7 @@
 //            --search-profile handle|bm25 (default bm25; exact-title pin applies to both)
 //            --evidence-supply natural|oracle (default natural; oracle is full eval only)
 //            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
-//            --query-reformulation off|on|auto|multi (default auto: reformulate only Japanese
+//            --query-reformulation off|on|auto|multi (default auto: Japanese or non-title
 //              searchTasks; identity records on if any search fired, else off; multi stays opt-in)
 //            --reformulation-records path (on default: examples/contextstill/scenarios/reformulation-records.json)
 //            multi default: data/contextstill/multi-query-records.json (missing means pending)
@@ -115,7 +115,9 @@ if (queryReformulation !== "off") {
 			"--reformulation-records",
 			queryReformulation === "multi"
 				? "data/contextstill/multi-query-records.json"
-				: "examples/contextstill/scenarios/reformulation-records.json",
+				: queryReformulation === "auto"
+					? "examples/contextstill/scenarios/reformulation-records-default.json"
+					: "examples/contextstill/scenarios/reformulation-records.json",
 		),
 	);
 	const collected: InferenceTask[] = [];

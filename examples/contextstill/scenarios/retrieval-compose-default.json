@@ -16,9 +16,9 @@
 		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
 		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
 		"assemblyMode": "baseline",
-		"queryReformulation": "off",
-		"reformulationInstructionsDigest": null,
-		"reformulationSchemaDigest": null,
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
 		"suiteId": "seed-three-axis",
 		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
 		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
@@ -31,6 +31,27 @@
 		"queryStyle": null
 	},
 	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 4,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"queryToSource": "exclude .env and API keys from commits and prevent secrets appearing in logs or responses"
+		},
+		{
+			"searchTask": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"queryToSource": "fix pre-commit verify failures without bypassing hooks and do not force push without explicit approval"
+		},
+		{
+			"searchTask": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"queryToSource": "smoke test packed artifacts in a clean project without calling live providers"
+		},
+		{
+			"searchTask": "Format Python source using 4-space indentation and limit line length.",
+			"queryToSource": "format Python source using 4-space indentation and limit line length"
+		}
+	],
 	"summary": {
 		"compose": {
 			"tasks": 4,
@@ -79,10 +100,6 @@
 					"title": "Separate shared app settings from local secret runtime settings"
 				},
 				{
-					"ref": "contextstill:kn_phc6v2rnkq4f7n3wmlfnfyfcgq",
-					"title": "Assert Ownership in Authenticated API Checks"
-				},
-				{
 					"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
 					"title": "Never expose long-lived credentials in URLs"
 				},
@@ -91,12 +108,16 @@
 					"title": "Never transport long-lived credentials in URL query parameters"
 				},
 				{
+					"ref": "contextstill:kn_kwkt4hkvkj2ui2ybssuiajl7qu",
+					"title": "Exclude Codex internal/provider prompt logs from distillation"
+				},
+				{
 					"ref": "contextstill:kn_4iwwnxeva2pfhpdfzkvegdiq5q",
 					"title": "Desktop runtime mode must override repo-local env defaults for writable state"
 				},
 				{
-					"ref": "contextstill:kn_up6um7divlsfvs7dykbgvebx2i",
-					"title": "Restore environment variables in tests instead of deleting them unconditionally"
+					"ref": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+					"title": "Azure OpenAI の secret は deployment ごとに個別に参照する"
 				}
 			]
 		},
@@ -165,7 +186,7 @@
 				},
 				{
 					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
-					"rank": 2
+					"rank": 3
 				}
 			],
 			"allRequiredHitAt8": true,
@@ -177,32 +198,32 @@
 					"title": "Package Release Smoke Test with Packed Artifacts"
 				},
 				{
-					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
-					"title": "Smoke tests must not implicitly call live providers"
+					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+					"title": "Verify And Clean Persistent Test Data Before Commit"
 				},
 				{
-					"ref": "contextstill:kn_enxkwb6srfr4saw2cfyywzizr4",
-					"title": "Publish-critical artifacts must be tracked or reproducibly generated"
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
 				},
 				{
 					"ref": "contextstill:kn_ugebpij7zcdpk5zbb67sevwtbu",
 					"title": "Monorepo npm publish readiness check without workspace protocol leaks"
 				},
 				{
-					"ref": "contextstill:kn_gnxwyqtgngkd7zdjnz4ad5ceki",
-					"title": "Package Node sidecars for desktop without copying full node_modules"
-				},
-				{
 					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
 					"title": "Separate fast verification from operational integration gates"
 				},
 				{
-					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
-					"title": "Verify And Clean Persistent Test Data Before Commit"
+					"ref": "contextstill:kn_vmariive5cmef3xwhbhgjzfxqy",
+					"title": "Distillation Queue v2 への移行は、freeze/backup → schema & code 切替 → one-time migration → live smoke → final cleanup drop の順で進める"
 				},
 				{
-					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
-					"title": "Verify desktop packaging with real app launch, not artifact existence"
+					"ref": "contextstill:kn_vdxy37fpwburanyw4cyzqc5mje",
+					"title": "Run destructive test-data cleanup with dry-run confirmation"
+				},
+				{
+					"ref": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+					"title": "Run existing smoke tests after adding a new E2E harness"
 				}
 			]
 		},

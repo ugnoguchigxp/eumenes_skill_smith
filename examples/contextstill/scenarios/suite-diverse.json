@@ -1,0 +1,170 @@
+{
+	"id": "seed-diverse-companion",
+	"provenance": "Purposive seed-derived companion eval probes; same frozen seed as suite-3axis; not production-user tasks; excluded from the 61-task scoreboard.",
+	"tasks": [
+		{
+			"id": "diverse-23jihz-informal",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "don't commit my .env or api keys",
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitles": ["Never commit secrets or local environment files"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-224yjd-question",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Can I test this against something that looks like production first?",
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitles": ["Test in a Production Clone"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-4pfru3-mixed",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "ログや HTTP の response に secret が残らないようにして",
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitles": ["Never print secrets into logs or responses"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-b2qt6s-informal",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "pre-commit failed again. don't skip the hook, just fix whatever it caught",
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks"
+			],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-4f7bhy-natural",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "I changed a git hook and I want to make sure it actually runs the way it would in a real commit, not just that the file looks right",
+			"expectedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"expectedTitles": ["Validate Hook Changes End-to-End"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-4eev36-natural",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "We're porting this service to Go. I don't want a line-by-line translation — write it the way Go code is usually written",
+			"expectedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"expectedTitles": ["Prefer Idiomatic Go Over Direct Translation"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-2o2vt6-mixed",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "MCP サーバ起動時に workspace の .env が process.env に漏れないようにしたい",
+			"expectedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"expectedTitles": [
+				"Workspace .env values must not leak into process.env during MCP service execution"
+			],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-fmgsj5-short",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "python indent 4 spaces no tabs",
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitles": ["Use 4-Space Indentation"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-2jrkfp-informal",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "don't force-push unless I clearly say you can",
+			"expectedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"expectedTitles": ["Never force push without explicit approval"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		},
+		{
+			"id": "diverse-6tvplq-question",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "how do I keep smoke tests from accidentally calling a live model API?",
+			"expectedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"expectedTitles": ["Smoke tests must not implicitly call live providers"],
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			],
+			"tags": ["diverse-probe"],
+			"notes": "Purposive seed-derived eval probe, not a production-user task. Judge applicability from body, not title alone."
+		}
+	]
+}

@@ -16,9 +16,9 @@
 		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
 		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
 		"assemblyMode": "baseline",
-		"queryReformulation": "off",
-		"reformulationInstructionsDigest": null,
-		"reformulationSchemaDigest": null,
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
 		"suiteId": "seed-three-axis",
 		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
 		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
@@ -31,16 +31,85 @@
 		"queryStyle": "en"
 	},
 	"inferenceCalls": 0,
+	"reformulationInferenceTasks": 16,
+	"inputTokens": null,
+	"outputTokens": null,
+	"reformulationTraces": [
+		{
+			"searchTask": "Keep API keys and .env out of version control.",
+			"queryToSource": "exclude API keys and .env files from git commits"
+		},
+		{
+			"searchTask": "Validate the release against a replica of the production environment.",
+			"queryToSource": "test release in a replica production environment"
+		},
+		{
+			"searchTask": "Redact credentials before writing diagnostic output or returning HTTP payloads.",
+			"queryToSource": "redact credentials from diagnostic logs and HTTP responses"
+		},
+		{
+			"searchTask": "Repair a failing pre-commit check before retrying the commit without bypass flags.",
+			"queryToSource": "fix failing pre-commit checks without bypass flags"
+		},
+		{
+			"searchTask": "Indent Python source with four spaces rather than tabs.",
+			"queryToSource": "Python indentation four spaces not tabs"
+		},
+		{
+			"searchTask": "Ask for permission before overwriting remote git history.",
+			"queryToSource": "require permission before overwriting remote git history"
+		},
+		{
+			"searchTask": "Keep credential masking enabled even while debugging.",
+			"queryToSource": "keep credential masking enabled during debugging"
+		},
+		{
+			"searchTask": "Exercise modified hooks through the complete execution flow.",
+			"queryToSource": "test modified hooks through full execution flow"
+		},
+		{
+			"searchTask": "Obtain explicit permission before a destructive git reset.",
+			"queryToSource": "explicit permission before destructive git reset"
+		},
+		{
+			"searchTask": "Do not edit generated dependency lock files without a reason.",
+			"queryToSource": "avoid unnecessary edits to generated dependency lock files"
+		},
+		{
+			"searchTask": "Make smoke checks deterministic and independent of external model credentials.",
+			"queryToSource": "deterministic smoke checks independent of external model credentials"
+		},
+		{
+			"searchTask": "Build Python extensions with a stable binary interface to reduce version breakage.",
+			"queryToSource": "Python extensions stable binary interface compatibility"
+		},
+		{
+			"searchTask": "Describe HTTP endpoints with the OpenAPI standard.",
+			"queryToSource": "describe HTTP endpoints using OpenAPI"
+		},
+		{
+			"searchTask": "Replace missing numeric DataFrame values with null before JSON serialization.",
+			"queryToSource": "convert missing numeric DataFrame values to null before JSON serialization"
+		},
+		{
+			"searchTask": "Prevent MCP workspace dotenv settings from contaminating the server process environment.",
+			"queryToSource": "prevent MCP workspace dotenv values leaking into server process environment"
+		},
+		{
+			"searchTask": "When porting code to Go, rewrite it in the language native style.",
+			"queryToSource": "port code to idiomatic Go rather than translating directly"
+		}
+	],
 	"summary": {
 		"retrieval:en": {
 			"tasks": 16,
 			"allRequiredHitAt8": {
-				"hit": 13,
+				"hit": 14,
 				"of": 16,
 				"notApplicable": 0
 			},
 			"allRequiredHitAt20Diagnostic": {
-				"hit": 14,
+				"hit": 15,
 				"of": 16,
 				"notApplicable": 0
 			}
@@ -67,32 +136,32 @@
 					"title": "Never commit secrets or local environment files"
 				},
 				{
-					"ref": "contextstill:kn_c6smbwblg4ym4j4unfwy4kfe7i",
-					"title": "Collect Bounded File Hunks After Final Target Discovery"
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
 				},
 				{
-					"ref": "contextstill:kn_qgvdmzsttl6kn3wuky6drjaahq",
-					"title": "Verify a toggled feature before release with both states"
+					"ref": "contextstill:kn_caooc6cj7dvqprfubqxrlghs7u",
+					"title": "Keep Temporary Verification Artifacts Out Of Commits"
 				},
 				{
-					"ref": "contextstill:kn_nwxnv4cuhbniktthfvlyfvo7xu",
-					"title": "Keep secret masking independent from login requirements"
+					"ref": "contextstill:kn_qmz4dwfrjdtc3r3pqhjgpmisoe",
+					"title": "fresh clone value smoke では clone 後に現在の worktree 差分を overlay してから検証する"
+				},
+				{
+					"ref": "contextstill:kn_4qr7q4xat73fiivx3m2kfxfgsa",
+					"title": "ローカル設定ファイルを .env より優先して読む設定ストア導入"
+				},
+				{
+					"ref": "contextstill:kn_zv4jynuzzvokxtk3t5y5jz5ka4",
+					"title": "Stage Only Task-Owned Hunks In Dirty Worktrees"
 				},
 				{
 					"ref": "contextstill:kn_nlvi5dccag5ivma5fivgmffwtu",
 					"title": "Roll out API-key auth without breaking browser clients"
 				},
 				{
-					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
-					"title": "Separate shared app settings from local secret runtime settings"
-				},
-				{
-					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
-					"title": "Never deploy to production without explicit release intent"
-				},
-				{
-					"ref": "contextstill:kn_cufhjcfsk5tafmvqjn43ymsz2u",
-					"title": "API route tests should build an OpenAPIHono app with errorHandler and mocked auth/service modules"
+					"ref": "contextstill:kn_fezt3vp5dhucpg4y75kpk42tgi",
+					"title": "GitHub PR review workflow"
 				}
 			]
 		},
@@ -120,28 +189,28 @@
 					"title": "Never deploy to production without explicit release intent"
 				},
 				{
-					"ref": "contextstill:kn_fr72uuzrcpwualcow266cl7v4i",
-					"title": "Never execute database migrations against the wrong environment"
+					"ref": "contextstill:kn_g2ipytu6ejrvv6uwe3x2wsmrtq",
+					"title": "production deploy は environment protection で保護する"
+				},
+				{
+					"ref": "contextstill:kn_gupnxlxzscijkotigmyady4jde",
+					"title": "E2E rate-limit bypasses must be disabled in production"
 				},
 				{
 					"ref": "contextstill:kn_nmqv627vgpu5kxbzcvk7d6bdza",
 					"title": "Never drop production database objects without backup and approval"
 				},
 				{
-					"ref": "contextstill:kn_g2ipytu6ejrvv6uwe3x2wsmrtq",
-					"title": "production deploy は environment protection で保護する"
+					"ref": "contextstill:kn_7phrebupfbuhp5jxklc2bx6tgm",
+					"title": "data classification と data residency を明確にする"
+				},
+				{
+					"ref": "contextstill:kn_fr72uuzrcpwualcow266cl7v4i",
+					"title": "Never execute database migrations against the wrong environment"
 				},
 				{
 					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
 					"title": "Package Release Smoke Test with Packed Artifacts"
-				},
-				{
-					"ref": "contextstill:kn_5oluuhkkislziqz4npidgfakqq",
-					"title": "Use the abstraction layer to improve testing"
-				},
-				{
-					"ref": "contextstill:kn_gupnxlxzscijkotigmyady4jde",
-					"title": "E2E rate-limit bypasses must be disabled in production"
 				}
 			]
 		},
@@ -153,7 +222,7 @@
 			"ranks": [
 				{
 					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
-					"rank": 3
+					"rank": 1
 				}
 			],
 			"allRequiredHitAt8": true,
@@ -161,16 +230,12 @@
 			"falseFriendsInTop8": [],
 			"top8": [
 				{
-					"ref": "contextstill:kn_d7py4dvm7urbcrw36ityewsjam",
-					"title": "Redact Unknown Evidence Payloads Recursively"
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
 				},
 				{
 					"ref": "contextstill:kn_g5exem4z3zylataykg4rhjff74",
 					"title": "Redact extension failure summaries before persisting or emitting them"
-				},
-				{
-					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
-					"title": "Never print secrets into logs or responses"
 				},
 				{
 					"ref": "contextstill:kn_yn5aj443tevcvjw5c2esq242um",
@@ -181,16 +246,20 @@
 					"title": "\"redaction 変更時は保存前データとシリアライズ結果を対象ファイル単位で検証する\""
 				},
 				{
-					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
-					"title": "Never weaken redaction to simplify debugging"
-				},
-				{
 					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
 					"title": "Never commit secrets or local environment files"
 				},
 				{
-					"ref": "contextstill:kn_zat3hedvbjw6q4wsa7h7ruzbvi",
-					"title": "Redact extension failure summaries at decision and status boundaries"
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+					"title": "Never weaken redaction to simplify debugging"
+				},
+				{
+					"ref": "contextstill:kn_mspfjpi7nc6m37rg5y6hm7gopi",
+					"title": "Preserve provenance between assistant text and tool output"
+				},
+				{
+					"ref": "contextstill:kn_6g3tqy5lx2bcdvg7hgyfqtatdi",
+					"title": "Diagnose E2E API failures from server logs and direct repros"
 				}
 			]
 		},
@@ -214,32 +283,32 @@
 					"title": "Fix pre-commit verify failures instead of bypassing hooks"
 				},
 				{
+					"ref": "contextstill:kn_wyurf7v5wxbkm3p3d3hm3qg5te",
+					"title": "Never disable authentication or authorization in production paths"
+				},
+				{
 					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
 					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
 				},
 				{
-					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
-					"title": "Verify And Clean Persistent Test Data Before Commit"
+					"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+					"title": "Incremental gate validation for large changes"
 				},
 				{
-					"ref": "contextstill:kn_rno5qgwemriv4xmxmf5kqelq34",
-					"title": "Preserve Diagnostics And Evidence Across LLM Parse Or Repair Failures"
+					"ref": "contextstill:kn_jycdx7jubxwxpiefeympf4b4xu",
+					"title": "Never bypass failing tests by deleting assertions"
+				},
+				{
+					"ref": "contextstill:kn_bafxpul343q4pgedmzrjzzlmle",
+					"title": "Never remove access controls to bypass a failure"
 				},
 				{
 					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
 					"title": "Hook failure triage before push"
 				},
 				{
-					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
-					"title": "Verify before committing despite commit hooks"
-				},
-				{
-					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
-					"title": "Use gofmt for Standard Go Code Formatting"
-				},
-				{
-					"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
-					"title": "Incremental gate validation for large changes"
+					"ref": "contextstill:kn_mgykqtmyxgxwywlkehw3yzeg5m",
+					"title": "Never weaken encryption or certificate checks for convenience"
 				}
 			]
 		},
@@ -263,32 +332,32 @@
 					"title": "Use 4-Space Indentation"
 				},
 				{
-					"ref": "contextstill:kn_tb7usr577ratzzba6ji64c57wa",
-					"title": "Use Standard Continuation Layouts"
-				},
-				{
 					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
 					"title": "Use gofmt for Standard Go Code Formatting"
 				},
 				{
-					"ref": "contextstill:kn_okl22skmy22r4cdt6mkotawpxy",
-					"title": "MCP review should default to OpenAI when no explicit reviewer preference is provided"
+					"ref": "contextstill:kn_4rkt3s7zqfjeksqetc4awz6bpi",
+					"title": "issues 配下のタブ UI は @gxp/design-system を使う"
 				},
 				{
-					"ref": "contextstill:kn_lhg64hsszcedofi5ibi5iw3kfa",
-					"title": "Use SQLite-compatible timestamp strings for textual time comparisons"
+					"ref": "contextstill:kn_xmh4gv3am6n6ruzgyy4nlafiqq",
+					"title": "issues 配下の共通タブを layout に切り出して PersonalElementsScreen から重複タブを削除する"
 				},
 				{
-					"ref": "contextstill:kn_a5mgu25a2vzfxed3jjzemhaatm",
-					"title": "Validate source existence before enqueuing source-backed candidate jobs"
+					"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+					"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
 				},
 				{
-					"ref": "contextstill:kn_a56mbmv5kr3uywzgvtr372xuaq",
-					"title": "Every table in a database design schema must have exactly one primary key column"
+					"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+					"title": "Python 側の責務は MLX 推論に限定する"
 				},
 				{
-					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
-					"title": "Use ABI3 for resilient Python extension builds"
+					"ref": "contextstill:kn_eelewcqzlk56bobdrtmuaagzgu",
+					"title": "Separate agent decision workspaces from target workspaces"
+				},
+				{
+					"ref": "contextstill:kn_avz4zgyjvn4wcqvv3pezytganq",
+					"title": "issues 配下の共通タブレイアウト実装手順"
 				}
 			]
 		},
@@ -300,7 +369,7 @@
 			"ranks": [
 				{
 					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
-					"rank": 8
+					"rank": 7
 				}
 			],
 			"allRequiredHitAt8": true,
@@ -308,28 +377,24 @@
 			"falseFriendsInTop8": [],
 			"top8": [
 				{
-					"ref": "contextstill:kn_msj5xtbap2cw2pygg42dthb7mu",
-					"title": "Review dirty worktrees by preserving unrelated user changes"
-				},
-				{
-					"ref": "contextstill:kn_x3afiezii4r4fwh67o6itwxv7q",
-					"title": "Use the WPT GitHub repo for source history and change discussion"
-				},
-				{
-					"ref": "contextstill:kn_zv4jynuzzvokxtk3t5y5jz5ka4",
-					"title": "Stage Only Task-Owned Hunks In Dirty Worktrees"
+					"ref": "contextstill:kn_3vha3kvsu7nyo7imgq3bnc3yje",
+					"title": "Starter Template Registry Ref の実在確認と更新手順"
 				},
 				{
 					"ref": "contextstill:kn_siggfereq5j2w6hsoxmrzjdi5q",
 					"title": "本番運用で local state を使わず、remote backend と state locking を使う"
 				},
 				{
-					"ref": "contextstill:kn_3vha3kvsu7nyo7imgq3bnc3yje",
-					"title": "Starter Template Registry Ref の実在確認と更新手順"
+					"ref": "contextstill:kn_x3afiezii4r4fwh67o6itwxv7q",
+					"title": "Use the WPT GitHub repo for source history and change discussion"
 				},
 				{
-					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
-					"title": "Never run destructive git reset without explicit user request"
+					"ref": "contextstill:kn_msj5xtbap2cw2pygg42dthb7mu",
+					"title": "Review dirty worktrees by preserving unrelated user changes"
+				},
+				{
+					"ref": "contextstill:kn_65vern2r2c7vjzcwu2t3izwpou",
+					"title": "screen-history の削除変更を入れた後の検証手順"
 				},
 				{
 					"ref": "contextstill:kn_ysen7wgcm2rxoni4hip6hkttfm",
@@ -338,6 +403,10 @@
 				{
 					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
 					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_xdxkd3nscyb7wgrtrqc66eec6q",
+					"title": "Never delete audit logs or historical records without retention review"
 				}
 			]
 		},
@@ -369,24 +438,24 @@
 					"title": "Local-first app authentication boundary decision"
 				},
 				{
+					"ref": "contextstill:kn_mlamxttzezddaokyurstqq7ndy",
+					"title": "Keep the system buildable during replacement"
+				},
+				{
+					"ref": "contextstill:kn_vugseakua7wqtgsz4omiltzzu4",
+					"title": "Keep MarkdownTipTapConverter as the entry point during parser extraction"
+				},
+				{
 					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
 					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
 				},
 				{
-					"ref": "contextstill:kn_ui7vs2eknrdrx7rfxk2i5qmbza",
-					"title": "Runtime ledger persistence failures must not terminate the agent runtime"
+					"ref": "contextstill:kn_727llew4fewzou5zhqdkdyhdny",
+					"title": "WebAuthn認証リクエストオプションでallowCredentialsを空配列に設定し、登録済みCredential一覧の推測を防ぐ"
 				},
 				{
-					"ref": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
-					"title": "Decouple E2E agent runs from external providers"
-				},
-				{
-					"ref": "contextstill:kn_btstvm75h2gi6zvb7rumiihf5e",
-					"title": "Deleting with no selected event should be a no-op"
-				},
-				{
-					"ref": "contextstill:kn_5vkm6cinuxpytp437end4qptrq",
-					"title": "Carry task context across all observable runtime events"
+					"ref": "contextstill:kn_es7vlmbkvnrvv3nzctttap2gdm",
+					"title": "Parse tool calls after stripping reasoning blocks"
 				}
 			]
 		},
@@ -406,36 +475,36 @@
 			"falseFriendsInTop8": [],
 			"top8": [
 				{
-					"ref": "contextstill:kn_ivxnqnvwsqozsicrfiup3s7yne",
-					"title": "Use Plays as tactical exercises"
-				},
-				{
-					"ref": "contextstill:kn_ab37pcxyo7pk6mj5o66ai4sfxi",
-					"title": "Add regression coverage for stale-host replacement during stdio adapter restart"
-				},
-				{
-					"ref": "contextstill:kn_jqvscgwaueipoodh3r7kd7r5fq",
-					"title": "Archive executions, not parent work items, after human acceptance"
-				},
-				{
-					"ref": "contextstill:kn_mf4erdnwkqq5lz45ip5oo2usx4",
-					"title": "Expose structured LLM state updates through narrow tools"
-				},
-				{
-					"ref": "contextstill:kn_vqu2virippfzmbiwulk4u5w7kq",
-					"title": "SQLite-backed CRUD API for Todo lists"
+					"ref": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+					"title": "Split verification gates into daily fast checks and explicit full checks"
 				},
 				{
 					"ref": "contextstill:kn_iscgtmgck45wntoukocly3wdjm",
 					"title": "hook execution repository は eventId::ruleId を重複判定キーにする"
 				},
 				{
-					"ref": "contextstill:kn_pbwqxnzhkhbaw5klxymm5k6z34",
-					"title": "Branch by Abstraction migration workflow"
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
 				},
 				{
-					"ref": "contextstill:kn_s7v6bpplemx2ha2da47bl7ezne",
-					"title": "Confirm admin reset actions through a selected-user state before executing"
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_loj62x72edakkbkmjvsgz55a7m",
+					"title": "UI表記変更とテスト固定の標準手順"
+				},
+				{
+					"ref": "contextstill:kn_ab37pcxyo7pk6mj5o66ai4sfxi",
+					"title": "Add regression coverage for stale-host replacement during stdio adapter restart"
+				},
+				{
+					"ref": "contextstill:kn_izyl2gm7gmzykdycukm472rdxe",
+					"title": "Dynamic Subprocess Execution in Integration Tests"
+				},
+				{
+					"ref": "contextstill:kn_42coaem3ly2cj3otxotlzow4vm",
+					"title": "各ドメインの task / PR には DB schema, shared schema, backend, frontend, hooks, UI, tests を含める"
 				}
 			]
 		},
@@ -508,32 +577,32 @@
 					"title": "Never modify generated lockfiles casually"
 				},
 				{
-					"ref": "contextstill:kn_pjhwg6qbxjxtkw4gsuvsrqpcqm",
-					"title": "Never delete unrelated user files"
+					"ref": "contextstill:kn_dlnwcltxvemdads2m2wkxs7ed4",
+					"title": "Never overwrite user edits to resolve conflicts silently"
 				},
 				{
-					"ref": "contextstill:kn_dj5ljtdovpluaigu6jxcbuzrhq",
-					"title": "Reject code-change report or stop before an edit tool is attempted"
-				},
-				{
-					"ref": "contextstill:kn_k4ddtfqpwx74y7pofxmachmw7i",
-					"title": "Never discard uncommitted changes without inspecting ownership"
-				},
-				{
-					"ref": "contextstill:kn_5qtvjewocccypjfonrrue4jtve",
-					"title": "Prepare future external decision advice with manual operation first"
+					"ref": "contextstill:kn_egoq2dunetqvmg2s3pdjzfrj5a",
+					"title": "private devDependency が install を妨げるときの起動用依存の復旧手順"
 				},
 				{
 					"ref": "contextstill:kn_outadf53gu2p4bz7xi4muhizxe",
 					"title": "Keep generated regression files in a temp workspace"
 				},
 				{
-					"ref": "contextstill:kn_xd6ddu32bhyo4nditwmclke3ym",
-					"title": "Reduce agent loops by classifying failure modes early, not by weakening guards"
+					"ref": "contextstill:kn_z7wi6igd6u3ytz36ntxk3pcycm",
+					"title": "dependency install と security scan は再現性と抑制理由を重視する"
 				},
 				{
 					"ref": "contextstill:kn_45yojpykhg7gclkt5udcz7md4a",
 					"title": "Never overwrite files outside the requested task scope"
+				},
+				{
+					"ref": "contextstill:kn_pjhwg6qbxjxtkw4gsuvsrqpcqm",
+					"title": "Never delete unrelated user files"
+				},
+				{
+					"ref": "contextstill:kn_663yforotostflvo77in3xi4qi",
+					"title": "不要ドキュメントの削除判断で「リンク切れ回避」のみを理由に復元しない"
 				}
 			]
 		},
@@ -557,32 +626,32 @@
 					"title": "Smoke tests must not implicitly call live providers"
 				},
 				{
-					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
-					"title": "Separate fast verification from operational integration gates"
-				},
-				{
 					"ref": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
 					"title": "Decouple E2E agent runs from external providers"
 				},
 				{
-					"ref": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
-					"title": "Integrate native desktop checks into the main verification gate deliberately"
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
 				},
 				{
-					"ref": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
-					"title": "Never make live network calls that mutate external systems without approval"
+					"ref": "contextstill:kn_yrmons6ovtr5ueysxszabyds5i",
+					"title": "MTP 導入時は target と drafter を両方 preload し、on/off で同一 prompt を benchmark する"
 				},
 				{
-					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
-					"title": "Verify desktop packaging with real app launch, not artifact existence"
+					"ref": "contextstill:kn_xqljbwwlutby4yj2t2vdrzyvdi",
+					"title": "SQLite-backed queue state should be observable across processes"
+				},
+				{
+					"ref": "contextstill:kn_lkflwncokkzb3zzk7chbwpcfwu",
+					"title": "Use Random Forest as auxiliary context_decision signal"
 				},
 				{
 					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
 					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
 				},
 				{
-					"ref": "contextstill:kn_xqljbwwlutby4yj2t2vdrzyvdi",
-					"title": "SQLite-backed queue state should be observable across processes"
+					"ref": "contextstill:kn_xqiutlewwagqbzxg7epbi24vmm",
+					"title": "Do not repeatedly retry deterministic configuration failures"
 				}
 			]
 		},
@@ -606,32 +675,32 @@
 					"title": "Use ABI3 for resilient Python extension builds"
 				},
 				{
-					"ref": "contextstill:kn_3qgz6tuaezt67jkfafjjjcz234",
-					"title": "Use versioned WSTG links"
-				},
-				{
-					"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
-					"title": "Python wheel hygiene check for mixed Rust/Python packages"
-				},
-				{
-					"ref": "contextstill:kn_aw2a6uhisa4x4trf5xezl5u3vy",
-					"title": "再現性のために version と lockfile を明示し、CI で同じ build コマンドを使う"
-				},
-				{
-					"ref": "contextstill:kn_j3qjabesgqs5hcovecprwfv2h4",
-					"title": "探索評価追加後の検証手順"
-				},
-				{
-					"ref": "contextstill:kn_cens4pzkaqi4gzdzcoz2ywtoam",
-					"title": "useReducer は更新ルールが複雑なときに使う"
+					"ref": "contextstill:kn_q2nkq6c5clneayp6q63mdicvnm",
+					"title": "Fix Broken Builds Immediately"
 				},
 				{
 					"ref": "contextstill:kn_cih6r4woie43sfmjgyyi54yowq",
 					"title": "Keep CodeBlockNodeView.tsx as a thin switch after moving view implementations out"
 				},
 				{
-					"ref": "contextstill:kn_zxkn7u4fe5lnnknpmfhbcgnd2i",
-					"title": "Cast nullable parameters inside jsonb_build_object SQL fragments"
+					"ref": "contextstill:kn_gynncu6duk66pj47buqblt5xce",
+					"title": "既存 interface からスキーマを生成する際は型一致を強制する"
+				},
+				{
+					"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+					"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
+				},
+				{
+					"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+					"title": "Python 側の責務は MLX 推論に限定する"
+				},
+				{
+					"ref": "contextstill:kn_z7cpcnpcksxhx2q44y5az6567m",
+					"title": "interface extends の追加は重複を避ける"
+				},
+				{
+					"ref": "contextstill:kn_fvvdll3j7z5za3zy5vbcrr732e",
+					"title": "Do not break backward compatibility"
 				}
 			]
 		},
@@ -659,28 +728,28 @@
 					"title": "API route tests should build an OpenAPIHono app with errorHandler and mocked auth/service modules"
 				},
 				{
-					"ref": "contextstill:kn_yfykne3xylzuqj7q7ebijj4ds4",
-					"title": "BBS thread ID validation requires UUID format in Zod schema"
-				},
-				{
-					"ref": "contextstill:kn_wmehl3qaoxn2v426lwfxnnv6my",
-					"title": "Keep generated OpenAPI in sync with runtime code"
-				},
-				{
-					"ref": "contextstill:kn_og7oohjejsedck5v4jv4l3cuwy",
-					"title": "Add route coverage for new API endpoints by mocking services and asserting request/response behavior"
+					"ref": "contextstill:kn_6pq2nkp3puxqwpkimofh7tcyzq",
+					"title": "Protected API contract tests should cover both authenticated success and unauthenticated 401 cases"
 				},
 				{
 					"ref": "contextstill:kn_wfkaz6jegdwyzq5rz3xnb6njly",
 					"title": "OpenAPI 契約テストの CI 必須化ルール"
 				},
 				{
-					"ref": "contextstill:kn_6pq2nkp3puxqwpkimofh7tcyzq",
-					"title": "Protected API contract tests should cover both authenticated success and unauthenticated 401 cases"
+					"ref": "contextstill:kn_yfykne3xylzuqj7q7ebijj4ds4",
+					"title": "BBS thread ID validation requires UUID format in Zod schema"
 				},
 				{
-					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
-					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
+					"ref": "contextstill:kn_6ai3do2x5kg6a4alpxzbvckjcu",
+					"title": "Hono バックエンド設計ドキュメントを実装実態に合わせて書き直す"
+				},
+				{
+					"ref": "contextstill:kn_yqnbu6cotedja63s5d6udfyxdy",
+					"title": "verify コマンドで型・テスト・ビルド・OpenAPI を一括検証する"
+				},
+				{
+					"ref": "contextstill:kn_uucxpv4rrvdea6byqdu2bjw6lm",
+					"title": "OpenAPI 仕様書の正本は YAML、JSON は派生出力とする"
 				}
 			]
 		},
@@ -712,24 +781,24 @@
 					"title": "Provider optional field null handling rule"
 				},
 				{
-					"ref": "contextstill:kn_2revkzphhcgynp7euwgq7ofl3y",
-					"title": "Code change workflows require an edit tool before stop/report"
+					"ref": "contextstill:kn_e7thdlx5xvuvwhdmnxfci4smpa",
+					"title": "_prepare_analysis_inputs では欠損処理・外れ値除去・エンコード・正規化を前処理設定に従って行う"
 				},
 				{
-					"ref": "contextstill:kn_zxkn7u4fe5lnnknpmfhbcgnd2i",
-					"title": "Cast nullable parameters inside jsonb_build_object SQL fragments"
+					"ref": "contextstill:kn_ecq2lipbwxe55mcnem2ph3npgi",
+					"title": "Knowledge score values use 0-100 externally and 0-1 internally where needed"
+				},
+				{
+					"ref": "contextstill:kn_rblumyd26eqouaqt5o4yzghwiy",
+					"title": "Do Not Persist Empty Optional Answers"
 				},
 				{
 					"ref": "contextstill:kn_gt7llz3nuhrn64tpgscyliqiwy",
 					"title": "Normalize SQL-ish database schema inputs before validation"
 				},
 				{
-					"ref": "contextstill:kn_e7thdlx5xvuvwhdmnxfci4smpa",
-					"title": "_prepare_analysis_inputs では欠損処理・外れ値除去・エンコード・正規化を前処理設定に従って行う"
-				},
-				{
-					"ref": "contextstill:kn_jlvooebz47lxmfacm42zli3quy",
-					"title": "Normalize bare SQLite paths for libsql clients"
+					"ref": "contextstill:kn_zxkn7u4fe5lnnknpmfhbcgnd2i",
+					"title": "Cast nullable parameters inside jsonb_build_object SQL fragments"
 				}
 			]
 		},
@@ -741,44 +810,44 @@
 			"ranks": [
 				{
 					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
-					"rank": 13
+					"rank": 1
 				}
 			],
-			"allRequiredHitAt8": false,
+			"allRequiredHitAt8": true,
 			"allRequiredHitAt20Diagnostic": true,
 			"falseFriendsInTop8": [],
 			"top8": [
 				{
-					"ref": "contextstill:kn_agxos3pgmnfy6w6nkrfmfuezh4",
-					"title": "Reset dirty E2E server state before final verification"
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+					"title": "Workspace .env values must not leak into process.env during MCP service execution"
 				},
 				{
 					"ref": "contextstill:kn_tauvrjyl2r4jkfazeqkzv5cwwy",
 					"title": "MCP review tool は workspaceRoot を解決し、dotenv/config/plugin/LLM を順に組み立ててから実行する"
 				},
 				{
-					"ref": "contextstill:kn_up6um7divlsfvs7dykbgvebx2i",
-					"title": "Restore environment variables in tests instead of deleting them unconditionally"
+					"ref": "contextstill:kn_eukijg3xgmywa7jf4i27txosma",
+					"title": "MCP service の workspace .env が process.env に漏れないことを統合テストで確認する"
 				},
 				{
-					"ref": "contextstill:kn_iaf76ijz6kekk5cghgous54sii",
-					"title": "MCP 設定移行時に旧 stdio プロセスの残留を放置しない"
+					"ref": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+					"title": "Monorepo Package Purity and Dry-Run Audit"
 				},
 				{
 					"ref": "contextstill:kn_5z4xfsjk37zgyhn5q2s26nzfta",
 					"title": "DiffGuard MCP サーバーのセットアップと起動"
 				},
 				{
+					"ref": "contextstill:kn_agxos3pgmnfy6w6nkrfmfuezh4",
+					"title": "Reset dirty E2E server state before final verification"
+				},
+				{
 					"ref": "contextstill:kn_qxy5et6svtql6n3wum43ygp3ni",
 					"title": "Diagnose local env validation failures by importing backend config without ambient env"
 				},
 				{
-					"ref": "contextstill:kn_eukijg3xgmywa7jf4i27txosma",
-					"title": "MCP service の workspace .env が process.env に漏れないことを統合テストで確認する"
-				},
-				{
-					"ref": "contextstill:kn_j7xqrgnw4sa5sztykj5irnpsqi",
-					"title": "Non-admin users must be redirected away from the admin tab"
+					"ref": "contextstill:kn_or3oizrtkeqjztiqzdz6detake",
+					"title": "Desktop Runtime Must Override Repo-Local Environment Defaults"
 				}
 			]
 		},
@@ -790,44 +859,44 @@
 			"ranks": [
 				{
 					"ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
-					"rank": null
+					"rank": 18
 				}
 			],
 			"allRequiredHitAt8": false,
-			"allRequiredHitAt20Diagnostic": false,
+			"allRequiredHitAt20Diagnostic": true,
 			"falseFriendsInTop8": [],
 			"top8": [
 				{
-					"ref": "contextstill:kn_axaiqkled7kn3twxhlcufazori",
-					"title": "Codex SDK Laneにおける履歴処理：内部Rewrite禁止とCompact Projectionの採用"
+					"ref": "contextstill:kn_xueoqmpfi25q45jvdgn4vgamqa",
+					"title": "Smell-Matched Refactoring"
+				},
+				{
+					"ref": "contextstill:kn_dis55cl5d4pb7vny3n5a6j5nnu",
+					"title": "Web search provider selection is centralized in a factory"
 				},
 				{
 					"ref": "contextstill:kn_tbymo677b7acydl2y6rpfvkjra",
 					"title": "Keep native/API provider debugging inside the native/API lane"
 				},
 				{
-					"ref": "contextstill:kn_n6iwdwmvqfo2vtzkvc3hmvrvgq",
-					"title": "Never rewrite broad code areas to fix a narrow issue"
+					"ref": "contextstill:kn_2nxvnddsodp5snnw7zl3znddia",
+					"title": "Pact is for code-first contract testing of HTTP and message integrations"
 				},
 				{
-					"ref": "contextstill:kn_htmeunk5pb2mn4vebmqrozndbe",
-					"title": "Rewrite target identities during imported event writes"
+					"ref": "contextstill:kn_rh6euhafhdfq3xo6bs63uq24re",
+					"title": "Rust API Guidelines are advisory, not mandatory"
 				},
 				{
-					"ref": "contextstill:kn_od4cvlo3pydww4wff2qwhtabo4",
-					"title": "UI primitives should be built as thin React wrappers around native elements with cn-based class merging and data-slot markers"
+					"ref": "contextstill:kn_b4ze46y77fc77fuausarwmrjha",
+					"title": "Structure Inspection Should Avoid Returning Full Values By Default"
 				},
 				{
-					"ref": "contextstill:kn_iwx47yb36y4xodaureinybxtvi",
-					"title": "Render patch output as a code block in chat cards"
+					"ref": "contextstill:kn_6rlffa2utsolaf7virzx3ejwya",
+					"title": "Prioritize consistency over bikeshedding in HTTP APIs"
 				},
 				{
-					"ref": "contextstill:kn_xueoqmpfi25q45jvdgn4vgamqa",
-					"title": "Smell-Matched Refactoring"
-				},
-				{
-					"ref": "contextstill:kn_szbavix6rkzti5p4oek6njglym",
-					"title": "Render chat markdown with safe theme-aware styling"
+					"ref": "contextstill:kn_lhg64hsszcedofi5ibi5iw3kfa",
+					"title": "Use SQLite-compatible timestamp strings for textual time comparisons"
 				}
 			]
 		}

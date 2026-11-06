@@ -339,3 +339,33 @@ test("handle-profile records under bm25 do not silently reuse as scored", async 
 		fixture.close();
 	}
 });
+
+test("diverse companion loads independently without expanding the 61-task scoreboard", () => {
+	const load = (name: string) =>
+		parseAnyScenarioSuite(
+			JSON.parse(
+				readFileSync(
+					resolve(`examples/contextstill/scenarios/${name}.json`),
+					"utf8",
+				),
+			),
+		);
+	const main = load("suite-3axis");
+	const diverse = load("suite-diverse");
+	expect(main.tasks).toHaveLength(61);
+	expect(diverse.tasks).toHaveLength(10);
+	expect(diverse.id).not.toBe(main.id);
+	for (const task of diverse.tasks) {
+		expect(task.axis).toBe("retrieval");
+		expect(task.tags).toContain("diverse-probe");
+		const exact = main.tasks.find(
+			(t) =>
+				t.queryStyle === "exact" &&
+				JSON.stringify(t.expectedTitles) ===
+					JSON.stringify(task.expectedTitles),
+		);
+		expect(exact).toBeDefined();
+		expect(task.expectedRefs).toEqual(exact!.expectedRefs);
+		expect(task.acceptance).toEqual(exact!.acceptance);
+	}
+});
