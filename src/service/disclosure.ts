@@ -74,7 +74,7 @@ export function discloseEvidence(
 }
 
 export function toSearchCards(evidence: Evidence[]): EvidenceCard[] {
-	return evidence.map(
-		({ body: _b, sections: _s, ...card }) => structuredClone(card),
+	return evidence.map(({ body: _b, sections: _s, ...card }) =>
+		structuredClone(card),
 	);
 }

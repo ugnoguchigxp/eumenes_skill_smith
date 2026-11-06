@@ -7,10 +7,7 @@ const text = z.string().trim().min(1).max(8000);
 export const evalTaskSchema = z.strictObject({
 	id,
 	goal: text,
-	acceptance: z
-		.array(z.strictObject({ id, text }))
-		.min(1)
-		.max(32),
+	acceptance: z.array(z.strictObject({ id, text })).min(1).max(32),
 	constraints: z.array(z.strictObject({ id, text })).max(32).default([]),
 	/** Refs that a correct retrieval should surface (proposal 03). */
 	expectedRefs: z.array(id).max(32).default([]),

@@ -109,6 +109,18 @@ export const modelTurnSchema = z.discriminatedUnion("kind", [
 		kind: z.literal("re_search"),
 		query: z.string().trim().min(1).max(512),
 	}),
+	z.strictObject({
+		kind: z.literal("disclose"),
+		items: z
+			.array(
+				z.strictObject({
+					ref: id,
+					sectionIds: z.array(id).max(64).optional(),
+				}),
+			)
+			.min(1)
+			.max(8),
+	}),
 ]);
 export type ModelTurn = z.infer<typeof modelTurnSchema>;
 export const resultSchema = z.strictObject({

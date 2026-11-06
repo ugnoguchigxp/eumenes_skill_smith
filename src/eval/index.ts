@@ -8,15 +8,12 @@ export {
 	type EvalRunResult,
 	type EvalComparison,
 } from "./task.js";
-export {
-	compareConditionRuns,
-	synthesisNotClearlyBetter,
-} from "./compare.js";
+export { compareConditionRuns, synthesisNotClearlyBetter } from "./compare.js";
 export {
 	evidenceCardView,
 	discloseEvidence,
 	toSearchCards,
-} from "./disclosure.js";
+} from "../service/disclosure.js";
 export {
 	baselineTurnSchema,
 	baselineInstructions,

@@ -23,7 +23,9 @@ function advantage(
 	if (a === undefined || b === undefined) return "incomplete";
 	if (a === b) return "tie";
 	const aWins = preferTrue ? a && !b : !a && b;
-	return aWins ? (aName as "agent_skills" | "skillsmith") : (bName as "agent_skills" | "skillsmith");
+	return aWins
+		? (aName as "agent_skills" | "skillsmith")
+		: (bName as "agent_skills" | "skillsmith");
 }
 
 /**
@@ -87,7 +89,10 @@ export function compareConditionRuns(runs: EvalRunResult[]): EvalComparison {
 /** Falsification helper: true when synthesis does not clearly beat the baseline. */
 export function synthesisNotClearlyBetter(comparison: EvalComparison): boolean {
 	const { acceptanceAdvantage, misApplicationWorse } = comparison.deltas;
-	if (acceptanceAdvantage === "incomplete" || misApplicationWorse === "incomplete")
+	if (
+		acceptanceAdvantage === "incomplete" ||
+		misApplicationWorse === "incomplete"
+	)
 		return true;
 	if (acceptanceAdvantage !== "skillsmith") return true;
 	if (misApplicationWorse === "skillsmith") return true;

@@ -15,6 +15,7 @@ import type {
 	ReadyDecision,
 } from "../contracts/types.js";
 import { buildInstructions } from "../instructions/build.js";
+import { discloseEvidence, evidenceCardView } from "./disclosure.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
 
 function parseEvidence(raw: unknown): Evidence {
@@ -303,6 +304,7 @@ export async function executeBuild<Tx>(
 	}
 
 	let state = await runSearch(request.task.goal, r.authority.searchTask, null);
+	let disclosed: ReturnType<typeof discloseEvidence> = [];
 
 	const buildData = () => {
 		const {
@@ -328,7 +330,8 @@ export async function executeBuild<Tx>(
 			audience: request.audience,
 			policy: p.policy,
 			candidateCards,
-			untrustedEvidence: evidence,
+			evidenceIndex: evidence.map(evidenceCardView),
+			untrustedEvidence: disclosed,
 			search: {
 				externalUsed,
 				...(successors.length ? { successors } : {}),
@@ -408,13 +411,40 @@ export async function executeBuild<Tx>(
 				repair = {
 					code: "re_search_limit",
 					instruction:
-						"再検索は予算内で1回まで。ready・needs_input・unavailableのいずれかを返す。",
+						"再検索は予算内で1回まで。ready・needs_input・unavailable・discloseのいずれかを返す。",
 				};
 				continue;
 			}
 			reSearchUsed = true;
 			repair = undefined;
 			state = await runSearch(turn.query, turn.query, state);
+			continue;
+		}
+		if (turn.kind === "disclose") {
+			repair = undefined;
+			const next = discloseEvidence(state.evidence, turn.items);
+			const byRef = new Map(disclosed.map((d) => [d.ref, d]));
+			for (const item of next) {
+				const prior = byRef.get(item.ref);
+				if (!prior) {
+					byRef.set(item.ref, item);
+					continue;
+				}
+				if (item.sections?.length) {
+					const ids = new Set(prior.sections?.map((s) => s.id) ?? []);
+					const merged = [...(prior.sections ?? [])];
+					for (const s of item.sections) {
+						if (!ids.has(s.id)) {
+							ids.add(s.id);
+							merged.push(s);
+						}
+					}
+					byRef.set(item.ref, { ...prior, sections: merged, body: undefined });
+				} else if (item.body !== undefined) {
+					byRef.set(item.ref, { ...prior, body: item.body });
+				}
+			}
+			disclosed = [...byRef.values()];
 			continue;
 		}
 		const candidate = turn;

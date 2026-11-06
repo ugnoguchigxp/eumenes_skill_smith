@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Evidence, EvidenceCard } from "../contracts/types.js";
-import { discloseEvidence, evidenceCardView } from "./disclosure.js";
+import { discloseEvidence, evidenceCardView } from "../service/disclosure.js";
 
 const id = z.string().min(1).max(160);
 const text = z.string().trim().min(1).max(8000);
@@ -96,8 +96,7 @@ export async function runAgentSkillsBaseline(
 	let modelCalls = 0;
 
 	const addTokens = (i: number | null, o: number | null) => {
-		inputTokens =
-			inputTokens === null || i === null ? null : inputTokens + i;
+		inputTokens = inputTokens === null || i === null ? null : inputTokens + i;
 		outputTokens =
 			outputTokens === null || o === null ? null : outputTokens + o;
 	};
