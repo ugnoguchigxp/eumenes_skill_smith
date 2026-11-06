@@ -78,6 +78,10 @@ Request の `usage` は modelCalls／sourceCalls に加え、観測済みの inp
 
 製品の workflow 誘導は reflection と同様に `prepareWorkflow`（同期）→ `induceWorkflow`（transaction 外の推論）→ `saveWorkflow`（同期・再照合）に分ける。推論中に authority 失効・report 訂正・根拠失効があれば保存しない。観測付き trajectories／failedSummaries は任意入力であり、品質優位は未測定のまま候補を proposed に留める。
 
+### 3.1f 候補検証と元build成功の分離（2026-11-06追加）
+
+`executionVerified` は元buildの succeeded 報告由来であり、候補本文の実行証明ではない。報告が succeeded 以外へ訂正されるとクリアする。候補本文 digest・report revision に束縛する `candidateVerification` は別証跡で、本文変更や report 訂正で invalidated になる。boolean 印だけで検索優先度を上げず、自動 promotion もしない。
+
 ### 3.2 推論providerの注入
 
 本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。

@@ -57,6 +57,7 @@ export interface Repository<Tx> {
 	reportsByBuild(tx: Tx, scope: string, buildRef: string): Report[];
 	proposal(tx: Tx, ref: string): Proposal | null;
 	putProposal(tx: Tx, proposal: Proposal, expected: number | null): void;
+	proposalsByExecution(tx: Tx, scope: string, executionRef: string): Proposal[];
 }
 export interface Ports<Tx> {
 	repository: Repository<Tx>;

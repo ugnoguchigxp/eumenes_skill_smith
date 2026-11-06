@@ -307,6 +307,17 @@ export const sqliteRepository: Repository<Database> = {
 			proposalSchema,
 			ref,
 		),
+	proposalsByExecution(db, scope, executionRef) {
+		const rows = db
+			.query("SELECT data_json FROM knowledge_proposals WHERE scope=?")
+			.all(scope) as { data_json: string }[];
+		const out: Proposal[] = [];
+		for (const row of rows) {
+			const parsed = parseStored(row.data_json, proposalSchema);
+			if (parsed.executionRef === executionRef) out.push(parsed);
+		}
+		return out;
+	},
 	putProposal(db, p, expected) {
 		requireThat(!blocked(db, p.ref), "reference_revoked");
 		if (expected === null)

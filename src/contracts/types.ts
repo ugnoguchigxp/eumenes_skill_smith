@@ -134,6 +134,14 @@ export interface Proposal {
 	status: "proposed" | "validated" | "accepted" | "rejected" | "withdrawn";
 	revision: number;
 	executionVerified?: boolean;
+	candidateVerification?: {
+		status: "unverified" | "bound" | "invalidated";
+		proposalDigest: string;
+		reportDigest: string;
+		reportRevision: number;
+		verifierVersion: "candidate_verify.v1";
+		outcome?: "succeeded" | "failed";
+	};
 }
 export interface Reflection {
 	ref: string;

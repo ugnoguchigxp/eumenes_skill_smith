@@ -77,3 +77,5 @@ export {
 	type UsageCall,
 	type UsageLedger,
 } from "./usage-ledger.js";
+
+export { localCandidateVerificationFixture } from "./candidate-verify.js";

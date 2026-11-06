@@ -35,3 +35,12 @@ boolean 印だけで検索優先度を上げません。自動 promotion をし�
 ## 依存・前提
 
 提案 17 の共通 executor と提案 22 の出所 trace。実課題で候補有用性を測るなら提案 16 のコーパスが必要です。仮定: 候補を局所実行できる課題があること。
+
+## 実装結果
+
+- **採否**: 採用（意味の訂正）。候補有用性の実測は未測定。
+- **内容**: `executionVerified` を元 build 報告由来と明記し、succeeded 以外への訂正でクリア。候補本文 digest に束縛する `candidateVerification` と `bindCandidateVerification` を追加。本文変更で invalidated。検索優先や自動 promotion はしない。
+- **パス**: `src/contracts/{schema,types,ports}.ts`, `src/sqlite/index.ts`, `src/service/results.ts`, `src/eval/candidate-verify.ts`, `src/test/execution-verified.test.ts`, `integration-contract.md`
+- **試験**: `bun test src/test/execution-verified.test.ts`（5 pass）。訂正後に executionVerified が消えることを確認。
+- **未実施**: 実課題での候補有用性、検索順位への影響測定（意図的に未接続）
+- **理由**: 誤った「検証済み」残存を止め、候補実行と元 build 成功を分離した。

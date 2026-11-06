@@ -51,6 +51,37 @@ export function createResultOperations<Tx>(
 			digest: hash,
 		};
 		repo.putReport(tx, result);
+		for (const proposal of repo.proposalsByExecution(
+			tx,
+			auth.scope,
+			r.executionRef,
+		)) {
+			let changed = false;
+			const expected = proposal.revision;
+			if (proposal.executionVerified) {
+				// Source-report mark is only meaningful while the latest report stayed succeeded.
+				if (r.outcome !== "succeeded") {
+					delete proposal.executionVerified;
+					changed = true;
+				}
+			}
+			if (proposal.candidateVerification?.status === "bound") {
+				if (
+					proposal.candidateVerification.reportDigest !== hash ||
+					proposal.candidateVerification.reportRevision !== result.revision
+				) {
+					proposal.candidateVerification = {
+						...proposal.candidateVerification,
+						status: "invalidated",
+					};
+					changed = true;
+				}
+			}
+			if (changed) {
+				proposal.revision++;
+				repo.putProposal(tx, proposal, expected);
+			}
+		}
 		return { digest: hash, revision: result.revision };
 	}
 	function prepareReflection(
@@ -273,6 +304,13 @@ export function createResultOperations<Tx>(
 		for (const source of evidence) repo.link(tx, ref, source);
 		return proposal;
 	}
+	function proposalContentDigest(proposal: Proposal) {
+		return digest({
+			sections: proposal.sections,
+			conditions: proposal.conditions,
+			evidence: proposal.evidence,
+		});
+	}
 	function markExecutionVerified(
 		tx: Tx,
 		proposalRef: string,
@@ -300,10 +338,62 @@ export function createResultOperations<Tx>(
 				repo.hasUse(tx, auth.scope, proposal.buildRef, proposal.executionRef),
 			"verification_required",
 		);
+		// Source-report mark only — does not claim the proposal text was executed.
 		proposal.executionVerified = true;
 		proposal.revision++;
 		repo.putProposal(tx, proposal, expectedRevision);
 		return proposal;
+	}
+	/**
+	 * Bind an independent local candidate run to the proposal content digest.
+	 * Does not promote or change search ranking. Invalidates when digest drifts.
+	 */
+	function bindCandidateVerification(
+		tx: Tx,
+		proposalRef: string,
+		expectedRevision: number,
+		input: {
+			proposalDigest: string;
+			outcome: "succeeded" | "failed";
+		},
+		auth: Authority,
+	) {
+		const proposal = repo.proposal(tx, proposalRef);
+		requireThat(
+			auth.permissions.includes("manage") &&
+				proposal?.scope === auth.scope &&
+				!repo.blocked(tx, proposalRef) &&
+				p.authority.valid(tx, auth, proposal.evidence),
+			"permission_denied",
+		);
+		requireThat(proposal.revision === expectedRevision, "proposal_conflict");
+		const liveDigest = proposalContentDigest(proposal);
+		requireThat(liveDigest === input.proposalDigest, "verification_required");
+		const report = repo.report(tx, auth.scope, proposal.executionRef);
+		requireThat(
+			report &&
+				repo.hasUse(tx, auth.scope, proposal.buildRef, proposal.executionRef),
+			"verification_required",
+		);
+		proposal.candidateVerification = {
+			status: "bound",
+			proposalDigest: liveDigest,
+			reportDigest: report.digest,
+			reportRevision: report.revision,
+			verifierVersion: "candidate_verify.v1",
+			outcome: input.outcome,
+		};
+		proposal.revision++;
+		repo.putProposal(tx, proposal, expectedRevision);
+		return proposal;
+	}
+	function candidateVerificationStatus(proposal: Proposal) {
+		const mark = proposal.candidateVerification;
+		if (!mark) return "unverified" as const;
+		if (mark.status === "invalidated") return "invalidated" as const;
+		if (mark.proposalDigest !== proposalContentDigest(proposal))
+			return "invalidated" as const;
+		return mark.status;
 	}
 	function prepareWorkflow(
 		tx: Tx,
@@ -450,6 +540,9 @@ export function createResultOperations<Tx>(
 		failReflection,
 		reviewProposal,
 		markExecutionVerified,
+		bindCandidateVerification,
+		proposalContentDigest,
+		candidateVerificationStatus,
 		prepareWorkflow,
 		induceWorkflow,
 		saveWorkflow,

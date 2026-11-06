@@ -306,6 +306,21 @@ export const proposalSchema = z.strictObject({
 		"withdrawn",
 	]),
 	revision: z.number().int().nonnegative(),
-	/** Set when a succeeded report+use binding verified the proposal locally. Not auto-publish. */
+	/**
+	 * True when a succeeded source-build report+use binding was observed.
+	 * This is NOT proof the proposal text itself was executed. Not auto-publish.
+	 * Cleared when the bound report is corrected away from succeeded.
+	 */
 	executionVerified: z.boolean().optional(),
+	/** Separate evidence bound to this proposal's content digest. */
+	candidateVerification: z
+		.strictObject({
+			status: z.enum(["unverified", "bound", "invalidated"]),
+			proposalDigest: id,
+			reportDigest: id,
+			reportRevision: z.number().int().nonnegative(),
+			verifierVersion: z.literal("candidate_verify.v1"),
+			outcome: z.enum(["succeeded", "failed"]).optional(),
+		})
+		.optional(),
 });
