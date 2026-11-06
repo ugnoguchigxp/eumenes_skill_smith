@@ -131,6 +131,16 @@ export const evidenceCardSchema = z.strictObject({
 	/** Successor reference reported by the same origin; only meaningful when superseded. */
 	supersededBy: id.optional(),
 });
+/** Full evidence document returned by registry.read / source.get. Validated at the build boundary. */
+export const evidenceSchema = evidenceCardSchema
+	.extend({
+		body: z.string().min(1).max(32768),
+		sections: z.array(sectionSchema).max(64).optional(),
+	})
+	.superRefine((e, ctx) => {
+		if (e.sections && !unique(e.sections.map((s) => s.id)))
+			ctx.addIssue({ code: "custom", message: "duplicate_sections" });
+	});
 export const usageSchema = z.strictObject({
 	modelCalls: z.number().int().nonnegative(),
 	sourceCalls: z.number().int().nonnegative(),

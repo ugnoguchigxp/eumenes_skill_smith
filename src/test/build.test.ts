@@ -251,3 +251,47 @@ test("the output limit includes the envelope and metadata, not only the body", a
 		n: 1,
 	});
 });
+
+test("malformed evidence from registry.read is a source contract violation", async () => {
+	const cases: {
+		label: string;
+		mutate: (doc: Record<string, unknown>) => unknown;
+	}[] = [
+		{
+			label: "invalid_status",
+			mutate: (doc) => ({ ...doc, status: "weird" }),
+		},
+		{
+			label: "huge_body",
+			mutate: (doc) => ({ ...doc, body: "x".repeat(40000) }),
+		},
+		{
+			label: "duplicate_section_ids",
+			mutate: (doc) => ({
+				...doc,
+				sections: [
+					{ id: "same", body: "one" },
+					{ id: "same", body: "two" },
+				],
+			}),
+		},
+	];
+	for (const c of cases) {
+		const f = fixture();
+		const original = f.ports.registry.read;
+		f.ports.registry.read = async (...args) => {
+			const doc = await original(...args);
+			return c.mutate(doc as unknown as Record<string, unknown>) as typeof doc;
+		};
+		const receipt = f.submit();
+		await expect(f.run(receipt.requestRef!)).rejects.toThrow(
+			"source_contract_violation",
+		);
+		expect(f.modelCalls()).toBe(0);
+	}
+});
+test("well-formed evidence still builds after boundary validation", async () => {
+	const f = fixture();
+	const r = await ready(f);
+	expect(r.build.content.dependencies[0]!.ref).toBe("skill:compare@1");
+});

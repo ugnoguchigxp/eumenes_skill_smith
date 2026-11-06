@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
 	CONTRACT,
 	decisionSchema,
+	evidenceSchema,
 	sourceSearchSchema,
 } from "../contracts/schema.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
@@ -15,6 +16,12 @@ import type {
 } from "../contracts/types.js";
 import { buildInstructions } from "../instructions/build.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
+
+function parseEvidence(raw: unknown): Evidence {
+	const parsed = evidenceSchema.safeParse(raw);
+	requireThat(parsed.success, "source_contract_violation");
+	return parsed.data;
+}
 
 export function checkDecision(
 	decision: ReadyDecision,
@@ -193,7 +200,9 @@ export async function executeBuild<Tx>(
 				ports.source.get(ref, signal))
 			: ports.registry.read(ref, r.authority, signal);
 	for (const card of candidates.slice(0, request.limits.documents)) {
-		const document = await call(() => read(card.ref, card.external));
+		const document = parseEvidence(
+			await call(() => read(card.ref, card.external)),
+		);
 		requireThat(
 			document.ref === card.ref &&
 				digest(document.version) === digest(card.version) &&
@@ -230,7 +239,7 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		let next: Evidence | null = null;
 		try {
-			next = await read(successor, e.external);
+			next = parseEvidence(await read(successor, e.external));
 		} catch (error) {
 			signal.throwIfAborted();
 			if (error instanceof SkillSmithError) throw error;
