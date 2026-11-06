@@ -21,6 +21,14 @@ import {
 	absentJudgeOutputSchema,
 	absentJudgeDigests,
 } from "./absent-isolation.js";
+import {
+	ABSTENTION_JUDGE_INSTRUCTIONS,
+	abstentionJudgeSchema,
+	abstentionJudgeOutputSchema,
+	abstentionJudgeDigests,
+	expectedRefsRetrieved,
+	type AbstentionContrast,
+} from "./abstention-isolation.js";
 import type {
 	InferenceTask,
 	RecordContext,
@@ -218,6 +226,10 @@ export interface RunIdentity {
 	/** Proposal 32 absent-axis judge; additive identity fields. */
 	absentJudgeInstructionsDigest: string;
 	absentJudgeSchemaDigest: string;
+	/** Proposal 33 opt-in contrast judge; additive identity fields. */
+	abstentionContrast: AbstentionContrast;
+	abstentionJudgeInstructionsDigest: string;
+	abstentionJudgeSchemaDigest: string;
 	/** Proposals 28/29 opt-in; records with and without it must not mix. */
 	queryReformulation: QueryReformulation;
 	reformulationInstructionsDigest: string | null;
@@ -253,6 +265,7 @@ export function buildEvalIdentity(input: {
 	assemblyMode?: AssemblyMode;
 	queryReformulation?: QueryReformulation;
 	evidenceSupply?: EvidenceSupply;
+	abstentionContrast?: AbstentionContrast;
 }): RunIdentity {
 	const assemblyMode = input.assemblyMode ?? "baseline";
 	const queryReformulation = input.queryReformulation ?? "off";
@@ -261,6 +274,8 @@ export function buildEvalIdentity(input: {
 		evidenceSupply: input.evidenceSupply ?? "natural",
 		...composeJudgeDigests(),
 		...absentJudgeDigests(),
+		abstentionContrast: input.abstentionContrast ?? "off",
+		...abstentionJudgeDigests(),
 		assemblyMode,
 		queryReformulation,
 		...(queryReformulation === "on"
@@ -318,6 +333,8 @@ export interface FullDeps {
 	/** Opt-in compact assembly (proposal 36). Default baseline. */
 	assemblyMode?: AssemblyMode;
 	evidenceSupply?: EvidenceSupply;
+	/** Proposal 33: judge tasks with expectedRefs by the contrast judge. Default off. */
+	abstentionContrast?: AbstentionContrast;
 	/** Proposal 28 ledger; present only when the source is the reformulating wrapper. */
 	reformulation?: ReformulationLedger;
 }
@@ -347,6 +364,13 @@ export async function runFull(deps: FullDeps) {
 		inventsOfficialSkill: boolean;
 		claimsVerified: boolean;
 		actionability: number;
+	}[] = [];
+	const abstentionScores: {
+		taskId: string;
+		expectedRefsRetrieved: string[];
+		treatsExistingAsAbsent: boolean;
+		excessiveAbstention: boolean;
+		appropriateGap: boolean;
 	}[] = [];
 	let evalEvidenceGetCalls = 0;
 	const searchPreview: {
@@ -487,6 +511,13 @@ export async function runFull(deps: FullDeps) {
 				try {
 					const compose = task.axis === "compose";
 					const absent = task.axis === "absent";
+					// Proposal 33 opt-in: only tasks whose skill exists in the fixture.
+					const contrast =
+						deps.abstentionContrast === "on" && task.expectedRefs.length > 0;
+					const contrastRetrieved = expectedRefsRetrieved(
+						task.expectedRefs,
+						retrieved,
+					);
 					// Judge-only ground truth documents; never inserted into builder task/data.
 					const referenceEvidence = [];
 					if (compose)
@@ -515,27 +546,33 @@ export async function runFull(deps: FullDeps) {
 					});
 					const judged = await judge.complete(
 						{
-							system: absent
-								? ABSENT_JUDGE_INSTRUCTIONS
-								: compose
-									? COMPOSE_JUDGE_INSTRUCTIONS
-									: JUDGE_INSTRUCTIONS,
-							data: absent
-								? {
-										...data,
-										// Watch-list only; not gold and never sent to the builder.
-										nearestFalseFriendRefs: task.nearestFalseFriendRefs,
-									}
-								: compose
-									? { ...data, evidenceSupply, referenceEvidence }
-									: data,
-							schema: absent
-								? absentJudgeOutputSchema
-								: compose
-									? composeJudgeOutputSchema
-									: judgeOutputSchema,
+							system: contrast
+								? ABSTENTION_JUDGE_INSTRUCTIONS
+								: absent
+									? ABSENT_JUDGE_INSTRUCTIONS
+									: compose
+										? COMPOSE_JUDGE_INSTRUCTIONS
+										: JUDGE_INSTRUCTIONS,
+							data: contrast
+								? { ...data, expectedRefsRetrieved: contrastRetrieved }
+								: absent
+									? {
+											...data,
+											// Watch-list only; not gold and never sent to the builder.
+											nearestFalseFriendRefs: task.nearestFalseFriendRefs,
+										}
+									: compose
+										? { ...data, evidenceSupply, referenceEvidence }
+										: data,
+							schema: contrast
+								? abstentionJudgeOutputSchema
+								: absent
+									? absentJudgeOutputSchema
+									: compose
+										? composeJudgeOutputSchema
+										: judgeOutputSchema,
 							requestRef: `scenario-judge:${task.id}`,
-							maxOutputTokens: absent || compose ? 1200 : 400,
+							maxOutputTokens: contrast || absent || compose ? 1200 : 400,
 							deadlineAt: fixedDeadline,
 						},
 						new AbortController().signal,
@@ -543,11 +580,13 @@ export async function runFull(deps: FullDeps) {
 					judgeInferenceTasks += judgeTasks.length;
 					provenance.judgeRecordPresent = true;
 					const parsed = (
-						absent
-							? absentJudgeSchema
-							: compose
-								? composeJudgeSchema
-								: assemblyJudgeSchema
+						contrast
+							? abstentionJudgeSchema
+							: absent
+								? absentJudgeSchema
+								: compose
+									? composeJudgeSchema
+									: assemblyJudgeSchema
 					).safeParse(judged.value);
 					if (!parsed.success) {
 						status(
@@ -556,7 +595,16 @@ export async function runFull(deps: FullDeps) {
 						);
 						continue;
 					}
-					if (compose) {
+					if (contrast) {
+						const detailed = abstentionJudgeSchema.parse(judged.value);
+						abstentionScores.push({
+							taskId: task.id,
+							expectedRefsRetrieved: contrastRetrieved,
+							treatsExistingAsAbsent: detailed.treatsExistingAsAbsent,
+							excessiveAbstention: detailed.excessiveAbstention,
+							appropriateGap: detailed.appropriateGap,
+						});
+					} else if (compose) {
 						const detailed = composeJudgeSchema.parse(judged.value);
 						composeScores.push({
 							taskId: task.id,
@@ -629,6 +677,7 @@ export async function runFull(deps: FullDeps) {
 		evidenceSupply,
 		composeScores,
 		absentScores,
+		abstentionScores,
 		statuses,
 		scores,
 		pendingBuild,

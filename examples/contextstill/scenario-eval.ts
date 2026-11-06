@@ -9,6 +9,7 @@
 //            --query-reformulation off|on|multi (default off; proposals 28/29 opt-in, not adopted)
 //            --reformulation-records path (on default: examples/contextstill/scenarios/reformulation-records.json)
 //            multi default: data/contextstill/multi-query-records.json (missing means pending)
+//            --abstention-contrast off|on (default off; proposal 33 opt-in, requires --full)
 //            --build-records path --judge-records path --scores path --db path
 // retrieval-only: SourcePort search only; optional auxiliary inference, no build/judge or 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
@@ -33,6 +34,7 @@ import {
 } from "./query-reformulation.js";
 import { createMultiQuerySource, type MultiQueryTrace } from "./multi-query.js";
 import { parseEvidenceSupply } from "./compose-isolation.js";
+import { parseAbstentionContrast } from "./abstention-isolation.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
 	buildEvalIdentity,
@@ -64,6 +66,12 @@ const assemblyMode = parseAssemblyMode(process.argv);
 const evidenceSupply = parseEvidenceSupply(process.argv);
 const queryReformulation = parseQueryReformulation(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
+const abstentionContrast = parseAbstentionContrast(process.argv);
+if (
+	abstentionContrast === "on" &&
+	(retrievalOnly || !process.argv.includes("--full"))
+)
+	throw new Error("--abstention-contrast on requires --full");
 if (retrievalOnly && evidenceSupply !== "natural")
 	throw new Error("--evidence-supply oracle requires full evaluation");
 const suitePath = arg("--suite", "examples/contextstill/scenarios/suite.json");
@@ -144,6 +152,7 @@ const identity = buildEvalIdentity({
 	seedPath: dbPath,
 	queryReformulation,
 	evidenceSupply,
+	abstentionContrast,
 });
 
 try {
@@ -210,6 +219,7 @@ try {
 			source,
 			assemblyMode,
 			evidenceSupply,
+			abstentionContrast,
 			createInference: (role, onTask, recordContext) =>
 				recordedInference(
 					role === "build" ? buildRecords : judgeRecords,
@@ -247,6 +257,9 @@ try {
 			scores: result.scores,
 			composeScores: result.composeScores,
 			absentScores: result.absentScores,
+			...(abstentionContrast === "on"
+				? { abstentionScores: result.abstentionScores }
+				: {}),
 			evidenceSupply,
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,
@@ -265,7 +278,8 @@ try {
 			searchProfile === "handle" &&
 			assemblyMode === "baseline" &&
 			queryReformulation === "off" &&
-			evidenceSupply === "natural";
+			evidenceSupply === "natural" &&
+			abstentionContrast === "off";
 		const scorePath = raw("--scores")
 			? resolve(raw("--scores")!)
 			: legacyDefault
