@@ -15,7 +15,11 @@ import type {
 	ReadyDecision,
 } from "../contracts/types.js";
 import { buildInstructions } from "../instructions/build.js";
-import { discloseEvidence, evidenceCardView } from "./disclosure.js";
+import {
+	discloseEvidence,
+	evidenceCardView,
+	spotlightUntrusted,
+} from "./disclosure.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
 
 function parseEvidence(raw: unknown): Evidence {
@@ -130,7 +134,12 @@ export function buildContent(
 		body,
 		decision: d,
 		dependencies: selected.map(
-			({ body: _body, sections: _sections, ...rest }) => rest,
+			({
+				body: _body,
+				sections: _sections,
+				retrievedAt: _retrievedAt,
+				...rest
+			}) => rest,
 		),
 		policy: p.policy,
 	};
@@ -249,6 +258,7 @@ export async function executeBuild<Tx>(
 					document.scope === card.scope,
 				"source_revoked",
 			);
+			document.retrievedAt = ports.now();
 			evidence.push(document);
 			seenEvidence.add(document.ref);
 		}
@@ -286,6 +296,7 @@ export async function executeBuild<Tx>(
 				next.external === e.external &&
 				(next.scope === "shared" || next.scope === r.authority.scope)
 			) {
+				next.retrievedAt = ports.now();
 				evidence.push(next);
 				successors.push({ ref: e.ref, successor, outcome: "fetched" });
 			} else successors.push({ ref: e.ref, successor, outcome: "unavailable" });
@@ -331,7 +342,14 @@ export async function executeBuild<Tx>(
 			policy: p.policy,
 			candidateCards,
 			evidenceIndex: evidence.map(evidenceCardView),
-			untrustedEvidence: disclosed,
+			untrustedEvidence: spotlightUntrusted(disclosed),
+			freshness: evidence.map((e) => ({
+				ref: e.ref,
+				status: e.status,
+				retrievedAt: e.retrievedAt ?? null,
+				supersededBy: e.supersededBy ?? null,
+				version: e.version,
+			})),
 			search: {
 				externalUsed,
 				...(successors.length ? { successors } : {}),

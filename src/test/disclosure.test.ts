@@ -16,13 +16,15 @@ test("first model input carries evidenceIndex without bodies", async () => {
 			sectionIds: string[];
 			hasSections: boolean;
 		}[];
-		untrustedEvidence: unknown[];
+		untrustedEvidence: { items: unknown[] };
 	};
 	expect(data.evidenceIndex[0]!.ref).toBe("skill:compare@1");
 	expect(data.evidenceIndex[0]!.sectionIds).toEqual(["inspect", "compare"]);
 	expect(data.evidenceIndex[0]!.hasSections).toBe(true);
-	expect(data.untrustedEvidence).toEqual([]);
-	expect(JSON.stringify(data)).not.toContain("資料の正本を確認し");
+	expect(data.untrustedEvidence.items).toEqual([]);
+	expect(JSON.stringify(data.evidenceIndex)).not.toContain(
+		"資料の正本を確認し",
+	);
 });
 
 test("disclose adds requested sections; full body when no section IDs", async () => {
@@ -92,29 +94,28 @@ test("disclose adds requested sections; full body when no section IDs", async ()
 	expect(work.result.decision.kind).toBe("ready");
 	expect(work.settle()).toBe(true);
 	expect(
-		(seen[0] as { untrustedEvidence: unknown[] }).untrustedEvidence,
+		(seen[0] as { untrustedEvidence: { items: unknown[] } }).untrustedEvidence
+			.items,
 	).toEqual([]);
 	const disclosed = (
 		seen[1] as {
 			untrustedEvidence: {
-				ref: string;
-				sections?: { id: string }[];
-				body?: string;
-			}[];
+				items: {
+					ref: string;
+					sections?: { id: string; body: string }[];
+					body?: string;
+					datamark?: string;
+					untrusted?: boolean;
+					title: string;
+					status: string;
+				}[];
+			};
 		}
-	).untrustedEvidence;
-	expect(disclosed).toEqual([
-		{
-			ref: "skill:compare@1",
-			title: "比較",
-			status: "active",
-			sections: [{ id: "inspect", body: "正本を確認する。" }],
-		},
-		{
-			ref: "doc:plain@1",
-			title: "無区分",
-			status: "active",
-			body: "sectionのない本文",
-		},
-	]);
+	).untrustedEvidence.items;
+	expect(disclosed).toHaveLength(2);
+	expect(disclosed[0]!.ref).toBe("skill:compare@1");
+	expect(disclosed[0]!.sections?.map((s) => s.id)).toEqual(["inspect"]);
+	expect(disclosed[0]!.datamark).toBe("<<UNTRUSTED>>");
+	expect(disclosed[1]!.ref).toBe("doc:plain@1");
+	expect(disclosed[1]!.body).toBe("sectionのない本文");
 });

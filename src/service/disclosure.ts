@@ -23,6 +23,7 @@ export function evidenceCardView(e: Evidence): {
 		external: e.external,
 		scope: e.scope,
 		...(e.supersededBy ? { supersededBy: e.supersededBy } : {}),
+		...(e.retrievedAt !== undefined ? { retrievedAt: e.retrievedAt } : {}),
 		sectionIds,
 		hasSections: sectionIds.length > 0,
 	};
@@ -77,4 +78,18 @@ export function toSearchCards(evidence: Evidence[]): EvidenceCard[] {
 	return evidence.map(({ body: _b, sections: _s, ...card }) =>
 		structuredClone(card),
 	);
+}
+
+/** Datamark untrusted disclosed material for the model (Spotlighting). Not a complete defense. */
+export function spotlightUntrusted<T extends { ref: string }>(
+	items: T[],
+): { boundary: string; items: T[] } {
+	return {
+		boundary: "UNTRUSTED_EVIDENCE_BEGIN…UNTRUSTED_EVIDENCE_END",
+		items: items.map((item) => ({
+			...item,
+			untrusted: true as const,
+			datamark: "<<UNTRUSTED>>",
+		})),
+	};
 }

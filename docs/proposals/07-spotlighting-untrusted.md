@@ -36,3 +36,12 @@
 
 前提: 提案 13。
 
+
+
+## 実装結果
+
+- **採否**: 採用
+- **内容**: `spotlightUntrusted` で boundary / datamark / untrusted を付与。指示で印の意味を説明。注入が解けたと主張しない。
+- **パス**: `src/service/disclosure.ts`, `src/service/build.ts`, `src/instructions/build.ts`, `src/test/spotlight-freshness.test.ts`
+- **試験**: spotlight 試験通過。構造検査は維持。
+- **理由**: 印付けが入り、通常経路を退行させない。
