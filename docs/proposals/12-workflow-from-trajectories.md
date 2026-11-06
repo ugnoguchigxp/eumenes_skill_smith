@@ -36,3 +36,8 @@
 
 前提: 提案 06、09。成功軌跡の蓄積（仮定）。
 
+## 実装結果
+
+- **採否**: 採用
+- **内容**: InferencePort 経由で成功要約から手順候補を誘導。`induceAndSaveWorkflow` は proposed のみ保存。キーワード採掘なし。
+- **パス**: `src/eval/workflow.ts`, `src/service/results.ts`, `src/instructions/build.ts`, `src/test/workflow-product.test.ts`, `src/test/eval-kit-workflow.test.ts`
