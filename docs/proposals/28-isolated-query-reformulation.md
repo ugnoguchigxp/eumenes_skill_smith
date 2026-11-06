@@ -55,7 +55,7 @@ searchTask を固定し内部 canary だけを変えた paired 入力で、補�
 
 ## 実装結果
 
-opt-in の評価経路として実装した。**既定は off のまま**。日本語 16 件では、同じ profile で complement した BM25 と組み合わせると hit@8 が 2/16 から 15/16 に増えた。handle 順だけでは 1/16 から 2/16 で、補助推論だけ増える域を大きくは出ない。既定の検索経路は変えない。
+opt-in の評価経路として実装した。**既定は off のまま**。日本語 16 件では、同じ seed のうえで BM25 と組み合わせると hit@8 が 2/16 から 15/16 に増えた。handle 順だけでは 1/16 から 2/16 で、補助推論だけ増える域を大きくは出ない。既定の検索経路は変えない。
 
 - 選択: `scenario-eval.ts --query-reformulation off|on`（省略時 off、未知の値はエラー）。on のときだけ `examples/contextstill/query-reformulation.ts` の `createReformulatingSource` が fixture SourcePort を包む。記録は `--reformulation-records`（既定 `examples/contextstill/scenarios/reformulation-records.json`）。
 - 境界（提案 18 維持）: core と host は変更していない。core は従来どおり `authority.searchTask` を `SourcePort.search` へ渡す。wrapper は受け取った文字列だけを `data: { searchTask }` として補助 InferencePort へ渡し、固定 instructions と schema（`{ query }` 1 本）を付ける。返った query を内側の fixture 検索へ渡し、`{ searchTask, queryToSource }` を trace に残す。生の query を authority へ昇格しない。`turn.query` は外部へ流さない。語句辞書や対訳表は無い。
