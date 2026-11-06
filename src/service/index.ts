@@ -51,6 +51,10 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	}
 	function usable(tx: Tx, b: Build, auth: Authority) {
 		const origin = repo.request(tx, b.requestRef);
+		const generatorOk =
+			!b.generator ||
+			(b.generator.contractVersion === CONTRACT &&
+				b.generator.instructions === INSTRUCTION_VERSION);
 		return (
 			!!origin &&
 			valid(tx, origin, auth) &&
@@ -58,6 +62,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			!repo.blocked(tx, b.ref) &&
 			b.scope === auth.scope &&
 			b.expiresAt > p.now() &&
+			generatorOk &&
 			p.policy.current(tx, b.content.policy.version) &&
 			p.registry.current(
 				tx,
@@ -137,13 +142,21 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			digest(policy.version) === digest(request.environment.policy),
 			"policy_mismatch",
 		);
+		const { deadlineAt: _deadlineAt, ...limitsWithoutDeadline } =
+			request.limits;
 		const key = digest({
-			request: { ...request, requestId: undefined, prior: undefined },
+			request: {
+				...request,
+				requestId: undefined,
+				prior: undefined,
+				limits: limitsWithoutDeadline,
+			},
 			scope: auth.scope,
 			principal: auth.principal,
 			epoch: auth.epoch,
 			sourceRefs: auth.sourceRefs,
 			instructions: INSTRUCTION_VERSION,
+			generator: { contractVersion: CONTRACT },
 		});
 		const row: RequestRecord = {
 			ref: p.id(),
@@ -355,6 +368,10 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			expiresAt: p.now() + limits.buildTtlMs,
 			usage: structuredClone(row.usage),
 			revoked: false,
+			generator: {
+				instructions: INSTRUCTION_VERSION,
+				contractVersion: CONTRACT,
+			},
 		};
 		if (
 			bytes({

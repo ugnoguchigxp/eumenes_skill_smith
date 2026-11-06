@@ -35,3 +35,12 @@
 ## 依存・前提
 
 提案 19 の依存 / round 追跡と、提案 22 の cold / warm 使用量が有用です。ローカルで完結します。仮定: 互換 manifest を安定化できること。
+
+## 実装結果
+
+- **採否**: 採用（deadline 分離と generator 互換）。実 hit 率は未測定。
+- **内容**: cache key から `deadlineAt` を除外（受付 ID／prior も従来どおり非内容）。Build に `generator.instructions/contractVersion` を刻印し、`usable` が現行指示と不一致なら拒否。評価用 identity manifest を追加。
+- **パス**: `src/service/index.ts`, `src/contracts/{schema,types}.ts`, `src/eval/cache-identity.ts`, `src/test/cache-identity.test.ts`, `docs/proposals/23-...`
+- **試験**: `bun test src/test/cache-identity.test.ts`（5 pass）。deadline 更新で ready hit、受入変更で miss。
+- **未実施**: 実運用 hit 率、新資料追加時系列の効用
+- **理由**: 安全な同内容再利用 hit が増え、指示更新後の旧 build 漏れを止める。

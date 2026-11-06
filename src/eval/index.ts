@@ -90,3 +90,9 @@ export {
 	continuousProvenanceMark,
 	jsonAttributeMark,
 } from "./provenance-mark.js";
+
+export {
+	cacheIdentityManifestSchema,
+	defaultCacheIdentityManifest,
+	type CacheIdentityManifest,
+} from "./cache-identity.js";

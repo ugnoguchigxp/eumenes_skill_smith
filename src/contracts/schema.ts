@@ -199,6 +199,13 @@ export const buildSchema = z.strictObject({
 	expiresAt: z.number().int().positive(),
 	usage: usageSchema,
 	revoked: z.boolean(),
+	/** Generator compatibility; absent on legacy rows. */
+	generator: z
+		.strictObject({
+			instructions: id,
+			contractVersion: z.literal(CONTRACT),
+		})
+		.optional(),
 });
 const envelope = {
 	contractVersion: z.literal(CONTRACT),

@@ -86,6 +86,10 @@ Request の `usage` は modelCalls／sourceCalls に加え、観測済みの inp
 
 `re_search` では新規カードを候補枠の先頭へ入れ、文書枠が満杯なら prior-only の本文を追い出して新規本文を取得できる。`cardsAdded`／`cardsAdmitted`／`documentsFetched` を分離記録する。残した資料の初回 warnings／degraded は `sourceNotices` として蓄積し、最新 round の空応答で消さない。無制限 top-k 拡張はしない。
 
+### 3.1h cache 内容同一性（2026-11-06追加）
+
+ビルド cache key の内容同一性から `deadlineAt` を除く（実行上の期限は受付時に別検査）。Build は `generator.instructions`（INSTRUCTION_VERSION）と contractVersion を保持し、`usable` が現行と不一致なら ready を返さない。指示 digest 自体は外さない。
+
 ### 3.2 推論providerの注入
 
 本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。

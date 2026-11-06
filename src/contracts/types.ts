@@ -68,6 +68,7 @@ export interface Build {
 	expiresAt: number;
 	usage: Usage;
 	revoked: boolean;
+	generator?: { instructions: string; contractVersion: "skillsmith.v1" };
 }
 export type Outcome =
 	| { kind: "ready"; buildRef: string }
