@@ -55,13 +55,16 @@ searchTask を固定し内部 canary だけを変えた paired 入力で、補�
 
 ## 実装結果
 
-opt-in の評価経路として実装した。採用はしていない。既定は off のまま。
+opt-in の評価経路として実装した。**既定は off のまま**。日本語 16 件では、同じ profile で complement した BM25 と組み合わせると hit@8 が 2/16 から 15/16 に増えた。handle 順だけでは 1/16 から 2/16 で、補助推論だけ増える域を大きくは出ない。既定の検索経路は変えない。
 
-- 選択: `scenario-eval.ts --query-reformulation off|on`（省略時 off、未知の値はエラー）。on のときだけ `examples/contextstill/query-reformulation.ts` の `createReformulatingSource` が fixture SourcePort を包む。記録は `--reformulation-records`（既定 `examples/contextstill/scenarios/reformulation-records.json`、未作成）。
+- 選択: `scenario-eval.ts --query-reformulation off|on`（省略時 off、未知の値はエラー）。on のときだけ `examples/contextstill/query-reformulation.ts` の `createReformulatingSource` が fixture SourcePort を包む。記録は `--reformulation-records`（既定 `examples/contextstill/scenarios/reformulation-records.json`）。
 - 境界（提案 18 維持）: core と host は変更していない。core は従来どおり `authority.searchTask` を `SourcePort.search` へ渡す。wrapper は受け取った文字列だけを `data: { searchTask }` として補助 InferencePort へ渡し、固定 instructions と schema（`{ query }` 1 本）を付ける。返った query を内側の fixture 検索へ渡し、`{ searchTask, queryToSource }` を trace に残す。生の query を authority へ昇格しない。`turn.query` は外部へ流さない。語句辞書や対訳表は無い。
 - identity: `queryReformulation` と、on のときの reformulation instructions / schema digest を提案 35 の identity に入れた（off では null）。`buildInstructions` / `INSTRUCTION_VERSION` / compact instructions は変更していない。
 - usage: 補助推論は `usage.reformulationInferenceTasks`（retrieval-only では `reformulationInferenceTasks`）として別計上する。token は null のまま。
 - 欠測: 補助推論の記録が無い場合は `awaiting_reformulation_inference` となり、`data/contextstill/scenario-reformulation-pending.json` に書き出して exit 2 で止まる。query を作らず、DB 検索も行わない。retrieval 報告と score ファイルは書かない。
 - 隔離試験: searchTask を固定し、内部 goal に `PRIVATE_CANARY_42` を入れたものと入れないものを比べた。補助モデル入力と fixture DB へ届いた query は両者で完全一致し、canary、内部 task、host の constraints / acceptance の文字列は含まれなかった（`examples/contextstill/test/query-reformulation.test.ts`、補助モデルは searchTask を返すだけの test double）。
 - 既定 off: retrieval-only の旧5件の順位は、handle（6, 1, 未取得, 未取得, 未取得）と BM25（1, 1, 1, 1, 1）のどちらも記録済みの `scores.json` / `scores-bm25.json` の searchPreview と一致した。
-- 未実施: 記録は作っていない。架空の query や点数は入れていない。日本語 hit@8 の前後比較、誤意図 query の判定、採用判断は、親が補助推論を recorded-inference として記録するまで保留（PENDING）。token 削減や本番 ContextStill の検索改善は主張しない。
+- 日本語 16 件の retrieval-only（suite-3axis、queryStyle=jp）。holdout 課題はこの suite に無い。補助記録は searchTask だけを見て書いた（`examples/contextstill/scenarios/reformulation-records.json`）。前後比較は `retrieval-jp-{handle,bm25}.json` と `retrieval-jp-{handle,bm25}-reformulation.json`。
+- hit@8: handle 1/16 → 2/16（@20 は 2/16 → 4/16）。BM25 2/16 → 15/16（@20 は 4/16 → 16/16）。handle で新たに @8 に入ったのは `retrieval-224yjd-jp`（本番 clone）。BM25 の残り 1 件は `retrieval-4f7bhy-jp`（期待「Validate Hook Changes End-to-End」、順位 16）。書き換え query は「verify hook changes through the real execution path」で searchTask に沿うが、上位は「Fix pre-commit verify failures instead of bypassing hooks」になった（語彙の近傍であり、query が別目的を足したわけではない）。`retrieval-2o2vt6-jp` は期待が 5 位で @8 には入る。falseFriendsInTop8 は 0 件。
+- 誤意図: 16 本の query はいずれも searchTask の言い換えで、別ゴールを足していない。BM25 では 14 件の 1 位が期待題名と一致、1 件は 5 位で到達、1 件は上記のフック近傍。handle 順では語彙索引を使わないため、同じ query でも回復は小さい。
+- 組み立て（SKILL 出力）の評点はこの 16 件では未測定。token は null のまま。本番 ContextStill の検索改善とは呼ばない。提案 27 の既定（handle）も変えていない。

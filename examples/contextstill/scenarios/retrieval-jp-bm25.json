@@ -1,0 +1,828 @@
+{
+  "ok": true,
+  "mode": "retrieval-only",
+  "suite": "seed-three-axis",
+  "searchProfile": "bm25",
+  "assemblyMode": "baseline",
+  "identity": {
+    "searchProfile": "bm25",
+    "assemblyMode": "baseline",
+    "queryReformulation": "off",
+    "reformulationInstructionsDigest": null,
+    "reformulationSchemaDigest": null,
+    "suiteId": "seed-three-axis",
+    "suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+    "seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+    "buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+    "judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+    "judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+  },
+  "filter": {
+    "axis": "retrieval",
+    "queryStyle": "jp"
+  },
+  "inferenceCalls": 0,
+  "summary": {
+    "retrieval:jp": {
+      "tasks": 16,
+      "allRequiredHitAt8": {
+        "hit": 2,
+        "of": 16,
+        "notApplicable": 0
+      },
+      "allRequiredHitAt20Diagnostic": {
+        "hit": 4,
+        "of": 16,
+        "notApplicable": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "taskId": "retrieval-23jihz-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_whnur2kle6phuawkx4umgr5le4",
+          "title": "全変更コミット前は未追跡ファイル混入を最終確認する"
+        },
+        {
+          "ref": "contextstill:kn_4qr7q4xat73fiivx3m2kfxfgsa",
+          "title": "ローカル設定ファイルを .env より優先して読む設定ストア導入"
+        },
+        {
+          "ref": "contextstill:kn_f5xfqzzpv6f2m4ahk5j4jigtt4",
+          "title": "未追跡ファイルは内容確認のうえ、今回の作業と無関係ならコミット対象から外す"
+        },
+        {
+          "ref": "contextstill:kn_u6zyvzqydmbenjt4at5v4d5j2y",
+          "title": "品質ゲート通過後に関連差分だけをまとめてコミットする"
+        },
+        {
+          "ref": "contextstill:kn_e4br63ddvts42vnzxjwiyrk5k4",
+          "title": "全変更対象のコミット手順（検証後一括ステージング）"
+        },
+        {
+          "ref": "contextstill:kn_ujvjnvc6varshbgm26hbhrr2mq",
+          "title": "コミット前の全変更検証とステージング手順"
+        },
+        {
+          "ref": "contextstill:kn_liqvmj4bw73mi4meevldntpw6u",
+          "title": "計画書の基準SHAとファイルパスの最新化を怠らない"
+        },
+        {
+          "ref": "contextstill:kn_j67a7spi4o3jtwpgg2qejqifza",
+          "title": "DBDesign 実装のコミット前確認フロー"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-224yjd-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_dezawosjpnefcwtphvmozmipry",
+          "title": "Episode 生成機能のデプロイ順序と空白期間防止手順"
+        },
+        {
+          "ref": "contextstill:kn_hqntmvaeudfzqouu5exo5xbu2q",
+          "title": "production go/no-go checklist の確認手順"
+        },
+        {
+          "ref": "contextstill:kn_w5f37amfv4iczlpgmcxxvgrlpe",
+          "title": "Publish-critical artifacts must be tracked or reproducibly generated"
+        },
+        {
+          "ref": "contextstill:kn_kvq7fi5s72wuxsdchygzxsyuka",
+          "title": "Azure VM へリリースを配布してプロビジョニングする手順"
+        },
+        {
+          "ref": "contextstill:kn_yfk2xmfnc324bjiiftlihidzyu",
+          "title": "Tauri のビルド前にリリース最適化設定を入れてサイズと性能を確認する"
+        },
+        {
+          "ref": "contextstill:kn_p7qwt6pat4l7vssae6brudqkfi",
+          "title": "MCP サーバー修正後は lint・typecheck・test を再実行して回帰を確認する"
+        },
+        {
+          "ref": "contextstill:kn_x4gbvqsivewk5nlu657v54itf4",
+          "title": "本番デプロイの段階的移行ワークフロー"
+        },
+        {
+          "ref": "contextstill:kn_yo7cu5zy5mgcq7zhfjinhcokpy",
+          "title": "Windows環境でのCRLF改行コードによる検証失敗"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4pfru3-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_x2t7wfvohub44rpxbqyo2ux4pu",
+          "title": "機密データにはタグ、マスキングポリシー、行アクセスポリシーを組み合わせる"
+        },
+        {
+          "ref": "contextstill:kn_6jralscmr352egkp44qbys5vg4",
+          "title": "HTTP/HTTPS 切り替えはコードではなく実行時環境変数で制御する"
+        },
+        {
+          "ref": "contextstill:kn_hb35qwvnpk6fbyav5jec7zzdre",
+          "title": "HTTP/HTTPS 切り替え設定を追加してデプロイと実行を分離する手順"
+        },
+        {
+          "ref": "contextstill:kn_qq5drzig4xa7wilnattl4tfnou",
+          "title": "Azure VM の HTTP-only 煙テストデプロイを行う手順"
+        },
+        {
+          "ref": "contextstill:kn_ez34ck2xznj2kqgiprrfapd2yi",
+          "title": "Web evidenceの検証範囲はHTTP/HTTPSに限定する"
+        },
+        {
+          "ref": "contextstill:kn_2d6rqowjav3dtj6brca2y5apou",
+          "title": "HTTP/SSL 切替は SSL_ENABLED で分岐し、URL・Cookie・Nginx 起動条件を連動させる"
+        },
+        {
+          "ref": "contextstill:kn_wi2w56aqkr6qb3fqubdbjcijfy",
+          "title": "HTTP 検証用デプロイでは NODE_ENV を development にして、ブラウザ cookie の保存可否を切り分ける"
+        },
+        {
+          "ref": "contextstill:kn_n4vrjooeyz7gpmb3lypkrbxc34",
+          "title": "認証系のエラーは HttpError で HTTP ステータスに変換する"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-b2qt6s-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_fjpxb2nq2kyx6c4rpdommu7n3y",
+          "title": "ドキュメント更新後のリンク整合性検証と Lint 確認手順"
+        },
+        {
+          "ref": "contextstill:kn_u6zyvzqydmbenjt4at5v4d5j2y",
+          "title": "品質ゲート通過後に関連差分だけをまとめてコミットする"
+        },
+        {
+          "ref": "contextstill:kn_d55wljcjkx4h2bf7a4pyl5xcw4",
+          "title": "Goal Compiler リポジトリのコミット前検証フロー"
+        },
+        {
+          "ref": "contextstill:kn_q7ygny465kllkfrzcuw6neo3ja",
+          "title": "GitHub Flowで変更を届ける手順"
+        },
+        {
+          "ref": "contextstill:kn_wnd6v7qsvw6kapuyv7r3bnk43m",
+          "title": "nightWorkers リポジトリの全変更コミット手順"
+        },
+        {
+          "ref": "contextstill:kn_wxfi5vnvalu4iizcgmee3sbspy",
+          "title": "コミット前のコード品質チェックフロー"
+        },
+        {
+          "ref": "contextstill:kn_otwm4pxkoooodzad3ttw5cymau",
+          "title": "Ontology 実装変更後の検証とコミット手順"
+        },
+        {
+          "ref": "contextstill:kn_vmf3th2mdg74pev23hwzwnet24",
+          "title": "コミット前の verify スクリプト実行と lint/typecheck 修正義務"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-fmgsj5-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_uemcpogzqmnobiy6sxtfywcr2i",
+          "title": "6000byte超の翻訳結果を自動で縮小し、必要なら6100byte未満までトリミングする"
+        },
+        {
+          "ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+          "title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
+        },
+        {
+          "ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+          "title": "Python 側の責務は MLX 推論に限定する"
+        },
+        {
+          "ref": "contextstill:kn_an33omg57vn3aog7aaprye7hda",
+          "title": "マスター編集トグルはアイコンボタン化してツールバーの省スペース化に使う"
+        },
+        {
+          "ref": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+          "title": "分析処理はPython側に寄せ、OpenAIはレビューと改善提案に限定する"
+        },
+        {
+          "ref": "contextstill:kn_4bnvyyozlx5upzuen4oosdeyzu",
+          "title": "Agent UI のプロジェクト選択は表示だけでなく実際の実行ルートに反映する"
+        },
+        {
+          "ref": "contextstill:kn_gqpjmqfo3fxze6fkyx6w42tove",
+          "title": "SQLite VACUUM INTO でのクォート脱落による失敗を避ける"
+        },
+        {
+          "ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+          "title": "Use ABI3 for resilient Python extension builds"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2jrkfp-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_7mldxtpvascki3tv5mtraurirm",
+          "title": "git pull できないときは、ローカル未プッシュコミットを退避して main を origin/main に同期する"
+        },
+        {
+          "ref": "contextstill:kn_ejugn25k7uhuylkctuob22nhnq",
+          "title": "PDF 出力では allow-uri-read を付与してリモート画像を読めるようにする"
+        },
+        {
+          "ref": "contextstill:kn_rrumwdpvzjacq4biui7wzuumnm",
+          "title": "Terraform チーム運用におけるリモートバックエンドとステートロックの使用"
+        },
+        {
+          "ref": "contextstill:kn_7rsgngpwmu3ibliuglpwprg7xm",
+          "title": "episodeDistiller のリモートターゲット接続時の認証確認"
+        },
+        {
+          "ref": "contextstill:kn_k4vaj77zmj3rftrrysvsubzibq",
+          "title": "通常は COPY を使い、ADD は必要な場合だけ使う"
+        },
+        {
+          "ref": "contextstill:kn_v2fx4u3p5q2j2ilzakztyfaibi",
+          "title": "SQLite をネットワーク越しに使うときは、ゼロレイテンシ前提を捨てて N+1 クエリを避ける"
+        },
+        {
+          "ref": "contextstill:kn_lvqoxqhviqmjcjdnrfpysfeysq",
+          "title": "Analytics ドメインの責務境界定義"
+        },
+        {
+          "ref": "contextstill:kn_ysyizxk42ai5wxrtml5oldwtri",
+          "title": "Doctor レポートにおける蒸留実行の理由付けの共通化"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2xsdjd-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_ngezo7325tgcrk5fynpqoxafiq",
+          "title": "モジュール不在の route は削除し、デバッグ用 demo 系は対象外にする"
+        },
+        {
+          "ref": "contextstill:kn_izwj3x4abxwdhkig4eb6ecrcqm",
+          "title": "Playwright の実行モードは既定実行・headed・UI で使い分ける"
+        },
+        {
+          "ref": "contextstill:kn_v7t3sh7r3vo4i4bdfltlym2v64",
+          "title": "ローカル環境での Bun.serve 起動失敗時の対処"
+        },
+        {
+          "ref": "contextstill:kn_qnzvobh4mkkujjqvvfi3syfeou",
+          "title": "外部 API 失敗時のデバッグ情報は送信前に記録する"
+        },
+        {
+          "ref": "contextstill:kn_3itc3mb6qy5vd2w55nuqdrnslq",
+          "title": "各テストは独立したBrowser Contextで実行し、共有状態を避ける"
+        },
+        {
+          "ref": "contextstill:kn_eqiftswf7f6tfrifmpw4px3svq",
+          "title": "CI環境でのPlaywrightテスト実行設定の標準化"
+        },
+        {
+          "ref": "contextstill:kn_oiahcjay73k2kkufgb5iuvouca",
+          "title": "UI回帰レビューにおける表示条件と表示内容の分離確認"
+        },
+        {
+          "ref": "contextstill:kn_q63f43g7inddlfsrtt2mayvisi",
+          "title": "フロントエンドロギングの標準化"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4f7bhy-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_frmkvlzugkmjukzfsyakandopu",
+          "title": "query 化の差分を入れた後は、静的解析を通してから実 API の e2e で保存と再読込を確認する"
+        },
+        {
+          "ref": "contextstill:kn_3avpfc3ro775in45acktdkxsrm",
+          "title": "実装後の検証は対象テスト→全体 verify→production build→diff check の順で行う"
+        },
+        {
+          "ref": "contextstill:kn_zblshz2tyxxla7uc2kkj4ojdgy",
+          "title": "ケアパス集約画面では予防接種・処置の取得フックを再利用して統合サマリーを追加する"
+        },
+        {
+          "ref": "contextstill:kn_qmzv3fqpo5rpppcj6bq45njm7e",
+          "title": "Context関連の実装は作成・状態管理・Provider・フックをまとめて隠蔽する"
+        },
+        {
+          "ref": "contextstill:kn_uhf5c367cnoz7uqoxgmiz5mlkq",
+          "title": "localStorage の JSON は Record 判定や schema 検証を通してから参照する"
+        },
+        {
+          "ref": "contextstill:kn_6i6kk4r75wbkvd3vvywaqrxz3y",
+          "title": "example BFF の SSO 統合を実装したら、専用 E2E と既存の品質チェックを通してから commit する"
+        },
+        {
+          "ref": "contextstill:kn_fv7wwk53yjdzxc2axoyykww7pq",
+          "title": "review_implementation_plan の学習ループ統合手順"
+        },
+        {
+          "ref": "contextstill:kn_suyqtxmszyxoml5pwtszy42vam",
+          "title": "useQuery と useMutation はコンポーネント直書きせずカスタムフックに隠蔽する"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-6j6ieb-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_xslgqnl526dyu2zhkc6tdmtdgi",
+          "title": "プロジェクト切替時にDASTターゲット情報をリセットする"
+        },
+        {
+          "ref": "contextstill:kn_clf23ddicb5hcjsb3cjl3vgdvm",
+          "title": "loadedMeta 取得時のドラフト再初期化は初回ロードまたは明示リセットに限定する"
+        },
+        {
+          "ref": "contextstill:kn_qnkxzx7zfeo3tegy6d6cm3scdq",
+          "title": "cron 実行予算はプロセス寿命ではなく時間窓でリセットする"
+        },
+        {
+          "ref": "contextstill:kn_mmjpws6y52fpga3jyoppgb327a",
+          "title": "外部 CSS リセットによる SVG アイコンのブロック化を避ける"
+        },
+        {
+          "ref": "contextstill:kn_65hrvg5eapgpmo5b4j35zjytxe",
+          "title": "getPaperSize のプリセット対応をテストする"
+        },
+        {
+          "ref": "contextstill:kn_l24cqzznhnuxwclnep262a46se",
+          "title": "Antigravity 2.0 ログ移行時は旧形式データを削除して sync_states をリセットし、再同期する"
+        },
+        {
+          "ref": "contextstill:kn_3z2rkbfzi5g6psmfh2dtpxx34e",
+          "title": "SQLite ローカルDBの安全なリセット手順"
+        },
+        {
+          "ref": "contextstill:kn_adjki33nyt7sqm32jhibgwsuly",
+          "title": "予測モデル機能では学習件数と検証件数をユーザーが指定できるようにする"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-7bkw42-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_lyga5jzmfkhq5sj33frr5vdqqy",
+          "title": "ロックファイル操作の堅牢な実装"
+        },
+        {
+          "ref": "contextstill:kn_kn7f3w2xbd2ids6cmejt6b65fq",
+          "title": "created-age-expired のファイルロックは、記録 PID が生存中なら回収しない"
+        },
+        {
+          "ref": "contextstill:kn_wektf57xg3zdqrzl2dsqs5ilam",
+          "title": "コードは fenced code block とインラインコードを適切に使う"
+        },
+        {
+          "ref": "contextstill:kn_j7bv3h2vz6lep3fbuepp7kwsrm",
+          "title": "依存関係キャッシュのキーにロックファイルハッシュを含める"
+        },
+        {
+          "ref": "contextstill:kn_w6fm24jjlbiynp54m4wmko3aky",
+          "title": "トランザクションは短く保つ"
+        },
+        {
+          "ref": "contextstill:kn_3gbgkxbuzd6rz6gln4wf5xdd6e",
+          "title": "セマフォ解放時の ENOENT はエラー扱いにしない"
+        },
+        {
+          "ref": "contextstill:kn_ac7uin6peeqsevbarbcuxto6sm",
+          "title": "Tauri の agent 実行結果をファイル反映まで含めて扱う手順"
+        },
+        {
+          "ref": "contextstill:kn_bj7azecqdxipfzkyp3cwxi5ioa",
+          "title": "大規模ファイル分割時の機械的抽出範囲ズレと再発防止"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-6tvplq-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_rmfmhblaomt35yvy2lbsxdpvpa",
+          "title": "review LLM の openai 指定は、実際に使えるクラウドプロバイダへ解決してから扱う"
+        },
+        {
+          "ref": "contextstill:kn_7nwo43iuskgtf2gzc33nlgbwlu",
+          "title": "AI provider の HTTP エラー詳細は 500 系 AppError でもログに出す"
+        },
+        {
+          "ref": "contextstill:kn_qbdtqu2szaavawulb73ibei56y",
+          "title": "MCP host 経由の失敗は provider 問題と切り分けて扱う"
+        },
+        {
+          "ref": "contextstill:kn_4r72lnmjkbsjm3hlygznxgg7iy",
+          "title": "テスト戦略の計画立案手順"
+        },
+        {
+          "ref": "contextstill:kn_pbmuwzb7u7is42kbd6ypvjrmsa",
+          "title": "回復可能なツール失敗とターミナルエラーの分離判定基準"
+        },
+        {
+          "ref": "contextstill:kn_3j6phzksqkmu2c7zamlswc6fyi",
+          "title": "バックエンドは接続資源として扱う"
+        },
+        {
+          "ref": "contextstill:kn_oryq4d6lzq2pvb75syf2ri4y6e",
+          "title": "検索プロバイダのフォールバックとクールダウンを伴う search_web 実行手順"
+        },
+        {
+          "ref": "contextstill:kn_vbdcqjf6c3rxmj6maxns66mjfy",
+          "title": "検索プロバイダの失敗時は、レート制限情報とクールダウン状態を保持して次回以降の選択に反映する"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-3codmb-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+          "rank": 1
+        }
+      ],
+      "allRequiredHitAt8": true,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+          "title": "Use ABI3 for resilient Python extension builds"
+        },
+        {
+          "ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+          "title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
+        },
+        {
+          "ref": "contextstill:kn_bh6qv6syvwje3ktwoicrguuxvy",
+          "title": "Cloudflare Workers 環境での FastAPI 実装制約と variant 分離"
+        },
+        {
+          "ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+          "title": "Python 側の責務は MLX 推論に限定する"
+        },
+        {
+          "ref": "contextstill:kn_2m6vkbgnwvtgwas4hlijay2vma",
+          "title": "テンプレートリポジトリにおけるDesign SystemのVendored Snapshot運用方針"
+        },
+        {
+          "ref": "contextstill:kn_i2gfodtqch5xdgats3bzreqfau",
+          "title": "action のリンク先は ScreenJSON のバージョン生成とは分離して保存する"
+        },
+        {
+          "ref": "contextstill:kn_coake6iqz2k6hjiobpx5zpuskq",
+          "title": "分析処理はPython側に寄せ、OpenAIはレビューと改善提案に限定する"
+        },
+        {
+          "ref": "contextstill:kn_6sexfjakrcmm6btxrfnac24o6e",
+          "title": "本番デプロイ・切り替え手順（Phase 1: LBなし）"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-76iqn7-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu",
+          "rank": 13
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_yqnbu6cotedja63s5d6udfyxdy",
+          "title": "verify コマンドで型・テスト・ビルド・OpenAPI を一括検証する"
+        },
+        {
+          "ref": "contextstill:kn_uucxpv4rrvdea6byqdu2bjw6lm",
+          "title": "OpenAPI 仕様書の正本は YAML、JSON は派生出力とする"
+        },
+        {
+          "ref": "contextstill:kn_yxw5lgl7e4rbggegllkqjndjjy",
+          "title": "認証・MFA・OpenAPI の変更後に行う最終確認手順"
+        },
+        {
+          "ref": "contextstill:kn_zkq3xfzmsusa4pzty23lyivata",
+          "title": "OpenAPI は API 契約の source of truth として管理する"
+        },
+        {
+          "ref": "contextstill:kn_meo2d2b4lttaajll26oihdg2vu",
+          "title": "OpenAPI では null と optional を区別する"
+        },
+        {
+          "ref": "contextstill:kn_cjgsru2sva6mezfwtuamiu3bge",
+          "title": "OpenAPI は実装済みエンドポイントと同期させる"
+        },
+        {
+          "ref": "contextstill:kn_f5s23jcdydftjzrpevhdcruegu",
+          "title": "監査 API を追加したら OpenAPI 契約テストで 4 エンドポイントの整合を確認する"
+        },
+        {
+          "ref": "contextstill:kn_wfkaz6jegdwyzq5rz3xnb6njly",
+          "title": "OpenAPI 契約テストの CI 必須化ルール"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-25hf6t-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "rank": 1
+        }
+      ],
+      "allRequiredHitAt8": true,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_42vyuodqyuvyk5zscmptntqqfq",
+          "title": "run_analysis は元データをコピーして行IDを付与してから処理する"
+        },
+        {
+          "ref": "contextstill:kn_fny5qmf7lsm3tdjap7e2yrpdyu",
+          "title": "データフレームの代表行選定フロー"
+        },
+        {
+          "ref": "contextstill:kn_dn7x2zzuna53iuwpf6spzcal2e",
+          "title": "中核データは通常のテーブルとカラムで持ち、JSONB や配列は補助用途に限定する"
+        },
+        {
+          "ref": "contextstill:kn_vqi4r5o4ce4s7w3lf65qkphvhi",
+          "title": "graph-maintenance に normalize-guidance を追加して実行可能にする"
+        },
+        {
+          "ref": "contextstill:kn_wjl352buyeaotngj4clnes2f4e",
+          "title": "DataFrame to JSON conversion: Convert NaN to None to prevent serialization errors"
+        },
+        {
+          "ref": "contextstill:kn_xk7rbps6bqxxkchlshrsymqamq",
+          "title": "trust_reports は通報の基本レコードとして reporter/target/reason/status/priority/metadata を持ち、target と status に索引を張る"
+        },
+        {
+          "ref": "contextstill:kn_btxzsoldww6sgysznqdpgyxfje",
+          "title": "Strict JSON Schema 環境における Optional Property の null 許容設計"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2o2vt6-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+          "rank": 18
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_hfi3llzhkd5wi6yu7ucbzsxup4",
+          "title": "LaunchAgent 管理外の古い常駐プロセスは残さず、現行管理対象だけを残して停止する"
+        },
+        {
+          "ref": "contextstill:kn_qe4c7rauo73mwzzorqkgm7yste",
+          "title": "MCP host は複数サービスを router で束ね、tool 名の重複を禁止する"
+        },
+        {
+          "ref": "contextstill:kn_ey33casnp4rkej2ljk3njjwb6q",
+          "title": "MCP サーバーのトランスポート方式選定基準: stdio は開発用、インプロセス/HTTP は本番推奨"
+        },
+        {
+          "ref": "contextstill:kn_6ppchrrom6dzvlzy7lsrjr4ldq",
+          "title": "サービスはポートで公開する"
+        },
+        {
+          "ref": "contextstill:kn_5cteul5d72pei4rtbdkov6awi4",
+          "title": "MCP host の検証は長寿命プロセスを残さない形で行う"
+        },
+        {
+          "ref": "contextstill:kn_ytl2dhpaeihhon3idxiqleoguq",
+          "title": "MCP host/adapter の検証後は残存プロセスがないことを確認する"
+        },
+        {
+          "ref": "contextstill:kn_hvxxvlhmjadc6gmm2lzuu5cqfm",
+          "title": "Ollama/daemon の設定変更後はサービスを再起動して反映を確認する"
+        },
+        {
+          "ref": "contextstill:kn_zek22e3cynvcuscf5zhlp22f3e",
+          "title": "MCP の起動時 dedupe は、健康な別プロセスを落とさない設定にする"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4eev36-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_glnk6fyvwjz225fk5yitncrmyy",
+          "title": "Flutter の透明度指定は withOpacity に寄せる"
+        },
+        {
+          "ref": "contextstill:kn_gm6w7gwnntusr6ulsucxxqhhna",
+          "title": "Storybook の動的読み込みエラー回避のため、stories では satisfies 構文を避けて明示型付けにする"
+        },
+        {
+          "ref": "contextstill:kn_gvtv4ukiil7vkng3v5hun7zvmm",
+          "title": "コードスタイルは既存コードに合わせる"
+        },
+        {
+          "ref": "contextstill:kn_xxbwqacbkxdwm5kuj5isdlikci",
+          "title": "Jest から Vitest へ段階的に移行する"
+        },
+        {
+          "ref": "contextstill:kn_nbyk7neew4zopztncjre63vhnq",
+          "title": "InfiniteCardStrip の Storybook デモを患者一覧向けに組み立てる手順"
+        },
+        {
+          "ref": "contextstill:kn_22i7ul7wai3g6ysdlzafq4cvte",
+          "title": "データ補正系マイグレーションにおける状態遷移の取り扱い"
+        },
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        }
+      ]
+    }
+  ],
+  "note": "Search ranks only (bm25-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality.",
+  "reportFile": "/tmp/p28-base-bm25/retrieval-seed-three-axis.json"
+}

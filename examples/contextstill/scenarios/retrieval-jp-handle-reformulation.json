@@ -1,0 +1,897 @@
+{
+  "ok": true,
+  "mode": "retrieval-only",
+  "suite": "seed-three-axis",
+  "searchProfile": "handle",
+  "assemblyMode": "baseline",
+  "identity": {
+    "searchProfile": "handle",
+    "assemblyMode": "baseline",
+    "queryReformulation": "on",
+    "reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+    "reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
+    "suiteId": "seed-three-axis",
+    "suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+    "seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+    "buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+    "judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+    "judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+  },
+  "filter": {
+    "axis": "retrieval",
+    "queryStyle": "jp"
+  },
+  "inferenceCalls": 0,
+  "reformulationInferenceTasks": 16,
+  "inputTokens": null,
+  "outputTokens": null,
+  "reformulationTraces": [
+    {
+      "searchTask": "APIキーや環境設定ファイルをコミットに含めないようにする。",
+      "queryToSource": "do not commit API keys or environment files"
+    },
+    {
+      "searchTask": "リリース前に本番環境の複製で変更を試験する。",
+      "queryToSource": "test changes in a production clone before release"
+    },
+    {
+      "searchTask": "ログやHTTP応答に秘密情報を出力せず、認証情報をマスキングする。",
+      "queryToSource": "do not print secrets in logs or HTTP responses; redact credentials"
+    },
+    {
+      "searchTask": "コミット前フックで検証が失敗したら、回避せず原因を修正して再試行する。",
+      "queryToSource": "fix pre-commit hook verify failures instead of bypassing"
+    },
+    {
+      "searchTask": "Pythonのコードの字下げはタブでなくスペース四つを使う。",
+      "queryToSource": "indent Python code with four spaces not tabs"
+    },
+    {
+      "searchTask": "リモートの履歴を強制プッシュで上書きする前に明示的な許可を得る。",
+      "queryToSource": "get explicit permission before force-pushing remote history"
+    },
+    {
+      "searchTask": "デバッグのためでも秘密情報の秘匿処理を弱めない。",
+      "queryToSource": "do not weaken secret redaction even for debugging"
+    },
+    {
+      "searchTask": "フックを変更したら実際の処理経路を通して検証する。",
+      "queryToSource": "verify hook changes through the real execution path"
+    },
+    {
+      "searchTask": "破壊的なgitリセットは利用者の明示的な依頼がない限り実行しない。",
+      "queryToSource": "do not run destructive git reset without explicit user request"
+    },
+    {
+      "searchTask": "自動生成された依存関係のロックファイルを安易に変更しない。",
+      "queryToSource": "do not casually change generated dependency lockfiles"
+    },
+    {
+      "searchTask": "スモークテストは外部プロバイダや認証情報がなくても決定的に実行できるようにする。",
+      "queryToSource": "smoke tests should run deterministically without external providers or credentials"
+    },
+    {
+      "searchTask": "Python拡張のビルドを安定ABIで複数バージョンに対応させる。",
+      "queryToSource": "build Python extensions with the stable ABI for multiple versions"
+    },
+    {
+      "searchTask": "APIの仕様記述にはOpenAPI形式を採用する。",
+      "queryToSource": "use OpenAPI format for API specifications"
+    },
+    {
+      "searchTask": "データフレームをJSONに変換するときNaNをnullに正規化する。",
+      "queryToSource": "normalize NaN to null when converting a dataframe to JSON"
+    },
+    {
+      "searchTask": "MCPサービス実行時に作業場所の環境変数がプロセス全体へ漏れないようにする。",
+      "queryToSource": "prevent workspace environment variables from leaking to the whole process when running an MCP service"
+    },
+    {
+      "searchTask": "Goに移植するときは逐語訳せず言語固有の書き方にする。",
+      "queryToSource": "when porting to Go, use idiomatic Go rather than a literal translation"
+    }
+  ],
+  "summary": {
+    "retrieval:jp": {
+      "tasks": 16,
+      "allRequiredHitAt8": {
+        "hit": 2,
+        "of": 16,
+        "notApplicable": 0
+      },
+      "allRequiredHitAt20Diagnostic": {
+        "hit": 4,
+        "of": 16,
+        "notApplicable": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "taskId": "retrieval-23jihz-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "rank": 6
+        }
+      ],
+      "allRequiredHitAt8": true,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+          "title": "distillation runtime では親 Abort は fallback しない"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-224yjd-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "rank": 1
+        }
+      ],
+      "allRequiredHitAt8": true,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+          "title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4pfru3-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+          "title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+        },
+        {
+          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+          "title": "distillation runtime では親 Abort は fallback しない"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-b2qt6s-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+          "title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+          "title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+          "title": "SQLite DB のダンプ・復元・整合性検証手順"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-fmgsj5-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        },
+        {
+          "ref": "contextstill:kn_273k7bikea6klmoq4toyd5i7bi",
+          "title": "doctor-reasons の理由コード収集テストを実装に合わせて更新する"
+        },
+        {
+          "ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+          "title": "Use Screenshot Feedback To Identify The Correct Layer"
+        },
+        {
+          "ref": "contextstill:kn_27wpfsem6sucfaquheduaelvn4",
+          "title": "同期系の診断では設定不足・未配置・未ロード・古さを別 reason として分ける"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2jrkfp-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+          "rank": 16
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24milsmlhrjvwu5qscjlyytvoq",
+          "title": "保存後のクエリ再検証と選択ページ切り替え"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        },
+        {
+          "ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+          "title": "Use Screenshot Feedback To Identify The Correct Layer"
+        },
+        {
+          "ref": "contextstill:kn_2dwpo4h4fdz4rkg6kfyqhpf5iy",
+          "title": "Biome の severity は用途に応じて error / warn / off を使い分ける"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2xsdjd-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+          "title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+        },
+        {
+          "ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+          "title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない"
+        },
+        {
+          "ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+          "title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4f7bhy-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+          "title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+          "title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+          "title": "SQLite DB のダンプ・復元・整合性検証手順"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        },
+        {
+          "ref": "contextstill:kn_26q7pf2dy6cuyeyifygtenfnjq",
+          "title": "Local LLM 関連変更の検証手順"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-6j6ieb-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+          "title": "distillation runtime では親 Abort は fallback しない"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+          "title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+          "title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+        },
+        {
+          "ref": "contextstill:kn_26hsw7ovo4a6mb5wa23s272gwa",
+          "title": "SQLite DB のダンプ・復元・整合性検証手順"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-7bkw42-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+          "title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+          "title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-6tvplq-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+          "title": "distillation runtime では親 Abort は fallback しない"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-3codmb-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+          "title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+        },
+        {
+          "ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+          "title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        },
+        {
+          "ref": "contextstill:kn_26ngfch6obasgpawktjbnfnsc4",
+          "title": "Review Decision Queue Actions Safely"
+        },
+        {
+          "ref": "contextstill:kn_27mw2cicvjgnst5cxoq63phpxq",
+          "title": "Use Screenshot Feedback To Identify The Correct Layer"
+        },
+        {
+          "ref": "contextstill:kn_2a6rduqfu2u2kat6fzc56fweci",
+          "title": "graph 画面の再描画時に選択ノード整合性を保つ手順"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-76iqn7-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+          "title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+        },
+        {
+          "ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+          "title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+        },
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-25hf6t-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+          "rank": 11
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": true,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_24milsmlhrjvwu5qscjlyytvoq",
+          "title": "保存後のクエリ再検証と選択ページ切り替え"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-2o2vt6-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+          "title": "Test in a Production Clone"
+        },
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+          "title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        }
+      ]
+    },
+    {
+      "taskId": "retrieval-4eev36-jp",
+      "axis": "retrieval",
+      "queryStyle": "jp",
+      "tags": [],
+      "ranks": [
+        {
+          "ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
+          "rank": null
+        }
+      ],
+      "allRequiredHitAt8": false,
+      "allRequiredHitAt20Diagnostic": false,
+      "falseFriendsInTop8": [],
+      "top8": [
+        {
+          "ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+          "title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+        },
+        {
+          "ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+          "title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+        },
+        {
+          "ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+          "title": "タイポグラフィは複合トークンとして管理する"
+        },
+        {
+          "ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+          "title": "Never commit secrets or local environment files"
+        },
+        {
+          "ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+          "title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+        },
+        {
+          "ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+          "title": "Treat Empty Project Roots As Valid New-Project Targets"
+        },
+        {
+          "ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+          "title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+        },
+        {
+          "ref": "contextstill:kn_24milsmlhrjvwu5qscjlyytvoq",
+          "title": "保存後のクエリ再検証と選択ページ切り替え"
+        }
+      ]
+    }
+  ],
+  "note": "Search ranks only (handle-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality.",
+  "reportFile": "/tmp/p28-ref-handle/retrieval-seed-three-axis.json"
+}
