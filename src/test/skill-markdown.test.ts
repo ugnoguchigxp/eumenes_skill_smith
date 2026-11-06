@@ -1,10 +1,12 @@
 import { expect, test } from "bun:test";
 import { YAML } from "bun";
 import { fixture, ready } from "./fixture.js";
+import { bodyTail } from "../service/build.js";
 import {
 	renderSkillMarkdown,
 	validateSkillMarkdown,
 	skillName,
+	defaultSkillName,
 } from "../index.js";
 
 async function finalReady(f: ReturnType<typeof fixture>) {
@@ -83,8 +85,8 @@ test("compose retains instruction order, provenance and verification", async () 
 	expect(text.indexOf(sections[0]!.body)).toBeLessThan(
 		text.indexOf(sections[1]!.body),
 	);
-	expect(text).toContain("Strategy: compose");
-	expect(text).toContain("## Verification");
+	expect(text).toContain("方針: 組み合わせ。");
+	expect(text).toContain("## 確認");
 	expect(text).toContain(reply.build.content.decision.verification[0]!);
 });
 
@@ -128,11 +130,9 @@ test("provisional is explicitly unverified with assumptions and no invented sour
 		],
 	});
 	const reply = await finalReady(f);
-	expect(reply.skill.content).toContain("PROVISIONAL / UNVERIFIED");
-	expect(reply.skill.content).toContain("No source references");
-	expect(reply.skill.content).toContain(
-		"Simulator available (mandatory: false; resolved: false)",
-	);
+	expect(reply.skill.content).toContain("暫定・未検証");
+	expect(reply.skill.content).toContain("出典なし");
+	expect(reply.skill.content).toContain("- Simulator available\n");
 	expect(reply.skill.content).toContain("Run a small check.");
 });
 
@@ -330,8 +330,8 @@ test("reuse renders through deterministic sourceMarkdown; envelope stays in inte
 	expect(skill.content).toContain(source);
 	for (const s of ['{"contractVersion', "_fixture", "trustClass", '"trust"'])
 		expect(skill.content).not.toContain(s);
-	expect(skill.content).toContain("## Sources\n");
-	expect(skill.content).toContain("- 比較 (`skill:compare@1`)");
+	expect(skill.content).toContain("## 出典\n");
+	expect(skill.content).toContain("- 比較（`skill:compare@1`）");
 	expect(skill.content).not.toContain("受入条件\n");
 	expect(content.body).toContain(envelope);
 	expect(() =>
@@ -348,5 +348,88 @@ test("compose and provisional never invoke sourceMarkdown", async () => {
 			throw new Error("must_not_call");
 		},
 	});
-	expect(skill.content).toContain("## Instructions\n");
+	expect(skill.content).toContain("## 手順\n");
+});
+
+test("template is Japanese: no English headings, notes or internal markers", async () => {
+	const f = fixture();
+	f.setEvidence([]);
+	f.setDecision({
+		kind: "ready",
+		strategy: "provisional",
+		sourceRefs: [],
+		sections: [{ id: "explore", body: "探索する。" }],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["小さく確かめる。"],
+		assumptions: [{ text: "任意の前提", mandatory: false, resolved: false }],
+	});
+	const content = structuredClone((await finalReady(f)).build.content);
+	const oldTail = bodyTail(content.task, content.decision).join("\n\n");
+	content.decision.assumptions.push(
+		{ text: "必須の前提", mandatory: true, resolved: false },
+		{ text: "解決した前提", mandatory: true, resolved: true },
+	);
+	content.body =
+		content.body.slice(0, content.body.length - oldTail.length) +
+		bodyTail(content.task, content.decision).join("\n\n");
+	const text = renderSkillMarkdown(content).content;
+	for (const h of ["## 手順\n", "## 確認\n", "## 出典\n", "## 前提\n"])
+		expect(text).toContain(h);
+	expect(text).toContain("- 任意の前提\n");
+	expect(text).toContain("- 必須の前提（必須・未解決）");
+	expect(text).toContain("- 解決した前提（必須・解決済み）");
+	for (const s of [
+		"mandatory",
+		"resolved:",
+		"Instructions",
+		"Verification",
+		"Sources",
+		"Assumptions",
+		"Strategy",
+		"Provides",
+		"Use when",
+		"PROVISIONAL",
+	])
+		expect(text).not.toContain(s);
+	expect(text).toContain('description: "公式の根拠が無いため');
+});
+
+test("reuse name derives from primary source title; others keep goal identity", async () => {
+	const f = fixture();
+	f.setDecision({
+		kind: "ready",
+		strategy: "reuse",
+		sourceRefs: ["skill:compare@1"],
+		sections: [],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["Check source."],
+		assumptions: [],
+	});
+	const content = structuredClone((await finalReady(f)).build.content);
+	content.dependencies = content.dependencies.map((x) =>
+		x.ref === "skill:compare@1"
+			? { ...x, title: "Prefer Idiomatic Go Over Direct Translation" }
+			: x,
+	);
+	const skill = renderSkillMarkdown(content);
+	expect(skill.name).toBe("prefer-idiomatic-go-over-direct-translation");
+	expect(defaultSkillName(content)).toBe(skill.name);
+	expect(renderSkillMarkdown(content)).toEqual(skill);
+	expect(skill.content).toContain(
+		"既存の Skill 「Prefer Idiomatic Go Over Direct Translation」の指示をそのまま提供する。次の作業を頼まれたときに使う: ",
+	);
+	content.dependencies = content.dependencies.map((x) => ({
+		...x,
+		title: "比較",
+	}));
+	expect(defaultSkillName(content)).toBe(skillName(content.task.goal));
+	content.dependencies = content.dependencies.map((x) => ({
+		...x,
+		title: "x".repeat(100),
+	}));
+	expect(defaultSkillName(content)).toBe("x".repeat(64));
+	const composed = (await finalReady(fixture())).build.content;
+	expect(defaultSkillName(composed)).toBe(skillName(composed.task.goal));
 });

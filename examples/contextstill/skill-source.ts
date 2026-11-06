@@ -46,34 +46,40 @@ export function contextStillSourceMarkdown(body: string): string {
 	};
 	const body0 = str("body");
 	if (body0) out.push(body0);
-	para("Rationale", str("rationale"));
-	items("Steps", arr("steps"), true);
-	items("Applies when", arr("appliesWhen"));
-	items("Does not apply when", arr("notAppliesWhen"));
-	items("Exceptions", arr("exceptions"));
+	para("理由", str("rationale"));
+	items("手順", arr("steps"), true);
+	items("適用する場面", arr("appliesWhen"));
+	items("適用しない場面", arr("notAppliesWhen"));
+	items("例外", arr("exceptions"));
 	const examples = Array.isArray(item.examples)
 		? (item.examples as Record<string, unknown>[])
 				.map((e) =>
-					(["situation", "action", "outcome"] as const)
-						.map((k) =>
+					(
+						[
+							["situation", "状況"],
+							["action", "行動"],
+							["outcome", "結果"],
+						] as const
+					)
+						.map(([k, label]) =>
 							typeof e?.[k] === "string" && (e[k] as string).trim()
-								? `${k[0]!.toUpperCase()}${k.slice(1)}: ${(e[k] as string).trim()}`
+								? `${label}: ${(e[k] as string).trim()}`
 								: "",
 						)
 						.filter(Boolean)
-						.join("; "),
+						.join("。"),
 				)
 				.filter(Boolean)
 		: [];
-	items("Examples", examples);
+	items("例", examples);
 	// Episode documents.
-	para("Intent", str("intent"));
-	para("Decision", str("decision"));
-	para("Observations", str("observations"));
-	para("Action", str("action"));
-	para("Outcome", str("outcome"));
-	para("Lesson", str("lesson"));
-	items("Open questions", arr("openQuestions"));
+	para("意図", str("intent"));
+	para("判断", str("decision"));
+	para("観察", str("observations"));
+	para("行動", str("action"));
+	para("結果", str("outcome"));
+	para("教訓", str("lesson"));
+	items("未解決の問い", arr("openQuestions"));
 	if (!out.length) throw new Error("skill_source_body_empty");
 	return out.join("\n\n");
 }

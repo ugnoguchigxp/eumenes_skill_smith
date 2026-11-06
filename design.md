@@ -642,3 +642,27 @@ Provenance becomes a `Sources` list of `title (ref)`. Trust class, digests, time
 confidence and fixture metadata stay in the internal JSON Build (unchanged digest/schema,
 judge inputs). Rendered source text is still reference data, not verified execution; it is
 not given more authority than the build's reuse decision already gave it.
+
+### 21.2 SKILL.md template language, name and description (2026-11-07)
+
+Rendered SKILL.md must not mix template languages: every fixed string the renderer adds
+(headings 手順/受け入れ条件/制約/確認/出典/前提, the provisional banner, the Sources note,
+strategy labels 再利用/改変/組み合わせ/暫定, empty-list notes, the description template and the
+ContextStill field headings 理由/手順/適用する場面/…) is Japanese. Assumptions render as plain
+text; internal `(mandatory; resolved)` markers are removed, and only a mandatory assumption
+gets a short suffix (`（必須・未解決）` or `（必須・解決済み）`).
+
+`name` default (explicit names are still validated, never repaired): for `reuse`, the
+kebab-case ASCII slug of the primary source (`sourceRefs[0]`) title, max 64 chars per the
+Agent Skills spec; if that slug is empty (e.g. a non-ASCII title) or for other strategies,
+the existing goal-identity `skillName(goal)`. Same build ⇒ same name. `description` is
+Japanese, built from the strategy field, source titles and goal by a fixed template
+(what it does + when to use it), bounded to 1024 chars. No model call, no keyword branching.
+
+Remaining mixing (not fixed here): source skill bodies, source titles, task goals,
+acceptance/constraint/verification text are data, inserted verbatim. An English source body
+(e.g. ContextStill `kn_4eev36…`) stays English inside a Japanese template, and an English
+goal appears inside the Japanese description. The renderer must not machine-translate. A fix
+would need a recorded-inference build step that writes instructions/verification in the
+request language; that changes build instructions and INSTRUCTION_VERSION, invalidates
+build/judge records and requires re-scoring, so it is out of scope.

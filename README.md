@@ -68,6 +68,7 @@ optionalDirectoryName)` are public deterministic helpers. Rendering needs the as
 build, not bare decision JSON: reuse sections are empty, but the assembled body includes
 the selected source skill. Sources (title + ref) and assumption status are Markdown body data; source JSON envelopes are not pasted (see `skillMarkdown` port).
 Provisional instructions are explicitly unverified; validation checks format, not quality.
+Template strings (headings, notes, description) are Japanese; source text is not translated (design §21.2).
 
 `bun run context:task DB QUERY RECORDS OUTPUT_DIR` writes a successful build to
 `OUTPUT_DIR/<name>/SKILL.md` (default `data/contextstill/task-output`) and reports

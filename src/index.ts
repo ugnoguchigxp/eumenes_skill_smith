@@ -13,6 +13,7 @@ export {
 	renderSkillMarkdown,
 	validateSkillMarkdown,
 	skillName,
+	defaultSkillName,
 } from "./service/skill-markdown.js";
 export type {
 	SkillArtifact,

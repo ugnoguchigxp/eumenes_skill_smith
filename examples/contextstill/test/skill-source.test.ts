@@ -59,7 +59,7 @@ test("all non-empty knowledge fields render deterministically; others pass throu
 	});
 	const md = contextStillSourceMarkdown(body);
 	expect(md).toBe(
-		"Main rule.\n\n### Rationale\n\nBecause.\n\n### Steps\n\n1. One\n2. Two\n\n### Applies when\n\n- When A\n\n### Does not apply when\n\n- When B\n\n### Exceptions\n\n- Except C\n\n### Examples\n\n- Situation: S; Action: A; Outcome: O",
+		"Main rule.\n\n### 理由\n\nBecause.\n\n### 手順\n\n1. One\n2. Two\n\n### 適用する場面\n\n- When A\n\n### 適用しない場面\n\n- When B\n\n### 例外\n\n- Except C\n\n### 例\n\n- 状況: S。行動: A。結果: O",
 	);
 	expect(contextStillSourceMarkdown(body)).toBe(md);
 	expect(contextStillSourceMarkdown("plain text")).toBe("plain text");

@@ -149,3 +149,14 @@ Existing integrations must select this new final boundary when distributing skil
   return non-empty Markdown. Without it the reuse body is rendered as-is.
 - The renderer recomputes the host tail exactly; an assembled body that does not match
   fails closed with `skill_body_unrecognized`.
+
+### 5.2 SKILL.md template language and identity (2026-11-07)
+
+- Fixed renderer strings are Japanese; section headings are `手順`, `受け入れ条件`, `制約`,
+  `確認`, `出典`, `前提` (replacing the English headings of 5.1). Integrations that parse
+  headings must update.
+- Assumptions have no internal markers; a mandatory one ends with `（必須・未解決）` or
+  `（必須・解決済み）`.
+- Default `name`: reuse ⇒ ASCII kebab slug of the primary source title (≤64), else/fallback
+  `skillName(goal)`. `description`: Japanese fixed template from strategy, source titles
+  and goal. Deterministic; no translation of source/goal text (it may remain English).
