@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
 	buildEvalIdentity,
+	parseAssemblyMode,
 	runFull,
 	runRetrievalOnly,
 } from "../scenario-runner.js";
@@ -251,7 +252,15 @@ test("invalid judge value is status invalid; other tasks can still score; mean w
 	expect(result.usage.outputTokens).toBeNull();
 });
 
-test("buildEvalIdentity populates profile, file hashes, and instruction digests", () => {
+test("parseAssemblyMode defaults to baseline and rejects unknown values", () => {
+	expect(parseAssemblyMode([])).toBe("baseline");
+	expect(parseAssemblyMode(["--assembly-mode", "baseline"])).toBe("baseline");
+	expect(parseAssemblyMode(["--assembly-mode", "compact"])).toBe("compact");
+	for (const args of [["--assembly-mode"], ["--assembly-mode", "fast"]])
+		expect(() => parseAssemblyMode(args)).toThrow("unknown --assembly-mode");
+});
+
+test("buildEvalIdentity populates profile, assemblyMode, file hashes, and instruction digests", () => {
 	const suitePath = resolve("examples/contextstill/scenarios/suite.json");
 	const seedPath = resolve("data/contextstill/seed.sqlite");
 	const identity = buildEvalIdentity({
@@ -261,6 +270,7 @@ test("buildEvalIdentity populates profile, file hashes, and instruction digests"
 		seedPath,
 	});
 	expect(identity.searchProfile).toBe("handle");
+	expect(identity.assemblyMode).toBe("baseline");
 	expect(identity.suiteId).toBe("seed-skill-assembly");
 	expect(identity.suiteFileSha256).toMatch(/^[a-f0-9]{64}$/);
 	expect(identity.seedFileSha256).toMatch(/^[a-f0-9]{64}$/);
@@ -268,6 +278,17 @@ test("buildEvalIdentity populates profile, file hashes, and instruction digests"
 	expect(identity.judgeInstructionsDigest).toMatch(/^[a-f0-9]{64}$/);
 	expect(identity.judgeSchemaDigest).toMatch(/^[a-f0-9]{64}$/);
 	expect(identity.suiteFileSha256).not.toBe(identity.seedFileSha256);
+	const compact = buildEvalIdentity({
+		searchProfile: "handle",
+		assemblyMode: "compact",
+		suiteId: "seed-skill-assembly",
+		suitePath,
+		seedPath,
+	});
+	expect(compact.assemblyMode).toBe("compact");
+	expect(compact.buildInstructionsDigest).not.toBe(
+		identity.buildInstructionsDigest,
+	);
 });
 
 test("handle-profile records under bm25 do not silently reuse as scored", async () => {

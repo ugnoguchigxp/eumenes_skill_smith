@@ -8,7 +8,10 @@ import { createExampleHost } from "./host.js";
 import type { SourcePort } from "./source.js";
 import type { InferenceTask, recordedInference } from "./recorded.js";
 import { digest } from "../../src/index.js";
-import { buildInstructions } from "../../src/instructions/build.js";
+import {
+	buildInstructions,
+	compactBuildInstructions,
+} from "../../src/instructions/build.js";
 import {
 	JUDGE_INSTRUCTIONS,
 	allRequiredHit,
@@ -32,6 +35,18 @@ export function parseSearchProfile(argv: string[]): SearchProfile {
 	const value = argv[index + 1];
 	if (value !== "handle" && value !== "bm25")
 		throw new Error(`unknown --search-profile ${value ?? "(missing)"}`);
+	return value;
+}
+
+export type AssemblyMode = "baseline" | "compact";
+
+/** Strict CLI assembly-mode parsing; omitted means baseline (recorded-inference compatible). */
+export function parseAssemblyMode(argv: string[]): AssemblyMode {
+	const index = argv.indexOf("--assembly-mode");
+	if (index < 0) return "baseline";
+	const value = argv[index + 1];
+	if (value !== "baseline" && value !== "compact")
+		throw new Error(`unknown --assembly-mode ${value ?? "(missing)"}`);
 	return value;
 }
 
@@ -151,6 +166,7 @@ export type TaskStatus =
 /** Binds a report to suite/seed bytes and the instruction/schema digests that shaped records. */
 export interface RunIdentity {
 	searchProfile: SearchProfile;
+	assemblyMode: AssemblyMode;
 	suiteId: string;
 	suiteFileSha256: string;
 	seedFileSha256: string;
@@ -159,9 +175,11 @@ export interface RunIdentity {
 	judgeSchemaDigest: string;
 }
 
-export function instructionDigests() {
+export function instructionDigests(assemblyMode: AssemblyMode = "baseline") {
 	return {
-		buildInstructionsDigest: digest(buildInstructions),
+		buildInstructionsDigest: digest(
+			assemblyMode === "compact" ? compactBuildInstructions : buildInstructions,
+		),
 		judgeInstructionsDigest: digest(JUDGE_INSTRUCTIONS),
 		judgeSchemaDigest: digest(judgeOutputSchema),
 	};
@@ -177,13 +195,16 @@ export function buildEvalIdentity(input: {
 	suiteId: string;
 	suitePath: string;
 	seedPath: string;
+	assemblyMode?: AssemblyMode;
 }): RunIdentity {
+	const assemblyMode = input.assemblyMode ?? "baseline";
 	return {
 		searchProfile: input.searchProfile,
+		assemblyMode,
 		suiteId: input.suiteId,
 		suiteFileSha256: fileSha256(input.suitePath),
 		seedFileSha256: fileSha256(input.seedPath),
-		...instructionDigests(),
+		...instructionDigests(assemblyMode),
 	};
 }
 
@@ -218,6 +239,8 @@ export interface FullDeps {
 		onTask: (task: InferenceTask) => void,
 	) => Inference;
 	hasBuildRecord: (digest: string) => boolean;
+	/** Opt-in compact assembly (proposal 36). Default baseline. */
+	assemblyMode?: AssemblyMode;
 }
 
 const fixedDeadline = 1_700_000_000_000 + 120_000;
@@ -242,6 +265,7 @@ export async function runFull(deps: FullDeps) {
 	const recordProvenance: RecordProvenance[] = [];
 	let buildInferenceTasks = 0;
 	let judgeInferenceTasks = 0;
+	const assemblyMode = deps.assemblyMode ?? "baseline";
 	for (const task of deps.tasks) {
 		const status = (s: TaskStatus, detail?: string) =>
 			statuses.push({
@@ -293,6 +317,7 @@ export async function runFull(deps: FullDeps) {
 					modelCalls: 4,
 					candidates: 8,
 					documents: 8,
+					assemblyMode,
 				},
 			);
 			try {
@@ -412,7 +437,7 @@ export async function runFull(deps: FullDeps) {
 		searchPreview,
 		recordProvenance,
 		usage,
-		instructionDigests: instructionDigests(),
+		instructionDigests: instructionDigests(assemblyMode),
 		/** Only defined when every task scored; a partial mean would hide failures. */
 		meanScore:
 			complete && scores.length

@@ -1,6 +1,5 @@
 import {
 	CONTRACT,
-	INSTRUCTION_VERSION,
 	authoritySchema,
 	requestSchema,
 } from "../contracts/schema.js";
@@ -16,12 +15,14 @@ import type {
 	RequestRecord,
 } from "../contracts/types.js";
 import { buildContent, contentDigest, executeBuild } from "./build.js";
+import { resolveAssembly } from "./assembly.js";
 import { bytes, digest, requireThat } from "./identity.js";
 import { createResultOperations } from "./results.js";
 
 export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	const repo = p.repository;
 	const limits = resolveServiceLimits(p.limits);
+	const assembly = resolveAssembly(p.assemblyMode ?? "baseline");
 	function valid(tx: Tx, row: RequestRecord, auth: Authority) {
 		return (
 			auth.permissions.includes("build") &&
@@ -54,7 +55,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		const generatorOk =
 			!b.generator ||
 			(b.generator.contractVersion === CONTRACT &&
-				b.generator.instructions === INSTRUCTION_VERSION);
+				b.generator.instructions === assembly.instructionVersion);
 		return (
 			!!origin &&
 			valid(tx, origin, auth) &&
@@ -155,7 +156,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			principal: auth.principal,
 			epoch: auth.epoch,
 			sourceRefs: auth.sourceRefs,
-			instructions: INSTRUCTION_VERSION,
+			instructions: assembly.instructionVersion,
 			generator: { contractVersion: CONTRACT },
 		});
 		const row: RequestRecord = {
@@ -369,7 +370,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			usage: structuredClone(row.usage),
 			revoked: false,
 			generator: {
-				instructions: INSTRUCTION_VERSION,
+				instructions: assembly.instructionVersion,
 				contractVersion: CONTRACT,
 			},
 		};

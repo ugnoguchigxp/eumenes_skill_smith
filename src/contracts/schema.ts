@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const CONTRACT = "skillsmith.v1" as const;
-export { INSTRUCTION_VERSION } from "../instructions/build.js";
+export {
+	INSTRUCTION_VERSION,
+	COMPACT_INSTRUCTION_VERSION,
+} from "../instructions/build.js";
 const id = z.string().min(1).max(160);
 const text = z.string().trim().min(1).max(8000);
 const unique = <T>(xs: T[]) => new Set(xs).size === xs.length;
@@ -123,6 +126,56 @@ export const modelTurnSchema = z.discriminatedUnion("kind", [
 	}),
 ]);
 export type ModelTurn = z.infer<typeof modelTurnSchema>;
+export const coverageSchema = z.enum([
+	"sufficient",
+	"partial",
+	"absent",
+	"unclear",
+]);
+/** Fixed exploration slots for the compact path (proposal 36). Model fills values only. */
+export const explorationSlotsSchema = z.strictObject({
+	targetAndVersion: text,
+	officialSources: text,
+	firstSafeObservation: text,
+	isolatedExperiment: text,
+	passStopConditions: text,
+	unresolvedAssumptions: text,
+});
+export type Coverage = z.infer<typeof coverageSchema>;
+export type ExplorationSlots = z.infer<typeof explorationSlotsSchema>;
+/** Compact ready decision: baseline ready fields plus coverage and optional exploration. */
+export const compactReadySchema = ready.extend({
+	coverage: coverageSchema,
+	exploration: explorationSlotsSchema.optional(),
+});
+export type CompactReadyDecision = z.infer<typeof compactReadySchema>;
+/** Compact-path model turns; baseline modelTurnSchema stays unchanged. */
+export const compactModelTurnSchema = z.discriminatedUnion("kind", [
+	compactReadySchema,
+	z.strictObject({
+		kind: z.literal("needs_input"),
+		missing: z.array(text).min(1).max(16),
+	}),
+	z.strictObject({ kind: z.literal("unavailable"), code: id }),
+	z.strictObject({
+		kind: z.literal("re_search"),
+		query: z.string().trim().min(1).max(512),
+	}),
+	z.strictObject({
+		kind: z.literal("disclose"),
+		items: z
+			.array(
+				z.strictObject({
+					ref: id,
+					sectionIds: z.array(id).max(64).optional(),
+				}),
+			)
+			.min(1)
+			.max(8),
+	}),
+]);
+export type CompactModelTurn = z.infer<typeof compactModelTurnSchema>;
+
 export const resultSchema = z.strictObject({
 	reportId: id,
 	buildRef: id,

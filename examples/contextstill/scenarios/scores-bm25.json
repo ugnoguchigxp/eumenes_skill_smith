@@ -53,12 +53,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-			],
-			"expectedRefs": [
-				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-			],
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Never commit secrets or local environment files」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は .env・APIキー・トークン・秘密鍵・cookie・機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用である。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -69,12 +65,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-			],
-			"expectedRefs": [
-				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-			],
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Test in a Production Clone」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で変更を試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -85,12 +77,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
-			],
-			"expectedRefs": [
-				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
-			],
+			"usedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Never print secrets into logs or responses」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを印刷・保存・返却せず、診断出力の記録や要約の前にマスキングするという目的と受入条件に沿う。handle 順では到達せず needs_input になっていた案件で、今回は指針が出力されている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -101,12 +89,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
-			],
-			"expectedRefs": [
-				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
-			],
+			"usedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、ユーザーが明示しない限り --no-verify を使わない手順になっており、bypass せず直すという目的に沿う。handle 順では到達せず needs_input になっていた。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
@@ -117,12 +101,8 @@
 			"score": 7,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
-			],
-			"expectedRefs": [
-				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
-			],
+			"usedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Use 4-Space Indentation」が BM25 で検索1位に届き、reuse でその参照を採用している。本文は Python コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせるという規則であり、題名だけから任意言語へ4スペースを課してはいない。前提でも Python 向けであることとリポジトリ言語が未指定であることを残している。目的は「このリポジトリ」のインデント幅であり言語が無いため、Python 以外への適用は未確定である。期待Skillは使われ指針も出ているが、リポジトリ全体への無条件回答にはなっていないので 9 にはしない。",

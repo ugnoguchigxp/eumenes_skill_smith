@@ -53,12 +53,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 6,
-			"usedRefs": [
-				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-			],
-			"expectedRefs": [
-				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
-			],
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、reuse でその参照だけを採用している。本文は .env や APIキー等をコミットせず、露出時は無効化またはローテーションするという目的に沿った規則である。sections は reuse 契約どおり空で、指針本文は Skill 本体の再利用になっている。",
@@ -69,12 +65,8 @@
 			"score": 9,
 			"expectedSkillUsed": true,
 			"retrievalRank": 1,
-			"usedRefs": [
-				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-			],
-			"expectedRefs": [
-				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
-			],
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
 			"strategy": "reuse",
 			"kind": "ready",
 			"rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。",
@@ -86,9 +78,7 @@
 			"expectedSkillUsed": false,
 			"retrievalRank": null,
 			"usedRefs": [],
-			"expectedRefs": [
-				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
-			],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
 			"strategy": null,
 			"kind": "needs_input",
 			"rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用していない点は妥当だが、期待Skillは組み上がっておらず評点は低い。",
@@ -100,9 +90,7 @@
 			"expectedSkillUsed": false,
 			"retrievalRank": null,
 			"usedRefs": [],
-			"expectedRefs": [
-				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
-			],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
 			"strategy": null,
 			"kind": "needs_input",
 			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。組み立ては needs_input で、届いた context_compile 向け verify 手順も採用していない。期待Skillは組み上がっていない。",
@@ -114,9 +102,7 @@
 			"expectedSkillUsed": false,
 			"retrievalRank": null,
 			"usedRefs": [],
-			"expectedRefs": [
-				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
-			],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
 			"strategy": null,
 			"kind": "needs_input",
 			"rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用もしていないが、期待Skillは組み上がっていない。",

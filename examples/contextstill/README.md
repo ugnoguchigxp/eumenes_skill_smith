@@ -54,7 +54,7 @@ bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/con
 bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --axis compose
 ```
 
-`--search-profile handle|bm25`（既定 `handle`、retrieval-only / full 共通）、`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
+`--search-profile handle|bm25`（既定 `handle`、retrieval-only / full 共通）、`--assembly-mode baseline|compact`（既定 `baseline`。`compact` は提案36の opt-in で、品質・token 測定前のため既定採用ではない）、`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
 
 順位比較の報告には `searchProfile` を記録します。提案 35 以降、full / retrieval-only の報告に `identity`（suite・seed ファイル SHA-256 と builder/judge 指示・schema の digest）と、full では課題ごとの `recordProvenance` が付きます。未採点・invalid・error を 0/10 で埋めず、一部だけ採点した平均も出しません。profile 間の報告を残す場合は別々の `--output-dir` を使います。`context:check` / 固定fixture の検索は変更していません。BM25 は任意の測定用 profile です。旧5件 suite の full + LLM judge では平均 8.6（handle の 4.2 から上昇）で、3件は handle 順では needs_input だったものが指針を出せました。日本語はほぼ改善せず退行もあるため既定は handle のままです（[提案27の実測](../../docs/proposals/27-lexical-bm25-ranking.md)）。mock 検索は本番 ContextStill 検索と異なり、提案01/16の実ユーザーpilotではありません。再生は `examples/contextstill/scenarios/build-records-bm25.json` と `judge-records-bm25.json` を指定し、`--output-dir` を既定の `scores.json` とは別にします。
 

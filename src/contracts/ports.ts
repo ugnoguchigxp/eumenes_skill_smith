@@ -128,6 +128,8 @@ export interface Ports<Tx> {
 	id(): string;
 	/** Optional overrides; omitted fields keep package defaults. */
 	limits?: Partial<ServiceLimits>;
+	/** Opt-in assembly path (proposal 36). Omitted means baseline. */
+	assemblyMode?: "baseline" | "compact";
 }
 export interface ObservedUsage {
 	inputTokens: number | null;

@@ -4,6 +4,7 @@
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
 //            --search-profile handle|bm25 (default handle)
+//            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
 //            --build-records path --judge-records path --scores path --db path
 // retrieval-only: SourcePort search only, zero inference, no 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
@@ -20,6 +21,7 @@ import { recordedInference, type InferenceRecord } from "./recorded.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
 	buildEvalIdentity,
+	parseAssemblyMode,
 	parseSearchProfile,
 	runFull,
 	runRetrievalOnly,
@@ -41,6 +43,7 @@ function loadRecords(path: string): InferenceRecord[] {
 }
 
 const searchProfile = parseSearchProfile(process.argv);
+const assemblyMode = parseAssemblyMode(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
 const suitePath = arg("--suite", "examples/contextstill/scenarios/suite.json");
 const dbPath = arg("--db", "data/contextstill/seed.sqlite");
@@ -69,6 +72,7 @@ const source = createFixtureSource(createMcpHandler(fixture, token), token);
 const filter = { axis: axis ?? null, queryStyle: queryStyle ?? null };
 const identity = buildEvalIdentity({
 	searchProfile,
+	assemblyMode,
 	suiteId: suite.id,
 	suitePath,
 	seedPath: dbPath,
@@ -83,6 +87,7 @@ try {
 			mode: "retrieval-only",
 			suite: suite.id,
 			searchProfile,
+			assemblyMode,
 			identity,
 			filter,
 			inferenceCalls: 0,
@@ -109,6 +114,7 @@ try {
 		const result = await runFull({
 			tasks,
 			source,
+			assemblyMode,
 			createInference: (role, onTask) =>
 				recordedInference(
 					role === "build" ? buildRecords : judgeRecords,
@@ -132,6 +138,7 @@ try {
 			mode: "full",
 			suite: suite.id,
 			searchProfile,
+			assemblyMode,
 			identity,
 			filter,
 			status: result.complete ? "complete" : "incomplete",
@@ -153,7 +160,8 @@ try {
 			!outputDir &&
 			!axis &&
 			!queryStyle &&
-			searchProfile === "handle";
+			searchProfile === "handle" &&
+			assemblyMode === "baseline";
 		const scorePath = raw("--scores")
 			? resolve(raw("--scores")!)
 			: legacyDefault

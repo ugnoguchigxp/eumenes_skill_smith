@@ -1,8 +1,8 @@
 import { z } from "zod";
 import {
 	CONTRACT,
+	compactReadySchema,
 	evidenceSchema,
-	modelTurnSchema,
 	sourceSearchSchema,
 } from "../contracts/schema.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
@@ -14,12 +14,16 @@ import type {
 	Prepared,
 	ReadyDecision,
 } from "../contracts/types.js";
-import { buildInstructions } from "../instructions/build.js";
 import {
 	discloseEvidence,
 	evidenceCardView,
 	spotlightUntrusted,
 } from "./disclosure.js";
+import {
+	rejectDisclosedBodyRewrite,
+	resolveAssembly,
+	toStoredReady,
+} from "./assembly.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
 
 function parseEvidence(raw: unknown): Evidence {
@@ -32,6 +36,7 @@ export function checkDecision(
 	decision: ReadyDecision,
 	evidence: Evidence[],
 	p: Prepared,
+	options?: { rejectBodyRewrite?: boolean },
 ) {
 	const selected = decision.sourceRefs.map((ref) => {
 		const e = evidence.find((e) => e.ref === ref);
@@ -91,6 +96,8 @@ export function checkDecision(
 			patched.add(key);
 		}
 	}
+	if (options?.rejectBodyRewrite)
+		rejectDisclosedBodyRewrite(decision, evidence);
 	return selected;
 }
 export function buildContent(
@@ -501,19 +508,20 @@ export async function executeBuild<Tx>(
 	let repair: { code: string; instruction: string } | undefined;
 	let lastFailure = "invalid_model_output";
 	let reSearchUsed = false;
+	const assembly = resolveAssembly(ports.assemblyMode ?? "baseline");
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
 		modelCallsUsed = attempt + 1;
 		const data = repair ? { ...buildData(), repair } : buildData();
 		requireThat(
-			bytes(data) + new TextEncoder().encode(buildInstructions).length <
+			bytes(data) + new TextEncoder().encode(assembly.instructions).length <
 				request.limits.inputBytes,
 			"context_budget_exceeded",
 		);
 		const modelInput = {
-			system: buildInstructions,
+			system: assembly.instructions,
 			data,
-			schema: z.toJSONSchema(modelTurnSchema),
+			schema: z.toJSONSchema(assembly.turnSchema),
 			deadlineAt: request.limits.deadlineAt,
 			maxOutputTokens: request.limits.outputTokens,
 			requestRef: r.ref,
@@ -568,7 +576,7 @@ export async function executeBuild<Tx>(
 				callKind: "build",
 			});
 		}
-		const parsed = modelTurnSchema.safeParse(answer.value);
+		const parsed = assembly.turnSchema.safeParse(answer.value);
 		if (!parsed.success) {
 			lastFailure = "invalid_model_output";
 			repair = {
@@ -661,10 +669,22 @@ export async function executeBuild<Tx>(
 			};
 			continue;
 		}
-		const candidate = turn;
+		let candidate: Decision = turn as Decision;
 		if (candidate.kind === "ready") {
 			try {
-				checkDecision(candidate, state.evidence, p);
+				if (assembly.mode === "compact") {
+					const compact = compactReadySchema.safeParse(turn);
+					requireThat(compact.success, "invalid_model_output");
+					requireThat(compact.data.coverage !== "unclear", "invalid_coverage");
+					if (compact.data.coverage === "absent")
+						requireThat(!!compact.data.exploration, "invalid_exploration");
+					if (compact.data.coverage !== "absent")
+						requireThat(!compact.data.exploration, "invalid_exploration");
+					candidate = toStoredReady(compact.data);
+				}
+				checkDecision(candidate, state.evidence, p, {
+					rejectBodyRewrite: assembly.mode === "compact",
+				});
 				requireThat(
 					bytes(buildContent(p, candidate, state.evidence)) <=
 						request.limits.outputBytes,
