@@ -5,6 +5,8 @@
 
 2026-11-06の追加依頼により、ContextStillの公開範囲をread-onlyでコピーする独立試験基盤を `examples/contextstill` に追加した。元DBを変更せず、コピーしたローカルDBだけで検索・取得・SourcePort接続・固定モデルによる保存結合を確認する。これはP4/P8の実接続・実LLM評価を完了したことを意味しない。使い方と制限は[単体試験基盤](examples/contextstill/README.md)、引継ぎは[Grokbot向け手順](GROKBOT_HANDOFF.md)を参照する。
 
+続く公開許可に基づき、MIT LICENSE、README、知識のみの公開seedと `context:seed` を追加する。経験・設定・認証情報・生成SQLiteは公開seedへ含めない。clone先で元DBなしに初期化・検索・保存結合できること、seedの改変・公開範囲・参照切れ・無断上書きを拒否すること、コア配布物にLICENSEとREADMEを含めることを完了条件とする。
+
 ## 1. 目的と文書の役割
 
 Eumenesの会話エージェントとサブエージェントが、既存Skillと経験を検索し、現在の目的・制約・能力に合う実行用Skillを受け取れるようにする。SkillSmithを独立したTypeScriptライブラリとして開発し、本体のknowledge domainから同一プロセスで利用する。
@@ -200,6 +202,7 @@ fixture通過後に、実ContextStill・Registry・保存済み推論設定と�
 - [ ] P0の本体接続fixtureを含む契約の固定
 - [x] P1〜P3のコア・SQLite adapter・結果・候補の初期実装とfixture
 - [x] 公開範囲のDBコピー、疑似ContextStill、単体試験・実データ確認・Grokbot引継ぎ基盤
+- [x] MITライセンス、README、公開知識seedとSQLite初期化・検証
 - [ ] P1〜P3の残契約と正式配布版の固定
 - [ ] P4〜P6の本体・利用側・正式採用
 - [ ] P7のMCP・外部利用側fixture受入

@@ -40,12 +40,15 @@ try {
 		)
 	)
 		throw new Error("invalid_package_contents");
+	for (const file of ["LICENSE", "README.md"])
+		await cp(join(root, file), join(target, file));
 	await writeFile(
 		join(target, "package.json"),
 		JSON.stringify(
 			{
 				name: pkg.name,
 				version: pkg.version,
+				license: pkg.license,
 				type: "module",
 				private: true,
 				sideEffects: false,
@@ -95,6 +98,7 @@ try {
 		pkg.name + "-" + pkg.version + ".tgz",
 	);
 	const tar = Bun.spawn(["tar", "-czf", artifact, "-C", stage, "package"], {
+		env: { ...process.env, COPYFILE_DISABLE: "1" },
 		stdout: "inherit",
 		stderr: "inherit",
 	});

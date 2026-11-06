@@ -82,3 +82,23 @@
 実データ確認はDBの差し替え完了後に実施した結果を採用した。稼働サービスは起動・停止していない。ContextStillのソース作業ツリーに変更がないことも確認した。
 
 実ContextStillとの相違は[基盤のREADME](examples/contextstill/README.md)、次の担当への注意点は[Grokbot引継ぎ](GROKBOT_HANDOFF.md)に記載した。特に実APIには `_fixture` がなく、SourcePortには検索全体のwarnings/degradedを渡す契約が不足する。実adapterの版固定・省略検知・競合情報の受渡しは未実装であり、この基盤でP4/P8の実接続・実LLM品質を完了とは扱わない。
+
+## 6. MITライセンスと公開seed
+
+続く依頼で知識の公開が許可されたため、MIT LICENSE、packageのlicense metadata、READMEのcloneからの利用手順を追加した。コア配布tgzにもLICENSEとREADMEを含める。GitHubには知識のみのseedを含め、生成SQLiteと経験を含む従来のローカルコピーは引き続き除外する。
+
+`examples/contextstill/seed/knowledge.jsonl.gz` は知識6,957件・経験0件・競合ペア0件、2,251,244 bytes。圧縮ファイルのSHA-256は `f9791ff3d5586b284ef1091117f8b798754fa1975d8a7625f4df024789969d25`。経験と経験由来の事例を除き、設定・認証情報・raw source・personal・repo限定の行を含めない。公開知識に対する認証情報形式の検査でも該当はなかった。本文は未信頼の参考知識として保持し、意味判断は変更していない。
+
+`bun run context:seed` はmanifestの版・ハッシュ・展開後サイズ・件数、知識schema、公開範囲、重複・後継・競合参照を検証し、FTS索引とmetadataを持つ `data/contextstill/seed.sqlite` を原子的に作成する。既存DBには `--replace` が必要で、無関係なDBへの上書きは拒否する。元DBや稼働サービス、APIキーは不要。`context:check` の既定値をこのseed DBへ変更した。従来のローカルコピーは引数で明示して確認できる。
+
+部分試験では既存の合成fixtureに取得時刻metadataがなかったため追加した。出力契約や検査条件は弱めていない。検証の結果は以下のとおり。
+
+| 確認 | 結果 |
+| --- | --- |
+| 型・lint・format | 34型検査ファイル・40整形対象、通過 |
+| 固定試験 | コア45件＋examples24件＝69件成功、0失敗、215 assertions。seed専用7件を追加 |
+| 公開seedの通し確認 | 知識6,957件から検索8件、ready、依存1件、固定モデル1回、source port呼出し6回 |
+| 独立した作業フォルダ | Gitの登録予定ファイルだけを一時フォルダへ展開。元DB・data/なしでfrozen install → context:seed → context:checkが成功 |
+| コア配布物 | LICENSE・README・MIT metadataを含む23検証ファイルとMANIFESTの計24ファイル。実データ・examplesなし。全内容のhash一致 |
+
+配布点検でmacOS由来のAppleDouble付加情報30件を検出したため、tar作成時にCOPYFILE_DISABLEを指定して除外した。再確認でアーカイブ内の全ファイルがmanifestの許可対象と一致することを確認した。最終差分はライセンス、README・引継ぎ、seedと初期化・書出し・固定試験、配布処理に限定され、コアのLLM指示・意味判断・port契約は変更していない。

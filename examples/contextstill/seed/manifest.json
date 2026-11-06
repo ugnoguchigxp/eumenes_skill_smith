@@ -1,0 +1,34 @@
+{
+	"format": "skillsmith-contextstill-seed.v1",
+	"fixtureFormat": "skillsmith-contextstill-fixture.v1",
+	"license": "MIT",
+	"file": "knowledge.jsonl.gz",
+	"sha256": "f9791ff3d5586b284ef1091117f8b798754fa1975d8a7625f4df024789969d25",
+	"dataSha256": "3e7deca4c293e56ddd211b6b9629d141b47aba08141c7675f02e852524c0c5e8",
+	"dataBytes": 9092811,
+	"counts": {
+		"knowledge": 6957,
+		"episode": 0,
+		"conflicts": 0
+	},
+	"source": {
+		"project": "ContextStill",
+		"commit": "dd365e96115903626254a3d445ed5e097210a194",
+		"snapshotAt": "2026-11-06T02:11:38.256053+00:00"
+	},
+	"omitted": [
+		"episodes",
+		"episode_examples",
+		"settings",
+		"credentials",
+		"keys",
+		"raw_sources",
+		"source_excerpts",
+		"source_urls",
+		"personal",
+		"repo_scope",
+		"vectors",
+		"logs",
+		"themes"
+	]
+}

@@ -21,11 +21,12 @@
 
 ```sh
 bun install --frozen-lockfile
+bun run context:seed
 bun run verify
 bun run context:check
 ```
 
-verifyはDBなしで再現できます。context:checkにはGitに含まれない `data/contextstill/snapshot.sqlite` が必要です。この作業フォルダには知識6,957件・経験843件のコピーを用意済みです。別環境では[コピー手順](examples/contextstill/README.md)に従ってDBを移すか再生成します。認証設定や元DB全体は移さないでください。
+verifyは事前のDBなしで再現できます。`context:seed` はGit管理の公開知識6,957件から `data/contextstill/seed.sqlite` を作り、context:checkはこのDBを使用します。別環境でもclone後に同じ手順で初期化できます。経験843件を含むローカルコピーは別管理であり、確認する場合は `bun run context:check data/contextstill/snapshot.sqlite` と明示します。[コピー手順](examples/contextstill/README.md)も参照してください。
 
 context:checkの成功は、実データの検索・取得とSkillSmithの保存・再検査が接続できたという意味です。モデルは `fixed_wiring_stub`、検索は `lexical_only` で、実LLMによる指針生成の成功を示しません。コピー元のサービスも元DBも参照しません。試験では通信とBun.serveを禁止しています。
 
@@ -36,8 +37,8 @@ context:checkの成功は、実データの検索・取得とSkillSmithの保存
 - `_fixture` の版・ハッシュ・省略情報は試験用拡張。実ContextStillのAPIに存在すると仮定しない。実adapterには版固定・省略検知の根拠が必要。
 - 既存SourcePortは検索全体の競合warnings・degraded情報を返せない。製品接続前に契約と推論入力への受渡しを設計し、fixtureで検証する。疑似API自体はwarnings/degradedを返す。
 - `complete` の検査、権限、予算、入力・出力制限、返却契約を弱めて試験を通さない。固定モデルや文字列検索のロジックを製品の意味判断へ移さない。
-- DB・本文・秘密をGit、配布物、通常ログへ入れない。コピーはread-onlyの公開投影で、元DBの変更やサービス操作を伴わない。
-- 既存Gitは未コミットの開発状態。差分と利用中の変更を確認する。今回の依頼にはGrokbotへのメッセージ送信や公開・pushは含まない。
+- 公開を許可された知識seedだけをGitへ含める。経験・設定・秘密・生成SQLiteを含めない。通常ログには本文を出さない。元DBの変更やサービス操作を伴わない。
+- 差分と利用中の変更を確認する。初期コミットはmainへpush済み。別のチャットへの送信や本体の変更は、対象の依頼範囲に従う。
 
 ## 次の実装単位と完了条件
 

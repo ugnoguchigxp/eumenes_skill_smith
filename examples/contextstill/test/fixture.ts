@@ -83,6 +83,9 @@ export function setup(documents: PublicItem[] = [item(), episode()]) {
 	writer
 		.query("INSERT INTO fixture_metadata VALUES('format',?)")
 		.run(JSON.stringify(FORMAT));
+	writer
+		.query("INSERT INTO fixture_metadata VALUES('snapshotAt',?)")
+		.run(JSON.stringify("2026-11-01T00:00:00Z"));
 	function put(
 		document: PublicItem,
 		override: {

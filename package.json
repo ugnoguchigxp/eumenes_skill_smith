@@ -1,6 +1,7 @@
 {
 	"name": "eumenes-skill-smith",
 	"version": "0.1.0",
+	"license": "MIT",
 	"private": true,
 	"type": "module",
 	"sideEffects": false,
@@ -23,6 +24,8 @@
 		"test": "bun test src/test",
 		"test:examples": "bun test examples/contextstill/test",
 		"context:snapshot": "python3 examples/contextstill/snapshot.py",
+		"context:seed": "bun examples/contextstill/seed.ts",
+		"context:seed:export": "bun examples/contextstill/export-seed.ts",
 		"context:check": "bun examples/contextstill/check.ts",
 		"build": "bun scripts/build.ts",
 		"pack:core": "bun scripts/pack.ts",

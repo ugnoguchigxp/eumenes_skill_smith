@@ -4,23 +4,29 @@ SkillSmithの実装・検証を、Eumenes本体、ContextStillの稼働サービ
 
 ## 最初に動かす
 
-プロジェクトのルートで実行します。Bun 1.4.4を使用し、コピー処理だけPython 3の標準ライブラリを使います。
+プロジェクトのルートで実行します。Bun 1.4.4を使用します。同梱seedからの初期化にPython、ContextStill本体、元DB、APIキーは不要です。
 
 ```sh
 bun install --frozen-lockfile
+bun run context:seed
+bun run context:check
 bun run verify
 ```
 
-verifyは固定データから一時DBを作ります。コピー済みDB、隣のContextStillリポジトリ、通信、待受ポートは不要です。新しい試験だけなら次を実行します。
+verifyは合成データと同梱の公開seedから一時DBを作ります。コピー済みDB、隣のContextStillリポジトリ、通信、待受ポートは不要です。元DBから再コピーする処理の試験だけPython 3の標準ライブラリを使います。新しい試験だけなら次を実行します。
 
 ```sh
 bun run test:examples
 ```
 
-この作業環境には `data/contextstill/snapshot.sqlite` を作成済みです。コピーした実データで、検索 → 本文取得 → 固定モデル → SkillSmith保存 → 外部依存の再検査を確認できます。
+`context:seed` はGit管理されている[公開知識seed](seed/README.md)から `data/contextstill/seed.sqlite` を作ります。知識6,957件を収録し、経験と経験由来の事例は含めません。検索 → 本文取得 → 固定モデル → SkillSmith保存 → 外部依存の再検査を確認できます。生成済みDBを作り直す場合は `--replace` を明示します。
 
 ```sh
 bun run context:check
+# seedを再適用する場合
+bun run context:seed --replace
+# 別の場所に初期化する場合
+bun run context:seed --dest /absolute/path/seed.sqlite
 # 別のDB・検索語を使う場合
 bun run context:check /absolute/path/snapshot.sqlite 検証
 ```
@@ -46,13 +52,15 @@ bun run context:snapshot --source /absolute/path/context-still.sqlite3 --dest /a
 
 コピー元の既定値だけが隣の `../contextStill/data/context-still.sqlite3` を参照します。コピー後の実行には元DB・元リポジトリは不要です。コピー元はread-only接続と読取transactionで読み、WALを含む整合した時点を取り出します。作業中は0600の一時ファイルを使い、完成後に原子的に配置します。元DBへの書込み、checkpoint、サービス操作は行いません。
 
-保存先ディレクトリは0700、DBは0600で作ります。`fixture_metadata` に形式、取得時刻、コピー件数、対象ソース版、省略範囲を記録します。実データは `.gitignore` の `data/` に置き、Gitとコア配布tgzには含めません。別環境のGrokbotにはローカルコピーが自動共有されません。同じ作業フォルダを使うか、許可した方法でDBを移すか、その環境で再生成してください。固定試験だけなら実データの受渡しは不要です。
+保存先ディレクトリは0700、DBは0600で作ります。`fixture_metadata` に形式、取得時刻、コピー件数、対象ソース版、省略範囲を記録します。生成したSQLiteは `.gitignore` の `data/` に置き、Gitとコア配布tgzには含めません。知識だけの公開seedはGit管理します。別環境のGrokbotもclone後に `bun run context:seed` で初期化できます。経験843件を含むローカルコピーは自動共有されません。
 
 ## 構成と利用方法
 
 | ファイル | 役割 |
 | --- | --- |
 | `snapshot.py` / `schema.sql` | 公開範囲のコピー、専用DB形式、FTS索引 |
+| `seed/` | MITで提供する公開知識6,957件の圧縮JSONLと検証manifest |
+| `seed.ts` / `export-seed.ts` | seed検証・SQLite初期化と、知識だけの明示的な再書出し |
 | `contracts.ts` | 現行の検索・取得引数、返却契約と試験用拡張 |
 | `database.ts` | コピーをread-onlyで開き、文字列検索・取得・サイズ制限を行う |
 | `mcp.ts` | RequestをResponseへ変換するプロセス内の疑似MCP |
@@ -68,7 +76,7 @@ import { ContextStillFixture } from "./database.js";
 import { createMcpHandler } from "./mcp.js";
 import { createFixtureSource } from "./source.js";
 
-const fixture = new ContextStillFixture("data/contextstill/snapshot.sqlite");
+const fixture = new ContextStillFixture("data/contextstill/seed.sqlite");
 try {
   const token = crypto.randomUUID(); // 元サービスのtokenは使わない
   const transport = createMcpHandler(fixture, token);

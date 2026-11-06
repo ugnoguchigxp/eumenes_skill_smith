@@ -1,4 +1,4 @@
-// Keep the real-copy smoke just as isolated as the fixed tests.
+// Keep the seed/real-copy smoke just as isolated as the fixed tests.
 import "../../scripts/test-preload.js";
 import { resolve } from "node:path";
 import { ContextStillFixture } from "./database.js";
@@ -6,7 +6,7 @@ import { createMcpHandler } from "./mcp.js";
 import { createFixtureSource } from "./source.js";
 import { createExampleHost } from "./host.js";
 
-const path = resolve(process.argv[2] ?? "data/contextstill/snapshot.sqlite");
+const path = resolve(process.argv[2] ?? "data/contextstill/seed.sqlite");
 const query = process.argv[3] ?? "検証";
 const fixture = new ContextStillFixture(path);
 const token = crypto.randomUUID(); // Process-local only; neither saved nor printed.

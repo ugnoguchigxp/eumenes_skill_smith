@@ -4,16 +4,24 @@ Eumenesの会話・作業担当へ、今回の目的と制約に合う実行用S
 
 現在はコアとSQLite adapterの実装・固定試験段階です。[疑似ContextStillの単体試験基盤](examples/contextstill/README.md)と、[Grokbot向け引継ぎ](GROKBOT_HANDOFF.md)を用意しています。Eumenesの本体サービス、ContextStillの実接続、会話・担当、MCPへの製品組込みは未完了です。固定モデルの試験は、実LLMによる意味判断の性能を証明するものではありません。
 
-## 開発
+## はじめに
 
-Bun 1.4.4を使います。
+Bun 1.4.4を使います。全試験を実行する場合はコピー処理の試験用にPython 3も必要です。公開知識6,957件のseedを同梱しているため、ContextStill本体・元DB・APIキーなしでSQLiteを初期化して試せます。seed初期化と接続確認はBunだけで動きます。
 
-    bun install --frozen-lockfile
-    bun run verify
+```sh
+git clone https://github.com/ugnoguchigxp/eumenes_skill_smith.git
+cd eumenes_skill_smith
+bun install --frozen-lockfile
+bun run context:seed
+bun run context:check
+bun run verify
+```
 
 verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、tgz内容と配布物からのimportを検査します。試験ではnetworkとBun.serveを禁止し、一時DBと注入したモデルを使います。
 
-コピー済みの実データでも確認する場合は `bun run context:check` を実行します。DBは `data/contextstill/snapshot.sqlite` に置き、Gitとコア配布物から除外します。再生成・別環境での準備は上記の単体試験基盤を参照してください。
+`context:seed` は [公開seed](examples/contextstill/seed/README.md) のハッシュ・件数・参照を検査し、`data/contextstill/seed.sqlite` と検索索引を作成します。seedには知識だけを含め、経験、経験由来の事例、設定、認証情報、raw sourceは含めません。生成したSQLiteはGitとコア配布物から除外しています。
+
+`context:check` は疑似ContextStillと固定モデルによる接続確認です。文字列検索を使い、実LLMの品質評価は行いません。既存のseed DBを作り直す場合は `bun run context:seed --replace` を使います。コピー済みの知識・経験DBを調べる場合は `bun run context:check data/contextstill/snapshot.sqlite` を指定します。詳しい手順は[単体試験基盤](examples/contextstill/README.md)を参照してください。
 
 ## ホストからの利用
 
@@ -32,7 +40,11 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 
 ## 配布
 
-bun run pack:coreはartifacts/へtgzと内容manifestを作ります。現在は未コミットの開発版なのでsourceGitCommitはnullで、sourceDigestとファイルhashを記録します。本体へ正式に取り込む前にソース版と配布物を固定します。remote作成・公開・pushは自動実行しません。
+`bun run pack:core` は `artifacts/` へtgzと内容manifestを作ります。JavaScript、型宣言、package metadata、LICENSE、READMEを含め、ソース版、sourceDigestとファイルhashを記録します。examplesとseedはGitリポジトリから利用し、コアtgzには含めません。現在は開発段階で、パッケージの公開は行っていません。
+
+## ライセンス
+
+[MIT License](LICENSE)。コード、ドキュメント、同梱の公開知識seedをMITで提供します。
 
 ## 設計と進捗
 
