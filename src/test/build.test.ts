@@ -304,3 +304,67 @@ test("instruction version is the digest of the live instruction text", () => {
 	);
 	expect(INSTRUCTION_VERSION).not.toBe("build.v3");
 });
+
+test("a structural decision failure can be repaired within the model call budget", async () => {
+	const f = fixture();
+	let calls = 0;
+	const good = {
+		kind: "ready" as const,
+		strategy: "compose" as const,
+		sourceRefs: ["skill:compare@1"],
+		sections: [
+			{ id: "start", body: "資料の正本と相違を確認する。" },
+			{ id: "finish", body: "不確実な箇所を示し、報告を検証する。" },
+		],
+		patches: [],
+		requiredCapabilities: ["read"],
+		verification: ["差異の各項目が原資料へたどれるか確認する。"],
+		assumptions: [],
+	};
+	const bad = {
+		...good,
+		requiredCapabilities: ["not-offered"],
+	};
+	f.ports.inference.complete = async (input) => {
+		calls++;
+		if (calls === 1) {
+			expect("repair" in (input.data as object)).toBe(false);
+			return {
+				value: structuredClone(bad),
+				receipt: "receipt",
+				inputTokens: 1,
+				outputTokens: 1,
+			};
+		}
+		expect((input.data as { repair: { code: string } }).repair.code).toBe(
+			"capability_missing",
+		);
+		return {
+			value: structuredClone(good),
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	const r = await ready(f);
+	expect(r.build.content.decision.requiredCapabilities).toEqual(["read"]);
+	expect(calls).toBe(2);
+});
+test("structural repair stops at the model call limit and keeps the failure code", async () => {
+	const f = fixture();
+	f.setDecision({
+		kind: "ready",
+		strategy: "reuse",
+		sourceRefs: ["skill:compare@1"],
+		sections: [],
+		patches: [],
+		requiredCapabilities: ["not-offered"],
+		verification: ["確認"],
+		assumptions: [],
+	});
+	const receipt = f.submit();
+	await expect(f.run(receipt.requestRef!)).rejects.toThrow(
+		"capability_missing",
+	);
+	expect(f.modelCalls()).toBe(2);
+});

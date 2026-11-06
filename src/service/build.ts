@@ -296,23 +296,15 @@ export async function executeBuild<Tx>(
 			request.limits.inputBytes,
 		"context_budget_exceeded",
 	);
-	let value: unknown, receipt: string | undefined;
+	let decision: Decision | undefined, receipt: string | undefined;
 	const tokens = { input: 0 as number | null, output: 0 as number | null };
-	let invalid = false;
+	let repair: { code: string; instruction: string } | undefined;
+	let lastFailure = "invalid_model_output";
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
 		const modelInput = {
 			system: buildInstructions,
-			data: invalid
-				? {
-						...data,
-						repair: {
-							code: "invalid_output",
-							instruction:
-								"前回の出力は採用されていない。元の目的・制約を保ちschemaに従って返す。",
-						},
-					}
-				: data,
+			data: repair ? { ...data, repair } : data,
 			schema: z.toJSONSchema(decisionSchema),
 			deadlineAt: request.limits.deadlineAt,
 			maxOutputTokens: request.limits.outputTokens,
@@ -335,22 +327,47 @@ export async function executeBuild<Tx>(
 				? null
 				: tokens.output + answer.outputTokens;
 		const parsed = decisionSchema.safeParse(answer.value);
-		if (parsed.success) {
-			value = parsed.data;
-			break;
+		if (!parsed.success) {
+			lastFailure = "invalid_model_output";
+			repair = {
+				code: "invalid_output",
+				instruction:
+					"前回の出力は採用されていない。元の目的・制約を保ちschemaに従って返す。",
+			};
+			continue;
 		}
-		invalid = true;
+		const candidate = parsed.data;
+		if (candidate.kind === "ready") {
+			try {
+				checkDecision(candidate, evidence, p);
+				requireThat(
+					bytes(buildContent(p, candidate, evidence)) <=
+						request.limits.outputBytes,
+					"context_budget_exceeded",
+				);
+			} catch (error) {
+				if (
+					!(error instanceof SkillSmithError) ||
+					error.code === "context_budget_exceeded"
+				)
+					throw error;
+				lastFailure = error.code;
+				repair = {
+					code: error.code,
+					instruction:
+						"前回の出力は構造検査で拒否された（" +
+						error.code +
+						"）。元の目的・制約を保ちschemaに従い、この違反を解消して返す。",
+				};
+				continue;
+			}
+		}
+		decision = candidate;
+		break;
 	}
 	checkpoint();
-	const parsed = decisionSchema.safeParse(value);
-	requireThat(parsed.success, "invalid_model_output");
-	const decision: Decision = parsed.data;
+	requireThat(decision, lastFailure);
 	if (decision.kind === "ready") {
-		checkDecision(decision, evidence, p);
-		requireThat(
-			bytes(buildContent(p, decision, evidence)) <= request.limits.outputBytes,
-			"context_budget_exceeded",
-		);
 		const selected = evidence.filter(
 			(e) => decision.sourceRefs.includes(e.ref) && e.external,
 		);
