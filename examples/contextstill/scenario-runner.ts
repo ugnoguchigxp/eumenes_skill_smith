@@ -1,5 +1,7 @@
 // Proposal 26: two-mode scenario runner (retrieval-only / full) over typed three-axis tasks.
 // retrieval-only calls SourcePort.search only and never creates inference; it invents no 0-10 scores.
+import type { SearchProfile } from "./database.js";
+
 import { createExampleHost } from "./host.js";
 import type { SourcePort } from "./source.js";
 import type { InferenceTask, recordedInference } from "./recorded.js";
@@ -18,6 +20,16 @@ import {
 	type AssemblyScore,
 	type NormalizedScenarioTask,
 } from "../../src/eval/scenario-score.js";
+
+/** Strict CLI profile parsing; omitted means the replay-compatible baseline. */
+export function parseSearchProfile(argv: string[]): SearchProfile {
+	const index = argv.indexOf("--search-profile");
+	if (index < 0) return "handle";
+	const value = argv[index + 1];
+	if (value !== "handle" && value !== "bm25")
+		throw new Error(`unknown --search-profile ${value ?? "(missing)"}`);
+	return value;
+}
 
 /** SourcePort API cap; ranks past it are unobservable here. */
 export const SEARCH_LIMIT = 20;

@@ -10,6 +10,8 @@ import {
 } from "./contracts.js";
 import type { PublicItem, SearchArgs } from "./contracts.js";
 
+export type SearchProfile = "handle" | "bm25";
+
 interface Row {
 	handle: string;
 	revision: number;
@@ -22,7 +24,10 @@ const cut = (text: string, count: number) => [...text].slice(0, count).join("");
 
 export class ContextStillFixture {
 	private readonly db: Database;
-	constructor(path: string) {
+	constructor(
+		path: string,
+		readonly searchProfile: SearchProfile = "handle",
+	) {
 		this.db = new Database(path, { readonly: true, strict: true });
 		try {
 			this.db.exec("PRAGMA query_only=ON");
@@ -147,6 +152,9 @@ export class ContextStillFixture {
 		const terms = [...new Set(tokens)];
 		const long = terms.filter((t) => [...t].length >= 3);
 		const short = terms.filter((t) => [...t].length === 2);
+		const ftsQuery = long
+			.map((t) => `"${t.replaceAll('"', '""')}"`)
+			.join(" OR ");
 		const params: (string | number)[] = [...args.kinds, ...args.spaces];
 		const filters = [
 			`kind IN (${args.kinds.map(() => "?").join(",")})`,
@@ -164,9 +172,9 @@ export class ContextStillFixture {
 		const matches: string[] = [];
 		if (long.length) {
 			matches.push(
-				"rowid IN (SELECT rowid FROM items_fts WHERE items_fts MATCH ?)",
+				"items.rowid IN (SELECT rowid FROM items_fts WHERE items_fts MATCH ?)",
 			);
-			params.push(long.map((t) => `"${t.replaceAll('"', '""')}"`).join(" OR "));
+			params.push(ftsQuery);
 		}
 		for (const term of short) {
 			matches.push(
@@ -176,10 +184,23 @@ export class ContextStillFixture {
 		}
 		if (matches.length) filters.push(`(${matches.join(" OR ")})`);
 		else filters.push("0"); // No wildcard scan for empty/one-character input.
+		// Keep the match universe identical; only the optional profile changes order.
+		// Materialize scores in the FTS MATCH context (FTS5 auxiliary function requirement).
+		const ranked = this.searchProfile === "bm25" && long.length > 0;
+		const prefix = ranked
+			? "WITH scores AS MATERIALIZED (SELECT rowid AS item_rowid, bm25(items_fts) AS score FROM items_fts WHERE items_fts MATCH ?) "
+			: "";
+		const join = ranked
+			? " LEFT JOIN scores ON scores.item_rowid=items.rowid"
+			: "";
+		const order = ranked
+			? "scores.score IS NULL, scores.score ASC, handle"
+			: "handle";
+		if (ranked) params.unshift(ftsQuery);
 		params.push(args.limit);
 		const rows = this.db
 			.query<Row, (string | number)[]>(
-				`SELECT handle,revision,document_json FROM items WHERE ${filters.join(" AND ")} ORDER BY handle LIMIT ?`,
+				`${prefix}SELECT handle,revision,document_json FROM items${join} WHERE ${filters.join(" AND ")} ORDER BY ${order} LIMIT ?`,
 			)
 			.all(...params);
 		const results = rows.map((row, index) => {

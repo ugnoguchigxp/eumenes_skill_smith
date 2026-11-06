@@ -21,7 +21,7 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 
 `context:seed` は [公開seed](examples/contextstill/seed/README.md) のハッシュ・件数・参照を検査し、`data/contextstill/seed.sqlite` と検索索引を作成します。seedには知識だけを含め、経験、経験由来の事例、設定、認証情報、raw sourceは含めません。生成したSQLiteはGitとコア配布物から除外しています。
 
-`context:check` は疑似ContextStillと固定モデルによる接続確認です。文字列検索を使い、実LLMの品質評価は行いません。`context:eval` は固定fixtureの完全性検査であり、組み立て品質の評点ではありません。タスクシナリオで期待Skillが組み上がったかをLLMが評点するのは `bun run context:eval-scenarios` です。記録が無い呼び出しは推論タスクを書き出して待ち、記録がある呼び出しは毎回評点を出します。`--retrieval-only` は推論を一切呼ばず検索順位だけを測り、0〜10 の評点は出しません（提案 26）。既存のseed DBを作り直す場合は `bun run context:seed --replace` を使います。コピー済みの知識・経験DBを調べる場合は `bun run context:check data/contextstill/snapshot.sqlite` を指定します。詳しい手順は[単体試験基盤](examples/contextstill/README.md)を参照してください。
+`context:check` は疑似ContextStillと固定モデルによる接続確認です。文字列検索を使い、実LLMの品質評価は行いません。`context:eval` は固定fixtureの完全性検査であり、組み立て品質の評点ではありません。タスクシナリオで期待Skillが組み上がったかをLLMが評点するのは `bun run context:eval-scenarios` です。記録が無い呼び出しは推論タスクを書き出して待ち、記録がある呼び出しは毎回評点を出します。`--retrieval-only` は推論を一切呼ばず検索順位だけを測り、0〜10 の評点は出しません（提案 26）。`--search-profile handle|bm25` で mock 検索の順位だけを比較できます（既定は `handle`、提案 27）。BM25 の SKILL 出力品質は未採用・LLM 評価待ちで、本番 ContextStill の検索改善を意味しません。既存のseed DBを作り直す場合は `bun run context:seed --replace` を使います。コピー済みの知識・経験DBを調べる場合は `bun run context:check data/contextstill/snapshot.sqlite` を指定します。詳しい手順は[単体試験基盤](examples/contextstill/README.md)を参照してください。
 
 ## ホストからの利用
 

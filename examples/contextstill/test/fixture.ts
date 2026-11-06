@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FORMAT } from "../contracts.js";
 import type { PublicItem } from "../contracts.js";
-import { ContextStillFixture } from "../database.js";
+import { ContextStillFixture, type SearchProfile } from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource } from "../source.js";
 
@@ -73,7 +73,10 @@ export function episode(): PublicItem {
 		evidenceTruncated: false,
 	};
 }
-export function setup(documents: PublicItem[] = [item(), episode()]) {
+export function setup(
+	documents: PublicItem[] = [item(), episode()],
+	searchProfile: SearchProfile = "handle",
+) {
 	const dir = mkdtempSync(join(tmpdir(), "skillsmith-contextstill-"));
 	cleanup.push(() => rmSync(dir, { recursive: true, force: true }));
 	const path = join(dir, "snapshot.sqlite");
@@ -115,7 +118,7 @@ export function setup(documents: PublicItem[] = [item(), episode()]) {
 		writer.exec("INSERT INTO items_fts(items_fts) VALUES('rebuild')");
 	}
 	for (const doc of documents) put(doc);
-	const fixture = new ContextStillFixture(path);
+	const fixture = new ContextStillFixture(path, searchProfile);
 	cleanup.push(() => fixture.close());
 	const token = "fixture-only-test-token-123456";
 	const handler = createMcpHandler(fixture, token);

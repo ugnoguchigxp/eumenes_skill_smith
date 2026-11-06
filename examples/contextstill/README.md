@@ -42,7 +42,7 @@ bun run context:check /absolute/path/snapshot.sqlite 検証
 bun run context:eval-scenarios
 ```
 
-推論記録が足りない場合は `data/contextstill/scenario-build-pending.json` または `scenario-judge-pending.json` を書き、終了コード 2 で待ちます。記録を `examples/contextstill/scenarios/build-records.json` と `judge-records.json` に足して再実行すると、毎回評点を標準出力と `scenarios/scores.json` に出します。検索は lexical かつ handle 順のため、期待Skillが候補に入らない課題は低得点になり得ます。それは検索品質の事実であり、固定出力で埋めません。
+推論記録が足りない場合は `data/contextstill/scenario-build-pending.json` または `scenario-judge-pending.json` を書き、終了コード 2 で待ちます。記録を `examples/contextstill/scenarios/build-records.json` と `judge-records.json` に足して再実行すると、毎回評点を標準出力と `scenarios/scores.json` に出します。既定の検索は lexical かつ handle 順のため、期待Skillが候補に入らない課題は低得点になり得ます。それは検索品質の事実であり、固定出力で埋めません。
 
 二つのモードがあります（提案 26）。
 
@@ -54,7 +54,15 @@ bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/con
 bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --axis compose
 ```
 
-`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
+`--search-profile handle|bm25`（既定 `handle`、retrieval-only / full 共通）、`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
+
+順位比較の報告には `searchProfile` を記録します。profile 間の報告を残す場合は別々の `--output-dir` を使います。`context:check` / 固定fixture の検索は変更していません。BM25 は任意の測定用 profile としてのみ追加し、SKILL 出力としての採用は full 実行 + LLM judge の評価待ちです。英語 lexical 検索は改善しますが、日本語はほぼ改善せず退行もあります（[提案27の実測](../../docs/proposals/27-lexical-bm25-ranking.md)）。mock 検索は本番 ContextStill 検索と異なり、提案01/16の実ユーザーpilotではありません。
+
+```sh
+bun run context:eval-scenarios --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --search-profile handle --output-dir data/contextstill/scenario-reports/handle
+bun run context:eval-scenarios --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --search-profile bm25 --output-dir data/contextstill/scenario-reports/bm25
+```
+
 
 ## コピー内容と更新
 
@@ -122,7 +130,7 @@ try {
 | --- | --- |
 | MCP | JSON-RPCのinitialize、initialized通知、ping、tools/list、tools/call、検索・取得をプロセス内で処理する。protocolVersionは2025-03-26。session、SSE、実HTTP、頻度・並行数制限は未実装 |
 | 境界 | bearer、loopbackのHost/Origin、引数、32KiBの要求・応答を検査する。製品の認証・失効保証は含まない |
-| 検索 | 分かち書き、SQLite trigram FTSと短い文字列の部分一致。一致後はhandle順。実検索の複数lane・重み・埋込み順位は再現しない。`mock_lexical_only/vector_unavailable` を返す |
+| 検索 | 分かち書き、SQLite trigram FTSと短い文字列の部分一致。一致後は既定handle順。scenario-evalでは `--search-profile bm25` で FTS5既定BM25昇順（同点handle順、2文字部分一致だけの候補は後方）を比較できる。実検索の複数lane・重み・埋込み順位は再現しない。`mock_lexical_only/vector_unavailable` を返す |
 | theme/depth | themeで絞り込まず `theme_unavailable` を返す。depth>0では `expansion_unavailable`。意味に応じた専用分岐は持たない |
 | 本文と出典 | 各フィールドは知識8,000／経験4,000 Unicode文字を上限に、応答サイズに合わせて縮める。出典の詳細は常に省略。evidenceSummaryは表示した出典リストの件数 |
 | `_fixture` | この例だけの必須拡張。公開投影本文のSHA-256、revision、`complete` を返す。completeは投影した本文・出典リストに追加の切詰めがないという意味で、元の出典詳細があるという保証ではない |

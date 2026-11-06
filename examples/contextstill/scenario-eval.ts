@@ -3,6 +3,7 @@
 //   bun examples/contextstill/scenario-eval.ts                       # full: legacy 5-task suite, LLM judge replay
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
+//            --search-profile handle|bm25 (default handle)
 //            --build-records path --judge-records path --scores path --db path
 // retrieval-only: SourcePort search only, zero inference, no 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
@@ -17,6 +18,7 @@ import { createFixtureSource } from "./source.js";
 import { recordedInference, type InferenceRecord } from "./recorded.js";
 import { parseAnyScenarioSuite } from "../../src/eval/scenario-score.js";
 import {
+	parseSearchProfile,
 	runFull,
 	runRetrievalOnly,
 	summarizeRetrieval,
@@ -36,6 +38,7 @@ function loadRecords(path: string): InferenceRecord[] {
 	return Array.isArray(data) ? (data as InferenceRecord[]) : [];
 }
 
+const searchProfile = parseSearchProfile(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
 const suitePath = arg("--suite", "examples/contextstill/scenarios/suite.json");
 const dbPath = arg("--db", "data/contextstill/seed.sqlite");
@@ -58,7 +61,7 @@ const tasks = suite.tasks.filter(
 );
 if (!tasks.length)
 	throw new Error("no tasks after --axis/--query-style filter");
-const fixture = new ContextStillFixture(dbPath);
+const fixture = new ContextStillFixture(dbPath, searchProfile);
 const token = crypto.randomUUID();
 const source = createFixtureSource(createMcpHandler(fixture, token), token);
 const filter = { axis: axis ?? null, queryStyle: queryStyle ?? null };
@@ -71,11 +74,12 @@ try {
 			ok: true,
 			mode: "retrieval-only",
 			suite: suite.id,
+			searchProfile,
 			filter,
 			inferenceCalls: 0,
 			summary: summarizeRetrieval(rows),
 			rows,
-			note: "Search ranks only (handle-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality.",
+			note: `Search ranks only (${searchProfile}-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality.`,
 		};
 		const path = resolve(reportDir, `retrieval-${suite.id}.json`);
 		writeFileSync(path, JSON.stringify(report, null, 2));
@@ -118,6 +122,7 @@ try {
 			ok: result.complete,
 			mode: "full",
 			suite: suite.id,
+			searchProfile,
 			filter,
 			status: result.complete ? "complete" : "incomplete",
 			tasks: tasks.length,
@@ -132,7 +137,11 @@ try {
 				: "Incomplete: meanScore is withheld because not every task was scored.",
 		};
 		const legacyDefault =
-			suite.format === "legacy" && !outputDir && !axis && !queryStyle;
+			suite.format === "legacy" &&
+			!outputDir &&
+			!axis &&
+			!queryStyle &&
+			searchProfile === "handle";
 		const scorePath = raw("--scores")
 			? resolve(raw("--scores")!)
 			: legacyDefault
