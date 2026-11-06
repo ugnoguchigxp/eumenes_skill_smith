@@ -36,3 +36,9 @@ record の形式が変更のたびに壊れ、比較できなくなることで�
 
 前提: 提案 01 のタスク。
 
+## 実装結果
+
+- **採否**: 採用
+- **内容**: `runEvalSuite` + `examples/contextstill/eval-kit.ts` + fixture suite。recorded-inference 継ぎ目を拡張。配線クエリ「検証」を品質スコア扱いしない注記あり。
+- **パス**: `src/eval/kit.ts`, `examples/contextstill/eval-kit.ts`, `examples/contextstill/seed/eval-suite.fixture.json`
+- **未実施**: 実ユーザー課題コーパス

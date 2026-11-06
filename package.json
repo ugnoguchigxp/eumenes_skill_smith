@@ -30,7 +30,8 @@
 		"context:task": "bun examples/contextstill/task.ts",
 		"build": "bun scripts/build.ts",
 		"pack:core": "bun scripts/pack.ts",
-		"verify": "bun scripts/verify.ts"
+		"verify": "bun scripts/verify.ts",
+		"context:eval": "bun examples/contextstill/eval-kit.ts"
 	},
 	"dependencies": {
 		"zod": "4.4.3"

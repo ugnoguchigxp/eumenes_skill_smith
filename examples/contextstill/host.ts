@@ -1,12 +1,7 @@
 import { Database } from "bun:sqlite";
 import { createSkillSmith } from "../../src/index.js";
 import { migrations, sqliteRepository } from "../../src/sqlite/index.js";
-import type {
-	Authority,
-	Evidence,
-	GuidanceRequest,
-	Ports,
-} from "../../src/index.js";
+import type { Authority, GuidanceRequest, Ports } from "../../src/index.js";
 import type { SourcePort } from "./source.js";
 
 /** Standalone wiring example. Fixed model/authority/jobs are test doubles, not Eumenes adapters. */
@@ -21,6 +16,8 @@ export function createExampleHost(
 	db.exec(
 		"CREATE TABLE example_jobs(id TEXT PRIMARY KEY,request_ref TEXT,epoch INTEGER)",
 	);
+	// Stable clock so recorded-inference digests replay across host instances.
+	const fixedNow = 1_700_000_000_000;
 	const policy = {
 		id: "example-policy",
 		version: "1",
@@ -51,7 +48,7 @@ export function createExampleHost(
 		audience: "worker",
 		environment: { id: "standalone-example", capabilities: [], policy },
 		limits: {
-			deadlineAt: Date.now() + 120000,
+			deadlineAt: fixedNow + 120000,
 			modelCalls: 1,
 			sourceCalls: 12,
 			candidates: 3,
@@ -82,17 +79,25 @@ export function createExampleHost(
 		inference: injected ?? {
 			complete: async (input) => {
 				// Fixture rule checks wiring only. It must never be used as semantic skill generation.
-				const evidence = (
-					input.data as { untrustedEvidence: Evidence[] }
-				).untrustedEvidence.find((e) => e.status === "active" && e.complete);
+				// Progressive disclosure: first turn exposes evidenceIndex; bodies stay host-side.
+				const index = (
+					input.data as {
+						evidenceIndex: {
+							ref: string;
+							status: string;
+							complete: boolean;
+						}[];
+					}
+				).evidenceIndex;
+				const card = index?.find((e) => e.status === "active" && e.complete);
 				const receipt = crypto.randomUUID();
 				receipts.add(receipt);
 				return {
-					value: evidence
+					value: card
 						? {
 								kind: "ready",
 								strategy: "compose",
-								sourceRefs: [evidence.ref],
+								sourceRefs: [card.ref],
 								sections: [
 									{
 										id: "wiring-only",
@@ -134,7 +139,7 @@ export function createExampleHost(
 				tx.query("DELETE FROM example_jobs WHERE id=?").run(id);
 			},
 		},
-		now: Date.now,
+		now: () => fixedNow,
 		id: () => crypto.randomUUID(),
 	};
 	const service = createSkillSmith(ports);

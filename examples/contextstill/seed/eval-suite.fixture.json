@@ -1,0 +1,70 @@
+{
+	"id": "fixture-suite",
+	"tasks": [
+		{
+			"id": "task:compare",
+			"goal": "資料の相違を確認する",
+			"acceptance": [{ "id": "a1", "text": "差異が説明されている" }],
+			"expectedRefs": ["skill:compare@1"]
+		}
+	],
+	"records": [
+		{
+			"taskId": "task:compare",
+			"condition": "none",
+			"records": [
+				{
+					"inputDigest": "fixture-none",
+					"provider": "fixture",
+					"value": {
+						"kind": "ready",
+						"usedRefs": [],
+						"judgment": {
+							"acceptanceMet": false,
+							"misApplied": false,
+							"source": "fixture"
+						}
+					}
+				}
+			]
+		},
+		{
+			"taskId": "task:compare",
+			"condition": "agent_skills",
+			"records": [
+				{
+					"inputDigest": "fixture-baseline",
+					"provider": "fixture",
+					"value": {
+						"kind": "ready",
+						"usedRefs": ["skill:compare@1"],
+						"judgment": {
+							"acceptanceMet": true,
+							"misApplied": false,
+							"source": "fixture"
+						}
+					}
+				}
+			]
+		},
+		{
+			"taskId": "task:compare",
+			"condition": "skillsmith",
+			"records": [
+				{
+					"inputDigest": "fixture-smith",
+					"provider": "fixture",
+					"value": {
+						"kind": "ready",
+						"usedRefs": ["skill:compare@1"],
+						"judgment": {
+							"acceptanceMet": true,
+							"misApplied": false,
+							"source": "fixture"
+						}
+					}
+				}
+			]
+		}
+	]
+}
