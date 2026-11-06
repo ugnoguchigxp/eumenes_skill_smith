@@ -25,3 +25,14 @@ export {
 	type BaselineResult,
 	type BaselinePorts,
 } from "./baseline.js";
+
+export {
+	recallLabelSchema,
+	recallObservationSchema,
+	recallResultSchema,
+	recallAtK,
+	meanRecallAtK,
+	type RecallLabel,
+	type RecallObservation,
+	type RecallResult,
+} from "./recall.js";
