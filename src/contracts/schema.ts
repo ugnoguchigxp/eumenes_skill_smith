@@ -162,6 +162,8 @@ export const evidenceSchema = evidenceCardSchema
 	.extend({
 		body: z.string().min(1).max(32768),
 		sections: z.array(sectionSchema).max(64).optional(),
+		/** Host-stamped retrieval time (ms since epoch). Optional; set by SkillSmith on read. */
+		retrievedAt: z.number().int().nonnegative().optional(),
 	})
 	.superRefine((e, ctx) => {
 		if (e.sections && !unique(e.sections.map((s) => s.id)))

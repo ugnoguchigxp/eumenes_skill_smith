@@ -36,3 +36,12 @@
 
 前提: source が取得時刻を返せること（仮定）。提案 01。
 
+
+
+## 実装結果
+
+- **採否**: 採用
+- **内容**: 取得時に `retrievedAt` を刻印し、`freshness[]`（status / supersededBy / version）をモデルへ渡す。意味規則は入れない。dependencies 保存からは除外。
+- **パス**: `src/service/build.ts`, `src/contracts/schema.ts`, `src/service/disclosure.ts`, `src/test/spotlight-freshness.test.ts`
+- **試験**: freshness 試験通過
+- **理由**: 鮮度信号が構造化され、古さの判断はモデル側。

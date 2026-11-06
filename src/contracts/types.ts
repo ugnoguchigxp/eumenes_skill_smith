@@ -33,6 +33,7 @@ export interface EvidenceCard {
 export interface Evidence extends EvidenceCard {
 	body: string;
 	sections?: Section[];
+	retrievedAt?: number;
 }
 export interface Policy {
 	version: VersionRef;
