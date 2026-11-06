@@ -1,0 +1,452 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-skill-assembly",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"abstentionContrast": "on",
+		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
+		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
+		"assemblyMode": "baseline",
+		"queryReformulation": "off",
+		"reformulationInstructionsDigest": null,
+		"reformulationSchemaDigest": null,
+		"suiteId": "seed-skill-assembly",
+		"suiteFileSha256": "b86a8041d2d4d58baa7de63a0075739a5d7db52a84b086b618641f5b65d0597e",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": null,
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 5,
+	"scored": 5,
+	"meanScore": 8,
+	"statuses": [
+		{
+			"taskId": "commit-no-secrets",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "test-production-clone",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "four-space-indent",
+			"axis": "retrieval",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "commit-no-secrets",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 6,
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待 Skill「Never commit secrets or local environment files」が検索 6 位にあり、reuse としてその本文を使っている。届いた根拠を使った組み立てであり、棄権ではない。専用 Skill が無いとする探索にも、根拠到達下の needs_input にもなっていない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "test-production-clone",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待 Skill「Test in a Production Clone」が検索 1 位にあり、reuse としてその本文を使っている。届いた根拠の利用であり、適切な棄権・過剰棄権・偽の欠落探索のいずれでもない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待 ref はこの回の検索に無い。needs_input はログや HTTP 応答へ秘密情報を出さない手順を名指しし、今回の候補がコミット時の秘密情報や OAuth、見た目など別用途だと述べている。全世界に公式 Skill が無いとは書いておらず、探索型 provisional にもしていない。検索未到達を欠落軸の成功としては加点しない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待 ref はこの回の検索に無い。フックの bypass をせず直す手順を名指しし、開示した context_compile の verify 手順は git hook の bypass 可否には当てはまらないと区別している。候補集合の不適合を述べており、公式手順の非存在証明や探索 SKILL 化ではない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "four-space-indent",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待 ref はこの回の検索に無い。このリポジトリのインデント幅を定めた既存 Skill が候補に見当たらないと述べ、本番クローン試験やタイポグラフィなど別用途を挙げている。世界非存在の主張や探索型 provisional ではなく、今回の検索集合での不足明示である。",
+			"judge": "llm"
+		}
+	],
+	"composeScores": [],
+	"absentScores": [],
+	"abstentionScores": [
+		{
+			"taskId": "commit-no-secrets",
+			"expectedRefsRetrieved": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false
+		},
+		{
+			"taskId": "test-production-clone",
+			"expectedRefsRetrieved": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		},
+		{
+			"taskId": "four-space-indent",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		}
+	],
+	"evidenceSupply": "natural",
+	"recordProvenance": [
+		{
+			"taskId": "commit-no-secrets",
+			"builderInputDigests": [
+				"59f040c50ffec6afa26d49c1705ad92ec61a06bb9f7aa2a39fff17947637c272",
+				"06c371a02743122f1f05c7964653b75580fb681f184fa426ebff3b56dc40ab9d"
+			],
+			"judgeInputDigest": "9fe570f7f383e616fad4230e8c9c42896dae2e60a0a75801828878ffee36d59d",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "test-production-clone",
+			"builderInputDigests": [
+				"4285e072a86f7687fd7899ae3a1972f8c6e92e8f180e0f2c37c9a7cd2a62f46e",
+				"9f2541dccc3cdf3a678c84f645744c2997ce339f6d87d1ef4d3ec2b9718a623f"
+			],
+			"judgeInputDigest": "752c71c4dac21026f739e26ac84f4283e1270f423da719e96612cfd6a6bc9f5d",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"builderInputDigests": [
+				"4e5c1bd3a05176a4a82cbd6f0f8a598e827c6b895767170cab5de7d45822d124"
+			],
+			"judgeInputDigest": "d9282cc5a440b94bbbd87df5b988f1f05cf69da5b4fb63bc761976828918a14b",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"builderInputDigests": [
+				"c1ba7440ace34fc44a3ae4ce2a8f3e104cc3e6b13100c1fccdf2dee3a921d9f9",
+				"9302539a942bb491712056470c1e945a2e4cb9a1f364ed09b899ff8b9f52588e"
+			],
+			"judgeInputDigest": "f3018c29b857cf72f62680b34637ebcdd1646782ab57b41621b1029831268603",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "four-space-indent",
+			"builderInputDigests": [
+				"dcb75106c4ba05c551ec01963efdd47e91f63d03d9ced47e6f5ca533f4b911aa"
+			],
+			"judgeInputDigest": "ba50aa48104848153e5e255e20529476f963fed7b047dce37aac90c02f4b095d",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 8,
+		"judgeInferenceTasks": 5,
+		"reformulationInferenceTasks": 0,
+		"inputTokens": null,
+		"outputTokens": null,
+		"evalEvidenceGetCalls": 0
+	},
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "commit-no-secrets",
+			"retrievalRank": 6,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 6
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				}
+			]
+		},
+		{
+			"taskId": "test-production-clone",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				}
+			]
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				}
+			]
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				}
+			]
+		},
+		{
+			"taskId": "four-space-indent",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+					"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_26hi7r3nz7d2qzynb7qro5tqty",
+					"title": "キューAPIルーティングのセットアップ"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}

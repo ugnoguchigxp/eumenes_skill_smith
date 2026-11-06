@@ -1,0 +1,50 @@
+[
+	{
+		"inputDigest": "dad8cfea26d994e3496d1e97645bc58d4d6ffd62b11e0b30886a46f7d07aa1f1",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "両方の期待 ref（コミットから秘密情報を除く、ログや応答に出さない）が検索に届き、compose として両方を使っている。届いた根拠の組み立てであり、棄権でも偽の欠落探索でもない。"
+		}
+	},
+	{
+		"inputDigest": "b2dac38cb21b58d4796575ad9df331edf5f251ab4fb2754d307301d5b953a978",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "両方の期待 ref（フック失敗を bypass せず直す、許可なく force push しない）が検索に届き、compose として順序付きで使っている。根拠到達下の組み立てであり、過剰棄権ではない。"
+		}
+	},
+	{
+		"inputDigest": "c8a0d4fe2cfef31aa1c9f277353334d712d54570ef49f9d55c130127f57f807f",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "両方の期待 ref（パック成果物のスモーク、ライブプロバイダへ暗黙依存しない）が検索に届き、compose として使っている。届いた根拠を拒んでおらず、専用 Skill が無いとも書いていない。"
+		}
+	},
+	{
+		"inputDigest": "a576507a6543271f7e4508769523703dfe7e0f17e2c1e9732d3a55d5b993a047",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "両方の期待 ref（4 スペース字下げと行長制限）が検索に届き、Python 向けの順で compose している。根拠を使った組み立てであり、棄権の対比では問題にならない。"
+		}
+	}
+]

@@ -1,0 +1,401 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-three-axis",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"abstentionContrast": "on",
+		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
+		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
+		"assemblyMode": "baseline",
+		"queryReformulation": "off",
+		"reformulationInstructionsDigest": null,
+		"reformulationSchemaDigest": null,
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 4,
+	"scored": 4,
+	"meanScore": 8,
+	"statuses": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": 7,
+			"usedRefs": [],
+			"expectedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "期待 ref のうちコミット時の秘密情報規則だけが検索に届き、ログへ秘密情報を出さない指針は届いていない。needs_input は届いた半分を開示済みと認め、残りの半分を公式資料として確認できていないと名指ししている。複合に必要な両方揃わず組み立てを拒んだので、届いた根拠を無視した過剰棄権ではない。expectedRefsRetrieved が空でないため、指示どおり appropriateGap にはしない。世界非存在の主張や探索型 provisional でもない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+				"contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+			],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "両方の期待 ref ともこの回の検索に無い。フック失敗を bypass せず直す指針と、許可なく force push しない指針を名指しし、開示した context_compile の verify は前者に当てはまらないと述べている。今回の候補での不足であり、公式 Skill が世界に無いとする探索ではない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [
+				"contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+				"contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+			],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "両方の期待 ref ともこの回の検索に無い。パックした成果物を使うリリーススモークの指針と、スモークがライブプロバイダへ暗黙に依存しない指針を名指ししている。非存在の主張や探索型 provisional ではなく、複合に必要な根拠がこの検索集合に無いことの明示である。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "python-style",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+				"contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+			],
+			"strategy": null,
+			"kind": "needs_input",
+			"rationale": "両方の期待 ref ともこの回の検索に無い。Python の 4 スペース字下げと行長制限の指針を名指しして needs_input している。世界に公式 Skill が無いとは書いておらず、欠落軸の探索成功としては加点しない。",
+			"judge": "llm"
+		}
+	],
+	"composeScores": [],
+	"absentScores": [],
+	"abstentionScores": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"expectedRefsRetrieved": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		},
+		{
+			"taskId": "python-style",
+			"expectedRefsRetrieved": [],
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true
+		}
+	],
+	"evidenceSupply": "natural",
+	"recordProvenance": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"builderInputDigests": [
+				"420477e3ccb61750a5503ba4b2eb5bafe42a85c53660544c0c3f16c52a84976b",
+				"a0856fbd87c037569dd9fb3398bb21d84e971e9488de90b5396e925b37a8da56"
+			],
+			"judgeInputDigest": "e2f4ca4bd48e0a5eadc707c5f35863772c745a248936d5300dd59dfff71afd8a",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"builderInputDigests": [
+				"a35a8fefe4fe35072748796c3861e767736cad7ddf373ae0e00e7735e2bd7d6f",
+				"edef735727d99c1cf3addd993e2a163702782a43d18535c8ce6335f857e56e6e"
+			],
+			"judgeInputDigest": "7694e126c7cab1ba0336e46a518ba1285cb2897f638b27525993b80b1bd80ef1",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"builderInputDigests": [
+				"d8eca28ca21a4c614a10fa5216739f896703e729a83df01df52f180c62774d6e"
+			],
+			"judgeInputDigest": "28ec81f499070bd9b57448dc897728526b0fd662ccb7430be7f52a5605c39801",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "python-style",
+			"builderInputDigests": [
+				"d075ac5eb2290929cbf2d0cf107508b075bed49a972175c26e8a125c8ae3c036"
+			],
+			"judgeInputDigest": "0e9afbc2ced1ce496db2b764bfe6db7ff821f7b968a32821dafffac28be32efa",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 6,
+		"judgeInferenceTasks": 4,
+		"reformulationInferenceTasks": 0,
+		"inputTokens": null,
+		"outputTokens": null,
+		"evalEvidenceGetCalls": 8
+	},
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"retrievalRank": 7,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 7
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				},
+				{
+					"ref": "contextstill:kn_24ts7hhdy7nf67al6mowjbyjcu",
+					"title": "review_document 完了時は review.completed フックイベントを発火し、失敗してもレビュー処理は止めない"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+					"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"retrievalRank": null,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": null
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				},
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_25iial3x72tpis2wdzhbjfarzm",
+					"title": "overview の dashboard 集約は各 domain を先に取得し、最終 checkedAt を最新時刻で決める"
+				},
+				{
+					"ref": "contextstill:kn_26dfuzwndrusudl3z774ccj66i",
+					"title": "unmanaged table は構造表示のみで、row 操作 API の対象にしない"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}

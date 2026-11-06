@@ -1,0 +1,85 @@
+{
+	"cases": [
+		{
+			"id": "treats-existing-as-absent",
+			"sourceTaskId": "no-secrets-in-logs",
+			"sourceCondition": "original-five-handle",
+			"sourceJudgeDigest": "d9282cc5a440b94bbbd87df5b988f1f05cf69da5b4fb63bc761976828918a14b",
+			"sourcePositiveScore": 8,
+			"sourcePositiveFlags": {
+				"treatsExistingAsAbsent": false,
+				"excessiveAbstention": false,
+				"appropriateGap": true
+			},
+			"inputDigest": "7d015b73f500e9306ee637397b701c4e97a4078825b58fcfe7c73e4bc0964236",
+			"recordContext": null,
+			"requestRef": "scenario-judge-negative:no-secrets-in-logs:treats-existing-as-absent",
+			"expectedRefsRetrieved": [],
+			"assembled": {
+				"kind": "ready",
+				"strategy": "provisional",
+				"usedRefs": [],
+				"missing": [],
+				"sections": [
+					{
+						"id": "read-confirm",
+						"body": "公式の専用 Skill はこのコーパスに存在しない。検索に出てきた候補は別用途なので、欠落を前提に探索手順を書く。"
+					},
+					{
+						"id": "isolated-experiment",
+						"body": "専用の公式手順が無いものとして、隔離した環境でログ出力を試し、秘密情報が出ないかを見る。"
+					},
+					{
+						"id": "observe",
+						"body": "出力に秘密情報が混ざるかを観察する。"
+					},
+					{
+						"id": "stop",
+						"body": "観察できなければ探索を止める。存在する公式 Skill を探す必要はない。"
+					}
+				],
+				"body": "公式の専用 Skill はこのコーパスに存在しない。検索に出てきた候補は別用途なので、欠落を前提に探索手順を書く。\n\n専用の公式手順が無いものとして、隔離した環境でログ出力を試し、秘密情報が出ないかを見る。\n\n出力に秘密情報が混ざるかを観察する。\n\n観察できなければ探索を止める。存在する公式 Skill を探す必要はない。"
+			},
+			"judge": {
+				"score": 2,
+				"expectedSkillUsed": false,
+				"treatsExistingAsAbsent": true,
+				"excessiveAbstention": false,
+				"appropriateGap": false,
+				"rationale": "期待 Skill（ログや応答へ秘密情報を出さない）は fixture に存在する。本文は公式の専用 Skill がコーパスに存在しないとして探索型 provisional を書いており、検索未到達を世界的な非存在として扱っている。適切な不足明示ではなく、偽の欠落探索なので低く評価する。expectedSkillUsed は false のまま、捏造した欠落を used とは数えない。"
+			}
+		},
+		{
+			"id": "excessive-abstention",
+			"sourceTaskId": "commit-no-secrets",
+			"sourceCondition": "original-five-handle",
+			"sourceJudgeDigest": "9fe570f7f383e616fad4230e8c9c42896dae2e60a0a75801828878ffee36d59d",
+			"sourcePositiveScore": 8,
+			"sourcePositiveFlags": {
+				"treatsExistingAsAbsent": false,
+				"excessiveAbstention": false,
+				"appropriateGap": false
+			},
+			"inputDigest": "20675c9979840c04c56abb3d7d0f3687746138a717750d6c37033453fa970a8d",
+			"recordContext": null,
+			"requestRef": "scenario-judge-negative:commit-no-secrets:excessive-abstention",
+			"expectedRefsRetrieved": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"assembled": {
+				"kind": "needs_input",
+				"strategy": null,
+				"usedRefs": [],
+				"sections": [],
+				"missing": ["秘密情報をコミットしない手順がまだ足りないため進めない"],
+				"body": ""
+			},
+			"judge": {
+				"score": 2,
+				"expectedSkillUsed": false,
+				"treatsExistingAsAbsent": false,
+				"excessiveAbstention": true,
+				"appropriateGap": false,
+				"rationale": "期待 Skill「Never commit secrets or local environment files」はこの回の検索 6 位に届いている。それにもかかわらず needs_input で秘密情報をコミットしない手順が足りないと拒んでおり、届いた根拠を使わず組み立てていない。過剰棄権であり、適切な不足明示ではない。"
+			}
+		}
+	]
+}

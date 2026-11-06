@@ -1,0 +1,62 @@
+[
+	{
+		"inputDigest": "9fe570f7f383e616fad4230e8c9c42896dae2e60a0a75801828878ffee36d59d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "期待 Skill「Never commit secrets or local environment files」が検索 6 位にあり、reuse としてその本文を使っている。届いた根拠を使った組み立てであり、棄権ではない。専用 Skill が無いとする探索にも、根拠到達下の needs_input にもなっていない。"
+		}
+	},
+	{
+		"inputDigest": "752c71c4dac21026f739e26ac84f4283e1270f423da719e96612cfd6a6bc9f5d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": false,
+			"rationale": "期待 Skill「Test in a Production Clone」が検索 1 位にあり、reuse としてその本文を使っている。届いた根拠の利用であり、適切な棄権・過剰棄権・偽の欠落探索のいずれでもない。"
+		}
+	},
+	{
+		"inputDigest": "d9282cc5a440b94bbbd87df5b988f1f05cf69da5b4fb63bc761976828918a14b",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": false,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true,
+			"rationale": "期待 ref はこの回の検索に無い。needs_input はログや HTTP 応答へ秘密情報を出さない手順を名指しし、今回の候補がコミット時の秘密情報や OAuth、見た目など別用途だと述べている。全世界に公式 Skill が無いとは書いておらず、探索型 provisional にもしていない。検索未到達を欠落軸の成功としては加点しない。"
+		}
+	},
+	{
+		"inputDigest": "f3018c29b857cf72f62680b34637ebcdd1646782ab57b41621b1029831268603",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": false,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true,
+			"rationale": "期待 ref はこの回の検索に無い。フックの bypass をせず直す手順を名指しし、開示した context_compile の verify 手順は git hook の bypass 可否には当てはまらないと区別している。候補集合の不適合を述べており、公式手順の非存在証明や探索 SKILL 化ではない。"
+		}
+	},
+	{
+		"inputDigest": "ba50aa48104848153e5e255e20529476f963fed7b047dce37aac90c02f4b095d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": false,
+			"treatsExistingAsAbsent": false,
+			"excessiveAbstention": false,
+			"appropriateGap": true,
+			"rationale": "期待 ref はこの回の検索に無い。このリポジトリのインデント幅を定めた既存 Skill が候補に見当たらないと述べ、本番クローン試験やタイポグラフィなど別用途を挙げている。世界非存在の主張や探索型 provisional ではなく、今回の検索集合での不足明示である。"
+		}
+	}
+]

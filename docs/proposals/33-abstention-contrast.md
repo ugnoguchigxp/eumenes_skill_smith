@@ -44,7 +44,7 @@ judge が偽の欠落探索や過剰棄権を適切な棄権と区別できな�
 
 ## 実装結果
 
-測定ハーネスを opt-in として実装した（`--abstention-contrast on --full` のときだけ）。既定の製品経路、baseline `buildInstructions`、`INSTRUCTION_VERSION`（`build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623`）、元 assemblyJudgeSchema、compose / absent judge は変更なし。品質採点と指示 delta の判断は親側で未実施（pending）。本実装は評点や SKILL 本文を作っていない。
+測定ハーネスを opt-in として採用した（`--abstention-contrast on --full` のときだけ）。既定の製品経路、baseline `buildInstructions`、`INSTRUCTION_VERSION`（`build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623`）、元 assemblyJudgeSchema、compose / absent judge は変更なし。既存の build 記録だけを対比 judge で採点し、新しい builder 出力は作っていない。指示変更は見送った。対比 judge の平均 8 は元 5 件の assembly judge 平均 4.2 の置き換えではない。
 
 ### 親の採点例
 
@@ -52,6 +52,18 @@ judge が偽の欠落探索や過剰棄権を適切な棄権と区別できな�
 PATH=/home/box/.bun/bin:$PATH bun examples/contextstill/scenario-eval.ts \
   --full --abstention-contrast on --search-profile handle \
   --build-records examples/contextstill/scenarios/build-records.json \
-  --judge-records data/contextstill/abstention/judge-records-original-five.json \
+  --judge-records examples/contextstill/scenarios/judge-records-abstention-original-five.json \
   --output-dir data/contextstill/abstention/original-five
 ```
+
+- **採点結果（対比 judge。元の assembly / compose judge の評点は変えていない）**:
+  - 元 5 件 handle: mean 8（8, 8, 8, 8, 8）。2 hit（commit-no-secrets rank 6、test-production-clone rank 1）は ready / reuse、expectedSkillUsed true、3 フラグとも false。3 miss（no-secrets-in-logs / no-hook-bypass / four-space-indent）は needs_input、expectedRefsRetrieved 空、appropriateGap true、treatsExistingAsAbsent / excessiveAbstention false。不足文は今回の候補の不適合を名指しし、世界非存在や探索型 provisional にはしていない。この 8 は元の assembly judge 平均 4.2（9, 9, 1, 1, 1）を置き換えない。検索未到達の 1 は expectedSkillUsed 側の比較用スライスのまま残す。
+  - compose natural handle: mean 8（8, 8, 8, 8）、4/4 needs_input、expectedSkillUsed false。fix-check-and-no-force / packed-offline-smoke / python-style は期待 ref が検索に無く appropriateGap true。secure-commit-and-logs だけコミット規則が 7 位に届き、ログ指針は届いていない。needs_input は届いた半分を開示済みと認め残りの半分を名指しした。不完全な compose を拒んだので excessiveAbstention は false。expectedRefsRetrieved が空でないため appropriateGap も false（3 フラグとも false）。treatsExistingAsAbsent は 4 件とも false。
+  - compose natural BM25: mean 8（8, 8, 8, 8）、4/4 ready / compose、expectedSkillUsed true、期待 ref が両方検索に届き両方使っている。3 フラグとも false。根拠到達時に組み立てている。
+  - provider の入出力トークンは null のまま（未測定）。
+- **負例**: 元 5 件 handle の正例を親が明示的に改変し、同じ対比 judge 指示 / schema で別 digest として採点した。正例の評点はコピーしていない。
+  - treats-existing-as-absent（元 no-secrets-in-logs の appropriateGap 8）: score 2、treatsExistingAsAbsent true、appropriateGap false。本文が公式専用 Skill はコーパスに存在しないとして探索型 provisional を書く。
+  - excessive-abstention（元 commit-no-secrets の ready / reuse 8）: score 2、excessiveAbstention true。期待 Skill が検索 6 位に届いているのに needs_input で拒む。
+  どちらも正例の 8 より低く、偽の欠落探索と過剰棄権を適切な棄権・根拠利用と区別できた。
+- **採否**: 測定ハーネスは採用（`--abstention-contrast on --full` のときだけ）。製品経路・baseline 指示は変えない。指示変更は不採用。現行指示は検索未到達で不足を名指しし（偽の欠落探索にしない）、根拠が揃えば組み立て、複合の片方だけなら残りの不足を名指しする。対比 judge の平均 8 を元 5 件 4.2 の改善とは呼ばない。提案 32 の欠落軸 mean 8 も、この検索未到達の成功としては数えない。
+- **記録**: `examples/contextstill/scenarios/scores-abstention-original-five.json`、`scores-abstention-compose-handle.json`、`scores-abstention-compose-bm25.json`、対応する `judge-records-abstention-*.json`、負例は `abstention-negatives.json` と `judge-records-abstention-negatives.json`。build 記録は既存のものを再利用した。
