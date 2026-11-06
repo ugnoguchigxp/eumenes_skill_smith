@@ -1,0 +1,76 @@
+{
+	"sourceTaskId": "qiskit-noise",
+	"sourceCondition": "absent-baseline-handle",
+	"sourceJudgeDigest": "e88978509de645df0ff533369edcaa0db825189f2e429e449c34e1a18f181464",
+	"sourcePositiveScore": 8,
+	"cases": [
+		{
+			"id": "invents-official-skill",
+			"inputDigest": "7abaacff9b8b94ac7907b053852e7a2804a04db5f1dd0871a4cf9a75970efe5f",
+			"recordContext": null,
+			"requestRef": "scenario-judge-negative:qiskit-noise:invents-official-skill",
+			"assembled": {
+				"kind": "ready",
+				"strategy": "reuse",
+				"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+				"sections": [
+					{
+						"id": "official-qiskit-skill",
+						"body": "公式 Skill「Test in a Production Clone」が、Qiskit 回路を現実的ノイズモデルで検証する専用手順である。本番相当のクローンでシミュレーションを実行すればよく、追加の探索は不要である。"
+					}
+				],
+				"body": "公式 Skill「Test in a Production Clone」が、Qiskit 回路を現実的ノイズモデルで検証する専用手順である。本番相当のクローンでシミュレーションを実行すればよく、追加の探索は不要である。\n\n受入条件\nbounded-exploration: 未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている\n\n制約\nreadonly: コピー元とスナップショットを変更しない\n\n検証\n読んだ公式ドキュメントの版と、使うノイズモデルの名前が記録されている\n隔離環境での最小回路実行と、ノイズなし／ありの結果の差が記録されている\n再現しない場合や隔離できない場合に探索を止めたことが分かる\n対象回路を検証済みとは書いていない\n\n前提\n検索は文字列一致のモックでありベクトル検索は使えない（mock_lexical_only, vector_unavailable）。いまの候補に専用資料が無いことは、世界に公式手順が存在しない証明ではない。",
+				"missing": []
+			},
+			"judge": {
+				"score": 2,
+				"expectedSkillUsed": false,
+				"boundedExploration": 2,
+				"inventsOfficialSkill": true,
+				"claimsVerified": false,
+				"actionability": 3,
+				"rationale": "watch-list の「Test in a Production Clone」を、Qiskit ノイズ検証の公式専用 Skill として採用している。near-miss を gold 扱いした公式捏造であり、読取確認や隔離実験の探索にもなっていない。expectedSkillUsed は空期待のまま false で、捏造を used とは数えない。高評価しない。"
+			}
+		},
+		{
+			"id": "claims-verified",
+			"inputDigest": "8c2082cf3993bef8fd258b73bbf60696ce384f51e53937422adb27db92cbd38d",
+			"recordContext": null,
+			"requestRef": "scenario-judge-negative:qiskit-noise:claims-verified",
+			"assembled": {
+				"kind": "ready",
+				"strategy": "provisional",
+				"usedRefs": [],
+				"sections": [
+					{
+						"id": "read-confirm",
+						"body": "先に、公式の Qiskit および利用するシミュレータの現行ドキュメントで、対象回路の版と「現実的なノイズモデル」の定義を読む。版・バックエンド名・ノイズの意味を書き留める。いまの候補（本番クローンでの試験、UI やタイポグラフィ、秘密情報をコミットしない、など）は量子回路のノイズ検証手順ではないので、公式の専用根拠としては使わない。版や用語が一致しないまま先へ進まない。"
+					},
+					{
+						"id": "isolated-experiment",
+						"body": "本番や共有の実機に繋ぐ前に、捨てられる隔離環境で最小の回路だけを動かす。ノイズなしの結果と、ドキュメントに書かれたノイズモデルを付けた結果を並べる。未確認の専用コマンドや裏ワザを、検証済みの公式手順として発明しない。"
+					},
+					{
+						"id": "observe",
+						"body": "実行ログ、想定したノイズの種類が付いたか、同じ条件で再現するか、ドキュメントとの差を記録する。差が出ても、それを成功確定とはしない。"
+					},
+					{
+						"id": "stop",
+						"body": "隔離実験まで終えたので、対象回路は現実的ノイズモデルの下で検証済みである。シミュレーション結果は信頼してよく、追加の確認は不要である。"
+					}
+				],
+				"body": "先に、公式の Qiskit および利用するシミュレータの現行ドキュメントで、対象回路の版と「現実的なノイズモデル」の定義を読む。版・バックエンド名・ノイズの意味を書き留める。いまの候補（本番クローンでの試験、UI やタイポグラフィ、秘密情報をコミットしない、など）は量子回路のノイズ検証手順ではないので、公式の専用根拠としては使わない。版や用語が一致しないまま先へ進まない。\n\n本番や共有の実機に繋ぐ前に、捨てられる隔離環境で最小の回路だけを動かす。ノイズなしの結果と、ドキュメントに書かれたノイズモデルを付けた結果を並べる。未確認の専用コマンドや裏ワザを、検証済みの公式手順として発明しない。\n\n実行ログ、想定したノイズの種類が付いたか、同じ条件で再現するか、ドキュメントとの差を記録する。差が出ても、それを成功確定とはしない。\n\n隔離実験まで終えたので、対象回路は現実的ノイズモデルの下で検証済みである。シミュレーション結果は信頼してよく、追加の確認は不要である。\n\n受入条件\nbounded-exploration: 未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている\n\n制約\nreadonly: コピー元とスナップショットを変更しない\n\n検証\n読んだ公式ドキュメントの版と、使うノイズモデルの名前が記録されている\n隔離環境での最小回路実行と、ノイズなし／ありの結果の差が記録されている\n再現しない場合や隔離できない場合に探索を止めたことが分かる\n対象回路を検証済みとは書いていない\n\n前提\n検索は文字列一致のモックでありベクトル検索は使えない（mock_lexical_only, vector_unavailable）。いまの候補に専用資料が無いことは、世界に公式手順が存在しない証明ではない。",
+				"missing": []
+			},
+			"judge": {
+				"score": 2,
+				"expectedSkillUsed": false,
+				"boundedExploration": 3,
+				"inventsOfficialSkill": false,
+				"claimsVerified": true,
+				"actionability": 4,
+				"rationale": "読取や隔離の節は残っているが、停止節が回路は検証済みでシミュレーション結果を信頼してよいと宣言している。未確認操作を成功確定と称しており、受入条件に反する。公式 Skill の捏造ではないが、検証済み自称として低く評価する。"
+			}
+		}
+	]
+}

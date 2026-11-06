@@ -1,0 +1,347 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-three-axis",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"assemblyMode": "baseline",
+		"queryReformulation": "off",
+		"reformulationInstructionsDigest": null,
+		"reformulationSchemaDigest": null,
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "absent",
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 4,
+	"scored": 4,
+	"meanScore": 8,
+	"statuses": [
+		{
+			"taskId": "qiskit-noise",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "zephyr-rollback",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "sigstore-offline",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "otel-ebpf",
+			"axis": "absent",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "qiskit-noise",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [],
+			"strategy": "provisional",
+			"kind": "ready",
+			"rationale": "専用の Qiskit ノイズ検証 Skill は期待されておらず、本文も公式専用 Skill を捏造していない。本番クローン試験などの watch-list を公式根拠にしていない。読取確認、隔離した最小回路、観測、停止条件があり、実施をもって検証済みとは書いていない。次に読むもの・隔離するもの・記録するもの・止める条件が実行できる。検索未到達の別軸成功としては加点していない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "zephyr-rollback",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [],
+			"strategy": "provisional",
+			"kind": "ready",
+			"rationale": "Zephyr / MCUBoot / nRF52840 の専用 Skill は期待に無く、本文も公式専用手順を捏造していない。キュー移行や本番クローンなどの近傍候補を rollback の公式根拠にしていない。先に公式文書を読み、唯一の本番デバイスでは試さず、起動ログを観察し、復旧経路が不明なら止める流れがある。rollback が安全だと検証済みとは書いていない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "sigstore-offline",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [],
+			"strategy": "provisional",
+			"kind": "ready",
+			"rationale": "Sigstore / Cosign のオフライン検証専用 Skill は期待に無く、本文も公式専用 Skill を捏造していない。Biome や UI などの近傍候補を公式根拠にしていない。信頼ルートを読む、隔離してオフラインの過不足を見る、確認できないときは成果物を信頼しない、確立済みとは書かない、という境界がある。探索の次の行動は実行できる。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "otel-ebpf",
+			"score": 8,
+			"expectedSkillUsed": false,
+			"retrievalRank": null,
+			"usedRefs": [],
+			"expectedRefs": [],
+			"strategy": "provisional",
+			"kind": "ready",
+			"rationale": "OpenTelemetry eBPF の専用 Skill は期待に無く、本文も公式専用 Skill を捏造していない。OAuth や本番クローンなどの近傍候補を計装の公式根拠にしていない。公式文書の確認、本番以外の複製での試行、オーバーヘッドと取得データの観察、測れないときの停止があり、計装が検証済みだとは書いていない。",
+			"judge": "llm"
+		}
+	],
+	"composeScores": [],
+	"absentScores": [
+		{
+			"taskId": "qiskit-noise",
+			"boundedExploration": 8,
+			"inventsOfficialSkill": false,
+			"claimsVerified": false,
+			"actionability": 8
+		},
+		{
+			"taskId": "zephyr-rollback",
+			"boundedExploration": 8,
+			"inventsOfficialSkill": false,
+			"claimsVerified": false,
+			"actionability": 8
+		},
+		{
+			"taskId": "sigstore-offline",
+			"boundedExploration": 8,
+			"inventsOfficialSkill": false,
+			"claimsVerified": false,
+			"actionability": 8
+		},
+		{
+			"taskId": "otel-ebpf",
+			"boundedExploration": 8,
+			"inventsOfficialSkill": false,
+			"claimsVerified": false,
+			"actionability": 8
+		}
+	],
+	"evidenceSupply": "natural",
+	"recordProvenance": [
+		{
+			"taskId": "qiskit-noise",
+			"builderInputDigests": [
+				"e87da4fd78c5e9b03455d35714b0144d227d5b13c0039eb6d74869a673fd3fbe"
+			],
+			"judgeInputDigest": "e88978509de645df0ff533369edcaa0db825189f2e429e449c34e1a18f181464",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "zephyr-rollback",
+			"builderInputDigests": [
+				"e2014b4a8259fdbddc314d78a43cdfd038190ef86f31543b83a57907c8a0245e"
+			],
+			"judgeInputDigest": "72ff58bd876911e3f32b30effcae2e6a9ef9cc11347b49b3f58bbd5667d75b82",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "sigstore-offline",
+			"builderInputDigests": [
+				"87e17c2522891e52f7d9edf0ecfde014c80f900d71ef59005cfb5149c38f3b66"
+			],
+			"judgeInputDigest": "1427dce5e60c9e1b66fadcbb24608087c47de1c771036df95d857e25c69db571",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "otel-ebpf",
+			"builderInputDigests": [
+				"59dcb3d74e20130fc74bedc3624195276e654af395a42557f9168ffaf969ea40"
+			],
+			"judgeInputDigest": "836b9793ed4b8227579681467de93780395763ba33d99591cea742a72ea4fc07",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 4,
+		"judgeInferenceTasks": 4,
+		"reformulationInferenceTasks": 0,
+		"inputTokens": null,
+		"outputTokens": null,
+		"evalEvidenceGetCalls": 0
+	},
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "qiskit-noise",
+			"retrievalRank": null,
+			"ranks": [],
+			"allRequiredHitAt8": null,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+					"title": "distillation runtime では親 Abort は fallback しない"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23etyorowknzkoxwqxztp5agiq",
+					"title": "Responsive UI の実装原則：ロジックの共通化と表示の適応分離"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				}
+			]
+		},
+		{
+			"taskId": "zephyr-rollback",
+			"retrievalRank": null,
+			"ranks": [],
+			"allRequiredHitAt8": null,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				},
+				{
+					"ref": "contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+					"title": "Label と annotation は運用上の意味を統一し、selector 変更を慎重に扱う"
+				},
+				{
+					"ref": "contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+					"title": "Web URL UploadではFormDataを使用し、ファイルをmultipart/form-dataで送信する"
+				},
+				{
+					"ref": "contextstill:kn_24u73k27hk62mnxhhu6irsab2y",
+					"title": "setup CLI と locale 対応 onboarding を追加した後は verify を通し、計画書の進捗も更新する"
+				}
+			]
+		},
+		{
+			"taskId": "sigstore-offline",
+			"retrievalRank": null,
+			"ranks": [],
+			"allRequiredHitAt8": null,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+					"title": "Biome は ESLint の完全な代替ではないため、厳密な要件には ESLint の併用を検討する"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+					"title": "context_compile の verify 失敗時は、関連テストを先に直してから全体 verify を再実行する"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				}
+			]
+		},
+		{
+			"taskId": "otel-ebpf",
+			"retrievalRank": null,
+			"ranks": [],
+			"allRequiredHitAt8": null,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+					"title": "ReportEditorPage のキャンバス外背景は濃いグレー系にする"
+				},
+				{
+					"ref": "contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+					"title": "実装計画書生成における Questionnaire Decisions の優先順位と検証スコープの決定"
+				},
+				{
+					"ref": "contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+					"title": "タイポグラフィは複合トークンとして管理する"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+					"title": "Queue migration の idempotency_key は旧 nullable ID ではなく安定 stringify した複合値を hash 化して作る"
+				},
+				{
+					"ref": "contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+					"title": "OAuth の token/revocation/introspection は Basic クライアント認証を必須にする"
+				},
+				{
+					"ref": "contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+					"title": "Treat Empty Project Roots As Valid New-Project Targets"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}
