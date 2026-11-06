@@ -14,4 +14,8 @@ export {
 	validateSkillMarkdown,
 	skillName,
 } from "./service/skill-markdown.js";
-export type { SkillArtifact, SkillReply } from "./service/skill-markdown.js";
+export type {
+	SkillArtifact,
+	SkillMarkdownOptions,
+	SkillReply,
+} from "./service/skill-markdown.js";

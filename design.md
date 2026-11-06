@@ -624,3 +624,21 @@ host/CLI and scenario runner. This keeps persisted content, judge inputs and his
 record digests byte-equivalent while making final build delivery Markdown. It reuses
 getValidated authorization and enforces the same request outputBytes on the final reply.
 Existing integrations must select this new final boundary when distributing skills.
+
+### 21.1 SKILL.md body excludes transport envelopes (2026-11-07)
+
+Reuse previously pasted the selected evidence body verbatim; for ContextStill that body is
+the source JSON document (contractVersion, trust, handle, scores, timestamps, `_fixture`
+digest, fixtureLimitations), which is meaningless to a SKILL.md reader. Only the final
+renderer changes: the assembled body is split deterministically (host policy prefix, main
+instructions, and the host tail shared with `buildContent` via `bodyTail`, byte-identical),
+and acceptance/constraints/verification/assumptions render as their own Markdown sections.
+For reuse only, an optional port `skillMarkdown.sourceMarkdown(body)` extracts usable text;
+the ContextStill example renders `body` and non-empty rationale, steps, appliesWhen,
+notAppliesWhen, exceptions, examples (episodes: intent…openQuestions) by fixed field
+mapping, with no model call or keyword branching; non-envelope bodies pass through. Compose,
+adapt and provisional bodies are already model/host text and are rendered unchanged.
+Provenance becomes a `Sources` list of `title (ref)`. Trust class, digests, timestamps,
+confidence and fixture metadata stay in the internal JSON Build (unchanged digest/schema,
+judge inputs). Rendered source text is still reference data, not verified execution; it is
+not given more authority than the build's reuse decision already gave it.

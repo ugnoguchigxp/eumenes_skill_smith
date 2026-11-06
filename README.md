@@ -66,7 +66,7 @@ Non-ready responses preserve their question/error and have no skill artifact.
 `renderSkillMarkdown(build.content, optionalName)` and `validateSkillMarkdown(text,
 optionalDirectoryName)` are public deterministic helpers. Rendering needs the assembled
 build, not bare decision JSON: reuse sections are empty, but the assembled body includes
-the selected source skill. Provenance and assumption status are Markdown body data.
+the selected source skill. Sources (title + ref) and assumption status are Markdown body data; source JSON envelopes are not pasted (see `skillMarkdown` port).
 Provisional instructions are explicitly unverified; validation checks format, not quality.
 
 `bun run context:task DB QUERY RECORDS OUTPUT_DIR` writes a successful build to

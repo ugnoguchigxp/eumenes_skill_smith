@@ -296,3 +296,57 @@ test("final delivery revalidates external sources before disclosing a skill", as
 	if (result.kind === "rejected") expect(result.code).toBe("source_revoked");
 	expect("skill" in result).toBe(false);
 });
+
+test("reuse renders through deterministic sourceMarkdown; envelope stays in internal build", async () => {
+	const f = fixture();
+	f.setDecision({
+		kind: "ready",
+		strategy: "reuse",
+		sourceRefs: ["skill:compare@1"],
+		sections: [],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["Check source."],
+		assumptions: [],
+	});
+	const reply = await finalReady(f);
+	const source = "資料の正本を確認し、差異の根拠を対応付ける。";
+	const envelope = JSON.stringify({
+		contractVersion: "x.v1",
+		trust: { trustClass: "untrusted" },
+		item: { body: source },
+		_fixture: { digest: "d" },
+	});
+	const content = structuredClone(reply.build.content);
+	content.body = content.body.replace(source, envelope);
+	const seen: string[] = [];
+	const skill = renderSkillMarkdown(content, undefined, {
+		sourceMarkdown: (body) => {
+			seen.push(body);
+			return (JSON.parse(body) as { item: { body: string } }).item.body;
+		},
+	});
+	expect(seen).toEqual([envelope]);
+	expect(skill.content).toContain(source);
+	for (const s of ['{"contractVersion', "_fixture", "trustClass", '"trust"'])
+		expect(skill.content).not.toContain(s);
+	expect(skill.content).toContain("## Sources\n");
+	expect(skill.content).toContain("- 比較 (`skill:compare@1`)");
+	expect(skill.content).not.toContain("受入条件\n");
+	expect(content.body).toContain(envelope);
+	expect(() =>
+		renderSkillMarkdown({ ...content, body: content.body + "x" }),
+	).toThrow("skill_body_unrecognized");
+});
+
+test("compose and provisional never invoke sourceMarkdown", async () => {
+	const f = fixture();
+	const reply = await finalReady(f);
+	expect(reply.build.content.decision.strategy).not.toBe("reuse");
+	const skill = renderSkillMarkdown(reply.build.content, undefined, {
+		sourceMarkdown: () => {
+			throw new Error("must_not_call");
+		},
+	});
+	expect(skill.content).toContain("## Instructions\n");
+});

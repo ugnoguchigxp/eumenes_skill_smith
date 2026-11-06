@@ -100,6 +100,22 @@ export function checkDecision(
 		rejectDisclosedBodyRewrite(decision, evidence);
 	return selected;
 }
+/** Host-appended acceptance/constraints/verification/assumptions blocks (shared with SKILL.md rendering). */
+export function bodyTail(
+	task: Build["content"]["task"],
+	d: Pick<ReadyDecision, "verification" | "assumptions">,
+): string[] {
+	return [
+		"受入条件\n" + task.acceptance.map((c) => c.id + ": " + c.text).join("\n"),
+		task.constraints.length
+			? "制約\n" + task.constraints.map((c) => c.id + ": " + c.text).join("\n")
+			: "",
+		"検証\n" + d.verification.join("\n"),
+		d.assumptions.length
+			? "前提\n" + d.assumptions.map((a) => a.text).join("\n")
+			: "",
+	].filter(Boolean);
+}
 export function buildContent(
 	p: Prepared,
 	d: ReadyDecision,
@@ -120,16 +136,7 @@ export function buildContent(
 	body = [
 		!p.policy.alreadyPresent ? p.policy.body : "",
 		body,
-		"受入条件\n" +
-			request.task.acceptance.map((c) => c.id + ": " + c.text).join("\n"),
-		request.task.constraints.length
-			? "制約\n" +
-				request.task.constraints.map((c) => c.id + ": " + c.text).join("\n")
-			: "",
-		"検証\n" + d.verification.join("\n"),
-		d.assumptions.length
-			? "前提\n" + d.assumptions.map((a) => a.text).join("\n")
-			: "",
+		...bodyTail(request.task, d),
 	]
 		.filter(Boolean)
 		.join("\n\n");

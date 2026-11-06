@@ -1,3 +1,4 @@
+import { contextStillSkillMarkdown } from "./skill-source.js";
 import { Database } from "bun:sqlite";
 import { createSkillSmith } from "../../src/index.js";
 import { migrations, sqliteRepository } from "../../src/sqlite/index.js";
@@ -154,6 +155,7 @@ export function createExampleHost(
 		now: () => fixedNow,
 		id: () => crypto.randomUUID(),
 		assemblyMode: options.assemblyMode ?? "baseline",
+		skillMarkdown: contextStillSkillMarkdown,
 	};
 	const service = createSkillSmith(ports);
 	const write = <T>(op: () => T) => db.transaction(op)();

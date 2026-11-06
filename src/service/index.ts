@@ -477,7 +477,11 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		if (result.kind !== "ready") return result;
 		const final = {
 			...result,
-			skill: renderSkillMarkdown(result.build.content),
+			skill: renderSkillMarkdown(
+				result.build.content,
+				undefined,
+				p.skillMarkdown,
+			),
 		};
 		return read((tx) => {
 			const row = repo.request(tx, ref);

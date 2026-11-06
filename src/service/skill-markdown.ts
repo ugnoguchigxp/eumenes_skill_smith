@@ -1,5 +1,6 @@
 import { YAML } from "bun";
 import type { Build, Reply } from "../contracts/types.js";
+import { bodyTail } from "./build.js";
 import { digest, requireThat } from "./identity.js";
 
 export type SkillReply =
@@ -73,10 +74,36 @@ export function validateSkillMarkdown(
 	requireThat(match[2]!.trim().length > 0, "skill_body_empty");
 }
 
-/** Render the host-assembled body: reuse already includes the actual selected source body. */
+export interface SkillMarkdownOptions {
+	/**
+	 * Deterministic, source-specific extraction of human/agent-usable text from one
+	 * retrieved source body (reuse). Must not call models or classify meaning; transport
+	 * envelopes/trust/digest metadata stay in the internal JSON build only.
+	 */
+	sourceMarkdown?: (body: string) => string;
+}
+
+/** Split the assembled body into host policy, main instructions and the host tail. */
+function mainInstructions(build: Build["content"]): string {
+	const prefix = build.policy.alreadyPresent ? "" : build.policy.body;
+	const tail = bodyTail(build.task, build.decision).join("\n\n");
+	let body = build.body;
+	if (prefix) {
+		requireThat(body.startsWith(prefix), "skill_body_unrecognized");
+		body = body.slice(prefix.length).replace(/^\n\n/, "");
+	}
+	requireThat(body.endsWith(tail), "skill_body_unrecognized");
+	return body.slice(0, body.length - tail.length).replace(/\n\n$/, "");
+}
+
+const list = (items: string[], ordered = false) =>
+	items.map((t, i) => `${ordered ? `${i + 1}.` : "-"} ${t}`).join("\n");
+
+/** Render the final SKILL.md from the assembled build; JSON envelopes are never pasted. */
 export function renderSkillMarkdown(
 	build: Build["content"],
 	name = skillName(build.task.goal),
+	options: SkillMarkdownOptions = {},
 ): SkillArtifact {
 	requireThat(validName(name), "skill_name_invalid");
 	requireThat(build.body.trim().length > 0, "skill_body_empty");
@@ -85,28 +112,47 @@ export function renderSkillMarkdown(
 	requireThat(goal.length > 0, "skill_description_invalid");
 	const shortGoal = goal.length > 470 ? goal.slice(0, 469) + "…" : goal;
 	const description = `Provides instructions for this task: ${shortGoal}\nUse when asked to carry out this task.`;
+	let main = mainInstructions(build);
+	if (d.strategy === "reuse" && options.sourceMarkdown)
+		main = options.sourceMarkdown(main);
+	const policy = build.policy.alreadyPresent ? "" : build.policy.body;
+	const instructions = [policy, main].filter((t) => t.trim()).join("\n\n");
+	requireThat(instructions.trim().length > 0, "skill_body_empty");
+	const titles = new Map(build.dependencies.map((x) => [x.ref, x.title]));
+	const { acceptance, constraints } = build.task;
 	const body = [
 		`# ${name}`,
 		d.strategy === "provisional"
 			? "> PROVISIONAL / UNVERIFIED: exploratory guidance, not an official or execution-verified skill. Validate assumptions and perform the checks below before relying on it."
 			: "",
-		"## Instructions and checks\n\n" + build.body,
-		"## Verification\n\n" +
-			d.verification.map((v, i) => `${i + 1}. ${v}`).join("\n"),
-		"## Provenance\n\nStrategy: " +
-			d.strategy +
-			". Source references are provenance, not proof of successful execution.\n\n" +
+		"## Instructions\n\n" + instructions,
+		acceptance.length
+			? "## Acceptance criteria\n\n" +
+				list(acceptance.map((c) => `${c.id}: ${c.text}`))
+			: "",
+		constraints.length
+			? "## Constraints\n\n" +
+				list(constraints.map((c) => `${c.id}: ${c.text}`))
+			: "",
+		"## Verification\n\n" + list(d.verification, true),
+		"## Sources\n\n" +
+			`Strategy: ${d.strategy}. Sources are reference data, not proof of successful execution.\n\n` +
 			(d.sourceRefs.length
-				? d.sourceRefs.map((ref) => "- " + JSON.stringify(ref)).join("\n")
+				? list(
+						d.sourceRefs.map((ref) => {
+							const title = titles.get(ref);
+							return title ? `${title} (\`${ref}\`)` : `\`${ref}\``;
+						}),
+					)
 				: "No source references; this guidance is not grounded in a retrieved official skill."),
 		"## Assumptions\n\n" +
 			(d.assumptions.length
-				? d.assumptions
-						.map(
+				? list(
+						d.assumptions.map(
 							(a) =>
-								`- ${a.text} (mandatory: ${a.mandatory}; resolved: ${a.resolved})`,
-						)
-						.join("\n")
+								`${a.text} (mandatory: ${a.mandatory}; resolved: ${a.resolved})`,
+						),
+					)
 				: "No assumptions recorded; this is not a claim that all conditions have been verified."),
 	]
 		.filter(Boolean)

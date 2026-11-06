@@ -130,6 +130,8 @@ export interface Ports<Tx> {
 	limits?: Partial<ServiceLimits>;
 	/** Opt-in assembly path (proposal 36). Omitted means baseline. */
 	assemblyMode?: "baseline" | "compact";
+	/** Final SKILL.md rendering only; deterministic source-body extraction (no model calls). */
+	skillMarkdown?: import("../service/skill-markdown.js").SkillMarkdownOptions;
 }
 export interface ObservedUsage {
 	inputTokens: number | null;

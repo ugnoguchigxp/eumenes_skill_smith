@@ -51,6 +51,9 @@ test("full runner emits validated build files per task even while judge replay i
 		expect(files).toHaveLength(1);
 		const text = readFileSync(files[0]!, "utf8");
 		expect(text).toContain("PROVISIONAL / UNVERIFIED");
+		for (const s of ['{"contractVersion', "_fixture", "trustClass"])
+			expect(text).not.toContain(s);
+		expect(text).toContain("## Instructions\n");
 		expect(() => validateSkillMarkdown(text)).not.toThrow();
 	} finally {
 		fixture.close();

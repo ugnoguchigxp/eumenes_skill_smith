@@ -138,3 +138,14 @@ host/CLI and scenario runner. This keeps persisted content, judge inputs and his
 record digests byte-equivalent while making final build delivery Markdown. It reuses
 getValidated authorization and enforces the same request outputBytes on the final reply.
 Existing integrations must select this new final boundary when distributing skills.
+
+### 5.1 SKILL.md body content (2026-11-07)
+
+- SKILL.md must not contain source transport envelopes or trust/digest/timestamp/confidence
+  metadata; those remain in internal `build`. Sections: Instructions, Acceptance criteria,
+  Constraints, Verification, Sources (`title (ref)` per sourceRef), Assumptions.
+- `Ports.skillMarkdown.sourceMarkdown(body)` (optional) is applied to the reuse source body
+  only, must be deterministic field extraction (no LLM, no semantic classification), and
+  return non-empty Markdown. Without it the reuse body is rendered as-is.
+- The renderer recomputes the host tail exactly; an assembled body that does not match
+  fails closed with `skill_body_unrecognized`.
