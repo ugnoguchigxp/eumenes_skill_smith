@@ -43,6 +43,140 @@ export const scenarioSuiteSchema = z.strictObject({
 });
 export type ScenarioSuite = z.infer<typeof scenarioSuiteSchema>;
 
+const acceptance = z
+	.array(z.strictObject({ id, text: z.string().trim().min(1).max(8000) }))
+	.min(1)
+	.max(32);
+const typedBase = {
+	id,
+	goal: z.string().trim().min(1).max(8000),
+	acceptance,
+	tags: z.array(id).max(16).optional(),
+	notes: z.string().trim().min(1).max(4000).optional(),
+};
+
+/** Proposal 26: typed three-axis task. Gold labels are for scoring/judge only, never the builder. */
+export const typedScenarioTaskSchema = z.discriminatedUnion("axis", [
+	z.strictObject({
+		...typedBase,
+		axis: z.literal("retrieval"),
+		queryStyle: z.enum(["original", "exact", "en", "jp"]),
+		expectedRefs: z.array(id).min(1).max(8),
+		expectedTitles: z.array(z.string().trim().min(1).max(512)).min(1).max(8),
+	}),
+	z.strictObject({
+		...typedBase,
+		axis: z.literal("compose"),
+		expectedRefs: z.array(id).min(2).max(8),
+		expectedTitles: z.array(z.string().trim().min(1).max(512)).min(2).max(8),
+	}),
+	z.strictObject({
+		...typedBase,
+		axis: z.literal("absent"),
+		expectedRefs: z.array(id).max(0),
+		expectedTitles: z.array(z.string()).max(0),
+		/** Watch-list only: lexical near misses, not gold and not scored as recall. */
+		nearestFalseFriendRefs: z.array(id).max(32).default([]),
+	}),
+]);
+export type TypedScenarioTask = z.infer<typeof typedScenarioTaskSchema>;
+
+export const typedScenarioSuiteSchema = z.strictObject({
+	id,
+	provenance: z.string().trim().min(1).max(2000).optional(),
+	tasks: z.array(typedScenarioTaskSchema).min(1).max(64),
+});
+
+export type ScenarioAxis = TypedScenarioTask["axis"];
+export type QueryStyle = "original" | "exact" | "en" | "jp";
+
+/** Internal normalized task. `legacy` keeps the old judge payload byte-identical for replay. */
+export interface NormalizedScenarioTask {
+	id: string;
+	axis: ScenarioAxis;
+	queryStyle: QueryStyle | null;
+	goal: string;
+	acceptance: { id: string; text: string }[];
+	expectedRefs: string[];
+	expectedTitles: string[];
+	nearestFalseFriendRefs: string[];
+	tags: string[];
+	legacy: ScenarioTask | null;
+}
+
+/** Accept the old 5-task schema or the typed three-axis schema. */
+export function parseAnyScenarioSuite(raw: unknown): {
+	id: string;
+	format: "legacy" | "typed";
+	tasks: NormalizedScenarioTask[];
+} {
+	const legacy = scenarioSuiteSchema.safeParse(raw);
+	if (legacy.success)
+		return {
+			id: legacy.data.id,
+			format: "legacy",
+			tasks: legacy.data.tasks.map((task) => ({
+				id: task.id,
+				axis: "retrieval",
+				queryStyle: "original",
+				goal: task.goal,
+				acceptance: task.acceptance,
+				expectedRefs: task.expectedRefs,
+				expectedTitles: [task.expectedTitle],
+				nearestFalseFriendRefs: [],
+				tags: ["comparison-slice"],
+				legacy: task,
+			})),
+		};
+	const typed = typedScenarioSuiteSchema.parse(raw);
+	return {
+		id: typed.id,
+		format: "typed",
+		tasks: typed.tasks.map((task) => ({
+			id: task.id,
+			axis: task.axis,
+			queryStyle: task.axis === "retrieval" ? task.queryStyle : null,
+			goal: task.goal,
+			acceptance: task.acceptance,
+			expectedRefs: task.expectedRefs,
+			expectedTitles: task.expectedTitles,
+			nearestFalseFriendRefs:
+				task.axis === "absent" ? task.nearestFalseFriendRefs : [],
+			tags: task.tags ?? [],
+			legacy: null,
+		})),
+	};
+}
+
+/** What the builder may see. Gold labels (axis, expected refs/titles) are excluded by construction. */
+export function builderView(task: NormalizedScenarioTask): {
+	goal: string;
+	acceptance: { id: string; text: string }[];
+} {
+	return { goal: task.goal, acceptance: task.acceptance };
+}
+
+/** 1-based rank of every expected ref; null when not returned. */
+export function refRanks(
+	cards: { ref: string }[],
+	expectedRefs: string[],
+): { ref: string; rank: number | null }[] {
+	const refs = cards.map((card) => card.ref);
+	return expectedRefs.map((ref) => {
+		const index = refs.indexOf(ref);
+		return { ref, rank: index < 0 ? null : index + 1 };
+	});
+}
+
+/** True only if every expected ref ranks within k. null (N/A) when nothing is expected (absent axis). */
+export function allRequiredHit(
+	ranks: { rank: number | null }[],
+	k: number,
+): boolean | null {
+	if (!ranks.length) return null;
+	return ranks.every((item) => item.rank !== null && item.rank <= k);
+}
+
 export function retrievalRank(
 	cards: { ref: string }[],
 	expectedRefs: string[],
@@ -70,7 +204,7 @@ export const judgeOutputSchema = {
 } as const;
 
 export function judgeData(input: {
-	task: ScenarioTask;
+	task: ScenarioTask | NormalizedScenarioTask;
 	retrievalRank: number | null;
 	retrieved: { ref: string; title: string }[];
 	usedRefs: string[];
@@ -81,13 +215,32 @@ export function judgeData(input: {
 	missing?: string[];
 }) {
 	return {
-		task: {
-			id: input.task.id,
-			goal: input.task.goal,
-			acceptance: input.task.acceptance,
-			expectedRefs: input.task.expectedRefs,
-			expectedTitle: input.task.expectedTitle,
-		},
+		// Legacy tasks keep the exact old payload so recorded judge digests still replay.
+		task:
+			"expectedTitle" in input.task
+				? {
+						id: input.task.id,
+						goal: input.task.goal,
+						acceptance: input.task.acceptance,
+						expectedRefs: input.task.expectedRefs,
+						expectedTitle: input.task.expectedTitle,
+					}
+				: input.task.legacy
+					? {
+							id: input.task.legacy.id,
+							goal: input.task.legacy.goal,
+							acceptance: input.task.legacy.acceptance,
+							expectedRefs: input.task.legacy.expectedRefs,
+							expectedTitle: input.task.legacy.expectedTitle,
+						}
+					: {
+							id: input.task.id,
+							axis: input.task.axis,
+							goal: input.task.goal,
+							acceptance: input.task.acceptance,
+							expectedRefs: input.task.expectedRefs,
+							expectedTitles: input.task.expectedTitles,
+						},
 		retrievalRank: input.retrievalRank,
 		retrieved: input.retrieved,
 		assembled: {
@@ -102,7 +255,7 @@ export function judgeData(input: {
 }
 
 export function scoreFromJudge(
-	task: ScenarioTask,
+	task: { id: string; expectedRefs: string[] },
 	facts: {
 		retrievalRank: number | null;
 		usedRefs: string[];

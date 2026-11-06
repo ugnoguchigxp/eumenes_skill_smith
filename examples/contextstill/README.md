@@ -44,6 +44,18 @@ bun run context:eval-scenarios
 
 推論記録が足りない場合は `data/contextstill/scenario-build-pending.json` または `scenario-judge-pending.json` を書き、終了コード 2 で待ちます。記録を `examples/contextstill/scenarios/build-records.json` と `judge-records.json` に足して再実行すると、毎回評点を標準出力と `scenarios/scores.json` に出します。検索は lexical かつ handle 順のため、期待Skillが候補に入らない課題は低得点になり得ます。それは検索品質の事実であり、固定出力で埋めません。
 
+二つのモードがあります（提案 26）。
+
+- `--retrieval-only`: SourcePort の検索だけを呼び、推論は 0 回です。期待 ref ごとの順位、全 ref が 8 位以内か（`allRequiredHitAt8`）、診断用の 20 位以内を出します。LLM 評点は出しません。absent 軸は N/A です。
+- 既定（full）: 製品実行、recordedInference、記録済み LLM judge で 0〜10 を出します。一件でも未採点なら平均を出さず、課題ごとの状態を出して終了コード 2 にします。
+
+```sh
+bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
+bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --axis compose
+```
+
+`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
+
 ## コピー内容と更新
 
 これは元DBファイルの丸ごと複製ではなく、公開範囲の論理コピーです。2026-11-06に、ContextStillの版 `dd365e96115903626254a3d445ed5e097210a194` を参照し、知識6,957件・経験843件、42,860,544 bytesを保存しました。現在のコピーでは公開対象外の行を除いているため、元DBの全件数とは異なります。
@@ -78,7 +90,7 @@ bun run context:snapshot --source /absolute/path/context-still.sqlite3 --dest /a
 | `source.ts` | 疑似MCPをSkillSmithのSourcePortへ接続する試験用adapter |
 | `host.ts` | 一時SQLite、固定モデル、試験用権限・jobによるホスト例 |
 | `check.ts` | コピー済みデータでの通し確認。通信・listenを禁止 |
-| `scenario-eval.ts` / `scenarios/` | 公開seed上のタスクシナリオ。recorded-inferenceでSkillを組み立て、LLMが毎回評点する |
+| `scenario-eval.ts` / `scenario-runner.ts` / `scenarios/` | 公開seed上のタスクシナリオ。retrieval-only は検索順位だけ、full は recorded-inferenceでSkillを組み立てLLMが評点する。`suite-3axis.json` は検索・複合・欠落の 61 件 |
 | `test/` | 合成データ、コピー処理、公開範囲、契約、変更検知、保存結合の固定試験 |
 
 利用例は次のとおりです。`transport` を注入し、HTTPサーバーを起動せずにAPI境界を検査します。

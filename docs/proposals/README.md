@@ -27,3 +27,4 @@
 - `23-cache-identity-timeseries.md`: deadline と生成器互換性を分離した cache 時系列
 - `24-proposal-bound-verification.md`: 元 build 成功と候補検証の分離
 - `25-snapshot-safe-workflow.md`: snapshot 型 workflow と観測付き成否対比
+- `26-three-axis-scenario-runner.md`: 検索・複合・欠落の typed suite と retrieval-only / full 二モード runner

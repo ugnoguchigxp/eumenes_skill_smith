@@ -1,0 +1,1005 @@
+{
+	"id": "seed-three-axis",
+	"provenance": "Synthetic seed-derived verification scenarios; not proposal01/16 real-user pilot; no new LLM scores",
+	"tasks": [
+		{
+			"id": "commit-no-secrets",
+			"axis": "retrieval",
+			"goal": "I need to commit my work, but the working tree contains a .env file and API keys. How should I avoid committing secrets or local environment files?",
+			"acceptance": [
+				{
+					"id": "no-secrets",
+					"text": "コミット対象から .env と秘密情報を除く具体的な進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitles": ["Never commit secrets or local environment files"],
+			"tags": ["original-five", "comparison-slice"],
+			"notes": "Original goal preserved unchanged.",
+			"queryStyle": "original"
+		},
+		{
+			"id": "test-production-clone",
+			"axis": "retrieval",
+			"goal": "Test these changes in a production clone before we release.",
+			"acceptance": [
+				{
+					"id": "clone-test",
+					"text": "本番相当の複製環境でテストしてからリリースする進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitles": ["Test in a Production Clone"],
+			"tags": ["original-five", "comparison-slice"],
+			"notes": "Original goal preserved unchanged.",
+			"queryStyle": "original"
+		},
+		{
+			"id": "no-secrets-in-logs",
+			"axis": "retrieval",
+			"goal": "Make sure the app never prints secrets into logs or HTTP responses.",
+			"acceptance": [
+				{
+					"id": "no-print",
+					"text": "ログとレスポンスに秘密情報を出さない進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitles": ["Never print secrets into logs or responses"],
+			"tags": ["original-five", "comparison-slice"],
+			"notes": "Original goal preserved unchanged.",
+			"queryStyle": "original"
+		},
+		{
+			"id": "no-hook-bypass",
+			"axis": "retrieval",
+			"goal": "pre-commit verify failed. Should I bypass the hooks to push anyway?",
+			"acceptance": [
+				{
+					"id": "fix-first",
+					"text": "フックを bypass せず、失敗した verify を直してから進める判断が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks"
+			],
+			"tags": ["original-five", "comparison-slice"],
+			"notes": "Original goal preserved unchanged.",
+			"queryStyle": "original"
+		},
+		{
+			"id": "four-space-indent",
+			"axis": "retrieval",
+			"goal": "When editing this repository, how many spaces should indentation use?",
+			"acceptance": [
+				{
+					"id": "indent",
+					"text": "インデント幅の決め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitles": ["Use 4-Space Indentation"],
+			"tags": ["original-five", "comparison-slice"],
+			"notes": "Original ambiguous scope preserved for comparison: seed body applies to Python, not arbitrary repositories. Do not judge blind 4-space enforcement as correct.",
+			"queryStyle": "original"
+		},
+		{
+			"id": "retrieval-23jihz-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never commit secrets or local environment files",
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitles": ["Never commit secrets or local environment files"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-23jihz-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Keep API keys and .env out of version control.",
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitles": ["Never commit secrets or local environment files"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-23jihz-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "APIキーや環境設定ファイルをコミットに含めないようにする。",
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitles": ["Never commit secrets or local environment files"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-224yjd-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Test in a Production Clone",
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitles": ["Test in a Production Clone"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-224yjd-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Validate the release against a replica of the production environment.",
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitles": ["Test in a Production Clone"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-224yjd-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "リリース前に本番環境の複製で変更を試験する。",
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitles": ["Test in a Production Clone"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4pfru3-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never print secrets into logs or responses",
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitles": ["Never print secrets into logs or responses"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4pfru3-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Redact credentials before writing diagnostic output or returning HTTP payloads.",
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitles": ["Never print secrets into logs or responses"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4pfru3-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "ログやHTTP応答に秘密情報を出力せず、認証情報をマスキングする。",
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitles": ["Never print secrets into logs or responses"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-b2qt6s-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Fix pre-commit verify failures instead of bypassing hooks",
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-b2qt6s-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Repair a failing pre-commit check before retrying the commit without bypass flags.",
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-b2qt6s-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "コミット前フックで検証が失敗したら、回避せず原因を修正して再試行する。",
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-fmgsj5-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Use 4-Space Indentation",
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitles": ["Use 4-Space Indentation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-fmgsj5-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Indent Python source with four spaces rather than tabs.",
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitles": ["Use 4-Space Indentation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-fmgsj5-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "Pythonのコードの字下げはタブでなくスペース四つを使う。",
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitles": ["Use 4-Space Indentation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2jrkfp-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never force push without explicit approval",
+			"expectedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"expectedTitles": ["Never force push without explicit approval"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2jrkfp-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Ask for permission before overwriting remote git history.",
+			"expectedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"expectedTitles": ["Never force push without explicit approval"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2jrkfp-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "リモートの履歴を強制プッシュで上書きする前に明示的な許可を得る。",
+			"expectedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"expectedTitles": ["Never force push without explicit approval"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2xsdjd-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never weaken redaction to simplify debugging",
+			"expectedRefs": ["contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"],
+			"expectedTitles": ["Never weaken redaction to simplify debugging"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2xsdjd-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Keep credential masking enabled even while debugging.",
+			"expectedRefs": ["contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"],
+			"expectedTitles": ["Never weaken redaction to simplify debugging"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2xsdjd-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "デバッグのためでも秘密情報の秘匿処理を弱めない。",
+			"expectedRefs": ["contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"],
+			"expectedTitles": ["Never weaken redaction to simplify debugging"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4f7bhy-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Validate Hook Changes End-to-End",
+			"expectedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"expectedTitles": ["Validate Hook Changes End-to-End"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4f7bhy-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Exercise modified hooks through the complete execution flow.",
+			"expectedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"expectedTitles": ["Validate Hook Changes End-to-End"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4f7bhy-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "フックを変更したら実際の処理経路を通して検証する。",
+			"expectedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"expectedTitles": ["Validate Hook Changes End-to-End"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6j6ieb-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never run destructive git reset without explicit user request",
+			"expectedRefs": ["contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"],
+			"expectedTitles": [
+				"Never run destructive git reset without explicit user request"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6j6ieb-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Obtain explicit permission before a destructive git reset.",
+			"expectedRefs": ["contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"],
+			"expectedTitles": [
+				"Never run destructive git reset without explicit user request"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6j6ieb-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "破壊的なgitリセットは利用者の明示的な依頼がない限り実行しない。",
+			"expectedRefs": ["contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"],
+			"expectedTitles": [
+				"Never run destructive git reset without explicit user request"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-7bkw42-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Never modify generated lockfiles casually",
+			"expectedRefs": ["contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"],
+			"expectedTitles": ["Never modify generated lockfiles casually"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-7bkw42-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Do not edit generated dependency lock files without a reason.",
+			"expectedRefs": ["contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"],
+			"expectedTitles": ["Never modify generated lockfiles casually"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-7bkw42-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "自動生成された依存関係のロックファイルを安易に変更しない。",
+			"expectedRefs": ["contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"],
+			"expectedTitles": ["Never modify generated lockfiles casually"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6tvplq-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Smoke tests must not implicitly call live providers",
+			"expectedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"expectedTitles": ["Smoke tests must not implicitly call live providers"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6tvplq-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Make smoke checks deterministic and independent of external model credentials.",
+			"expectedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"expectedTitles": ["Smoke tests must not implicitly call live providers"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-6tvplq-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "スモークテストは外部プロバイダや認証情報がなくても決定的に実行できるようにする。",
+			"expectedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"expectedTitles": ["Smoke tests must not implicitly call live providers"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-3codmb-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Use ABI3 for resilient Python extension builds",
+			"expectedRefs": ["contextstill:kn_3codmb7qiibcmoicukynrht4ni"],
+			"expectedTitles": ["Use ABI3 for resilient Python extension builds"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-3codmb-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Build Python extensions with a stable binary interface to reduce version breakage.",
+			"expectedRefs": ["contextstill:kn_3codmb7qiibcmoicukynrht4ni"],
+			"expectedTitles": ["Use ABI3 for resilient Python extension builds"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-3codmb-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "Python拡張のビルドを安定ABIで複数バージョンに対応させる。",
+			"expectedRefs": ["contextstill:kn_3codmb7qiibcmoicukynrht4ni"],
+			"expectedTitles": ["Use ABI3 for resilient Python extension builds"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-76iqn7-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Use OpenAPI as the API description format",
+			"expectedRefs": ["contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"],
+			"expectedTitles": ["Use OpenAPI as the API description format"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-76iqn7-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Describe HTTP endpoints with the OpenAPI standard.",
+			"expectedRefs": ["contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"],
+			"expectedTitles": ["Use OpenAPI as the API description format"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-76iqn7-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "APIの仕様記述にはOpenAPI形式を採用する。",
+			"expectedRefs": ["contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"],
+			"expectedTitles": ["Use OpenAPI as the API description format"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-25hf6t-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output",
+			"expectedRefs": ["contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"],
+			"expectedTitles": [
+				"DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-25hf6t-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Replace missing numeric DataFrame values with null before JSON serialization.",
+			"expectedRefs": ["contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"],
+			"expectedTitles": [
+				"DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-25hf6t-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "データフレームをJSONに変換するときNaNをnullに正規化する。",
+			"expectedRefs": ["contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"],
+			"expectedTitles": [
+				"DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2o2vt6-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Workspace .env values must not leak into process.env during MCP service execution",
+			"expectedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"expectedTitles": [
+				"Workspace .env values must not leak into process.env during MCP service execution"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2o2vt6-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "Prevent MCP workspace dotenv settings from contaminating the server process environment.",
+			"expectedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"expectedTitles": [
+				"Workspace .env values must not leak into process.env during MCP service execution"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-2o2vt6-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "MCPサービス実行時に作業場所の環境変数がプロセス全体へ漏れないようにする。",
+			"expectedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"expectedTitles": [
+				"Workspace .env values must not leak into process.env during MCP service execution"
+			],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4eev36-exact",
+			"axis": "retrieval",
+			"queryStyle": "exact",
+			"goal": "Prefer Idiomatic Go Over Direct Translation",
+			"expectedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"expectedTitles": ["Prefer Idiomatic Go Over Direct Translation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4eev36-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"goal": "When porting code to Go, rewrite it in the language native style.",
+			"expectedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"expectedTitles": ["Prefer Idiomatic Go Over Direct Translation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "retrieval-4eev36-jp",
+			"axis": "retrieval",
+			"queryStyle": "jp",
+			"goal": "Goに移植するときは逐語訳せず言語固有の書き方にする。",
+			"expectedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"expectedTitles": ["Prefer Idiomatic Go Over Direct Translation"],
+			"notes": "Purposive seed-derived scenario, not a production-user task. Judge applicability from body, not title alone.",
+			"acceptance": [
+				{
+					"id": "grounded-guidance",
+					"text": "目的に対し、届いた根拠に基づく実行可能な指針が示されている。根拠が届かない場合は不足を明示し、根拠の無い手順を検証済みと称さない"
+				}
+			]
+		},
+		{
+			"id": "secure-commit-and-logs",
+			"axis": "compose",
+			"goal": "Prepare a release that excludes .env and API keys from commits and prevents secrets appearing in logs or responses.",
+			"expectedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"expectedTitles": [
+				"Never commit secrets or local environment files",
+				"Never print secrets into logs or responses"
+			],
+			"notes": "Synthetic task derived from real seed items; require all referenced intents and coherent ordered sections, not mere concatenation.",
+			"acceptance": [
+				{
+					"id": "all-parts",
+					"text": "目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている"
+				}
+			]
+		},
+		{
+			"id": "fix-check-and-no-force",
+			"axis": "compose",
+			"goal": "Fix pre-commit verify failures without bypassing hooks, then push normally; do not force push without explicit approval.",
+			"expectedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+				"contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+			],
+			"expectedTitles": [
+				"Fix pre-commit verify failures instead of bypassing hooks",
+				"Never force push without explicit approval"
+			],
+			"notes": "Synthetic task derived from real seed items; require all referenced intents and coherent ordered sections, not mere concatenation.",
+			"acceptance": [
+				{
+					"id": "all-parts",
+					"text": "目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている"
+				}
+			]
+		},
+		{
+			"id": "packed-offline-smoke",
+			"axis": "compose",
+			"goal": "Prepare a package release smoke test using packed artifacts in a clean project, without implicitly calling live providers.",
+			"expectedRefs": [
+				"contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+				"contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+			],
+			"expectedTitles": [
+				"Package Release Smoke Test with Packed Artifacts",
+				"Smoke tests must not implicitly call live providers"
+			],
+			"notes": "Synthetic task derived from real seed items; require all referenced intents and coherent ordered sections, not mere concatenation.",
+			"acceptance": [
+				{
+					"id": "all-parts",
+					"text": "目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている"
+				}
+			]
+		},
+		{
+			"id": "python-style",
+			"axis": "compose",
+			"goal": "Format Python source using 4-space indentation and limit line length.",
+			"expectedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+				"contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+			],
+			"expectedTitles": ["Use 4-Space Indentation", "Limit Line Length"],
+			"notes": "Synthetic task derived from real seed items; require all referenced intents and coherent ordered sections, not mere concatenation.",
+			"acceptance": [
+				{
+					"id": "all-parts",
+					"text": "目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている"
+				}
+			]
+		},
+		{
+			"id": "qiskit-noise",
+			"axis": "absent",
+			"goal": "Design an exploratory procedure to validate a Qiskit quantum circuit under a realistic noise model before relying on its simulation results.",
+			"expectedRefs": [],
+			"expectedTitles": [],
+			"nearestFalseFriendRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+				"contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+				"contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+				"contextstill:kn_23cg4k6b75pthmpra7qpjggr7y",
+				"contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+				"contextstill:kn_23etyorowknzkoxwqxztp5agiq",
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_23pp54ig75ftah6m3ekj6rufiq"
+			],
+			"notes": "No dedicated technology mention found by exhaustive literal scan of title/search_text for listed distinctive terms; absence remains a reviewed fixture label, not semantic proof. Nearest lexical hits are watch-list candidates, not all necessarily irrelevant. Success is a bounded read-only exploration SKILL, not a claim that target operation is already verified.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている"
+				}
+			]
+		},
+		{
+			"id": "zephyr-rollback",
+			"axis": "absent",
+			"goal": "Plan safe exploration and tests for Zephyr nRF52840 MCUBoot firmware rollback after an interrupted update.",
+			"expectedRefs": [],
+			"expectedTitles": [],
+			"nearestFalseFriendRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+				"contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+				"contextstill:kn_24jobl6gpe27p3plsf6ex3zweq",
+				"contextstill:kn_24kbcux4rzfpjqxfqmpddwszxu",
+				"contextstill:kn_24qrjq2gtaoze6vmru36q56ltq",
+				"contextstill:kn_24u73k27hk62mnxhhu6irsab2y"
+			],
+			"notes": "No dedicated technology mention found by exhaustive literal scan of title/search_text for listed distinctive terms; absence remains a reviewed fixture label, not semantic proof. Nearest lexical hits are watch-list candidates, not all necessarily irrelevant. Success is a bounded read-only exploration SKILL, not a claim that target operation is already verified.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている"
+				}
+			]
+		},
+		{
+			"id": "sigstore-offline",
+			"axis": "absent",
+			"goal": "Plan how to verify Sigstore Cosign signatures for release containers in an offline environment; investigate trust roots before trusting artifacts.",
+			"expectedRefs": [],
+			"expectedTitles": [],
+			"nearestFalseFriendRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+				"contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+				"contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+				"contextstill:kn_2353j4fo23ydrj7552cpd765xe",
+				"contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_23pp54ig75ftah6m3ekj6rufiq",
+				"contextstill:kn_23tsymcii6h4y35hpxuqonfoha"
+			],
+			"notes": "No dedicated technology mention found by exhaustive literal scan of title/search_text for listed distinctive terms; absence remains a reviewed fixture label, not semantic proof. Nearest lexical hits are watch-list candidates, not all necessarily irrelevant. Success is a bounded read-only exploration SKILL, not a claim that target operation is already verified.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている"
+				}
+			]
+		},
+		{
+			"id": "otel-ebpf",
+			"axis": "absent",
+			"goal": "Explore how to instrument an existing Linux service with OpenTelemetry eBPF while testing performance overhead and preserving privacy.",
+			"expectedRefs": [],
+			"expectedTitles": [],
+			"nearestFalseFriendRefs": [
+				"contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+				"contextstill:kn_22tvfsngv5arzyrepnbjyev5ye",
+				"contextstill:kn_22vvsqsmaohf6enifmtmbocoqa",
+				"contextstill:kn_23emkbpc2eoakn6x5bamclacoi",
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_23tsymcii6h4y35hpxuqonfoha",
+				"contextstill:kn_23wop237qpozmcqhjq3b3iurdu",
+				"contextstill:kn_24jobl6gpe27p3plsf6ex3zweq"
+			],
+			"notes": "No dedicated technology mention found by exhaustive literal scan of title/search_text for listed distinctive terms; absence remains a reviewed fixture label, not semantic proof. Nearest lexical hits are watch-list candidates, not all necessarily irrelevant. Success is a bounded read-only exploration SKILL, not a claim that target operation is already verified.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "未確認の操作を検証済みと称さず、読取確認・隔離した実験・観測・停止条件を含む探索手順が示されている、または不足が明示されている"
+				}
+			]
+		}
+	]
+}
