@@ -239,7 +239,7 @@ adapterはinitialize／tools一覧と契約版を検査し、実際に公開さ�
 
 取得応答のtrust、status、supersededBy、conflict、degraded、truncatedを保持する。本文や根拠が省略されている場合は完全な手順として採用しない。安全に使える部分だけを明示するか、不足として返す。検索全体のwarnings・degraded・truncatedはSourcePortのSourceSearchとして受け取り、構造検査だけを行って推論入力のsearch.externalへ未信頼データとして渡す（[接続契約3.1](integration-contract.md)）。外部応答のdigestは「取得した内容の同一性」であり、元記録の不変revisionを保証するものではない。
 
-supersededの本文を新しい正式根拠として採用せず、公開された後継を予算内で取得する。循環・上限・後継欠落は不足として扱う。conflictや省略が必須条件に関わるときはreadyにしない。optionalな補足に限って未使用・未確認として切り離せるかはLLMが判断する。
+supersededの本文を新しい正式根拠として採用せず、公開された後継を予算内で取得する（`supersededBy`、[接続契約3.1a](integration-contract.md)）。循環・上限・後継欠落は不足として扱う。conflictや省略が必須条件に関わるときはreadyにしない。optionalな補足に限って未使用・未確認として切り離せるかはLLMが判断する。
 
 ### 7.3 検索機能の公開範囲
 

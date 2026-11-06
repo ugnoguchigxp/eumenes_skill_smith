@@ -9,6 +9,20 @@
 
 [公開schema](src/contracts/schema.ts)、[port](src/contracts/ports.ts)、[コア](src/service/index.ts)、[SQLite adapter](src/sqlite/index.ts)を実装した。コアは任意のTx型に対する同期repository操作を使い、SQLite固有型は./sqliteの入口に閉じる。
 
+### 1.1 2026-11-06の再照合（読取りのみ）
+
+`/workspace/eumenes` で `git fetch --depth=50 origin` を行い、origin/main `3eb6a54032cd54548df299f1a93ec5df2e2bdd64`（2026-11-06 15:56 JST）を `git show` で読んだ。作業ツリーは5bf5ca5のまま変更していない。ac37317はorigin/mainの祖先で、ac37317..3eb6a54のcapabilities・inference・queueの差分は13 files（+279/−12、bundle・codex/cloud-agent adapter・independent-control・試験）。
+
+| 本体の操作（3eb6a54） | RegistryPortへの適合 |
+| --- | --- |
+| `capabilities.searchInTransaction(db, owner, intent, terms, deadline, limit)` | kind='package'だけを返し、card は candidateRef（5分の一時参照）。Skill単体の検索には使えない → **追加公開操作が必要** |
+| `getDefinitionInTransaction(db, revisionId)` | 有効なrevisionのhash・kind・本文（skillのみ）。read の再利用候補。ただしscope・status・section IDは返さない |
+| `instructionInTransaction(db, revisionId)` | profile/skill本文とhash。readの代替候補 |
+| `validateInTransaction` | 定義の検証。版の現在性検査（current）には直接対応しない |
+| knowledge domain | `api/domains/knowledge` は存在しない（0 files） |
+
+結論: read は既存操作の再利用で足りる見込み。search（Skill単体のカード、scope・status付き）と current（revisionIdの有効・現行判定）はcapabilities所有の追加公開操作が必要で、本体側の作業（P4）。SkillSmith側では推測のAPIを作らない。
+
 ## 2. ホストで接続する操作
 
 | 契約 | 現在のコアと検証 | 本体で必要な接続 |
@@ -43,6 +57,10 @@ SourcePort.searchは `SourceSearch = { cards, warnings: {kind, refs}[], degraded
 推論入力の `search.external` には、候補に残ったカードだけを指すwarnings、候補外を指したwarningの件数 `omittedWarnings`、degraded、truncatedをそのまま渡す。通知の意味（競合が必須条件に関わるか、縮退で不足が生じるか）はコードで判定せずLLMが判断する。指示は `build.v2` に更新し、キャッシュキーも変わる。
 
 ホスト側の未確定事項: 実ContextStillのsearch_knowledgeが返すwarningsの実schemaとkindの語彙、degradedの語彙は未照合（疑似APIは `{kind:"unresolved_conflict", handles}` と `mock_lexical_only` 等）。実adapterはhandle→refの変換と語彙の検査を製品接続前に確定する。
+
+### 3.1a 撤回済み資料の後継（2026-11-06追加）
+
+EvidenceCard／Evidenceは任意の `supersededBy`（同じ取得元のref）を持てる。コアは取得したsupersededの文書に後継があれば、同じ取得元から documents上限とsourceCalls予算の内で取得する。結果は推論入力の `search.successors` に `{ref, successor, outcome}` として渡す。outcomeは fetched／unavailable（取得失敗・ref不一致・scope外）／cycle／limit。予算超過・中断・コアの拒否は従来どおりビルド失敗とする。後継が今回の目的に合うか、不足を補えるかはLLMが判断する。指示版は `build.v3`。ContextStill疑似adapterは `item.supersededBy` のhandleをrefへ変換する。実ContextStillでの後継の公開性は未照合。
 
 ### 3.2 推論providerの注入
 

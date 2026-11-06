@@ -27,6 +27,8 @@ export interface EvidenceCard {
 	external: boolean;
 	/** Host labels these, not the source document. */
 	scope: string;
+	/** Successor ref from the same origin, for superseded items. */
+	supersededBy?: string;
 }
 export interface Evidence extends EvidenceCard {
 	body: string;

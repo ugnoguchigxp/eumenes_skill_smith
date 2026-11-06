@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CONTRACT = "skillsmith.v1" as const;
-export const INSTRUCTION_VERSION = "build.v2" as const;
+export const INSTRUCTION_VERSION = "build.v3" as const;
 const id = z.string().min(1).max(160);
 const text = z.string().trim().min(1).max(8000);
 const unique = <T>(xs: T[]) => new Set(xs).size === xs.length;
@@ -128,6 +128,8 @@ export const evidenceCardSchema = z.strictObject({
 	complete: z.boolean(),
 	external: z.boolean(),
 	scope: id,
+	/** Successor reference reported by the same origin; only meaningful when superseded. */
+	supersededBy: id.optional(),
 });
 export const usageSchema = z.strictObject({
 	modelCalls: z.number().int().nonnegative(),

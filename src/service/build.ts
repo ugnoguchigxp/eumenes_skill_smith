@@ -187,13 +187,13 @@ export async function executeBuild<Tx>(
 		"source_ref_conflict",
 	);
 	const evidence: Evidence[] = [];
+	const read = (ref: string, external: boolean) =>
+		external
+			? (requireThat(ports.source, "source_unavailable"),
+				ports.source.get(ref, signal))
+			: ports.registry.read(ref, r.authority, signal);
 	for (const card of candidates.slice(0, request.limits.documents)) {
-		const document = await call(() =>
-			card.external
-				? (requireThat(ports.source, "source_unavailable"),
-					ports.source.get(card.ref, signal))
-				: ports.registry.read(card.ref, r.authority, signal),
-		);
+		const document = await call(() => read(card.ref, card.external));
 		requireThat(
 			document.ref === card.ref &&
 				digest(document.version) === digest(card.version) &&
@@ -202,6 +202,48 @@ export async function executeBuild<Tx>(
 			"source_revoked",
 		);
 		evidence.push(document);
+	}
+	// Follow published successors of superseded documents within the same
+	// document and call budgets. Outcomes are structural facts for inference;
+	// whether a successor fits the task is left to the model.
+	const successors: {
+		ref: string;
+		successor: string;
+		outcome: "fetched" | "unavailable" | "cycle" | "limit";
+	}[] = [];
+	const seen = new Set(evidence.map((e) => e.ref));
+	for (let i = 0; i < evidence.length; i++) {
+		const e = evidence[i]!;
+		if (e.status !== "superseded" || !e.supersededBy) continue;
+		const successor = e.supersededBy;
+		if (seen.has(successor)) {
+			successors.push({ ref: e.ref, successor, outcome: "cycle" });
+			continue;
+		}
+		if (evidence.length >= request.limits.documents) {
+			successors.push({ ref: e.ref, successor, outcome: "limit" });
+			continue;
+		}
+		seen.add(successor);
+		checkpoint();
+		await reserve("sourceCalls");
+		checkpoint();
+		let next: Evidence | null = null;
+		try {
+			next = await read(successor, e.external);
+		} catch (error) {
+			signal.throwIfAborted();
+			if (error instanceof SkillSmithError) throw error;
+		}
+		if (
+			next &&
+			next.ref === successor &&
+			next.external === e.external &&
+			(next.scope === "shared" || next.scope === r.authority.scope)
+		) {
+			evidence.push(next);
+			successors.push({ ref: e.ref, successor, outcome: "fetched" });
+		} else successors.push({ ref: e.ref, successor, outcome: "unavailable" });
 	}
 	const candidateCards = candidates.map((e) => ({
 		ref: e.ref,
@@ -221,6 +263,7 @@ export async function executeBuild<Tx>(
 		untrustedEvidence: evidence,
 		search: {
 			externalUsed,
+			...(successors.length ? { successors } : {}),
 			// Source-reported, untrusted. Only structure is checked; meaning is left to inference.
 			...(sourceSearch
 				? {

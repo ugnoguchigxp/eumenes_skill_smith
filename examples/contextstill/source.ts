@@ -116,6 +116,9 @@ export function createFixtureSource(
 		// Preserve conditions, counterconditions, examples and provenance as untrusted data.
 		return {
 			...card({ ...doc.item, _fixture: doc._fixture }),
+			...("supersededBy" in doc.item && doc.item.supersededBy
+				? { supersededBy: refOf(doc.item.supersededBy) }
+				: {}),
 			body: JSON.stringify({
 				...doc,
 				fixtureLimitations: ["source_details_omitted", "themes_unavailable"],

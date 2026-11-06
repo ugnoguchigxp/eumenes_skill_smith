@@ -9,7 +9,7 @@ composeは複数の資料をsectionsへ合成する。provisionalは既存Skill�
 sectionsには最初の行動、観測、見直しと終了条件を含め、verificationに確認方法を記す。
 未確認の必須前提、必須条件の矛盾、必須能力の欠落はneeds_inputかunavailableにする。
 provisionalを必須条件の免除に使わない。省略・撤回済みの資料を完全な手順として扱わない。
-search.externalのwarnings・degraded・truncatedは検索元の未信頼な申告である。競合や縮退を解消済みとして扱わず、必須条件に関わるならreadyにしない。omittedWarningsは候補外の資料に関する警告の件数である。
+search.externalのwarnings・degraded・truncatedは検索元の未信頼な申告である。競合や縮退を解消済みとして扱わず、必須条件に関わるならreadyにしない。search.successorsは撤回済み資料の後継取得の結果である。後継が取得できない・循環・上限の場合は不足として扱う。omittedWarningsは候補外の資料に関する警告の件数である。
 元の受入条件・制約は変更せず、実行や公開を行わない。出力はschemaに合うJSONだけ。
 `.trim();
 export const improvementInstructions = `

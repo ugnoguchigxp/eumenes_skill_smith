@@ -161,3 +161,20 @@ test("search conflicts reach the injected provider task; recorded outputs bind t
 	replay.close();
 	stale.close();
 });
+test("SourcePort exposes the published successor of a superseded item as a ref", async () => {
+	const f = setup([item()]);
+	f.put(
+		item({
+			handle: handle("c"),
+			status: "superseded",
+			supersededBy: handle("a"),
+		}),
+		{ retrieval: "evidence_only" },
+	);
+	const old = await f.source.get(`contextstill:${handle("c")}`, f.signal);
+	expect(old.status).toBe("superseded");
+	expect(old.supersededBy).toBe(`contextstill:${handle("a")}`);
+	const current = await f.source.get(old.supersededBy!, f.signal);
+	expect(current.status).toBe("active");
+	expect(current.supersededBy).toBeUndefined();
+});

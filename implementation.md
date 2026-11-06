@@ -110,3 +110,5 @@
 - 変更後検証: verify成功（core 51 pass・122 expect、examples 25 pass・114 expect、型37 files、pack 23 files）、context:check ok（fixed_wiring_stub）。
 - recorded.ts／context:taskで、Grok Bot等のproviderへ渡す課題を書き出し、入力digestに束縛した構造化出力だけを再生する。意味判断の規則は持たない。
 - P0の本体照合: 参照可能なEumenesは5bf5ca5（2026-11-04、shallow）で、契約記載のac37317を含まない。capabilitiesにSkill単体のカード・本文・有効性の公開操作は見当たらず、knowledge domainも未作成。追加公開操作は未確定のgateとして残す。
+- 本体再照合（読取り）: origin/main 3eb6a54。Skill単体search・currentは追加公開操作が必要、readは getDefinitionInTransaction／instructionInTransaction の再利用候補（接続契約1.1）。
+- 撤回済み資料の後継取得を実装（supersededBy、search.successors、build.v3）。verify成功（core 55 pass・132 expect、examples 26 pass・118 expect、型38 files）、context:check ok。
