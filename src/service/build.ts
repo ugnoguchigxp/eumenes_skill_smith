@@ -372,12 +372,11 @@ export async function executeBuild<Tx>(
 			(e) => decision.sourceRefs.includes(e.ref) && e.external,
 		);
 		if (selected.length)
-			for (const e of selected)
-				requireThat(
-					ports.source &&
-						(await call(() => ports.source!.validate([e], signal))),
-					"source_revoked",
-				);
+			requireThat(
+				ports.source &&
+					(await call(() => ports.source!.validate(selected, signal))),
+				"source_revoked",
+			);
 	}
 	checkpoint();
 	return { decision, evidence, receipt, tokens };

@@ -368,3 +368,67 @@ test("structural repair stops at the model call limit and keeps the failure code
 	);
 	expect(f.modelCalls()).toBe(2);
 });
+
+test("selected external evidence is validated in one source call", async () => {
+	const f = fixture({ external: true });
+	const base = {
+		version: { id: "ext", version: "1", digest: "d", generation: 0 },
+		title: "外部",
+		body: "外部資料の手順。",
+		status: "active" as const,
+		complete: true,
+		external: true,
+		scope: "shared",
+	};
+	const docs = [
+		{ ...base, ref: "external:1" },
+		{ ...base, ref: "external:2", version: { ...base.version, id: "ext2" } },
+	];
+	f.ports.registry.search = async () => [];
+	f.ports.source!.search = async () => ({
+		cards: docs.map(({ body: _b, ...card }) => card),
+		warnings: [],
+		degraded: [],
+		truncated: false,
+	});
+	f.ports.source!.get = async (ref) => docs.find((d) => d.ref === ref)!;
+	let validateCalls = 0;
+	let validatedRefs: string[] = [];
+	f.ports.source!.validate = async (refs) => {
+		validateCalls++;
+		validatedRefs = refs.map((r) => r.ref);
+		return true;
+	};
+	f.setDecision({
+		kind: "ready",
+		strategy: "compose",
+		sourceRefs: ["external:1", "external:2"],
+		sections: [
+			{ id: "start", body: "外部資料を読み取る。" },
+			{ id: "finish", body: "結果を検証する。" },
+		],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["確認する"],
+		assumptions: [],
+	});
+	const receipt = f.submit();
+	const work = await f.run(receipt.requestRef!);
+	expect(validateCalls).toBe(1);
+	expect(validatedRefs).toEqual(["external:1", "external:2"]);
+	work.settle();
+	const reply = await f.service.getValidated(
+		receipt.requestRef!,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(reply.kind).toBe("ready");
+	if (reply.kind === "ready")
+		expect(reply.build.content.decision.sourceRefs).toEqual([
+			"external:1",
+			"external:2",
+		]);
+	// Delivery revalidates once more with the same batch.
+	expect(validateCalls).toBe(2);
+});
