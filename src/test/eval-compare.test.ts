@@ -78,3 +78,59 @@ test("unlabeled runs stay incomplete instead of inventing a winner", () => {
 	expect(cmp.deltas.acceptanceAdvantage).toBe("incomplete");
 	expect(synthesisNotClearlyBetter(cmp)).toBe(true);
 });
+
+test("strategy and abstention fields appear in paired A/B/C deltas", () => {
+	const cmp = compareConditionRuns([
+		{
+			taskId: "t1",
+			condition: "none",
+			kind: "needs_input",
+			usedRefs: [],
+			missing: ["不足"],
+			inputTokens: 1,
+			outputTokens: 1,
+			modelCalls: 1,
+			sourceCalls: 0,
+			abstention: { appropriate: true, source: "fixture" },
+			judgment: { acceptanceMet: false, misApplied: false, source: "fixture" },
+		},
+		{
+			taskId: "t1",
+			condition: "agent_skills",
+			kind: "ready",
+			usedRefs: ["a"],
+			inputTokens: 2,
+			outputTokens: 2,
+			modelCalls: 1,
+			sourceCalls: 0,
+			actualStrategy: "reuse",
+			judgment: { acceptanceMet: true, misApplied: false, source: "fixture" },
+		},
+		{
+			taskId: "t1",
+			condition: "skillsmith",
+			kind: "ready",
+			usedRefs: ["a"],
+			inputTokens: 3,
+			outputTokens: 3,
+			modelCalls: 2,
+			sourceCalls: 1,
+			actualStrategy: "compose",
+			judgment: { acceptanceMet: true, misApplied: false, source: "fixture" },
+		},
+	]);
+	expect(cmp.deltas.acceptanceAdvantage).toBe("tie");
+	expect(cmp.deltas.acceptanceAdvantageVsNone).toBe("skillsmith");
+	expect(cmp.deltas.strategyCounts).toEqual({
+		reuse: 1,
+		adapt: 0,
+		compose: 1,
+		provisional: 0,
+	});
+	expect(cmp.deltas.abstention).toEqual({
+		needsInputRuns: 1,
+		labeledAppropriate: 1,
+		labeledExcessive: 0,
+		unlabeled: 0,
+	});
+});

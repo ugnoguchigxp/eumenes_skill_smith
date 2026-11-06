@@ -43,6 +43,18 @@ export const evalRunResultSchema = z.strictObject({
 	outputTokens: z.number().int().nonnegative().nullable().default(null),
 	modelCalls: z.number().int().nonnegative().default(0),
 	sourceCalls: z.number().int().nonnegative().default(0),
+	/** Observed product strategy when kind=ready; absent otherwise. */
+	actualStrategy: z
+		.enum(["reuse", "adapt", "compose", "provisional"])
+		.optional(),
+	/** Human/judge abstention labels; never inferred from kind alone. */
+	abstention: z
+		.strictObject({
+			appropriate: z.boolean().optional(),
+			excessive: z.boolean().optional(),
+			source: z.enum(["human", "judge", "fixture"]).optional(),
+		})
+		.optional(),
 	/** Human or calibrated-judge labels applied after the run. */
 	judgment: z
 		.strictObject({
@@ -63,10 +75,30 @@ export const evalComparisonSchema = z.strictObject({
 		acceptanceAdvantage: z
 			.enum(["none", "agent_skills", "skillsmith", "tie", "incomplete"])
 			.optional(),
+		/** Paired display vs none (A); incomplete when unlabeled. */
+		acceptanceAdvantageVsNone: z
+			.enum(["none", "agent_skills", "skillsmith", "tie", "incomplete"])
+			.optional(),
 		misApplicationWorse: z
 			.enum(["none", "agent_skills", "skillsmith", "tie", "incomplete"])
 			.optional(),
 		tokenDeltaSkillsmithVsBaseline: z.number().nullable().optional(),
+		strategyCounts: z
+			.strictObject({
+				reuse: z.number().int().nonnegative().default(0),
+				adapt: z.number().int().nonnegative().default(0),
+				compose: z.number().int().nonnegative().default(0),
+				provisional: z.number().int().nonnegative().default(0),
+			})
+			.optional(),
+		abstention: z
+			.strictObject({
+				needsInputRuns: z.number().int().nonnegative(),
+				labeledAppropriate: z.number().int().nonnegative(),
+				labeledExcessive: z.number().int().nonnegative(),
+				unlabeled: z.number().int().nonnegative(),
+			})
+			.optional(),
 	}),
 });
 export type EvalComparison = z.infer<typeof evalComparisonSchema>;

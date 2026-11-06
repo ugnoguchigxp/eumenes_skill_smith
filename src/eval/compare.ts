@@ -72,7 +72,37 @@ export function compareConditionRuns(runs: EvalRunResult[]): EvalComparison {
 	const tokenDeltaSkillsmithVsBaseline =
 		sTok === null || bTok === null ? null : sTok - bTok;
 
-	void none;
+	const acceptanceAdvantageVsNone = (() => {
+		const s = labeled(skillsmith, "acceptanceMet");
+		const n = labeled(none, "acceptanceMet");
+		if (s === undefined || n === undefined) return "incomplete" as const;
+		if (s === n) return "tie" as const;
+		return s && !n ? ("skillsmith" as const) : ("none" as const);
+	})();
+
+	const strategyCounts = {
+		reuse: 0,
+		adapt: 0,
+		compose: 0,
+		provisional: 0,
+	};
+	for (const r of parsed) {
+		if (!r.actualStrategy) continue;
+		strategyCounts[r.actualStrategy]++;
+	}
+
+	let needsInputRuns = 0,
+		labeledAppropriate = 0,
+		labeledExcessive = 0,
+		unlabeled = 0;
+	for (const r of parsed) {
+		if (r.kind !== "needs_input") continue;
+		needsInputRuns++;
+		if (r.abstention?.appropriate === true) labeledAppropriate++;
+		else if (r.abstention?.excessive === true) labeledExcessive++;
+		else unlabeled++;
+	}
+
 	void advantage;
 
 	return evalComparisonSchema.parse({
@@ -80,8 +110,16 @@ export function compareConditionRuns(runs: EvalRunResult[]): EvalComparison {
 		runs: parsed,
 		deltas: {
 			acceptanceAdvantage,
+			acceptanceAdvantageVsNone,
 			misApplicationWorse,
 			tokenDeltaSkillsmithVsBaseline,
+			strategyCounts,
+			abstention: {
+				needsInputRuns,
+				labeledAppropriate,
+				labeledExcessive,
+				unlabeled,
+			},
 		},
 	});
 }

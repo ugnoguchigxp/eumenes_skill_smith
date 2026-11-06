@@ -35,3 +35,12 @@ Skill なし / Agent Skills 型 / SkillSmith を同じ実行器へ渡し、reuse
 ## 依存・前提
 
 仮定: 適切な実課題と評価者を得られること。前提: 提案 17・18 の安全と評価整合を先行。本体の P4 待ちは不要です。実ユーザー課題コーパスと人手評価者が必要です。
+
+## 実装結果
+
+- **採否**: 部分採用（ハーネス拡張のみ）。実課題 pilot 実行は未実施。
+- **内容**: EvalRunResult に `actualStrategy` と人手/judge の `abstention` ラベル欄を追加。比較 deltas に `acceptanceAdvantageVsNone`（C対A）、`strategyCounts`、`abstention` 集計を追加。架空の実課題コーパスや品質スコアは作っていない。
+- **パス**: `src/eval/task.ts`, `src/eval/compare.ts`, `src/test/eval-compare.test.ts`
+- **試験**: `bun test src/test/eval-compare.test.ts`（4 pass）
+- **未実施**: ユーザー実課題 10〜20 件の収集、戦略別・棄権別の人手評価、合成縮小判断
+- **理由**: 測定枠は揃えたが、コーパスなしでは「よくなった」条件を満たせない。
