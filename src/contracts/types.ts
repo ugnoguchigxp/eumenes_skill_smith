@@ -6,6 +6,7 @@ import type {
 	VersionRef,
 	ResultInput,
 	ReadyDecision,
+	SourceSearch,
 } from "./schema.js";
 export type {
 	Authority,
@@ -15,6 +16,7 @@ export type {
 	VersionRef,
 	ResultInput,
 	ReadyDecision,
+	SourceSearch,
 };
 export interface EvidenceCard {
 	ref: string;

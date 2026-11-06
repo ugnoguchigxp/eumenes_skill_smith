@@ -76,11 +76,12 @@ export interface Ports<Tx> {
 		current(tx: Tx, authority: Authority, refs: VersionRef[]): boolean;
 	};
 	source?: {
+		/** Cards plus search-wide warnings/degraded/truncated as reported by the source. */
 		search(
 			query: string,
 			limit: number,
 			signal: AbortSignal,
-		): Promise<import("./types.js").EvidenceCard[]>;
+		): Promise<import("./types.js").SourceSearch>;
 		get(ref: string, signal: AbortSignal): Promise<Evidence>;
 		validate(
 			refs: Pick<Evidence, "ref" | "version" | "external">[],

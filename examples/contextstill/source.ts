@@ -24,6 +24,10 @@ const envelope = z.object({
 		isError: z.boolean().optional(),
 	}),
 });
+const warningSchema = z.object({
+	kind: z.string(),
+	handles: z.array(handleSchema).min(1),
+});
 const refOf = (handle: string) => `contextstill:${handle}`;
 const handleOf = (ref: string) => {
 	if (!ref.startsWith("contextstill:")) throw new Error("invalid_source_ref");
@@ -114,25 +118,30 @@ export function createFixtureSource(
 			...card({ ...doc.item, _fixture: doc._fixture }),
 			body: JSON.stringify({
 				...doc,
-				fixtureLimitations: [
-					"source_details_omitted",
-					"themes_unavailable",
-					"search_warnings_not_forwarded_by_source_port",
-				],
+				fixtureLimitations: ["source_details_omitted", "themes_unavailable"],
 			}),
 		};
 	};
 	return {
-		search: async (query, limit, signal) =>
-			searchSchema
-				.parse(
-					await call(
-						"search_knowledge",
-						{ query, limit, kinds: ["knowledge", "episode"] },
-						signal,
-					),
-				)
-				.results.map(card),
+		search: async (query, limit, signal) => {
+			const r = searchSchema.parse(
+				await call(
+					"search_knowledge",
+					{ query, limit, kinds: ["knowledge", "episode"] },
+					signal,
+				),
+			);
+			// Forward search-wide notices verbatim as structure; no interpretation here.
+			return {
+				cards: r.results.map(card),
+				warnings: r.warnings.map((w) => {
+					const parsed = warningSchema.parse(w);
+					return { kind: parsed.kind, refs: parsed.handles.map(refOf) };
+				}),
+				degraded: r.degraded,
+				truncated: r.truncated,
+			};
+		},
 		get,
 		validate: async (refs, signal) => {
 			for (const ref of refs) {

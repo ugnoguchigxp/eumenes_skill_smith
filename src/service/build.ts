@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { CONTRACT, decisionSchema } from "../contracts/schema.js";
+import {
+	CONTRACT,
+	decisionSchema,
+	sourceSearchSchema,
+} from "../contracts/schema.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
 import type {
 	Build,
@@ -150,16 +154,28 @@ export async function executeBuild<Tx>(
 			signal,
 		),
 	);
-	const external =
-		ports.source && r.authority.searchTask
-			? await call(() =>
+	const externalUsed = !!(ports.source && r.authority.searchTask);
+	const reported = externalUsed
+		? sourceSearchSchema.safeParse(
+				await call(() =>
 					ports.source!.search(
 						r.authority.searchTask!,
 						request.limits.candidates,
 						signal,
 					),
-				)
-			: [];
+				),
+			)
+		: null;
+	requireThat(!reported || reported.success, "source_contract_violation");
+	const sourceSearch = reported?.data;
+	const external = sourceSearch?.cards ?? [];
+	requireThat(
+		external.every((c) => c.external) &&
+			(sourceSearch?.warnings ?? []).every((w) =>
+				w.refs.every((ref) => external.some((c) => c.ref === ref)),
+			),
+		"source_contract_violation",
+	);
 	const combined: typeof local = [];
 	for (let rank = 0; rank < Math.max(local.length, external.length); rank++) {
 		if (local[rank]) combined.push(local[rank]!);
@@ -203,7 +219,25 @@ export async function executeBuild<Tx>(
 		policy: p.policy,
 		candidateCards,
 		untrustedEvidence: evidence,
-		search: { externalUsed: !!(ports.source && r.authority.searchTask) },
+		search: {
+			externalUsed,
+			// Source-reported, untrusted. Only structure is checked; meaning is left to inference.
+			...(sourceSearch
+				? {
+						external: {
+							warnings: sourceSearch.warnings.filter((w) =>
+								w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
+							),
+							omittedWarnings: sourceSearch.warnings.filter(
+								(w) =>
+									!w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
+							).length,
+							degraded: sourceSearch.degraded,
+							truncated: sourceSearch.truncated,
+						},
+					}
+				: {}),
+		},
 	};
 	requireThat(
 		bytes(data) + new TextEncoder().encode(buildInstructions).length <

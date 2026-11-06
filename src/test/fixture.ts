@@ -154,9 +154,18 @@ export function fixture(
 		...(options.external
 			? {
 					source: {
-						search: async () => [
-							{ ...evidence[0]!, ref: "external:1", external: true },
-						],
+						search: async () => ({
+							cards: [
+								(({ body: _b, sections: _s, ...card }) => ({
+									...card,
+									ref: "external:1",
+									external: true,
+								}))(evidence[0]!),
+							],
+							warnings: [],
+							degraded: [],
+							truncated: false,
+						}),
 						get: async () => ({
 							...evidence[0]!,
 							ref: "external:1",

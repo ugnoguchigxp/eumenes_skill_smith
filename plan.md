@@ -199,7 +199,7 @@ fixture通過後に、実ContextStill・Registry・保存済み推論設定と�
 - [x] 目的、知識domainの責務、技術スタック、動作契約の設計案を作成
 - [x] 設計・実装計画の文書レビューと参照・整合確認
 - [x] 設計案に基づく実装開始の指示
-- [ ] P0の本体接続fixtureを含む契約の固定
+- [ ] P0の本体接続fixtureを含む契約の固定（SourcePortの検索通知とprovider注入の契約は2026-11-06に固定。本体の公開操作は未照合）
 - [x] P1〜P3のコア・SQLite adapter・結果・候補の初期実装とfixture
 - [x] 公開範囲のDBコピー、疑似ContextStill、単体試験・実データ確認・Grokbot引継ぎ基盤
 - [x] MITライセンス、README、公開知識seedとSQLite初期化・検証

@@ -27,6 +27,7 @@
 		"context:seed": "bun examples/contextstill/seed.ts",
 		"context:seed:export": "bun examples/contextstill/export-seed.ts",
 		"context:check": "bun examples/contextstill/check.ts",
+		"context:task": "bun examples/contextstill/task.ts",
 		"build": "bun scripts/build.ts",
 		"pack:core": "bun scripts/pack.ts",
 		"verify": "bun scripts/verify.ts"

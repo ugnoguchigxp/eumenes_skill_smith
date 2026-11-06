@@ -36,6 +36,18 @@ submit等の入力・権限・競合違反は、transactionをrollbackするた�
 
 検索、各本文取得、外部再検査ごとにsourceCallsを予約する。モデルは入力容量を検査した後にmodelCallsを予約し、必要時の構造修復も同じ総予算で行う。source.validateにはビルド中は一件ずつ渡す。本体adapterで複数の通信を隠して上限を迂回しない。
 
+### 3.1 検索全体の通知（2026-11-06追加）
+
+SourcePort.searchは `SourceSearch = { cards, warnings: {kind, refs}[], degraded: string[], truncated }` を返す（`sourceSearchSchema`）。旧来のEvidenceCard配列は受け付けない。コアは構造だけを検査する: schema違反、external=falseのカード、返却カードにないrefを指すwarningは推論前に `source_contract_violation` で拒否する。kind・degradedは64字以内の識別子（`[a-z0-9_.:-]`）に限り、自由文を推論入力へ流さない。
+
+推論入力の `search.external` には、候補に残ったカードだけを指すwarnings、候補外を指したwarningの件数 `omittedWarnings`、degraded、truncatedをそのまま渡す。通知の意味（競合が必須条件に関わるか、縮退で不足が生じるか）はコードで判定せずLLMが判断する。指示は `build.v2` に更新し、キャッシュキーも変わる。
+
+ホスト側の未確定事項: 実ContextStillのsearch_knowledgeが返すwarningsの実schemaとkindの語彙、degradedの語彙は未照合（疑似APIは `{kind:"unresolved_conflict", handles}` と `mock_lexical_only` 等）。実adapterはhandle→refの変換と語彙の検査を製品接続前に確定する。
+
+### 3.2 推論providerの注入
+
+本ワークフローのlive推論providerは親チャットのGrok Botである。コアはInferencePortだけに依存し、LLM clientを持たない。`examples/contextstill/recorded.ts` は、送信する `{system, data, schema}` のdigestを付けた課題を書き出し、providerが返した構造化出力をそのdigestに一致する場合だけ再生する。記録がない・入力が異なる場合は `inference_record_missing` で失敗する。`bun run context:task [db] [query] [records.json]` は課題を `data/contextstill/inference-task.json`（Git対象外）へ出力する。fixed_wiring_stubと試験用の記録は接続確認であり、意味品質の評価ではない。
+
 完成後のgetValidatedは読み取り用の短い期限で外部の参照版を再検査し、生成を再開しない。配布のI/O使用量とリクエスト頻度の制限は、本体の取得API／MCP接続で記録・強制する。コア単体の試験でその本体側計量まで実証したとはしない。
 
 ## 4. 保存形式と未実装の有効化条件

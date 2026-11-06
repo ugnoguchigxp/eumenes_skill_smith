@@ -10,7 +10,12 @@ import type {
 import type { SourcePort } from "./source.js";
 
 /** Standalone wiring example. Fixed model/authority/jobs are test doubles, not Eumenes adapters. */
-export function createExampleHost(source: SourcePort, query: string) {
+export function createExampleHost(
+	source: SourcePort,
+	query: string,
+	/** Optional host-injected provider, e.g. recordedInference for Grok Bot outputs. */
+	injected?: Ports<Database>["inference"],
+) {
 	const db = new Database(":memory:");
 	for (const m of migrations) db.exec(m.sql);
 	db.exec(
@@ -74,7 +79,7 @@ export function createExampleHost(source: SourcePort, query: string) {
 			current: () => true,
 		},
 		source,
-		inference: {
+		inference: injected ?? {
 			complete: async (input) => {
 				// Fixture rule checks wiring only. It must never be used as semantic skill generation.
 				const evidence = (

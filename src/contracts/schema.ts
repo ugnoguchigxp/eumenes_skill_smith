@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CONTRACT = "skillsmith.v1" as const;
-export const INSTRUCTION_VERSION = "build.v1" as const;
+export const INSTRUCTION_VERSION = "build.v2" as const;
 const id = z.string().min(1).max(160);
 const text = z.string().trim().min(1).max(8000);
 const unique = <T>(xs: T[]) => new Set(xs).size === xs.length;
@@ -178,3 +178,24 @@ export const replySchema = z.discriminatedUnion("kind", [
 	z.strictObject({ ...envelope, kind: z.literal("cancelled"), code: id }),
 	z.strictObject({ ...envelope, kind: z.literal("expired"), code: id }),
 ]);
+
+const notice = z
+	.string()
+	.min(1)
+	.max(64)
+	.regex(/^[a-z0-9_.:-]+$/);
+/** Search-wide notices reported by an external source. Untrusted; passed to inference as data. */
+export const sourceSearchSchema = z.strictObject({
+	cards: z.array(evidenceCardSchema).max(100),
+	warnings: z
+		.array(
+			z.strictObject({
+				kind: notice,
+				refs: z.array(z.string().min(1).max(512)).min(1).max(16),
+			}),
+		)
+		.max(64),
+	degraded: z.array(notice).max(32),
+	truncated: z.boolean(),
+});
+export type SourceSearch = z.infer<typeof sourceSearchSchema>;

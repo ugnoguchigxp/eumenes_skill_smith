@@ -102,3 +102,11 @@
 | コア配布物 | LICENSE・README・MIT metadataを含む23検証ファイルとMANIFESTの計24ファイル。実データ・examplesなし。全内容のhash一致 |
 
 配布点検でmacOS由来のAppleDouble付加情報30件を検出したため、tar作成時にCOPYFILE_DISABLEを指定して除外した。再確認でアーカイブ内の全ファイルがmanifestの許可対象と一致することを確認した。最終差分はライセンス、README・引継ぎ、seedと初期化・書出し・固定試験、配布処理に限定され、コアのLLM指示・意味判断・port契約は変更していない。
+
+## 2026-11-06 SourcePort検索通知とprovider注入
+
+- 開始時検証: Bun 1.4.4（/tmp配置、システムは1.4.2のまま。1.4.2では `bun check` がなくtypecheckが失敗）。seed 6,957件、verify 45+24 pass、context:check ok。
+- SourcePort.searchをSourceSearchへ変更し、warnings・degraded・truncatedを構造検査のうえ推論入力search.externalへ渡す。指示をbuild.v2へ更新。
+- 変更後検証: verify成功（core 51 pass・122 expect、examples 25 pass・114 expect、型37 files、pack 23 files）、context:check ok（fixed_wiring_stub）。
+- recorded.ts／context:taskで、Grok Bot等のproviderへ渡す課題を書き出し、入力digestに束縛した構造化出力だけを再生する。意味判断の規則は持たない。
+- P0の本体照合: 参照可能なEumenesは5bf5ca5（2026-11-04、shallow）で、契約記載のac37317を含まない。capabilitiesにSkill単体のカード・本文・有効性の公開操作は見当たらず、knowledge domainも未作成。追加公開操作は未確定のgateとして残す。

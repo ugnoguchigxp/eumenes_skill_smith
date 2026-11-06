@@ -13,7 +13,7 @@ const token = crypto.randomUUID(); // Process-local only; neither saved nor prin
 const source = createFixtureSource(createMcpHandler(fixture, token), token);
 const host = createExampleHost(source, query);
 try {
-	const cards = await source.search(query, 8, new AbortController().signal);
+	const { cards } = await source.search(query, 8, new AbortController().signal);
 	if (!cards.length) throw new Error("snapshot_search_empty_try_another_query");
 	const reply = await host.run();
 	if (reply.kind !== "ready") throw new Error(`snapshot_wiring_${reply.kind}`);
