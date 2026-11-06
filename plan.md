@@ -68,7 +68,7 @@ Bun 1.4.4、TypeScript strict／ESM／ES2022、Zod 4系を本体と合わせる�
 
 公開schemaには、入力とTrustedContextの分離、ready／pending／needs_input／unavailable／rejected／cancelled／expired、ビルド、依存、結果、候補、再送、継続参照を含める。設計書6章・15章の契約を共有し、MCPと直接呼出しで別schemaを作らない。
 
-次のコマンドを定義する。以下は新設予定であり、現在実行できることを意味しない。
+次のコマンドを定義する。package.json に実装済みで、`bun run verify`（Bun 1.4.4）からまとめて実行できる。
 
 | コマンド | 対象 |
 | --- | --- |
@@ -87,7 +87,7 @@ RegistryPort、SourcePort、InferencePort、PolicyPort、保存・job用fixture�
 
 既存Skillにはsection IDがある場合だけ型付き差分を適用する。ない場合は全文に基づく再構成とする。受入条件・制約のIDと原文は保持する。検索順位は候補削減にだけ用い、適合・矛盾の判断はLLMに渡す。
 
-部分試験はsrc/test/build.test.ts、reuse.test.ts、sources.test.ts、context.test.tsを新設予定とする。実装時に名称を確定し、変更時は本計画を更新する。
+部分試験は src/test/build.test.ts を中心に実装済み。検索通知は source-notices.test.ts、後継取得は successors.test.ts。当初案の reuse.test.ts / sources.test.ts / context.test.ts は独立ファイルとしては作らず、build 系へ統合した。
 
 通過条件は次のとおり。
 
@@ -105,7 +105,7 @@ RegistryPort、SourcePort、InferencePort、PolicyPort、保存・job用fixture�
 
 report_resultは認可済みbuildRefとexecutionRefに結び付け、同じ実行をreportId違いで二重集計しない。訂正は結果版で扱う。新規性の判断を再利用し、必要時だけ改善候補を作る。候補・検証・採用の区別を保存する。
 
-保存結合はsrc/test/sqlite.test.ts、requests.test.ts、results.test.ts、proposals.test.ts、forget.test.tsを新設予定とする。各試験は一時DBと固定時計・固定依存を使う。
+保存結合は src/test/sqlite.test.ts、requests.test.ts、results.test.ts、proposals.test.ts、forget.test.ts として実装済み。各試験は一時DBと固定時計・固定依存を使う。
 
 完了条件は、受付・成果物・配達の途中失敗で部分保存が起きないこと、再起動しても消費予算を戻さないこと、取消後の遅延結果を採用しないこと、間接的な依存閉包を失効・消去できること。ここでのqueueは注入fixtureであり、本体の実queueとの結合はP4で行う。
 
