@@ -8,7 +8,10 @@ import type {
 } from "../contracts/types.js";
 import type { Ports } from "../contracts/ports.js";
 import type { ServiceLimits } from "../contracts/limits.js";
-import { improvementInstructions } from "../instructions/build.js";
+import {
+	improvementInstructions,
+	workflowInstructions,
+} from "../instructions/build.js";
 import { bytes, digest, requireThat } from "./identity.js";
 const proposalContent = z.strictObject({
 	sections: z.array(sectionSchema).min(1).max(16),
@@ -269,6 +272,100 @@ export function createResultOperations<Tx>(
 		for (const source of evidence) repo.link(tx, ref, source);
 		return proposal;
 	}
+	function markExecutionVerified(
+		tx: Tx,
+		proposalRef: string,
+		expectedRevision: number,
+		auth: Authority,
+	) {
+		const proposal = repo.proposal(tx, proposalRef);
+		requireThat(
+			auth.permissions.includes("manage") &&
+				proposal?.scope === auth.scope &&
+				!repo.blocked(tx, proposalRef) &&
+				p.authority.valid(tx, auth, proposal.evidence),
+			"permission_denied",
+		);
+		requireThat(proposal.revision === expectedRevision, "proposal_conflict");
+		requireThat(
+			proposal.status === "proposed" || proposal.status === "validated",
+			"proposal_conflict",
+		);
+		const report = repo.report(tx, auth.scope, proposal.executionRef);
+		requireThat(
+			report &&
+				report.input.outcome === "succeeded" &&
+				report.input.buildRef === proposal.buildRef &&
+				repo.hasUse(tx, auth.scope, proposal.buildRef, proposal.executionRef),
+			"verification_required",
+		);
+		proposal.executionVerified = true;
+		proposal.revision++;
+		repo.putProposal(tx, proposal, expectedRevision);
+		return proposal;
+	}
+	async function induceAndSaveWorkflow(
+		tx: Tx,
+		input: {
+			buildRef: string;
+			executionRef: string;
+			taskGoal: string;
+			succeededSummaries: string[];
+			evidence: string[];
+		},
+		auth: Authority,
+		context: { signal: AbortSignal; reserve(): Promise<void> },
+	) {
+		requireThat(
+			auth.permissions.includes("report") &&
+				p.authority.valid(tx, auth, input.evidence) &&
+				repo.hasUse(tx, auth.scope, input.buildRef, input.executionRef) &&
+				!repo.blocked(tx, input.buildRef),
+			"permission_denied",
+		);
+		requireThat(input.succeededSummaries.length >= 1, "verification_required");
+		context.signal.throwIfAborted();
+		await context.reserve();
+		const data = {
+			taskGoal: input.taskGoal,
+			succeededSummaries: input.succeededSummaries.slice(0, 16),
+			evidence: input.evidence,
+		};
+		requireThat(
+			bytes(data) <= limits.reflectionMaxDataBytes,
+			"context_budget_exceeded",
+		);
+		const response = await p.inference.complete(
+			{
+				system: workflowInstructions,
+				data,
+				schema: z.toJSONSchema(proposalContent),
+				deadlineAt: p.now() + limits.reflectionDeadlineMs,
+				maxOutputTokens: limits.reflectionMaxOutputTokens,
+				requestRef: input.executionRef,
+			},
+			context.signal,
+		);
+		const content = proposalContent.parse(response.value);
+		requireThat(
+			content.evidence.every((e) => input.evidence.includes(e)),
+			"evidence_unavailable",
+		);
+		requireThat(p.inference.validReceipt(tx, response.receipt), "stale_result");
+		const proposal: Proposal = {
+			ref: p.id(),
+			scope: auth.scope,
+			buildRef: input.buildRef,
+			executionRef: input.executionRef,
+			...content,
+			status: "proposed",
+			revision: 0,
+		};
+		repo.putProposal(tx, proposal, null);
+		repo.link(tx, proposal.ref, proposal.buildRef);
+		for (const ref of proposal.evidence) repo.link(tx, proposal.ref, ref);
+		return proposal;
+	}
 	return {
 		reportResult,
 		prepareReflection,
@@ -277,5 +374,7 @@ export function createResultOperations<Tx>(
 		saveProposal,
 		failReflection,
 		reviewProposal,
+		markExecutionVerified,
+		induceAndSaveWorkflow,
 	};
 }

@@ -126,6 +126,7 @@ export interface Proposal {
 	evidence: string[];
 	status: "proposed" | "validated" | "accepted" | "rejected" | "withdrawn";
 	revision: number;
+	executionVerified?: boolean;
 }
 export interface Reflection {
 	ref: string;

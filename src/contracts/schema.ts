@@ -302,4 +302,6 @@ export const proposalSchema = z.strictObject({
 		"withdrawn",
 	]),
 	revision: z.number().int().nonnegative(),
+	/** Set when a succeeded report+use binding verified the proposal locally. Not auto-publish. */
+	executionVerified: z.boolean().optional(),
 });

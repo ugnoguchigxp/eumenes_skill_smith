@@ -36,3 +36,10 @@
 
 前提: 受入条件付きの報告（提案 01、14）。
 
+## 実装結果
+
+- **採否**: 採用（ローカル印）
+- **内容**: `markExecutionVerified` は succeeded の report + bindUse がある proposed/validated 候補にだけ `executionVerified` を付ける。自動で正式 Skill 登録はしない。
+- **パス**: `src/service/results.ts`, `src/contracts/schema.ts`, `src/contracts/types.ts`, `src/test/execution-verified.test.ts`
+- **試験**: 通過。本体 publish API は未発明。
+- **理由**: Voyager 的な実行検証の印を、ホスト API なしで安全に追加できた。
