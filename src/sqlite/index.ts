@@ -289,6 +289,17 @@ export const sqliteRepository: Repository<Database> = {
 			r.input.executionRef,
 		);
 	},
+	reportsByBuild(db, scope, buildRef) {
+		const rows = db
+			.query("SELECT data_json FROM knowledge_results WHERE scope=?")
+			.all(scope) as { data_json: string }[];
+		const out: Report[] = [];
+		for (const row of rows) {
+			const parsed = parseStored(row.data_json, reportRecordSchema);
+			if (parsed.input.buildRef === buildRef) out.push(parsed);
+		}
+		return out;
+	},
 	proposal: (db, ref) =>
 		json<Proposal>(
 			db,

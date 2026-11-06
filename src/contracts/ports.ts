@@ -54,6 +54,7 @@ export interface Repository<Tx> {
 		reportId: string,
 	): { digest: string; revision: number } | null;
 	putReport(tx: Tx, report: Report): void;
+	reportsByBuild(tx: Tx, scope: string, buildRef: string): Report[];
 	proposal(tx: Tx, ref: string): Proposal | null;
 	putProposal(tx: Tx, proposal: Proposal, expected: number | null): void;
 }

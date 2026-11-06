@@ -18,6 +18,7 @@ search.externalのwarnings・degraded・truncatedは検索元の未信頼な申�
 export const INSTRUCTION_VERSION = "build." + digest(buildInstructions);
 export const improvementInstructions = `
 報告された実行結果から、他の対象にも使える手順の改善候補を作る。
+buildBody・sourceRefs・dependencyVersions・contrast が付く場合はそれらを根拠にする。
 実行側の自己申告は検証済みの事実と区別する。引用した根拠の範囲を超えて一般化しない。
 変更するsections、適用するconditions、根拠のevidenceだけを返す。
 個別の語句への専用分岐、受入条件・権限の変更、正式公開は行わない。

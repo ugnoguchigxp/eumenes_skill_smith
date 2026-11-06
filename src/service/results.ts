@@ -84,7 +84,28 @@ export function createResultOperations<Tx>(
 			for (const source of report.input.evidence)
 				repo.link(tx, reflection.ref, source);
 		}
-		return { reflection, report };
+		const build = repo.build(tx, report.input.buildRef);
+		const peers = repo.reportsByBuild(tx, auth.scope, report.input.buildRef);
+		const grounding = build
+			? {
+					buildBody: build.content.body,
+					sourceRefs: build.content.decision.sourceRefs,
+					dependencyVersions: build.content.dependencies.map((d) => d.version),
+					contrast: {
+						succeeded: peers
+							.filter((p) => p.input.outcome === "succeeded")
+							.map((p) => p.input.summary)
+							.slice(0, 8),
+						failed: peers
+							.filter((p) =>
+								["failed", "incomplete", "cancelled"].includes(p.input.outcome),
+							)
+							.map((p) => p.input.summary)
+							.slice(0, 8),
+					},
+				}
+			: undefined;
+		return { reflection, report, grounding };
 	}
 	function reserveReflection(tx: Tx, s: PreparedReflection, auth: Authority) {
 		requireThat(auth.permissions.includes("report"), "permission_denied");
@@ -119,6 +140,14 @@ export function createResultOperations<Tx>(
 		const data = {
 			report: s.report.input,
 			verification: "実行側の報告。ホストで実証されたという意味ではない",
+			...(s.grounding
+				? {
+						buildBody: s.grounding.buildBody,
+						sourceRefs: s.grounding.sourceRefs,
+						dependencyVersions: s.grounding.dependencyVersions,
+						contrast: s.grounding.contrast,
+					}
+				: {}),
 		};
 		requireThat(
 			bytes(data) <= limits.reflectionMaxDataBytes,

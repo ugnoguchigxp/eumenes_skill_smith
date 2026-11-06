@@ -140,7 +140,14 @@ export interface Reflection {
 	inputTokens: number | null;
 	outputTokens: number | null;
 }
+export interface ImprovementGrounding {
+	buildBody: string;
+	sourceRefs: string[];
+	dependencyVersions: import("./schema.js").VersionRef[];
+	contrast: { succeeded: string[]; failed: string[] };
+}
 export interface PreparedReflection {
 	reflection: Reflection;
 	report: Report;
+	grounding?: ImprovementGrounding;
 }

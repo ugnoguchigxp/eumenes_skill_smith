@@ -36,3 +36,13 @@
 
 前提: 成否付きの報告が蓄積されていること（仮定）。提案 10。
 
+
+
+## 実装結果
+
+- **採否**: 採用
+- **内容**: `prepareReflection` が build 本文・sourceRefs・版・成否要約対比を `grounding` として付け、`propose` がモデルへ渡す。候補は proposed のまま。
+- **パス**: `src/service/results.ts`, `src/contracts/ports.ts`, `src/contracts/types.ts`, `src/sqlite/index.ts`, `src/instructions/build.ts`, `src/test/grounded-propose.test.ts`
+- **試験**: `bun test src/test/grounded-propose.test.ts`
+- **未実施**: 人手での候補品質ラベル比較
+- **理由**: 報告文だけの根拠づけを解消。正式公開はしない。
