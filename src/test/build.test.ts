@@ -484,3 +484,42 @@ test("duplicate refs across local and external keep the first-seen card", async 
 	expect(r.build.content.dependencies[0]!.external).toBe(false);
 	expect(r.build.content.body).toContain("ローカル本文");
 });
+
+test("cached external builds revalidate and refuse revoked sources on delivery", async () => {
+	const f = fixture({ external: true });
+	f.setDecision({
+		kind: "ready",
+		strategy: "reuse",
+		sourceRefs: ["external:1"],
+		sections: [],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["確認する"],
+		assumptions: [],
+	});
+	const first = await ready(f);
+	expect(f.modelCalls()).toBe(1);
+	const second = f.submit({ ...f.request, requestId: "request:2" });
+	expect(second.kind).toBe("unavailable");
+	if (second.kind === "unavailable")
+		expect(second.code).toBe("external_validation_required");
+	expect(f.modelCalls()).toBe(1);
+	const validated = await f.service.getValidated(
+		second.requestRef!,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(validated.kind).toBe("ready");
+	if (validated.kind === "ready")
+		expect(validated.build.ref).toBe(first.build.ref);
+	f.setSourceValid(false);
+	const revoked = await f.service.getValidated(
+		second.requestRef!,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(revoked.kind).toBe("rejected");
+	if (revoked.kind === "rejected") expect(revoked.code).toBe("source_revoked");
+});

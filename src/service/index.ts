@@ -168,12 +168,9 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		const cached = request.prior?.buildRef
 			? repo.build(tx, request.prior.buildRef)
 			: repo.cached(tx, auth.scope, key);
-		if (
-			cached &&
-			cached.key === key &&
-			usable(tx, cached, auth) &&
-			!cached.content.dependencies.some((e) => e.external)
-		)
+		// External dependency builds may be cached; delivery still revalidates
+		// via getValidated before a ready reply is returned to the client.
+		if (cached && cached.key === key && usable(tx, cached, auth))
 			row.outcome = { kind: "ready", buildRef: cached.ref };
 		else if (!row.waitingParent)
 			row.jobRef = p.jobs.enqueue(tx, {
