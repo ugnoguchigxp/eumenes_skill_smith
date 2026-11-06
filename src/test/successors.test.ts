@@ -62,13 +62,18 @@ test("a superseded document's published successor is fetched within the document
 });
 test("missing, cyclic and over-budget successors are reported as insufficiency, not followed", async () => {
 	const missing = setup(
-		{ a: doc("a", { status: "superseded", supersededBy: "gone" }) },
+		{
+			a: doc("a", { status: "superseded", supersededBy: "gone" }),
+			// Returned but unusable (wrong ref) counts as unavailable, not transport error.
+			gone: doc("other-ref"),
+		},
 		["a"],
 	);
 	await missing.run();
 	expect(missing.inputs[0]!.search.successors).toEqual([
 		{ ref: "a", successor: "gone", outcome: "unavailable" },
 	]);
+	expect(missing.inputs[0]!.untrustedEvidence.map((e) => e.ref)).toEqual(["a"]);
 	const cycle = setup(
 		{
 			a: doc("a", { status: "superseded", supersededBy: "b" }),
@@ -137,4 +142,43 @@ test("a successor outside the requester's scope is not adopted", async () => {
 		{ ref: "a", successor: "x", outcome: "unavailable" },
 	]);
 	expect(s.inputs[0]!.untrustedEvidence.map((e) => e.ref)).toEqual(["a"]);
+});
+
+test("a transport failure while fetching a successor is reported as error", async () => {
+	const f = fixture();
+	const inputs: { search: Record<string, unknown> }[] = [];
+	f.ports.registry.search = async () => [
+		{
+			ref: "a",
+			version: { id: "a", version: "1", digest: "d", generation: 0 },
+			title: "a",
+			status: "superseded",
+			complete: true,
+			external: false,
+			scope: "shared",
+			supersededBy: "n",
+		},
+	];
+	f.ports.registry.read = async (ref) => {
+		if (ref === "a")
+			return doc("a", {
+				status: "superseded",
+				supersededBy: "n",
+				version: { id: "a", version: "1", digest: "d", generation: 0 },
+			});
+		throw new Error("network_down");
+	};
+	const complete = f.ports.inference.complete;
+	f.ports.inference.complete = async (input, signal) => {
+		inputs.push(structuredClone(input.data) as never);
+		return complete(input, signal);
+	};
+	const r = f.submit({
+		...f.request,
+		limits: { ...f.request.limits, documents: 4 },
+	});
+	await f.run(r.requestRef!).catch(() => undefined);
+	expect(inputs[0]!.search.successors).toEqual([
+		{ ref: "a", successor: "n", outcome: "error" },
+	]);
 });

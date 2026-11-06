@@ -219,7 +219,7 @@ export async function executeBuild<Tx>(
 	const successors: {
 		ref: string;
 		successor: string;
-		outcome: "fetched" | "unavailable" | "cycle" | "limit";
+		outcome: "fetched" | "unavailable" | "error" | "cycle" | "limit";
 	}[] = [];
 	const seen = new Set(evidence.map((e) => e.ref));
 	for (let i = 0; i < evidence.length; i++) {
@@ -244,9 +244,11 @@ export async function executeBuild<Tx>(
 		} catch (error) {
 			signal.throwIfAborted();
 			if (error instanceof SkillSmithError) throw error;
+			// Transport/fetch failure: not the same as a returned unusable successor.
+			successors.push({ ref: e.ref, successor, outcome: "error" });
+			continue;
 		}
 		if (
-			next &&
 			next.ref === successor &&
 			next.external === e.external &&
 			(next.scope === "shared" || next.scope === r.authority.scope)
