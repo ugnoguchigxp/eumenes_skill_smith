@@ -51,16 +51,26 @@ oracle 条件で品質が改善し、natural 条件でも根拠が届くとき�
 
 ## 実装結果
 
-測定ハーネスを opt-in として実装。品質の採否・指示変更の採否は未判定。既定の製品経路は natural のまま。
+測定ハーネスを opt-in として採用。既定の製品経路は natural のまま。複合 4 件の品質採点後、baseline 指示の変更は見送った。
 
 - **選択**: `scenario-eval.ts --full --suite examples/contextstill/scenarios/suite-3axis.json --axis compose --evidence-supply natural|oracle`。省略は `natural`、未知値はエラー。oracle は full 評価専用（retrieval-only と同時指定はエラー）。検索 profile、query-reformulation（off）、assembly-mode（baseline）の既定値は不変。
 - **根拠供給**: oracle は suite の expectedRefs だけを評価側で読み、既存の fixture SourcePort.get から実際の文書を取得する。ref 順に並べた通常の card を評価専用 SourcePort.search から返すため検索順位には依存しない。製品 execute は通常どおり get / disclose / validate を通り、版・complete・認可・予算・I/O・return の検査は省略しない。本文・題名を期待ラベルから合成しない。oracle の順位は供給条件の記録であり自然検索の改善ではない。
 - **隔離**: builder の task は従来の builderView（goal / acceptance）だけ。期待題名・expectedRefs ラベル・axis は追加せず、通常の card と格納済み本文だけを渡す。SourcePort へ turn.query を渡す変更なし、core は未変更で authority.searchTask の境界を維持。補助モデルの入力も未変更。
-- **指示**: baseline `buildInstructions` / `INSTRUCTION_VERSION` は変更なし（`build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623`）。compose の参照 2 件以上を製品規則にしていない。後続の指示 delta は、親が統合品質を採点してから必要な場合だけ別 opt-in で検討する。
+- **指示**: baseline `buildInstructions` / `INSTRUCTION_VERSION` は変更なし（`build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623`）。compose の参照 2 件以上を製品規則にしていない。採点の結果、現行指示と受入条件（単なる連結を禁ずる）で根拠が届いたときは統合指針が出たため、compose-integration の指示 delta は見送る。
 - **judge**: compose だけの別 schema / 指示で coverage / coherence / conflictHandling / actionability を分離。期待文書本文は judge にだけ追加し、評点は LLM に委ねる。内容を語句で採点しない。元の assemblyJudgeSchema / judge 指示 / 元 5 件の payload は変更なし。報告の composeScores に別項目を保存する。
 - **identity / 会計**: 提案 35 の identity に evidenceSupply と compose judge 指示・schema digest を追加。oracle の recorded-inference は host-side recordContext も inputDigest に束縛し、同一の model data でも natural の記録を流用しない。この context は builder の data / system / schema に挿入しない。natural は旧 digest を維持する。builder / judge 呼び出しと評価専用 get を実測、token 欠測は null のまま。記録欠落は pending、meanScore は null。`--output-dir` 指定時の build / judge pending もそのディレクトリに置く。
 - **試験結果**: `compose-isolation.test.ts` の 7 試験通過。oracle の元 search を例外にしても実カード・本文が execute / get / disclose で利用でき、builder data の全 turn に gold label / canary 題名 / axis が無い。natural compose の retrieval-only は既存報告の全 rows と parsed 同一（handle 0/4、BM25 4/4 allRequiredHit@8）。旧 5 件 handle full replay は 5/5 scored、平均 4.2 を再現。欠測 builder / judge は pending で SKILL・評点を補完しない。`bun run verify` 通過。
-- **未測定 / 親の作業**: 新しい SKILL 出力・compose judge 評点は作っていない。親が baseline の recorded-inference を埋め、複合 4 件 × natural（根拠が届く BM25 と届かない handle）× oracle（検索に依存しない対照）を採点する。一方の手順を落とした負例・矛盾する負例・単純連結の負例も同じ compose judge 指示 / schema で別 digest の記録として採点する。その結果を見て初めて、後続の compose-integration 指示 delta が必要か判定する。品質改善は主張しない。
+- **採点結果**: 複合 4 件を現行 baseline 指示のまま recorded-inference で採点した。builder は期待ラベルを見ていない。token 欠測は null のまま。`INSTRUCTION_VERSION` は採点前後で不変。
+  - natural handle: 4/4 `needs_input`、mean score 1（1, 1, 1, 1）。coverage 平均 1.25（2, 1, 1, 1）、coherence 平均 0、conflictHandling 平均 2.0（3, 5, 0, 0）、actionability 平均 2.0。期待Skillの同時到達は 0/4 のまま。ログ手順が候補に無い、誤った近傍（context_compile の verify）を公式のフック回避禁止に使わない、など検索未到達を正直に保留している。これを合成失敗として元 5 件の 4.2 から差し引かない。
+  - natural BM25: 4/4 `ready` / `compose`、mean score 8（8, 8, 8, 8）。coverage 平均 8.75（9, 9, 8, 9）、coherence 平均 8.25（8, 8, 8, 9）、conflictHandling 平均 8.25（8, 9, 8, 8）、actionability 平均 8.0。根拠が届いたときは、先に一方を確認して他方を免除しないこと、適用範囲の違い、検証項目を一つの指針として書いている。packed-offline-smoke の coverage 8 は、モノレポ依存グラフ内や PATH 上の開発バイナリを避ける注意が原文ほど明示されていないため。
+  - oracle（search-profile handle で供給だけ切替）: 4/4 `ready` / `compose`、mean score 8。次元点は natural BM25 と同一。同じ開示本文から同じ組み立てを書いており、oracle だから加点していない。evalEvidenceGetCalls は handle/BM25 が 8（judge 用の期待文書取得）、oracle が 16（preload 8 + judge 8）。
+- **負例**: `secure-commit-and-logs` の oracle 正例（score 8）を親が明示的に改変し、同じ compose judge 指示 / schema で別 digest として採点した。正例の評点はコピーしていない。
+  - dropped-procedure: score 3、coverage 3、coherence 4、conflictHandling 2、actionability 4、expectedSkillUsed false（ログ手順の本文を削除）。
+  - contradiction: score 2、coverage 4、coherence 2、conflictHandling 1、actionability 2、expectedSkillUsed false（マスキングすれば .env をコミットしてよい、と根拠の禁止を反転）。
+  - concatenation: score 4、coverage 7、coherence 2、conflictHandling 2、actionability 6、expectedSkillUsed true（2件の原文を連結しただけ）。
+  3件とも正例の 8 より低く、片方欠落・矛盾・単純連結を統合成功と区別できた。
+- **採否**: 測定ハーネスは採用（opt-in。省略時は natural）。製品の複合規則も baseline 指示も変えない。指示変更は不採用。品質改善を製品既定の効果としては主張しない。natural handle の低点は検索未到達であり合成軸へ加算しない。
+- **記録**: `examples/contextstill/scenarios/build-records-compose-natural-{handle,bm25}.json`、`build-records-compose-oracle.json`、対応する `judge-records-compose-*.json` と `scores-compose-*.json`、負例は `compose-negatives.json` と `judge-records-compose-negatives.json`。
 
 ### 親の記録作成例
 

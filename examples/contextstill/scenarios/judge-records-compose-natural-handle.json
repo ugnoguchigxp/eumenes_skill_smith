@@ -1,0 +1,54 @@
+[
+	{
+		"inputDigest": "eacd0de27227d2a0ebd184303cc18d6e0c45a12174e0e81005881965b1059084",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"coverage": 2,
+			"coherence": 0,
+			"conflictHandling": 3,
+			"actionability": 2,
+			"rationale": "自然検索ではコミット秘密の規則だけが候補に現れ、ログや応答へ秘密を出さない規則は top に無い。組み立ては不足を明示して needs_input にしており、届いていない根拠を公式Skillとして捏造していない。これは検索未到達であり、届いた根拠の統合失敗ではない。複合SKILLは生成されていないため coverage と coherence は低い。期待した2手順を本文で活用していない。"
+		}
+	},
+	{
+		"inputDigest": "d2204a8b0ffd0ca7af6c8366787bf4369048b9629a4f0247ceb037a58aa4df74",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"coverage": 1,
+			"coherence": 0,
+			"conflictHandling": 5,
+			"actionability": 2,
+			"rationale": "自然検索の候補に pre-commit 回避禁止と force push 禁止は見当たらない。開示した context_compile の verify 手順を、フック回避禁止や force push 禁止の代用にしていない点は適用範囲の取り違えを避けている。ただし複合指針は出ておらず、受入条件の全要素も満たさない。検索未到達による保留であり、合成失敗として加点も減点もしない。"
+		}
+	},
+	{
+		"inputDigest": "78b18c078bb2be04d0d50db8ea89285c4a807403565463fa59d683d1d03af6f7",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"coverage": 1,
+			"coherence": 0,
+			"conflictHandling": 0,
+			"actionability": 2,
+			"rationale": "候補は本番クローン試験や計画書生成などで、パック成果物のスモークもライブプロバイダ隔離も届いていない。組み立ては両方の不足を書いて needs_input にした。複合本文は無く、手順の統合も衝突整理も評価できない。検索未到達であり、oracle でもない本条件を合成失敗としては扱わない。"
+		}
+	},
+	{
+		"inputDigest": "33482a6f761fd4dccbba66ef3eb375245f0cf603f9431984034092ba103f08b2",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"coverage": 1,
+			"coherence": 0,
+			"conflictHandling": 0,
+			"actionability": 2,
+			"rationale": "候補に Python の4スペース字下げも行長制限も無い。タイポグラフィトークンなど別領域の題名を流用せず needs_input にしている。期待Skillは本文で使われておらず、複合指針も無い。検索未到達を合成の失敗として加算しない。"
+		}
+	}
+]

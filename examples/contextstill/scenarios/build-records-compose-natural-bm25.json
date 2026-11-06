@@ -1,0 +1,222 @@
+[
+	{
+		"inputDigest": "02c04f76e0385308073c35e588df3a2197f8c14d67a8995ecc395f3bd43e93fa",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "54528566a8ec17119b7c7cba8dc6b200099c177a9d235248d2051a356e2ca384",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "4219ad0682c9d398448365fad0034dc3a8d9c23436b0ec3627826c9cfd888f70",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u"
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "f5a4f06727d1412c2a8d100dc4d4296503c0ad457654f42acb7e8be34668f8b8",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "24d7a04ef7876f4f6236c03c8e37384bfab4821a72fd26104e0e0a3a4e3d4274",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "compose",
+			"sourceRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"sections": [
+				{
+					"id": "apply-together",
+					"body": "リリース準備では、秘密情報をコミットに載せないことと、ログや応答に出さないことを別々の点検として両方行う。片方だけ満たしても目的は完了しない。.env や鍵をコミットから外しても、同じ値をログや HTTP 応答へ生のまま出すことは許されない。逆にログをマスキングしても、秘密ファイルをコミットしてよいことにはならない。先に作業ツリーとコミット対象を確認し、その後にログ・応答・診断出力を確認する。"
+				},
+				{
+					"id": "keep-secrets-out-of-commits",
+					"body": "秘密情報、APIキー、トークン、秘密鍵、cookie、ローカルの .env、機械固有の認証情報をコミットしない。すでに露出していれば作業を止めて無効化またはローテーションする。"
+				},
+				{
+					"id": "keep-secrets-out-of-logs",
+					"body": "生の秘密情報、トークン、APIキー、パスワード、cookie、秘密鍵、認証情報付き URL を表示・保存・返却しない。ログや診断出力を残す前にマスキングする。"
+				}
+			],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"ログおよび HTTP 応答に生の秘密情報や認証情報付き URL が含まれておらず、診断出力はマスキング済みである",
+				"すでに露出している認証情報があれば無効化またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "b63cfc977089011939aa2788fd00899a001b042ba9315ea3a01c711647d37900",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "compose",
+			"sourceRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+				"contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+			],
+			"sections": [
+				{
+					"id": "order-then-push",
+					"body": "コミット前フックの検証失敗は、回避せず原因を直してから同じ検証を再実行し、通常の push をする。フックを直したことは force push の許可にはならない。履歴を上書きする push は、利用者が明示的に依頼し対象ブランチを確認したあとでのみ検討する。先にフック相当の検証を通し、その後に非破壊的な push を行う。"
+				},
+				{
+					"id": "fix-hook-failures",
+					"body": "pre-commit フックが typecheck、lint、format、test で失敗したら、フック出力から種類を特定する。formatter なら報告されたファイルを整形する。lint や型なら最小の修正にする。フックが実行するのと同じ verify を再実行し、意図した変更を再ステージしてからコミットをやり直す。利用者がリスクを認めて明示しない限り --no-verify は使わない。無関係なファイルを広く整形し直さない。同じ失敗ファイルを変えずに再コミットしない。"
+				},
+				{
+					"id": "no-force-push",
+					"body": "`git push --force` や `git push --force-with-lease` は、利用者が明示的に依頼し対象ブランチが確認されるまで実行しない。通常は非破壊的な push を選び、履歴への影響を先に説明する。"
+				}
+			],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"フックと同等の verify コマンドがローカルで成功している",
+				"再コミット前に未ステージの修正が残っていない",
+				"最終コミットは bypass なしで成功している",
+				"push は明示的な許可なく --force または --force-with-lease を使っていない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "d26cd502c978f8b62539d8c4d33090ead2f42be675e96764398d3cfcca1710a3",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "compose",
+			"sourceRefs": [
+				"contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+				"contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+			],
+			"sections": [
+				{
+					"id": "offline-packed-smoke",
+					"body": "公開リリース前のスモークは、パックした成果物をきれいな一時プロジェクトへ入れて消費者と同じように実行し、その実行が外部プロバイダや認証情報へ暗黙に依存しないようにする。ローカルの build/test 成功や `npm pack --dry-run` だけでは最終ゲートにしない。ライブなプロバイダ確認が必要なら明示的なタグやコマンドの向こうへ隔離し、認証情報が無いときはスキップする。"
+				},
+				{
+					"id": "packed-artifact-path",
+					"body": "必要なコンポーネントをビルドし、プラットフォーム用 tarball と本体 tarball を作る。きれいな一時ディレクトリでプロジェクトを初期化し、プラットフォーム用、続いて本体を入れる。本体はレジストリ状態に対して決定的になるよう `--omit=optional` などのフラグを使う。入れたパッケージの文脈でアプリケーションコマンドを実行する。開発用のローカルパスやビルドツールに頼らず成功することを確認する。"
+				},
+				{
+					"id": "no-implicit-live-providers",
+					"body": "スモークテストは外部 API の認証情報、現在のユーザー設定、ネットワークやプロバイダの可用性に依存せず決定的であるべきである。ライブなプロバイダ確認は明示的なタグまたはコマンドの向こうへ隔離し、認証情報が無いときはスキップする。"
+				}
+			],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"きれいな一時ディレクトリへ tarball を入れてインストールエラーがない",
+				"入れたパッケージの文脈でアプリケーションコマンドが、ローカル開発パスやビルドツールなしで成功する",
+				"スモーク実行が外部プロバイダや認証情報への暗黙の呼び出しを含まない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "97718d2af4f0dd6ba6396e71125edecba964bcac2f7bc1afcb1ae223ef63bc85",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "compose",
+			"sourceRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+				"contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+			],
+			"sections": [
+				{
+					"id": "format-order",
+					"body": "Python ソースを整えるときは、先にインデントをファイルの規則へ合わせ、そのうえで行の長さを制限する。インデントを直した結果として長くなった行は折り返す。行長だけを先に折っても、タブとスペースの混在は残る。両方を一つの整形手順として扱い、言語を問わず同じ数値を押し付けるのではない。対象は Python である。"
+				},
+				{
+					"id": "four-space-indent",
+					"body": "Python コードの字下げはレベルあたりスペース4つにする。タブよりスペースを優先する。そのファイルがすでにタブ字下げである場合に限り、そのファイルの既存スタイルに合わせる。"
+				},
+				{
+					"id": "limit-line-length",
+					"body": "Python のコード行は 79 文字以下にする。docstring とコメントは 72 文字以下で折り返す。"
+				}
+			],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"対象が Python である場合、インデントはレベルあたりスペース4つである。既存がタブ字下げのファイルではそのファイルの既存スタイルに合わせている",
+				"Python のコード行は 79 文字以下、docstring とコメントは 72 文字以下である"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	}
+]

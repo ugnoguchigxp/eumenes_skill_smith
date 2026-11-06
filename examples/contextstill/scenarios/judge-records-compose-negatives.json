@@ -1,0 +1,41 @@
+[
+	{
+		"inputDigest": "7d954d80d10fff7033234c2a9911f83394a22d350c99bd2cecdded1dc3dcdc5a",
+		"provider": "grok_bot",
+		"value": {
+			"score": 3,
+			"expectedSkillUsed": false,
+			"coverage": 3,
+			"coherence": 4,
+			"conflictHandling": 2,
+			"actionability": 4,
+			"rationale": "統合節はログと応答の確認にも触れるが、秘密をログや応答へ出さない手順の本文が欠けている。コミットから秘密を除く側だけが残っており、受入条件の全要素を満たさない。片方の手順を消した負例であり、残った側の順序説明だけを統合成功とは扱わない。期待した2件を本文で活用していない。"
+		}
+	},
+	{
+		"inputDigest": "70ef0894fb63c1c7cd0033df75ebf01d3f60ecfa2296b91c51a51175e06cc8aa",
+		"provider": "grok_bot",
+		"value": {
+			"score": 2,
+			"expectedSkillUsed": false,
+			"coverage": 4,
+			"coherence": 2,
+			"conflictHandling": 1,
+			"actionability": 2,
+			"rationale": "統合節が、ログをマスキングすれば .env や APIキーをコミットしてよい、あるいはコミットから外せば同じ秘密をログや応答に出してよい、と根拠の禁止を反転している。後続節は元の禁止を残しており、文書内でも矛盾する。根拠間に無いトレードオフを発明しており、その指示に従うと両方の規則を破る。矛盾する負例として低く評価する。"
+		}
+	},
+	{
+		"inputDigest": "320c21e7115c979cd86009464d467562c431de10740026e6589c7e42e705334a",
+		"provider": "grok_bot",
+		"value": {
+			"score": 4,
+			"expectedSkillUsed": true,
+			"coverage": 7,
+			"coherence": 2,
+			"conflictHandling": 2,
+			"actionability": 6,
+			"rationale": "2件の期待手順の本文はほぼ原文のまま並んでいるので coverage はある。しかし順序、依存、片方では免除されないことは書かれておらず、受入条件が禁じる単純連結である。適用面の違いを優先関係として整理してもいない。各規則の禁止自体は実行できるが、リリース準備としての一貫した指針にはなっていない。"
+		}
+	}
+]

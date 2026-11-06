@@ -1,0 +1,69 @@
+[
+	{
+		"inputDigest": "420477e3ccb61750a5503ba4b2eb5bafe42a85c53660544c0c3f16c52a84976b",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "a35a8fefe4fe35072748796c3861e767736cad7ddf373ae0e00e7735e2bd7d6f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "d8eca28ca21a4c614a10fa5216739f896703e729a83df01df52f180c62774d6e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"package release smoke test guidance that uses packed artifacts in a clean project",
+				"guidance that smoke tests must not implicitly call live providers"
+			]
+		}
+	},
+	{
+		"inputDigest": "d075ac5eb2290929cbf2d0cf107508b075bed49a972175c26e8a125c8ae3c036",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"Python 4-space indentation guidance",
+				"Python line-length limit guidance"
+			]
+		}
+	},
+	{
+		"inputDigest": "a0856fbd87c037569dd9fb3398bb21d84e971e9488de90b5396e925b37a8da56",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"ログや HTTP 応答、診断出力に秘密情報を出さないための指針。開示できたのはコミット対象から秘密ファイルや鍵を除く規則だけで、目的の残り半分を公式資料として確認できていない"
+			]
+		}
+	},
+	{
+		"inputDigest": "edef735727d99c1cf3addd993e2a163702782a43d18535c8ce6335f857e56e6e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"コミット前フックの検証失敗を回避せず直して再試行するための指針。開示した資料は context_compile 周辺の verify 手順であり、pre-commit の bypass 禁止ではない",
+				"明示的な許可なく force push しないための指針"
+			]
+		}
+	}
+]

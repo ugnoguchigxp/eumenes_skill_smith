@@ -1,0 +1,312 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-three-axis",
+	"searchProfile": "handle",
+	"assemblyMode": "baseline",
+	"identity": {
+		"searchProfile": "handle",
+		"evidenceSupply": "oracle",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"assemblyMode": "baseline",
+		"queryReformulation": "off",
+		"reformulationInstructionsDigest": null,
+		"reformulationSchemaDigest": null,
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "compose",
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 4,
+	"scored": 4,
+	"meanScore": 8,
+	"statuses": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "python-style",
+			"axis": "compose",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"expectedRefs": [
+				"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+				"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+			],
+			"strategy": "compose",
+			"kind": "ready",
+			"rationale": "コミットから秘密・.env・鍵を除く手順と、ログや応答へ生の秘密を出さない手順が両方本文に入っている。先に作業ツリーとコミット対象を見て、続いてログ・応答を見る順序と、片方を満たしても他方は免除されないことが書いてあるので単純連結ではない。根拠同士は補完関係で、無い衝突を発明していない。露出時は作業停止と無効化、検証はコミット内容・ログ/応答・ローテーションに分かれて実行できる。cookie や認証情報付き URL も手順側に残っている。到達条件の説明であって oracle だから加点していない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+				"contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+			],
+			"expectedRefs": [
+				"contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+				"contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+			],
+			"strategy": "compose",
+			"kind": "ready",
+			"rationale": "フック失敗を種類ごとに直し、同じ verify を再実行して bypass せず再コミットする手順と、明示許可なしに force / force-with-lease しない手順が両方入っている。フック修正は force push の許可にならないと切り分け、先に検証を通してから非破壊的な push をする順序になっている。根拠の条件差を優先関係として説明しており、無い矛盾は作っていない。検証は verify 成功、未ステージ無し、bypass 無し、force 無しで観測できる。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": [
+				"contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+				"contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+			],
+			"expectedRefs": [
+				"contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+				"contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+			],
+			"strategy": "compose",
+			"kind": "ready",
+			"rationale": "パックした tarball をきれいな一時ディレクトリへ入れて消費者と同様に実行する流れと、スモークが認証情報や外部プロバイダへ暗黙依存しないことが両方ある。dry-run だけでは最終ゲートにしない点も入っている。順序として成果物検証とライブ呼び出しの隔離を一つのスモークとして述べている。根拠は補完関係で、衝突の捏造は無い。検証はインストール成功、開発パス無しでのコマンド成功、暗黙のライブ呼び出し無し。モノレポの依存グラフ内や PATH 上の開発バイナリを避ける注意は原文ほど明示されておらず、coverage を満点にはしない。供給条件による加点はしていない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "python-style",
+			"score": 8,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+				"contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+			],
+			"expectedRefs": [
+				"contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+				"contextstill:kn_5e7ttipadb3m6lszysqy26sjr4"
+			],
+			"strategy": "compose",
+			"kind": "ready",
+			"rationale": "Python に限定して、レベルあたりスペース4つ（既存がタブのファイルだけはそのファイルに合わせる）と、コード79・docstring/コメント72の行長が両方入っている。先に字下げを整え、その結果長くなった行を折る順序で、行長だけ先に折ってもタブ混在が残ると依存が説明されている。他言語へ同じ数値を押し付けない範囲指定もあり、無い衝突は作っていない。検証項目は字下げと行長を直接観測できる。",
+			"judge": "llm"
+		}
+	],
+	"composeScores": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"coverage": 9,
+			"coherence": 8,
+			"conflictHandling": 8,
+			"actionability": 8
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"coverage": 9,
+			"coherence": 8,
+			"conflictHandling": 9,
+			"actionability": 8
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"coverage": 8,
+			"coherence": 8,
+			"conflictHandling": 8,
+			"actionability": 8
+		},
+		{
+			"taskId": "python-style",
+			"coverage": 9,
+			"coherence": 9,
+			"conflictHandling": 8,
+			"actionability": 8
+		}
+	],
+	"evidenceSupply": "oracle",
+	"recordProvenance": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"builderInputDigests": [
+				"4f706c634f8b8471dc6090edfd081b44d7a129e6e9fcd9df735a84da18983346",
+				"f476871c8daf2671600bc79249a46ad5d3ae7af3a2294ad925b670ce2bfb162a"
+			],
+			"judgeInputDigest": "f971fa876a152e9c0a55f873053d9f5ef347e88d5225056a99b60b487f58aeb3",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"builderInputDigests": [
+				"6d4f919926ba10fd4ee559a69918226a3974f3ea013302fd7961d77d44adca98",
+				"d5d1d301c5bce58892088bd1b71bfb8d2b08880424b809b5ea336a407a3af592"
+			],
+			"judgeInputDigest": "45eb7512b4fc8c07b5a94c72b08f4540bd1ceb58aa37ac7b523dcff667c791a1",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"builderInputDigests": [
+				"82a8d3601b08a6f500501288614bab57b6d98e346c174e3102aec8dcb52afdc2",
+				"32d08522ef06b4f6ecc94e634533c3ec2cf3dcd9ee66575ef5cd4e27a6ad59ba"
+			],
+			"judgeInputDigest": "9607fdd4cfc7dc905b1005986de261e1842cc334f53e7f99a03ea3b23a09a9ba",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "python-style",
+			"builderInputDigests": [
+				"4361793f1cc0b64070973f8b891af85de609fc609717cba711e33d6697af49dc",
+				"7ab051de5c2c4201324c0fc3d26db0dfc0e4691c7d212f86b3136227811a2b57"
+			],
+			"judgeInputDigest": "0055b47dbbc52e249eb7a4da75b694fa17c80e74cd1e728ec9939daa143b30c8",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 8,
+		"judgeInferenceTasks": 4,
+		"reformulationInferenceTasks": 0,
+		"inputTokens": null,
+		"outputTokens": null,
+		"evalEvidenceGetCalls": 16
+	},
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "secure-commit-and-logs",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 1
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 2
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				}
+			]
+		},
+		{
+			"taskId": "fix-check-and-no-force",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 2
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				}
+			]
+		},
+		{
+			"taskId": "packed-offline-smoke",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"rank": 1
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": 2
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"title": "Package Release Smoke Test with Packed Artifacts"
+				},
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
+				}
+			]
+		},
+		{
+			"taskId": "python-style",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 2
+				},
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_5e7ttipadb3m6lszysqy26sjr4",
+					"title": "Limit Line Length"
+				},
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}

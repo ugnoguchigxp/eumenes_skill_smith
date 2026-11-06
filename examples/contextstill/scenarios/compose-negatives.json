@@ -1,0 +1,120 @@
+{
+	"sourceTaskId": "secure-commit-and-logs",
+	"sourceCondition": "oracle",
+	"sourceJudgeDigest": "f971fa876a152e9c0a55f873053d9f5ef347e88d5225056a99b60b487f58aeb3",
+	"sourcePositiveScore": 8,
+	"cases": [
+		{
+			"id": "dropped-procedure",
+			"inputDigest": "7d954d80d10fff7033234c2a9911f83394a22d350c99bd2cecdded1dc3dcdc5a",
+			"recordContext": {
+				"evidenceSupply": "oracle"
+			},
+			"requestRef": "scenario-judge-negative:secure-commit-and-logs:dropped-procedure",
+			"assembled": {
+				"kind": "ready",
+				"strategy": "compose",
+				"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+				"sections": [
+					{
+						"id": "apply-together",
+						"body": "リリース準備では、秘密情報をコミットに載せないことと、ログや応答に出さないことを別々の点検として両方行う。片方だけ満たしても目的は完了しない。.env や鍵をコミットから外しても、同じ値をログや HTTP 応答へ生のまま出すことは許されない。逆にログをマスキングしても、秘密ファイルをコミットしてよいことにはならない。先に作業ツリーとコミット対象を確認し、その後にログ・応答・診断出力を確認する。"
+					},
+					{
+						"id": "keep-secrets-out-of-commits",
+						"body": "秘密情報、APIキー、トークン、秘密鍵、cookie、ローカルの .env、機械固有の認証情報をコミットしない。すでに露出していれば作業を止めて無効化またはローテーションする。"
+					}
+				],
+				"body": "リリース準備では、秘密情報をコミットに載せないことと、ログや応答に出さないことを別々の点検として両方行う。片方だけ満たしても目的は完了しない。.env や鍵をコミットから外しても、同じ値をログや HTTP 応答へ生のまま出すことは許されない。逆にログをマスキングしても、秘密ファイルをコミットしてよいことにはならない。先に作業ツリーとコミット対象を確認し、その後にログ・応答・診断出力を確認する。\n\n秘密情報、APIキー、トークン、秘密鍵、cookie、ローカルの .env、機械固有の認証情報をコミットしない。すでに露出していれば作業を止めて無効化またはローテーションする。\n\n受入条件\nall-parts: 目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている\n\n制約\nreadonly: コピー元とスナップショットを変更しない\n\n検証\nコミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない\nログおよび HTTP 応答に生の秘密情報や認証情報付き URL が含まれておらず、診断出力はマスキング済みである\nすでに露出している認証情報があれば無効化またはローテーションした\n\n前提\n検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+				"missing": []
+			},
+			"judge": {
+				"score": 3,
+				"expectedSkillUsed": false,
+				"coverage": 3,
+				"coherence": 4,
+				"conflictHandling": 2,
+				"actionability": 4,
+				"rationale": "統合節はログと応答の確認にも触れるが、秘密をログや応答へ出さない手順の本文が欠けている。コミットから秘密を除く側だけが残っており、受入条件の全要素を満たさない。片方の手順を消した負例であり、残った側の順序説明だけを統合成功とは扱わない。期待した2件を本文で活用していない。"
+			}
+		},
+		{
+			"id": "contradiction",
+			"inputDigest": "70ef0894fb63c1c7cd0033df75ebf01d3f60ecfa2296b91c51a51175e06cc8aa",
+			"recordContext": {
+				"evidenceSupply": "oracle"
+			},
+			"requestRef": "scenario-judge-negative:secure-commit-and-logs:contradiction",
+			"assembled": {
+				"kind": "ready",
+				"strategy": "compose",
+				"usedRefs": [
+					"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				],
+				"sections": [
+					{
+						"id": "apply-together",
+						"body": "ログと診断出力をマスキングしていれば、.env や APIキー、トークンをコミットしてよい。コミット対象から秘密ファイルを外していれば、同じ値をログや HTTP 応答に生のまま出してよい。どちらか一方を満たせばリリース準備は完了する。"
+					},
+					{
+						"id": "keep-secrets-out-of-commits",
+						"body": "秘密情報、APIキー、トークン、秘密鍵、cookie、ローカルの .env、機械固有の認証情報をコミットしない。すでに露出していれば作業を止めて無効化またはローテーションする。"
+					},
+					{
+						"id": "keep-secrets-out-of-logs",
+						"body": "生の秘密情報、トークン、APIキー、パスワード、cookie、秘密鍵、認証情報付き URL を表示・保存・返却しない。ログや診断出力を残す前にマスキングする。"
+					}
+				],
+				"body": "ログと診断出力をマスキングしていれば、.env や APIキー、トークンをコミットしてよい。コミット対象から秘密ファイルを外していれば、同じ値をログや HTTP 応答に生のまま出してよい。どちらか一方を満たせばリリース準備は完了する。\n\n秘密情報、APIキー、トークン、秘密鍵、cookie、ローカルの .env、機械固有の認証情報をコミットしない。すでに露出していれば作業を止めて無効化またはローテーションする。\n\n生の秘密情報、トークン、APIキー、パスワード、cookie、秘密鍵、認証情報付き URL を表示・保存・返却しない。ログや診断出力を残す前にマスキングする。\n\n受入条件\nall-parts: 目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている\n\n制約\nreadonly: コピー元とスナップショットを変更しない\n\n検証\nコミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない\nログおよび HTTP 応答に生の秘密情報や認証情報付き URL が含まれておらず、診断出力はマスキング済みである\nすでに露出している認証情報があれば無効化またはローテーションした\n\n前提\n検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+				"missing": []
+			},
+			"judge": {
+				"score": 2,
+				"expectedSkillUsed": false,
+				"coverage": 4,
+				"coherence": 2,
+				"conflictHandling": 1,
+				"actionability": 2,
+				"rationale": "統合節が、ログをマスキングすれば .env や APIキーをコミットしてよい、あるいはコミットから外せば同じ秘密をログや応答に出してよい、と根拠の禁止を反転している。後続節は元の禁止を残しており、文書内でも矛盾する。根拠間に無いトレードオフを発明しており、その指示に従うと両方の規則を破る。矛盾する負例として低く評価する。"
+			}
+		},
+		{
+			"id": "concatenation",
+			"inputDigest": "320c21e7115c979cd86009464d467562c431de10740026e6589c7e42e705334a",
+			"recordContext": {
+				"evidenceSupply": "oracle"
+			},
+			"requestRef": "scenario-judge-negative:secure-commit-and-logs:concatenation",
+			"assembled": {
+				"kind": "ready",
+				"strategy": "compose",
+				"usedRefs": [
+					"contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				],
+				"sections": [
+					{
+						"id": "never-commit-secrets",
+						"body": "Do not commit secrets, API keys, tokens, private keys, cookies, local .env files, or machine-specific credentials. Stop and redact or rotate exposed credentials when discovered."
+					},
+					{
+						"id": "never-print-secrets",
+						"body": "Do not print, store, or return raw secrets, tokens, API keys, passwords, cookies, private keys, or credential-bearing URLs. Redact secrets before logging or summarizing diagnostic output."
+					}
+				],
+				"body": "Do not commit secrets, API keys, tokens, private keys, cookies, local .env files, or machine-specific credentials. Stop and redact or rotate exposed credentials when discovered.\n\nDo not print, store, or return raw secrets, tokens, API keys, passwords, cookies, private keys, or credential-bearing URLs. Redact secrets before logging or summarizing diagnostic output.\n\n受入条件\nall-parts: 目的に含まれる各要素がすべて扱われ、単なる連結ではなく順序立った一貫した指針になっている\n\n制約\nreadonly: コピー元とスナップショットを変更しない\n\n検証\nコミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない\nログおよび HTTP 応答に生の秘密情報や認証情報付き URL が含まれておらず、診断出力はマスキング済みである\nすでに露出している認証情報があれば無効化またはローテーションした\n\n前提\n検索は文字列一致のモックであり、開示した資料以外に適合する公式Skillがある可能性は残る。",
+				"missing": []
+			},
+			"judge": {
+				"score": 4,
+				"expectedSkillUsed": true,
+				"coverage": 7,
+				"coherence": 2,
+				"conflictHandling": 2,
+				"actionability": 6,
+				"rationale": "2件の期待手順の本文はほぼ原文のまま並んでいるので coverage はある。しかし順序、依存、片方では免除されないことは書かれておらず、受入条件が禁じる単純連結である。適用面の違いを優先関係として整理してもいない。各規則の禁止自体は実行できるが、リリース準備としての一貫した指針にはなっていない。"
+			}
+		}
+	]
+}

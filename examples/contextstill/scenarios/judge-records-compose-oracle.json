@@ -1,0 +1,54 @@
+[
+	{
+		"inputDigest": "f971fa876a152e9c0a55f873053d9f5ef347e88d5225056a99b60b487f58aeb3",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"coverage": 9,
+			"coherence": 8,
+			"conflictHandling": 8,
+			"actionability": 8,
+			"rationale": "コミットから秘密・.env・鍵を除く手順と、ログや応答へ生の秘密を出さない手順が両方本文に入っている。先に作業ツリーとコミット対象を見て、続いてログ・応答を見る順序と、片方を満たしても他方は免除されないことが書いてあるので単純連結ではない。根拠同士は補完関係で、無い衝突を発明していない。露出時は作業停止と無効化、検証はコミット内容・ログ/応答・ローテーションに分かれて実行できる。cookie や認証情報付き URL も手順側に残っている。到達条件の説明であって oracle だから加点していない。"
+		}
+	},
+	{
+		"inputDigest": "45eb7512b4fc8c07b5a94c72b08f4540bd1ceb58aa37ac7b523dcff667c791a1",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"coverage": 9,
+			"coherence": 8,
+			"conflictHandling": 9,
+			"actionability": 8,
+			"rationale": "フック失敗を種類ごとに直し、同じ verify を再実行して bypass せず再コミットする手順と、明示許可なしに force / force-with-lease しない手順が両方入っている。フック修正は force push の許可にならないと切り分け、先に検証を通してから非破壊的な push をする順序になっている。根拠の条件差を優先関係として説明しており、無い矛盾は作っていない。検証は verify 成功、未ステージ無し、bypass 無し、force 無しで観測できる。"
+		}
+	},
+	{
+		"inputDigest": "9607fdd4cfc7dc905b1005986de261e1842cc334f53e7f99a03ea3b23a09a9ba",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"coverage": 8,
+			"coherence": 8,
+			"conflictHandling": 8,
+			"actionability": 8,
+			"rationale": "パックした tarball をきれいな一時ディレクトリへ入れて消費者と同様に実行する流れと、スモークが認証情報や外部プロバイダへ暗黙依存しないことが両方ある。dry-run だけでは最終ゲートにしない点も入っている。順序として成果物検証とライブ呼び出しの隔離を一つのスモークとして述べている。根拠は補完関係で、衝突の捏造は無い。検証はインストール成功、開発パス無しでのコマンド成功、暗黙のライブ呼び出し無し。モノレポの依存グラフ内や PATH 上の開発バイナリを避ける注意は原文ほど明示されておらず、coverage を満点にはしない。供給条件による加点はしていない。"
+		}
+	},
+	{
+		"inputDigest": "0055b47dbbc52e249eb7a4da75b694fa17c80e74cd1e728ec9939daa143b30c8",
+		"provider": "grok_bot",
+		"value": {
+			"score": 8,
+			"expectedSkillUsed": true,
+			"coverage": 9,
+			"coherence": 9,
+			"conflictHandling": 8,
+			"actionability": 8,
+			"rationale": "Python に限定して、レベルあたりスペース4つ（既存がタブのファイルだけはそのファイルに合わせる）と、コード79・docstring/コメント72の行長が両方入っている。先に字下げを整え、その結果長くなった行を折る順序で、行長だけ先に折ってもタブ混在が残ると依存が説明されている。他言語へ同じ数値を押し付けない範囲指定もあり、無い衝突は作っていない。検証項目は字下げと行長を直接観測できる。"
+		}
+	}
+]
