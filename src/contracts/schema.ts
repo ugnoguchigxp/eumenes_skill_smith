@@ -211,3 +211,67 @@ export const sourceSearchSchema = z.strictObject({
 	truncated: z.boolean(),
 });
 export type SourceSearch = z.infer<typeof sourceSearchSchema>;
+
+export const outcomeSchema = z.discriminatedUnion("kind", [
+	z.strictObject({ kind: z.literal("ready"), buildRef: id }),
+	z.strictObject({
+		kind: z.literal("needs_input"),
+		missing: z.array(text).min(1).max(16),
+	}),
+	z.strictObject({ kind: z.literal("unavailable"), code: id }),
+	z.strictObject({ kind: z.literal("rejected"), code: id }),
+	z.strictObject({ kind: z.literal("cancelled"), code: id }),
+	z.strictObject({ kind: z.literal("expired"), code: id }),
+]);
+export const requestRecordSchema = z.strictObject({
+	ref: id,
+	request: requestSchema,
+	authority: authoritySchema,
+	key: id,
+	inputDigest: id,
+	epoch: z.number().int().nonnegative(),
+	revision: z.number().int().nonnegative(),
+	createdAt: z.number().int().nonnegative(),
+	jobRef: id.nullable(),
+	waitingParent: id.nullable(),
+	runToken: id.nullable(),
+	outcome: outcomeSchema.nullable(),
+	usage: usageSchema,
+});
+export const reportRecordSchema = z.strictObject({
+	input: resultSchema,
+	scope: id,
+	revision: z.number().int().nonnegative(),
+	digest: id,
+});
+export const reflectionSchema = z.strictObject({
+	ref: id,
+	scope: id,
+	executionRef: id,
+	reportDigest: id,
+	buildRef: id,
+	authority: authoritySchema,
+	reserved: z.boolean(),
+	outcome: z.enum(["pending", "completed", "failed"]),
+	proposalRef: id.nullable(),
+	revision: z.number().int().nonnegative(),
+	inputTokens: z.number().int().nonnegative().nullable(),
+	outputTokens: z.number().int().nonnegative().nullable(),
+});
+export const proposalSchema = z.strictObject({
+	ref: id,
+	scope: id,
+	buildRef: id,
+	executionRef: id,
+	sections: z.array(sectionSchema).max(16),
+	conditions: z.array(text).max(32),
+	evidence: z.array(id).max(32),
+	status: z.enum([
+		"proposed",
+		"validated",
+		"accepted",
+		"rejected",
+		"withdrawn",
+	]),
+	revision: z.number().int().nonnegative(),
+});

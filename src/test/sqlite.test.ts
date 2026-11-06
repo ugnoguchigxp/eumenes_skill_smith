@@ -50,3 +50,30 @@ test("a crash does not replenish a reserved call budget or lose a start reservat
 		rmSync(dir, { recursive: true, force: true });
 	}
 });
+
+test("corrupt stored JSON is refused instead of typed through", async () => {
+	const f = fixture();
+	const r = await ready(f);
+	f.db
+		.query("UPDATE knowledge_builds SET data_json=? WHERE ref=?")
+		.run("{not-json", r.build.ref);
+	expect(() => f.service.get(f.db, r.requestRef, f.auth)).toThrow(
+		"corrupt_storage",
+	);
+	f.db
+		.query("UPDATE knowledge_builds SET data_json=? WHERE ref=?")
+		.run(JSON.stringify({ ...r.build, digest: 123 }), r.build.ref);
+	expect(() => f.service.get(f.db, r.requestRef, f.auth)).toThrow(
+		"corrupt_storage",
+	);
+	f.db.query("UPDATE knowledge_requests SET data_json=? WHERE ref=?").run(
+		JSON.stringify({
+			ref: r.requestRef,
+			not: "a request record",
+		}),
+		r.requestRef,
+	);
+	expect(() => f.service.get(f.db, r.requestRef, f.auth)).toThrow(
+		"corrupt_storage",
+	);
+});

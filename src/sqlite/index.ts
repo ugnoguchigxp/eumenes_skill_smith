@@ -1,13 +1,22 @@
 import type { Database } from "bun:sqlite";
+import type { z } from "zod";
 import type { Repository } from "../contracts/ports.js";
+import {
+	buildSchema,
+	proposalSchema,
+	reflectionSchema,
+	reportRecordSchema,
+	requestRecordSchema,
+} from "../contracts/schema.js";
 import type {
 	Build,
 	Delivery,
 	Proposal,
 	Report,
 	RequestRecord,
+	Reflection,
 } from "../contracts/types.js";
-import { requireThat } from "../service/identity.js";
+import { requireThat, SkillSmithError } from "../service/identity.js";
 
 export const migrations = [
 	{
@@ -28,9 +37,25 @@ CREATE TABLE knowledge_proposals(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,revisi
 `,
 	},
 ] as const;
-function json<T>(db: Database, sql: string, ...args: string[]): T | null {
+function parseStored<T>(raw: string, schema: z.ZodType<T>): T {
+	let value: unknown;
+	try {
+		value = JSON.parse(raw);
+	} catch {
+		throw new SkillSmithError("corrupt_storage");
+	}
+	const parsed = schema.safeParse(value);
+	requireThat(parsed.success, "corrupt_storage");
+	return parsed.data;
+}
+function json<T>(
+	db: Database,
+	sql: string,
+	schema: z.ZodType<T>,
+	...args: string[]
+): T | null {
 	const r = db.query(sql).get(...args) as { data_json: string } | null;
-	return r ? (JSON.parse(r.data_json) as T) : null;
+	return r ? parseStored(r.data_json, schema) : null;
 }
 export function blocked(db: Database, ref: string): boolean {
 	return !!db
@@ -46,15 +71,17 @@ WITH RECURSIVE ancestry(ref) AS (
 export const sqliteRepository: Repository<Database> = {
 	blocked,
 	reflection: (db, ref) =>
-		json<import("../contracts/types.js").Reflection>(
+		json<Reflection>(
 			db,
 			"SELECT data_json FROM knowledge_reflections WHERE ref=?",
+			reflectionSchema,
 			ref,
 		),
 	reflectionByReport: (db, scope, hash) =>
-		json<import("../contracts/types.js").Reflection>(
+		json<Reflection>(
 			db,
 			"SELECT data_json FROM knowledge_reflections WHERE scope=? AND report_digest=?",
+			reflectionSchema,
 			scope,
 			hash,
 		),
@@ -83,12 +110,14 @@ export const sqliteRepository: Repository<Database> = {
 		json<RequestRecord>(
 			db,
 			"SELECT data_json FROM knowledge_requests WHERE ref=?",
+			requestRecordSchema,
 			ref,
 		),
 	requestByKey: (db, scope, id) =>
 		json<RequestRecord>(
 			db,
 			"SELECT data_json FROM knowledge_requests WHERE scope=? AND request_id=?",
+			requestRecordSchema,
 			scope,
 			id,
 		),
@@ -120,12 +149,13 @@ export const sqliteRepository: Repository<Database> = {
 					"SELECT data_json FROM knowledge_requests WHERE json_extract(data_json,'$.outcome') IS NULL ORDER BY rowid LIMIT ?",
 				)
 				.all(limit) as { data_json: string }[]
-		).map((r) => JSON.parse(r.data_json) as RequestRecord);
+		).map((r) => parseStored(r.data_json, requestRecordSchema));
 	},
 	build(db, ref) {
 		const b = json<Build>(
 			db,
 			"SELECT data_json FROM knowledge_builds WHERE ref=?",
+			buildSchema,
 			ref,
 		);
 		return b ? { ...b, revoked: blocked(db, ref) } : null;
@@ -137,7 +167,7 @@ export const sqliteRepository: Repository<Database> = {
 			)
 			.all(scope, key) as { ref: string; data_json: string }[];
 		const r = rows.find((x) => !blocked(db, x.ref));
-		return r ? (JSON.parse(r.data_json) as Build) : null;
+		return r ? parseStored(r.data_json, buildSchema) : null;
 	},
 	putBuild(db, b) {
 		requireThat(!blocked(db, b.ref), "reference_revoked");
@@ -236,6 +266,7 @@ export const sqliteRepository: Repository<Database> = {
 		json<Report>(
 			db,
 			"SELECT data_json FROM knowledge_results WHERE scope=? AND execution_ref=?",
+			reportRecordSchema,
 			scope,
 			execution,
 		),
@@ -262,6 +293,7 @@ export const sqliteRepository: Repository<Database> = {
 		json<Proposal>(
 			db,
 			"SELECT data_json FROM knowledge_proposals WHERE ref=?",
+			proposalSchema,
 			ref,
 		),
 	putProposal(db, p, expected) {
