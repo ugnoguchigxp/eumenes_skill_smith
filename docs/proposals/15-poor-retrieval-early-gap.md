@@ -36,3 +36,8 @@
 
 前提: 提案 03。
 
+## 実装結果
+
+- **採否**: 採用
+- **内容**: 指示で検索不良時の early needs_input/unavailable を明示。既存 decisionSchema を構造検査のみで実行。キーワード閾値なし。04 の re_search と同一制御経路。
+- **パス**: `src/instructions/build.ts`, `src/test/early-gap.test.ts`
