@@ -74,3 +74,45 @@ test("build instruction version unchanged", () => {
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 });
+
+test("product default SKILL scores stay off the two-column board and out of the 61 total", () => {
+	expect(b.totalTasks).toBe(61);
+	expect(b.blendedMean).toBeNull();
+	const exact = b.slices.find(
+		(s) => s.id === "retrieval/exact",
+	)!.productDefault!;
+	expect(exact.scored).toBe(16);
+	expect(exact.meanScore).toBe(8.88);
+	expect(exact.scores.map((s) => s.score)).toEqual([
+		9, 9, 9, 9, 7, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+	]);
+	expect(exact.hitAt8).toEqual({ hit: 16, of: 16 });
+	const en = b.slices.find((s) => s.id === "retrieval/en")!.productDefault!;
+	expect(en.meanScore).toBe(8);
+	expect(en.scores.map((s) => s.score)).toEqual([
+		9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 1,
+	]);
+	const jp = b.slices.find((s) => s.id === "retrieval/jp")!.productDefault!;
+	expect(jp.meanScore).toBe(8.5);
+	expect(jp.scores.map((s) => s.score)).toEqual([
+		9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9,
+	]);
+	expect(
+		b.slices.find((s) => s.id === "retrieval/original")!.productDefault!
+			.meanScore,
+	).toBeNull();
+	expect(
+		b.slices.find((s) => s.id === "compose")!.productDefault!.meanScore,
+	).toBeNull();
+	expect(cell("retrieval/exact", "handle").meanScore).toBe(2);
+	expect(cell("retrieval/exact", "bm25").meanScore).toBeNull();
+	expect(b.diverseCompanion?.n).toBe(10);
+	expect(b.diverseCompanion?.meanScore).toBe(9);
+	expect(
+		b.diverseCompanion?.scores.map((s: { score: number | null }) => s.score),
+	).toEqual([9, 9, 9, 9, 9, 9, 9, 9, 9, 9]);
+	const text = renderText(b);
+	expect(text).not.toMatch(/SKILL点は未再生/);
+	expect(text).not.toMatch(/全体平均\s*[0-9]/);
+	expect(text).toMatch(/別枠 suite-diverse（10 件、61 件には含めない）/);
+});

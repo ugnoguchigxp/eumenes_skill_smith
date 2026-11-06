@@ -1,0 +1,627 @@
+[
+	{
+		"inputDigest": "812ff75b58007c0813b98354e59c68f3dabaedae19618e162150dfb4fc24efb9",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c0cbfa0eaf48bbb25eb8fc93bca739b33ebe51a9cadb98c1c5043bfee0de7a7c",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "87ba25935de7ae74f4b082ced09da574093d6f3d21a2277ebd27ea6ea371e271",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "0fc2281eef0f720cddfdda86e3e74c19615d4f8f7962714c7853d84b9b83bf0a",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "4c1c693f77e8c90e5a706d8b2a5b85242cf62352572f781577c5111acdce854f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "110988722f03ccf26d723db1d3116ade2e6b629ff6b2933527505709dffd6372",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c52870e3f8626c88935e64921bfbff2b3945c935eae4a80ee7c5a52592b2bfb2",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "3b13efd1bfcdf43795eed827c508e8ad9c47e43a083d5130ee51f67032450e46",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "b91ad606eef4f3ec9a270b46b7fc7b194806ba3bc32b7be9d47048e9703d8cf6",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "f808c3d9c827816c819fe6b0872a4d9d356721c08acdc0c0333812c8bb0a952b",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "3975ee376415f49d5e921aedb57bd73200fbbc019851adecd775cf06827526c0",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "e4069f91b1346a3a83b9197fefd65031000c7a80bee30856d37bd9986241e1e1",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "791c5bc8a1fa7d5491723c42e5c47200c45a856c95c519c7b1264c542246b224",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "91d7fe95a2a4963ad23358227152d32bf577bcbed756c873c21548b1f8b96337",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "83960f1a36d405f587dcce0a3bfd783af86944e24762e88fee273507deb7f3a7",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "0b98dcb6b06e4faa7ddffda12c1f3192b1b65e9d69f6b0e671fc3167439578e5",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "19378077dbedb7b3ebf6ae10c087743da4d0f5f8e4589fd692af22a4bea9cb36",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"すでに露出している認証情報があれば無効化またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "1ac32afdcc2710d69677c7e7e8b963a515360cb397971f46b02dd099e5a7084e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["リリース前に本番環境の複製（clone）で変更を試験した"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "a05386e4c990e9244e17b94aa03e3b8055de12e240527a4d8bacbbb3c84bbd4e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ログや診断出力、レスポンスに生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを出していない",
+				"記録や要約の前にマスキングした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "befb42b16aad8186c2929cb9f96216b7135574c0767df74d3c8d1f9c02d8ee2d",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"フック相当の verify がローカルで通った",
+				"再コミット前に未ステージの変更が残っていない",
+				"迂回フラグなしでコミットできた"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "260304d7f0819ec07f94a0e82e5e924b7be0add3db93d1d10032fd73194127bd",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"Python コードのインデントはレベルあたりスペース4つで、タブは既存がタブ字下げのファイルに合わせる場合だけにした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "10ad4865299334a4d3d40e9b6291f209aa886b424a6dab7eb5b002bf6335d7f7",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ユーザーが明示せず、対象ブランチも確認しないまま `git push --force` や `--force-with-lease` を実行していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "9b274991cf730bc61da70d6e3d4c072dae72c1cbd469f9ff9a5d0ecd56727a62",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"デバッグ容易化のために secret の redaction やマスキングを無効化・弱化していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c0eed0eee765ac2f0954125aefae0459aad9eacdc139a0f29285a322db64108f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"hook が想定位置にインストールされ、Git 操作で発火する",
+				"実行時の出力が新しい動作を反映している"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "2ea2d59dc62ebf76e0ff6df187ba71ed5cb5f1773ddb5dd6e3ec2ad5b9c0cfbb",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ユーザーが明示していない `git reset --hard` や同等の破壊的 Git 操作を実行していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "5f9159684c2ec7da0baf568a5b562ee8bd6709e96e5e1e5fbc7e0dbed4d9aa8b",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"依存変更に必要でない lockfile や生成メタデータの安易な書き換えをしていない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "f6ca18d3967bf072d954bd0bcf5875557f42563cd963115fa4541f8efccb4618",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"スモークテストが外部 API 資格情報やネットワークに依存せず、本番プロバイダ呼び出しは明示タグの外では走らない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "d1bbab1da65e0a7b9a7440732c2066e314a46a7d4dc4109a5c21728ca6438ab6",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_3codmb7qiibcmoicukynrht4ni"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"対応する最小 Python 向けの ABI3 を有効にし、ホストと CI 行列でビルド・import できる"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "9ca592f6646c9054f002c3e19a920b85e94b350c6363e033a046b55c0534d37d",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["API の記述形式として OpenAPI を使っている"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "687e14084472eafaa38f55db55c9199cbd4ce48d2b9ebf8186f2fcd67486b97a",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"DataFrame を JSON にする前に NaN / NaT / pd.NA を None へ正規化し、妥当な JSON になっている"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "58f1a618219f2469cdc656f243b463a3858114f6c0fb7bc773487dd07d8ac958",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"MCP サービス実行時に workspace の .env を読んでも process.env にその値が残っていない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "e366239d4e54d953554cdd84c002bbfac4a972738b7f60927346b57d52911a0a",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"Go のコードは逐語訳ではなく、Go 自身の慣用と強みに合わせた書き方になっている"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	}
+]

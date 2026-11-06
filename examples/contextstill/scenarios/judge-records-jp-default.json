@@ -1,0 +1,146 @@
+[
+	{
+		"inputDigest": "a428f9847548d510fdbda5579c87663092fbf453d1d5a568363a0e95095a86c1",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Validate Hook Changes End-to-End」は検索8位以内に無い（16位）。組み立ては needs_input で参照も指針本文も空である。1位の「Fix pre-commit verify failures instead of bypassing hooks」は別目的であり誤用していない点は妥当だが、期待Skillは組み上がっておらず評点は低い。"
+		}
+	},
+	{
+		"inputDigest": "85caf1220c5dd298c827c671039bde427171e503551ce9ee1e7a6e6a356d3bcf",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never commit secrets or local environment files」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は.env・APIキー・トークン・秘密鍵・cookie・機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "06eaeb19aafaff452c8eb45fd64f37fcac2276c8d5cc9c5103d3ee9226810cea",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Test in a Production Clone」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で変更を試験するという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "b717b7c2642e4edd44d64b5f059d753295e5284e63be844293e745335c066d95",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never print secrets into logs or responses」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを印刷・保存・返却せず、診断出力の記録や要約の前にマスキングするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "760257119a446f49883de59d0a79843abb52570a4ffe62fac81bdfb06888eafd",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、ユーザーが明示しない限り --no-verify を使わないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "978cb0ddb5d3b8463b5b67f96afec8a5e5d1c9633a5dea4a2d6d294386167b53",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Use 4-Space Indentation」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はPython コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせるという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "b87267f199fae83b972658a27abe37ebcd2f890e94b3707be609e6fd5166f83a",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never force push without explicit approval」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はユーザーが明示し対象ブランチも確認しない限り `git push --force` や `--force-with-lease` を実行しないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "243a327be7422d82b93f2a38e0563a296990964fff9fa2e6f662973fd2567d41",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never weaken redaction to simplify debugging」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はデバッグ容易化のために secret の redaction やマスキングを無効化・弱化せず、マスキングを保った診断を足すという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "cb3fce14c12b6db3907e3b62141de6121d3354fc4f6cee8bde68c2c10f0e4564",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never run destructive git reset without explicit user request」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はユーザーが明示していない `git reset --hard` や同等の破壊的 Git 操作を実行しないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "ce1158a08bed1a4365050acc4a05e2a80f78dccbe4ad77c95cd3c0f0050a85cf",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never modify generated lockfiles casually」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は依存変更に必要でない lockfile や生成メタデータを安易に書き換えないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "76b9536438e1a0f7a3b0ec7b96223a9ec3ae298c4ba3b76295ffda78b2842e1f",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Smoke tests must not implicitly call live providers」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はスモークテストを外部 API 資格情報やネットワークに依存させず、本番プロバイダ検査は明示タグの外では走らせないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "5889753e5349ae1ef07765bfd867eebd75ad277916cf7f78a91bdc9ee51b16e3",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Use ABI3 for resilient Python extension builds」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は対応する最小 Python 向けの ABI3 を有効にし、単一のローカル解釈系に縛られずビルドと import ができるという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "5c15c40504afeb7431180e1b89dc1f854ddc146891112dc901eef5cb58da2d53",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Use OpenAPI as the API description format」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はAPI の記述形式として OpenAPI を使うという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "ab4272cf3ea7709322ab06148990594fea50f287a5add9019a0be7e458b579bd",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「DataFrame to JSON: Normalize NaN to None for Valid JSON Output」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はpandas DataFrame を JSON にする前に NaN / NaT / pd.NA を None へ正規化し、妥当な JSON にするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "537e9dd329460b6165a4c251e73049b2967fcef585aefc29dc1dcb63f7d61f32",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Workspace .env values must not leak into process.env during MCP service execution」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はMCP サービス実行時に workspace の .env を読んでも process.env にその値を残さないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	},
+	{
+		"inputDigest": "880effa192c5b1b28636d579a5867bd843c83cce520b787b8be20b1524d0d859",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Prefer Idiomatic Go Over Direct Translation」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はGo のコードを逐語訳ではなく、Go 自身の慣用と強みに合わせた書き方にするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。"
+		}
+	}
+]

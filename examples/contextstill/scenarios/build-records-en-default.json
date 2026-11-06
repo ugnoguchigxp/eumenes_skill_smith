@@ -1,0 +1,568 @@
+[
+	{
+		"inputDigest": "459ff4c748b43c3bb550e336a550b6624737cd257b3fa4dfc53cc532bd3a7d17",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "b5e83ae690b9a7b07018d13cb7423437919a86d5d5282a113c37fc850dd902c0",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "841a93442c7f0fca3850b2efc47202292a5744d5b297f949bb9e24c0d99729e5",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "0d51cca00fa47e12d4bc7f613de5788b310d11dd772e98a21e07cf8d1ae7c348",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "0c88ec295247f37e954a1f38db397d3e362ba9b9ed857974065682b1ab2a6195",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "cd81391218b9a303f715f9a863dfae03c497719febf1e931e1e70f03973c5a99",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "254e1c192eeae57554a683e96d3fc217d260a1672ff9653e1afa658d99c991dc",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "cab5a15d1d7471a0062ede2d0aeb0d7edab5e3c1f7c16c329644ba299ae409a6",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"変更した hook を実際の実行経路で検証する手順を述べた既存Skill。今回の候補は検証ゲートの分割、hook execution repository の重複キー、hook を最小ゲートとする話、コミット時の verify などで、hook 変更そのものの end-to-end 検証を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "ec8d284d14fab2779bcfcd73b03c7791f9580b20cae3b4c1e02f512dd05c43dd",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "6163bcb12cd56ad91f341d9278adebef1895cd81e371190e905f7d9b6521ddf7",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "2a3ad252627c0ef7f21f863e7b7f8a81a1c4dadb7685f5f8d6e1fa6def001505",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "ccca1b153e090e89775a948f7db2eecc1d4731e3f6a932f70e9abccbc484feeb",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "8652c70011547a54938473a3cb1f4e502326c65441583647c4f103ad02613325",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "cc7687e984b1f9a86b40d927dc18889535c5437258dd932d660403061c36d894",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "e8c170426e353478804bbe28a2f08510dd01b5bc5f6596d7a602be15125287cd",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "624e67e9d07881510af447863f4c016755b2db54a886a36ef8ea8b5821cde313",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"Go へ移植するとき逐語訳せず慣用の書き方にする手順を述べた既存Skill。今回の候補はリファクタ、native/API デバッグ経路、Rust ガイドライン、HTTP 一貫性などで、Go の慣用表現を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "aa6d6e72a846d3478806ea23a030ef65e1d028fa0ce01ab67212af4ed523aaf2",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"すでに露出している認証情報があれば無効化またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "fe33ed37ede9fb6d3adc11fa6ab77be210dc6aa994d504fef815826de78ac07b",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["リリース前に本番環境の複製（clone）で変更を試験した"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c3ab10f23ecfaf80837e319dff62819542a7d98be80bd2ee642204845933aa03",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ログや診断出力、レスポンスに生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを出していない",
+				"記録や要約の前にマスキングした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "33332152bfa509545fccaa008cf8a8ecb11944ea0af01b1b7ec1265214d0e0d5",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"フック相当の verify がローカルで通った",
+				"再コミット前に未ステージの変更が残っていない",
+				"迂回フラグなしでコミットできた"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "494709d51b69727ca05c1b23bdf80707ffa6a6eba7295e51ee4b08f9f7bf4c86",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"Python コードのインデントはレベルあたりスペース4つで、タブは既存がタブ字下げのファイルに合わせる場合だけにした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c2511244c136d768f17ede71c9465c294dcc1a1ececd8e8db5bf37a7b6e69d3f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ユーザーが明示せず、対象ブランチも確認しないまま `git push --force` や `--force-with-lease` を実行していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "cc7f7c667edf5223fefb08b944c4284698964ebf92152520f4e06caee91763a7",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"デバッグ容易化のために secret の redaction やマスキングを無効化・弱化していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "a4e49d43a8be6717fbb76e95ad8e54367e8000d15686a01d678a682372b02be9",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ユーザーが明示していない `git reset --hard` や同等の破壊的 Git 操作を実行していない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "8802cc80c9f0595cc805e3e7e0be598c66356d496c014a784b4b13392defee3a",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"依存変更に必要でない lockfile や生成メタデータの安易な書き換えをしていない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "fd1216f04a8a15a07253a6fe864bb7183eca8b430dc1998ee580006b986213d4",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"スモークテストが外部 API 資格情報やネットワークに依存せず、本番プロバイダ呼び出しは明示タグの外では走らない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "1b3e23d869eff4502d49895e4ab46c69014f89f1bba65c6a1c813e2ccb7ef746",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_3codmb7qiibcmoicukynrht4ni"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"対応する最小 Python 向けの ABI3 を有効にし、ホストと CI 行列でビルド・import できる"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "222833cfe757b9e06f1247a8b2b7ed3bfe1a6587c29bfa8fb656c995dda1a116",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_76iqn75jaxztthpe57wrm3jmyu"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["API の記述形式として OpenAPI を使っている"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "c6fe31df9db16d9ebecdedfe383e6c5acf5b6289162e7d86cadb0160dc4dbe75",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"DataFrame を JSON にする前に NaN / NaT / pd.NA を None へ正規化し、妥当な JSON になっている"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "8ec3bdadb18fd911cf6ae5b857972a2baa616d9e31acbb7d8d814457772d6cca",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"MCP サービス実行時に workspace の .env を読んでも process.env にその値が残っていない"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	}
+]

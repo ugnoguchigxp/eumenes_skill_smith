@@ -22,7 +22,7 @@ retrieval 区分には hit@8（主）と hit@20（診断用）を出します。
 
 ## 条件（2 列）
 
-- handle: assembly baseline・evidence natural・言い換え off・弃権対比 off
+- handle: assembly baseline・evidence natural・言い換え off・棄権対比 off
 - bm25: 検索だけ BM25、他は同じ
 
 compact、oracle、言い換え on / multi、弃権対比は診断用で、この表には入れません。
@@ -35,7 +35,7 @@ compact、oracle、言い換え on / multi、弃権対比は診断用で、こ�
 - 題名一致の固定: query（searchTask）と題名を NFKC 正規化・前後空白除去・ASCII だけ大文字小文字を同一視して完全一致した Skill を、同じ kind / space / type / searchable の絞り込みを通したうえで先頭に置きます（複数なら handle 順、重複なし）。あいまい一致や翻訳辞書は使いません。handle・bm25 の両 profile に効くため、現行コードの `--search-profile handle` は題名どおり課題で過去の `retrieval-exact-handle.json`（題名固定なし）を再現しません。
 - 言い換え `--query-reformulation off|on|auto|multi` の既定は `auto`。searchTask にひらがな・カタカナ・漢字が含まれるとき（「APIキー」のような混在も含む）、または同じ絞り込みを通る題名と完全一致しないとき、既存の隔離言い換え（proposal 28）を通します。日本語を含まない題名完全一致は言い換えません。判定の正規化は題名固定と同じです。英語などではまず通常検索で公開カードの題名一致を調べるため、非一致時には検索が追加で 1 回発生します。補助モデルの入力は引き続き `{searchTask}` だけで、内部 goal・期待題名・期待 ref は渡しません。report の `queryReformulationMode` は指定値、`identity.queryReformulation` は実際に 1 件でも言い換えた run なら `on`、なければ `off` です。multi は従来どおり任意で既定オフです。
 
-既定での検索のみ結果は `retrieval-{original|exact|en|jp|compose}-default.json` に置き、scoreboard の 2 列表とは別に「製品既定」として hit@k だけ表示します。既定のもとで SKILL 点は再生していません（未測定）。
+既定での検索のみ結果は `retrieval-{original|exact|en|jp|compose}-default.json` に置き、scoreboard の 2 列表とは別に「製品既定」として出します。SKILL 点は `scores-{exact|en|jp}-default.json` にあり、同じ欄で区分ごとに表示します（混ぜません）。当初 5 件と複合の既定 SKILL 点は未測定です。多様な言い回し 10 件は `suite-diverse.json` の別枠で、61 件には含めません。
 
 ## 点数の扱い
 
@@ -45,9 +45,8 @@ compact、oracle、言い換え on / multi、弃権対比は診断用で、こ�
 
 ## 未測定
 
-- 製品既定（bm25・題名固定・言い換え auto）での SKILL 点（全区分）
-- retrieval/exact の BM25 の SKILL 点
-- retrieval/en・jp の SKILL 組み立て点（handle・bm25 とも）
+- 製品既定での retrieval/original（5 件）と compose（4 件）の SKILL 点
+- 歴史的 2 列における retrieval/exact の BM25、および retrieval/en・jp の handle / BM25 の SKILL 点
 - absent の BM25 の SKILL 点
 - provider の入出力トークン
 
@@ -93,4 +92,4 @@ exact は on ではなく auto の非発火確認です。original と compose �
 | diverse-2jrkfp-informal | 1 |
 | diverse-6tvplq-question | 1 |
 
-これは検索のみの的中率です。SKILL 点は未測定で、区分をまたぐ平均や品質向上の主張には使いません。ビルド指示・judge・INSTRUCTION_VERSION は変更していません。
+既定での SKILL 点は 10/10、平均 9（いずれも 9）です。記録は `scores-diverse-default.json` です。題名どおり・英語・日本語の既定点は `scores-{exact|en|jp}-default.json` です。区分をまたぐ平均や本番品質の主張には使いません。ビルド指示・judge・INSTRUCTION_VERSION は変更していません。

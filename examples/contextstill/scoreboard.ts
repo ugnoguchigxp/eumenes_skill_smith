@@ -88,14 +88,21 @@ export const SLICES: SliceDef[] = [
 	},
 ];
 
-/** Product default (bm25 + exact-title pin + reformulation auto) retrieval-only readout; separate
- * from the historical handle/bm25 (reformulation off) columns. No SKILL scores replayed here. */
+/** Product default (bm25 + exact-title pin + reformulation auto). Separate from the
+ * historical handle/bm25 (reformulation off) columns. SKILL files are per-slice; original
+ * and compose remain unscored under this default. Diverse is a companion suite, not in 61. */
 export const DEFAULT_RETRIEVAL_FILES: Record<string, string> = {
 	"retrieval/original": "retrieval-original-default.json",
 	"retrieval/exact": "retrieval-exact-default.json",
 	"retrieval/en": "retrieval-en-default.json",
 	"retrieval/jp": "retrieval-jp-default.json",
 	compose: "retrieval-compose-default.json",
+};
+
+export const DEFAULT_SCORE_FILES: Record<string, string> = {
+	"retrieval/exact": "scores-exact-default.json",
+	"retrieval/en": "scores-en-default.json",
+	"retrieval/jp": "scores-jp-default.json",
 };
 
 interface ScoreRow {
@@ -236,8 +243,37 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 			);
 			if (rows.length !== taskIds.length)
 				throw new Error(`${df}: ${rows.length}/${taskIds.length} rows`);
+			const scoreName = DEFAULT_SCORE_FILES[def.id] ?? null;
+			const sf = scoreName ? read(dir, scoreName) : null;
+			if (sf) {
+				if (sf.searchProfile !== "bm25" || sf.queryReformulationMode !== "auto")
+					throw new Error(`${scoreName}: not product default`);
+			}
+			const byId = new Map<string, any>(
+				(sf?.scores ?? []).map((s: any) => [s.taskId, s]),
+			);
+			const scores = taskIds.map((taskId): ScoreRow => {
+				const s = byId.get(taskId);
+				return {
+					taskId,
+					score: typeof s?.score === "number" ? s.score : null,
+					kind: s?.kind ?? null,
+					strategy: s?.strategy ?? null,
+					retrievalRank: s?.retrievalRank ?? null,
+					expectedSkillUsed: s ? (s.expectedSkillUsed ?? null) : null,
+				};
+			});
+			const scored = scores.filter((s) => s.score !== null).length;
+			const meanScore =
+				scored === taskIds.length && scored > 0
+					? Math.round(
+							(scores.reduce((a, s) => a + (s.score as number), 0) / scored) *
+								100,
+						) / 100
+					: null;
 			productDefault = {
 				retrievalSource: df,
+				scoreSource: sf ? scoreName : null,
 				queryReformulation: dr.identity?.queryReformulation ?? null,
 				hitAt8: {
 					hit: rows.filter((r: any) => r.allRequiredHitAt8).length,
@@ -247,7 +283,11 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 					hit: rows.filter((r: any) => r.allRequiredHitAt20Diagnostic).length,
 					of: rows.length,
 				},
-				meanScore: null,
+				n: taskIds.length,
+				scored,
+				unscored: taskIds.length - scored,
+				meanScore,
+				scores,
 			};
 		}
 		return {
@@ -260,6 +300,65 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 			productDefault,
 		};
 	});
+	const diverseRetrieval = read(dir, "retrieval-diverse-default.json");
+	const diverseScores = read(dir, "scores-diverse-default.json");
+	let diverseCompanion = null;
+	if (diverseRetrieval || diverseScores) {
+		if (diverseRetrieval) {
+			if (
+				diverseRetrieval.searchProfile !== "bm25" ||
+				diverseRetrieval.queryReformulationMode !== "auto"
+			)
+				throw new Error("retrieval-diverse-default.json: not product default");
+		}
+		if (diverseScores) {
+			if (
+				diverseScores.searchProfile !== "bm25" ||
+				diverseScores.queryReformulationMode !== "auto"
+			)
+				throw new Error("scores-diverse-default.json: not product default");
+		}
+		const rows = diverseRetrieval?.rows ?? [];
+		const scoreRows = (diverseScores?.scores ?? []).map((s: any) => ({
+			taskId: s.taskId as string,
+			score: typeof s.score === "number" ? (s.score as number) : null,
+			kind: s.kind ?? null,
+			strategy: s.strategy ?? null,
+			retrievalRank: s.retrievalRank ?? null,
+			expectedSkillUsed: s.expectedSkillUsed ?? null,
+		}));
+		const scored = scoreRows.filter((s: ScoreRow) => s.score !== null).length;
+		diverseCompanion = {
+			suite: diverseScores?.suite ?? diverseRetrieval?.suite ?? null,
+			n: scoreRows.length || rows.length,
+			scored,
+			unscored: (scoreRows.length || rows.length) - scored,
+			meanScore:
+				scoreRows.length > 0 && scored === scoreRows.length
+					? Math.round(
+							(scoreRows.reduce(
+								(a: number, s: ScoreRow) => a + (s.score as number),
+								0,
+							) /
+								scored) *
+								100,
+						) / 100
+					: null,
+			scores: scoreRows,
+			hitAt8: rows.length
+				? {
+						hit: rows.filter((r: any) => r.allRequiredHitAt8).length,
+						of: rows.length,
+					}
+				: null,
+			hitAt20Diagnostic: rows.length
+				? {
+						hit: rows.filter((r: any) => r.allRequiredHitAt20Diagnostic).length,
+						of: rows.length,
+					}
+				: null,
+		};
+	}
 	return {
 		suite: suite.id,
 		totalTasks: slices.reduce((a, s) => a + s.n, 0),
@@ -268,8 +367,9 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 			bm25: { searchProfile: "bm25", ...CANONICAL_CONDITIONS },
 		},
 		blendedMean: null,
-		note: "SKILL score is a provisional 0-10 LLM judgment (not human-calibrated). Means are per slice x condition only; no blended mean across slices or axes. Provider tokens unmeasured.",
+		note: "SKILL score is a provisional 0-10 LLM judgment (not human-calibrated). Means are per slice x condition only; no blended mean across slices or axes. Provider tokens unmeasured. Diverse companion is not part of the 61-task total.",
 		slices,
+		diverseCompanion,
 	};
 }
 
@@ -285,7 +385,7 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 		"SKILL点は LLM 判定の暫定値（0-10、人手較正なし）。平均は区分×条件ごとのみ。全体平均は出さない。",
 	);
 	L.push(
-		"条件: handle / bm25（いずれも assembly baseline・evidence natural・言い換えoff・弃権対比off）",
+		"条件: handle / bm25（いずれも assembly baseline・evidence natural・言い換えoff・棄権対比off）",
 	);
 	L.push("");
 	L.push(
@@ -300,13 +400,26 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 	}
 	L.push("");
 	L.push(
-		"製品既定（bm25・題名一致固定・日本語のみ言い換え auto）検索のみ。SKILL点は未再生。",
+		"製品既定（bm25・題名一致固定・言い換え auto＝日本語または題名非一致）。平均は区分ごと。全体平均は出さない。",
 	);
 	for (const s of b.slices)
-		if (s.productDefault)
+		if (s.productDefault) {
+			const pd = s.productDefault;
+			const skill =
+				pd.scored === 0
+					? "SKILL 未測定"
+					: `SKILL ${pd.scored}/${pd.n} 平均 ${pd.meanScore ?? "null（未採点あり）"}  [${pd.scores.map((x: ScoreRow) => x.score ?? "未").join(", ")}]`;
 			L.push(
-				`${s.id.padEnd(20)} ${String(s.n).padStart(2)} | hit@8 ${frac(s.productDefault.hitAt8)} (hit@20 ${frac(s.productDefault.hitAt20Diagnostic)})  言い換え ${s.productDefault.queryReformulation}`,
+				`${s.id.padEnd(20)} ${String(s.n).padStart(2)} | ${skill}  hit@8 ${frac(pd.hitAt8)} (hit@20 ${frac(pd.hitAt20Diagnostic)})  言い換え ${pd.queryReformulation}`,
 			);
+		}
+	if (b.diverseCompanion) {
+		const d = b.diverseCompanion;
+		L.push("");
+		L.push(
+			`別枠 suite-diverse（${d.n} 件、61 件には含めない）: SKILL ${d.scored}/${d.n} 平均 ${d.meanScore ?? "-"}  [${(d.scores as ScoreRow[]).map((x) => x.score ?? "未").join(", ")}]  hit@8 ${frac(d.hitAt8)} (hit@20 ${frac(d.hitAt20Diagnostic)})`,
+		);
+	}
 	L.push("");
 	for (const s of b.slices) {
 		for (const c of s.cells) {
@@ -320,11 +433,40 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 				);
 		}
 	}
-	const missing = b.slices.flatMap((s) =>
-		s.cells
-			.filter((c) => c.unscored)
-			.map((c) => `${s.id} ${c.profile} ${c.unscored}/${c.n}`),
-	);
+	for (const s of b.slices) {
+		const pd = s.productDefault;
+		if (!pd || pd.scored === 0) continue;
+		L.push(
+			`${s.id} 製品既定: 平均 ${pd.meanScore ?? "null（未採点あり）"}  [${pd.scores.map((x: ScoreRow) => x.score ?? "未").join(", ")}]`,
+		);
+		for (const x of pd.scores)
+			L.push(
+				`  ${x.taskId}: ${x.score ?? "未測定"}  ${x.kind ?? "-"}/${x.strategy ?? "-"}  rank ${x.retrievalRank ?? "-"}  expectedUsed ${x.expectedSkillUsed ?? "-"}`,
+			);
+	}
+	if (b.diverseCompanion && b.diverseCompanion.scored > 0) {
+		const d = b.diverseCompanion;
+		L.push(
+			`diverse 製品既定: 平均 ${d.meanScore ?? "null（未採点あり）"}  [${(d.scores as ScoreRow[]).map((x) => x.score ?? "未").join(", ")}]`,
+		);
+		for (const x of d.scores as ScoreRow[])
+			L.push(
+				`  ${x.taskId}: ${x.score ?? "未測定"}  ${x.kind ?? "-"}/${x.strategy ?? "-"}  rank ${x.retrievalRank ?? "-"}  expectedUsed ${x.expectedSkillUsed ?? "-"}`,
+			);
+	}
+	const missing = [
+		...b.slices.flatMap((s) =>
+			s.cells
+				.filter((c) => c.unscored)
+				.map((c) => `${s.id} ${c.profile} ${c.unscored}/${c.n}`),
+		),
+		...b.slices
+			.filter((s) => s.productDefault && s.productDefault.unscored)
+			.map(
+				(s) =>
+					`${s.id} 製品既定 ${s.productDefault!.unscored}/${s.productDefault!.n}`,
+			),
+	];
 	L.push("");
 	L.push(
 		`SKILL未測定: ${missing.join(", ") || "なし"}。provider トークン: 未測定。`,

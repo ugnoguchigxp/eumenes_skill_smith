@@ -1,0 +1,866 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-diverse-companion",
+	"searchProfile": "bm25",
+	"assemblyMode": "baseline",
+	"queryReformulationMode": "auto",
+	"identity": {
+		"searchProfile": "bm25",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"abstentionContrast": "off",
+		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
+		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
+		"assemblyMode": "baseline",
+		"queryReformulation": "on",
+		"reformulationInstructionsDigest": "3fb0fc297122da8a6302881dd0bf102045b475376402ba917da8447ef3ec95a4",
+		"reformulationSchemaDigest": "e78f8095aafbe0a6dbf3f93f4df1bb5b86cdd08a9d03523dcf07361f019bb68b",
+		"suiteId": "seed-diverse-companion",
+		"suiteFileSha256": "b116ab0926fe651fdc96b428c89a78e465012a041c0e6e203e5bcd8fd4bdc53d",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": null,
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 10,
+	"scored": 10,
+	"meanScore": 9,
+	"axisMeans": {
+		"retrieval": 9,
+		"compose": null,
+		"absent": null
+	},
+	"mixedAxes": false,
+	"statuses": [
+		{
+			"taskId": "diverse-23jihz-informal",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-224yjd-question",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-4pfru3-mixed",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-b2qt6s-informal",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-4f7bhy-natural",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-4eev36-natural",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-2o2vt6-mixed",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-fmgsj5-short",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-2jrkfp-informal",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "diverse-6tvplq-question",
+			"axis": "retrieval",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "diverse-23jihz-informal",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never commit secrets or local environment files」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は.env・APIキー・トークン・秘密鍵・cookie・機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-224yjd-question",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Test in a Production Clone」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で変更を試験するという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-4pfru3-mixed",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never print secrets into logs or responses」が製品既定の検索で届き、reuse でその参照だけを採用している。本文は生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを印刷・保存・返却せず、診断出力の記録や要約の前にマスキングするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-b2qt6s-informal",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、ユーザーが明示しない限り --no-verify を使わないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-4f7bhy-natural",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 4,
+			"usedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"expectedRefs": ["contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Validate Hook Changes End-to-End」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はhook スクリプトの更新後にインストール位置と実行権限を確認し、手動実行と Git 操作での発火で新しい動作を検証するという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-4eev36-natural",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"expectedRefs": ["contextstill:kn_4eev36krjgtot3bopqmb6rhjtu"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Prefer Idiomatic Go Over Direct Translation」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はGo のコードを逐語訳ではなく、Go 自身の慣用と強みに合わせた書き方にするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-2o2vt6-mixed",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"expectedRefs": ["contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Workspace .env values must not leak into process.env during MCP service execution」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はMCP サービス実行時に workspace の .env を読んでも process.env にその値を残さないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-fmgsj5-short",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Use 4-Space Indentation」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はPython コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせるという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-2jrkfp-informal",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"expectedRefs": ["contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never force push without explicit approval」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はユーザーが明示し対象ブランチも確認しない限り `git push --force` や `--force-with-lease` を実行しないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "diverse-6tvplq-question",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"expectedRefs": ["contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Smoke tests must not implicitly call live providers」が製品既定の検索で届き、reuse でその参照だけを採用している。本文はスモークテストを外部 API 資格情報やネットワークに依存させず、本番プロバイダ検査は明示タグの外では走らせないという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用になっている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		}
+	],
+	"composeScores": [],
+	"absentScores": [],
+	"evidenceSupply": "natural",
+	"recordProvenance": [
+		{
+			"taskId": "diverse-23jihz-informal",
+			"builderInputDigests": [
+				"071d2be31e6612433602a1553514b6ad9a41692b3b0446af5ab6539be929db80",
+				"24b0ca5c59acc68ef5bfb442c4db40b6c2b35e5d74fd7d4a454607e3e5ceadee"
+			],
+			"judgeInputDigest": "621e96b606c1f8ea94ec354594f81ac27ae3cbf422abe6071964eae233b67b68",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-224yjd-question",
+			"builderInputDigests": [
+				"552544ce83f071c4ff7baee9ae391c0930818ab367c73963526442ea827d044c",
+				"9b4fa561cf25a8b3cccfdad1aaeec6bdc98d17637c2280a7a1a81879ac430aa9"
+			],
+			"judgeInputDigest": "735b4c5e0d2719b733aefa85f40aab2e94507ff10e3cd89f5f6e728a32b96554",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-4pfru3-mixed",
+			"builderInputDigests": [
+				"63a45815ace952dea2e310562b771562f6d5e8190d85c6e4e2d750aa320ea5bd",
+				"c0d7fce3ef1968d9d8db997ff960dd4727a1a9c1ba161a0677c612fe5beb793a"
+			],
+			"judgeInputDigest": "55f9e201aa98971c4c51d03a4de78ef9c8e0ea493e1461b5584343dc9d80d180",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-b2qt6s-informal",
+			"builderInputDigests": [
+				"f0ea2b23407c7e2331870111880dd2b2a4fcbe2f9c55a618e57f3e462570d9f9",
+				"872e857f047e469318bb95b7f24c04ce8e8e35b207f807a95f29e9c784e9ea01"
+			],
+			"judgeInputDigest": "221034d495ca654e251da5f370f51e0eec27559246266021dc8a86d47c9bb6a4",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-4f7bhy-natural",
+			"builderInputDigests": [
+				"c63b98a577080826ee16264c532d1c7e69362aa3c5e8373cc1501dcee9deffe5",
+				"0efb92198fe8828fa045e84fe3ba4f4f5f7716b539eeaaea8f66d8f0889ceef5"
+			],
+			"judgeInputDigest": "692360bceb593502a2c859d2dca5fbfc3d3404caa6ea4275777abfbf582ae81f",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-4eev36-natural",
+			"builderInputDigests": [
+				"aa41a8cad0544cbfc1b037333a0a4883b22dcf3fa484f724afc8cd1098f89597",
+				"a712e3a2bda50a973e6a3c147b5d96220033d0539453f5f57415ada5c5052e92"
+			],
+			"judgeInputDigest": "d91f0a75b2f16cc0175cf5182ee3a31087af1ba4605060889efc4b7f29090517",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-2o2vt6-mixed",
+			"builderInputDigests": [
+				"cc1590132d407f7f21a942bbf8f1eddf8a7635e94e388dd4c5f98ed6433f6124",
+				"7145fc5103e1f05b926b77d2ca1e9956856434a41a0f6be35afb3e131e381a2f"
+			],
+			"judgeInputDigest": "f4aad6106185dcbf224cdacc2367e3b32f87075b38b35cf76f951e45ca91ef55",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-fmgsj5-short",
+			"builderInputDigests": [
+				"e6b212e5e528860dc2ae0180138fddf0f1243b90b502b3b2d0d3967be7166f4c",
+				"8f5f6da2a3c76abfe649b8cf8f849566c721d360fc5e4aca31eb27614e597f30"
+			],
+			"judgeInputDigest": "0f078f6391a38d1935acff422c0c7f625fa28e467c30c9a011868c079c8b6a05",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-2jrkfp-informal",
+			"builderInputDigests": [
+				"66b455541aa8c1b6ddb966f10aef3d8816ba0774048a53685c03cc606ecee64e",
+				"5a0da7fb3114ab9c01eff99f3614bef52aa9ad30ae672bd0118ceda8cb2dd36c"
+			],
+			"judgeInputDigest": "55d07b90415c12c4a2281c258423017e5a4f5b042da4dfb8a9c5e811f87d2cda",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		},
+		{
+			"taskId": "diverse-6tvplq-question",
+			"builderInputDigests": [
+				"4a0d87ab19ebc60d8342804f82862733527c53175514d1730eed818a31d4147c",
+				"7eaaaed9df2c3d9000d47aba4bbb98ee58a9976435ba448f8acd120159847331"
+			],
+			"judgeInputDigest": "7491d3e49f411fd994d5ed5a0c3becf8f1bacba66a916fd2af8f2ef62f922326",
+			"builderRecordsPresent": true,
+			"judgeRecordPresent": true
+		}
+	],
+	"usage": {
+		"buildInferenceTasks": 20,
+		"judgeInferenceTasks": 10,
+		"reformulationInferenceTasks": 20,
+		"inputTokens": null,
+		"outputTokens": null,
+		"evalEvidenceGetCalls": 0
+	},
+	"pendingFiles": [],
+	"reformulationTraces": [
+		{
+			"searchTask": "don't commit my .env or api keys",
+			"queryToSource": "avoid committing .env files or API keys"
+		},
+		{
+			"searchTask": "don't commit my .env or api keys",
+			"queryToSource": "avoid committing .env files or API keys"
+		},
+		{
+			"searchTask": "Can I test this against something that looks like production first?",
+			"queryToSource": "test changes in a production-like environment first"
+		},
+		{
+			"searchTask": "Can I test this against something that looks like production first?",
+			"queryToSource": "test changes in a production-like environment first"
+		},
+		{
+			"searchTask": "ログや HTTP の response に secret が残らないようにして",
+			"queryToSource": "prevent secrets remaining in logs or HTTP responses"
+		},
+		{
+			"searchTask": "ログや HTTP の response に secret が残らないようにして",
+			"queryToSource": "prevent secrets remaining in logs or HTTP responses"
+		},
+		{
+			"searchTask": "pre-commit failed again. don't skip the hook, just fix whatever it caught",
+			"queryToSource": "fix pre-commit hook failures without skipping checks"
+		},
+		{
+			"searchTask": "pre-commit failed again. don't skip the hook, just fix whatever it caught",
+			"queryToSource": "fix pre-commit hook failures without skipping checks"
+		},
+		{
+			"searchTask": "I changed a git hook and I want to make sure it actually runs the way it would in a real commit, not just that the file looks right",
+			"queryToSource": "validate changed git hook by running it in a real commit workflow"
+		},
+		{
+			"searchTask": "I changed a git hook and I want to make sure it actually runs the way it would in a real commit, not just that the file looks right",
+			"queryToSource": "validate changed git hook by running it in a real commit workflow"
+		},
+		{
+			"searchTask": "We're porting this service to Go. I don't want a line-by-line translation — write it the way Go code is usually written",
+			"queryToSource": "port service to idiomatic Go instead of line-by-line translation"
+		},
+		{
+			"searchTask": "We're porting this service to Go. I don't want a line-by-line translation — write it the way Go code is usually written",
+			"queryToSource": "port service to idiomatic Go instead of line-by-line translation"
+		},
+		{
+			"searchTask": "MCP サーバ起動時に workspace の .env が process.env に漏れないようにしたい",
+			"queryToSource": "prevent workspace .env values leaking into process.env when starting MCP server"
+		},
+		{
+			"searchTask": "MCP サーバ起動時に workspace の .env が process.env に漏れないようにしたい",
+			"queryToSource": "prevent workspace .env values leaking into process.env when starting MCP server"
+		},
+		{
+			"searchTask": "python indent 4 spaces no tabs",
+			"queryToSource": "Python indentation 4 spaces no tabs"
+		},
+		{
+			"searchTask": "python indent 4 spaces no tabs",
+			"queryToSource": "Python indentation 4 spaces no tabs"
+		},
+		{
+			"searchTask": "don't force-push unless I clearly say you can",
+			"queryToSource": "require explicit permission before git force push"
+		},
+		{
+			"searchTask": "don't force-push unless I clearly say you can",
+			"queryToSource": "require explicit permission before git force push"
+		},
+		{
+			"searchTask": "how do I keep smoke tests from accidentally calling a live model API?",
+			"queryToSource": "prevent smoke tests accidentally calling live model APIs"
+		},
+		{
+			"searchTask": "how do I keep smoke tests from accidentally calling a live model API?",
+			"queryToSource": "prevent smoke tests accidentally calling live model APIs"
+		}
+	],
+	"searchPreview": [
+		{
+			"taskId": "diverse-23jihz-informal",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_zv4jynuzzvokxtk3t5y5jz5ka4",
+					"title": "Stage Only Task-Owned Hunks In Dirty Worktrees"
+				},
+				{
+					"ref": "contextstill:kn_i2hdlzso7ytitegmdwqzyaotrq",
+					"title": "Stage only related files in a dirty worktree commit"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_caooc6cj7dvqprfubqxrlghs7u",
+					"title": "Keep Temporary Verification Artifacts Out Of Commits"
+				},
+				{
+					"ref": "contextstill:kn_ufbcjdq3r3p3p5ct35py5dhtqu",
+					"title": "Azure OpenAI の secret は deployment ごとに個別に参照する"
+				},
+				{
+					"ref": "contextstill:kn_woukarx4it542gkaser24ebwya",
+					"title": "Honor explicit full-worktree commit requests"
+				},
+				{
+					"ref": "contextstill:kn_ysen7wgcm2rxoni4hip6hkttfm",
+					"title": "Mixed worktree commit hygiene procedure"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-224yjd-question",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_g2ipytu6ejrvv6uwe3x2wsmrtq",
+					"title": "production deploy は environment protection で保護する"
+				},
+				{
+					"ref": "contextstill:kn_gupnxlxzscijkotigmyady4jde",
+					"title": "E2E rate-limit bypasses must be disabled in production"
+				},
+				{
+					"ref": "contextstill:kn_nmqv627vgpu5kxbzcvk7d6bdza",
+					"title": "Never drop production database objects without backup and approval"
+				},
+				{
+					"ref": "contextstill:kn_v2z3tutriwxcztwarm2o7jtnky",
+					"title": "Repo-aligned implementation plans should start from live schema and tool anchors"
+				},
+				{
+					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+					"title": "Never deploy to production without explicit release intent"
+				},
+				{
+					"ref": "contextstill:kn_ll6fskowwjrkwm3hozbc4ipzma",
+					"title": "Use targeted tests before the full verification gate for broad changes"
+				},
+				{
+					"ref": "contextstill:kn_fr72uuzrcpwualcow266cl7v4i",
+					"title": "Never execute database migrations against the wrong environment"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-4pfru3-mixed",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_j7xqrgnw4sa5sztykj5irnpsqi",
+					"title": "Non-admin users must be redirected away from the admin tab"
+				},
+				{
+					"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+					"title": "Never expose long-lived credentials in URLs"
+				},
+				{
+					"ref": "contextstill:kn_bs3azz4ofeqzquxoom6thzy6w4",
+					"title": "機密情報（secrets）の取り扱いに関する原則"
+				},
+				{
+					"ref": "contextstill:kn_phc6v2rnkq4f7n3wmlfnfyfcgq",
+					"title": "Assert Ownership in Authenticated API Checks"
+				},
+				{
+					"ref": "contextstill:kn_sszzdarvqjx3wqgmpvsbphlm2i",
+					"title": "Constrain tool inputs by allowed URI schemes"
+				},
+				{
+					"ref": "contextstill:kn_bsftgq7woctylgu224doej3sga",
+					"title": "GitHub Actions 経由のデプロイでは secrets/vars から env を生成する"
+				},
+				{
+					"ref": "contextstill:kn_xvikv2dmqiqhvckvqnfvlhr6jm",
+					"title": "Masked update flow for secret settings"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-b2qt6s-informal",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_unfewr5nfj2bzn42p4impwagbu",
+					"title": "Split verification gates into daily fast checks and explicit full checks"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
+				},
+				{
+					"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+					"title": "Incremental gate validation for large changes"
+				},
+				{
+					"ref": "contextstill:kn_jycdx7jubxwxpiefeympf4b4xu",
+					"title": "Never bypass failing tests by deleting assertions"
+				},
+				{
+					"ref": "contextstill:kn_woukarx4it542gkaser24ebwya",
+					"title": "Honor explicit full-worktree commit requests"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-4f7bhy-natural",
+			"retrievalRank": 4,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y",
+					"rank": 4
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
+				},
+				{
+					"ref": "contextstill:kn_cbk46trlecibiksymgbeeb3ahy",
+					"title": "Hook の実行コンテキストは trace 状態と Git 由来情報をマージして補完する"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y",
+					"title": "Validate Hook Changes End-to-End"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_qg4bxyhb6r7fmyxcr7iumfye7y",
+					"title": "review 系イベントではレビュー対象 diff 文脈を明示的に渡す"
+				},
+				{
+					"ref": "contextstill:kn_wxfi5vnvalu4iizcgmee3sbspy",
+					"title": "コミット前のコード品質チェックフロー"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-4eev36-natural",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
+					"title": "Prefer Idiomatic Go Over Direct Translation"
+				},
+				{
+					"ref": "contextstill:kn_rh6euhafhdfq3xo6bs63uq24re",
+					"title": "Rust API Guidelines are advisory, not mandatory"
+				},
+				{
+					"ref": "contextstill:kn_mfuw6djslkq2gnpryauhu7zjai",
+					"title": "翻訳トラックの編集は作者本人に限定する"
+				},
+				{
+					"ref": "contextstill:kn_uzzhp2srtw2ou2tsl3eorcawam",
+					"title": "ReDoS Vulnerability Prevention Rule"
+				},
+				{
+					"ref": "contextstill:kn_uo45f7zv7ucv67i7i4zggkviqy",
+					"title": "InlineParser must fall back to literal text when placeholder token is unrecognized"
+				},
+				{
+					"ref": "contextstill:kn_4ipg2uit3rt2ydfbnsszx6ny3y",
+					"title": "字幕キューと注釈は保存前に content safety を通し、block は拒否する"
+				},
+				{
+					"ref": "contextstill:kn_pgb446f5bu4kv7d43sqd3uwvlu",
+					"title": "MCP の共有ホスト向け利用では transport-free の service import を主経路にする"
+				},
+				{
+					"ref": "contextstill:kn_waczf4scbt4cjctfxns4zwe4be",
+					"title": "InlineParser must restore literal text when a placeholder token is not recognized"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-2o2vt6-mixed",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+					"title": "Workspace .env values must not leak into process.env during MCP service execution"
+				},
+				{
+					"ref": "contextstill:kn_eukijg3xgmywa7jf4i27txosma",
+					"title": "MCP service の workspace .env が process.env に漏れないことを統合テストで確認する"
+				},
+				{
+					"ref": "contextstill:kn_ggfistfefe2cdoo4ev7wwu7qim",
+					"title": "Monorepo Package Purity and Dry-Run Audit"
+				},
+				{
+					"ref": "contextstill:kn_lfdtlkztyjjdp5ij46t35tdice",
+					"title": "Codex Agent 実行時に NightWorkers MCP 用のタスク識別子を確実に注入する"
+				},
+				{
+					"ref": "contextstill:kn_hagnmon5j5r64gdvfvznmvguwe",
+					"title": "TypeScript 環境変数の型狭義化回避と安全な文字列化手順"
+				},
+				{
+					"ref": "contextstill:kn_tauvrjyl2r4jkfazeqkzv5cwwy",
+					"title": "MCP review tool は workspaceRoot を解決し、dotenv/config/plugin/LLM を順に組み立ててから実行する"
+				},
+				{
+					"ref": "contextstill:kn_4cr6gmxmq4gqtxbv47crkjdapi",
+					"title": "環境変数の検証と利用に関するベストプラクティス"
+				},
+				{
+					"ref": "contextstill:kn_gnto6g35pre6odoimrfyll7lsy",
+					"title": "Runtime env access through focused config helpers"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-fmgsj5-short",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+					"title": "Use gofmt for Standard Go Code Formatting"
+				},
+				{
+					"ref": "contextstill:kn_4rkt3s7zqfjeksqetc4awz6bpi",
+					"title": "issues 配下のタブ UI は @gxp/design-system を使う"
+				},
+				{
+					"ref": "contextstill:kn_xmh4gv3am6n6ruzgyy4nlafiqq",
+					"title": "issues 配下の共通タブを layout に切り出して PersonalElementsScreen から重複タブを削除する"
+				},
+				{
+					"ref": "contextstill:kn_pdcaajq64d3q3zzr57v5mapjpa",
+					"title": "doctor/status の起動経路をシェルラッパー経由に統一し、Python 実行と strict 付与を保証する"
+				},
+				{
+					"ref": "contextstill:kn_aly67o77dgn6hy64f4tsrkjgsu",
+					"title": "Python 側の責務は MLX 推論に限定する"
+				},
+				{
+					"ref": "contextstill:kn_avz4zgyjvn4wcqvv3pezytganq",
+					"title": "issues 配下の共通タブレイアウト実装手順"
+				},
+				{
+					"ref": "contextstill:kn_ay67xsiwtuladqdcdgbusidqhq",
+					"title": "issues 配下の UI は designSystem コンポーネントで統一する"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-2jrkfp-informal",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+					"title": "Never rewrite branch history on shared branches without confirmation"
+				},
+				{
+					"ref": "contextstill:kn_be5cgss55kdvfd5oxatwjrp6cy",
+					"title": "PR検証とmainへのpushを異なるトリガーとして扱う"
+				},
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+					"title": "Never run destructive git reset without explicit user request"
+				},
+				{
+					"ref": "contextstill:kn_hx6wajruwk5umwgzzbmv2cqjqm",
+					"title": "token形状を含むfixtureのpush protection対応"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_ysen7wgcm2rxoni4hip6hkttfm",
+					"title": "Mixed worktree commit hygiene procedure"
+				}
+			]
+		},
+		{
+			"taskId": "diverse-6tvplq-question",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
+				},
+				{
+					"ref": "contextstill:kn_p3dh73q27ofammwrrizv2dybha",
+					"title": "Run existing smoke tests after adding a new E2E harness"
+				},
+				{
+					"ref": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
+					"title": "Never make live network calls that mutate external systems without approval"
+				},
+				{
+					"ref": "contextstill:kn_4svsurpndmnannamjejjk4ioby",
+					"title": "実 LLM テストの分離構成と実行条件"
+				},
+				{
+					"ref": "contextstill:kn_emxrlqsrf5zxxm6knmqpuhagy4",
+					"title": "Keep connectivity tests isolated from live clients"
+				},
+				{
+					"ref": "contextstill:kn_vmariive5cmef3xwhbhgjzfxqy",
+					"title": "Distillation Queue v2 への移行は、freeze/backup → schema & code 切替 → one-time migration → live smoke → final cleanup drop の順で進める"
+				},
+				{
+					"ref": "contextstill:kn_jhmqhk6ihc6vcqmvcxpyumiuby",
+					"title": "media サービスの smoke/単体検証を固定時刻で行う"
+				},
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}
