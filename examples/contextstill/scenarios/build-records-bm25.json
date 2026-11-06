@@ -1,0 +1,205 @@
+[
+	{
+		"inputDigest": "6ff035e0aa35bf295acf0837f017e399e6b5336dcf9d24abff5b5b489c30e9bc",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "98e2732aae1137299ec755161ac81e8ec1d9f5d4e95ec76a6c944d624f881348",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "4077f18b57e471479f8478e69777298b0c5eaaf950b44ae8fc80681b8263a711",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "ab6a61780ea6f17313f19feed82454ad52cf7f052e574116d610f88194799d27",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "d3faff962f79c0fd0efb52c96b6267f24f757075145105c6edec7632d3472da1",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "024564951eb8299efe8503b2c594965de4e8ea9791614ffc4d73a49f8a3e9ce9",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"すでに露出している認証情報があれば無効化またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "575c21e28db260f7eb1ba097900e7800792c9bd66c8fa5b8958b174afcb2cb5f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["リリース前に本番環境の複製（clone）で変更を試験した"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "2b3e452bbf5942230168435d0441c957f8af58ad8cf84539aee42653571a0628",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"ログおよびHTTPレスポンスに生の秘密情報、トークン、APIキー、パスワード、cookie、秘密鍵、認証情報付きURLが含まれていない",
+				"診断出力を記録または要約する前に秘密情報をマスキングした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "139bbc455bae5581fd039ddb70d87987112ecaa6007cadf55cdde395e5822787",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"フックと同等の verify コマンドがローカルで成功している",
+				"再コミット前に未ステージの修正が残っていない",
+				"最終コミットは --no-verify などの bypass なしで成功している"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "f81dcd9e4de589ac4eb090609f061186cdd9ecbf54d01aec916aa4295b11a52f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"対象が Python である場合、インデントはレベルあたりスペース4つである",
+				"既存がタブ字下げのファイルでは、そのファイルの既存スタイルに合わせている"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "開示された規則は Python コードの字下げを定めたものであり、任意の言語のリポジトリへ無条件に4スペースを課すものではない。このリポジトリの言語は未指定である。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	}
+]

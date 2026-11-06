@@ -1,0 +1,332 @@
+{
+	"ok": true,
+	"mode": "full",
+	"suite": "seed-skill-assembly",
+	"searchProfile": "bm25",
+	"filter": {
+		"axis": null,
+		"queryStyle": null
+	},
+	"status": "complete",
+	"tasks": 5,
+	"scored": 5,
+	"meanScore": 8.6,
+	"statuses": [
+		{
+			"taskId": "commit-no-secrets",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "test-production-clone",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "four-space-indent",
+			"axis": "retrieval",
+			"status": "scored"
+		}
+	],
+	"scores": [
+		{
+			"taskId": "commit-no-secrets",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never commit secrets or local environment files」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は .env・APIキー・トークン・秘密鍵・cookie・機械固有の認証情報をコミットせず、露出時は無効化またはローテーションするという目的と受入条件に沿う。reuse 契約どおり sections は空で、指針本文は Skill 本体の再利用である。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "test-production-clone",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Test in a Production Clone」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で変更を試験するという受入条件に一致する。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Never print secrets into logs or responses」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文は生の秘密情報・トークン・APIキー・パスワード・cookie・秘密鍵・認証情報付きURLを印刷・保存・返却せず、診断出力の記録や要約の前にマスキングするという目的と受入条件に沿う。handle 順では到達せず needs_input になっていた案件で、今回は指針が出力されている。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"score": 9,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」が BM25 で検索1位に届き、reuse でその参照だけを採用している。本文はフック失敗の種別を読み、整形・lint/型・テストを直し、同等の verify が通ってから再ステージしてコミットし、ユーザーが明示しない限り --no-verify を使わない手順になっており、bypass せず直すという目的に沿う。handle 順では到達せず needs_input になっていた。フィクスチャの JSON 包みをそのまま出しているため 10 にはしない。",
+			"judge": "llm"
+		},
+		{
+			"taskId": "four-space-indent",
+			"score": 7,
+			"expectedSkillUsed": true,
+			"retrievalRank": 1,
+			"usedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"strategy": "reuse",
+			"kind": "ready",
+			"rationale": "期待Skill「Use 4-Space Indentation」が BM25 で検索1位に届き、reuse でその参照を採用している。本文は Python コードをレベルあたりスペース4つで字下げし、既存がタブ字下げのファイルではそのスタイルに合わせるという規則であり、題名だけから任意言語へ4スペースを課してはいない。前提でも Python 向けであることとリポジトリ言語が未指定であることを残している。目的は「このリポジトリ」のインデント幅であり言語が無いため、Python 以外への適用は未確定である。期待Skillは使われ指針も出ているが、リポジトリ全体への無条件回答にはなっていないので 9 にはしない。",
+			"judge": "llm"
+		}
+	],
+	"pendingFiles": [],
+	"searchPreview": [
+		{
+			"taskId": "commit-no-secrets",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_woukarx4it542gkaser24ebwya",
+					"title": "Honor explicit full-worktree commit requests"
+				},
+				{
+					"ref": "contextstill:kn_i2hdlzso7ytitegmdwqzyaotrq",
+					"title": "Stage only related files in a dirty worktree commit"
+				},
+				{
+					"ref": "contextstill:kn_ysen7wgcm2rxoni4hip6hkttfm",
+					"title": "Mixed worktree commit hygiene procedure"
+				},
+				{
+					"ref": "contextstill:kn_zv4jynuzzvokxtk3t5y5jz5ka4",
+					"title": "Stage Only Task-Owned Hunks In Dirty Worktrees"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_d3fmu4ptdxfzrn4lsnfrtkgro4",
+					"title": "Audit staged state when committing all requested changes"
+				},
+				{
+					"ref": "contextstill:kn_caooc6cj7dvqprfubqxrlghs7u",
+					"title": "Keep Temporary Verification Artifacts Out Of Commits"
+				}
+			]
+		},
+		{
+			"taskId": "test-production-clone",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+					"title": "Never deploy to production without explicit release intent"
+				},
+				{
+					"ref": "contextstill:kn_ll6fskowwjrkwm3hozbc4ipzma",
+					"title": "Use targeted tests before the full verification gate for broad changes"
+				},
+				{
+					"ref": "contextstill:kn_ircsuea4oaulpqm7skqy55jina",
+					"title": "Use feature toggles to change behavior without code changes"
+				},
+				{
+					"ref": "contextstill:kn_msj5xtbap2cw2pygg42dthb7mu",
+					"title": "Review dirty worktrees by preserving unrelated user changes"
+				},
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				},
+				{
+					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+					"title": "Verify And Clean Persistent Test Data Before Commit"
+				},
+				{
+					"ref": "contextstill:kn_mqgwqc7wxfblxu6k7uuvywtkvi",
+					"title": "clone は必要な場合だけ使い、借用回避目的では使わない"
+				}
+			]
+		},
+		{
+			"taskId": "no-secrets-in-logs",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_muc77pns6headksqiv6yb6w3w4",
+					"title": "Never store credentials in plaintext"
+				},
+				{
+					"ref": "contextstill:kn_bfvl4b2pl3v2xgdwhmirumomay",
+					"title": "Never expose long-lived credentials in URLs"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
+					"title": "Never make live network calls that mutate external systems without approval"
+				},
+				{
+					"ref": "contextstill:kn_gdriv4jrogeu3pt5twhzrelh2u",
+					"title": "Separate Display Formatting From Execution Data"
+				},
+				{
+					"ref": "contextstill:kn_tyrcetl73q2vgnvbjitfwcjp2m",
+					"title": "Expose Internal Guidance Loading In Audit Trails"
+				},
+				{
+					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+					"title": "Verify desktop packaging with real app launch, not artifact existence"
+				}
+			]
+		},
+		{
+			"taskId": "no-hook-bypass",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_x2dtehp6co4av2btroqqzyvdyq",
+					"title": "Keep Git hooks as minimum quality gates, not full verification substitutes"
+				},
+				{
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
+				},
+				{
+					"ref": "contextstill:kn_puollo4e2xf6qzmrzt62b7c63u",
+					"title": "Biome を使用した開発フローの段階的適用手順"
+				},
+				{
+					"ref": "contextstill:kn_7zcbuqfrc5gopvkrvhcb4t3zmi",
+					"title": "Never rewrite branch history on shared branches without confirmation"
+				},
+				{
+					"ref": "contextstill:kn_gupnxlxzscijkotigmyady4jde",
+					"title": "E2E rate-limit bypasses must be disabled in production"
+				}
+			]
+		},
+		{
+			"taskId": "four-space-indent",
+			"retrievalRank": 1,
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"retrieved": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_wyie4cdqnklh2gkpe74f5yama4",
+					"title": "Editing knowledge items should display evidence source refs and originating vibe memory IDs"
+				},
+				{
+					"ref": "contextstill:kn_ru3eekuxtqnbyiupnji7k245pm",
+					"title": "Keep prompts in Japanese"
+				},
+				{
+					"ref": "contextstill:kn_ml5zkgujlan6xroqt6y7y3uyqq",
+					"title": "Use the registered repo root"
+				},
+				{
+					"ref": "contextstill:kn_hy74rpuoaqkftfkfgk2ipcpljy",
+					"title": "ライブラリとアプリケーションのエラーハンドリングにおけるthiserrorとanyhowの使い分け"
+				},
+				{
+					"ref": "contextstill:kn_eelewcqzlk56bobdrtmuaagzgu",
+					"title": "Separate agent decision workspaces from target workspaces"
+				},
+				{
+					"ref": "contextstill:kn_s3kxs725zxze2o5hnct56nd7xi",
+					"title": "Admin knowledge modal should use AdminModalShell and keep form fields inside a scrollable CardContent body"
+				},
+				{
+					"ref": "contextstill:kn_oo3ftfnstoubsximbth53mo5gu",
+					"title": "Show login UI only when authentication is required"
+				}
+			]
+		}
+	],
+	"note": "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+}

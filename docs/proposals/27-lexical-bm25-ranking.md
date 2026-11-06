@@ -38,7 +38,7 @@ baseline が変わる、一致集合や token 化が変わる、既存記録が�
 
 ## 実装結果
 
-- **採否**: 任意の比較 profile として実装。既定は handle のまま。**SKILL出力としての採用は PENDING（親による full + LLM judge 待ち）**。
+- **採否**: 任意の比較 profile としての実装は採用。旧5件の SKILL 出力では BM25 が役立つ指針を出せた（平均 4.2 → 8.6）。**既定検索は handle のまま**（日本語の退行があるため切り替えない）。本番 ContextStill の検索改善は主張しない。`suite-3axis.json` の full + LLM judge は未実施。
 - **retrieval-only**: 推論0、limit20、主指標@8。既知値とすべて一致。
 
 | 旧5件 | handle rank@8 | BM25 rank@8 |
@@ -69,8 +69,21 @@ compose の BM25 根拠順位は secure-commit-and-logs=[2,1]、fix-check-and-no
 
 fixtureを直接読み取り、診断用にlimitを広げて確認しました（公開MCP capは20のまま）。上記2 queryの一致件数は両profileでそれぞれ6053、5533と同一です。
 
-**結論**: 英語 lexical 検索の到達は改善、日本語はほぼ改善せず退行あり。新しいLLM組み立て評点・根拠は作っていません。旧 suite の既定 full 再生は5/5 scored・平均4.2を再現しました（新規推論評価ではない）。
+**結論（検索到達）**: 英語 lexical 検索の到達は改善、日本語はほぼ改善せず退行あり。旧 suite の既定 full 再生は5/5 scored・平均4.2を再現しました（handle profile、新規推論評価ではない）。
 
-親の次の評価は、旧5件と `suite-3axis.json` を各 `--search-profile handle` / `--search-profile bm25` で `--full` 実行し、profile別の `--build-records` / `--judge-records` / `--output-dir` を指定します。missing記録には実際のLLM出力を用意し、composeの意味品質・日本語の退行・Python適用範囲を確認してから既定化の採否を決めます。
+**SKILL 出力（旧5件 suite、`--search-profile bm25` の full + recorded LLM judge）**:
+
+| 課題 | handle 評点 | BM25 評点 | BM25 の組み立て |
+| --- | --- | --- | --- |
+| commit-no-secrets | 9 | 9 | reuse、rank 1 |
+| test-production-clone | 9 | 9 | reuse、rank 1 |
+| no-secrets-in-logs | 1（needs_input） | 9 | reuse、rank 1 |
+| no-hook-bypass | 1（needs_input） | 9 | reuse、rank 1 |
+| four-space-indent | 1（needs_input） | 7 | reuse、rank 1。本文は Python 向けで、言語未指定の前提を残した |
+| 平均 | 4.2 | 8.6 | |
+
+記録は `examples/contextstill/scenarios/build-records-bm25.json`、`judge-records-bm25.json`、`scores-bm25.json`。既定の `scores.json` は handle の平均4.2のまま上書きしていません。4件は期待Skillの本文が目的に沿い、フィクスチャの JSON 包みをそのまま出すため 9（10ではない）。`four-space-indent` は期待Skillを使っているが、本文が「Indent Python code with 4 spaces…」であり「このリポジトリ」の言語が無いため 7。題名一致だけで任意言語へ4スペースを課していません。
+
+`suite-3axis.json` の full + LLM judge（compose・日本語言い換え・欠落時の探索SKILL）は未実施です。日本語退行を隠さず、既定を BM25 に切り替えません。
 
 **verify**: `PATH=/home/box/.bun/bin:$PATH bun run verify` 成功。core 141件、examples 31件、typecheck / lint / format / build / pack 成功。旧 `scores.json` は既存記録の再生結果に `searchProfile: handle` を付け、formatterに合わせたものです。評点・根拠は変更していません。

@@ -56,11 +56,12 @@ bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/con
 
 `--search-profile handle|bm25`（既定 `handle`、retrieval-only / full 共通）、`--axis retrieval|compose|absent`、`--query-style original|exact|en|jp`、`--output-dir` が使えます。新しい報告は既定で `data/contextstill/scenario-reports/` に書き、`scenarios/scores.json` は旧 5 件 suite の full 既定実行でだけ更新します。builder には goal と acceptance だけを渡し、期待 ref・題名・axis は judge だけが見ます。
 
-順位比較の報告には `searchProfile` を記録します。profile 間の報告を残す場合は別々の `--output-dir` を使います。`context:check` / 固定fixture の検索は変更していません。BM25 は任意の測定用 profile としてのみ追加し、SKILL 出力としての採用は full 実行 + LLM judge の評価待ちです。英語 lexical 検索は改善しますが、日本語はほぼ改善せず退行もあります（[提案27の実測](../../docs/proposals/27-lexical-bm25-ranking.md)）。mock 検索は本番 ContextStill 検索と異なり、提案01/16の実ユーザーpilotではありません。
+順位比較の報告には `searchProfile` を記録します。profile 間の報告を残す場合は別々の `--output-dir` を使います。`context:check` / 固定fixture の検索は変更していません。BM25 は任意の測定用 profile です。旧5件 suite の full + LLM judge では平均 8.6（handle の 4.2 から上昇）で、3件は handle 順では needs_input だったものが指針を出せました。日本語はほぼ改善せず退行もあるため既定は handle のままです（[提案27の実測](../../docs/proposals/27-lexical-bm25-ranking.md)）。mock 検索は本番 ContextStill 検索と異なり、提案01/16の実ユーザーpilotではありません。再生は `examples/contextstill/scenarios/build-records-bm25.json` と `judge-records-bm25.json` を指定し、`--output-dir` を既定の `scores.json` とは別にします。
 
 ```sh
 bun run context:eval-scenarios --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --search-profile handle --output-dir data/contextstill/scenario-reports/handle
 bun run context:eval-scenarios --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json --search-profile bm25 --output-dir data/contextstill/scenario-reports/bm25
+bun run context:eval-scenarios --suite examples/contextstill/scenarios/suite.json --search-profile bm25 --build-records examples/contextstill/scenarios/build-records-bm25.json --judge-records examples/contextstill/scenarios/judge-records-bm25.json --output-dir data/contextstill/scenario-reports/bm25-full
 ```
 
 
