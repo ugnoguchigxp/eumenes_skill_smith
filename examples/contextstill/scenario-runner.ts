@@ -687,10 +687,45 @@ export async function runFull(deps: FullDeps) {
 		recordProvenance,
 		usage,
 		instructionDigests: instructionDigests(assemblyMode),
-		/** Only defined when every task scored; a partial mean would hide failures. */
-		meanScore:
-			complete && scores.length
-				? scores.reduce((sum, item) => sum + item.score, 0) / scores.length
-				: null,
+		...axisSpecificMeans(statuses, scores, complete),
+	};
+}
+
+export type AxisName = "retrieval" | "compose" | "absent";
+export type AxisMeans = Record<AxisName, number | null>;
+
+/**
+ * Proposal 34: per-axis judges have different rubrics, so a mixed-axis run never
+ * publishes one blended mean. An axis mean is published only when every task of
+ * that axis in the run was scored (and at least one exists); otherwise null.
+ * meanScore keeps the legacy single-axis average and is null when the run's
+ * tasks span more than one axis or the run is incomplete.
+ */
+export function axisSpecificMeans(
+	statuses: readonly { taskId: string; axis: string; status: TaskStatus }[],
+	scores: readonly { taskId: string; score: number }[],
+	complete: boolean,
+): { meanScore: number | null; axisMeans: AxisMeans; mixedAxes: boolean } {
+	const axisOf = new Map(statuses.map((s) => [s.taskId, s.axis]));
+	const axes = new Set(statuses.map((s) => s.axis));
+	const mean = (items: readonly { score: number }[]) =>
+		items.reduce((sum, item) => sum + item.score, 0) / items.length;
+	const axisMeans = Object.fromEntries(
+		(["retrieval", "compose", "absent"] as const).map((axis) => {
+			const all = statuses.filter((s) => s.axis === axis);
+			const scored = scores.filter((s) => axisOf.get(s.taskId) === axis);
+			const ok =
+				all.length > 0 &&
+				all.every((s) => s.status === "scored") &&
+				scored.length === all.length;
+			return [axis, ok ? mean(scored) : null];
+		}),
+	) as AxisMeans;
+	const mixedAxes = axes.size > 1;
+	return {
+		/** Only defined when every task scored and all share one axis. */
+		meanScore: complete && scores.length && !mixedAxes ? mean(scores) : null,
+		axisMeans,
+		mixedAxes,
 	};
 }

@@ -253,6 +253,8 @@ try {
 			tasks: tasks.length,
 			scored: result.scores.length,
 			meanScore: result.meanScore,
+			axisMeans: result.axisMeans,
+			mixedAxes: result.mixedAxes,
 			statuses: result.statuses,
 			scores: result.scores,
 			composeScores: result.composeScores,
@@ -267,7 +269,9 @@ try {
 			...(queryReformulation !== "off" ? { reformulationTraces } : {}),
 			searchPreview: result.searchPreview,
 			note: result.complete
-				? "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+				? result.mixedAxes
+					? "Scores are LLM judgments of skill assembly. Mixed axes: meanScore is withheld; see axisMeans (proposal 34)."
+					: "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
 				: "Incomplete: meanScore is withheld because not every task was scored.",
 		};
 		const legacyDefault =
