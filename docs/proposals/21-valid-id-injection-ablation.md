@@ -35,3 +35,12 @@ metadata / title / section / body / 報告 contrast 由来の攻撃、許可 ID 
 ## 依存・前提
 
 提案 17 の正しい replay と提案 18 の query 境界。実モデル比較には新しい record が必要です。構造反例は fixture だけで可能です。仮定: 注入の人手判定を安定化できること。
+
+## 実装結果
+
+- **採否**: 部分採用（攻撃面の固定試験と評価専用印の比較）。実モデル ASR と防御副作用は未測定。製品に keyword 拒否は入れない。
+- **内容**: 正しい ID の reuse／compose／repair 洗浄が構造上 ready になり得ることを回帰試験化。評価専用の連続 provenance mark と JSON 属性 mark を比較可能な関数として追加。Spotlighting 同等は主張しない。
+- **パス**: `src/test/valid-id-injection.test.ts`, `src/eval/provenance-mark.ts`
+- **試験**: `bun test src/test/valid-id-injection.test.ts`（4 pass）
+- **未実施**: 実モデル攻撃成功率、印付けの読解副作用、下流 executor の独立禁止試験の本番接続
+- **理由**: schema 通過≠安全を明示できる試験ができた。製品の意味防御は未強化（意図的）。

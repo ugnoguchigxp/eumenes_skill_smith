@@ -85,3 +85,8 @@ export {
 	disclosureRoundCompareSchema,
 	type DisclosureRoundCompare,
 } from "./disclosure-compare.js";
+
+export {
+	continuousProvenanceMark,
+	jsonAttributeMark,
+} from "./provenance-mark.js";
