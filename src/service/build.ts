@@ -188,10 +188,21 @@ export async function executeBuild<Tx>(
 		}[];
 		externalUsed: boolean;
 		sourceSearch: z.infer<typeof sourceSearchSchema> | undefined;
+		/** Warnings/degraded retained across re-search rounds for still-held refs. */
+		sourceNotices:
+			| {
+					warnings: z.infer<typeof sourceSearchSchema>["warnings"];
+					degraded: string[];
+					truncated: boolean;
+			  }
+			| undefined;
 		reSearch: {
 			query: string;
 			externalQuery: string | null;
 			cardsAdded: number;
+			cardsAdmitted: number;
+			documentsFetched: number;
+			round: number;
 		}[];
 	};
 
@@ -232,26 +243,58 @@ export async function executeBuild<Tx>(
 			"source_contract_violation",
 		);
 		const combined: typeof local = [];
-		const seenRefs = new Set<string>(state?.candidates.map((c) => c.ref) ?? []);
+		const seenNew = new Set<string>();
 		let cardsAdded = 0;
 		for (let rank = 0; rank < Math.max(local.length, external.length); rank++) {
 			for (const card of [local[rank], external[rank]]) {
-				if (!card || seenRefs.has(card.ref)) continue;
-				seenRefs.add(card.ref);
+				if (!card || seenNew.has(card.ref)) continue;
+				seenNew.add(card.ref);
 				combined.push(card);
 				cardsAdded++;
 			}
 		}
 		const prior = state?.candidates ?? [];
-		const candidates = [...prior, ...combined].slice(
-			0,
-			request.limits.candidates,
+		const priorOnly = prior.filter((c) => !seenNew.has(c.ref));
+		// Re-search prefers newly found cards in the bounded working set.
+		const candidates = (
+			state ? [...combined, ...priorOnly] : [...prior, ...combined]
+		).slice(0, request.limits.candidates);
+		const candidateRefs = new Set(candidates.map((c) => c.ref));
+		const newRoundRefs = new Set(
+			combined.map((c) => c.ref).filter((ref) => candidateRefs.has(ref)),
 		);
-		const evidence = state?.evidence ? [...state.evidence] : [];
+		let evidence = (state?.evidence ?? []).filter((e) =>
+			candidateRefs.has(e.ref),
+		);
+		// If documents are full, free slots by dropping prior-only evidence first.
+		if (state && evidence.length >= request.limits.documents) {
+			const keepNew = evidence.filter((e) => newRoundRefs.has(e.ref));
+			const keepPrior = evidence.filter((e) => !newRoundRefs.has(e.ref));
+			evidence = [...keepNew, ...keepPrior].slice(0, request.limits.documents);
+			// Prefer room for at least one new document when new cards were admitted.
+			if (
+				newRoundRefs.size > 0 &&
+				!evidence.some((e) => newRoundRefs.has(e.ref)) &&
+				evidence.length >= request.limits.documents
+			) {
+				evidence = evidence.slice(0, Math.max(0, request.limits.documents - 1));
+			}
+		}
 		const seenEvidence = new Set(evidence.map((e) => e.ref));
+		let documentsFetched = 0;
+		let cardsAdmitted = 0;
 		for (const card of candidates) {
-			if (evidence.length >= request.limits.documents) break;
+			if (!state || !state.candidates.some((c) => c.ref === card.ref))
+				cardsAdmitted++;
 			if (seenEvidence.has(card.ref)) continue;
+			if (evidence.length >= request.limits.documents) {
+				// Evict a prior-only document to admit a new-round card.
+				if (!state || !newRoundRefs.has(card.ref)) continue;
+				const evictAt = evidence.findIndex((e) => !newRoundRefs.has(e.ref));
+				if (evictAt < 0) continue;
+				const evicted = evidence.splice(evictAt, 1)[0]!;
+				seenEvidence.delete(evicted.ref);
+			}
 			const document = parseEvidence(
 				await call(() => read(card.ref, card.external)),
 			);
@@ -265,6 +308,7 @@ export async function executeBuild<Tx>(
 			document.retrievedAt = ports.now();
 			evidence.push(document);
 			seenEvidence.add(document.ref);
+			documentsFetched++;
 		}
 		const successors = state?.successors ? [...state.successors] : [];
 		const seen = new Set(evidence.map((e) => e.ref));
@@ -305,12 +349,43 @@ export async function executeBuild<Tx>(
 				successors.push({ ref: e.ref, successor, outcome: "fetched" });
 			} else successors.push({ ref: e.ref, successor, outcome: "unavailable" });
 		}
+		const priorNotices = state?.sourceNotices;
+		const mergedWarnings = [
+			...(priorNotices?.warnings ?? []),
+			...(sourceSearch?.warnings ?? []),
+		];
+		const warningKey = (w: { kind: string; refs: string[] }) =>
+			w.kind + ":" + w.refs.slice().sort().join(",");
+		const seenWarn = new Set<string>();
+		const warnings = [];
+		for (const w of mergedWarnings) {
+			const key = warningKey(w);
+			if (seenWarn.has(key)) continue;
+			seenWarn.add(key);
+			warnings.push(w);
+		}
+		const sourceNotices =
+			sourceSearch || priorNotices
+				? {
+						warnings,
+						degraded: [
+							...new Set([
+								...(priorNotices?.degraded ?? []),
+								...(sourceSearch?.degraded ?? []),
+							]),
+						],
+						truncated: !!(priorNotices?.truncated || sourceSearch?.truncated),
+					}
+				: undefined;
 		const reSearch = state?.reSearch ? [...state.reSearch] : [];
 		if (state)
 			reSearch.push({
 				query: queryLocal,
 				externalQuery: queryExternal ?? null,
 				cardsAdded,
+				cardsAdmitted,
+				documentsFetched,
+				round: reSearch.length + 1,
 			});
 		return {
 			candidates,
@@ -318,6 +393,7 @@ export async function executeBuild<Tx>(
 			successors,
 			externalUsed,
 			sourceSearch,
+			sourceNotices,
 			reSearch,
 		};
 	}
@@ -332,6 +408,7 @@ export async function executeBuild<Tx>(
 			successors,
 			externalUsed,
 			sourceSearch,
+			sourceNotices,
 			reSearch,
 		} = state;
 		const candidateCards = candidates.map((e) => ({
@@ -362,20 +439,24 @@ export async function executeBuild<Tx>(
 				externalUsed,
 				...(successors.length ? { successors } : {}),
 				...(reSearch.length ? { reSearch } : {}),
-				...(sourceSearch
+				...(sourceNotices || sourceSearch
 					? {
 							external: {
-								warnings: sourceSearch.warnings.filter((w) =>
+								warnings: (
+									sourceNotices?.warnings ?? sourceSearch!.warnings
+								).filter((w) =>
 									w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
 								),
-								omittedWarnings: sourceSearch.warnings.filter(
+								omittedWarnings: (
+									sourceNotices?.warnings ?? sourceSearch!.warnings
+								).filter(
 									(w) =>
 										!w.refs.every((ref) =>
 											candidates.some((c) => c.ref === ref),
 										),
 								).length,
-								degraded: sourceSearch.degraded,
-								truncated: sourceSearch.truncated,
+								degraded: sourceNotices?.degraded ?? sourceSearch!.degraded,
+								truncated: sourceNotices?.truncated ?? sourceSearch!.truncated,
 							},
 						}
 					: {}),

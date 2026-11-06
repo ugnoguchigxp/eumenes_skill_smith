@@ -35,3 +35,12 @@
 ## 依存・前提
 
 提案 18 の外部境界を維持します。現行の fixture / SourcePort で構造試験は可能です。仮定: 入替で必要根拠を維持できること。
+
+## 実装結果
+
+- **採否**: 採用（構造）。実課題での訂正検索優位は未測定。
+- **内容**: 再検索時に新規カードを作業集合へ優先入場。文書枠満杯時は prior-only を追い出して新規本文を取得。warnings/degraded を round 横断で保持。`cardsAdmitted`／`documentsFetched` を記録。
+- **パス**: `src/service/build.ts`, `src/test/re-search-replacement.test.ts`, `integration-contract.md`
+- **試験**: `bun test src/test/re-search-replacement.test.ts`（2 pass）ほか re-search／source-notices 通過。
+- **未実施**: 実課題での Corrective RAG 品質比較
+- **理由**: 再現していた「cardsAdded=1 なのに追加0」「警告消失」を構造的に解消。
