@@ -35,3 +35,12 @@ disclosed の ref / section 集合、追加 byte、最終使用 section との�
 ## 依存・前提
 
 提案 19 の round trace と提案 22 の使用量測定が有用です。制御動作は fixture、品質は実 record で見ます。P4 は不要です。仮定: 開示選択の record を取得できること。
+
+## 実装結果
+
+- **採否**: 部分採用（構造トレースと 1対2 比較ヘルパー）。品質上の最適 round は未測定。
+- **内容**: モデル入力へ `disclosureProgress`（rounds・disclosed refs/sections・last.addedBytes/duplicateOnly/unknownRefs・modelCallsUsed）を付与。未知だけの disclose は repair。`compareDisclosureRounds` で同一総上限の byte／予算を比較（品質点は出さない）。
+- **パス**: `src/service/build.ts`, `src/eval/disclosure-compare.ts`, `src/test/disclosure-progress.test.ts`
+- **試験**: `bun test src/test/disclosure-progress.test.ts`（3 pass）
+- **未実施**: 実 record での達成・誤適用・token 削減の比較
+- **理由**: 無進捗の可視化と構造比較は可能。品質の「よくなった」判定にはコーパスが必要。

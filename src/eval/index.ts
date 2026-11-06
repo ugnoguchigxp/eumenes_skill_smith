@@ -79,3 +79,9 @@ export {
 } from "./usage-ledger.js";
 
 export { localCandidateVerificationFixture } from "./candidate-verify.js";
+
+export {
+	compareDisclosureRounds,
+	disclosureRoundCompareSchema,
+	type DisclosureRoundCompare,
+} from "./disclosure-compare.js";

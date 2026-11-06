@@ -400,6 +400,22 @@ export async function executeBuild<Tx>(
 
 	let state = await runSearch(request.task.goal, r.authority.searchTask, null);
 	let disclosed: ReturnType<typeof discloseEvidence> = [];
+	let disclosureTrace: {
+		rounds: number;
+		last: {
+			addedBytes: number;
+			newSectionIds: string[];
+			duplicateOnly: boolean;
+			unknownRefs: string[];
+		} | null;
+		disclosedRefs: string[];
+		disclosedSectionIds: string[];
+	} = {
+		rounds: 0,
+		last: null,
+		disclosedRefs: [],
+		disclosedSectionIds: [],
+	};
 
 	const buildData = () => {
 		const {
@@ -428,6 +444,14 @@ export async function executeBuild<Tx>(
 			candidateCards,
 			evidenceIndex: evidence.map(evidenceCardView),
 			untrustedEvidence: spotlightUntrusted(disclosed),
+			disclosureProgress: {
+				rounds: disclosureTrace.rounds,
+				disclosedRefs: disclosureTrace.disclosedRefs,
+				disclosedSectionIds: disclosureTrace.disclosedSectionIds,
+				last: disclosureTrace.last,
+				modelCallsLimit: request.limits.modelCalls,
+				modelCallsUsed: modelCallsUsed,
+			},
 			freshness: evidence.map((e) => ({
 				ref: e.ref,
 				status: e.status,
@@ -464,6 +488,7 @@ export async function executeBuild<Tx>(
 		};
 	};
 
+	let modelCallsUsed = 0;
 	let decision: Decision | undefined, receipt: string | undefined;
 	const tokens = {
 		input: 0 as number | null,
@@ -478,6 +503,7 @@ export async function executeBuild<Tx>(
 	let reSearchUsed = false;
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
+		modelCallsUsed = attempt + 1;
 		const data = repair ? { ...buildData(), repair } : buildData();
 		requireThat(
 			bytes(data) + new TextEncoder().encode(buildInstructions).length <
@@ -570,8 +596,29 @@ export async function executeBuild<Tx>(
 			continue;
 		}
 		if (turn.kind === "disclose") {
+			const unknownRefs = turn.items
+				.map((i) => i.ref)
+				.filter((ref) => !state.evidence.some((e) => e.ref === ref));
+			if (!turn.items.length || unknownRefs.length === turn.items.length) {
+				lastFailure = "invalid_model_output";
+				repair = {
+					code: "disclose_unknown",
+					instruction:
+						"disclose は取得済み evidenceIndex の ref／sectionIds だけを指定する。空や未知だけは採用されない。",
+				};
+				continue;
+			}
 			repair = undefined;
-			const next = discloseEvidence(state.evidence, turn.items);
+			const beforeBytes = bytes(disclosed);
+			const beforeSections = new Set(
+				disclosed.flatMap(
+					(d) => d.sections?.map((s) => d.ref + "#" + s.id) ?? [],
+				),
+			);
+			const next = discloseEvidence(
+				state.evidence,
+				turn.items.filter((i) => state.evidence.some((e) => e.ref === i.ref)),
+			);
 			const byRef = new Map(disclosed.map((d) => [d.ref, d]));
 			for (const item of next) {
 				const prior = byRef.get(item.ref);
@@ -594,6 +641,24 @@ export async function executeBuild<Tx>(
 				}
 			}
 			disclosed = [...byRef.values()];
+			const afterSections = disclosed.flatMap(
+				(d) => d.sections?.map((s) => d.ref + "#" + s.id) ?? [],
+			);
+			const newSectionIds = afterSections.filter(
+				(id) => !beforeSections.has(id),
+			);
+			const addedBytes = Math.max(0, bytes(disclosed) - beforeBytes);
+			disclosureTrace = {
+				rounds: disclosureTrace.rounds + 1,
+				last: {
+					addedBytes,
+					newSectionIds,
+					duplicateOnly: addedBytes === 0 && newSectionIds.length === 0,
+					unknownRefs,
+				},
+				disclosedRefs: disclosed.map((d) => d.ref),
+				disclosedSectionIds: afterSections,
+			};
 			continue;
 		}
 		const candidate = turn;
