@@ -183,16 +183,17 @@ export async function executeBuild<Tx>(
 			),
 		"source_contract_violation",
 	);
+	// Interleave by rank; first seen wins so a same-rank local card beats external.
 	const combined: typeof local = [];
+	const seenRefs = new Set<string>();
 	for (let rank = 0; rank < Math.max(local.length, external.length); rank++) {
-		if (local[rank]) combined.push(local[rank]!);
-		if (external[rank]) combined.push(external[rank]!);
+		for (const card of [local[rank], external[rank]]) {
+			if (!card || seenRefs.has(card.ref)) continue;
+			seenRefs.add(card.ref);
+			combined.push(card);
+		}
 	}
 	const candidates = combined.slice(0, request.limits.candidates);
-	requireThat(
-		new Set(candidates.map((e) => e.ref)).size === candidates.length,
-		"source_ref_conflict",
-	);
 	const evidence: Evidence[] = [];
 	const read = (ref: string, external: boolean) =>
 		external

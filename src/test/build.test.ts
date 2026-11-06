@@ -432,3 +432,55 @@ test("selected external evidence is validated in one source call", async () => {
 	// Delivery revalidates once more with the same batch.
 	expect(validateCalls).toBe(2);
 });
+
+test("duplicate refs across local and external keep the first-seen card", async () => {
+	const f = fixture({ external: true });
+	const sharedRef = "skill:compare@1";
+	const local = {
+		ref: sharedRef,
+		version: { id: "compare", version: "1", digest: "digest", generation: 0 },
+		title: "比較",
+		body: "ローカル本文。",
+		sections: [{ id: "inspect", body: "確認する。" }],
+		status: "active" as const,
+		complete: true,
+		external: false,
+		scope: "shared",
+	};
+	f.setEvidence([local]);
+	f.ports.source!.search = async () => ({
+		cards: [
+			{
+				ref: sharedRef,
+				version: { id: "ext", version: "9", digest: "other", generation: 0 },
+				title: "外部同名",
+				status: "active",
+				complete: true,
+				external: true,
+				scope: "shared",
+			},
+		],
+		warnings: [],
+		degraded: [],
+		truncated: false,
+	});
+	let gotExternal = false;
+	f.ports.source!.get = async () => {
+		gotExternal = true;
+		throw new Error("should_not_read_duplicate_external");
+	};
+	f.setDecision({
+		kind: "ready",
+		strategy: "reuse",
+		sourceRefs: [sharedRef],
+		sections: [],
+		patches: [],
+		requiredCapabilities: [],
+		verification: ["確認"],
+		assumptions: [],
+	});
+	const r = await ready(f);
+	expect(gotExternal).toBe(false);
+	expect(r.build.content.dependencies[0]!.external).toBe(false);
+	expect(r.build.content.body).toContain("ローカル本文");
+});
