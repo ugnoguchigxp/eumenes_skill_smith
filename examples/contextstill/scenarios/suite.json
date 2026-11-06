@@ -1,0 +1,65 @@
+{
+	"id": "seed-skill-assembly",
+	"tasks": [
+		{
+			"id": "commit-no-secrets",
+			"goal": "I need to commit my work, but the working tree contains a .env file and API keys. How should I avoid committing secrets or local environment files?",
+			"acceptance": [
+				{
+					"id": "no-secrets",
+					"text": "コミット対象から .env と秘密情報を除く具体的な進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"expectedTitle": "Never commit secrets or local environment files"
+		},
+		{
+			"id": "test-production-clone",
+			"goal": "Test these changes in a production clone before we release.",
+			"acceptance": [
+				{
+					"id": "clone-test",
+					"text": "本番相当の複製環境でテストしてからリリースする進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"expectedTitle": "Test in a Production Clone"
+		},
+		{
+			"id": "no-secrets-in-logs",
+			"goal": "Make sure the app never prints secrets into logs or HTTP responses.",
+			"acceptance": [
+				{
+					"id": "no-print",
+					"text": "ログとレスポンスに秘密情報を出さない進め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq"],
+			"expectedTitle": "Never print secrets into logs or responses"
+		},
+		{
+			"id": "no-hook-bypass",
+			"goal": "pre-commit verify failed. Should I bypass the hooks to push anyway?",
+			"acceptance": [
+				{
+					"id": "fix-first",
+					"text": "フックを bypass せず、失敗した verify を直してから進める判断が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_b2qt6sghacbcake5ccaxubfjn4"],
+			"expectedTitle": "Fix pre-commit verify failures instead of bypassing hooks"
+		},
+		{
+			"id": "four-space-indent",
+			"goal": "When editing this repository, how many spaces should indentation use?",
+			"acceptance": [
+				{
+					"id": "indent",
+					"text": "インデント幅の決め方が示されている"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi"],
+			"expectedTitle": "Use 4-Space Indentation"
+		}
+	]
+}

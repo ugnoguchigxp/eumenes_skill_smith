@@ -4,12 +4,22 @@ import { migrations, sqliteRepository } from "../../src/sqlite/index.js";
 import type { Authority, GuidanceRequest, Ports } from "../../src/index.js";
 import type { SourcePort } from "./source.js";
 
+export type ExampleHostOptions = {
+	goal?: string;
+	acceptance?: GuidanceRequest["task"]["acceptance"];
+	requestId?: string;
+	modelCalls?: number;
+	candidates?: number;
+	documents?: number;
+};
+
 /** Standalone wiring example. Fixed model/authority/jobs are test doubles, not Eumenes adapters. */
 export function createExampleHost(
 	source: SourcePort,
 	query: string,
 	/** Optional host-injected provider, e.g. recordedInference for Grok Bot outputs. */
 	injected?: Ports<Database>["inference"],
+	options: ExampleHostOptions = {},
 ) {
 	const db = new Database(":memory:");
 	for (const m of migrations) db.exec(m.sql);
@@ -34,10 +44,10 @@ export function createExampleHost(
 	};
 	const request: GuidanceRequest = {
 		contractVersion: "skillsmith.v1",
-		requestId: crypto.randomUUID(),
+		requestId: options.requestId ?? crypto.randomUUID(),
 		task: {
-			goal: query,
-			acceptance: [
+			goal: options.goal ?? query,
+			acceptance: options.acceptance ?? [
 				{ id: "connection", text: "外部根拠を取得し、版を検査して保存できる" },
 			],
 			constraints: [
@@ -49,10 +59,10 @@ export function createExampleHost(
 		environment: { id: "standalone-example", capabilities: [], policy },
 		limits: {
 			deadlineAt: fixedNow + 120000,
-			modelCalls: 1,
+			modelCalls: options.modelCalls ?? 1,
 			sourceCalls: 12,
-			candidates: 3,
-			documents: 3,
+			candidates: options.candidates ?? 3,
+			documents: options.documents ?? 3,
 			inputBytes: 131072,
 			outputBytes: 32768,
 			outputTokens: 1200,

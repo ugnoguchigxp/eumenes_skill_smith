@@ -1,6 +1,6 @@
 # 単体試験用の疑似ContextStill
 
-SkillSmithの実装・検証を、Eumenes本体、ContextStillの稼働サービス、APIキーに依存せず進めるための例です。実データのSQLiteコピー、公開MCPの一部を再現する処理、SourcePortへの接続例、固定モデルを使う通し確認を含みます。実LLMの意味判断や本番検索品質の評価には使いません。
+SkillSmithの実装・検証を、Eumenes本体、ContextStillの稼働サービス、APIキーに依存せず進めるための例です。実データのSQLiteコピー、公開MCPの一部を再現する処理、SourcePortへの接続例、固定モデルを使う通し確認を含みます。接続確認と固定fixtureの評価キットは実LLMの意味判断や本番検索品質の証明には使いません。タスクシナリオでのSkill組み立て評点は `bun run context:eval-scenarios` を使います。
 
 ## 最初に動かす
 
@@ -31,7 +31,18 @@ bun run context:seed --dest /absolute/path/seed.sqlite
 bun run context:check /absolute/path/snapshot.sqlite 検証
 ```
 
+
 出力は件数・状態・消費回数だけです。本文とtokenは出力しません。`model: fixed_wiring_stub` は接続確認専用の固定出力を意味します。検索語で候補が見つからない場合や接続に問題がある場合は終了コードを失敗にし、固定データで代替しません。
+
+## Skill組み立てのシナリオ評点
+
+`context:check` の固定モデルと `context:eval` の固定fixtureは、期待Skillが正しく組み上がったかの評点ではありません。公開seed上の決められたタスクを通し、検索順位と組み立て結果を記録したうえで、LLM（Grok Botのrecorded-inference）が 0 から 10 で評点します。
+
+```sh
+bun run context:eval-scenarios
+```
+
+推論記録が足りない場合は `data/contextstill/scenario-build-pending.json` または `scenario-judge-pending.json` を書き、終了コード 2 で待ちます。記録を `examples/contextstill/scenarios/build-records.json` と `judge-records.json` に足して再実行すると、毎回評点を標準出力と `scenarios/scores.json` に出します。検索は lexical かつ handle 順のため、期待Skillが候補に入らない課題は低得点になり得ます。それは検索品質の事実であり、固定出力で埋めません。
 
 ## コピー内容と更新
 
@@ -67,6 +78,7 @@ bun run context:snapshot --source /absolute/path/context-still.sqlite3 --dest /a
 | `source.ts` | 疑似MCPをSkillSmithのSourcePortへ接続する試験用adapter |
 | `host.ts` | 一時SQLite、固定モデル、試験用権限・jobによるホスト例 |
 | `check.ts` | コピー済みデータでの通し確認。通信・listenを禁止 |
+| `scenario-eval.ts` / `scenarios/` | 公開seed上のタスクシナリオ。recorded-inferenceでSkillを組み立て、LLMが毎回評点する |
 | `test/` | 合成データ、コピー処理、公開範囲、契約、変更検知、保存結合の固定試験 |
 
 利用例は次のとおりです。`transport` を注入し、HTTPサーバーを起動せずにAPI境界を検査します。

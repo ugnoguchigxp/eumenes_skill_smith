@@ -1,0 +1,121 @@
+[
+	{
+		"inputDigest": "59f040c50ffec6afa26d49c1705ad92ec61a06bb9f7aa2a39fff17947637c272",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "4285e072a86f7687fd7899ae3a1972f8c6e92e8f180e0f2c37c9a7cd2a62f46e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "4e5c1bd3a05176a4a82cbd6f0f8a598e827c6b895767170cab5de7d45822d124",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"ログやHTTPレスポンスへ秘密情報を出さない手順を述べた既存Skill。今回の候補はコミット時の秘密情報、OAuth、見た目、別用途の資料であり、目的に合うものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "c1ba7440ace34fc44a3ae4ce2a8f3e104cc3e6b13100c1fccdf2dee3a921d9f9",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "disclose",
+			"items": [
+				{
+					"ref": "contextstill:kn_23pp54ig75ftah6m3ekj6rufiq"
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "dcb75106c4ba05c551ec01963efdd47e91f63d03d9ced47e6f5ca533f4b911aa",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"このリポジトリのインデント幅（何スペースか）を定めた既存Skill。今回の候補は本番clone試験、Questionnaire、タイポグラフィトークン、秘密情報のコミット禁止などで、コードのインデント幅を述べたものが見当たらない。"
+			]
+		}
+	},
+	{
+		"inputDigest": "06c371a02743122f1f05c7964653b75580fb681f184fa426ebff3b56dc40ab9d",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": [
+				"コミット対象に .env、APIキー、トークン、秘密鍵、cookie、機械固有の認証情報が含まれていない",
+				"すでに露出している認証情報があれば赤作用またはローテーションした"
+			],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "9f2541dccc3cdf3a678c84f645744c2997ce339f6d87d1ef4d3ec2b9718a623f",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "ready",
+			"strategy": "reuse",
+			"sourceRefs": ["contextstill:kn_224yjdcormlnvyfo2xg2z2r76y"],
+			"sections": [],
+			"patches": [],
+			"requiredCapabilities": [],
+			"verification": ["リリース前に本番環境の複製（clone）で変更を試験した"],
+			"assumptions": [
+				{
+					"text": "検索は文字列一致のみでベクトル検索は使えない（mock_lexical_only, vector_unavailable）。適合の保証には使わない。",
+					"mandatory": false,
+					"resolved": false
+				},
+				{
+					"text": "出典詳細は省略されている（source_details_omitted）。",
+					"mandatory": false,
+					"resolved": false
+				}
+			]
+		}
+	},
+	{
+		"inputDigest": "9302539a942bb491712056470c1e945a2e4cb9a1f364ed09b899ff8b9f52588e",
+		"provider": "grok_bot",
+		"value": {
+			"kind": "needs_input",
+			"missing": [
+				"pre-commit フックの verify 失敗を bypass せず直す手順を述べた既存Skill。開示した資料は context_compile 周辺の単体テストやモック shape を直してから全体 verify を再実行する手順であり、git hook の bypass 可否には当てはまらない。"
+			]
+		}
+	}
+]

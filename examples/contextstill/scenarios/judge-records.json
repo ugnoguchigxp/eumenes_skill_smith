@@ -1,0 +1,47 @@
+[
+	{
+		"inputDigest": "24f73f79798e359ec5d4b6f4a50d0466f03baf5cc0988bd2ceb961de7b4cc757",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Never commit secrets or local environment files」が検索6位で届き、reuse でその参照だけを採用している。本文は .env や APIキー等をコミットせず、露出時は無効化またはローテーションするという目的に沿った規則である。sections は reuse 契約どおり空で、指針本文は Skill 本体の再利用になっている。"
+		}
+	},
+	{
+		"inputDigest": "44fabf1640ce12d23ac3d19e4c7d55426313e8e29671cb5d437ce7414292f00f",
+		"provider": "grok_bot",
+		"value": {
+			"score": 9,
+			"expectedSkillUsed": true,
+			"rationale": "期待Skill「Test in a Production Clone」が検索1位で届き、reuse でその参照だけを採用している。本文はリリース前に本番環境の複製で試験するという受入条件に一致する。"
+		}
+	},
+	{
+		"inputDigest": "3f7d99f65234eb1cb1e792f4c1a5acf3671f83db4afc63b7b7a2f16a20c4573d",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Never print secrets into logs or responses」は検索結果に無い。組み立ては needs_input で参照も指針本文も空である。近くの「Never commit secrets」を誤用していない点は妥当だが、期待Skillは組み上がっておらず評点は低い。"
+		}
+	},
+	{
+		"inputDigest": "0adc4ff600d5c1b9ab6136583d6d319213026af8d6e5fe934b4a1ee9619e13a6",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Fix pre-commit verify failures instead of bypassing hooks」は検索結果に無い。組み立ては needs_input で、届いた context_compile 向け verify 手順も採用していない。期待Skillは組み上がっていない。"
+		}
+	},
+	{
+		"inputDigest": "c30c2adadd35291ac8ab7af2466fc44ae042635ea1f23479088bd0d207ed40e2",
+		"provider": "grok_bot",
+		"value": {
+			"score": 1,
+			"expectedSkillUsed": false,
+			"rationale": "期待Skill「Use 4-Space Indentation」は検索結果に無い。組み立ては needs_input でインデント幅の指針が無い。タイポグラフィトークンなど無関係な候補の誤用もしていないが、期待Skillは組み上がっていない。"
+		}
+	}
+]

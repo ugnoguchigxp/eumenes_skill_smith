@@ -96,3 +96,19 @@ export {
 	defaultCacheIdentityManifest,
 	type CacheIdentityManifest,
 } from "./cache-identity.js";
+
+export {
+	JUDGE_INSTRUCTIONS,
+	assemblyJudgeSchema,
+	assemblyScoreSchema,
+	judgeData,
+	judgeOutputSchema,
+	retrievalRank,
+	scenarioSuiteSchema,
+	scenarioTaskSchema,
+	scoreFromJudge,
+	type AssemblyJudge,
+	type AssemblyScore,
+	type ScenarioSuite,
+	type ScenarioTask,
+} from "./scenario-score.js";
