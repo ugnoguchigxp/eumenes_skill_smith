@@ -7,6 +7,7 @@ import type {
 	Report,
 } from "../contracts/types.js";
 import type { Ports } from "../contracts/ports.js";
+import type { ServiceLimits } from "../contracts/limits.js";
 import { improvementInstructions } from "../instructions/build.js";
 import { bytes, digest, requireThat } from "./identity.js";
 const proposalContent = z.strictObject({
@@ -14,7 +15,10 @@ const proposalContent = z.strictObject({
 	conditions: z.array(z.string().min(1).max(2000)).min(1).max(16),
 	evidence: z.array(z.string().min(1).max(160)).max(32),
 });
-export function createResultOperations<Tx>(p: Ports<Tx>) {
+export function createResultOperations<Tx>(
+	p: Ports<Tx>,
+	limits: ServiceLimits,
+) {
 	const repo = p.repository;
 	function reportResult(tx: Tx, input: unknown, auth: Authority) {
 		const r = resultSchema.parse(input);
@@ -116,14 +120,17 @@ export function createResultOperations<Tx>(p: Ports<Tx>) {
 			report: s.report.input,
 			verification: "実行側の報告。ホストで実証されたという意味ではない",
 		};
-		requireThat(bytes(data) <= 32768, "context_budget_exceeded");
+		requireThat(
+			bytes(data) <= limits.reflectionMaxDataBytes,
+			"context_budget_exceeded",
+		);
 		const response = await p.inference.complete(
 			{
 				system: improvementInstructions,
 				data,
 				schema: z.toJSONSchema(proposalContent),
-				deadlineAt: p.now() + 30000,
-				maxOutputTokens: 1200,
+				deadlineAt: p.now() + limits.reflectionDeadlineMs,
+				maxOutputTokens: limits.reflectionMaxOutputTokens,
 				requestRef: s.reflection.ref,
 			},
 			context.signal,

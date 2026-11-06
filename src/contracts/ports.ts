@@ -1,3 +1,4 @@
+import type { ServiceLimits } from "./limits.js";
 import type {
 	Authority,
 	Build,
@@ -120,6 +121,8 @@ export interface Ports<Tx> {
 	};
 	now(): number;
 	id(): string;
+	/** Optional overrides; omitted fields keep package defaults. */
+	limits?: Partial<ServiceLimits>;
 }
 export interface ExecutionContext {
 	signal: AbortSignal;

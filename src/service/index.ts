@@ -5,6 +5,7 @@ import {
 	requestSchema,
 } from "../contracts/schema.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
+import { resolveServiceLimits } from "../contracts/limits.js";
 import type {
 	Authority,
 	Build,
@@ -20,6 +21,7 @@ import { createResultOperations } from "./results.js";
 
 export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	const repo = p.repository;
+	const limits = resolveServiceLimits(p.limits);
 	function valid(tx: Tx, row: RequestRecord, auth: Authority) {
 		return (
 			auth.permissions.includes("build") &&
@@ -104,7 +106,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			...base,
 			kind: "pending",
 			deadlineAt: row.request.limits.deadlineAt,
-			retryAfterMs: 1000,
+			retryAfterMs: limits.pendingRetryAfterMs,
 		};
 	}
 	function submit(tx: Tx, input: unknown, authority: Authority): Reply {
@@ -123,7 +125,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		}
 		requireThat(
 			request.limits.deadlineAt > p.now() &&
-				request.limits.deadlineAt <= p.now() + 120000,
+				request.limits.deadlineAt <= p.now() + limits.maxSubmitHorizonMs,
 			"invalid_deadline",
 		);
 		if (request.prior?.requestRef) {
@@ -315,7 +317,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			digest: contentDigest(content),
 			content,
 			createdAt: p.now(),
-			expiresAt: p.now() + 30 * 86400000,
+			expiresAt: p.now() + limits.buildTtlMs,
 			usage: structuredClone(row.usage),
 			revoked: false,
 		};
@@ -377,7 +379,10 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		if (!snapshot) return read((tx) => get(tx, ref, auth));
 		const external = snapshot.content.dependencies.filter((e) => e.external);
 		if (external.length) {
-			const bounded = AbortSignal.any([signal, AbortSignal.timeout(5000)]);
+			const bounded = AbortSignal.any([
+				signal,
+				AbortSignal.timeout(limits.deliveryValidateTimeoutMs),
+			]);
 			try {
 				if (!p.source || !(await p.source.validate(external, bounded)))
 					return {
@@ -472,6 +477,6 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				: false;
 		},
 		pending: (tx: Tx, limit = 100) => repo.openRequests(tx, limit),
-		...createResultOperations(p),
+		...createResultOperations(p, limits),
 	};
 }
