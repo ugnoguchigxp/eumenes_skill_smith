@@ -31,7 +31,7 @@ export const requestSchema = z
 		}),
 		limits: z.strictObject({
 			deadlineAt: z.number().int().positive(),
-			modelCalls: z.number().int().min(1).max(2),
+			modelCalls: z.number().int().min(1).max(4),
 			sourceCalls: z.number().int().min(1).max(32),
 			candidates: z.number().int().min(1).max(20),
 			documents: z.number().int().min(1).max(8),
@@ -97,6 +97,20 @@ export const decisionSchema = z.discriminatedUnion("kind", [
 ]);
 export type Decision = z.infer<typeof decisionSchema>;
 export type ReadyDecision = Extract<Decision, { kind: "ready" }>;
+/** Model turns during build: terminal decisions plus budgeted control actions. */
+export const modelTurnSchema = z.discriminatedUnion("kind", [
+	ready,
+	z.strictObject({
+		kind: z.literal("needs_input"),
+		missing: z.array(text).min(1).max(16),
+	}),
+	z.strictObject({ kind: z.literal("unavailable"), code: id }),
+	z.strictObject({
+		kind: z.literal("re_search"),
+		query: z.string().trim().min(1).max(512),
+	}),
+]);
+export type ModelTurn = z.infer<typeof modelTurnSchema>;
 export const resultSchema = z.strictObject({
 	reportId: id,
 	buildRef: id,

@@ -1,8 +1,8 @@
 import { z } from "zod";
 import {
 	CONTRACT,
-	decisionSchema,
 	evidenceSchema,
+	modelTurnSchema,
 	sourceSearchSchema,
 } from "../contracts/schema.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
@@ -153,162 +153,224 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		return f();
 	};
-	const local = await call(() =>
-		ports.registry.search(
-			request.task.goal,
-			r.authority,
-			request.limits.candidates,
-			signal,
-		),
-	);
-	const externalUsed = !!(ports.source && r.authority.searchTask);
-	const reported = externalUsed
-		? sourceSearchSchema.safeParse(
-				await call(() =>
-					ports.source!.search(
-						r.authority.searchTask!,
-						request.limits.candidates,
-						signal,
-					),
-				),
-			)
-		: null;
-	requireThat(!reported || reported.success, "source_contract_violation");
-	const sourceSearch = reported?.data;
-	const external = sourceSearch?.cards ?? [];
-	requireThat(
-		external.every((c) => c.external) &&
-			(sourceSearch?.warnings ?? []).every((w) =>
-				w.refs.every((ref) => external.some((c) => c.ref === ref)),
-			),
-		"source_contract_violation",
-	);
-	// Interleave by rank; first seen wins so a same-rank local card beats external.
-	const combined: typeof local = [];
-	const seenRefs = new Set<string>();
-	for (let rank = 0; rank < Math.max(local.length, external.length); rank++) {
-		for (const card of [local[rank], external[rank]]) {
-			if (!card || seenRefs.has(card.ref)) continue;
-			seenRefs.add(card.ref);
-			combined.push(card);
-		}
-	}
-	const candidates = combined.slice(0, request.limits.candidates);
-	const evidence: Evidence[] = [];
 	const read = (ref: string, external: boolean) =>
 		external
 			? (requireThat(ports.source, "source_unavailable"),
 				ports.source.get(ref, signal))
 			: ports.registry.read(ref, r.authority, signal);
-	for (const card of candidates.slice(0, request.limits.documents)) {
-		const document = parseEvidence(
-			await call(() => read(card.ref, card.external)),
-		);
-		requireThat(
-			document.ref === card.ref &&
-				digest(document.version) === digest(card.version) &&
-				document.external === card.external &&
-				document.scope === card.scope,
-			"source_revoked",
-		);
-		evidence.push(document);
-	}
-	// Follow published successors of superseded documents within the same
-	// document and call budgets. Outcomes are structural facts for inference;
-	// whether a successor fits the task is left to the model.
-	const successors: {
-		ref: string;
-		successor: string;
-		outcome: "fetched" | "unavailable" | "error" | "cycle" | "limit";
-	}[] = [];
-	const seen = new Set(evidence.map((e) => e.ref));
-	for (let i = 0; i < evidence.length; i++) {
-		const e = evidence[i]!;
-		if (e.status !== "superseded" || !e.supersededBy) continue;
-		const successor = e.supersededBy;
-		if (seen.has(successor)) {
-			successors.push({ ref: e.ref, successor, outcome: "cycle" });
-			continue;
-		}
-		if (evidence.length >= request.limits.documents) {
-			successors.push({ ref: e.ref, successor, outcome: "limit" });
-			continue;
-		}
-		seen.add(successor);
-		checkpoint();
-		await reserve("sourceCalls");
-		checkpoint();
-		let next: Evidence | null = null;
-		try {
-			next = parseEvidence(await read(successor, e.external));
-		} catch (error) {
-			signal.throwIfAborted();
-			if (error instanceof SkillSmithError) throw error;
-			// Transport/fetch failure: not the same as a returned unusable successor.
-			successors.push({ ref: e.ref, successor, outcome: "error" });
-			continue;
-		}
-		if (
-			next.ref === successor &&
-			next.external === e.external &&
-			(next.scope === "shared" || next.scope === r.authority.scope)
-		) {
-			evidence.push(next);
-			successors.push({ ref: e.ref, successor, outcome: "fetched" });
-		} else successors.push({ ref: e.ref, successor, outcome: "unavailable" });
-	}
-	const candidateCards = candidates.map((e) => ({
-		ref: e.ref,
-		version: e.version,
-		title: e.title,
-		status: e.status,
-		complete: e.complete,
-		external: e.external,
-		scope: e.scope,
-	}));
-	const data = {
-		task: request.task,
-		environment: request.environment,
-		audience: request.audience,
-		policy: p.policy,
-		candidateCards,
-		untrustedEvidence: evidence,
-		search: {
-			externalUsed,
-			...(successors.length ? { successors } : {}),
-			// Source-reported, untrusted. Only structure is checked; meaning is left to inference.
-			...(sourceSearch
-				? {
-						external: {
-							warnings: sourceSearch.warnings.filter((w) =>
-								w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
-							),
-							omittedWarnings: sourceSearch.warnings.filter(
-								(w) =>
-									!w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
-							).length,
-							degraded: sourceSearch.degraded,
-							truncated: sourceSearch.truncated,
-						},
-					}
-				: {}),
-		},
+
+	type SearchState = {
+		candidates: {
+			ref: string;
+			version: Evidence["version"];
+			title: string;
+			status: Evidence["status"];
+			complete: boolean;
+			external: boolean;
+			scope: string;
+			supersededBy?: string;
+		}[];
+		evidence: Evidence[];
+		successors: {
+			ref: string;
+			successor: string;
+			outcome: "fetched" | "unavailable" | "error" | "cycle" | "limit";
+		}[];
+		externalUsed: boolean;
+		sourceSearch: z.infer<typeof sourceSearchSchema> | undefined;
+		reSearch: { query: string; cardsAdded: number }[];
 	};
-	requireThat(
-		bytes(data) + new TextEncoder().encode(buildInstructions).length <
-			request.limits.inputBytes,
-		"context_budget_exceeded",
-	);
+
+	async function runSearch(
+		queryLocal: string,
+		queryExternal: string | undefined,
+		state: SearchState | null,
+	): Promise<SearchState> {
+		const local = await call(() =>
+			ports.registry.search(
+				queryLocal,
+				r.authority,
+				request.limits.candidates,
+				signal,
+			),
+		);
+		const externalUsed = !!(ports.source && r.authority.searchTask);
+		const reported =
+			externalUsed && queryExternal
+				? sourceSearchSchema.safeParse(
+						await call(() =>
+							ports.source!.search(
+								queryExternal,
+								request.limits.candidates,
+								signal,
+							),
+						),
+					)
+				: null;
+		requireThat(!reported || reported.success, "source_contract_violation");
+		const sourceSearch = reported?.data;
+		const external = sourceSearch?.cards ?? [];
+		requireThat(
+			external.every((c) => c.external) &&
+				(sourceSearch?.warnings ?? []).every((w) =>
+					w.refs.every((ref) => external.some((c) => c.ref === ref)),
+				),
+			"source_contract_violation",
+		);
+		const combined: typeof local = [];
+		const seenRefs = new Set<string>(state?.candidates.map((c) => c.ref) ?? []);
+		let cardsAdded = 0;
+		for (let rank = 0; rank < Math.max(local.length, external.length); rank++) {
+			for (const card of [local[rank], external[rank]]) {
+				if (!card || seenRefs.has(card.ref)) continue;
+				seenRefs.add(card.ref);
+				combined.push(card);
+				cardsAdded++;
+			}
+		}
+		const prior = state?.candidates ?? [];
+		const candidates = [...prior, ...combined].slice(
+			0,
+			request.limits.candidates,
+		);
+		const evidence = state?.evidence ? [...state.evidence] : [];
+		const seenEvidence = new Set(evidence.map((e) => e.ref));
+		for (const card of candidates) {
+			if (evidence.length >= request.limits.documents) break;
+			if (seenEvidence.has(card.ref)) continue;
+			const document = parseEvidence(
+				await call(() => read(card.ref, card.external)),
+			);
+			requireThat(
+				document.ref === card.ref &&
+					digest(document.version) === digest(card.version) &&
+					document.external === card.external &&
+					document.scope === card.scope,
+				"source_revoked",
+			);
+			evidence.push(document);
+			seenEvidence.add(document.ref);
+		}
+		const successors = state?.successors ? [...state.successors] : [];
+		const seen = new Set(evidence.map((e) => e.ref));
+		for (let i = 0; i < evidence.length; i++) {
+			const e = evidence[i]!;
+			if (e.status !== "superseded" || !e.supersededBy) continue;
+			const successor = e.supersededBy;
+			if (successors.some((s) => s.ref === e.ref && s.successor === successor))
+				continue;
+			if (seen.has(successor)) {
+				successors.push({ ref: e.ref, successor, outcome: "cycle" });
+				continue;
+			}
+			if (evidence.length >= request.limits.documents) {
+				successors.push({ ref: e.ref, successor, outcome: "limit" });
+				continue;
+			}
+			seen.add(successor);
+			checkpoint();
+			await reserve("sourceCalls");
+			checkpoint();
+			let next: Evidence | null = null;
+			try {
+				next = parseEvidence(await read(successor, e.external));
+			} catch (error) {
+				signal.throwIfAborted();
+				if (error instanceof SkillSmithError) throw error;
+				successors.push({ ref: e.ref, successor, outcome: "error" });
+				continue;
+			}
+			if (
+				next.ref === successor &&
+				next.external === e.external &&
+				(next.scope === "shared" || next.scope === r.authority.scope)
+			) {
+				evidence.push(next);
+				successors.push({ ref: e.ref, successor, outcome: "fetched" });
+			} else successors.push({ ref: e.ref, successor, outcome: "unavailable" });
+		}
+		const reSearch = state?.reSearch ? [...state.reSearch] : [];
+		if (state)
+			reSearch.push({ query: queryExternal ?? queryLocal, cardsAdded });
+		return {
+			candidates,
+			evidence,
+			successors,
+			externalUsed,
+			sourceSearch,
+			reSearch,
+		};
+	}
+
+	let state = await runSearch(request.task.goal, r.authority.searchTask, null);
+
+	const buildData = () => {
+		const {
+			candidates,
+			evidence,
+			successors,
+			externalUsed,
+			sourceSearch,
+			reSearch,
+		} = state;
+		const candidateCards = candidates.map((e) => ({
+			ref: e.ref,
+			version: e.version,
+			title: e.title,
+			status: e.status,
+			complete: e.complete,
+			external: e.external,
+			scope: e.scope,
+		}));
+		return {
+			task: request.task,
+			environment: request.environment,
+			audience: request.audience,
+			policy: p.policy,
+			candidateCards,
+			untrustedEvidence: evidence,
+			search: {
+				externalUsed,
+				...(successors.length ? { successors } : {}),
+				...(reSearch.length ? { reSearch } : {}),
+				...(sourceSearch
+					? {
+							external: {
+								warnings: sourceSearch.warnings.filter((w) =>
+									w.refs.every((ref) => candidates.some((c) => c.ref === ref)),
+								),
+								omittedWarnings: sourceSearch.warnings.filter(
+									(w) =>
+										!w.refs.every((ref) =>
+											candidates.some((c) => c.ref === ref),
+										),
+								).length,
+								degraded: sourceSearch.degraded,
+								truncated: sourceSearch.truncated,
+							},
+						}
+					: {}),
+			},
+		};
+	};
+
 	let decision: Decision | undefined, receipt: string | undefined;
 	const tokens = { input: 0 as number | null, output: 0 as number | null };
 	let repair: { code: string; instruction: string } | undefined;
 	let lastFailure = "invalid_model_output";
+	let reSearchUsed = false;
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
+		const data = repair ? { ...buildData(), repair } : buildData();
+		requireThat(
+			bytes(data) + new TextEncoder().encode(buildInstructions).length <
+				request.limits.inputBytes,
+			"context_budget_exceeded",
+		);
 		const modelInput = {
 			system: buildInstructions,
-			data: repair ? { ...data, repair } : data,
-			schema: z.toJSONSchema(decisionSchema),
+			data,
+			schema: z.toJSONSchema(modelTurnSchema),
 			deadlineAt: request.limits.deadlineAt,
 			maxOutputTokens: request.limits.outputTokens,
 			requestRef: r.ref,
@@ -329,7 +391,7 @@ export async function executeBuild<Tx>(
 			tokens.output === null || answer.outputTokens === null
 				? null
 				: tokens.output + answer.outputTokens;
-		const parsed = decisionSchema.safeParse(answer.value);
+		const parsed = modelTurnSchema.safeParse(answer.value);
 		if (!parsed.success) {
 			lastFailure = "invalid_model_output";
 			repair = {
@@ -339,12 +401,28 @@ export async function executeBuild<Tx>(
 			};
 			continue;
 		}
-		const candidate = parsed.data;
+		const turn = parsed.data;
+		if (turn.kind === "re_search") {
+			if (reSearchUsed) {
+				lastFailure = "invalid_model_output";
+				repair = {
+					code: "re_search_limit",
+					instruction:
+						"再検索は予算内で1回まで。ready・needs_input・unavailableのいずれかを返す。",
+				};
+				continue;
+			}
+			reSearchUsed = true;
+			repair = undefined;
+			state = await runSearch(turn.query, turn.query, state);
+			continue;
+		}
+		const candidate = turn;
 		if (candidate.kind === "ready") {
 			try {
-				checkDecision(candidate, evidence, p);
+				checkDecision(candidate, state.evidence, p);
 				requireThat(
-					bytes(buildContent(p, candidate, evidence)) <=
+					bytes(buildContent(p, candidate, state.evidence)) <=
 						request.limits.outputBytes,
 					"context_budget_exceeded",
 				);
@@ -371,7 +449,7 @@ export async function executeBuild<Tx>(
 	checkpoint();
 	requireThat(decision, lastFailure);
 	if (decision.kind === "ready") {
-		const selected = evidence.filter(
+		const selected = state.evidence.filter(
 			(e) => decision.sourceRefs.includes(e.ref) && e.external,
 		);
 		if (selected.length)
@@ -382,8 +460,9 @@ export async function executeBuild<Tx>(
 			);
 	}
 	checkpoint();
-	return { decision, evidence, receipt, tokens };
+	return { decision, evidence: state.evidence, receipt, tokens };
 }
+
 export function failureCode(error: unknown) {
 	if (error instanceof SkillSmithError) return error.code;
 	return "build_failed";
