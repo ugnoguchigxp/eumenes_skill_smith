@@ -582,3 +582,45 @@ P1〜P3は外部依存をfixtureへ差し替えて進められる。P4の基盤�
 - [ContextStillの公開認証境界](../contextStill/api/domains/mcp/controller/index.ts)
 
 参照したのはローカルの文書・コードであり、稼働中サービスの受入記録ではない。外部仕様の最新版を確認する作業は各接続の実装前に行う。
+
+## 21. Final Agent Skills artifact (2026-11-07)
+
+Internal build decisions and persisted Build remain JSON; the final consumable artifact is
+`<name>/SKILL.md`, rendered deterministically after normal build assembly and authorization.
+There was no SKILL.md/frontmatter renderer: `buildContent` already materializes reuse from
+the selected evidence body (rather than empty decision.sections), applies adapt patches,
+and assembles ordered compose/provisional sections with policy, acceptance, constraints,
+verification and assumptions. This existing assembly is the source of the Markdown body.
+
+The renderer adds YAML `name` and `description`, Markdown instructions/checks, provenance
+and explicit assumption status. It never infers task meaning, calls an LLM, searches again,
+or changes the model instructions/schema, judges, completeness checks, budgets or auth.
+Names derive mechanically from task goal plus a stable digest; non-ASCII-only goals use
+a digest fallback. An explicit valid name may be supplied for exports; it must equal the
+parent directory. Description states what the task is and when to use the artifact, bounded
+to the spec's 1024 characters. Only name/description are frontmatter fields; sourceRefs,
+strategy and assumptions live in the body. Spec: https://agentskills.io/specification.
+
+Ready reuse/adapt/compose/provisional all render. Reuse must contain the already-resolved
+source body; compose retains section order and lists sourceRefs as provenance (not proof
+of verification). Provisional/exploratory is visibly marked unverified and provisional,
+with assumptions and the recorded verification instructions, never promoted to official.
+Needs_input produces no artifact and retains its question; other non-ready replies also
+produce no artifact. Final ready replies expose the artifact beside the internal build.
+CLI and full scenario eval write one `<name>/SKILL.md` per successful task under their
+output directory, even if judge replay is pending; retrieval-only writes none. Artifacts
+do not count as judge scores or alter the existing eval complete decision.
+
+The validator parses YAML (not ad hoc string splitting), rejects invalid/missing fields,
+invalid names or directory mismatch and empty bodies; it validates format, not instruction
+quality, provenance truth, prompt safety or successful execution. Rendering preserves the
+existing body and cannot bundle source-referenced auxiliary assets absent from records.
+No downstream JSON-vs-SKILL.md agent task outcome improvement is measured by this change.
+
+Compatibility refinement: the existing JSON transport Reply schema and get/getValidated
+remain unchanged as internal/lifecycle APIs. New `getSkillValidated` is the final
+artifact delivery boundary (ready adds skill beside build), used by the example build
+host/CLI and scenario runner. This keeps persisted content, judge inputs and historical
+record digests byte-equivalent while making final build delivery Markdown. It reuses
+getValidated authorization and enforces the same request outputBytes on the final reply.
+Existing integrations must select this new final boundary when distributing skills.

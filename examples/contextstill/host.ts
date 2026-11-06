@@ -188,7 +188,7 @@ export function createExampleHost(
 				},
 			});
 			write(() => service.settle(db, prepared, result, authority));
-			return service.getValidated(
+			return service.getSkillValidated(
 				pending.requestRef,
 				authority,
 				(op) => op(db),

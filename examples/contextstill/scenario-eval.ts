@@ -1,3 +1,4 @@
+import { writeSkillArtifact } from "./skill-output.js";
 // Scenario eval (proposal 26/35/32): typed three-axis suite, two modes; absent uses a dedicated judge.
 // Usage:
 //   bun examples/contextstill/scenario-eval.ts                       # full: legacy 5-task suite, LLM judge replay
@@ -234,7 +235,15 @@ try {
 				"examples/contextstill/scenarios/judge-records.json",
 			),
 		);
+		const skillFiles: { taskId: string; path: string }[] = [];
 		const result = await runFull({
+			onSkill: (taskId, skill) => {
+				const path = writeSkillArtifact(
+					resolve(reportDir, "skills", `task-${encodeURIComponent(taskId)}`),
+					skill,
+				);
+				skillFiles.push({ taskId, path });
+			},
 			tasks,
 			source,
 			assemblyMode,
@@ -263,6 +272,7 @@ try {
 		}
 		const report = {
 			ok: result.complete,
+			skillFiles,
 			mode: "full",
 			suite: suite.id,
 			searchProfile,

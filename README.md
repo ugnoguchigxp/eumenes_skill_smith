@@ -53,3 +53,25 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 - [本体接続契約](integration-contract.md)
 - [実装と検証の記録](implementation.md)
 - [文書レビューの記録](review.md)
+
+### Final SKILL.md artifacts
+
+Build decisions and saved Build records stay JSON. For final delivery use
+`service.getSkillValidated(ref, authority, read, signal)`: ready returns the internal
+build plus `skill: { name, path, content }`. `skill.content` is the consumable Agent
+Skills Markdown document; write it at `skill.path` (`<name>/SKILL.md`). Existing
+`get`/`getValidated` remain internal JSON/lifecycle transport APIs for compatibility.
+Non-ready responses preserve their question/error and have no skill artifact.
+
+`renderSkillMarkdown(build.content, optionalName)` and `validateSkillMarkdown(text,
+optionalDirectoryName)` are public deterministic helpers. Rendering needs the assembled
+build, not bare decision JSON: reuse sections are empty, but the assembled body includes
+the selected source skill. Provenance and assumption status are Markdown body data.
+Provisional instructions are explicitly unverified; validation checks format, not quality.
+
+`bun run context:task DB QUERY RECORDS OUTPUT_DIR` writes a successful build to
+`OUTPUT_DIR/<name>/SKILL.md` (default `data/contextstill/task-output`) and reports
+`skillFile`. Full scenario evaluation writes each completed build to
+`--output-dir/skills/task-<encoded-task-id>/<name>/SKILL.md` and reports `skillFiles`,
+even if judge inference is pending. Retrieval-only emits no skills. Existing output
+byte limits still apply. Downstream agent task improvement versus JSON is unmeasured.

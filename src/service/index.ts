@@ -1,3 +1,4 @@
+import { renderSkillMarkdown, type SkillReply } from "./skill-markdown.js";
 import {
 	CONTRACT,
 	authoritySchema,
@@ -465,6 +466,37 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 					};
 		});
 	}
+	/** Final artifact boundary; legacy JSON transport remains unchanged. */
+	async function getSkillValidated(
+		ref: string,
+		auth: Authority,
+		read: <T>(op: (tx: Tx) => T) => T,
+		signal: AbortSignal,
+	): Promise<SkillReply> {
+		const result = await getValidated(ref, auth, read, signal);
+		if (result.kind !== "ready") return result;
+		const final = {
+			...result,
+			skill: renderSkillMarkdown(result.build.content),
+		};
+		return read((tx) => {
+			const row = repo.request(tx, ref);
+			if (!row || !valid(tx, row, auth) || !usable(tx, result.build, auth))
+				return {
+					contractVersion: CONTRACT,
+					kind: "rejected",
+					code: "permission_denied",
+				};
+			return bytes(final) <= row.request.limits.outputBytes
+				? final
+				: {
+						contractVersion: CONTRACT,
+						requestRef: ref,
+						kind: "unavailable",
+						code: "context_budget_exceeded",
+					};
+		});
+	}
 	function bindUse(
 		tx: Tx,
 		ref: string,
@@ -517,6 +549,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		settle,
 		get,
 		getValidated,
+		getSkillValidated,
 		bindUse,
 		forget,
 		execute: (s: Prepared, c: ExecutionContext) => executeBuild(p, s, c),

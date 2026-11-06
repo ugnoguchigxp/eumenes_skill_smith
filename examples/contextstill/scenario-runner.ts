@@ -1,3 +1,4 @@
+import type { SkillArtifact } from "../../src/index.js";
 // Proposal 26/35: two-mode scenario runner (retrieval-only / full) over typed three-axis tasks.
 // retrieval-only calls SourcePort.search only and never creates inference; it invents no 0-10 scores.
 // Proposal 35: per-task isolation, status vocabulary, run identity, record provenance, measured usage only.
@@ -320,6 +321,8 @@ export interface RunUsage {
 }
 
 export interface FullDeps {
+	/** Completed build artifacts, independent of judge availability. */
+	onSkill?: (taskId: string, skill: SkillArtifact) => void;
 	tasks: NormalizedScenarioTask[];
 	source: SourcePort;
 	/** Called per task for build and judge; records decide replay. */
@@ -487,6 +490,7 @@ export async function runFull(deps: FullDeps) {
 					continue;
 				}
 				const ready = reply.kind === "ready" ? reply : null;
+				if (ready) deps.onSkill?.(task.id, ready.skill);
 				const usedRefs = ready ? ready.build.content.decision.sourceRefs : [];
 				const strategy = ready ? ready.build.content.decision.strategy : null;
 				const sections = ready ? ready.build.content.decision.sections : [];

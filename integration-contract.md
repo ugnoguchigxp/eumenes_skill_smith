@@ -103,3 +103,38 @@ Request の `usage` は modelCalls／sourceCalls に加え、観測済みの inp
 現在のコアは通常の同条件キャッシュを再利用する。管理者が検証した適用関係の永続的な登録とパラメータ契約、正式Skillのscope・公開・切戻し・消去はP6で接続する。保持期限の保守・job終端との照合・本体の忘却journal再適用はP4で接続する。これらの管理契約が未検証の間、正式公開を有効にしない。
 
 MCPの認可、Claude Code／Codex SDKの対象版と本文読込、実接続受入はP7／P8で確認する。開発会話のMCPが利用できることを、製品接続の成立とは扱わない。強い外部即時失効は現在のsnapshot保証とは別の依存として残す。
+
+## 5. Final SKILL.md output contract (2026-11-07)
+
+- `ready` delivery includes `skill: { name, path, content }`, with path exactly
+  `<name>/SKILL.md` and content a validated Agent Skills document. `build` remains the
+  internal JSON record for lifecycle/evaluation; its digest/schema are unchanged.
+- Render only after the existing scope/revocation/external revalidation gates. Existing
+  output-byte limits still apply to the delivered reply; do not raise or bypass them.
+- Renderer input is the fully assembled Build.content, not raw decision.sections.
+  Reuse therefore embeds the referenced source body, adapt embeds applied patches, and
+  compose/provisional retain ordered sections. All sourceRefs are listed as provenance.
+- Provisional is explicitly unverified; retain recorded assumptions (mandatory/resolved)
+  and verification instructions. Do not manufacture evidence, official status or results.
+- `needs_input` retains missing/questions and emits no SKILL.md; likewise unavailable,
+  rejected, pending, expired, cancelled. No extra inference or source calls occur.
+- Names use a deterministic goal slug (or `skill` fallback) plus content-independent goal
+  digest, max 64 chars, lowercase kebab-case; explicit export names are validated.
+  Description = task-goal statement plus use trigger, max 1024 chars.
+- YAML frontmatter uses only required spec fields name/description. Provenance and
+  assumptions are Markdown body data. The structural validator also checks directory
+  equality, name/description length, allowed fields and nonempty Markdown body.
+- CLI `context:task` accepts an optional fourth positional output directory (after DB,
+  query, records). Full `context:eval-scenarios --output-dir DIR` writes
+  `DIR/skills/task-<encoded-task-id>/<name>/SKILL.md`; task-id is a safe encoded path component.
+  Each file path is reported; non-ready tasks do not write artifacts. Judge pending does
+  not suppress a completed build artifact and does not change the eval complete checks.
+- Format tests and recorded sample replay do not measure downstream agent task outcomes.
+
+Compatibility refinement: the existing JSON transport Reply schema and get/getValidated
+remain unchanged as internal/lifecycle APIs. New `getSkillValidated` is the final
+artifact delivery boundary (ready adds skill beside build), used by the example build
+host/CLI and scenario runner. This keeps persisted content, judge inputs and historical
+record digests byte-equivalent while making final build delivery Markdown. It reuses
+getValidated authorization and enforces the same request outputBytes on the final reply.
+Existing integrations must select this new final boundary when distributing skills.

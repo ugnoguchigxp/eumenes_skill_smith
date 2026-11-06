@@ -1,5 +1,6 @@
+import { writeSkillArtifact } from "./skill-output.js";
 // Exports the exact build inference task for a live provider (Grok Bot) and replays its record.
-// Usage: bun run context:task [db] [query] [records.json]
+// Usage: bun run context:task [db] [query] [records.json] [output-dir]
 // Writes data/contextstill/inference-task.json (git-ignored; may contain copied knowledge bodies).
 import "../../scripts/test-preload.js";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -30,12 +31,23 @@ const host = createExampleHost(
 );
 try {
 	const reply = await host.run().catch((e: Error) => ({ kind: e.message }));
+	const skillFile =
+		reply.kind === "ready" && "skill" in reply
+			? writeSkillArtifact(
+					resolve(process.argv[5] ?? "data/contextstill/task-output"),
+					reply.skill,
+				)
+			: null;
 	const out = resolve("data/contextstill/inference-task.json");
 	mkdirSync(resolve("data/contextstill"), { recursive: true });
 	if (tasks.length) writeFileSync(out, JSON.stringify(tasks.at(-1), null, 2));
 	console.log(
 		JSON.stringify({
 			status: reply.kind,
+			skillFile,
+			...(reply.kind === "needs_input" && "missing" in reply
+				? { missing: reply.missing }
+				: {}),
 			taskFile: tasks.length ? out : null,
 			inputDigest: tasks.at(-1)?.inputDigest ?? null,
 			records: records.length,
