@@ -1,4 +1,4 @@
-// Scenario eval (proposal 26/35): typed three-axis suite, two modes.
+// Scenario eval (proposal 26/35/32): typed three-axis suite, two modes; absent uses a dedicated judge.
 // Usage:
 //   bun examples/contextstill/scenario-eval.ts                       # full: legacy 5-task suite, LLM judge replay
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
@@ -246,6 +246,7 @@ try {
 			statuses: result.statuses,
 			scores: result.scores,
 			composeScores: result.composeScores,
+			absentScores: result.absentScores,
 			evidenceSupply,
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,

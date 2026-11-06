@@ -15,6 +15,12 @@ import {
 	oracleEvidenceSource,
 	type EvidenceSupply,
 } from "./compose-isolation.js";
+import {
+	ABSENT_JUDGE_INSTRUCTIONS,
+	absentJudgeSchema,
+	absentJudgeOutputSchema,
+	absentJudgeDigests,
+} from "./absent-isolation.js";
 import type {
 	InferenceTask,
 	RecordContext,
@@ -209,6 +215,9 @@ export interface RunIdentity {
 	evidenceSupply: EvidenceSupply;
 	composeJudgeInstructionsDigest: string;
 	composeJudgeSchemaDigest: string;
+	/** Proposal 32 absent-axis judge; additive identity fields. */
+	absentJudgeInstructionsDigest: string;
+	absentJudgeSchemaDigest: string;
 	/** Proposals 28/29 opt-in; records with and without it must not mix. */
 	queryReformulation: QueryReformulation;
 	reformulationInstructionsDigest: string | null;
@@ -251,6 +260,7 @@ export function buildEvalIdentity(input: {
 		searchProfile: input.searchProfile,
 		evidenceSupply: input.evidenceSupply ?? "natural",
 		...composeJudgeDigests(),
+		...absentJudgeDigests(),
 		assemblyMode,
 		queryReformulation,
 		...(queryReformulation === "on"
@@ -329,6 +339,13 @@ export async function runFull(deps: FullDeps) {
 		coverage: number;
 		coherence: number;
 		conflictHandling: number;
+		actionability: number;
+	}[] = [];
+	const absentScores: {
+		taskId: string;
+		boundedExploration: number;
+		inventsOfficialSkill: boolean;
+		claimsVerified: boolean;
 		actionability: number;
 	}[] = [];
 	let evalEvidenceGetCalls = 0;
@@ -469,6 +486,7 @@ export async function runFull(deps: FullDeps) {
 				);
 				try {
 					const compose = task.axis === "compose";
+					const absent = task.axis === "absent";
 					// Judge-only ground truth documents; never inserted into builder task/data.
 					const referenceEvidence = [];
 					if (compose)
@@ -497,13 +515,27 @@ export async function runFull(deps: FullDeps) {
 					});
 					const judged = await judge.complete(
 						{
-							system: compose ? COMPOSE_JUDGE_INSTRUCTIONS : JUDGE_INSTRUCTIONS,
-							data: compose
-								? { ...data, evidenceSupply, referenceEvidence }
-								: data,
-							schema: compose ? composeJudgeOutputSchema : judgeOutputSchema,
+							system: absent
+								? ABSENT_JUDGE_INSTRUCTIONS
+								: compose
+									? COMPOSE_JUDGE_INSTRUCTIONS
+									: JUDGE_INSTRUCTIONS,
+							data: absent
+								? {
+										...data,
+										// Watch-list only; not gold and never sent to the builder.
+										nearestFalseFriendRefs: task.nearestFalseFriendRefs,
+									}
+								: compose
+									? { ...data, evidenceSupply, referenceEvidence }
+									: data,
+							schema: absent
+								? absentJudgeOutputSchema
+								: compose
+									? composeJudgeOutputSchema
+									: judgeOutputSchema,
 							requestRef: `scenario-judge:${task.id}`,
-							maxOutputTokens: compose ? 1200 : 400,
+							maxOutputTokens: absent || compose ? 1200 : 400,
 							deadlineAt: fixedDeadline,
 						},
 						new AbortController().signal,
@@ -511,7 +543,11 @@ export async function runFull(deps: FullDeps) {
 					judgeInferenceTasks += judgeTasks.length;
 					provenance.judgeRecordPresent = true;
 					const parsed = (
-						compose ? composeJudgeSchema : assemblyJudgeSchema
+						absent
+							? absentJudgeSchema
+							: compose
+								? composeJudgeSchema
+								: assemblyJudgeSchema
 					).safeParse(judged.value);
 					if (!parsed.success) {
 						status(
@@ -527,6 +563,16 @@ export async function runFull(deps: FullDeps) {
 							coverage: detailed.coverage,
 							coherence: detailed.coherence,
 							conflictHandling: detailed.conflictHandling,
+							actionability: detailed.actionability,
+						});
+					}
+					if (absent) {
+						const detailed = absentJudgeSchema.parse(judged.value);
+						absentScores.push({
+							taskId: task.id,
+							boundedExploration: detailed.boundedExploration,
+							inventsOfficialSkill: detailed.inventsOfficialSkill,
+							claimsVerified: detailed.claimsVerified,
 							actionability: detailed.actionability,
 						});
 					}
@@ -582,6 +628,7 @@ export async function runFull(deps: FullDeps) {
 		complete,
 		evidenceSupply,
 		composeScores,
+		absentScores,
 		statuses,
 		scores,
 		pendingBuild,
