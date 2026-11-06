@@ -12,13 +12,28 @@ import type { SourcePort } from "./source.js";
 type Inference = Ports<unknown>["inference"];
 
 export type QueryReformulation = "off" | "on" | "multi";
+export type QueryReformulationMode = QueryReformulation | "auto";
 
-/** Strict CLI parsing; omitted means off (default search path unchanged). */
-export function parseQueryReformulation(argv: string[]): QueryReformulation {
+/** Hiragana, Katakana (incl. halfwidth via NFKC) or Han anywhere in the string. */
+export function containsJapanese(text: string): boolean {
+	return /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u.test(
+		text.normalize("NFKC"),
+	);
+}
+
+/** Strict CLI parsing; omitted means auto (reformulate only Japanese searchTasks). */
+export function parseQueryReformulation(
+	argv: string[],
+): QueryReformulationMode {
 	const index = argv.indexOf("--query-reformulation");
-	if (index < 0) return "off";
+	if (index < 0) return "auto";
 	const value = argv[index + 1];
-	if (value !== "off" && value !== "on" && value !== "multi")
+	if (
+		value !== "off" &&
+		value !== "on" &&
+		value !== "multi" &&
+		value !== "auto"
+	)
 		throw new Error(`unknown --query-reformulation ${value ?? "(missing)"}`);
 	return value;
 }
@@ -106,6 +121,27 @@ export function createReformulatingSource(
 			if (!parsed.success) throw new Error("reformulation_output_invalid");
 			options.onTrace?.({ searchTask, queryToSource: parsed.data.query });
 			return inner.search(parsed.data.query, limit, signal);
+		},
+		get: (ref, signal) => inner.get(ref, signal),
+		validate: (refs, signal) => inner.validate(refs, signal),
+	};
+}
+
+/**
+ * Product default: routes a searchTask through the reformulating source only when it contains
+ * Japanese script; otherwise the inner source receives the searchTask unchanged.
+ */
+export function createAutoReformulatingSource(
+	inner: SourcePort,
+	reformulating: SourcePort,
+	onFire?: () => void,
+): SourcePort {
+	return {
+		search: (searchTask, limit, signal) => {
+			if (!containsJapanese(searchTask))
+				return inner.search(searchTask, limit, signal);
+			onFire?.();
+			return reformulating.search(searchTask, limit, signal);
 		},
 		get: (ref, signal) => inner.get(ref, signal),
 		validate: (refs, signal) => inner.validate(refs, signal),

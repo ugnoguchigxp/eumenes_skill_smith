@@ -1,0 +1,836 @@
+{
+	"ok": true,
+	"mode": "retrieval-only",
+	"suite": "seed-three-axis",
+	"searchProfile": "bm25",
+	"assemblyMode": "baseline",
+	"queryReformulationMode": "auto",
+	"identity": {
+		"searchProfile": "bm25",
+		"evidenceSupply": "natural",
+		"composeJudgeInstructionsDigest": "7a15c9e46fc5056fdb49985477c92dba7ee4e69e3048b041e4c600f48be880c9",
+		"composeJudgeSchemaDigest": "690316653fc3fcc9085c8f16bac54f6f5305f3f342a10bae81ec5cbc2664312a",
+		"absentJudgeInstructionsDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"absentJudgeSchemaDigest": "d1e42b4b1e9f00f3daed7d98a5c81261fd4b2302bd72990af56de991523194fb",
+		"abstentionContrast": "off",
+		"abstentionJudgeInstructionsDigest": "c6755635a7adfb17faca6c5f6064d69c3b3214f5a2e684098038a44e505d850a",
+		"abstentionJudgeSchemaDigest": "e65c7a3a3d04eb197d531db37719e2cf0cd00773dbf7e823cbd82e7c3bc75c10",
+		"assemblyMode": "baseline",
+		"queryReformulation": "off",
+		"reformulationInstructionsDigest": null,
+		"reformulationSchemaDigest": null,
+		"suiteId": "seed-three-axis",
+		"suiteFileSha256": "cacf331c0c3097a47a952389eee9ecbaaa3f0955b383c2da019ffdbf6f4fd7ad",
+		"seedFileSha256": "1692429bf512716131d8300805c5e251e6dccfc3af19248f0c182ea6fabdf611",
+		"buildInstructionsDigest": "af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
+		"judgeInstructionsDigest": "7f67d5d99fbc04711cb18f7050a837f0e1de10ede1055ce1f6067cfd77643fb5",
+		"judgeSchemaDigest": "0cf30854257bed6dcb85209ecbe8a83aae71f6495fa0c8077196ac590bccc154"
+	},
+	"filter": {
+		"axis": "retrieval",
+		"queryStyle": "en"
+	},
+	"inferenceCalls": 0,
+	"summary": {
+		"retrieval:en": {
+			"tasks": 16,
+			"allRequiredHitAt8": {
+				"hit": 13,
+				"of": 16,
+				"notApplicable": 0
+			},
+			"allRequiredHitAt20Diagnostic": {
+				"hit": 14,
+				"of": 16,
+				"notApplicable": 0
+			}
+		}
+	},
+	"rows": [
+		{
+			"taskId": "retrieval-23jihz-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_c6smbwblg4ym4j4unfwy4kfe7i",
+					"title": "Collect Bounded File Hunks After Final Target Discovery"
+				},
+				{
+					"ref": "contextstill:kn_qgvdmzsttl6kn3wuky6drjaahq",
+					"title": "Verify a toggled feature before release with both states"
+				},
+				{
+					"ref": "contextstill:kn_nwxnv4cuhbniktthfvlyfvo7xu",
+					"title": "Keep secret masking independent from login requirements"
+				},
+				{
+					"ref": "contextstill:kn_nlvi5dccag5ivma5fivgmffwtu",
+					"title": "Roll out API-key auth without breaking browser clients"
+				},
+				{
+					"ref": "contextstill:kn_6orueu4h5xneofw42lecczwn7m",
+					"title": "Separate shared app settings from local secret runtime settings"
+				},
+				{
+					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+					"title": "Never deploy to production without explicit release intent"
+				},
+				{
+					"ref": "contextstill:kn_cufhjcfsk5tafmvqjn43ymsz2u",
+					"title": "API route tests should build an OpenAPIHono app with errorHandler and mocked auth/service modules"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-224yjd-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_224yjdcormlnvyfo2xg2z2r76y",
+					"title": "Test in a Production Clone"
+				},
+				{
+					"ref": "contextstill:kn_efyysmlo7bcesd3lttwftzfbje",
+					"title": "Never deploy to production without explicit release intent"
+				},
+				{
+					"ref": "contextstill:kn_fr72uuzrcpwualcow266cl7v4i",
+					"title": "Never execute database migrations against the wrong environment"
+				},
+				{
+					"ref": "contextstill:kn_nmqv627vgpu5kxbzcvk7d6bdza",
+					"title": "Never drop production database objects without backup and approval"
+				},
+				{
+					"ref": "contextstill:kn_g2ipytu6ejrvv6uwe3x2wsmrtq",
+					"title": "production deploy は environment protection で保護する"
+				},
+				{
+					"ref": "contextstill:kn_4okqcqjvtn67vlszhenrma3y4u",
+					"title": "Package Release Smoke Test with Packed Artifacts"
+				},
+				{
+					"ref": "contextstill:kn_5oluuhkkislziqz4npidgfakqq",
+					"title": "Use the abstraction layer to improve testing"
+				},
+				{
+					"ref": "contextstill:kn_gupnxlxzscijkotigmyady4jde",
+					"title": "E2E rate-limit bypasses must be disabled in production"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-4pfru3-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"rank": 3
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_d7py4dvm7urbcrw36ityewsjam",
+					"title": "Redact Unknown Evidence Payloads Recursively"
+				},
+				{
+					"ref": "contextstill:kn_g5exem4z3zylataykg4rhjff74",
+					"title": "Redact extension failure summaries before persisting or emitting them"
+				},
+				{
+					"ref": "contextstill:kn_4pfru3jvuz4rv4wrifrwnhhzsq",
+					"title": "Never print secrets into logs or responses"
+				},
+				{
+					"ref": "contextstill:kn_yn5aj443tevcvjw5c2esq242um",
+					"title": "Separate secret redaction from project anonymization before durable knowledge storage"
+				},
+				{
+					"ref": "contextstill:kn_yl5pf7qiy3furchp7h5grf2ibm",
+					"title": "\"redaction 変更時は保存前データとシリアライズ結果を対象ファイル単位で検証する\""
+				},
+				{
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+					"title": "Never weaken redaction to simplify debugging"
+				},
+				{
+					"ref": "contextstill:kn_23jihzqdoyhkbsnfs7a6p4brjq",
+					"title": "Never commit secrets or local environment files"
+				},
+				{
+					"ref": "contextstill:kn_zat3hedvbjw6q4wsa7h7ruzbvi",
+					"title": "Redact extension failure summaries at decision and status boundaries"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-b2qt6s-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_b2qt6sghacbcake5ccaxubfjn4",
+					"title": "Fix pre-commit verify failures instead of bypassing hooks"
+				},
+				{
+					"ref": "contextstill:kn_k5vblesqtq5tkvmbfedtz72yfe",
+					"title": "pre-commit hook 失敗時はbypassせず原因を修正して再検証する"
+				},
+				{
+					"ref": "contextstill:kn_mrln46ezxnallnx527vnhdwsta",
+					"title": "Verify And Clean Persistent Test Data Before Commit"
+				},
+				{
+					"ref": "contextstill:kn_rno5qgwemriv4xmxmf5kqelq34",
+					"title": "Preserve Diagnostics And Evidence Across LLM Parse Or Repair Failures"
+				},
+				{
+					"ref": "contextstill:kn_sc46k7dvczksy3tzyv5qzh23fi",
+					"title": "Hook failure triage before push"
+				},
+				{
+					"ref": "contextstill:kn_ykixfzsudmjvtocw4nnsljclca",
+					"title": "Verify before committing despite commit hooks"
+				},
+				{
+					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+					"title": "Use gofmt for Standard Go Code Formatting"
+				},
+				{
+					"ref": "contextstill:kn_kjwkmdpv56tat62phvduae7cyu",
+					"title": "Incremental gate validation for large changes"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-fmgsj5-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_fmgsj57jiuhjoljjw5gyq4j4wi",
+					"title": "Use 4-Space Indentation"
+				},
+				{
+					"ref": "contextstill:kn_tb7usr577ratzzba6ji64c57wa",
+					"title": "Use Standard Continuation Layouts"
+				},
+				{
+					"ref": "contextstill:kn_7ezsb3l4onzwj6zth65wbebqhm",
+					"title": "Use gofmt for Standard Go Code Formatting"
+				},
+				{
+					"ref": "contextstill:kn_okl22skmy22r4cdt6mkotawpxy",
+					"title": "MCP review should default to OpenAI when no explicit reviewer preference is provided"
+				},
+				{
+					"ref": "contextstill:kn_lhg64hsszcedofi5ibi5iw3kfa",
+					"title": "Use SQLite-compatible timestamp strings for textual time comparisons"
+				},
+				{
+					"ref": "contextstill:kn_a5mgu25a2vzfxed3jjzemhaatm",
+					"title": "Validate source existence before enqueuing source-backed candidate jobs"
+				},
+				{
+					"ref": "contextstill:kn_a56mbmv5kr3uywzgvtr372xuaq",
+					"title": "Every table in a database design schema must have exactly one primary key column"
+				},
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+					"title": "Use ABI3 for resilient Python extension builds"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-2jrkfp-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"rank": 8
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_msj5xtbap2cw2pygg42dthb7mu",
+					"title": "Review dirty worktrees by preserving unrelated user changes"
+				},
+				{
+					"ref": "contextstill:kn_x3afiezii4r4fwh67o6itwxv7q",
+					"title": "Use the WPT GitHub repo for source history and change discussion"
+				},
+				{
+					"ref": "contextstill:kn_zv4jynuzzvokxtk3t5y5jz5ka4",
+					"title": "Stage Only Task-Owned Hunks In Dirty Worktrees"
+				},
+				{
+					"ref": "contextstill:kn_siggfereq5j2w6hsoxmrzjdi5q",
+					"title": "本番運用で local state を使わず、remote backend と state locking を使う"
+				},
+				{
+					"ref": "contextstill:kn_3vha3kvsu7nyo7imgq3bnc3yje",
+					"title": "Starter Template Registry Ref の実在確認と更新手順"
+				},
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+					"title": "Never run destructive git reset without explicit user request"
+				},
+				{
+					"ref": "contextstill:kn_ysen7wgcm2rxoni4hip6hkttfm",
+					"title": "Mixed worktree commit hygiene procedure"
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-2xsdjd-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+					"rank": 2
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_nwxnv4cuhbniktthfvlyfvo7xu",
+					"title": "Keep secret masking independent from login requirements"
+				},
+				{
+					"ref": "contextstill:kn_2xsdjdgqdigcmtmbs3mdais7fy",
+					"title": "Never weaken redaction to simplify debugging"
+				},
+				{
+					"ref": "contextstill:kn_roqnzdetq5rmv77ied4bn7sxbe",
+					"title": "Local-first app authentication boundary decision"
+				},
+				{
+					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
+					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
+				},
+				{
+					"ref": "contextstill:kn_ui7vs2eknrdrx7rfxk2i5qmbza",
+					"title": "Runtime ledger persistence failures must not terminate the agent runtime"
+				},
+				{
+					"ref": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
+					"title": "Decouple E2E agent runs from external providers"
+				},
+				{
+					"ref": "contextstill:kn_btstvm75h2gi6zvb7rumiihf5e",
+					"title": "Deleting with no selected event should be a no-op"
+				},
+				{
+					"ref": "contextstill:kn_5vkm6cinuxpytp437end4qptrq",
+					"title": "Carry task context across all observable runtime events"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-4f7bhy-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4f7bhy5cdkhvrxfvhe2fdecd2y",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_ivxnqnvwsqozsicrfiup3s7yne",
+					"title": "Use Plays as tactical exercises"
+				},
+				{
+					"ref": "contextstill:kn_ab37pcxyo7pk6mj5o66ai4sfxi",
+					"title": "Add regression coverage for stale-host replacement during stdio adapter restart"
+				},
+				{
+					"ref": "contextstill:kn_jqvscgwaueipoodh3r7kd7r5fq",
+					"title": "Archive executions, not parent work items, after human acceptance"
+				},
+				{
+					"ref": "contextstill:kn_mf4erdnwkqq5lz45ip5oo2usx4",
+					"title": "Expose structured LLM state updates through narrow tools"
+				},
+				{
+					"ref": "contextstill:kn_vqu2virippfzmbiwulk4u5w7kq",
+					"title": "SQLite-backed CRUD API for Todo lists"
+				},
+				{
+					"ref": "contextstill:kn_iscgtmgck45wntoukocly3wdjm",
+					"title": "hook execution repository は eventId::ruleId を重複判定キーにする"
+				},
+				{
+					"ref": "contextstill:kn_pbwqxnzhkhbaw5klxymm5k6z34",
+					"title": "Branch by Abstraction migration workflow"
+				},
+				{
+					"ref": "contextstill:kn_s7v6bpplemx2ha2da47bl7ezne",
+					"title": "Confirm admin reset actions through a selected-user state before executing"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-6j6ieb-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_6j6iebm5evsoxzeed73ujpqhp4",
+					"title": "Never run destructive git reset without explicit user request"
+				},
+				{
+					"ref": "contextstill:kn_sxlgrwnwj5ztsz7tjqiwtr2b5q",
+					"title": "Harden destructive integration tests"
+				},
+				{
+					"ref": "contextstill:kn_lhqok4hieo3nyojl5razeoxjfi",
+					"title": "Never proceed autonomously when user intent conflicts with destructive impact"
+				},
+				{
+					"ref": "contextstill:kn_2jrkfpnfr77fpprl5bvrjkj53y",
+					"title": "Never force push without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_h7g67yrq2m562wlfst2vxodyae",
+					"title": "Gate Destructive UI Actions Through Review Jobs"
+				},
+				{
+					"ref": "contextstill:kn_e7yopouabiwuv52iv3vyab6n74",
+					"title": "Make destructive CLI commands preview-first"
+				},
+				{
+					"ref": "contextstill:kn_wd6omdogekjaqwuimm3f2a25jq",
+					"title": "Never chmod or chown broad paths without explicit approval"
+				},
+				{
+					"ref": "contextstill:kn_hb5xqnzj4xplnlmo237o4ybdlm",
+					"title": "Never broaden permissions without explicit security rationale"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-7bkw42-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_7bkw42yoelvnnep2tmhiiodxuu",
+					"title": "Never modify generated lockfiles casually"
+				},
+				{
+					"ref": "contextstill:kn_pjhwg6qbxjxtkw4gsuvsrqpcqm",
+					"title": "Never delete unrelated user files"
+				},
+				{
+					"ref": "contextstill:kn_dj5ljtdovpluaigu6jxcbuzrhq",
+					"title": "Reject code-change report or stop before an edit tool is attempted"
+				},
+				{
+					"ref": "contextstill:kn_k4ddtfqpwx74y7pofxmachmw7i",
+					"title": "Never discard uncommitted changes without inspecting ownership"
+				},
+				{
+					"ref": "contextstill:kn_5qtvjewocccypjfonrrue4jtve",
+					"title": "Prepare future external decision advice with manual operation first"
+				},
+				{
+					"ref": "contextstill:kn_outadf53gu2p4bz7xi4muhizxe",
+					"title": "Keep generated regression files in a temp workspace"
+				},
+				{
+					"ref": "contextstill:kn_xd6ddu32bhyo4nditwmclke3ym",
+					"title": "Reduce agent loops by classifying failure modes early, not by weakening guards"
+				},
+				{
+					"ref": "contextstill:kn_45yojpykhg7gclkt5udcz7md4a",
+					"title": "Never overwrite files outside the requested task scope"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-6tvplq-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_6tvplqdva3nz7x3mcnywyjctbi",
+					"title": "Smoke tests must not implicitly call live providers"
+				},
+				{
+					"ref": "contextstill:kn_coqykvbggpvwbkplqaendlritm",
+					"title": "Separate fast verification from operational integration gates"
+				},
+				{
+					"ref": "contextstill:kn_2xdq47sfa2eqjgldb3efipygmu",
+					"title": "Decouple E2E agent runs from external providers"
+				},
+				{
+					"ref": "contextstill:kn_bc3azd3hfycocnlzlwslgvsvqq",
+					"title": "Integrate native desktop checks into the main verification gate deliberately"
+				},
+				{
+					"ref": "contextstill:kn_fqivbtuqfo5tbvipxda4otj52i",
+					"title": "Never make live network calls that mutate external systems without approval"
+				},
+				{
+					"ref": "contextstill:kn_yleexjzbyeocagqkaqmv4ytv7m",
+					"title": "Verify desktop packaging with real app launch, not artifact existence"
+				},
+				{
+					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
+					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
+				},
+				{
+					"ref": "contextstill:kn_xqljbwwlutby4yj2t2vdrzyvdi",
+					"title": "SQLite-backed queue state should be observable across processes"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-3codmb-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_3codmb7qiibcmoicukynrht4ni",
+					"title": "Use ABI3 for resilient Python extension builds"
+				},
+				{
+					"ref": "contextstill:kn_3qgz6tuaezt67jkfafjjjcz234",
+					"title": "Use versioned WSTG links"
+				},
+				{
+					"ref": "contextstill:kn_w2rk4lmwao3vkxlkqvakopcqka",
+					"title": "Python wheel hygiene check for mixed Rust/Python packages"
+				},
+				{
+					"ref": "contextstill:kn_aw2a6uhisa4x4trf5xezl5u3vy",
+					"title": "再現性のために version と lockfile を明示し、CI で同じ build コマンドを使う"
+				},
+				{
+					"ref": "contextstill:kn_j3qjabesgqs5hcovecprwfv2h4",
+					"title": "探索評価追加後の検証手順"
+				},
+				{
+					"ref": "contextstill:kn_cens4pzkaqi4gzdzcoz2ywtoam",
+					"title": "useReducer は更新ルールが複雑なときに使う"
+				},
+				{
+					"ref": "contextstill:kn_cih6r4woie43sfmjgyyi54yowq",
+					"title": "Keep CodeBlockNodeView.tsx as a thin switch after moving view implementations out"
+				},
+				{
+					"ref": "contextstill:kn_zxkn7u4fe5lnnknpmfhbcgnd2i",
+					"title": "Cast nullable parameters inside jsonb_build_object SQL fragments"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-76iqn7-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_76iqn75jaxztthpe57wrm3jmyu",
+					"title": "Use OpenAPI as the API description format"
+				},
+				{
+					"ref": "contextstill:kn_cufhjcfsk5tafmvqjn43ymsz2u",
+					"title": "API route tests should build an OpenAPIHono app with errorHandler and mocked auth/service modules"
+				},
+				{
+					"ref": "contextstill:kn_yfykne3xylzuqj7q7ebijj4ds4",
+					"title": "BBS thread ID validation requires UUID format in Zod schema"
+				},
+				{
+					"ref": "contextstill:kn_wmehl3qaoxn2v426lwfxnnv6my",
+					"title": "Keep generated OpenAPI in sync with runtime code"
+				},
+				{
+					"ref": "contextstill:kn_og7oohjejsedck5v4jv4l3cuwy",
+					"title": "Add route coverage for new API endpoints by mocking services and asserting request/response behavior"
+				},
+				{
+					"ref": "contextstill:kn_wfkaz6jegdwyzq5rz3xnb6njly",
+					"title": "OpenAPI 契約テストの CI 必須化ルール"
+				},
+				{
+					"ref": "contextstill:kn_6pq2nkp3puxqwpkimofh7tcyzq",
+					"title": "Protected API contract tests should cover both authenticated success and unauthenticated 401 cases"
+				},
+				{
+					"ref": "contextstill:kn_axo7q4qlsngtba7c4pvr74ax5y",
+					"title": "Health and preflight endpoints must remain reachable when API auth is enabled"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-25hf6t-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"rank": 1
+				}
+			],
+			"allRequiredHitAt8": true,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_25hf6tj7tqswvlm6gg3ejfwlge",
+					"title": "DataFrame to JSON: Normalize NaN to None for Valid JSON Output"
+				},
+				{
+					"ref": "contextstill:kn_wjl352buyeaotngj4clnes2f4e",
+					"title": "DataFrame to JSON conversion: Convert NaN to None to prevent serialization errors"
+				},
+				{
+					"ref": "contextstill:kn_3n4na7afzvplxphxttx2id7ma4",
+					"title": "Provider optional field null handling rule"
+				},
+				{
+					"ref": "contextstill:kn_2revkzphhcgynp7euwgq7ofl3y",
+					"title": "Code change workflows require an edit tool before stop/report"
+				},
+				{
+					"ref": "contextstill:kn_zxkn7u4fe5lnnknpmfhbcgnd2i",
+					"title": "Cast nullable parameters inside jsonb_build_object SQL fragments"
+				},
+				{
+					"ref": "contextstill:kn_gt7llz3nuhrn64tpgscyliqiwy",
+					"title": "Normalize SQL-ish database schema inputs before validation"
+				},
+				{
+					"ref": "contextstill:kn_e7thdlx5xvuvwhdmnxfci4smpa",
+					"title": "_prepare_analysis_inputs では欠損処理・外れ値除去・エンコード・正規化を前処理設定に従って行う"
+				},
+				{
+					"ref": "contextstill:kn_jlvooebz47lxmfacm42zli3quy",
+					"title": "Normalize bare SQLite paths for libsql clients"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-2o2vt6-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_2o2vt6tyjlkjmfovkpnt7rcvcm",
+					"rank": 13
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": true,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_agxos3pgmnfy6w6nkrfmfuezh4",
+					"title": "Reset dirty E2E server state before final verification"
+				},
+				{
+					"ref": "contextstill:kn_tauvrjyl2r4jkfazeqkzv5cwwy",
+					"title": "MCP review tool は workspaceRoot を解決し、dotenv/config/plugin/LLM を順に組み立ててから実行する"
+				},
+				{
+					"ref": "contextstill:kn_up6um7divlsfvs7dykbgvebx2i",
+					"title": "Restore environment variables in tests instead of deleting them unconditionally"
+				},
+				{
+					"ref": "contextstill:kn_iaf76ijz6kekk5cghgous54sii",
+					"title": "MCP 設定移行時に旧 stdio プロセスの残留を放置しない"
+				},
+				{
+					"ref": "contextstill:kn_5z4xfsjk37zgyhn5q2s26nzfta",
+					"title": "DiffGuard MCP サーバーのセットアップと起動"
+				},
+				{
+					"ref": "contextstill:kn_qxy5et6svtql6n3wum43ygp3ni",
+					"title": "Diagnose local env validation failures by importing backend config without ambient env"
+				},
+				{
+					"ref": "contextstill:kn_eukijg3xgmywa7jf4i27txosma",
+					"title": "MCP service の workspace .env が process.env に漏れないことを統合テストで確認する"
+				},
+				{
+					"ref": "contextstill:kn_j7xqrgnw4sa5sztykj5irnpsqi",
+					"title": "Non-admin users must be redirected away from the admin tab"
+				}
+			]
+		},
+		{
+			"taskId": "retrieval-4eev36-en",
+			"axis": "retrieval",
+			"queryStyle": "en",
+			"tags": [],
+			"ranks": [
+				{
+					"ref": "contextstill:kn_4eev36krjgtot3bopqmb6rhjtu",
+					"rank": null
+				}
+			],
+			"allRequiredHitAt8": false,
+			"allRequiredHitAt20Diagnostic": false,
+			"falseFriendsInTop8": [],
+			"top8": [
+				{
+					"ref": "contextstill:kn_axaiqkled7kn3twxhlcufazori",
+					"title": "Codex SDK Laneにおける履歴処理：内部Rewrite禁止とCompact Projectionの採用"
+				},
+				{
+					"ref": "contextstill:kn_tbymo677b7acydl2y6rpfvkjra",
+					"title": "Keep native/API provider debugging inside the native/API lane"
+				},
+				{
+					"ref": "contextstill:kn_n6iwdwmvqfo2vtzkvc3hmvrvgq",
+					"title": "Never rewrite broad code areas to fix a narrow issue"
+				},
+				{
+					"ref": "contextstill:kn_htmeunk5pb2mn4vebmqrozndbe",
+					"title": "Rewrite target identities during imported event writes"
+				},
+				{
+					"ref": "contextstill:kn_od4cvlo3pydww4wff2qwhtabo4",
+					"title": "UI primitives should be built as thin React wrappers around native elements with cn-based class merging and data-slot markers"
+				},
+				{
+					"ref": "contextstill:kn_iwx47yb36y4xodaureinybxtvi",
+					"title": "Render patch output as a code block in chat cards"
+				},
+				{
+					"ref": "contextstill:kn_xueoqmpfi25q45jvdgn4vgamqa",
+					"title": "Smell-Matched Refactoring"
+				},
+				{
+					"ref": "contextstill:kn_szbavix6rkzti5p4oek6njglym",
+					"title": "Render chat markdown with safe theme-aware styling"
+				}
+			]
+		}
+	],
+	"note": "Search ranks only (bm25-ordered fixture search, limit 20). No LLM scores. hit@20 is diagnostic. Absent axis recall is N/A. Not production ContextStill quality."
+}

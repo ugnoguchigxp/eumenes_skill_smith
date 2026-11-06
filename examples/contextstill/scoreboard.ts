@@ -88,6 +88,16 @@ export const SLICES: SliceDef[] = [
 	},
 ];
 
+/** Product default (bm25 + exact-title pin + reformulation auto) retrieval-only readout; separate
+ * from the historical handle/bm25 (reformulation off) columns. No SKILL scores replayed here. */
+export const DEFAULT_RETRIEVAL_FILES: Record<string, string> = {
+	"retrieval/original": "retrieval-original-default.json",
+	"retrieval/exact": "retrieval-exact-default.json",
+	"retrieval/en": "retrieval-en-default.json",
+	"retrieval/jp": "retrieval-jp-default.json",
+	compose: "retrieval-compose-default.json",
+};
+
 interface ScoreRow {
 	taskId: string;
 	score: number | null;
@@ -215,6 +225,31 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 				},
 			};
 		});
+		const df = DEFAULT_RETRIEVAL_FILES[def.id];
+		const dr = df ? read(dir, df) : null;
+		let productDefault = null;
+		if (dr) {
+			if (dr.searchProfile !== "bm25" || dr.queryReformulationMode !== "auto")
+				throw new Error(`${df}: not product default`);
+			const rows = (dr.rows ?? []).filter((r: any) =>
+				taskIds.includes(r.taskId),
+			);
+			if (rows.length !== taskIds.length)
+				throw new Error(`${df}: ${rows.length}/${taskIds.length} rows`);
+			productDefault = {
+				retrievalSource: df,
+				queryReformulation: dr.identity?.queryReformulation ?? null,
+				hitAt8: {
+					hit: rows.filter((r: any) => r.allRequiredHitAt8).length,
+					of: rows.length,
+				},
+				hitAt20Diagnostic: {
+					hit: rows.filter((r: any) => r.allRequiredHitAt20Diagnostic).length,
+					of: rows.length,
+				},
+				meanScore: null,
+			};
+		}
 		return {
 			id: def.id,
 			axis: def.axis,
@@ -222,6 +257,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 			label: def.label,
 			n: taskIds.length,
 			cells,
+			productDefault,
 		};
 	});
 	return {
@@ -262,6 +298,15 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 		);
 		L.push(`${s.id.padEnd(20)} ${String(s.n).padStart(2)} | ${c[0]} | ${c[1]}`);
 	}
+	L.push("");
+	L.push(
+		"製品既定（bm25・題名一致固定・日本語のみ言い換え auto）検索のみ。SKILL点は未再生。",
+	);
+	for (const s of b.slices)
+		if (s.productDefault)
+			L.push(
+				`${s.id.padEnd(20)} ${String(s.n).padStart(2)} | hit@8 ${frac(s.productDefault.hitAt8)} (hit@20 ${frac(s.productDefault.hitAt20Diagnostic)})  言い換え ${s.productDefault.queryReformulation}`,
+			);
 	L.push("");
 	for (const s of b.slices) {
 		for (const c of s.cells) {

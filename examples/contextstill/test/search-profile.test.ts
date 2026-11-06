@@ -2,16 +2,46 @@ import { expect, test } from "bun:test";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { searchArgs } from "../contracts.js";
+import { ContextStillFixture } from "../database.js";
 import { parseSearchProfile } from "../scenario-runner.js";
 import { handle, item, setup } from "./fixture.js";
 
-test("profile parsing is strict and defaults to handle", () => {
-	expect(parseSearchProfile([])).toBe("handle");
+test("profile parsing is strict and defaults to bm25", () => {
+	expect(parseSearchProfile([])).toBe("bm25");
 	expect(parseSearchProfile(["--search-profile", "handle"])).toBe("handle");
 	expect(parseSearchProfile(["--search-profile", "bm25"])).toBe("bm25");
 	for (const args of [["--search-profile"], ["--search-profile", "semantic"]])
 		expect(() => parseSearchProfile(args)).toThrow("unknown --search-profile");
-	expect(setup().fixture.searchProfile).toBe("handle");
+	const f = setup();
+	const omitted = new ContextStillFixture(f.path);
+	expect(omitted.searchProfile).toBe("bm25");
+	omitted.close();
+});
+
+test("exact title pin moves the title match to rank 1 in both profiles", () => {
+	const docs = [
+		item({ handle: handle("a"), title: "Cache invalidation needle notes" }),
+		item({ handle: handle("b"), title: "needle needle needle cache" }),
+		item({ handle: handle("z"), title: "Cache Needle" }),
+	];
+	for (const profile of ["handle", "bm25"] as const) {
+		const f = setup(docs, profile);
+		const results = f.fixture
+			.search(searchArgs.parse({ query: " ｃache needle ", limit: 20 }))
+			.results.map((r) => r.handle);
+		expect(results[0]).toBe(handle("z"));
+		expect(new Set(results).size).toBe(results.length);
+		expect(results.sort()).toEqual(["a", "b", "z"].map((x) => handle(x)));
+		// A hidden item with the same title is not pinned.
+		f.put(item({ handle: handle("y"), title: "Cache Needle" }), {
+			retrieval: "hidden",
+		});
+		expect(
+			f.fixture
+				.search(searchArgs.parse({ query: "Cache Needle", limit: 20 }))
+				.results.map((r) => r.handle),
+		).not.toContain(handle("y"));
+	}
 });
 
 test("BM25 changes only order: score, handle ties, then short-only hits", () => {
@@ -75,10 +105,10 @@ test("CLI reports the selected profile, including the omitted-flag baseline", ()
 		]);
 		expect(result.exitCode).toBe(0);
 		const report = JSON.parse(result.stdout.toString());
-		expect(report.searchProfile).toBe(profile ?? "handle");
+		expect(report.searchProfile).toBe(profile ?? "bm25");
 		expect(report.inferenceCalls).toBe(0);
 		expect(
 			JSON.parse(readFileSync(report.reportFile, "utf8")).searchProfile,
-		).toBe(profile ?? "handle");
+		).toBe(profile ?? "bm25");
 	}
 });

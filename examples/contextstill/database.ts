@@ -21,12 +21,18 @@ const visible =
 	"scope='global' AND space IN ('coding','general','eumenes') AND status!='retracted' AND (retrieval='searchable' OR status='superseded')";
 const searchable = `${visible} AND status='active' AND retrieval='searchable'`;
 const cut = (text: string, count: number) => [...text].slice(0, count).join("");
+/** Title-pin key: NFKC + trim + ASCII-only case fold. No fuzzy match, no translation. */
+export const titleKey = (text: string) =>
+	text
+		.normalize("NFKC")
+		.trim()
+		.replace(/[A-Z]/g, (c) => c.toLowerCase());
 
 export class ContextStillFixture {
 	private readonly db: Database;
 	constructor(
 		path: string,
-		readonly searchProfile: SearchProfile = "handle",
+		readonly searchProfile: SearchProfile = "bm25",
 	) {
 		this.db = new Database(path, { readonly: true, strict: true });
 		try {
@@ -169,6 +175,8 @@ export class ContextStillFixture {
 			);
 			params.push(...args.types);
 		}
+		const baseFilters = [...filters];
+		const baseParams = [...params];
 		const matches: string[] = [];
 		if (long.length) {
 			matches.push(
@@ -184,7 +192,19 @@ export class ContextStillFixture {
 		}
 		if (matches.length) filters.push(`(${matches.join(" OR ")})`);
 		else filters.push("0"); // No wildcard scan for empty/one-character input.
-		// Keep the match universe identical; only the optional profile changes order.
+		// Title pin (both profiles): items whose normalized title equals the query, under the
+		// same kind/space/type/searchable filters, go first (handle tiebreak); no duplicates.
+		const key = titleKey(args.query);
+		const pinned = key
+			? this.db
+					.query<Row & { title: string }, (string | number)[]>(
+						`SELECT handle,revision,document_json,title FROM items WHERE ${baseFilters.join(" AND ")} ORDER BY handle`,
+					)
+					.all(...baseParams)
+					.filter((r) => titleKey(r.title) === key)
+					.slice(0, args.limit)
+			: [];
+		// Keep the match universe identical; only the profile changes order.
 		// Materialize scores in the FTS MATCH context (FTS5 auxiliary function requirement).
 		const ranked = this.searchProfile === "bm25" && long.length > 0;
 		const prefix = ranked
@@ -197,12 +217,17 @@ export class ContextStillFixture {
 			? "scores.score IS NULL, scores.score ASC, handle"
 			: "handle";
 		if (ranked) params.unshift(ftsQuery);
-		params.push(args.limit);
-		const rows = this.db
-			.query<Row, (string | number)[]>(
-				`${prefix}SELECT handle,revision,document_json FROM items${join} WHERE ${filters.join(" AND ")} ORDER BY ${order} LIMIT ?`,
-			)
-			.all(...params);
+		params.push(args.limit + pinned.length);
+		const pinnedHandles = new Set(pinned.map((r) => r.handle));
+		const rows = [
+			...pinned,
+			...this.db
+				.query<Row, (string | number)[]>(
+					`${prefix}SELECT handle,revision,document_json FROM items${join} WHERE ${filters.join(" AND ")} ORDER BY ${order} LIMIT ?`,
+				)
+				.all(...params)
+				.filter((r) => !pinnedHandles.has(r.handle)),
+		].slice(0, args.limit);
 		const results = rows.map((row, index) => {
 			const d = this.document(row),
 				item = d.item;

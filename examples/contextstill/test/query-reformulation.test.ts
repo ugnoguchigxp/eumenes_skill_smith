@@ -6,6 +6,8 @@ import { expect, test } from "bun:test";
 import { createExampleHost } from "../host.js";
 import {
 	REFORMULATION_INSTRUCTIONS,
+	containsJapanese,
+	createAutoReformulatingSource,
 	createReformulatingSource,
 	parseQueryReformulation,
 	reformulationOutputSchema,
@@ -61,8 +63,8 @@ function echoModel(onInput: (input: unknown) => void, multi = false) {
 	};
 }
 
-test("--query-reformulation is strict and off by default", () => {
-	expect(parseQueryReformulation([])).toBe("off");
+test("--query-reformulation is strict and auto by default", () => {
+	expect(parseQueryReformulation([])).toBe("auto");
 	expect(parseQueryReformulation(["--query-reformulation", "multi"])).toBe(
 		"multi",
 	);
@@ -248,3 +250,49 @@ for (const multi of [false, true]) {
 		expect(pending).toHaveLength(1);
 	});
 }
+
+test("parse: omitted is auto; auto/off/on explicit; unknown errors", () => {
+	expect(parseQueryReformulation([])).toBe("auto");
+	for (const v of ["off", "on", "auto", "multi"] as const)
+		expect(parseQueryReformulation(["--query-reformulation", v])).toBe(v);
+	expect(() => parseQueryReformulation(["--query-reformulation", "x"])).toThrow(
+		"unknown --query-reformulation",
+	);
+});
+
+test("auto fires only on Japanese script and passes only the public searchTask", async () => {
+	expect(containsJapanese("APIキー")).toBe(true);
+	expect(containsJapanese("ｶﾀｶﾅ")).toBe(true);
+	expect(containsJapanese("検証")).toBe(true);
+	expect(containsJapanese("Never commit secrets")).toBe(false);
+	const f = setup();
+	const inputs: unknown[] = [];
+	const db: string[] = [];
+	let fired = 0;
+	const inner = {
+		...f.source,
+		search: (q: string, l: number, s: AbortSignal) => (
+			db.push(q),
+			f.source.search(q, l, s)
+		),
+	};
+	const source = createAutoReformulatingSource(
+		inner,
+		createReformulatingSource(
+			inner,
+			echoModel((i) => inputs.push(i)),
+			{ deadlineAt },
+		),
+		() => fired++,
+	);
+	await source.search("Never commit secrets", 8, f.signal);
+	expect(fired).toBe(0);
+	expect(inputs).toEqual([]);
+	await source.search(`APIキー ${CANARY}`, 8, f.signal);
+	expect(fired).toBe(1);
+	expect(inputs).toHaveLength(1);
+	expect((inputs[0] as { data: unknown }).data).toEqual({
+		searchTask: `APIキー ${CANARY}`,
+	});
+	expect(db).toEqual(["Never commit secrets", `APIキー ${CANARY}`]);
+});

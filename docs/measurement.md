@@ -27,6 +27,16 @@ retrieval 区分には hit@8（主）と hit@20（診断用）を出します。
 
 compact、oracle、言い換え on / multi、弃権対比は診断用で、この表には入れません。
 
+## 製品既定（mock 例のみ）
+
+`ContextStillFixture` と scenario-eval のフラグ省略時の既定は次のとおりです。本番 ContextStill の品質を示すものではありません。
+
+- 検索 profile は `bm25`（`--search-profile handle` で従来の handle 順を明示指定できます）。
+- 題名一致の固定: query（searchTask）と題名を NFKC 正規化・前後空白除去・ASCII だけ大文字小文字を同一視して完全一致した Skill を、同じ kind / space / type / searchable の絞り込みを通したうえで先頭に置きます（複数なら handle 順、重複なし）。あいまい一致や翻訳辞書は使いません。handle・bm25 の両 profile に効くため、現行コードの `--search-profile handle` は題名どおり課題で過去の `retrieval-exact-handle.json`（題名固定なし）を再現しません。
+- 言い換え `--query-reformulation off|on|auto|multi` の既定は `auto`。searchTask にひらがな・カタカナ・漢字が含まれるとき（「APIキー」のような混在も含む）だけ、既存の隔離言い換え（proposal 28）を通します。report の `queryReformulationMode` は指定値、`identity.queryReformulation` は実際に 1 件でも言い換えた run なら `on`、なければ `off` です。multi は従来どおり任意で既定オフです。
+
+既定での検索のみ結果は `retrieval-{original|exact|en|jp|compose}-default.json` に置き、scoreboard の 2 列表とは別に「製品既定」として hit@k だけ表示します。既定のもとで SKILL 点は再生していません（未測定）。
+
 ## 点数の扱い
 
 - SKILL 点は LLM 判定による 0〜10 の暫定値で、人手で較正していません。
@@ -35,6 +45,7 @@ compact、oracle、言い換え on / multi、弃権対比は診断用で、こ�
 
 ## 未測定
 
+- 製品既定（bm25・題名固定・言い換え auto）での SKILL 点（全区分）
 - retrieval/exact の BM25 の SKILL 点
 - retrieval/en・jp の SKILL 組み立て点（handle・bm25 とも）
 - absent の BM25 の SKILL 点
@@ -47,4 +58,4 @@ bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/con
   --axis retrieval --query-style {original|exact|en|jp} --search-profile {handle|bm25} --output-dir <dir>
 ```
 
-出力を `examples/contextstill/scenarios/retrieval-{style}-{profile}.json` として置きます。
+過去の 2 列は言い換え off なので、再生成時は `--query-reformulation off` を付けます。出力を `examples/contextstill/scenarios/retrieval-{style}-{profile}.json` として置きます。製品既定はフラグなしで実行し、`retrieval-{style}-default.json` として置きます（jp は `reformulation-records.json` の記録を使います）。

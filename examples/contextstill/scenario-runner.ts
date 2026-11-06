@@ -59,10 +59,10 @@ import {
 
 type Inference = ReturnType<typeof recordedInference>;
 
-/** Strict CLI profile parsing; omitted means the replay-compatible baseline. */
+/** Strict CLI profile parsing; omitted means the product default bm25 (handle stays explicit). */
 export function parseSearchProfile(argv: string[]): SearchProfile {
 	const index = argv.indexOf("--search-profile");
-	if (index < 0) return "handle";
+	if (index < 0) return "bm25";
 	const value = argv[index + 1];
 	if (value !== "handle" && value !== "bm25")
 		throw new Error(`unknown --search-profile ${value ?? "(missing)"}`);

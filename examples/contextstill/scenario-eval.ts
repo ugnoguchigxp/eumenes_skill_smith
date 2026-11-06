@@ -3,10 +3,11 @@
 //   bun examples/contextstill/scenario-eval.ts                       # full: legacy 5-task suite, LLM judge replay
 //   bun examples/contextstill/scenario-eval.ts --retrieval-only --suite examples/contextstill/scenarios/suite-3axis.json
 //   options: --axis retrieval|compose|absent  --query-style original|exact|en|jp  --output-dir dir
-//            --search-profile handle|bm25 (default handle)
+//            --search-profile handle|bm25 (default bm25; exact-title pin applies to both)
 //            --evidence-supply natural|oracle (default natural; oracle is full eval only)
 //            --assembly-mode baseline|compact (default baseline; compact is opt-in, not adopted)
-//            --query-reformulation off|on|multi (default off; proposals 28/29 opt-in, not adopted)
+//            --query-reformulation off|on|auto|multi (default auto: reformulate only Japanese
+//              searchTasks; identity records on if any search fired, else off; multi stays opt-in)
 //            --reformulation-records path (on default: examples/contextstill/scenarios/reformulation-records.json)
 //            multi default: data/contextstill/multi-query-records.json (missing means pending)
 //            --abstention-contrast off|on (default off; proposal 33 opt-in, requires --full)
@@ -28,6 +29,7 @@ import {
 	type InferenceTask,
 } from "./recorded.js";
 import {
+	createAutoReformulatingSource,
 	createReformulatingSource,
 	parseQueryReformulation,
 	type ReformulationTrace,
@@ -106,6 +108,7 @@ const reformulationTraces: (ReformulationTrace | MultiQueryTrace)[] = [];
 let reformulationCalls = 0;
 let reformulationLedger: ReformulationLedger | undefined;
 let source = fixtureSource;
+let autoFired = false;
 if (queryReformulation !== "off") {
 	const records = loadRecords(
 		arg(
@@ -124,7 +127,7 @@ if (queryReformulation !== "off") {
 		queryReformulation === "multi"
 			? createMultiQuerySource
 			: createReformulatingSource;
-	source = wrap(
+	const wrapped = wrap(
 		fixtureSource,
 		recordedInference(records, (item) => {
 			reformulationCalls += 1;
@@ -135,6 +138,12 @@ if (queryReformulation !== "off") {
 			onTrace: (trace) => reformulationTraces.push(trace),
 		},
 	);
+	source =
+		queryReformulation === "auto"
+			? createAutoReformulatingSource(fixtureSource, wrapped, () => {
+					autoFired = true;
+				})
+			: wrapped;
 }
 const pendingReformulation: PendingReformulation[] = [];
 function writePendingReformulation(items: PendingReformulation[]) {
@@ -144,16 +153,24 @@ function writePendingReformulation(items: PendingReformulation[]) {
 	return path;
 }
 const filter = { axis: axis ?? null, queryStyle: queryStyle ?? null };
-const identity = buildEvalIdentity({
-	searchProfile,
-	assemblyMode,
-	suiteId: suite.id,
-	suitePath,
-	seedPath: dbPath,
-	queryReformulation,
-	evidenceSupply,
-	abstentionContrast,
-});
+// auto resolves to the condition that actually shaped searches: on if any searchTask fired.
+const effectiveReformulation = () =>
+	queryReformulation === "auto"
+		? autoFired
+			? "on"
+			: "off"
+		: queryReformulation;
+const identityFor = () =>
+	buildEvalIdentity({
+		searchProfile,
+		assemblyMode,
+		suiteId: suite.id,
+		suitePath,
+		seedPath: dbPath,
+		queryReformulation: effectiveReformulation(),
+		evidenceSupply,
+		abstentionContrast,
+	});
 
 try {
 	mkdirSync(reportDir, { recursive: true });
@@ -174,11 +191,12 @@ try {
 			suite: suite.id,
 			searchProfile,
 			assemblyMode,
-			identity,
+			queryReformulationMode: queryReformulation,
+			identity: identityFor(),
 			filter,
 			// Search-only: zero build/judge inference; reformulation calls are counted separately.
 			inferenceCalls: 0,
-			...(queryReformulation !== "off"
+			...(effectiveReformulation() !== "off"
 				? {
 						reformulationInferenceTasks: reformulationCalls,
 						inputTokens: null,
@@ -247,7 +265,8 @@ try {
 			suite: suite.id,
 			searchProfile,
 			assemblyMode,
-			identity,
+			queryReformulationMode: queryReformulation,
+			identity: identityFor(),
 			filter,
 			status: result.complete ? "complete" : "incomplete",
 			tasks: tasks.length,
@@ -266,7 +285,7 @@ try {
 			recordProvenance: result.recordProvenance,
 			usage: result.usage,
 			pendingFiles,
-			...(queryReformulation !== "off" ? { reformulationTraces } : {}),
+			...(effectiveReformulation() !== "off" ? { reformulationTraces } : {}),
 			searchPreview: result.searchPreview,
 			note: result.complete
 				? result.mixedAxes
@@ -281,7 +300,7 @@ try {
 			!queryStyle &&
 			searchProfile === "handle" &&
 			assemblyMode === "baseline" &&
-			queryReformulation === "off" &&
+			effectiveReformulation() === "off" &&
 			evidenceSupply === "natural" &&
 			abstentionContrast === "off";
 		const scorePath = raw("--scores")
