@@ -95,6 +95,8 @@ test("CLI reports the selected profile, including the omitted-flag baseline", ()
 			process.execPath,
 			"examples/contextstill/scenario-eval.ts",
 			"--retrieval-only",
+			"--replay-namespace",
+			"legacy",
 			"--db",
 			f.path,
 			"--suite",

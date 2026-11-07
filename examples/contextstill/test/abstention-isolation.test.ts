@@ -92,7 +92,9 @@ test("original-five handle full replay remains 5 scored / mean 4.2 with flag omi
 			tasks: legacy,
 			source: f.source,
 			createInference: (role, onTask, context) =>
-				recordedInference(role === "build" ? build : judge, onTask, context),
+				recordedInference(role === "build" ? build : judge, onTask, context, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) => build.some((r) => r.inputDigest === d),
 		});
 		expect(result.complete).toBe(true);
@@ -119,7 +121,9 @@ test("flag on reuses build records but never original-five judge records; stays 
 			source: f.source,
 			abstentionContrast: "on",
 			createInference: (role, onTask, context) =>
-				recordedInference(role === "build" ? build : judge, onTask, context),
+				recordedInference(role === "build" ? build : judge, onTask, context, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) => build.some((r) => r.inputDigest === d),
 		});
 		expect(result.complete).toBe(false);
@@ -173,7 +177,9 @@ test("compose natural handle records also stay pending under contrast (no compos
 			source: f.source,
 			abstentionContrast: "on",
 			createInference: (role, onTask, context) =>
-				recordedInference(role === "build" ? build : judge, onTask, context),
+				recordedInference(role === "build" ? build : judge, onTask, context, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) => build.some((r) => r.inputDigest === d),
 		});
 		expect(result.pendingBuild).toEqual([]);

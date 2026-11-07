@@ -746,3 +746,6 @@ Current metered delivery also requires an ExecutionContext. reserveDelivery comm
 
 ## Review M4 — unknown reasoning billing totals (2026-11-07)
 If any separately billed reasoning count is unknown, billableOutputTokens is null even when output is known. observedBillableOutputTokens reports only the sum of observed output and observed separate reasoning (a lower bound, never a complete total). Included reasoning is never counted twice. Build reasoning/cache totals remain observed-only, not claims of complete provider usage.
+
+## Review M5 — semantic vs execution replay IDs (2026-11-07)
+Default replay uses execution.v2: semanticInputId hashes system/data/schema and host replay context; executionConditionId hashes token cap and explicit provider/model/generation settings (unknown values stay null). inputDigest binds both IDs in a versioned namespace. Deadline/requestRef are intentionally excluded as transient routing. Changing cap/settings cannot reuse a current answer. Old digest semantics are available only via explicit legacy namespace (legacy assembly selects it); current runs never silently fall back. Unknown provider model/settings are not proof of independent or identical live execution.

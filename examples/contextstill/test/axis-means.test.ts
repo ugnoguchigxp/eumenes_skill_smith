@@ -31,7 +31,9 @@ async function replay(
 			tasks,
 			source: createFixtureSource(createMcpHandler(db, token), token),
 			createInference: (role, onTask, context) =>
-				recordedInference(role === "build" ? build : judge, onTask, context),
+				recordedInference(role === "build" ? build : judge, onTask, context, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) => build.some((r) => r.inputDigest === d),
 		});
 	} finally {

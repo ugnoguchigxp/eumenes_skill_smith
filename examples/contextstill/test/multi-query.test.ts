@@ -226,6 +226,8 @@ test("CLI replay: single JP BM25 stays 15/16; off keeps old ranks and auto refor
 				process.execPath,
 				"examples/contextstill/scenario-eval.ts",
 				"--retrieval-only",
+				"--replay-namespace",
+				"legacy",
 				"--output-dir",
 				f.dir,
 				"--search-profile",

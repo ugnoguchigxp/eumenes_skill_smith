@@ -34,7 +34,9 @@ test("full runner emits validated build files per task even while judge replay i
 			tasks,
 			source: createFixtureSource(createMcpHandler(fixture, token), token),
 			createInference: (role, onTask) =>
-				recordedInference(role === "build" ? records : [], onTask),
+				recordedInference(role === "build" ? records : [], onTask, undefined, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) =>
 				records.some((r: { inputDigest: string }) => r.inputDigest === d),
 			onSkill: (id, skill) => {

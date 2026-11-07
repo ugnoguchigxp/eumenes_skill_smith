@@ -270,7 +270,9 @@ test("original-five handle full replay remains 5 scored / mean 4.2", async () =>
 			tasks,
 			source: f.source,
 			createInference: (role, onTask, context) =>
-				recordedInference(role === "build" ? build : judge, onTask, context),
+				recordedInference(role === "build" ? build : judge, onTask, context, {
+					namespace: "legacy",
+				}),
 			hasBuildRecord: (d) => build.some((r) => r.inputDigest === d),
 		});
 		expect(result.evidenceSupply).toBe("natural");

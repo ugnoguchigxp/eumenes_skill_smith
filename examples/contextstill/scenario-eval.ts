@@ -107,6 +107,11 @@ const fixtureSource = createFixtureSource(
 // Proposal 28: off leaves the fixture source untouched (default path unchanged).
 const reformulationTraces: (ReformulationTrace | MultiQueryTrace)[] = [];
 let reformulationCalls = 0;
+const replayNamespace =
+	raw("--replay-namespace") ??
+	(assemblyMode === "legacy" ? "legacy" : "execution.v2");
+if (replayNamespace !== "legacy" && replayNamespace !== "execution.v2")
+	throw new Error("replay_namespace_invalid");
 let reformulationLedger: ReformulationLedger | undefined;
 let source = fixtureSource;
 let autoFired = false;
@@ -132,10 +137,15 @@ if (queryReformulation !== "off") {
 			: createReformulatingSource;
 	const wrapped = wrap(
 		fixtureSource,
-		recordedInference(records, (item) => {
-			reformulationCalls += 1;
-			collected.push(item);
-		}),
+		recordedInference(
+			records,
+			(item) => {
+				reformulationCalls += 1;
+				collected.push(item);
+			},
+			undefined,
+			{ namespace: replayNamespace },
+		),
 		{
 			deadlineAt: 1_700_000_000_000 + 120_000,
 			onTrace: (trace) => reformulationTraces.push(trace),
@@ -195,6 +205,7 @@ try {
 			searchProfile,
 			assemblyMode,
 			queryReformulationMode: queryReformulation,
+			replayNamespace,
 			identity: identityFor(),
 			filter,
 			// Search-only: zero build/judge inference; reformulation calls are counted separately.
@@ -254,6 +265,7 @@ try {
 					role === "build" ? buildRecords : judgeRecords,
 					onTask,
 					recordContext,
+					{ namespace: replayNamespace },
 				),
 			hasBuildRecord: (d) => buildRecords.some((r) => r.inputDigest === d),
 			reformulation: reformulationLedger,
@@ -278,6 +290,7 @@ try {
 			searchProfile,
 			assemblyMode,
 			queryReformulationMode: queryReformulation,
+			replayNamespace,
 			identity: identityFor(),
 			filter,
 			status: result.complete ? "complete" : "incomplete",
