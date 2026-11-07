@@ -160,3 +160,58 @@ Existing integrations must select this new final boundary when distributing skil
 - Default `name`: reuse ⇒ ASCII kebab slug of the primary source title (≤64), else/fallback
   `skillName(goal)`. `description`: Japanese fixed template from strategy, source titles
   and goal. Deterministic; no translation of source/goal text (it may remain English).
+
+
+## Localized build artifacts (2026-11-07)
+
+The builder, not the deterministic renderer, owns a concise meaningful `name`
+(ASCII kebab-case, at most 64 characters), a short human `title`, a useful
+`description` (what + when, without copied source titles), `language` (the request
+language tag), and `localizedInstructions`. The latter is complete Markdown below
+the H1: faithful guidance plus verification, acceptance/constraints, assumptions,
+and any provisional warning, all in the request language. Reuse faithfully
+restates the disclosed source body, not its transport envelope; original evidence
+and handles remain provenance, never instruction authority. Sections/patches and
+strategy/source-completeness/capability checks retain their existing meaning.
+The original host policy is retained verbatim when not already present.
+
+Current terminal ready turns require all five fields. Stored legacy decisions may
+omit all five, enabling deterministic historical rendering only; partial metadata
+is invalid. Language validation checks structural field presence, not keywords or
+semantic language guesses. Faithfulness and language quality remain model/judge
+responsibilities, not a claimed deterministic guarantee. New rendering uses the
+model title, description, and Markdown; source titles occur only in the appended
+`出典` provenance block. No new goal-slug/hash defaults on current builds.
+
+The build instruction digest changes. The initial index-only disclosure prompt
+and schema are archived unchanged: existing disclose/re_search control records
+can still replay against their exact digest. A terminal answer on this legacy
+initial turn is not accepted as a current ready build: the next budgeted turn
+uses current instructions/schema (without copying the old answer into model
+context). After a successful disclose, all subsequent turns use current fields.
+Legacy terminal needs_input/unavailable answers remain valid. No new model calls,
+I/O, auth, or completeness allowances are introduced. An extra current turn uses
+existing model-call and byte/token budgets; exhaustion fails closed.
+
+Re-recording uses only InferencePort/recorded-inference, with missing tasks and
+builder-only packets under /tmp/p-rebuild. No executor-written builder or judge
+values. All current builds must be rejudged; no historical score is relabeled as
+current. Gold labels remain judge/host-only. Historical snapshots are evidence of
+the prior instruction version, not current complete evaluations.
+
+
+Historical regression replay uses an explicit `legacy` assembly profile, carrying
+the archived instruction/schema/digest. It is never the default or a fallback for
+failed current generation. This keeps old complete/score/auth/limit regression
+assertions intact without inventing replacement model outputs. `compact` current
+turns also require localized presentation fields; its digest changes separately.
+The source-only provenance heading is intentionally the requested `出典`; no
+source title is added to generated descriptions. Host policy is not translated
+by the renderer or demoted to untrusted model text.
+
+
+For current localized artifacts, the unchanged judge receives the final SKILL.md
+string as its existing body field (including the new presentation). This prevents
+host-appended internal JSON/body-tail checks from masking omissions in the actual
+artifact. Archived legacy runs retain their original judge body and exact digests.
+No judge instructions, rubric, schema, or gold routing are changed.

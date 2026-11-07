@@ -42,6 +42,7 @@ import {
 import { digest } from "../../src/index.js";
 import {
 	buildInstructions,
+	disclosureInstructions,
 	compactBuildInstructions,
 } from "../../src/instructions/build.js";
 import {
@@ -70,14 +71,14 @@ export function parseSearchProfile(argv: string[]): SearchProfile {
 	return value;
 }
 
-export type AssemblyMode = "baseline" | "compact";
+export type AssemblyMode = "baseline" | "compact" | "legacy";
 
-/** Strict CLI assembly-mode parsing; omitted means baseline (recorded-inference compatible). */
+/** Strict CLI parsing; omitted means current baseline, legacy is explicit archival replay only. */
 export function parseAssemblyMode(argv: string[]): AssemblyMode {
 	const index = argv.indexOf("--assembly-mode");
 	if (index < 0) return "baseline";
 	const value = argv[index + 1];
-	if (value !== "baseline" && value !== "compact")
+	if (value !== "baseline" && value !== "compact" && value !== "legacy")
 		throw new Error(`unknown --assembly-mode ${value ?? "(missing)"}`);
 	return value;
 }
@@ -246,7 +247,11 @@ export interface RunIdentity {
 export function instructionDigests(assemblyMode: AssemblyMode = "baseline") {
 	return {
 		buildInstructionsDigest: digest(
-			assemblyMode === "compact" ? compactBuildInstructions : buildInstructions,
+			assemblyMode === "legacy"
+				? disclosureInstructions
+				: assemblyMode === "compact"
+					? compactBuildInstructions
+					: buildInstructions,
 		),
 		judgeInstructionsDigest: digest(JUDGE_INSTRUCTIONS),
 		judgeSchemaDigest: digest(judgeOutputSchema),
@@ -494,7 +499,11 @@ export async function runFull(deps: FullDeps) {
 				const usedRefs = ready ? ready.build.content.decision.sourceRefs : [];
 				const strategy = ready ? ready.build.content.decision.strategy : null;
 				const sections = ready ? ready.build.content.decision.sections : [];
-				const body = ready ? ready.build.content.body : null;
+				const body = ready
+					? ready.build.content.decision.localizedInstructions !== undefined
+						? ready.skill.content
+						: ready.build.content.body
+					: null;
 				const missing = reply.kind === "needs_input" ? reply.missing : [];
 				const kind =
 					reply.kind === "ready" ||

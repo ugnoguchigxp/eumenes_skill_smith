@@ -20,6 +20,7 @@ export function fixture(
 		parent?: boolean;
 		path?: string;
 		existing?: boolean;
+		assemblyMode?: Ports<Database>["assemblyMode"];
 	} = {},
 ) {
 	const db = new Database(options.path ?? ":memory:");
@@ -106,6 +107,7 @@ export function fixture(
 	};
 	let output: unknown = null;
 	const ports: Ports<Database> = {
+		assemblyMode: options.assemblyMode ?? "legacy",
 		repository: sqliteRepository,
 		authority: {
 			valid: (_tx, _a, refs) =>

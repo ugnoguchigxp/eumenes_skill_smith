@@ -1,5 +1,6 @@
+import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
-import { INSTRUCTION_VERSION } from "../../../src/instructions/build.js";
+import { disclosureInstructions } from "../../../src/instructions/build.js";
 import { buildScoreboard, renderText } from "../scoreboard.js";
 
 const b = buildScoreboard();
@@ -69,8 +70,8 @@ test("compose handle 1, bm25 8; absent handle 8", () => {
 	expect(cell("absent", "handle").meanScore).toBe(8);
 });
 
-test("build instruction version unchanged", () => {
-	expect(INSTRUCTION_VERSION).toBe(
+test("scoreboard retains the archived build instruction version", () => {
+	expect("build." + digest(disclosureInstructions)).toBe(
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 });

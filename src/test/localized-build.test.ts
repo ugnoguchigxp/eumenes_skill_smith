@@ -1,0 +1,215 @@
+import { expect, test } from "bun:test";
+import { z } from "zod";
+import { fixture, ready } from "./fixture.js";
+import {
+	decisionSchema,
+	legacyModelTurnSchema,
+	modelTurnSchema,
+	compactReadySchema,
+} from "../contracts/schema.js";
+import {
+	buildInstructions,
+	disclosureInstructions,
+	INSTRUCTION_VERSION,
+} from "../instructions/build.js";
+import { digest } from "../service/identity.js";
+import {
+	renderSkillMarkdown,
+	validateSkillMarkdown,
+} from "../service/skill-markdown.js";
+
+// Synthetic unit-test doubles only, never provider outputs/evaluation records.
+const legacy = {
+	kind: "ready" as const,
+	strategy: "reuse" as const,
+	sourceRefs: ["skill:compare@1"],
+	sections: [],
+	patches: [],
+	requiredCapabilities: [],
+	verification: ["差異の出所を照合する。"],
+	assumptions: [],
+};
+const presentation = {
+	name: "compare-source-differences",
+	title: "原資料の相違を比較する",
+	description:
+		"原資料の相違と出所を対応付ける。資料の比較を依頼されたときに使う。",
+	language: "ja",
+	localizedInstructions:
+		"## 手順\n\n正本を確認し、差異の根拠を対応付ける。\n\n## 確認\n\n差異の出所を照合する。\n\n## 受け入れ条件\n\n差異と出所が説明されている。\n\n## 制約\n\n原資料を変更しない。",
+};
+const current = { ...legacy, ...presentation };
+
+function currentFixture() {
+	const f = fixture({ assemblyMode: "baseline" });
+	let calls = 0;
+	const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
+	f.ports.inference.complete = async (input) => {
+		inputs.push(input);
+		calls++;
+		return {
+			value:
+				calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: current,
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	return { f, inputs };
+}
+
+test("current digest changes while initial disclosure payload stays archived", async () => {
+	const { f, inputs } = currentFixture();
+	const result = await ready(f);
+	expect(INSTRUCTION_VERSION).toBe("build." + digest(buildInstructions));
+	expect(INSTRUCTION_VERSION).not.toBe(
+		"build." + digest(disclosureInstructions),
+	);
+	expect(inputs[0]!.system).toBe(disclosureInstructions);
+	expect(inputs[0]!.schema).toEqual(z.toJSONSchema(legacyModelTurnSchema));
+	expect(inputs[1]!.system).toBe(buildInstructions);
+	expect(inputs[1]!.schema).toEqual(z.toJSONSchema(modelTurnSchema));
+	expect(result.build.generator?.instructions).toBe(INSTRUCTION_VERSION);
+	expect(result.build.usage.modelCalls).toBe(2);
+	expect(JSON.stringify(inputs)).not.toContain("expectedRefs");
+	expect(JSON.stringify(inputs)).not.toContain("gold");
+});
+
+test("current ready fields are required, legacy storage allows only complete absence", () => {
+	expect(decisionSchema.safeParse(legacy).success).toBe(true);
+	expect(modelTurnSchema.safeParse(legacy).success).toBe(false);
+	expect(modelTurnSchema.safeParse(current).success).toBe(true);
+	expect(
+		compactReadySchema.safeParse({ ...current, coverage: "sufficient" })
+			.success,
+	).toBe(true);
+	expect(
+		compactReadySchema.safeParse({ ...legacy, coverage: "sufficient" }).success,
+	).toBe(false);
+	for (const field of Object.keys(presentation)) {
+		const missing = { ...current } as Record<string, unknown>;
+		delete missing[field];
+		expect(modelTurnSchema.safeParse(missing).success).toBe(false);
+		expect(decisionSchema.safeParse(missing).success).toBe(false);
+	}
+});
+
+test("name/title/description/language/instructions have structural bounds, not keyword language routing", () => {
+	for (const name of ["Upper", "bad--slug", "../escape", "x".repeat(65)])
+		expect(modelTurnSchema.safeParse({ ...current, name }).success).toBe(false);
+	for (const field of [
+		"title",
+		"description",
+		"language",
+		"localizedInstructions",
+	])
+		expect(
+			modelTurnSchema.safeParse({ ...current, [field]: " " }).success,
+		).toBe(false);
+	// No vocabulary detector claims to prove whether these words are Japanese.
+	expect(
+		modelTurnSchema.safeParse({ ...current, language: "en", title: "日本語" })
+			.success,
+	).toBe(true);
+});
+
+test("renderer uses builder title/description/body; source title is provenance only", async () => {
+	const { f } = currentFixture();
+	const result = await ready(f);
+	const skill = renderSkillMarkdown(result.build.content, undefined, {
+		sourceMarkdown: () => {
+			throw new Error("new builds must not copy raw source envelopes");
+		},
+	});
+	expect(skill.name).toBe(presentation.name);
+	expect(skill.content).toContain(`# ${presentation.title}\n`);
+	expect(skill.content).toContain(
+		`description: ${JSON.stringify(presentation.description)}`,
+	);
+	expect(skill.content).toContain(presentation.localizedInstructions);
+	expect(skill.content.split("## 出典")[0]).not.toContain("比較（");
+	expect(skill.content).toContain("比較（`skill:compare@1`）");
+	expect(skill.content).not.toContain("contractVersion");
+	expect(skill.name).not.toMatch(/[a-f0-9]{12}$/);
+	validateSkillMarkdown(skill.content, presentation.name);
+	const partial = structuredClone(result.build.content);
+	delete partial.decision.language;
+	expect(() => renderSkillMarkdown(partial)).toThrow(
+		"incomplete_skill_presentation",
+	);
+});
+
+test("legacy initial terminal ready cannot bypass current fields or the call budget", async () => {
+	const f = fixture({ assemblyMode: "baseline" });
+	f.setDecision(legacy);
+	f.request.limits.modelCalls = 1;
+	const pending = f.submit();
+	await expect(f.run(pending.requestRef!)).rejects.toThrow(
+		"invalid_model_output",
+	);
+	expect(f.modelCalls()).toBe(1);
+});
+
+test("current schema repair never falls back to legacy rendering", async () => {
+	const { f } = currentFixture();
+	let calls = 0;
+	f.ports.inference.complete = async () => ({
+		value:
+			++calls === 1
+				? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+				: legacy,
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const pending = f.submit();
+	await expect(f.run(pending.requestRef!)).rejects.toThrow(
+		"invalid_model_output",
+	);
+	expect(calls).toBe(f.request.limits.modelCalls);
+});
+
+test("current localized ready retains required-assumption, source-ref and capability checks", async () => {
+	for (const invalid of [
+		{
+			...current,
+			assumptions: [{ text: "必須条件", mandatory: true, resolved: false }],
+		},
+		{ ...current, sourceRefs: ["unknown"] },
+		{ ...current, requiredCapabilities: ["not-offered"] },
+	]) {
+		const { f } = currentFixture();
+		let calls = 0;
+		f.ports.inference.complete = async () => ({
+			value:
+				++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: invalid,
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const pending = f.submit();
+		await expect(f.run(pending.requestRef!)).rejects.toThrow();
+		expect(calls).toBe(f.request.limits.modelCalls);
+	}
+});
+
+test("current localized artifacts still revalidate authority on delivery and cache by current version", async () => {
+	const { f, inputs } = currentFixture();
+	const result = await ready(f);
+	const cached = f.submit({ ...f.request, requestId: "request:cached" });
+	expect(cached.kind).toBe("ready");
+	expect(inputs).toHaveLength(2);
+	f.setValid(false);
+	const reply = await f.service.getSkillValidated(
+		result.requestRef,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(reply.kind).toBe("rejected");
+	expect("skill" in reply).toBe(false);
+});

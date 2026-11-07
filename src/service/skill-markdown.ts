@@ -1,4 +1,5 @@
 import { YAML } from "bun";
+import { skillPresentationSchema } from "../contracts/schema.js";
 import type { Build, Reply } from "../contracts/types.js";
 import { bodyTail } from "./build.js";
 import { digest, requireThat } from "./identity.js";
@@ -30,11 +31,12 @@ export function skillName(goal: string): string {
 }
 
 /**
- * Default name: reuse ⇒ ASCII kebab slug of the primary source title (Agent Skills spec,
+ * Current builds use the model name. Legacy reuse ⇒ primary source title (Agent Skills spec,
  * ≤64); empty slug or other strategies ⇒ goal identity. Deterministic per build.
  */
 export function defaultSkillName(build: Build["content"]): string {
 	const d = build.decision;
+	if (d.name !== undefined) return d.name;
 	if (d.strategy === "reuse") {
 		const title = build.dependencies.find(
 			(x) => x.ref === d.sourceRefs[0],
@@ -55,21 +57,12 @@ const STRATEGY: Record<string, string> = {
 const clip = (t: string, n: number) =>
 	t.length > n ? t.slice(0, n - 1) + "…" : t;
 
-/** Fixed Japanese template from structured fields only (strategy, titles, goal). */
-function describe(build: Build["content"], titles: string[]): string {
-	const goal = clip(build.task.goal.trim(), 400);
-	const src = clip(titles.map((t) => `「${t}」`).join(""), 300);
-	const what =
-		build.decision.strategy === "reuse" && src
-			? `既存の Skill ${src}の指示をそのまま提供する。`
-			: build.decision.strategy === "adapt" && src
-				? `既存の Skill ${src}を元に、この作業向けに改変した手順を提供する。`
-				: build.decision.strategy === "compose" && src
-					? `既存の Skill ${src}を組み合わせ、順序立てた手順を提供する。`
-					: build.decision.strategy === "provisional"
-						? "公式の根拠が無いため、未検証の暫定的な探索手順を提供する。"
-						: "この作業の手順を提供する。";
-	return `${what}次の作業を頼まれたときに使う: ${goal}`;
+/** Model description first; deterministic Japanese fallback for legacy records only. */
+function describe(build: Build["content"]): string {
+	return (
+		build.decision.description ??
+		`${build.decision.strategy === "provisional" ? "公式の根拠が無いため、未検証の暫定的な探索手順を提供する。" : "この作業の手順を提供する。"}次の作業を頼まれたときに使う: ${clip(build.task.goal.trim(), 400)}`
+	);
 }
 
 /** Structural format validation only; not a safety, semantic, or execution verdict. */
@@ -153,21 +146,34 @@ export function renderSkillMarkdown(
 	requireThat(validName(name), "skill_name_invalid");
 	requireThat(build.body.trim().length > 0, "skill_body_empty");
 	const d = build.decision;
+	const presentation = {
+		name: d.name,
+		title: d.title,
+		description: d.description,
+		language: d.language,
+		localizedInstructions: d.localizedInstructions,
+	};
+	if (Object.values(presentation).some((v) => v !== undefined))
+		requireThat(
+			skillPresentationSchema.safeParse(presentation).success,
+			"incomplete_skill_presentation",
+		);
 	requireThat(build.task.goal.trim().length > 0, "skill_description_invalid");
 	const titles = new Map(build.dependencies.map((x) => [x.ref, x.title]));
-	const description = describe(
-		build,
-		d.sourceRefs.map((r) => titles.get(r)).filter((t): t is string => !!t),
-	);
-	let main = mainInstructions(build);
-	if (d.strategy === "reuse" && options.sourceMarkdown)
+	const description = describe(build);
+	let main = d.localizedInstructions ?? mainInstructions(build);
+	if (
+		d.localizedInstructions === undefined &&
+		d.strategy === "reuse" &&
+		options.sourceMarkdown
+	)
 		main = options.sourceMarkdown(main);
 	const policy = build.policy.alreadyPresent ? "" : build.policy.body;
 	const instructions = [policy, main].filter((t) => t.trim()).join("\n\n");
 	requireThat(instructions.trim().length > 0, "skill_body_empty");
 	const { acceptance, constraints } = build.task;
-	const body = [
-		`# ${name}`,
+	const legacyBody = [
+		`# ${d.title ?? name}`,
 		d.strategy === "provisional"
 			? "> 暫定・未検証: 探索のための指針であり、公式の Skill でも実行で確かめた Skill でもない。頼る前に前提を確かめ、下の確認を行うこと。"
 			: "",
@@ -207,6 +213,25 @@ export function renderSkillMarkdown(
 	]
 		.filter(Boolean)
 		.join("\n\n");
+	const body =
+		d.localizedInstructions !== undefined
+			? [
+					`# ${d.title}`,
+					policy,
+					d.localizedInstructions,
+					"## 出典\n\n" +
+						(d.sourceRefs.length
+							? list(
+									d.sourceRefs.map((ref) => {
+										const title = titles.get(ref);
+										return title ? `${title}（\`${ref}\`）` : `\`${ref}\``;
+									}),
+								)
+							: "—"),
+				]
+					.filter(Boolean)
+					.join("\n\n")
+			: legacyBody;
 	// JSON double-quoted strings are valid YAML scalars; quotes/newlines cannot escape frontmatter.
 	const content = `---\nname: ${JSON.stringify(name)}\ndescription: ${JSON.stringify(description)}\n---\n\n${body}\n`;
 	validateSkillMarkdown(content, name);

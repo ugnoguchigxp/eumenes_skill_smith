@@ -12,8 +12,8 @@ export type ExampleHostOptions = {
 	modelCalls?: number;
 	candidates?: number;
 	documents?: number;
-	/** Opt-in compact assembly (proposal 36). Default baseline. */
-	assemblyMode?: "baseline" | "compact";
+	/** Current baseline by default with injected inference; legacy is archival/wiring-only. */
+	assemblyMode?: "baseline" | "compact" | "legacy";
 };
 
 /** Standalone wiring example. Fixed model/authority/jobs are test doubles, not Eumenes adapters. */
@@ -154,7 +154,7 @@ export function createExampleHost(
 		},
 		now: () => fixedNow,
 		id: () => crypto.randomUUID(),
-		assemblyMode: options.assemblyMode ?? "baseline",
+		assemblyMode: options.assemblyMode ?? (injected ? "baseline" : "legacy"),
 		skillMarkdown: contextStillSkillMarkdown,
 	};
 	const service = createSkillSmith(ports);

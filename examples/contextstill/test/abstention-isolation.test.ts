@@ -1,3 +1,4 @@
+import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -5,7 +6,10 @@ import {
 	parseAnyScenarioSuite,
 	assemblyJudgeSchema,
 } from "../../../src/eval/scenario-score.js";
-import { INSTRUCTION_VERSION } from "../../../src/instructions/build.js";
+import {
+	disclosureInstructions,
+	buildInstructions,
+} from "../../../src/instructions/build.js";
 import { ContextStillFixture } from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource } from "../source.js";
@@ -42,8 +46,8 @@ function fixture(profile: "handle" | "bm25" = "handle") {
 	};
 }
 
-test("contrast judge digests are stable; baseline instruction digest unchanged; flag strict", () => {
-	expect(INSTRUCTION_VERSION).toBe(
+test("contrast judge digests are stable; current build digest tracked separately from archived instructions; flag strict", () => {
+	expect("build." + digest(disclosureInstructions)).toBe(
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 	const digests = abstentionJudgeDigests();
@@ -66,9 +70,7 @@ test("contrast judge digests are stable; baseline instruction digest unchanged; 
 	expect(on.abstentionJudgeSchemaDigest).toBe(
 		digests.abstentionJudgeSchemaDigest,
 	);
-	expect(off.buildInstructionsDigest).toBe(
-		INSTRUCTION_VERSION.slice("build.".length),
-	);
+	expect(off.buildInstructionsDigest).toBe(digest(buildInstructions));
 	expect(parseAbstentionContrast([])).toBe("off");
 	expect(parseAbstentionContrast(["--abstention-contrast", "on"])).toBe("on");
 	expect(() => parseAbstentionContrast(["--abstention-contrast"])).toThrow();
@@ -83,6 +85,7 @@ test("original-five handle full replay remains 5 scored / mean 4.2 with flag omi
 	const judge = load(`${scen}/judge-records.json`) as InferenceRecord[];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: legacy,
 			source: f.source,
 			createInference: (role, onTask, context) =>
@@ -108,6 +111,7 @@ test("flag on reuses build records but never original-five judge records; stays 
 	const judge = load(`${scen}/judge-records.json`) as InferenceRecord[];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: legacy,
 			source: f.source,
 			abstentionContrast: "on",
@@ -161,6 +165,7 @@ test("compose natural handle records also stay pending under contrast (no compos
 	) as InferenceRecord[];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: compose,
 			source: f.source,
 			abstentionContrast: "on",
@@ -204,6 +209,7 @@ test("builder never sees gold, axis, false-friend, or contrast canaries", async 
 		};
 		const seen: InferenceTask[] = [];
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task],
 			source: f.source,
 			abstentionContrast: "on",

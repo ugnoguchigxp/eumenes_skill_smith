@@ -1,7 +1,8 @@
+import { digest } from "../service/identity.js";
 import { expect, test } from "bun:test";
 import { defaultCacheIdentityManifest } from "../eval/index.js";
 import { fixture, ready } from "./fixture.js";
-import { INSTRUCTION_VERSION } from "../instructions/build.js";
+import { disclosureInstructions } from "../instructions/build.js";
 
 test("same task with refreshed deadline hits cache", async () => {
 	const f = fixture();
@@ -24,10 +25,12 @@ test("acceptance change misses cache", async () => {
 	expect(pending.kind).toBe("pending");
 });
 
-test("new builds stamp generator instructions for usable()", async () => {
+test("archival replay stamps its generator instructions for usable()", async () => {
 	const f = fixture();
 	const r = await ready(f);
-	expect(r.build.generator?.instructions).toBe(INSTRUCTION_VERSION);
+	expect(r.build.generator?.instructions).toBe(
+		"build." + digest(disclosureInstructions),
+	);
 	expect(r.build.generator?.contractVersion).toBe("skillsmith.v1");
 });
 

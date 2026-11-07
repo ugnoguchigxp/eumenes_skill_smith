@@ -30,6 +30,7 @@ test("full runner emits validated build files per task even while judge replay i
 	const files: string[] = [];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks,
 			source: createFixtureSource(createMcpHandler(fixture, token), token),
 			createInference: (role, onTask) =>
@@ -105,6 +106,8 @@ test("scenario CLI writes and reports SKILL.md paths under the requested output 
 			[
 				process.execPath,
 				"examples/contextstill/scenario-eval.ts",
+				"--assembly-mode",
+				"legacy",
 				"--suite",
 				"examples/contextstill/scenarios/suite-3axis.json",
 				"--axis",

@@ -182,7 +182,7 @@ test("get/validate remain delegated; abort prevents all auxiliary and source cal
 	expect(aux).toBe(0);
 });
 
-test("multi identity differs from single, baseline and compact instructions stay unchanged", () => {
+test("multi identity differs from single, auxiliary reformulation stays independent of the current build version", () => {
 	const paths = {
 		searchProfile: "bm25" as const,
 		suiteId: "s",
@@ -212,7 +212,7 @@ test("multi identity differs from single, baseline and compact instructions stay
 	expect(single.reformulationSchemaDigest).toBe(
 		prior.identity.reformulationSchemaDigest,
 	);
-	expect(multi.buildInstructionsDigest).toBe(
+	expect(multi.buildInstructionsDigest).not.toBe(
 		prior.identity.buildInstructionsDigest,
 	);
 });

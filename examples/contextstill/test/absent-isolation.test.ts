@@ -1,3 +1,4 @@
+import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -5,7 +6,10 @@ import {
 	parseAnyScenarioSuite,
 	assemblyJudgeSchema,
 } from "../../../src/eval/scenario-score.js";
-import { INSTRUCTION_VERSION } from "../../../src/instructions/build.js";
+import {
+	disclosureInstructions,
+	buildInstructions,
+} from "../../../src/instructions/build.js";
 import { ContextStillFixture } from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource } from "../source.js";
@@ -40,8 +44,8 @@ function fixture(profile: "handle" | "bm25" = "handle") {
 	};
 }
 
-test("absent judge digests are stable; baseline instruction digest unchanged", () => {
-	expect(INSTRUCTION_VERSION).toBe(
+test("absent judge digests are stable; current build digest tracked separately from archived instructions", () => {
+	expect("build." + digest(disclosureInstructions)).toBe(
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 	const digests = absentJudgeDigests();
@@ -60,9 +64,7 @@ test("absent judge digests are stable; baseline instruction digest unchanged", (
 	expect(identity.absentJudgeSchemaDigest).toBe(
 		digests.absentJudgeSchemaDigest,
 	);
-	expect(identity.buildInstructionsDigest).toBe(
-		INSTRUCTION_VERSION.slice("build.".length),
-	);
+	expect(identity.buildInstructionsDigest).toBe(digest(buildInstructions));
 	expect(identity.composeJudgeInstructionsDigest).toMatch(/^[a-f0-9]{64}$/);
 });
 
@@ -114,6 +116,7 @@ test("absent builder never sees axis, gold labels, or false-friend canaries; mis
 		};
 		const seen: InferenceTask[] = [];
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task],
 			source: f.source,
 			hasBuildRecord: () => false,
@@ -174,6 +177,7 @@ test("original-five handle full replay remains 5 scored / mean 4.2", async () =>
 	) as InferenceRecord[];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks,
 			source: f.source,
 			createInference: (role, onTask, context) =>
@@ -199,6 +203,7 @@ test("absent judge receives watch-list only after build; missing judge remains p
 	try {
 		const task = absent[0]!;
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task],
 			source: f.source,
 			hasBuildRecord: () => true,

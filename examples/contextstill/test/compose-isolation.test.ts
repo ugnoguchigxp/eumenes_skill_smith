@@ -1,3 +1,4 @@
+import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -5,7 +6,7 @@ import {
 	parseAnyScenarioSuite,
 	assemblyJudgeSchema,
 } from "../../../src/eval/scenario-score.js";
-import { INSTRUCTION_VERSION } from "../../../src/instructions/build.js";
+import { disclosureInstructions } from "../../../src/instructions/build.js";
 import { ContextStillFixture } from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource, type SourcePort } from "../source.js";
@@ -41,7 +42,7 @@ function fixture(profile: "handle" | "bm25" = "handle") {
 	};
 }
 
-test("evidence supply is strict and defaults to natural; baseline instruction digest unchanged", () => {
+test("evidence supply is strict and defaults to natural; current build digest tracked separately from archived instructions", () => {
 	expect(parseEvidenceSupply([])).toBe("natural");
 	expect(parseEvidenceSupply(["--evidence-supply", "natural"])).toBe("natural");
 	expect(parseEvidenceSupply(["--evidence-supply", "oracle"])).toBe("oracle");
@@ -49,7 +50,7 @@ test("evidence supply is strict and defaults to natural; baseline instruction di
 		expect(() => parseEvidenceSupply(args)).toThrow(
 			"unknown --evidence-supply",
 		);
-	expect(INSTRUCTION_VERSION).toBe(
+	expect("build." + digest(disclosureInstructions)).toBe(
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 	const args = {
@@ -156,6 +157,7 @@ test("oracle execute discloses real documents, never gold labels; missing next t
 			validate: (...a) => f.source.validate(...a),
 		};
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task],
 			source,
 			evidenceSupply: "oracle",
@@ -264,6 +266,7 @@ test("original-five handle full replay remains 5 scored / mean 4.2", async () =>
 	) as InferenceRecord[];
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks,
 			source: f.source,
 			createInference: (role, onTask, context) =>
@@ -290,6 +293,7 @@ test("compose judge receives reference bodies and dimensions only after build; m
 	try {
 		const task = compose[0]!;
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task],
 			source: f.source,
 			hasBuildRecord: () => true,

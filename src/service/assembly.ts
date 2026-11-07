@@ -5,28 +5,40 @@ import type {
 } from "../contracts/schema.js";
 import {
 	compactModelTurnSchema,
+	legacyModelTurnSchema,
 	modelTurnSchema,
 } from "../contracts/schema.js";
 import {
 	buildInstructions,
+	disclosureInstructions,
 	compactBuildInstructions,
 	COMPACT_INSTRUCTION_VERSION,
 	INSTRUCTION_VERSION,
 } from "../instructions/build.js";
-import { requireThat } from "./identity.js";
+import { digest, requireThat } from "./identity.js";
 
-export type AssemblyMode = "baseline" | "compact";
+export type AssemblyMode = "baseline" | "compact" | "legacy";
 
 export type AssemblyProfile = {
 	mode: AssemblyMode;
 	instructions: string;
 	instructionVersion: string;
-	turnSchema: typeof modelTurnSchema | typeof compactModelTurnSchema;
+	turnSchema:
+		| typeof modelTurnSchema
+		| typeof compactModelTurnSchema
+		| typeof legacyModelTurnSchema;
 };
 
 export function resolveAssembly(
 	mode: AssemblyMode = "baseline",
 ): AssemblyProfile {
+	if (mode === "legacy")
+		return {
+			mode,
+			instructions: disclosureInstructions,
+			instructionVersion: "build." + digest(disclosureInstructions),
+			turnSchema: legacyModelTurnSchema,
+		};
 	if (mode === "compact")
 		return {
 			mode,

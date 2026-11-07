@@ -70,7 +70,18 @@ export const authoritySchema = z.strictObject({
 	permissions: z.array(z.enum(["build", "report", "manage"])).max(3),
 });
 export type Authority = z.infer<typeof authoritySchema>;
-const ready = z.strictObject({
+export const skillPresentationSchema = z.strictObject({
+	name: z
+		.string()
+		.min(1)
+		.max(64)
+		.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+	title: z.string().trim().min(1).max(256),
+	description: z.string().trim().min(1).max(1024),
+	language: z.string().trim().min(1).max(64),
+	localizedInstructions: text,
+});
+const legacyReady = z.strictObject({
 	kind: z.literal("ready"),
 	strategy: z.enum(["reuse", "adapt", "compose", "provisional"]),
 	sourceRefs: z.array(id).max(8).refine(unique),
@@ -90,8 +101,32 @@ const ready = z.strictObject({
 		)
 		.max(16),
 });
+// Legacy storage accepts absence, never an incomplete presentation group.
+const storedReady = legacyReady
+	.extend({
+		name: skillPresentationSchema.shape.name.optional(),
+		title: skillPresentationSchema.shape.title.optional(),
+		description: skillPresentationSchema.shape.description.optional(),
+		language: skillPresentationSchema.shape.language.optional(),
+		localizedInstructions:
+			skillPresentationSchema.shape.localizedInstructions.optional(),
+	})
+	.refine((d) => {
+		const values = [
+			d.name,
+			d.title,
+			d.description,
+			d.language,
+			d.localizedInstructions,
+		];
+		return (
+			values.every((v) => v === undefined) ||
+			values.every((v) => v !== undefined)
+		);
+	}, "incomplete_skill_presentation");
+const currentReady = legacyReady.extend(skillPresentationSchema.shape);
 export const decisionSchema = z.discriminatedUnion("kind", [
-	ready,
+	storedReady,
 	z.strictObject({
 		kind: z.literal("needs_input"),
 		missing: z.array(text).min(1).max(16),
@@ -100,9 +135,8 @@ export const decisionSchema = z.discriminatedUnion("kind", [
 ]);
 export type Decision = z.infer<typeof decisionSchema>;
 export type ReadyDecision = Extract<Decision, { kind: "ready" }>;
-/** Model turns during build: terminal decisions plus budgeted control actions. */
-export const modelTurnSchema = z.discriminatedUnion("kind", [
-	ready,
+/** Budgeted controls and non-ready outcomes are shared by archived/current schemas. */
+const controlTurns = [
 	z.strictObject({
 		kind: z.literal("needs_input"),
 		missing: z.array(text).min(1).max(16),
@@ -124,6 +158,16 @@ export const modelTurnSchema = z.discriminatedUnion("kind", [
 			.min(1)
 			.max(8),
 	}),
+] as const;
+/** The exact archived model schema is used only for initial disclosure or explicit history. */
+export const legacyModelTurnSchema = z.discriminatedUnion("kind", [
+	legacyReady,
+	...controlTurns,
+]);
+/** Current terminal ready decisions require the complete presentation contract. */
+export const modelTurnSchema = z.discriminatedUnion("kind", [
+	currentReady,
+	...controlTurns,
 ]);
 export type ModelTurn = z.infer<typeof modelTurnSchema>;
 export const coverageSchema = z.enum([
@@ -144,35 +188,15 @@ export const explorationSlotsSchema = z.strictObject({
 export type Coverage = z.infer<typeof coverageSchema>;
 export type ExplorationSlots = z.infer<typeof explorationSlotsSchema>;
 /** Compact ready decision: baseline ready fields plus coverage and optional exploration. */
-export const compactReadySchema = ready.extend({
+export const compactReadySchema = currentReady.extend({
 	coverage: coverageSchema,
 	exploration: explorationSlotsSchema.optional(),
 });
 export type CompactReadyDecision = z.infer<typeof compactReadySchema>;
-/** Compact-path model turns; baseline modelTurnSchema stays unchanged. */
+/** Compact-path model turns, including required localized presentation. */
 export const compactModelTurnSchema = z.discriminatedUnion("kind", [
 	compactReadySchema,
-	z.strictObject({
-		kind: z.literal("needs_input"),
-		missing: z.array(text).min(1).max(16),
-	}),
-	z.strictObject({ kind: z.literal("unavailable"), code: id }),
-	z.strictObject({
-		kind: z.literal("re_search"),
-		query: z.string().trim().min(1).max(512),
-	}),
-	z.strictObject({
-		kind: z.literal("disclose"),
-		items: z
-			.array(
-				z.strictObject({
-					ref: id,
-					sectionIds: z.array(id).max(64).optional(),
-				}),
-			)
-			.min(1)
-			.max(8),
-	}),
+	...controlTurns,
 ]);
 export type CompactModelTurn = z.infer<typeof compactModelTurnSchema>;
 
@@ -244,7 +268,7 @@ export const buildSchema = z.strictObject({
 		audience: requestSchema.shape.audience,
 		environment: requestSchema.shape.environment,
 		body: z.string().min(1).max(32768),
-		decision: ready,
+		decision: storedReady,
 		dependencies: z.array(evidenceCardSchema).max(8),
 		policy: policySchema,
 	}),

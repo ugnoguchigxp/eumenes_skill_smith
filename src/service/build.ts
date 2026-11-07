@@ -1,7 +1,9 @@
 import { z } from "zod";
+import { disclosureInstructions } from "../instructions/build.js";
 import {
 	CONTRACT,
 	compactReadySchema,
+	legacyModelTurnSchema,
 	evidenceSchema,
 	sourceSearchSchema,
 } from "../contracts/schema.js";
@@ -123,7 +125,8 @@ export function buildContent(
 ): Build["content"] {
 	const selected = checkDecision(d, evidence, p);
 	let body: string;
-	if (d.strategy === "reuse") body = selected[0]!.body;
+	if (d.localizedInstructions !== undefined) body = d.localizedInstructions;
+	else if (d.strategy === "reuse") body = selected[0]!.body;
 	else if (d.patches.length)
 		body = selected[0]!
 			.sections!.map((s) => {
@@ -516,19 +519,26 @@ export async function executeBuild<Tx>(
 	let lastFailure = "invalid_model_output";
 	let reSearchUsed = false;
 	const assembly = resolveAssembly(ports.assemblyMode ?? "baseline");
+	let currentBuildTurn = assembly.mode !== "baseline";
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
 		modelCallsUsed = attempt + 1;
+		const turnSchema = currentBuildTurn
+			? assembly.turnSchema
+			: legacyModelTurnSchema;
+		const instructions = currentBuildTurn
+			? assembly.instructions
+			: disclosureInstructions;
 		const data = repair ? { ...buildData(), repair } : buildData();
 		requireThat(
-			bytes(data) + new TextEncoder().encode(assembly.instructions).length <
+			bytes(data) + new TextEncoder().encode(instructions).length <
 				request.limits.inputBytes,
 			"context_budget_exceeded",
 		);
 		const modelInput = {
-			system: assembly.instructions,
+			system: instructions,
 			data,
-			schema: z.toJSONSchema(assembly.turnSchema),
+			schema: z.toJSONSchema(turnSchema),
 			deadlineAt: request.limits.deadlineAt,
 			maxOutputTokens: request.limits.outputTokens,
 			requestRef: r.ref,
@@ -583,7 +593,7 @@ export async function executeBuild<Tx>(
 				callKind: "build",
 			});
 		}
-		const parsed = assembly.turnSchema.safeParse(answer.value);
+		const parsed = turnSchema.safeParse(answer.value);
 		if (!parsed.success) {
 			lastFailure = "invalid_model_output";
 			repair = {
@@ -594,6 +604,11 @@ export async function executeBuild<Tx>(
 			continue;
 		}
 		const turn = parsed.data;
+		if (!currentBuildTurn && turn.kind === "ready") {
+			// Never promote a legacy ready response to a current artifact.
+			currentBuildTurn = true;
+			continue;
+		}
 		if (turn.kind === "re_search") {
 			if (reSearchUsed) {
 				lastFailure = "invalid_model_output";
@@ -624,6 +639,7 @@ export async function executeBuild<Tx>(
 				continue;
 			}
 			repair = undefined;
+			currentBuildTurn = true;
 			const beforeBytes = bytes(disclosed);
 			const beforeSections = new Set(
 				disclosed.flatMap(

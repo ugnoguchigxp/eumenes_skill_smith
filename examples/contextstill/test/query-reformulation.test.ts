@@ -218,6 +218,7 @@ for (const multi of [false, true]) {
 		const { source, ledger, db } = pendingSetup(multi);
 		let created = 0;
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: [task({ id: "p" })],
 			source,
 			createInference: (_r, onTask) => (

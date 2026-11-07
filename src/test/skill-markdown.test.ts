@@ -418,7 +418,7 @@ test("reuse name derives from primary source title; others keep goal identity", 
 	expect(defaultSkillName(content)).toBe(skill.name);
 	expect(renderSkillMarkdown(content)).toEqual(skill);
 	expect(skill.content).toContain(
-		"既存の Skill 「Prefer Idiomatic Go Over Direct Translation」の指示をそのまま提供する。次の作業を頼まれたときに使う: ",
+		"この作業の手順を提供する。次の作業を頼まれたときに使う: ",
 	);
 	content.dependencies = content.dependencies.map((x) => ({
 		...x,

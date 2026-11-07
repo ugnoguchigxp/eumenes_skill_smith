@@ -39,7 +39,15 @@ test("baseline buildInstructions and INSTRUCTION_VERSION stay unchanged by compa
 });
 
 test("baseline decisionSchema rejects coverage; compact accepts coverage and exploration", () => {
+	const presentation = {
+		name: "inspect-evidence",
+		title: "根拠の確認",
+		description: "根拠を確認する。調査の開始時に使う。",
+		language: "ja",
+		localizedInstructions: "根拠を確認し、結果を照合する。",
+	};
 	const reuse = {
+		...presentation,
 		kind: "ready" as const,
 		strategy: "reuse" as const,
 		sourceRefs: ["skill:a@1"],
@@ -57,6 +65,7 @@ test("baseline decisionSchema rejects coverage; compact accepts coverage and exp
 		compactReadySchema.safeParse({ ...reuse, coverage: "sufficient" }).success,
 	).toBe(true);
 	const explore = {
+		...presentation,
 		kind: "ready" as const,
 		strategy: "provisional" as const,
 		sourceRefs: [],
@@ -160,6 +169,11 @@ test("compact adapt that pastes a disclosed body into sections is rejected", () 
 
 test("toStoredReady maps exploration slots into fixed section ids", () => {
 	const stored = toStoredReady({
+		name: "safe-exploration",
+		title: "安全な探索",
+		description: "対象を安全に調べる。根拠がないときに使う。",
+		language: "ja",
+		localizedInstructions: "対象を確認し、隔離して試し、観測結果を照合する。",
 		kind: "ready",
 		strategy: "provisional",
 		sourceRefs: [],

@@ -124,6 +124,7 @@ test("full mode with missing records is incomplete and withholds the mean", asyn
 	const f = setup();
 	let created = 0;
 	const result = await runFull({
+		assemblyMode: "legacy",
 		tasks: [
 			task({
 				id: "p",
@@ -159,6 +160,7 @@ test("source.search throw isolates to one status row; later tasks still run", as
 		validate: f.source.validate.bind(f.source),
 	};
 	const result = await runFull({
+		assemblyMode: "legacy",
 		tasks: [
 			task({
 				id: "boom",
@@ -191,6 +193,7 @@ test("invalid judge value is status invalid; other tasks can still score; mean w
 	const f = setup();
 	const first = (await f.source.search("検証", 1, f.signal)).cards[0]!.ref;
 	const result = await runFull({
+		assemblyMode: "legacy",
 		tasks: [
 			task({
 				id: "good",
@@ -311,6 +314,7 @@ test("handle-profile records under bm25 do not silently reuse as scored", async 
 	const source = createFixtureSource(createMcpHandler(fixture, token), token);
 	try {
 		const result = await runFull({
+			assemblyMode: "legacy",
 			tasks: suite.tasks,
 			source,
 			createInference: (role, onTask) =>

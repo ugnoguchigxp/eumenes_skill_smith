@@ -128,8 +128,8 @@ export interface Ports<Tx> {
 	id(): string;
 	/** Optional overrides; omitted fields keep package defaults. */
 	limits?: Partial<ServiceLimits>;
-	/** Opt-in assembly path (proposal 36). Omitted means baseline. */
-	assemblyMode?: "baseline" | "compact";
+	/** Omitted means current baseline. Compact is opt-in; legacy is explicit archival replay only. */
+	assemblyMode?: "baseline" | "compact" | "legacy";
 	/** Final SKILL.md rendering only; deterministic source-body extraction (no model calls). */
 	skillMarkdown?: import("../service/skill-markdown.js").SkillMarkdownOptions;
 }

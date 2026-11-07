@@ -1,8 +1,9 @@
+import { digest } from "../../../src/service/identity.js";
 // Proposal 34: per-axis judges are reported per axis; a mixed run never blends them.
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { parseAnyScenarioSuite } from "../../../src/eval/scenario-score.js";
-import { INSTRUCTION_VERSION } from "../../../src/instructions/build.js";
+import { disclosureInstructions } from "../../../src/instructions/build.js";
 import { ContextStillFixture } from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource } from "../source.js";
@@ -26,6 +27,7 @@ async function replay(
 	const token = crypto.randomUUID();
 	try {
 		return await runFull({
+			assemblyMode: "legacy",
 			tasks,
 			source: createFixtureSource(createMcpHandler(db, token), token),
 			createInference: (role, onTask, context) =>
@@ -37,8 +39,8 @@ async function replay(
 	}
 }
 
-test("instruction version unchanged", () => {
-	expect(INSTRUCTION_VERSION).toBe(
+test("archived instruction version remains stable", () => {
+	expect("build." + digest(disclosureInstructions)).toBe(
 		"build.af6fa023174fee6ed36dd595a27bcbe013fca3ebdfeb3989629d7edf97b43623",
 	);
 });
