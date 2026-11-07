@@ -172,6 +172,7 @@ export function createResultOperations<Tx>(
 		requireThat(s.report.input.improvement, "improvement_not_requested");
 		context.signal.throwIfAborted();
 		await context.reserve();
+		context.signal.throwIfAborted();
 		const data = {
 			report: s.report.input,
 			verification: "実行側の報告。ホストで実証されたという意味ではない",
@@ -199,6 +200,7 @@ export function createResultOperations<Tx>(
 			},
 			context.signal,
 		);
+		context.signal.throwIfAborted();
 		const content = proposalContent.parse(response.value);
 		requireThat(bytes(content) <= 16384, "context_budget_exceeded");
 		return {
@@ -453,6 +455,7 @@ export function createResultOperations<Tx>(
 	) {
 		context.signal.throwIfAborted();
 		await context.reserve();
+		context.signal.throwIfAborted();
 		const data = {
 			taskGoal: s.taskGoal,
 			succeededSummaries: s.succeededSummaries,
@@ -481,6 +484,7 @@ export function createResultOperations<Tx>(
 			},
 			context.signal,
 		);
+		context.signal.throwIfAborted();
 		const content = proposalContent.parse(response.value);
 		requireThat(bytes(content) <= 16384, "context_budget_exceeded");
 		return {

@@ -319,3 +319,6 @@ scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来�
 
 ## 2026-11-07 review R4: model Markdown local links
 モデルMarkdownのlink/image/definitionは外部http(s)/mailtoを従来どおり許可するが、相対ローカルURLのpathはbundle内に限定する。絶対path、`..` segment、backslash/control文字、符号化されたこれら/URI scheme、壊れたpercent escapeと二重符号化は拒否する。fragment/queryだけの参照は許す。これは構文による経路境界であり意味判断やリンク先の取得をしない。コードブロック内の実行例はリンクとして解釈しない。本文/各機能節/referencesすべてに同じ文法を適用し、正常な6例の本文・同梱ファイルの同一性と既存100点rubricを確認する。
+
+## 2026-11-07 review R5: cancellation at reflection/workflow await boundaries
+`propose`/`induceWorkflow` は開始時に加え、予約commit直後とInferencePort完了直後にAbortSignalを再検査する。予約中にcancelされたら推論を開始せず、providerがsignalを無視して完了してもcancel後の候補を返さない。既commitの予約は消費したままで、返却型・保存時の認可/receipt/版検査は維持する。新たな推論・I/O・予約は追加しない。
