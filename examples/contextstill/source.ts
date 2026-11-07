@@ -60,56 +60,76 @@ export function createFixtureSource(
 	transport: LocalTransport,
 	token: string,
 ): SourcePort {
-	async function call(name: string, args: unknown, signal: AbortSignal) {
+	async function call(
+		name: string,
+		args: unknown,
+		signal: AbortSignal,
+		context?: import("../../src/contracts/ports.js").ExecutionContext,
+	) {
 		signal.throwIfAborted();
-		const id = crypto.randomUUID();
-		const response = await transport(
-			new Request("http://127.0.0.1/mcp", {
-				method: "POST",
-				signal,
-				headers: {
-					authorization: `Bearer ${token}`,
-					"content-type": "application/json",
-				},
-				body: JSON.stringify({
-					jsonrpc: "2.0",
-					id,
-					method: "tools/call",
-					params: { name, arguments: args },
-				}),
-			}),
-		);
-		signal.throwIfAborted();
-		if (!response.ok) throw new Error(`contextstill_http_${response.status}`);
-		const reader = response.body?.getReader();
-		if (!reader) throw new Error("contextstill_empty_response");
-		const decoder = new TextDecoder();
-		let text = "",
-			size = 0;
+		await context?.reserve("sourceCalls");
 		try {
-			while (true) {
-				signal.throwIfAborted();
-				const next = await reader.read();
-				if (next.done) break;
-				size += next.value.byteLength;
-				if (size > MAX_BYTES)
-					throw new Error("contextstill_response_too_large");
-				text += decoder.decode(next.value, { stream: true });
+			const id = crypto.randomUUID();
+			const response = await transport(
+				new Request("http://127.0.0.1/mcp", {
+					method: "POST",
+					signal,
+					headers: {
+						authorization: `Bearer ${token}`,
+						"content-type": "application/json",
+					},
+					body: JSON.stringify({
+						jsonrpc: "2.0",
+						id,
+						method: "tools/call",
+						params: { name, arguments: args },
+					}),
+				}),
+			);
+			signal.throwIfAborted();
+			if (!response.ok) throw new Error(`contextstill_http_${response.status}`);
+			const reader = response.body?.getReader();
+			if (!reader) throw new Error("contextstill_empty_response");
+			const decoder = new TextDecoder();
+			let text = "",
+				size = 0;
+			try {
+				while (true) {
+					signal.throwIfAborted();
+					const next = await reader.read();
+					if (next.done) break;
+					size += next.value.byteLength;
+					if (size > MAX_BYTES)
+						throw new Error("contextstill_response_too_large");
+					text += decoder.decode(next.value, { stream: true });
+				}
+				text += decoder.decode();
+			} finally {
+				await reader.cancel();
+				reader.releaseLock();
 			}
-			text += decoder.decode();
-		} finally {
-			await reader.cancel();
-			reader.releaseLock();
+			const rpc = envelope.parse(JSON.parse(text));
+			if (rpc.id !== id) throw new Error("contextstill_id_mismatch");
+			if (rpc.result.isError) throw new Error("contextstill_tool_error");
+			context?.noteCall?.({
+				kind: "sourceCalls",
+				operation: name,
+				outcome: "ok",
+			});
+			return JSON.parse(rpc.result.content[0].text) as unknown;
+		} catch (error) {
+			context?.noteCall?.({
+				kind: "sourceCalls",
+				operation: name,
+				outcome: "error",
+			});
+			throw error;
 		}
-		const rpc = envelope.parse(JSON.parse(text));
-		if (rpc.id !== id) throw new Error("contextstill_id_mismatch");
-		if (rpc.result.isError) throw new Error("contextstill_tool_error");
-		return JSON.parse(rpc.result.content[0].text) as unknown;
 	}
-	const get: SourcePort["get"] = async (ref, signal) => {
+	const get: SourcePort["get"] = async (ref, signal, context) => {
 		const handle = handleOf(ref);
 		const doc = documentSchema.parse(
-			await call("get_knowledge", { handle }, signal),
+			await call("get_knowledge", { handle }, signal, context),
 		);
 		if (doc.item.handle !== handle)
 			throw new Error("contextstill_handle_mismatch");
@@ -126,12 +146,14 @@ export function createFixtureSource(
 		};
 	};
 	return {
-		search: async (query, limit, signal) => {
+		meteredCalls: true,
+		search: async (query, limit, signal, context) => {
 			const r = searchSchema.parse(
 				await call(
 					"search_knowledge",
 					{ query, limit, kinds: ["knowledge", "episode"] },
 					signal,
+					context,
 				),
 			);
 			// Forward search-wide notices verbatim as structure; no interpretation here.
@@ -146,9 +168,9 @@ export function createFixtureSource(
 			};
 		},
 		get,
-		validate: async (refs, signal) => {
+		validate: async (refs, signal, context) => {
 			for (const ref of refs) {
-				const current: Evidence = await get(ref.ref, signal);
+				const current: Evidence = await get(ref.ref, signal, context);
 				if (
 					!ref.external ||
 					current.status !== "active" ||

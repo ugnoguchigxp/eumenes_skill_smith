@@ -1,3 +1,4 @@
+import { sourceOperation } from "./source-budget.js";
 // Proposal 29: fixture-only sibling of the unchanged single-query wrapper (28).
 // Core's proposal 18 boundary stays intact: only public searchTask enters here.
 import { z } from "zod";
@@ -60,13 +61,19 @@ export function createMultiQuerySource(
 	inference: Ports<unknown>["inference"],
 	options: { deadlineAt: number; onTrace?: (trace: MultiQueryTrace) => void },
 ): SourcePort {
+	const memo = new Map<string, string[]>();
 	return {
-		search: async (searchTask, limit, signal) => {
+		meteredCalls: true,
+		search: async (searchTask, limit, signal, context) => {
 			signal.throwIfAborted();
 			let value: unknown;
-			try {
-				value = (
-					await inference.complete(
+			const key = digest({ searchTask, version: multiQueryDigests() });
+			const cached = memo.get(key);
+			if (cached) value = { queries: cached };
+			else {
+				try {
+					await context?.reserve("modelCalls");
+					const answer = await inference.complete(
 						{
 							system: MULTI_QUERY_INSTRUCTIONS,
 							data: { searchTask },
@@ -76,19 +83,27 @@ export function createMultiQuerySource(
 							deadlineAt: options.deadlineAt,
 						},
 						signal,
+					);
+					value = answer.value;
+					await context?.noteUsage?.({ ...answer, callKind: "reformulation" });
+					context?.noteCall?.({
+						kind: "modelCalls",
+						operation: "multi-query",
+						outcome: "ok",
+					});
+				} catch (error) {
+					if (
+						error instanceof Error &&
+						error.message === "inference_record_missing"
 					)
-				).value;
-			} catch (error) {
-				if (
-					error instanceof Error &&
-					error.message === "inference_record_missing"
-				)
-					throw new ReformulationRecordMissing();
-				throw error;
+						throw new ReformulationRecordMissing();
+					throw error;
+				}
 			}
 			const parsed = outputSchema.safeParse(value);
 			if (!parsed.success) throw new Error("multi_query_output_invalid");
 			const queries = parsed.data.queries;
+			memo.set(key, queries);
 			const trace: MultiQueryTrace = {
 				searchTask,
 				queries,
@@ -108,7 +123,9 @@ export function createMultiQuerySource(
 				for (const query of queries) {
 					signal.throwIfAborted();
 					trace.queryToSource.push(query);
-					const result = await inner.search(query, limit, signal);
+					const result = await sourceOperation(inner, context, "search", () =>
+						inner.search(query, limit, signal, context),
+					);
 					trace.perQuery.push({ query, ...result });
 					warnings.push(...result.warnings);
 					degraded.push(...result.degraded);
@@ -153,7 +170,13 @@ export function createMultiQuerySource(
 				options.onTrace?.(structuredClone(trace));
 			}
 		},
-		get: (ref, signal) => inner.get(ref, signal),
-		validate: (refs, signal) => inner.validate(refs, signal),
+		get: (ref, signal, context) =>
+			sourceOperation(inner, context, "get", () =>
+				inner.get(ref, signal, context),
+			),
+		validate: (refs, signal, context) =>
+			sourceOperation(inner, context, "validate", () =>
+				inner.validate(refs, signal, context),
+			),
 	};
 }

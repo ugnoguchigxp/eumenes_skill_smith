@@ -5,7 +5,13 @@ import { z } from "zod";
  * Product request.usage remains the committed aggregate; this records per-call traces.
  */
 export const usageCallSchema = z.strictObject({
-	callKind: z.enum(["build", "reflection", "workflow", "delivery_validate"]),
+	callKind: z.enum([
+		"build",
+		"reflection",
+		"workflow",
+		"delivery_validate",
+		"reformulation",
+	]),
 	inputDigest: z.string().min(1).optional(),
 	receipt: z.string().min(1).optional(),
 	inputTokens: z.number().int().nonnegative().nullable(),

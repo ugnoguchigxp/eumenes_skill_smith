@@ -1,3 +1,4 @@
+import { sourceOperation } from "./source-budget.js";
 // Proposal 28: opt-in, isolated query reformulation at the example/eval SourcePort boundary.
 // Core still passes the same authority.searchTask into SourcePort (proposal 18). This wrapper
 // receives only that public string, asks a separate InferencePort for ONE rewritten query
@@ -93,12 +94,18 @@ export function createReformulatingSource(
 		deadlineAt: number;
 	},
 ): SourcePort {
+	const memo = new Map<string, string>();
 	return {
-		search: async (searchTask, limit, signal) => {
+		meteredCalls: true,
+		search: async (searchTask, limit, signal, context) => {
+			const key = digest({ searchTask, version: reformulationDigests() });
 			let value: unknown;
-			try {
-				value = (
-					await inference.complete(
+			const cached = memo.get(key);
+			if (cached) value = { query: cached };
+			else {
+				try {
+					await context?.reserve("modelCalls");
+					const answer = await inference.complete(
 						{
 							system: REFORMULATION_INSTRUCTIONS,
 							data: { searchTask },
@@ -108,23 +115,39 @@ export function createReformulatingSource(
 							deadlineAt: options.deadlineAt,
 						},
 						signal,
+					);
+					value = answer.value;
+					await context?.noteUsage?.({ ...answer, callKind: "reformulation" });
+					context?.noteCall?.({
+						kind: "modelCalls",
+						operation: "reformulation",
+						outcome: "ok",
+					});
+				} catch (error) {
+					if (
+						error instanceof Error &&
+						error.message === "inference_record_missing"
 					)
-				).value;
-			} catch (error) {
-				if (
-					error instanceof Error &&
-					error.message === "inference_record_missing"
-				)
-					throw new ReformulationRecordMissing();
-				throw error;
+						throw new ReformulationRecordMissing();
+					throw error;
+				}
 			}
 			const parsed = outputSchema.safeParse(value);
 			if (!parsed.success) throw new Error("reformulation_output_invalid");
+			memo.set(key, parsed.data.query);
 			options.onTrace?.({ searchTask, queryToSource: parsed.data.query });
-			return inner.search(parsed.data.query, limit, signal);
+			return sourceOperation(inner, context, "search", () =>
+				inner.search(parsed.data.query, limit, signal, context),
+			);
 		},
-		get: (ref, signal) => inner.get(ref, signal),
-		validate: (refs, signal) => inner.validate(refs, signal),
+		get: (ref, signal, context) =>
+			sourceOperation(inner, context, "get", () =>
+				inner.get(ref, signal, context),
+			),
+		validate: (refs, signal, context) =>
+			sourceOperation(inner, context, "validate", () =>
+				inner.validate(refs, signal, context),
+			),
 	};
 }
 
@@ -140,9 +163,12 @@ export function createAutoReformulatingSource(
 	onFire?: () => void,
 ): SourcePort {
 	return {
-		search: async (searchTask, limit, signal) => {
+		meteredCalls: true,
+		search: async (searchTask, limit, signal, context) => {
 			if (!containsJapanese(searchTask)) {
-				const plain = await inner.search(searchTask, limit, signal);
+				const plain = await sourceOperation(inner, context, "search", () =>
+					inner.search(searchTask, limit, signal, context),
+				);
 				if (
 					plain.cards.some(
 						(card) => titleKey(card.title) === titleKey(searchTask),
@@ -151,9 +177,17 @@ export function createAutoReformulatingSource(
 					return plain;
 			}
 			onFire?.();
-			return reformulating.search(searchTask, limit, signal);
+			return sourceOperation(reformulating, context, "search", () =>
+				reformulating.search(searchTask, limit, signal, context),
+			);
 		},
-		get: (ref, signal) => inner.get(ref, signal),
-		validate: (refs, signal) => inner.validate(refs, signal),
+		get: (ref, signal, context) =>
+			sourceOperation(inner, context, "get", () =>
+				inner.get(ref, signal, context),
+			),
+		validate: (refs, signal, context) =>
+			sourceOperation(inner, context, "validate", () =>
+				inner.validate(refs, signal, context),
+			),
 	};
 }

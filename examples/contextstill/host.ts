@@ -157,9 +157,15 @@ export function createExampleHost(
 		assemblyMode: options.assemblyMode ?? (injected ? "baseline" : "legacy"),
 		skillMarkdown: contextStillSkillMarkdown,
 	};
+	const callLedger: {
+		kind: "modelCalls" | "sourceCalls";
+		operation: string;
+		outcome: "ok" | "error";
+	}[] = [];
 	const service = createSkillSmith(ports);
 	const write = <T>(op: () => T) => db.transaction(op)();
 	return {
+		callLedger,
 		db,
 		service,
 		authority,
@@ -175,6 +181,7 @@ export function createExampleHost(
 			if (!prepared) throw new Error("example_not_prepared");
 			const result = await service.execute(prepared, {
 				signal: new AbortController().signal,
+				noteCall: (call) => callLedger.push(call),
 				reserve: async (kind) => {
 					write(() => service.reserve(db, prepared, kind, authority));
 				},
@@ -195,6 +202,22 @@ export function createExampleHost(
 				authority,
 				(op) => op(db),
 				new AbortController().signal,
+				ports.assemblyMode === "legacy"
+					? undefined
+					: {
+							signal: new AbortController().signal,
+							reserve: async (kind) => {
+								write(() =>
+									service.reserveDelivery(
+										db,
+										pending.requestRef!,
+										authority,
+										kind,
+									),
+								);
+							},
+							noteCall: (call) => callLedger.push(call),
+						},
 			);
 		},
 	};

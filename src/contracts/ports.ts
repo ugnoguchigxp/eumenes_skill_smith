@@ -79,16 +79,24 @@ export interface Ports<Tx> {
 		current(tx: Tx, authority: Authority, refs: VersionRef[]): boolean;
 	};
 	source?: {
+		/** Adapter reserves each physical I/O using the supplied shared context. */
+		meteredCalls?: boolean;
 		/** Cards plus search-wide warnings/degraded/truncated as reported by the source. */
 		search(
 			query: string,
 			limit: number,
 			signal: AbortSignal,
+			context?: ExecutionContext,
 		): Promise<import("./types.js").SourceSearch>;
-		get(ref: string, signal: AbortSignal): Promise<Evidence>;
+		get(
+			ref: string,
+			signal: AbortSignal,
+			context?: ExecutionContext,
+		): Promise<Evidence>;
 		validate(
 			refs: Pick<Evidence, "ref" | "version" | "external">[],
 			signal: AbortSignal,
+			context?: ExecutionContext,
 		): Promise<boolean>;
 	};
 	inference: {
@@ -139,10 +147,17 @@ export interface ObservedUsage {
 	reasoningTokens?: number | null;
 	cachedInputTokens?: number | null;
 	receipt?: string;
-	callKind: "build" | "reflection" | "workflow" | "delivery_validate";
+	callKind:
+		"build" | "reflection" | "workflow" | "delivery_validate" | "reformulation";
 }
 export interface ExecutionContext {
 	signal: AbortSignal;
+	/** Optional per-call audit; no provider numbers invented. */
+	noteCall?(call: {
+		kind: "modelCalls" | "sourceCalls";
+		operation: string;
+		outcome: "ok" | "error";
+	}): void;
 	/** Each reservation must commit before any external call. */
 	reserve(kind: "modelCalls" | "sourceCalls"): Promise<void>;
 	/**

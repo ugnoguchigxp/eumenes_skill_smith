@@ -282,6 +282,26 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		row.usage[kind]++;
 		update(tx, row);
 	}
+	function reserveDelivery(
+		tx: Tx,
+		ref: string,
+		auth: Authority,
+		kind: "modelCalls" | "sourceCalls",
+	) {
+		const row = repo.request(tx, ref);
+		requireThat(
+			row && valid(tx, row, auth) && row.outcome?.kind === "ready",
+			"permission_denied",
+		);
+		requireThat(
+			kind === "sourceCalls" &&
+				row.usage.sourceCalls < row.request.limits.sourceCalls,
+			"budget_exceeded",
+		);
+		row.usage.sourceCalls++;
+		update(tx, row);
+	}
+
 	function noteUsage(
 		tx: Tx,
 		s: Prepared,
@@ -422,6 +442,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		auth: Authority,
 		read: <T>(op: (tx: Tx) => T) => T,
 		signal: AbortSignal,
+		context?: ExecutionContext,
 	): Promise<Reply> {
 		const snapshot = read((tx) => {
 			const row = repo.request(tx, ref);
@@ -438,7 +459,20 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				AbortSignal.timeout(limits.deliveryValidateTimeoutMs),
 			]);
 			try {
-				if (!p.source || !(await p.source.validate(external, bounded)))
+				requireThat(
+					!(p.assemblyMode !== "legacy" && p.source?.meteredCalls) || context,
+					"budget_context_required",
+				);
+				if (context && !p.source?.meteredCalls)
+					await context.reserve("sourceCalls");
+				if (
+					!p.source ||
+					!(await p.source.validate(
+						external,
+						bounded,
+						context ? { ...context, signal: bounded } : undefined,
+					))
+				)
 					return {
 						contractVersion: CONTRACT,
 						requestRef: ref,
@@ -472,8 +506,9 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		auth: Authority,
 		read: <T>(op: (tx: Tx) => T) => T,
 		signal: AbortSignal,
+		context?: ExecutionContext,
 	): Promise<SkillReply> {
-		const result = await getValidated(ref, auth, read, signal);
+		const result = await getValidated(ref, auth, read, signal, context);
 		if (result.kind !== "ready") return result;
 		const final = {
 			...result,
@@ -559,6 +594,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		execute: (s: Prepared, c: ExecutionContext) => executeBuild(p, s, c),
 		cancel: (tx: Tx, ref: string, auth: Authority) =>
 			terminate(tx, ref, auth, "user_cancelled", "cancelled"),
+		reserveDelivery,
 		noteUsage,
 		fail: (
 			tx: Tx,

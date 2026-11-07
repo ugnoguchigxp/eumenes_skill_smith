@@ -320,3 +320,94 @@ test("auto does not skip reformulation for a filtered-out title", async () => {
 	await source.search("Hidden title", 8, f.signal);
 	expect(inputs).toHaveLength(1);
 });
+
+test("M3 auto reserves two physical searches plus one shared auxiliary call and memoizes only query", async () => {
+	const f = setup();
+	let model = 0;
+	const counts = { modelCalls: 0, sourceCalls: 0 };
+	const ledger: any[] = [];
+	const aux = createReformulatingSource(
+		f.source,
+		echoModel(() => model++),
+		{ deadlineAt },
+	);
+	const source = createAutoReformulatingSource(f.source, aux);
+	const context = {
+		signal: f.signal,
+		reserve: async (kind: "modelCalls" | "sourceCalls") => {
+			counts[kind]++;
+		},
+		noteCall: (call: any) => ledger.push(call),
+	};
+	await source.search("non title", 1, f.signal, context);
+	await source.search("non title", 1, f.signal, context);
+	expect(model).toBe(1);
+	expect(counts).toEqual({ modelCalls: 1, sourceCalls: 4 });
+	expect(ledger.filter((x) => x.kind === "sourceCalls")).toHaveLength(4);
+});
+test("M3 exhausted shared model budget prevents auxiliary provider call and rewritten search", async () => {
+	const f = setup();
+	let model = 0;
+	let sourceCalls = 0;
+	const source = createAutoReformulatingSource(
+		f.source,
+		createReformulatingSource(
+			f.source,
+			echoModel(() => model++),
+			{ deadlineAt },
+		),
+	);
+	await expect(
+		source.search("non title", 1, f.signal, {
+			signal: f.signal,
+			reserve: async (kind) => {
+				if (kind === "modelCalls") throw new Error("budget_exceeded");
+				sourceCalls++;
+			},
+		}),
+	).rejects.toThrow("budget_exceeded");
+	expect(model).toBe(0);
+	expect(sourceCalls).toBe(1);
+});
+test("M3 validate reserves every get and stops at shared source cap", async () => {
+	const f = setup();
+	const refs = (await f.source.search("検証", 2, f.signal)).cards;
+	let calls = 0;
+	const ledger: any[] = [];
+	await expect(
+		f.source.validate(refs, f.signal, {
+			signal: f.signal,
+			reserve: async () => {
+				if (calls >= 1) throw new Error("budget_exceeded");
+				calls++;
+			},
+			noteCall: (call) => ledger.push(call),
+		}),
+	).rejects.toThrow("budget_exceeded");
+	expect(calls).toBe(1);
+	expect(ledger).toHaveLength(1);
+});
+test("M3 core and auxiliary share model cap, without raising existing limit", async () => {
+	const f = setup();
+	let auxCalls = 0;
+	let builderCalls = 0;
+	const source = createReformulatingSource(
+		f.source,
+		echoModel(() => auxCalls++),
+		{ deadlineAt },
+	);
+	const host = createExampleHost(
+		source,
+		"検証",
+		echoModel(() => builderCalls++),
+		{ modelCalls: 1 },
+	);
+	try {
+		await expect(host.run()).rejects.toThrow("budget_exceeded");
+		expect(auxCalls).toBe(1);
+		expect(builderCalls).toBe(0);
+		expect(host.request.limits.modelCalls).toBe(1);
+	} finally {
+		host.close();
+	}
+});

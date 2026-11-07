@@ -184,10 +184,46 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		return f();
 	};
+	const tokens = {
+		input: 0 as number | null,
+		output: 0 as number | null,
+		reasoningTokens: null as number | null,
+		cachedInputTokens: null as number | null,
+	};
+	const auxiliary = { input: 0 as number | null, output: 0 as number | null };
+	const sourceContext: ExecutionContext = {
+		...context,
+		noteUsage: async (usage) => {
+			auxiliary.input =
+				auxiliary.input === null || usage.inputTokens === null
+					? null
+					: auxiliary.input + usage.inputTokens;
+			auxiliary.output =
+				auxiliary.output === null || usage.outputTokens === null
+					? null
+					: auxiliary.output + usage.outputTokens;
+			await noteUsage?.({
+				...usage,
+				inputTokens:
+					tokens.input === null || auxiliary.input === null
+						? null
+						: tokens.input + auxiliary.input,
+				outputTokens:
+					tokens.output === null || auxiliary.output === null
+						? null
+						: tokens.output + auxiliary.output,
+			});
+		},
+	};
+	const metered = ports.assemblyMode !== "legacy" && ports.source?.meteredCalls;
+	const sourceCall = async <T>(f: () => Promise<T>) => {
+		checkpoint();
+		return metered ? f() : call(f);
+	};
 	const read = (ref: string, external: boolean) =>
 		external
 			? (requireThat(ports.source, "source_unavailable"),
-				ports.source.get(ref, signal))
+				ports.source.get(ref, signal, metered ? sourceContext : undefined))
 			: ports.registry.read(ref, r.authority, signal);
 
 	type SearchState = {
@@ -244,11 +280,12 @@ export async function executeBuild<Tx>(
 		const reported =
 			externalUsed && queryExternal
 				? sourceSearchSchema.safeParse(
-						await call(() =>
+						await sourceCall(() =>
 							ports.source!.search(
 								queryExternal,
 								request.limits.candidates,
 								signal,
+								metered ? sourceContext : undefined,
 							),
 						),
 					)
@@ -317,7 +354,9 @@ export async function executeBuild<Tx>(
 				seenEvidence.delete(evicted.ref);
 			}
 			const document = parseEvidence(
-				await call(() => read(card.ref, card.external)),
+				await (card.external ? sourceCall : call)(() =>
+					read(card.ref, card.external),
+				),
 			);
 			requireThat(
 				document.ref === card.ref &&
@@ -349,7 +388,7 @@ export async function executeBuild<Tx>(
 			}
 			seen.add(successor);
 			checkpoint();
-			await reserve("sourceCalls");
+			if (!e.external || !metered) await reserve("sourceCalls");
 			checkpoint();
 			let next: Evidence | null = null;
 			try {
@@ -523,12 +562,7 @@ export async function executeBuild<Tx>(
 
 	let modelCallsUsed = 0;
 	let decision: Decision | undefined, receipt: string | undefined;
-	const tokens = {
-		input: 0 as number | null,
-		output: 0 as number | null,
-		reasoningTokens: null as number | null,
-		cachedInputTokens: null as number | null,
-	};
+
 	let reasoningReported = false;
 	let cachedReported = false;
 	let repair: { code: string; instruction: string } | undefined;
@@ -566,6 +600,11 @@ export async function executeBuild<Tx>(
 		await reserve("modelCalls");
 		checkpoint();
 		const answer = await ports.inference.complete(modelInput, signal);
+		context.noteCall?.({
+			kind: "modelCalls",
+			operation: "build",
+			outcome: "ok",
+		});
 		receipt = answer.receipt;
 		tokens.input =
 			tokens.input === null || answer.inputTokens === null
@@ -601,8 +640,14 @@ export async function executeBuild<Tx>(
 		}
 		if (noteUsage) {
 			await noteUsage({
-				inputTokens: tokens.input,
-				outputTokens: tokens.output,
+				inputTokens:
+					tokens.input === null || auxiliary.input === null
+						? null
+						: tokens.input + auxiliary.input,
+				outputTokens:
+					tokens.output === null || auxiliary.output === null
+						? null
+						: tokens.output + auxiliary.output,
 				reasoningTokens: tokens.reasoningTokens,
 				cachedInputTokens: tokens.cachedInputTokens,
 				receipt: answer.receipt,
@@ -812,6 +857,11 @@ export async function executeBuild<Tx>(
 		await reserve("modelCalls");
 		checkpoint();
 		const answer = await ports.inference.complete(input, signal);
+		context.noteCall?.({
+			kind: "modelCalls",
+			operation: "semantic-review",
+			outcome: "ok",
+		});
 		tokens.input =
 			tokens.input === null || answer.inputTokens === null
 				? null
@@ -830,8 +880,14 @@ export async function executeBuild<Tx>(
 				: tokens.cachedInputTokens + answer.cachedInputTokens;
 		receipt = answer.receipt;
 		await noteUsage?.({
-			inputTokens: tokens.input,
-			outputTokens: tokens.output,
+			inputTokens:
+				tokens.input === null || auxiliary.input === null
+					? null
+					: tokens.input + auxiliary.input,
+			outputTokens:
+				tokens.output === null || auxiliary.output === null
+					? null
+					: tokens.output + auxiliary.output,
 			reasoningTokens: tokens.reasoningTokens,
 			cachedInputTokens: tokens.cachedInputTokens,
 			receipt,
@@ -850,11 +906,25 @@ export async function executeBuild<Tx>(
 		if (selected.length)
 			requireThat(
 				ports.source &&
-					(await call(() => ports.source!.validate(selected, signal))),
+					(await sourceCall(() =>
+						ports.source!.validate(
+							selected,
+							signal,
+							metered ? sourceContext : undefined,
+						),
+					)),
 				"source_revoked",
 			);
 	}
 	checkpoint();
+	tokens.input =
+		tokens.input === null || auxiliary.input === null
+			? null
+			: tokens.input + auxiliary.input;
+	tokens.output =
+		tokens.output === null || auxiliary.output === null
+			? null
+			: tokens.output + auxiliary.output;
 	return { decision, evidence: state.evidence, receipt, tokens };
 }
 

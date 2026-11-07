@@ -329,6 +329,12 @@ export interface RecordProvenance {
 }
 
 export interface RunUsage {
+	physicalCallLedger: {
+		taskId: string;
+		kind: "modelCalls" | "sourceCalls";
+		operation: string;
+		outcome: "ok" | "error";
+	}[];
 	/** Collected builder InferenceTask count (measured). */
 	buildInferenceTasks: number;
 	/** Collected judge InferenceTask count (measured). */
@@ -405,6 +411,7 @@ export async function runFull(deps: FullDeps) {
 		appropriateGap: boolean;
 	}[] = [];
 	let evalEvidenceGetCalls = 0;
+	const physicalCallLedger: RunUsage["physicalCallLedger"] = [];
 	const searchPreview: {
 		taskId: string;
 		retrievalRank: number | null;
@@ -457,28 +464,47 @@ export async function runFull(deps: FullDeps) {
 							},
 						)
 					: deps.source;
-			const search = await taskSource.search(
-				task.goal,
-				PRIMARY_K,
-				new AbortController().signal,
-			);
-			const retrieved = search.cards.map((card) => ({
-				ref: card.ref,
-				title: card.title,
-			}));
-			const rank = retrievalRank(search.cards, task.expectedRefs);
-			const ranks = refRanks(search.cards, task.expectedRefs);
-			searchPreview.push({
-				taskId: task.id,
-				retrievalRank: rank,
-				ranks,
-				allRequiredHitAt8: allRequiredHit(ranks, PRIMARY_K),
-				retrieved,
-			});
+			let captured = false;
+			let retrieved: { ref: string; title: string }[] = [];
+			let rank: number | null = null;
+			const capture = (search: Awaited<ReturnType<SourcePort["search"]>>) => {
+				if (captured) return;
+				captured = true;
+				retrieved = search.cards.map(({ ref, title }) => ({ ref, title }));
+				rank = retrievalRank(search.cards, task.expectedRefs);
+				const ranks = refRanks(search.cards, task.expectedRefs);
+				searchPreview.push({
+					taskId: task.id,
+					retrievalRank: rank,
+					ranks,
+					allRequiredHitAt8: allRequiredHit(ranks, PRIMARY_K),
+					retrieved,
+				});
+			};
+			const buildSource: SourcePort =
+				assemblyMode === "legacy"
+					? taskSource
+					: {
+							...taskSource,
+							search: async (...args) => {
+								const result = await taskSource.search(...args);
+								capture(result);
+								return result;
+							},
+						};
+			if (assemblyMode === "legacy")
+				capture(
+					await taskSource.search(
+						task.goal,
+						PRIMARY_K,
+						new AbortController().signal,
+					),
+				);
+
 			const collected: InferenceTask[] = [];
 			const view = builderView(task);
 			const host = createExampleHost(
-				taskSource,
+				buildSource,
 				view.goal,
 				deps.createInference(
 					"build",
@@ -729,6 +755,9 @@ export async function runFull(deps: FullDeps) {
 					);
 				}
 			} finally {
+				physicalCallLedger.push(
+					...host.callLedger.map((call) => ({ taskId: task.id, ...call })),
+				);
 				host.close();
 			}
 		} catch (error) {
@@ -745,6 +774,7 @@ export async function runFull(deps: FullDeps) {
 	}
 	const complete = statuses.every((s) => s.status === "scored");
 	const usage: RunUsage = {
+		physicalCallLedger,
 		buildInferenceTasks,
 		judgeInferenceTasks,
 		reformulationInferenceTasks,
