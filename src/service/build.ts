@@ -1,3 +1,7 @@
+import { assembleSkillBody } from "./skill-document.js";
+import { legacyExecutionBody } from "./legacy-content.js";
+export { bodyTail } from "./legacy-content.js";
+import { validateModelMarkdown } from "./model-markdown.js";
 import { z } from "zod";
 import { renderSkillMarkdown, checkLocalizedHost } from "./skill-markdown.js";
 import {
@@ -106,53 +110,19 @@ export function checkDecision(
 		rejectDisclosedBodyRewrite(decision, evidence);
 	return selected;
 }
-/** Host-appended acceptance/constraints/verification/assumptions blocks (shared with SKILL.md rendering). */
-export function bodyTail(
-	task: Build["content"]["task"],
-	d: Pick<ReadyDecision, "verification" | "assumptions">,
-): string[] {
-	return [
-		"受入条件\n" + task.acceptance.map((c) => c.id + ": " + c.text).join("\n"),
-		task.constraints.length
-			? "制約\n" + task.constraints.map((c) => c.id + ": " + c.text).join("\n")
-			: "",
-		"検証\n" + d.verification.join("\n"),
-		d.assumptions.length
-			? "前提\n" + d.assumptions.map((a) => a.text).join("\n")
-			: "",
-	].filter(Boolean);
-}
 export function buildContent(
 	p: Prepared,
 	d: ReadyDecision,
 	evidence: Evidence[],
 ): Build["content"] {
 	const selected = checkDecision(d, evidence, p);
-	let body: string;
-	if (d.localizedInstructions !== undefined) body = d.localizedInstructions;
-	else if (d.strategy === "reuse") body = selected[0]!.body;
-	else if (d.patches.length)
-		body = selected[0]!
-			.sections!.map((s) => {
-				const patch = d.patches.find((x) => x.sectionId === s.id);
-				return patch?.body ?? s.body;
-			})
-			.join("\n\n");
-	else body = d.sections.map((s) => s.body).join("\n\n");
 	const { request } = p.record;
-	body = [
-		!p.policy.alreadyPresent ? p.policy.body : "",
-		body,
-		...bodyTail(request.task, d),
-	]
-		.filter(Boolean)
-		.join("\n\n");
-	return {
+	const content: Build["content"] = {
 		contractVersion: CONTRACT,
 		task: request.task,
 		audience: request.audience,
 		environment: request.environment,
-		body,
+		body: "",
 		decision: d,
 		dependencies: selected.map(
 			({
@@ -164,6 +134,16 @@ export function buildContent(
 		),
 		policy: p.policy,
 	};
+	if (d.localizedInstructions !== undefined) {
+		validateModelMarkdown(d.title ?? "", d.localizedInstructions);
+		content.body = assembleSkillBody(
+			content,
+			d.localizedInstructions,
+			d.name ?? "skill",
+		);
+	} else
+		content.body = legacyExecutionBody(request.task, p.policy, d, selected);
+	return content;
 }
 
 export async function executeBuild<Tx>(

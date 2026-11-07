@@ -583,99 +583,20 @@ P1〜P3は外部依存をfixtureへ差し替えて進められる。P4の基盤�
 
 参照したのはローカルの文書・コードであり、稼働中サービスの受入記録ではない。外部仕様の最新版を確認する作業は各接続の実装前に行う。
 
-## 21. Final Agent Skills artifact (2026-11-07)
+## Final SKILL.md contract — current (2026-11-07 review)
 
-Internal build decisions and persisted Build remain JSON; the final consumable artifact is
-`<name>/SKILL.md`, rendered deterministically after normal build assembly and authorization.
-There was no SKILL.md/frontmatter renderer: `buildContent` already materializes reuse from
-the selected evidence body (rather than empty decision.sections), applies adapt patches,
-and assembles ordered compose/provisional sections with policy, acceptance, constraints,
-verification and assumptions. This existing assembly is the source of the Markdown body.
+Current builds use meaningful model-generated name/title/description/language and instructions-only Markdown. The host assembles canonical body once from structured data; acceptance, constraints, checks, assumptions and provisional status never depend on free-text inclusion. Optional localizedHost values preserve every host ID and keep originals auditable. Only the instruction section is Markdown-capable; host text and provenance are escaped plain text.
 
-The renderer adds YAML `name` and `description`, Markdown instructions/checks, provenance
-and explicit assumption status. It never infers task meaning, calls an LLM, searches again,
-or changes the model instructions/schema, judges, completeness checks, budgets or auth.
-Names derive mechanically from task goal plus a stable digest; non-ASCII-only goals use
-a digest fallback. An explicit valid name may be supplied for exports; it must equal the
-parent directory. Description states what the task is and when to use the artifact, bounded
-to the spec's 1024 characters. Only name/description are frontmatter fields; sourceRefs,
-strategy and assumptions live in the body. Spec: https://agentskills.io/specification.
+`getSkillValidated` rechecks authorization and external dependencies, validates the canonical body, and returns `{name,path,content,digest,rendererVersion,sourceExtractorVersion}` beside the internal Build. Byte limits remain unchanged. Non-ready outcomes emit no artifact. `sourceMarkdown` applies only to explicit legacy reuse; extraction failures are coded, not raw exceptions.
 
-Ready reuse/adapt/compose/provisional all render. Reuse must contain the already-resolved
-source body; compose retains section order and lists sourceRefs as provenance (not proof
-of verification). Provisional/exploratory is visibly marked unverified and provisional,
-with assumptions and the recorded verification instructions, never promoted to official.
-Needs_input produces no artifact and retains its question; other non-ready replies also
-produce no artifact. Final ready replies expose the artifact beside the internal build.
-CLI and full scenario eval write one `<name>/SKILL.md` per successful task under their
-output directory, even if judge replay is pending; retrieval-only writes none. Artifacts
-do not count as judge scores or alter the existing eval complete decision.
-
-The validator parses YAML (not ad hoc string splitting), rejects invalid/missing fields,
-invalid names or directory mismatch and empty bodies; it validates format, not instruction
-quality, provenance truth, prompt safety or successful execution. Rendering preserves the
-existing body and cannot bundle source-referenced auxiliary assets absent from records.
-No downstream JSON-vs-SKILL.md agent task outcome improvement is measured by this change.
-
-Compatibility refinement: the existing JSON transport Reply schema and get/getValidated
-remain unchanged as internal/lifecycle APIs. New `getSkillValidated` is the final
-artifact delivery boundary (ready adds skill beside build), used by the example build
-host/CLI and scenario runner. This keeps persisted content, judge inputs and historical
-record digests byte-equivalent while making final build delivery Markdown. It reuses
-getValidated authorization and enforces the same request outputBytes on the final reply.
-Existing integrations must select this new final boundary when distributing skills.
-
-### 21.1 SKILL.md body excludes transport envelopes (2026-11-07)
-
-Reuse previously pasted the selected evidence body verbatim; for ContextStill that body is
-the source JSON document (contractVersion, trust, handle, scores, timestamps, `_fixture`
-digest, fixtureLimitations), which is meaningless to a SKILL.md reader. Only the final
-renderer changes: the assembled body is split deterministically (host policy prefix, main
-instructions, and the host tail shared with `buildContent` via `bodyTail`, byte-identical),
-and acceptance/constraints/verification/assumptions render as their own Markdown sections.
-For reuse only, an optional port `skillMarkdown.sourceMarkdown(body)` extracts usable text;
-the ContextStill example renders `body` and non-empty rationale, steps, appliesWhen,
-notAppliesWhen, exceptions, examples (episodes: intent…openQuestions) by fixed field
-mapping, with no model call or keyword branching; non-envelope bodies pass through. Compose,
-adapt and provisional bodies are already model/host text and are rendered unchanged.
-Provenance becomes a `Sources` list of `title (ref)`. Trust class, digests, timestamps,
-confidence and fixture metadata stay in the internal JSON Build (unchanged digest/schema,
-judge inputs). Rendered source text is still reference data, not verified execution; it is
-not given more authority than the build's reuse decision already gave it.
-
-### 21.2 SKILL.md template language, name and description (2026-11-07)
-
-Rendered SKILL.md must not mix template languages: every fixed string the renderer adds
-(headings 手順/受け入れ条件/制約/確認/出典/前提, the provisional banner, the Sources note,
-strategy labels 再利用/改変/組み合わせ/暫定, empty-list notes, the description template and the
-ContextStill field headings 理由/手順/適用する場面/…) is Japanese. Assumptions render as plain
-text; internal `(mandatory; resolved)` markers are removed, and only a mandatory assumption
-gets a short suffix (`（必須・未解決）` or `（必須・解決済み）`).
-
-`name` default (explicit names are still validated, never repaired): for `reuse`, the
-kebab-case ASCII slug of the primary source (`sourceRefs[0]`) title, max 64 chars per the
-Agent Skills spec; if that slug is empty (e.g. a non-ASCII title) or for other strategies,
-the existing goal-identity `skillName(goal)`. Same build ⇒ same name. `description` is
-Japanese, built from the strategy field, source titles and goal by a fixed template
-(what it does + when to use it), bounded to 1024 chars. No model call, no keyword branching.
-
-Remaining mixing (not fixed here): source skill bodies, source titles, task goals,
-acceptance/constraint/verification text are data, inserted verbatim. An English source body
-(e.g. ContextStill `kn_4eev36…`) stays English inside a Japanese template, and an English
-goal appears inside the Japanese description. The renderer must not machine-translate. A fix
-would need a recorded-inference build step that writes instructions/verification in the
-request language; that changes build instructions and INSTRUCTION_VERSION, invalidates
-build/judge records and requires re-scoring, so it is out of scope.
-
+Historical note (superseded 2026-11-07): the first renderer used goal slugs and decoded policy/main/bodyTail from persisted JSON. Those are retained only in the explicit legacy assembly/rendering modules for archival regression replay. They are not current naming rules, instruction format, judge identity or quality claims. Historical build.v2/v3 labels are replaced by digest-based INSTRUCTION_VERSION. The format contract is pinned in docs/skill-format.md; format validity does not establish semantic or execution success.
 
 ## Localized build artifacts (2026-11-07)
 
 The builder, not the deterministic renderer, owns a concise meaningful `name`
 (ASCII kebab-case, at most 64 characters), a short human `title`, a useful
 `description` (what + when, without copied source titles), `language` (the request
-language tag), and `localizedInstructions`. The latter is complete Markdown below
-the H1: faithful guidance plus verification, acceptance/constraints, assumptions,
-and any provisional warning, all in the request language. Reuse faithfully
+language tag), and `localizedInstructions`. The latter contains only faithful instructions in the request language. Host-owned conditions, verification, assumptions and provisional status are rendered separately; optional localizedHost entries supply checked per-ID translations with originals. Reuse faithfully
 restates the disclosed source body, not its transport envelope; original evidence
 and handles remain provenance, never instruction authority. Sections/patches and
 strategy/source-completeness/capability checks retain their existing meaning.
@@ -689,15 +610,11 @@ responsibilities, not a claimed deterministic guarantee. New rendering uses the
 model title, description, and Markdown; source titles occur only in the appended
 `出典` provenance block. No new goal-slug/hash defaults on current builds.
 
-The build instruction digest changes. The initial index-only disclosure prompt
-and schema are archived unchanged: existing disclose/re_search control records
-can still replay against their exact digest. A terminal answer on this legacy
+The build instruction digest changes. The initial disclosure instruction/schema constants remain archived, but current metadata trust markings and execution.v2 replay identities change the actual input. Only explicit legacy runs preserve archived full payload digests. A terminal answer on this legacy
 initial turn is not accepted as a current ready build: the next budgeted turn
 uses current instructions/schema (without copying the old answer into model
 context). After a successful disclose, all subsequent turns use current fields.
-Legacy terminal needs_input/unavailable answers remain valid. No new model calls,
-I/O, auth, or completeness allowances are introduced. An extra current turn uses
-existing model-call and byte/token budgets; exhaustion fails closed.
+Legacy-shaped terminal needs_input/unavailable answers remain valid. Current ready builds additionally require a budgeted semantic review, and auxiliary search inference shares the same limits. Existing model-call and byte/token limits are not raised; exhaustion fails closed.
 
 Re-recording uses only InferencePort/recorded-inference, with missing tasks and
 builder-only packets under /tmp/p-rebuild. No executor-written builder or judge
@@ -716,11 +633,7 @@ source title is added to generated descriptions. Host policy is not translated
 by the renderer or demoted to untrusted model text.
 
 
-For current localized artifacts, the unchanged judge receives the final SKILL.md
-string as its existing body field (including the new presentation). This prevents
-host-appended internal JSON/body-tail checks from masking omissions in the actual
-artifact. Archived legacy runs retain their original judge body and exact digests.
-No judge instructions, rubric, schema, or gold routing are changed.
+Current judges receive final artifacts and judge-only reference bodies in an untrusted data envelope; retrieval fidelity dimensions are separate from name selection. Judge instruction/schema digests and artifact bindings are versioned. Explicit archival runs retain their original judge body and legacy replay digests. Gold remains judge/host-only. Human calibration, independent-provider evaluation and downstream execution gains remain unmeasured.
 
 ## Review H1 — host-owned invariants (2026-11-07)
 Current artifacts always render acceptance, constraints, verification, assumptions and provisional status outside model-authored instructions. Optional localizedHost entries cover every stable host ID exactly once; originals remain in Build and in the artifact for audit. A separate semantic review via InferencePort must confirm meaning preservation, source fidelity and non-contradiction, within the existing shared model/input/output budget. Unreservable or invalid review fails closed. Legacy archival replay is isolated and is not current validation. Semantic review is not human calibration or execution authorization.
@@ -758,3 +671,6 @@ Snapshot/seed writers persist normalized title_key (NFKC, ECMAScript trim, ASCII
 
 ## Review L2 — pinned frontmatter format (2026-11-07)
 The supported frontmatter contract is pinned to the Agent Skills specification snapshot retrieved 2026-11-07 from https://agentskills.io/specification (no numeric upstream version is published). See docs/skill-format.md for the exact supported contract. All six supported fields are type-checked, including string-only metadata values and compatibility length. validateSkillMarkdownFormat is explicitly structural format validation, not a safety/semantic/execution verdict; the compatibility alias validateSkillMarkdown remains available.
+
+## Review L3 — one pure document assembly (2026-11-07)
+Current Build.content.body is the host-assembled canonical Markdown body produced by assembleSkillBody, not a second model body plus a legacy tail. Rendering checks canonical equality then adds frontmatter; no independently maintained host-tail representation exists on the current path. Legacy execution-body construction/extraction lives in legacy-content.ts and is selected only by complete absence of presentation fields. All host typed text is rendered as plain text; only instructions may contain model Markdown. Extractor exceptions/empty output become coded final unavailable replies. Earlier sections explicitly marked historical are not current contracts.

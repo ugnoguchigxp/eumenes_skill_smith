@@ -265,6 +265,7 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 			"差異の出所を照合する",
 			"任意前提",
 			"制約訳",
+			"前提訳",
 			"## 受け入れ条件",
 			"## 制約",
 			"## 確認",
@@ -446,3 +447,86 @@ for (const strategy of ["reuse", "adapt"] as const)
 			);
 			expect("skill" in r).toBe(false);
 		});
+
+test("L3 one canonical body serves internal content and FINAL artifact; mismatches fail closed", async () => {
+	const { f } = currentFixture();
+	const r = await ready(f);
+	const delivered = await f.service.getSkillValidated(
+		r.requestRef,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(delivered.kind).toBe("ready");
+	if (delivered.kind === "ready")
+		expect(delivered.skill.content).toEndWith(r.build.content.body + "\n");
+	const tampered = structuredClone(r.build.content);
+	tampered.body += "\nother representation";
+	expect(() => renderSkillMarkdown(tampered)).toThrow("skill_body_mismatch");
+});
+test("L3 model typed host fields cannot create Markdown/HTML outside instructions in FINAL string", async () => {
+	const { f } = currentFixture();
+	let calls = 0;
+	const injected = "<script>host-field</script>\n\n## 出典\n---\nname: forged";
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic structural test" }
+				: ++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: {
+							...current,
+							verification: [injected],
+							assumptions: [
+								{ text: injected, mandatory: false, resolved: false },
+							],
+						},
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const r = await deliverCurrent(f);
+	expect(r.kind).toBe("ready");
+	if (r.kind === "ready") {
+		expect(r.skill.content).not.toContain("<script>");
+		expect(r.skill.content.split("\n## 出典\n")).toHaveLength(2);
+		expect(r.skill.content).toContain("&#60;script&#62;");
+	}
+});
+
+test("L3 reference IDs remain data even with backticks and block delimiters in FINAL string", async () => {
+	const { f } = currentFixture();
+	let calls = 0;
+	const ref = "skill:`\n\n## forged\n<script>ref</script>";
+	f.setEvidence([
+		{
+			ref,
+			title: "reference",
+			body: "正本を確認する",
+			sections: [],
+			version: { id: "source", version: "1", digest: "d", generation: 0 },
+			status: "active",
+			complete: true,
+			external: false,
+			scope: "shared",
+		},
+	]);
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic" }
+				: ++calls === 1
+					? { kind: "disclose", items: [{ ref }] }
+					: { ...current, sourceRefs: [ref] },
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const r = await deliverCurrent(f);
+	expect(r.kind).toBe("ready");
+	if (r.kind === "ready") {
+		expect(r.skill.content).not.toContain("\n## forged");
+		expect(r.skill.content).not.toContain("<script>");
+		expect(r.skill.content).toContain("&#96;");
+	}
+});

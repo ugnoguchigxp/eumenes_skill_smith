@@ -122,7 +122,7 @@ const storedReady = legacyReady
 			d.localizedInstructions,
 		];
 		return (
-			values.every((v) => v === undefined) ||
+			(values.every((v) => v === undefined) && d.localizedHost === undefined) ||
 			values.every((v) => v !== undefined)
 		);
 	}, "incomplete_skill_presentation");

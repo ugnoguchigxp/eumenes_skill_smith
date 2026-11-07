@@ -15,7 +15,12 @@ import type {
 	Reply,
 	RequestRecord,
 } from "../contracts/types.js";
-import { buildContent, contentDigest, executeBuild } from "./build.js";
+import {
+	buildContent,
+	contentDigest,
+	executeBuild,
+	failureCode,
+} from "./build.js";
 import { resolveAssembly } from "./assembly.js";
 import { bytes, digest, requireThat } from "./identity.js";
 import { createResultOperations } from "./results.js";
@@ -510,14 +515,25 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	): Promise<SkillReply> {
 		const result = await getValidated(ref, auth, read, signal, context);
 		if (result.kind !== "ready") return result;
-		const final = {
-			...result,
-			skill: renderSkillMarkdown(
-				result.build.content,
-				undefined,
-				p.skillMarkdown,
-			),
-		};
+		let final: Extract<SkillReply, { kind: "ready" }>;
+		try {
+			final = {
+				...result,
+				skill: renderSkillMarkdown(
+					result.build.content,
+					undefined,
+					p.skillMarkdown,
+				),
+			};
+		} catch (error) {
+			return {
+				contractVersion: CONTRACT,
+				requestRef: ref,
+				kind: "unavailable",
+				code: failureCode(error),
+			};
+		}
+
 		return read((tx) => {
 			const row = repo.request(tx, ref);
 			if (!row || !valid(tx, row, auth) || !usable(tx, result.build, auth))

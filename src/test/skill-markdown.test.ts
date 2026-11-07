@@ -476,3 +476,38 @@ test("L2 all supported optional frontmatter fields follow the pinned spec", () =
 	);
 	expect(() => validateSkillMarkdown(text)).not.toThrow();
 });
+
+for (const empty of [false, true])
+	test(`L3 legacy source extractor failures become coded FINAL unavailable (${empty})`, async () => {
+		const f = fixture();
+		f.setDecision({
+			kind: "ready",
+			strategy: "reuse",
+			sourceRefs: ["skill:compare@1"],
+			sections: [],
+			patches: [],
+			requiredCapabilities: [],
+			verification: ["確認"],
+			assumptions: [],
+		});
+		const r = await ready(f);
+		f.ports.skillMarkdown = {
+			sourceMarkdown: () => {
+				if (empty) return " ";
+				throw new Error("PRIVATE_RAW_FAILURE");
+			},
+		};
+		const final = await f.service.getSkillValidated(
+			r.requestRef,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect(final.kind).toBe("unavailable");
+		if (final.kind === "unavailable")
+			expect(final.code).toBe(
+				empty ? "skill_source_body_empty" : "skill_source_extract_failed",
+			);
+		expect(JSON.stringify(final)).not.toContain("PRIVATE_RAW_FAILURE");
+		expect("skill" in final).toBe(false);
+	});
