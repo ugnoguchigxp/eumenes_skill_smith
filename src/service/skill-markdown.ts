@@ -27,6 +27,16 @@ export interface SkillArtifact {
 	content: string;
 }
 
+/** Audit projection is separate from SKILL content; callers may persist it as a sidecar. */
+export function skillAuditMetadata(build: Build["content"]) {
+	return structuredClone({
+		task: build.task,
+		policy: build.policy,
+		dependencies: build.dependencies,
+		decision: build.decision,
+	});
+}
+
 const validName = (name: string) =>
 	name.length <= 64 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name);
 

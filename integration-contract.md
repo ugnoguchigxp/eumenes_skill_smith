@@ -228,3 +228,5 @@ H1 の表示契約は、課題に関係する canonical reader 制約と verific
 reuse は原則だけの出典に縛られて抽象論で止まらず、LLM が正しいと判断できる一般的な具体策を通常の手順として補ってよい。追加は nonSourceAdditions（practice/reason）に記録して、出典由来と区別する。新規 terminal schema ではこの配列を必須（追加なしは空）とし、旧保存形式は読める。疑わしい事項は断言せず短い注意として手順へ統合し、flaggedItems は監査専用。既存の意味検証は一般知識追加の妥当性、注意の保持、接点と分野手がかりの統合、canonical 制約との非矛盾を点検し、不明なら拒否する。新規の LLM 呼出しは増やさない。
 
 renderer は skill-markdown.v6。参照IDが本文に残る場合は黙って削除せず構造違反として拒否する。quality-judge.v2 の採点軸と誤手順時最大5点は維持し、出典/監査節を表示しないことや一般知識の補足自体を減点しないよう明記して採点指示digestを更新する。実行結果は依然未測定。旧スコアは現行版へ流用しない。
+
+評価器は本文とは別に skillAuditMetadata（canonical task/policy/dependencies/decision）を judge-only の未信頼データへ渡す。一般知識の追加や非表示条件を採点役が監査できるようにし、本文に出典節を復活させない。本文digestと監査metadata digestを別々に記録する。

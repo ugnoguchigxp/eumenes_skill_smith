@@ -1,3 +1,4 @@
+import { skillAuditMetadata } from "../service/skill-markdown.js";
 import { expect, test } from "bun:test";
 import { z } from "zod";
 import { fixture, ready } from "./fixture.js";
@@ -894,6 +895,12 @@ for (const strategy of ["reuse", "adapt", "compose", "provisional"] as const) {
 				d.sourceReview.flaggedItems,
 			);
 			expect(r.build.content.decision.sourceRefs).toEqual(d.sourceRefs);
+			const audit = skillAuditMetadata(r.build.content);
+			expect(audit.decision).toEqual(r.build.content.decision);
+			expect(audit.dependencies).toEqual(r.build.content.dependencies);
+			expect(audit.task).toEqual(r.build.content.task);
+			audit.task.goal = "changed copy";
+			expect(r.build.content.task.goal).not.toBe(audit.task.goal);
 			if (strategy === "provisional")
 				expect(text.indexOf("暫定・未検証")).toBeGreaterThan(
 					text.indexOf("## 手順"),

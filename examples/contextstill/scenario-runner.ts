@@ -1,3 +1,4 @@
+import { skillAuditMetadata } from "../../src/service/skill-markdown.js";
 import {
 	currentAbstentionJudgeSchema,
 	currentAbstentionJudgeOutputSchema,
@@ -611,6 +612,9 @@ export async function runFull(deps: FullDeps) {
 					provenance.artifactDigest = ready.skill.digest;
 					deps.onSkill?.(task.id, ready.skill);
 				}
+				const artifactMetadata = ready
+					? skillAuditMetadata(ready.build.content)
+					: null;
 				const usedRefs = ready ? ready.build.content.decision.sourceRefs : [];
 				const strategy = ready ? ready.build.content.decision.strategy : null;
 				const sections = ready ? ready.build.content.decision.sections : [];
@@ -717,6 +721,10 @@ export async function runFull(deps: FullDeps) {
 											...judgePayload,
 											referenceEvidence,
 											finalArtifact: ready?.skill.content ?? null,
+											artifactMetadata,
+											artifactMetadataDigest: artifactMetadata
+												? digest(artifactMetadata)
+												: null,
 											artifactDigest: ready?.skill.digest ?? null,
 											rendererVersion:
 												ready?.skill.rendererVersion ?? SKILL_RENDERER_VERSION,

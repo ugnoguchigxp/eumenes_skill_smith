@@ -437,6 +437,10 @@ test("M2 current retrieval judge gets judge-only full reference bodies inside un
 		judgeInput.data.untrustedJudgeData.data.referenceEvidence[0].body,
 	).toBe("JUDGE_ONLY_REFERENCE_BODY");
 	expect(judgeInput.data.untrustedJudgeData.data.finalArtifact).toBeNull();
+	expect(judgeInput.data.untrustedJudgeData.data.artifactMetadata).toBeNull();
+	expect(
+		judgeInput.data.untrustedJudgeData.data.artifactMetadataDigest,
+	).toBeNull();
 	expect(r.retrievalFidelityScores[0]).toMatchObject({
 		nameSelection: 1,
 		constraintPreservation: 2,
