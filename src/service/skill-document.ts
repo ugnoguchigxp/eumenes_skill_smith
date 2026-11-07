@@ -112,14 +112,7 @@ export function assembleSkillBody(
 			...doc.sections.map((section) => {
 				const content =
 					section.kind === "workflow"
-						? [
-								doc.provisionalNotice && d.strategy === "provisional"
-									? `> ${markdownPlainText(doc.provisionalNotice)}`
-									: "",
-								instructions,
-							]
-								.filter(Boolean)
-								.join("\n\n")
+						? instructions
 						: section.kind === "completion"
 							? [section.body, list(checks, true)].filter(Boolean).join("\n\n")
 							: section.body;

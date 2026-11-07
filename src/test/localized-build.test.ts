@@ -250,7 +250,7 @@ async function deliverCurrent(f: ReturnType<typeof fixture>) {
 		new AbortController().signal,
 	);
 }
-test("H1 final artifact preserves translations and canonical audit originals with provisional warning", async () => {
+test("H1 final artifact preserves translations and canonical audit originals with provisional scope in audit and functional stops", async () => {
 	const { f } = currentFixture();
 	let call = 0;
 	const d = {
@@ -286,16 +286,11 @@ test("H1 final artifact preserves translations and canonical audit originals wit
 	const result = await deliverCurrent(f);
 	expect(result.kind).toBe("ready");
 	if (result.kind === "ready")
-		for (const text of [
-			"暫定・未検証",
-			"確認訳",
-			"制約訳",
-			"前提訳",
-			"## 確認",
-		])
+		for (const text of ["確認訳", "制約訳", "前提訳", "## 確認"])
 			expect(result.skill.content).toContain(text);
 	expect(JSON.stringify(result)).toContain("原資料を変更しない");
 	expect(JSON.stringify(result)).toContain("任意前提");
+	expect(JSON.stringify(result)).toContain("暫定・未検証");
 });
 test("H1 semantic contradiction and unreservable review fail closed without final artifact", async () => {
 	for (const budget of [2, 3]) {
@@ -806,7 +801,10 @@ test("v5 provisional needs explicit unverified domain anchors in metadata", asyn
 			const text = renderSkillMarkdown(r.build.content).content;
 			expect(text).not.toContain("## 未確認の手がかり");
 			expect(r.build.content.decision.domainAnchors).toEqual(domainAnchors);
-			expect(text).toContain("暫定・未検証");
+			expect(text).not.toContain("> 暫定・未検証");
+			expect(r.build.content.decision.document?.provisionalNotice).toContain(
+				"暫定・未検証",
+			);
 			expect(text).toContain(domainAnchors[0]!.term);
 		}
 	}
@@ -920,10 +918,12 @@ for (const strategy of ["reuse", "adapt", "compose", "provisional"] as const) {
 			expect(audit.task).toEqual(r.build.content.task);
 			audit.task.goal = "changed copy";
 			expect(r.build.content.task.goal).not.toBe(audit.task.goal);
-			if (strategy === "provisional")
-				expect(text.indexOf("暫定・未検証")).toBeGreaterThan(
-					text.indexOf("## 手順"),
+			if (strategy === "provisional") {
+				expect(text).not.toContain("> 暫定・未検証");
+				expect(audit.decision.document?.provisionalNotice).toContain(
+					"暫定・未検証",
 				);
+			}
 		},
 	);
 }
@@ -1430,4 +1430,10 @@ test("v11 new rendering fails closed without LLM-authored principles", async () 
 	await expect(deliverDocument(document)).rejects.toThrow(
 		"skill_principles_missing",
 	);
+});
+
+test("v11 normalization and provisional observations are LLM judgments, not topic routing", () => {
+	expect(buildInstructions).toContain("対象を限定した実際の変換操作");
+	expect(buildInstructions).toContain("不足している観測値・入手先");
+	expect(semanticReviewInstructions).toContain("全references");
 });
