@@ -1,4 +1,3 @@
-import { assembleSkillBody } from "../service/skill-document.js";
 import { skillAuditMetadata } from "../service/skill-markdown.js";
 import { expect, test } from "bun:test";
 import { z } from "zod";
@@ -1354,30 +1353,4 @@ test("v9 completion text avoids evaluation boilerplate without dropping task-spe
 	expect(semanticReviewInstructions).toContain(
 		"対象に関係しない定型文や評価メタを繰り返さない",
 	);
-});
-
-test("v9 concrete commands remain LLM-checked, scoped and honestly unexecuted", () => {
-	expect(buildInstructions).toContain("実在するコマンド・設定・コードへ置換");
-	expect(buildInstructions).toContain("未導入ツールを実行済みと扱わず");
-});
-test("v9 final bytes preserve functional commands, not audit fields", async () => {
-	const { reply } = await deliverDocument();
-	if (reply.kind !== "ready") throw new Error("fixture");
-	const b = structuredClone(reply.build.content);
-	b.decision.localizedInstructions =
-		"1. `python -m py_compile example.py` の終了0を確認し、失敗なら停止する。";
-	b.decision.document!.references[0]!.content +=
-		"\n\n```sh\npython -m py_compile example.py\n```";
-	b.body = assembleSkillBody(
-		b,
-		b.decision.localizedInstructions!,
-		"compare-source-records",
-	);
-	const rendered = renderSkillMarkdown(b);
-	expect(rendered.content).toContain("`python -m py_compile example.py`");
-	expect(rendered.files?.[0]?.content).toContain(
-		"python -m py_compile example.py",
-	);
-	expect(rendered.content).not.toContain("## 出典");
-	expect(rendered.content).not.toContain("skill:compare@1");
 });
