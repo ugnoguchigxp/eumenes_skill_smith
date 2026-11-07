@@ -70,7 +70,12 @@ export function assembleSkillBody(
 	const policy = build.policy.alreadyPresent ? "" : build.policy.body;
 	const instructions = [policy, main].filter((t) => t.trim()).join("\n\n");
 	requireThat(instructions.trim().length > 0, "skill_body_empty");
-	const { acceptance, constraints } = build.task;
+	const acceptance = build.task.acceptance.filter(
+		(x) => !x.visibility || x.visibility === "reader",
+	);
+	const constraints = build.task.constraints.filter(
+		(x) => !x.visibility || x.visibility === "reader",
+	);
 	checkLocalizedHost(build.task, d);
 	const hostText = (id: string, original: string) => {
 		const localized = d.localizedHost?.find((x) => x.id === id)?.text;
@@ -86,21 +91,11 @@ export function assembleSkillBody(
 		"## 手順\n\n" + instructions,
 		acceptance.length
 			? "## 受け入れ条件\n\n" +
-				list(
-					acceptance.map(
-						(c) =>
-							`${markdownPlainText(c.id)}: ${hostText("acceptance:" + c.id, c.text)}`,
-					),
-				)
+				list(acceptance.map((c) => hostText("acceptance:" + c.id, c.text)))
 			: "",
 		constraints.length
 			? "## 制約\n\n" +
-				list(
-					constraints.map(
-						(c) =>
-							`${markdownPlainText(c.id)}: ${hostText("constraint:" + c.id, c.text)}`,
-					),
-				)
+				list(constraints.map((c) => hostText("constraint:" + c.id, c.text)))
 			: "",
 		d.sourceReview?.flaggedItems.length
 			? "## 要確認の出典記述\n\n" +
@@ -129,19 +124,23 @@ export function assembleSkillBody(
 					)
 				: "出典なし。この指針は検索で得た公式の Skill に基づいていない。"),
 		"## 前提\n\n" +
-			(d.assumptions.length
+			(d.assumptions.filter((a) => !a.visibility || a.visibility === "reader")
+				.length
 				? list(
-						d.assumptions.map(
-							(a, i) =>
-								hostText("assumption:" + i, a.text) +
-								(a.mandatory
-									? a.resolved
-										? "（必須・解決済み）"
-										: "（必須・未解決）"
-									: ""),
-						),
+						d.assumptions
+							.map((a, i) => ({ a, i }))
+							.filter(({ a }) => !a.visibility || a.visibility === "reader")
+							.map(
+								({ a, i }) =>
+									hostText("assumption:" + i, a.text) +
+									(a.mandatory
+										? a.resolved
+											? "（必須・解決済み）"
+											: "（必須・未解決）"
+										: ""),
+							),
 					)
-				: "記録された前提なし。すべての条件を確かめたという意味ではない。"),
+				: "読者向けの前提注記なし。すべての条件を確かめたという意味ではない。"),
 	]
 		.filter(Boolean)
 		.join("\n\n");

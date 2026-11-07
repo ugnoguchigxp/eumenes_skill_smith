@@ -54,7 +54,14 @@ export function createExampleHost(
 				{ id: "connection", text: "外部根拠を取得し、版を検査して保存できる" },
 			],
 			constraints: [
-				{ id: "readonly", text: "コピー元とスナップショットを変更しない" },
+				{
+					id: "readonly",
+					text: "コピー元とスナップショットを変更しない",
+					...((options.assemblyMode ?? (injected ? "baseline" : "legacy")) ===
+					"legacy"
+						? {}
+						: { visibility: "environment" as const }),
+				},
 			],
 			references: [],
 		},

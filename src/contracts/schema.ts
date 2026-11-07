@@ -15,7 +15,8 @@ export const versionRefSchema = z.strictObject({
 	generation: z.number().int().nonnegative(),
 });
 export const sectionSchema = z.strictObject({ id, body: text });
-const clause = z.strictObject({ id, text });
+const visibility = z.enum(["reader", "environment", "evaluation"]);
+const clause = z.strictObject({ id, text, visibility: visibility.optional() });
 export const requestSchema = z
 	.strictObject({
 		contractVersion: z.literal(CONTRACT),
@@ -111,6 +112,7 @@ const legacyReady = z.strictObject({
 				text,
 				mandatory: z.boolean(),
 				resolved: z.boolean(),
+				visibility: visibility.optional(),
 			}),
 		)
 		.max(16),

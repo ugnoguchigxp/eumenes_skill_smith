@@ -636,3 +636,62 @@ test("v5 source review is mandatory for new terminal answers and host renders fl
 	expect(artifact).not.toContain("# unsafe <tag>");
 	expect(artifact).toContain("版条件が不明");
 });
+
+test("v5 reader text has no internal IDs while evaluation metadata stays canonical", async () => {
+	const { f } = currentFixture();
+	f.request.task.acceptance = [
+		{ id: "private-acceptance-id", text: "読者が結果を照合する" },
+	];
+	f.request.task.constraints = [
+		{ id: "private-reader-id", text: "原資料を変更しない" },
+		{
+			id: "private-eval-id",
+			text: "モックを変更しない",
+			visibility: "evaluation",
+		},
+	];
+	let n = 0;
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic" }
+				: ++n === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: {
+							...current,
+							assumptions: [
+								{
+									text: "モック文字列一致",
+									mandatory: false,
+									resolved: false,
+									visibility: "environment",
+								},
+								{ text: "読者向け前提", mandatory: false, resolved: false },
+							],
+						},
+		receipt: "test",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const r = await ready(f);
+	const text = renderSkillMarkdown(r.build.content).content;
+	for (const x of [
+		"読者が結果を照合する",
+		"原資料を変更しない",
+		"読者向け前提",
+		"差異の出所を照合する",
+	])
+		expect(text).toContain(x);
+	for (const x of [
+		"private-acceptance-id",
+		"private-reader-id",
+		"private-eval-id",
+		"モックを変更しない",
+		"モック文字列一致",
+	])
+		expect(text).not.toContain(x);
+	expect(r.build.content.task.constraints[1]!.text).toBe("モックを変更しない");
+	expect(r.build.content.decision.assumptions[0]!.text).toBe(
+		"モック文字列一致",
+	);
+});
