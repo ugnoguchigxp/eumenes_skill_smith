@@ -1,4 +1,8 @@
-"""Read-only, transaction-consistent PUBLIC projection. Never copies credentials or raw logs."""
+"""Read-only PUBLIC-column projection, not secret redaction.
+
+Credential/log storage is excluded; text in public records is copied unchanged.
+The host must review and authorize that content before export.
+"""
 import argparse
 import collections
 from contextlib import closing

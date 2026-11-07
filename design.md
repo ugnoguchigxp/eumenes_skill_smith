@@ -804,3 +804,6 @@ scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来�
 
 ## 2026-11-07 review R6: fair comparison identity
 評価kitは各conditionへtaskとrecordの独立cloneを渡し、taskの改変を検出したら比較を中止する。runnerの返すtaskId/conditionを既定値で上書きして正当化せず、要求identityと一致することを検査する。比較入力は1–3件でcondition重複を拒否し、suite中のtask ID/record pack identityの重複も拒否する。正常時の返却schema・採点rubric・生成物は変更しない。意味判定は追加せず構造の同一性だけを検査する。
+
+## 2026-11-07 review R7: public projection is not secret redaction
+公開scope/space/列のprojectionはcredential/log storageを選択しないが、公開本文に含まれる自由文を意味判定して除去する処理ではない。export前の内容確認と許可はホストの責任であり、scopeマークだけで秘密が無いと保証しない。この明確化はデータ・生成物・予算を変更しない。

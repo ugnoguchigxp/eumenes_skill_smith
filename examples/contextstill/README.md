@@ -72,6 +72,7 @@ bun run context:eval-scenarios --suite examples/contextstill/scenarios/suite.jso
 - `global` scope、`coding/general/eumenes` space、非撤回で、公開取得できる知識・経験を保存します。検索はさらに `active/searchable` に限定します。`superseded/evidence_only` は取得のみ可能です。
 - 状況、本文、理由、適用条件、非適用条件、例外、手順、公開経験への事例参照、版、状態を保存します。
 - 出典はroleとsourceKindだけです。設定、認証情報、鍵、元の会話ログ、raw source、出典の本文・URL、metadata、埋込み、personal、repo限定の行は保存しません。公開知識そのものに含まれる文章は改変せずコピーします。
+- 公開scope/列の選択は自由文の秘密除去ではありません。公開本文に誤って混入した機微情報も改変せずコピーするため、export前に内容を確認し、共有の許可を別途得てください。`omitted` は除外storageの区分であり、本文にその種の情報が一切無いという判定ではありません。
 - 公開対象の後継参照と未解決の競合ペアを保存します。themeやグラフ検索は再現しません。
 
 再生成する場合は以下を使います。既存コピーへの上書きには `--replace` が必要です。
