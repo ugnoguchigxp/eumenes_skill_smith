@@ -727,3 +727,6 @@ Current artifacts always render acceptance, constraints, verification, assumptio
 
 ## Review H2 — reference data boundary (2026-11-07)
 Source titles and refs render as single-line escaped plain text, never Markdown/HTML structure. Source notices and all candidate/index metadata are explicitly marked untrusted. The host always labels sources as reference data, not authority or execution evidence.
+
+## Review H3 — model Markdown grammar (2026-11-07)
+Current model instructions are parsed with a pinned CommonMark AST parser. No H1, reserved host heading at any depth, raw HTML, thematic-break/frontmatter blocks, unsafe URL schemes or unclosed fenced code is allowed. Titles must be a single line. Failures have structural codes; this is not a word-based semantic detector. The budgeted semantic gate remains necessary, and execution-side approval remains external.

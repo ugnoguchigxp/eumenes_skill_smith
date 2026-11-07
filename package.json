@@ -36,6 +36,7 @@
 		"context:scoreboard": "bun examples/contextstill/scoreboard.ts"
 	},
 	"dependencies": {
+		"mdast-util-from-markdown": "2.0.2",
 		"zod": "4.4.3"
 	},
 	"devDependencies": {

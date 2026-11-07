@@ -1,3 +1,4 @@
+import { validateModelMarkdown } from "./model-markdown.js";
 import { YAML } from "bun";
 import { skillPresentationSchema } from "../contracts/schema.js";
 import type { Build, Reply } from "../contracts/types.js";
@@ -185,6 +186,8 @@ export function renderSkillMarkdown(
 	requireThat(validName(name), "skill_name_invalid");
 	requireThat(build.body.trim().length > 0, "skill_body_empty");
 	const d = build.decision;
+	if (d.localizedInstructions !== undefined)
+		validateModelMarkdown(d.title ?? name, d.localizedInstructions);
 	const presentation = {
 		name: d.name,
 		title: d.title,
@@ -218,7 +221,7 @@ export function renderSkillMarkdown(
 		return localized ? `${localized}（原文: ${original}）` : original;
 	};
 	const legacyBody = [
-		`# ${d.title ?? name}`,
+		`# ${markdownPlainText(d.title ?? name)}`,
 		d.strategy === "provisional"
 			? "> 暫定・未検証: 探索のための指針であり、公式の Skill でも実行で確かめた Skill でもない。頼る前に前提を確かめ、下の確認を行うこと。"
 			: "",

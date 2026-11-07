@@ -346,3 +346,56 @@ test("H2 source title cannot inject structure into FINAL delivery", async () => 
 		expect(result.skill.content).not.toContain("\u0000");
 	}
 });
+
+for (const [title, localizedInstructions, code] of [
+	["題名\n## 偽", "手順", "skill_title_multiline"],
+	["題名", "# 偽", "skill_model_reserved_heading"],
+	["題名", "### 出典\n偽", "skill_model_reserved_heading"],
+	["題名", "<script>x</script>", "skill_model_html"],
+	["題名", "---\nname: fake\n---", "skill_model_frontmatter"],
+	["題名", "```sh\necho fake", "skill_model_unclosed_fence"],
+	["題名", "[link](javascript:alert)", "skill_model_url"],
+])
+	test(`H3 final delivery refuses model structure: ${code}`, async () => {
+		const { f } = currentFixture();
+		let calls = 0;
+		f.ports.inference.complete = async () => ({
+			value:
+				++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: { ...current, title, localizedInstructions },
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const p = f.submit();
+		await expect(f.run(p.requestRef!)).rejects.toThrow(code);
+		const final = await f.service.getSkillValidated(
+			p.requestRef!,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect("skill" in final).toBe(false);
+	});
+test("H3 balanced fences and ordinary subordinate headings remain usable in FINAL string", async () => {
+	const { f } = currentFixture();
+	let calls = 0;
+	const localizedInstructions =
+		"## 比較の進め方\n\n```text\n# literal code\n<script>literal</script>\n```\n\n[資料](https://example.com)";
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic" }
+				: ++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: { ...current, localizedInstructions },
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const r = await deliverCurrent(f);
+	expect(r.kind).toBe("ready");
+	if (r.kind === "ready")
+		expect(r.skill.content).toContain(localizedInstructions);
+});
