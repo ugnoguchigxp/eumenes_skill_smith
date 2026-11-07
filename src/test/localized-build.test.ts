@@ -1354,3 +1354,12 @@ test("v9 completion text avoids evaluation boilerplate without dropping task-spe
 		"対象に関係しない定型文や評価メタを繰り返さない",
 	);
 });
+
+test("v9 deduplicates by LLM judgment while preserving stops and canonical scope", () => {
+	expect(buildInstructions).toContain(
+		"本文・完成条件・referencesの重複をLLMで統合",
+	);
+	expect(buildInstructions).toContain(
+		"必須の停止・権限・対象範囲は短縮で落とさない",
+	);
+});
