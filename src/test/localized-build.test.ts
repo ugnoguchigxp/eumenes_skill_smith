@@ -1399,3 +1399,10 @@ test("v10 boundary examples test invariants and negative controls without fake e
 	expect(buildInstructions).toContain("意図的な違反を検出できる負例");
 	expect(buildInstructions).toContain("模造の成功を水増ししない");
 });
+
+test("v10 uncertainty routing distinguishes information collection from unsafe operations", () => {
+	expect(buildInstructions).toContain(
+		"不足項目→入手元/次の安全な観測→禁止される操作",
+	);
+	expect(buildInstructions).toContain("対象不明の接続や変更を許さない");
+});
