@@ -1164,3 +1164,25 @@ test("v8 localizes uncertainty without certifying version compatibility or execu
 	expect(buildInstructions).toContain("実在性/版互換/対象適合/実行済み");
 	expect(semanticReviewInstructions).toContain("全てを未確認と呼ぶ必要はない");
 });
+
+test("v8 missing per-step operational criteria fail the existing budgeted semantic gate", async () => {
+	const { f } = currentFixture();
+	let calls = 0;
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: false, reason: "step lacks an observable criterion" }
+				: ++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: current,
+		receipt: "r",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const pending = f.submit();
+	await expect(f.run(pending.requestRef!)).rejects.toThrow(
+		"semantic_review_failed",
+	);
+	expect(f.modelCalls()).toBe(3);
+	expect(buildInstructions).toContain("各番号付き手順に");
+});
