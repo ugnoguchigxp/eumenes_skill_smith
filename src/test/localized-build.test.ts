@@ -1454,3 +1454,21 @@ test("v11 post-build self-review uses the existing reserved call and immutable g
 		"既存予算を越えて修正済み扱いにしない",
 	);
 });
+
+test("final renderer refuses traversal links in instructions and bundled references", async () => {
+	const { f } = currentFixture();
+	const result = await ready(f);
+	const inBody = structuredClone(result.build.content);
+	inBody.decision.localizedInstructions = "[secret](../../private)";
+	expect(() => renderSkillMarkdown(inBody)).toThrow("skill_model_url");
+	const inReference = structuredClone(result.build.content);
+	inReference.decision.document!.references = [
+		{
+			path: "references/checks.md",
+			title: "確認",
+			content: "[secret](%2e%2e/private)",
+		},
+	];
+	inReference.decision.document!.resourceHeading = "リソース";
+	expect(() => renderSkillMarkdown(inReference)).toThrow("skill_model_url");
+});

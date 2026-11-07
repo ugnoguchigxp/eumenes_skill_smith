@@ -316,3 +316,6 @@ writer は名前/パス/digestの検証後、最初の書込み前に出力root�
 
 ## 2026-11-07 review R3: builder-only stdout
 scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来の集計を含む）でありbuilderへ渡してはならない。`--builder-only` は別の明示モードとしてprovider向けpending build/reformulationのclosed packetだけをstdoutとbuilder-packets.jsonへ出力し、judge記録/hostレポート/scoreファイルを読込/出力しない。通常のhostレポート契約は維持する。retrieval-only/oracle/abstention-contrastとの混用は拒否する。packet境界は役割別dataの最上位キーallowlistと既知host-only構造キーの再帰拒否を用い、不明な構造はfail closed。digestを維持したままデータを削除しない。本文の意味や単語は分類せず、自由文に埋め込んだ情報すべてを検出する保証とはしない。
+
+## 2026-11-07 review R4: model Markdown local links
+モデルMarkdownのlink/image/definitionは外部http(s)/mailtoを従来どおり許可するが、相対ローカルURLのpathはbundle内に限定する。絶対path、`..` segment、backslash/control文字、符号化されたこれら/URI scheme、壊れたpercent escapeと二重符号化は拒否する。fragment/queryだけの参照は許す。これは構文による経路境界であり意味判断やリンク先の取得をしない。コードブロック内の実行例はリンクとして解釈しない。本文/各機能節/referencesすべてに同じ文法を適用し、正常な6例の本文・同梱ファイルの同一性と既存100点rubricを確認する。

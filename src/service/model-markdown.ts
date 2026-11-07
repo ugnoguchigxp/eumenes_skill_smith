@@ -26,6 +26,25 @@ function nodeText(node: Nodes): string {
 	if ("value" in node) return node.value;
 	return "children" in node ? node.children.map(nodeText).join("") : "";
 }
+/** Local links must remain inside the skill bundle; no URL is fetched here. */
+function safeModelUrl(url: string): boolean {
+	if (/[\p{Cc}\\]/u.test(url) || url.startsWith("//")) return false;
+	if (/^[a-z][a-z0-9+.-]*:/i.test(url)) return /^(https?:|mailto:)/i.test(url);
+	const path = url.split(/[?#]/, 1)[0]!;
+	let decoded: string;
+	try {
+		decoded = decodeURIComponent(path);
+	} catch {
+		return false;
+	}
+	return (
+		!decoded.startsWith("/") &&
+		!/[\p{Cc}\\]/u.test(decoded) &&
+		!/^[a-z][a-z0-9+.-]*:/i.test(decoded) &&
+		!/%[a-f0-9]{2}/i.test(decoded) &&
+		!decoded.split("/").includes("..")
+	);
+}
 /** Current free-text grammar, not a semantic safety decision. */
 export function validateModelMarkdown(title: string, body: string): void {
 	requireThat(
@@ -48,12 +67,7 @@ export function validateModelMarkdown(title: string, body: string): void {
 			node.type === "definition"
 		) {
 			const url = node.url.trim();
-			requireThat(
-				!url.startsWith("//") &&
-					(!/^[a-z][a-z0-9+.-]*:/i.test(url) ||
-						/^(https?:|mailto:)/i.test(url)),
-				"skill_model_url",
-			);
+			requireThat(safeModelUrl(url), "skill_model_url");
 		}
 		if (node.type === "code") {
 			const raw = body.slice(
