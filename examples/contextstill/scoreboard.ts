@@ -1,3 +1,4 @@
+import { digest } from "../../src/service/identity.js";
 import { z } from "zod";
 import { buildEvalIdentity } from "./scenario-runner.js";
 // Canonical measurement entrypoint: aggregates existing recorded SKILL scores and retrieval-only
@@ -169,8 +170,39 @@ export function currentIdentityMatches(
 	return (
 		!!actual &&
 		Object.entries(expected).every(
-			([k, v]) => Object.hasOwn(actual, k) && actual[k] === v,
+			([k, v]) => Object.hasOwn(actual, k) && digest(actual[k]) === digest(v),
 		)
+	);
+}
+export function artifactBindingsValid(report: any): boolean {
+	if (
+		!report?.identity?.artifactDigests ||
+		!Array.isArray(report.scores) ||
+		!Array.isArray(report.recordProvenance)
+	)
+		return false;
+	const artifacts = report.identity.artifactDigests;
+	const ready = report.scores.filter((s: any) => s.kind === "ready");
+	return (
+		Object.keys(artifacts).length === ready.length &&
+		report.scores.every((s: any) => {
+			const p = report.recordProvenance.find((p: any) => p.taskId === s.taskId);
+			if (s.kind !== "ready")
+				return (
+					s.artifactDigest === null &&
+					!!p &&
+					p.artifactDigest === null &&
+					p.judgeArtifactDigest === null
+				);
+			return (
+				typeof s.artifactDigest === "string" &&
+				/^[a-f0-9]{64}$/.test(s.artifactDigest) &&
+				artifacts[s.taskId] === s.artifactDigest &&
+				p?.artifactDigest === s.artifactDigest &&
+				p?.judgeArtifactDigest === s.artifactDigest &&
+				p.judgeRecordPresent === true
+			);
+		})
 	);
 }
 function currentView<
@@ -201,13 +233,19 @@ function currentView<
 		evidenceSupply: "natural",
 		abstentionContrast: "off",
 	});
+	const bindings = artifactBindingsValid(sf);
+	const expectedWithArtifacts = {
+		...expected,
+		artifactDigests: sf?.identity?.artifactDigests ?? null,
+	};
 	const matches =
+		bindings &&
 		!!sf &&
 		(sf.queryReformulationMode ?? "off") === mode &&
 		(effective === "on" || effective === "off") &&
 		currentIdentityMatches(
 			sf.identity,
-			expected as unknown as Record<string, unknown>,
+			expectedWithArtifacts as unknown as Record<string, unknown>,
 		);
 	return {
 		...snapshot,

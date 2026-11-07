@@ -246,14 +246,26 @@ try {
 				"examples/contextstill/scenarios/judge-records.json",
 			),
 		);
-		const skillFiles: { taskId: string; path: string }[] = [];
+		const skillFiles: {
+			taskId: string;
+			path: string;
+			digest: string;
+			rendererVersion: string;
+			sourceExtractorVersion: string;
+		}[] = [];
 		const result = await runFull({
 			onSkill: (taskId, skill) => {
 				const path = writeSkillArtifact(
 					resolve(reportDir, "skills", `task-${encodeURIComponent(taskId)}`),
 					skill,
 				);
-				skillFiles.push({ taskId, path });
+				skillFiles.push({
+					taskId,
+					path,
+					digest: skill.digest,
+					rendererVersion: skill.rendererVersion,
+					sourceExtractorVersion: skill.sourceExtractorVersion,
+				});
 			},
 			tasks,
 			source,
@@ -291,7 +303,7 @@ try {
 			assemblyMode,
 			queryReformulationMode: queryReformulation,
 			replayNamespace,
-			identity: identityFor(),
+			identity: { ...identityFor(), artifactDigests: result.artifactDigests },
 			filter,
 			status: result.complete ? "complete" : "incomplete",
 			tasks: tasks.length,
@@ -301,6 +313,7 @@ try {
 			mixedAxes: result.mixedAxes,
 			statuses: result.statuses,
 			scores: result.scores,
+			retrievalFidelityScores: result.retrievalFidelityScores,
 			composeScores: result.composeScores,
 			absentScores: result.absentScores,
 			...(abstentionContrast === "on"

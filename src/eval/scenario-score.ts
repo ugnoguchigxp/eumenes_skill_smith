@@ -11,6 +11,11 @@ export const assemblyJudgeSchema = z.strictObject({
 export type AssemblyJudge = z.infer<typeof assemblyJudgeSchema>;
 
 export const assemblyScoreSchema = z.strictObject({
+	artifactDigest: z
+		.string()
+		.regex(/^[a-f0-9]{64}$/)
+		.nullable()
+		.optional(),
 	taskId: id,
 	score: z.number().int().min(0).max(10),
 	expectedSkillUsed: z.boolean(),

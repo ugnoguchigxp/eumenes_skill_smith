@@ -1,3 +1,5 @@
+import { ABSTENTION_JUDGE_INSTRUCTIONS } from "../abstention-isolation.js";
+import { JUDGE_DATA_BOUNDARY } from "../../../src/eval/scenario-score.js";
 import { semanticReviewInstructions } from "../../../src/instructions/build.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
@@ -66,7 +68,7 @@ test("contrast judge digests are stable; current build digest tracked separately
 	expect(off.abstentionContrast).toBe("off");
 	expect(on.abstentionContrast).toBe("on");
 	expect(on.abstentionJudgeInstructionsDigest).toBe(
-		digests.abstentionJudgeInstructionsDigest,
+		digest(ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY),
 	);
 	expect(on.abstentionJudgeSchemaDigest).toBe(
 		digests.abstentionJudgeSchemaDigest,

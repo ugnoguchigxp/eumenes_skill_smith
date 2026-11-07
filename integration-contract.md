@@ -243,3 +243,6 @@ If any separately billed reasoning count is unknown, billableOutputTokens is nul
 
 ## Review M5 — semantic vs execution replay IDs (2026-11-07)
 Default replay uses execution.v2: semanticInputId hashes system/data/schema and host replay context; executionConditionId hashes token cap and explicit provider/model/generation settings (unknown values stay null). inputDigest binds both IDs in a versioned namespace. Deadline/requestRef are intentionally excluded as transient routing. Changing cap/settings cannot reuse a current answer. Old digest semantics are available only via explicit legacy namespace (legacy assembly selects it); current runs never silently fall back. Unknown provider model/settings are not proof of independent or identical live execution.
+
+## Review M6 — artifact byte identity (2026-11-07)
+SkillArtifact carries SHA-256 of exact UTF-8 content, rendererVersion and sourceExtractorVersion. Current per-task artifact digests are bound into RunIdentity, judge data/provenance and score rows. A renderer/extractor or byte change creates a new artifact, never inherited score success. Current scoreboards require matching artifact bindings across ready score rows, run identity and judge provenance; historical rows without them stay stale. File writers check artifact integrity. Authorization/source validation still occurs on each delivery.

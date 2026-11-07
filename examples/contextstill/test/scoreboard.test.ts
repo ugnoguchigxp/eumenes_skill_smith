@@ -6,6 +6,7 @@ import {
 	renderText,
 	validateScoreRows,
 	currentIdentityMatches,
+	artifactBindingsValid,
 } from "../scoreboard.js";
 
 const b = buildScoreboard();
@@ -165,4 +166,34 @@ test("M1 score snapshots reject duplicate missing and out-of-range values", () =
 		[{ taskId: "x", score: 1.2 }],
 	])
 		expect(() => validateScoreRows({ scores }, ["x"])).toThrow();
+});
+
+test("M6 current score binding refuses mismatched final artifact or judge provenance", () => {
+	const hash = "a".repeat(64);
+	const report = {
+		identity: { artifactDigests: { t: hash } },
+		scores: [{ taskId: "t", kind: "ready", artifactDigest: hash }],
+		recordProvenance: [
+			{
+				taskId: "t",
+				artifactDigest: hash,
+				judgeArtifactDigest: hash,
+				judgeRecordPresent: true,
+			},
+		],
+	};
+	expect(artifactBindingsValid(report)).toBe(true);
+	for (const target of [
+		report.identity.artifactDigests,
+		report.scores[0]!,
+		report.recordProvenance[0]!,
+	]) {
+		const bad = structuredClone(report);
+		if (target === report.identity.artifactDigests)
+			bad.identity.artifactDigests.t = "b".repeat(64);
+		else if (target === report.scores[0])
+			bad.scores[0]!.artifactDigest = "b".repeat(64);
+		else bad.recordProvenance[0]!.judgeArtifactDigest = "b".repeat(64);
+		expect(artifactBindingsValid(bad)).toBe(false);
+	}
 });

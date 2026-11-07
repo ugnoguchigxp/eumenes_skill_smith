@@ -28,3 +28,7 @@ export const digest = (value: unknown) =>
 	createHash("sha256").update(canonical(value)).digest("hex");
 export const bytes = (value: unknown) =>
 	new TextEncoder().encode(canonical(value)).length;
+
+/** SHA-256 of the exact UTF-8 artifact, without JSON quoting/canonicalization. */
+export const artifactDigest = (content: string) =>
+	createHash("sha256").update(content, "utf8").digest("hex");

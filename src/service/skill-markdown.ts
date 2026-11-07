@@ -3,15 +3,18 @@ import { YAML } from "bun";
 import { skillPresentationSchema } from "../contracts/schema.js";
 import type { Build, Reply } from "../contracts/types.js";
 import { bodyTail } from "./build.js";
-import { digest, requireThat } from "./identity.js";
+import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v2";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v3";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
 	| (Extract<Reply, { kind: "ready" }> & { skill: SkillArtifact });
 
 export interface SkillArtifact {
+	digest: string;
+	rendererVersion: string;
+	sourceExtractorVersion: string;
 	name: string;
 	path: string;
 	content: string;
@@ -133,6 +136,7 @@ export interface SkillMarkdownOptions {
 	 * envelopes/trust/digest metadata stay in the internal JSON build only.
 	 */
 	sourceMarkdown?: (body: string) => string;
+	sourceMarkdownVersion?: string;
 }
 
 /** Split the assembled body into host policy, main instructions and the host tail. */
@@ -282,5 +286,17 @@ export function renderSkillMarkdown(
 	// JSON double-quoted strings are valid YAML scalars; quotes/newlines cannot escape frontmatter.
 	const content = `---\nname: ${JSON.stringify(name)}\ndescription: ${JSON.stringify(description)}\n---\n\n${body}\n`;
 	validateSkillMarkdown(content, name);
-	return { name, path: `${name}/SKILL.md`, content };
+	return {
+		name,
+		path: `${name}/SKILL.md`,
+		content,
+		digest: artifactDigest(content),
+		rendererVersion: SKILL_RENDERER_VERSION,
+		sourceExtractorVersion:
+			d.localizedInstructions === undefined &&
+			d.strategy === "reuse" &&
+			options.sourceMarkdown
+				? (options.sourceMarkdownVersion ?? "unversioned")
+				: "none",
+	};
 }

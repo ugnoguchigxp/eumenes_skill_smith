@@ -1,3 +1,5 @@
+import { artifactDigest } from "../service/identity.js";
+import { SKILL_RENDERER_VERSION } from "../service/skill-markdown.js";
 import { expect, test } from "bun:test";
 import { YAML } from "bun";
 import { fixture, ready } from "./fixture.js";
@@ -432,4 +434,19 @@ test("reuse name derives from primary source title; others keep goal identity", 
 	expect(defaultSkillName(content)).toBe("x".repeat(64));
 	const composed = (await finalReady(fixture())).build.content;
 	expect(defaultSkillName(composed)).toBe(skillName(composed.task.goal));
+});
+
+test("M6 FINAL artifact identity binds exact bytes, renderer and extractor", async () => {
+	const { skill, build } = await finalReady(fixture());
+	expect(skill.digest).toBe(artifactDigest(skill.content));
+	expect(skill.rendererVersion).toBe(SKILL_RENDERER_VERSION);
+	expect(skill.sourceExtractorVersion).toBe("none");
+	const changed = structuredClone(build.content);
+	changed.task.acceptance[0]!.text += " changed";
+	changed.body = changed.body.replace(
+		"差異と出所が説明されている",
+		"差異と出所が説明されている changed",
+	);
+	expect(renderSkillMarkdown(changed).digest).not.toBe(skill.digest);
+	expect(artifactDigest(skill.content + "\n")).not.toBe(skill.digest);
 });

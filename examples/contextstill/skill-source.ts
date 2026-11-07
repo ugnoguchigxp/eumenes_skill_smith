@@ -86,4 +86,5 @@ export function contextStillSourceMarkdown(body: string): string {
 
 export const contextStillSkillMarkdown: SkillMarkdownOptions = {
 	sourceMarkdown: contextStillSourceMarkdown,
+	sourceMarkdownVersion: "contextstill-source.v1",
 };

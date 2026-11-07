@@ -230,6 +230,7 @@ export type TaskStatus =
 /** Binds a report to suite/seed bytes and the instruction/schema digests that shaped records. */
 export interface RunIdentity {
 	rendererVersion: string;
+	artifactDigests: Record<string, string>;
 	searchProfile: SearchProfile;
 	assemblyMode: AssemblyMode;
 	evidenceSupply: EvidenceSupply;
@@ -288,11 +289,13 @@ export function buildEvalIdentity(input: {
 	queryReformulation?: QueryReformulation;
 	evidenceSupply?: EvidenceSupply;
 	abstentionContrast?: AbstentionContrast;
+	artifactDigests?: Record<string, string>;
 }): RunIdentity {
 	const assemblyMode = input.assemblyMode ?? "baseline";
 	const queryReformulation = input.queryReformulation ?? "off";
 	return {
 		rendererVersion: SKILL_RENDERER_VERSION,
+		artifactDigests: input.artifactDigests ?? {},
 		searchProfile: input.searchProfile,
 		evidenceSupply: input.evidenceSupply ?? "natural",
 		...composeJudgeDigests(),
@@ -313,11 +316,26 @@ export function buildEvalIdentity(input: {
 		suiteFileSha256: fileSha256(input.suitePath),
 		seedFileSha256: fileSha256(input.seedPath),
 		...instructionDigests(assemblyMode),
+		...(assemblyMode !== "legacy"
+			? {
+					composeJudgeInstructionsDigest: digest(
+						COMPOSE_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
+					),
+					absentJudgeInstructionsDigest: digest(
+						ABSENT_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
+					),
+					abstentionJudgeInstructionsDigest: digest(
+						ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
+					),
+				}
+			: {}),
 	};
 }
 
 export interface RecordProvenance {
 	taskId: string;
+	artifactDigest: string | null;
+	judgeArtifactDigest: string | null;
 	/** Digests the builder inference actually requested for this task. */
 	builderInputDigests: string[];
 	/** Judge digest once requested; null if the judge was not reached. */
@@ -420,6 +438,7 @@ export async function runFull(deps: FullDeps) {
 		retrieved: { ref: string; title: string }[];
 	}[] = [];
 	const recordProvenance: RecordProvenance[] = [];
+	const artifactDigests: Record<string, string> = {};
 	const pendingReformulation: PendingReformulation[] = [];
 	let reformulationInferenceTasks = 0;
 	const drainReformulation = (taskId: string) => {
@@ -446,6 +465,8 @@ export async function runFull(deps: FullDeps) {
 			});
 		const provenance: RecordProvenance = {
 			taskId: task.id,
+			artifactDigest: null,
+			judgeArtifactDigest: null,
 			builderInputDigests: [],
 			judgeInputDigest: null,
 			builderRecordsPresent: false,
@@ -545,7 +566,11 @@ export async function runFull(deps: FullDeps) {
 					continue;
 				}
 				const ready = reply.kind === "ready" ? reply : null;
-				if (ready) deps.onSkill?.(task.id, ready.skill);
+				if (ready) {
+					artifactDigests[task.id] = ready.skill.digest;
+					provenance.artifactDigest = ready.skill.digest;
+					deps.onSkill?.(task.id, ready.skill);
+				}
 				const usedRefs = ready ? ready.build.content.decision.sourceRefs : [];
 				const strategy = ready ? ready.build.content.decision.strategy : null;
 				const sections = ready ? ready.build.content.decision.sections : [];
@@ -646,6 +671,9 @@ export async function runFull(deps: FullDeps) {
 											...judgePayload,
 											referenceEvidence,
 											finalArtifact: ready?.skill.content ?? null,
+											artifactDigest: ready?.skill.digest ?? null,
+											rendererVersion:
+												ready?.skill.rendererVersion ?? SKILL_RENDERER_VERSION,
 										}),
 							schema: contrast
 								? abstentionJudgeOutputSchema
@@ -664,6 +692,7 @@ export async function runFull(deps: FullDeps) {
 					);
 					judgeInferenceTasks += judgeTasks.length;
 					provenance.judgeRecordPresent = true;
+					provenance.judgeArtifactDigest = ready?.skill.digest ?? null;
 					const parsed = (
 						contrast
 							? abstentionJudgeSchema
@@ -730,13 +759,16 @@ export async function runFull(deps: FullDeps) {
 							actionability: detailed.actionability,
 						});
 					}
-					scores.push(
-						scoreFromJudge(
+					scores.push({
+						...scoreFromJudge(
 							task,
 							{ retrievalRank: rank, usedRefs, strategy, kind },
 							parsed.data,
 						),
-					);
+						...(assemblyMode !== "legacy"
+							? { artifactDigest: ready?.skill.digest ?? null }
+							: {}),
+					});
 					status("scored");
 				} catch (error) {
 					judgeInferenceTasks += judgeTasks.length;
@@ -783,6 +815,7 @@ export async function runFull(deps: FullDeps) {
 		evalEvidenceGetCalls,
 	};
 	return {
+		artifactDigests,
 		complete,
 		evidenceSupply,
 		composeScores,

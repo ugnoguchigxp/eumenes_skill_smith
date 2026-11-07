@@ -1,3 +1,4 @@
+import { artifactDigest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -71,6 +72,9 @@ test("file writer rejects traversal, mismatched names and empty bodies before wr
 	try {
 		expect(() =>
 			writeSkillArtifact(dir, {
+				digest: artifactDigest(content),
+				rendererVersion: "synthetic",
+				sourceExtractorVersion: "none",
 				name: "safe-name",
 				path: "../../SKILL.md",
 				content,
@@ -78,6 +82,9 @@ test("file writer rejects traversal, mismatched names and empty bodies before wr
 		).toThrow("skill_path_invalid");
 		expect(() =>
 			writeSkillArtifact(dir, {
+				digest: artifactDigest(content),
+				rendererVersion: "synthetic",
+				sourceExtractorVersion: "none",
 				name: "other-name",
 				path: "other-name/SKILL.md",
 				content,
@@ -85,12 +92,18 @@ test("file writer rejects traversal, mismatched names and empty bodies before wr
 		).toThrow("skill_directory_mismatch");
 		expect(() =>
 			writeSkillArtifact(dir, {
+				digest: artifactDigest(content),
+				rendererVersion: "synthetic",
+				sourceExtractorVersion: "none",
 				name: "safe-name",
 				path: "safe-name/SKILL.md",
 				content: content.replace("Instructions.", ""),
 			}),
 		).toThrow("skill_body_empty");
 		const path = writeSkillArtifact(dir, {
+			digest: artifactDigest(content),
+			rendererVersion: "synthetic",
+			sourceExtractorVersion: "none",
 			name: "safe-name",
 			path: "safe-name/SKILL.md",
 			content,

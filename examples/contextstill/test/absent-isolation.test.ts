@@ -1,3 +1,5 @@
+import { ABSENT_JUDGE_INSTRUCTIONS } from "../absent-isolation.js";
+import { JUDGE_DATA_BOUNDARY } from "../../../src/eval/scenario-score.js";
 import { semanticReviewInstructions } from "../../../src/instructions/build.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
@@ -60,7 +62,7 @@ test("absent judge digests are stable; current build digest tracked separately f
 	};
 	const identity = buildEvalIdentity(args);
 	expect(identity.absentJudgeInstructionsDigest).toBe(
-		digests.absentJudgeInstructionsDigest,
+		digest(ABSENT_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY),
 	);
 	expect(identity.absentJudgeSchemaDigest).toBe(
 		digests.absentJudgeSchemaDigest,
