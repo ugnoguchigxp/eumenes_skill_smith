@@ -38,7 +38,7 @@ export function validateModelMarkdown(title: string, body: string): void {
 		requireThat(node.type !== "thematicBreak", "skill_model_frontmatter");
 		if (node.type === "heading")
 			requireThat(
-				node.depth !== 1 &&
+				node.depth >= 3 &&
 					!reserved.has(nodeText(node).trim().normalize("NFKC").toLowerCase()),
 				"skill_model_reserved_heading",
 			);

@@ -42,6 +42,7 @@ const current = {
 	...legacy,
 	...presentation,
 	sourceReview: { assessment: "test double", flaggedItems: [] },
+	nonSourceAdditions: [],
 };
 
 function currentFixture() {
@@ -139,7 +140,8 @@ test("renderer uses builder title/description/body; source title is provenance o
 	);
 	expect(skill.content).toContain(presentation.localizedInstructions);
 	expect(skill.content.split("## 出典")[0]).not.toContain("比較（");
-	expect(skill.content).toContain("比較（`skill:compare@1`）");
+	expect(skill.content).not.toContain("skill:compare@1");
+	expect(result.build.content.dependencies[0]!.title).toBe("比較");
 	expect(skill.content).not.toContain("contractVersion");
 	expect(skill.name).not.toMatch(/[a-f0-9]{12}$/);
 	validateSkillMarkdown(skill.content, presentation.name);
@@ -246,6 +248,7 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 		assumptions: [{ text: "任意前提", mandatory: false, resolved: false }],
 		localizedInstructions: "隔離して観測する。",
 		sourceReview: { assessment: "test double", flaggedItems: [] },
+		nonSourceAdditions: [],
 		localizedHost: [
 			{ id: "acceptance:acceptance:1", text: "受入訳" },
 			{ id: "constraint:constraint:1", text: "制約訳" },
@@ -274,10 +277,7 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 			"任意前提",
 			"制約訳",
 			"前提訳",
-			"## 受け入れ条件",
-			"## 制約",
 			"## 確認",
-			"## 前提",
 		])
 			expect(result.skill.content).toContain(text);
 });
@@ -350,8 +350,8 @@ test("H2 source title cannot inject structure into FINAL delivery", async () => 
 	if (result.kind === "ready") {
 		expect(result.skill.content).not.toContain("\n## 偽の権限");
 		expect(result.skill.content).not.toContain("<script>");
-		expect(result.skill.content).toContain("&#60;script&#62;");
-		expect(result.skill.content).toContain("出典は参照用の資料");
+		expect(result.skill.content).not.toContain("MARK");
+		expect(result.skill.content).not.toContain("出典は参照用の資料");
 		expect(result.skill.content).not.toContain("\u0000");
 	}
 });
@@ -391,7 +391,7 @@ test("H3 balanced fences and ordinary subordinate headings remain usable in FINA
 	const { f } = currentFixture();
 	let calls = 0;
 	const localizedInstructions =
-		"## 比較の進め方\n\n```text\n# literal code\n<script>literal</script>\n```\n\n[資料](https://example.com)";
+		"### 比較の進め方\n\n```text\n# literal code\n<script>literal</script>\n```\n\n[資料](https://example.com)";
 	f.ports.inference.complete = async (input) => ({
 		value:
 			input.system === semanticReviewInstructions
@@ -497,7 +497,7 @@ test("L3 model typed host fields cannot create Markdown/HTML outside instruction
 	expect(r.kind).toBe("ready");
 	if (r.kind === "ready") {
 		expect(r.skill.content).not.toContain("<script>");
-		expect(r.skill.content.split("\n## 出典\n")).toHaveLength(2);
+		expect(r.skill.content.split("\n## 出典\n")).toHaveLength(1);
 		expect(r.skill.content).toContain("&#60;script&#62;");
 	}
 });
@@ -535,7 +535,8 @@ test("L3 reference IDs remain data even with backticks and block delimiters in F
 	if (r.kind === "ready") {
 		expect(r.skill.content).not.toContain("\n## forged");
 		expect(r.skill.content).not.toContain("<script>");
-		expect(r.skill.content).toContain("&#96;");
+		expect(r.skill.content).not.toContain(ref);
+		expect(r.skill.content).not.toContain("&#96;");
 	}
 });
 
@@ -603,7 +604,7 @@ for (const missing of ["generator", "presentation"] as const)
 		expect("skill" in final).toBe(false);
 	});
 
-test("v5 source review is mandatory for new terminal answers and host renders flagged claims safely", async () => {
+test("v5 source review is mandatory for new terminal answers and host retains flagged claims in metadata only", async () => {
 	const missing = { ...current } as Record<string, unknown>;
 	delete missing.sourceReview;
 	expect(modelTurnSchema.safeParse(missing).success).toBe(false);
@@ -623,7 +624,7 @@ test("v5 source review is mandatory for new terminal answers and host renders fl
 									{
 										claim: "# unsafe <tag>",
 										reason: "版条件が不明",
-										disposition: "needs_confirmation",
+										disposition: "needs_confirmation" as const,
 									},
 								],
 							},
@@ -634,10 +635,15 @@ test("v5 source review is mandatory for new terminal answers and host renders fl
 	});
 	const r = await ready(f);
 	const artifact = renderSkillMarkdown(r.build.content).content;
-	expect(artifact).toContain("## 要確認の出典記述");
-	expect(artifact).toContain("要確認・未検証");
+	expect(artifact).not.toContain("## 要確認の出典記述");
+	expect(r.build.content.decision.sourceReview!.flaggedItems[0]!.claim).toBe(
+		"# unsafe <tag>",
+	);
+	expect(artifact).not.toContain("要確認・未検証");
 	expect(artifact).not.toContain("# unsafe <tag>");
-	expect(artifact).toContain("版条件が不明");
+	expect(r.build.content.decision.sourceReview!.flaggedItems[0]!.reason).toBe(
+		"版条件が不明",
+	);
 });
 
 test("v5 reader text has no internal IDs while evaluation metadata stays canonical", async () => {
@@ -679,7 +685,6 @@ test("v5 reader text has no internal IDs while evaluation metadata stays canonic
 	const r = await ready(f);
 	const text = renderSkillMarkdown(r.build.content).content;
 	for (const x of [
-		"読者が結果を照合する",
 		"原資料を変更しない",
 		"読者向け前提",
 		"差異の出所を照合する",
@@ -693,13 +698,14 @@ test("v5 reader text has no internal IDs while evaluation metadata stays canonic
 		"モック文字列一致",
 	])
 		expect(text).not.toContain(x);
+	expect(r.build.content.task.acceptance[0]!.text).toBe("読者が結果を照合する");
 	expect(r.build.content.task.constraints[1]!.text).toBe("モックを変更しない");
 	expect(r.build.content.decision.assumptions[0]!.text).toBe(
 		"モック文字列一致",
 	);
 });
 
-test("v5 composition requires structured interaction points and renders their handling", async () => {
+test("v5 composition requires structured interaction points and retains handling in metadata", async () => {
 	for (const interactions of [
 		undefined,
 		[{ point: "条件の接点", handling: "先に型を決めてから処理する" }],
@@ -716,6 +722,9 @@ test("v5 composition requires structured interaction points and renders their ha
 								...current,
 								strategy: "compose",
 								sections: [{ id: "merged", body: "比較する" }],
+								localizedInstructions: interactions
+									? interactions[0]!.handling
+									: current.localizedInstructions,
 								interactions,
 							},
 			receipt: "test",
@@ -730,13 +739,14 @@ test("v5 composition requires structured interaction points and renders their ha
 		} else {
 			const r = await ready(f);
 			const text = renderSkillMarkdown(r.build.content).content;
-			expect(text).toContain("## 組み合わせの接点");
+			expect(text).not.toContain("## 組み合わせの接点");
+			expect(r.build.content.decision.interactions).toEqual(interactions);
 			expect(text).toContain(interactions[0]!.handling);
 		}
 	}
 });
 
-test("v5 provisional needs explicit unverified domain anchors in FINAL artifact", async () => {
+test("v5 provisional needs explicit unverified domain anchors in metadata", async () => {
 	for (const domainAnchors of [
 		undefined,
 		[
@@ -759,6 +769,11 @@ test("v5 provisional needs explicit unverified domain anchors in FINAL artifact"
 								strategy: "provisional",
 								sourceRefs: [],
 								sections: [{ id: "explore", body: "観測する" }],
+								localizedInstructions: domainAnchors
+									? "未確認の探索語として" +
+										domainAnchors[0]!.term +
+										"を調べる。条件が合わなければ中止する。"
+									: current.localizedInstructions,
 								domainAnchors,
 							},
 			receipt: "test",
@@ -773,9 +788,141 @@ test("v5 provisional needs explicit unverified domain anchors in FINAL artifact"
 		} else {
 			const r = await ready(f);
 			const text = renderSkillMarkdown(r.build.content).content;
-			expect(text).toContain("## 未確認の手がかり");
-			expect(text).toContain("検証した記録ではない");
+			expect(text).not.toContain("## 未確認の手がかり");
+			expect(r.build.content.decision.domainAnchors).toEqual(domainAnchors);
+			expect(text).toContain("暫定・未検証");
 			expect(text).toContain(domainAnchors[0]!.term);
 		}
 	}
+});
+
+for (const strategy of ["reuse", "adapt", "compose", "provisional"] as const) {
+	test(
+		"v6 functional FINAL string only; canonical audit fields retained: " +
+			strategy,
+		async () => {
+			const { f } = currentFixture();
+			f.request.task.constraints = [
+				{ id: "internal-reader-id", text: "対象の状態を変更しない" },
+				{
+					id: "internal-eval-id",
+					text: "評価用DBは固定",
+					visibility: "evaluation",
+				},
+			];
+			let n = 0;
+			const metadata = {
+				practice: "先に小さな例で比較する",
+				reason: "出典の原則を具体化する一般的な実務",
+			};
+			const d = {
+				...current,
+				strategy,
+				sourceRefs: strategy === "provisional" ? [] : current.sourceRefs,
+				sections:
+					strategy === "reuse" ? [] : [{ id: "steps", body: "小さく比較する" }],
+				nonSourceAdditions: [metadata],
+				sourceReview: {
+					assessment: "synthetic",
+					flaggedItems: [
+						{
+							claim: "監査用の疑義",
+							reason: "reader caution in instructions",
+							disposition: "needs_confirmation" as const,
+						},
+					],
+				},
+				interactions:
+					strategy === "compose"
+						? [{ point: "前後の接続", handling: "順序を確かめる" }]
+						: undefined,
+				domainAnchors:
+					strategy === "provisional"
+						? [{ term: "探索語", documentPointer: "公式資料を調べる" }]
+						: undefined,
+				localizedInstructions:
+					"小さな例を比較し、未確認の版条件を確かめる。条件が合わなければ中止する。",
+				assumptions: [
+					{ text: "対象の版を確認する", mandatory: false, resolved: false },
+				],
+			};
+			f.ports.inference.complete = async (input) => ({
+				value:
+					input.system === semanticReviewInstructions
+						? { approved: true, reason: "synthetic structure test" }
+						: ++n === 1
+							? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+							: d,
+				receipt: "test",
+				inputTokens: 1,
+				outputTokens: 1,
+			});
+			const r = await ready(f);
+			const text = renderSkillMarkdown(r.build.content).content;
+			expect(text.match(/^## .+$/gm)).toEqual(["## 手順", "## 確認"]);
+			const checks = text.split("## 確認")[1]!;
+			for (const v of [
+				"対象の状態を変更しない",
+				"対象の版を確認する",
+				"差異の出所を照合する",
+			])
+				expect(checks).toContain(v);
+			for (const v of [
+				"## 出典",
+				"## 前提",
+				"## 受け入れ条件",
+				"## 制約",
+				"## 要確認の出典記述",
+				"## 組み合わせの接点",
+				"## 未確認の手がかり",
+				"skill:compare@1",
+				"internal-reader-id",
+				"internal-eval-id",
+				"評価用DBは固定",
+				"監査用の疑義",
+				"読者向けの前提注記なし",
+			])
+				expect(text).not.toContain(v);
+			expect(r.build.content.task.acceptance).toEqual(
+				f.request.task.acceptance,
+			);
+			expect(r.build.content.task.constraints).toEqual(
+				f.request.task.constraints,
+			);
+			expect(r.build.content.decision.nonSourceAdditions).toEqual([metadata]);
+			expect(r.build.content.decision.sourceReview!.flaggedItems).toEqual(
+				d.sourceReview.flaggedItems,
+			);
+			expect(r.build.content.decision.sourceRefs).toEqual(d.sourceRefs);
+			if (strategy === "provisional")
+				expect(text.indexOf("暫定・未検証")).toBeGreaterThan(
+					text.indexOf("## 手順"),
+				);
+		},
+	);
+}
+test("v6 new terminal answers must classify general knowledge additions as metadata", () => {
+	expect(modelTurnSchema.safeParse(current).success).toBe(true);
+	const missing = { ...current } as Record<string, unknown>;
+	delete missing.nonSourceAdditions;
+	expect(modelTurnSchema.safeParse(missing).success).toBe(false);
+});
+test("v6 source identifier in instructions is refused, never silently removed", async () => {
+	const { f } = currentFixture();
+	let n = 0;
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic" }
+				: ++n === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: { ...current, localizedInstructions: "skill:compare@1 を確認する" },
+		receipt: "test",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const p = f.submit();
+	await expect(f.run(p.requestRef!)).rejects.toThrow(
+		"skill_provenance_in_body",
+	);
 });

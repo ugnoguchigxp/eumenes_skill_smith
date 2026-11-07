@@ -43,7 +43,8 @@ test("ready delivery has a deterministic validated artifact without changing sto
 	expect(content).toEqual(reply.build.content);
 	if (!content.policy.alreadyPresent)
 		expect(skill.content).toContain(content.policy.body);
-	expect(skill.content).toContain(content.task.acceptance[0]!.text);
+	expect(skill.content).not.toContain(content.task.acceptance[0]!.text);
+	expect(content.task.acceptance).toEqual(reply.build.content.task.acceptance);
 	expect(skill.content).toContain(content.task.constraints[0]!.text);
 	const cached = f.submit({ ...f.request, requestId: "new-request" });
 	expect(cached.kind).toBe("ready");
@@ -77,7 +78,8 @@ test("reuse artifact embeds selected body even when sections is empty", async ()
 	expect(reply.skill.content).toContain(
 		"資料の正本を確認し、差異の根拠を対応付ける。",
 	);
-	expect(reply.skill.content).toContain("skill:compare@1");
+	expect(reply.skill.content).not.toContain("skill:compare@1");
+	expect(reply.build.content.decision.sourceRefs).toEqual(["skill:compare@1"]);
 });
 
 test("compose retains instruction order, provenance and verification", async () => {
@@ -87,7 +89,8 @@ test("compose retains instruction order, provenance and verification", async () 
 	expect(text.indexOf(sections[0]!.body)).toBeLessThan(
 		text.indexOf(sections[1]!.body),
 	);
-	expect(text).toContain("方針: 組み合わせ。");
+	expect(text).not.toContain("方針:");
+	expect(reply.build.content.decision.strategy).toBe("compose");
 	expect(text).toContain("## 確認");
 	expect(text).toContain(reply.build.content.decision.verification[0]!);
 });
@@ -133,8 +136,10 @@ test("provisional is explicitly unverified with assumptions and no invented sour
 	});
 	const reply = await finalReady(f);
 	expect(reply.skill.content).toContain("暫定・未検証");
-	expect(reply.skill.content).toContain("出典なし");
-	expect(reply.skill.content).toContain("- Simulator available\n");
+	expect(reply.skill.content).not.toContain("出典なし");
+	expect(reply.skill.content).toContain(
+		"適用前に確認する: Simulator available\n",
+	);
 	expect(reply.skill.content).toContain("Run a small check.");
 });
 
@@ -332,8 +337,9 @@ test("reuse renders through deterministic sourceMarkdown; envelope stays in inte
 	expect(skill.content).toContain(source);
 	for (const s of ['{"contractVersion', "_fixture", "trustClass", '"trust"'])
 		expect(skill.content).not.toContain(s);
-	expect(skill.content).toContain("## 出典\n");
-	expect(skill.content).toContain("- 比較（`skill:compare@1`）");
+	expect(skill.content).not.toContain("## 出典\n");
+	expect(skill.content).not.toContain("skill:compare@1");
+	expect(content.dependencies[0]!.title).toBe("比較");
 	expect(skill.content).not.toContain("受入条件\n");
 	expect(content.body).toContain(envelope);
 	expect(() =>
@@ -376,11 +382,10 @@ test("template is Japanese: no English headings, notes or internal markers", asy
 		content.body.slice(0, content.body.length - oldTail.length) +
 		bodyTail(content.task, content.decision).join("\n\n");
 	const text = renderSkillMarkdown(content).content;
-	for (const h of ["## 手順\n", "## 確認\n", "## 出典\n", "## 前提\n"])
-		expect(text).toContain(h);
-	expect(text).toContain("- 任意の前提\n");
-	expect(text).toContain("- 必須の前提（必須・未解決）");
-	expect(text).toContain("- 解決した前提（必須・解決済み）");
+	for (const h of ["## 手順\n", "## 確認\n"]) expect(text).toContain(h);
+	expect(text).toContain("適用前に確認する: 任意の前提\n");
+	expect(text).toContain("適用前に確認する: 必須の前提");
+	expect(text).toContain("適用前に確認する: 解決した前提");
 	for (const s of [
 		"mandatory",
 		"resolved:",
@@ -394,7 +399,7 @@ test("template is Japanese: no English headings, notes or internal markers", asy
 		"PROVISIONAL",
 	])
 		expect(text).not.toContain(s);
-	expect(text).toContain('description: "公式の根拠が無いため');
+	expect(text).toContain('description: "未検証の操作を安全に探索');
 });
 
 test("reuse name derives from primary source title; others keep goal identity", async () => {
@@ -447,7 +452,17 @@ test("M6 FINAL artifact identity binds exact bytes, renderer and extractor", asy
 		"差異と出所が説明されている",
 		"差異と出所が説明されている changed",
 	);
-	expect(renderSkillMarkdown(changed).digest).not.toBe(skill.digest);
+	expect(renderSkillMarkdown(changed).digest).toBe(skill.digest);
+	expect(changed.task.acceptance[0]!.text).not.toBe(
+		build.content.task.acceptance[0]!.text,
+	);
+	const functional = structuredClone(build.content);
+	const oldTail = bodyTail(functional.task, functional.decision).join("\n\n");
+	functional.decision.verification[0] += " 再確認する";
+	functional.body =
+		functional.body.slice(0, functional.body.length - oldTail.length) +
+		bodyTail(functional.task, functional.decision).join("\n\n");
+	expect(renderSkillMarkdown(functional).digest).not.toBe(skill.digest);
 	expect(artifactDigest(skill.content + "\n")).not.toBe(skill.digest);
 });
 

@@ -217,3 +217,14 @@ L3 delivery isolation audit: current execution requires a positive matching gene
 ### v5 再評価時の文書取得条件
 
 8 文書を先行取得すると、12 回の Source 共有予算内でも意味検証後の再配布時の検証が予約できず成果物が配布されない例があった。予算や再検証は緩めない。評価 CLI に --documents（1–8、既定8）を設け、文書取得数を減らす条件を明記して再試行できるようにする。旧条件の配布失敗を成功や採点済みと扱わない。答案そのものは採点用データを読む前の記録を固定し、条件変更後にも同一の答案を使ったことを digest で監査する。同じモデルが再試行するため独立盲検とは表現しない。
+
+
+## 機能に集中した SKILL 出力 v6（実装前契約・v5の表示仕様を更新）
+
+最終 SKILL.md は name/description の frontmatter、題名、手順、確認だけとする。出典・前提・受入条件・制約・要確認の出典記述・組合せの接点・未確認の手がかりの独立節、出典の題名/ID/方針説明、空の前提注記を本文に出さない。provisional の短い「暫定・未検証」と停止条件は手順内に置く。必要な注意、compose の接点、未確認の分野手がかりは LLM が手順へ統合する。意味判断や一般知識の正しさは辞書ではなく既存の予算付き意味検証で判定する。
+
+H1 の表示契約は、課題に関係する canonical reader 制約と verification を host が確認欄へ必ず描画することへ更新する。課題に関わる適用条件も空でない確認項目として保つ。評価/環境専用の条件は記録に残す。受入条件そのものは本文の定型句にせず、意味検証が手順・確認の目的充足と非矛盾を照合する。canonical task、policy、dependencies、sourceRefs、sourceReview、flaggedItems、assumptions、interactions、domainAnchors は Build.content / 推論記録の監査データとしてそのまま保持し、本文から落としたことを情報喪失とはしない。H2–H4、complete/auth/予算/入出力上限は変更しない。
+
+reuse は原則だけの出典に縛られて抽象論で止まらず、LLM が正しいと判断できる一般的な具体策を通常の手順として補ってよい。追加は nonSourceAdditions（practice/reason）に記録して、出典由来と区別する。新規 terminal schema ではこの配列を必須（追加なしは空）とし、旧保存形式は読める。疑わしい事項は断言せず短い注意として手順へ統合し、flaggedItems は監査専用。既存の意味検証は一般知識追加の妥当性、注意の保持、接点と分野手がかりの統合、canonical 制約との非矛盾を点検し、不明なら拒否する。新規の LLM 呼出しは増やさない。
+
+renderer は skill-markdown.v6。参照IDが本文に残る場合は黙って削除せず構造違反として拒否する。quality-judge.v2 の採点軸と誤手順時最大5点は維持し、出典/監査節を表示しないことや一般知識の補足自体を減点しないよう明記して採点指示digestを更新する。実行結果は依然未測定。旧スコアは現行版へ流用しない。

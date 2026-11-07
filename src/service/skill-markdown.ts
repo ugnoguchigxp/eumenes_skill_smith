@@ -12,7 +12,7 @@ export {
 } from "./skill-document.js";
 import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v5";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v6";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
@@ -67,7 +67,7 @@ const clip = (t: string, n: number) =>
 function describe(build: Build["content"]): string {
 	return (
 		build.decision.description ??
-		`${build.decision.strategy === "provisional" ? "公式の根拠が無いため、未検証の暫定的な探索手順を提供する。" : "この作業の手順を提供する。"}次の作業を頼まれたときに使う: ${clip(build.task.goal.trim(), 400)}`
+		`${build.decision.strategy === "provisional" ? "未検証の操作を安全に探索する手順を提供する。" : "この作業の手順を提供する。"}次の作業を頼まれたときに使う: ${clip(build.task.goal.trim(), 400)}`
 	);
 }
 
@@ -161,6 +161,7 @@ export function renderSkillMarkdown(
 		localizedInstructions: d.localizedInstructions,
 		localizedHost: d.localizedHost,
 		sourceReview: d.sourceReview,
+		nonSourceAdditions: d.nonSourceAdditions,
 	};
 	if (Object.values(presentation).some((v) => v !== undefined))
 		requireThat(

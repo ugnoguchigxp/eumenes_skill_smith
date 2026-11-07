@@ -66,4 +66,6 @@ for (const [schema, extra] of [
 test("strict rubric is versioned and distinguishes source fidelity from correctness", () => {
 	expect(QUALITY_JUDGE_VERSION).toBe("quality-judge.v2");
 	expect(CURRENT_JUDGE_INSTRUCTIONS).toContain("出典自体の誤り");
+	expect(CURRENT_JUDGE_INSTRUCTIONS).toContain("本文にないことを減点しない");
+	expect(CURRENT_JUDGE_INSTRUCTIONS).toContain("具体策はreuseでも許され");
 });

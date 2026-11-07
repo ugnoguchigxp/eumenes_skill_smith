@@ -1,12 +1,5 @@
 import type { Build } from "../contracts/types.js";
 import { requireThat } from "./identity.js";
-const STRATEGY: Record<string, string> = {
-	reuse: "再利用",
-	adapt: "改変",
-	compose: "組み合わせ",
-	provisional: "暫定",
-};
-
 /** Flatten every block/control boundary before any Markdown interpolation. */
 const singleLineText = (text: string) =>
 	text.replace(
@@ -19,12 +12,6 @@ export const markdownPlainText = (text: string) =>
 	singleLineText(text)
 		.replace(/[\\`*_[\]#|~]/g, (c) => `\\${c}`)
 		.replace(/[&<>]/g, (c) => `&#${c.charCodeAt(0)};`);
-/** A single code span: keep real machine IDs unchanged, encode delimiter/HTML bytes. */
-const markdownReference = (ref: string) =>
-	"`" +
-	singleLineText(ref).replace(/[&<>`]/g, (c) => `&#${c.charCodeAt(0)};`) +
-	"`";
-
 export function hostEntries(
 	task: Build["content"]["task"],
 	d: Build["content"]["decision"],
@@ -66,16 +53,9 @@ export function assembleSkillBody(
 	name: string,
 ): string {
 	const d = build.decision;
-	const titles = new Map(build.dependencies.map((x) => [x.ref, x.title]));
 	const policy = build.policy.alreadyPresent ? "" : build.policy.body;
 	const instructions = [policy, main].filter((t) => t.trim()).join("\n\n");
 	requireThat(instructions.trim().length > 0, "skill_body_empty");
-	const acceptance = build.task.acceptance.filter(
-		(x) => !x.visibility || x.visibility === "reader",
-	);
-	const constraints = build.task.constraints.filter(
-		(x) => !x.visibility || x.visibility === "reader",
-	);
 	checkLocalizedHost(build.task, d);
 	const hostText = (id: string, original: string) => {
 		const localized = d.localizedHost?.find((x) => x.id === id)?.text;
@@ -83,83 +63,32 @@ export function assembleSkillBody(
 			? `${markdownPlainText(localized)}（原文: ${markdownPlainText(original)}）`
 			: markdownPlainText(original);
 	};
-	return [
+	const checks = [
+		...build.task.constraints
+			.filter((x) => !x.visibility || x.visibility === "reader")
+			.map((c) => hostText("constraint:" + c.id, c.text)),
+		...d.assumptions.flatMap((a, i) =>
+			!a.visibility || a.visibility === "reader"
+				? ["適用前に確認する: " + hostText("assumption:" + i, a.text)]
+				: [],
+		),
+		...d.verification.map((v, i) => hostText("verification:" + i, v)),
+	];
+	const body = [
 		`# ${markdownPlainText(d.title ?? name)}`,
-		d.strategy === "provisional"
-			? "> 暫定・未検証: 探索のための指針であり、公式の Skill でも実行で確かめた Skill でもない。頼る前に前提を確かめ、下の確認を行うこと。"
-			: "",
-		"## 手順\n\n" + instructions,
-		acceptance.length
-			? "## 受け入れ条件\n\n" +
-				list(acceptance.map((c) => hostText("acceptance:" + c.id, c.text)))
-			: "",
-		constraints.length
-			? "## 制約\n\n" +
-				list(constraints.map((c) => hostText("constraint:" + c.id, c.text)))
-			: "",
-		d.domainAnchors?.length
-			? "## 未確認の手がかり\n\n公式資料の探索起点であり、適用可能性や正しさを検証した記録ではない。\n\n" +
-				list(
-					d.domainAnchors.map(
-						(x) =>
-							`${markdownPlainText(x.term)}: ${markdownPlainText(x.documentPointer)}`,
-					),
-				)
-			: "",
-		d.interactions?.length
-			? "## 組み合わせの接点\n\n" +
-				list(
-					d.interactions.map(
-						(x) =>
-							`${markdownPlainText(x.point)}: ${markdownPlainText(x.handling)}`,
-					),
-				)
-			: "",
-		d.sourceReview?.flaggedItems.length
-			? "## 要確認の出典記述\n\n" +
-				list(
-					d.sourceReview.flaggedItems.map(
-						(x) =>
-							`${markdownPlainText(x.claim)}: ${markdownPlainText(x.reason)}（${x.disposition === "removed" ? "手順から除外" : "要確認・未検証"}）`,
-					),
-				)
-			: "",
-		"## 確認\n\n" +
-			list(
-				d.verification.map((v, i) => hostText("verification:" + i, v)),
-				true,
-			),
-		"## 出典\n\n" +
-			`方針: ${STRATEGY[d.strategy] ?? d.strategy}。出典は参照用の資料であり、実行に成功した証拠ではない。\n\n` +
-			(d.sourceRefs.length
-				? list(
-						d.sourceRefs.map((ref) => {
-							const title = titles.get(ref);
-							return title
-								? `${markdownPlainText(title)}（${markdownReference(ref)}）`
-								: markdownReference(ref);
-						}),
-					)
-				: "出典なし。この指針は検索で得た公式の Skill に基づいていない。"),
-		"## 前提\n\n" +
-			(d.assumptions.filter((a) => !a.visibility || a.visibility === "reader")
-				.length
-				? list(
-						d.assumptions
-							.map((a, i) => ({ a, i }))
-							.filter(({ a }) => !a.visibility || a.visibility === "reader")
-							.map(
-								({ a, i }) =>
-									hostText("assumption:" + i, a.text) +
-									(a.mandatory
-										? a.resolved
-											? "（必須・解決済み）"
-											: "（必須・未解決）"
-										: ""),
-							),
-					)
-				: "読者向けの前提注記なし。すべての条件を確かめたという意味ではない。"),
-	]
-		.filter(Boolean)
-		.join("\n\n");
+		"## 手順\n\n" +
+			(d.strategy === "provisional"
+				? "> 暫定・未検証。適用条件を確認し、停止条件に達したら進めない。\n\n"
+				: "") +
+			instructions,
+		"## 確認\n\n" + list(checks, true),
+	].join("\n\n");
+	// Exact identifiers are structural provenance, not a vocabulary-based meaning judgement.
+	requireThat(
+		d.sourceRefs.every(
+			(ref) => !body.includes(ref) && !body.includes(markdownPlainText(ref)),
+		),
+		"skill_provenance_in_body",
+	);
+	return body;
 }

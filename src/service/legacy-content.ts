@@ -1,6 +1,6 @@
 import type { Build, ReadyDecision, Evidence } from "../contracts/types.js";
 import { requireThat } from "./identity.js";
-/** Host-appended acceptance/constraints/verification/assumptions blocks (shared with SKILL.md rendering). */
+/** Archived audit tail for legacy execution decoding; never rendered as v6 SKILL sections. */
 export function bodyTail(
 	task: Build["content"]["task"],
 	d: Pick<ReadyDecision, "verification" | "assumptions">,
