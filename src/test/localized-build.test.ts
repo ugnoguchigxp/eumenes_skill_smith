@@ -1406,3 +1406,8 @@ test("v10 uncertainty routing distinguishes information collection from unsafe o
 	);
 	expect(buildInstructions).toContain("対象不明の接続や変更を許さない");
 });
+
+test("v10 section minimalism preserves conditions rather than enforcing a topic template", () => {
+	expect(buildInstructions).toContain("重複する独立節を省き");
+	expect(buildInstructions).toContain("重要な条件を行動や確認へ保つ");
+});
