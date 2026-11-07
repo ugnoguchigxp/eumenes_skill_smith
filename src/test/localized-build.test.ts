@@ -573,3 +573,24 @@ test("M3 actual shared reservations appear in disclosure progress and observed a
 		cachedInputTokens: 1,
 	});
 });
+
+for (const missing of ["generator", "presentation"] as const)
+	test(`L3 current FINAL delivery rejects archived stored build without ${missing}`, async () => {
+		const { f } = currentFixture();
+		const r = await ready(f);
+		const stored = structuredClone(r.build);
+		if (missing === "generator") delete stored.generator;
+		else stored.content.decision = legacy;
+		f.db
+			.query("UPDATE knowledge_builds SET data_json=? WHERE ref=?")
+			.run(JSON.stringify(stored), stored.ref);
+		const final = await f.service.getSkillValidated(
+			r.requestRef,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect(final.kind).toBe("rejected");
+		if (final.kind === "rejected") expect(final.code).toBe("build_revoked");
+		expect("skill" in final).toBe(false);
+	});

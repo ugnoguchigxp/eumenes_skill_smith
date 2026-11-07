@@ -678,3 +678,5 @@ Current Build.content.body is the host-assembled canonical Markdown body produce
 H2 final boundary audit: freshness entries and the entire current search/successor subtree are also explicitly marked untrusted, not just candidate/index titles and external notices. Archival shapes remain unchanged.
 
 M3 final accounting audit: disclosureProgress.modelCallsUsed includes committed auxiliary reservations and the about-to-be-reserved builder call, so the builder sees the actual remaining shared allowance. Model-call audit rows retain the provider's per-call receipt and nullable token fields; cumulative build usage merges observed auxiliary reasoning/cache counts without inventing omitted values.
+
+L3 delivery isolation audit: current execution requires a positive matching generator instruction stamp and complete current presentation; unversioned or legacy-shaped stored builds are usable only in the explicit archival profile, never through the current final delivery API.

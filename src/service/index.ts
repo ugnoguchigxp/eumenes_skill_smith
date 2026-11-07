@@ -58,10 +58,13 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	}
 	function usable(tx: Tx, b: Build, auth: Authority) {
 		const origin = repo.request(tx, b.requestRef);
-		const generatorOk =
-			!b.generator ||
-			(b.generator.contractVersion === CONTRACT &&
-				b.generator.instructions === assembly.instructionVersion);
+		const generatorOk = b.generator
+			? b.generator.contractVersion === CONTRACT &&
+				b.generator.instructions === assembly.instructionVersion
+			: assembly.mode === "legacy";
+		const presentationOk =
+			assembly.mode === "legacy" ||
+			b.content.decision.localizedInstructions !== undefined;
 		return (
 			!!origin &&
 			valid(tx, origin, auth) &&
@@ -70,6 +73,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			b.scope === auth.scope &&
 			b.expiresAt > p.now() &&
 			generatorOk &&
+			presentationOk &&
 			p.policy.current(tx, b.content.policy.version) &&
 			p.registry.current(
 				tx,
