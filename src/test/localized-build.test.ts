@@ -1166,24 +1166,27 @@ test("v8 localizes uncertainty without certifying version compatibility or execu
 });
 
 test("v8 missing per-step operational criteria fail the existing budgeted semantic gate", async () => {
-	const { f } = currentFixture();
+	const { f, inputs } = currentFixture();
 	let calls = 0;
-	f.ports.inference.complete = async (input) => ({
-		value:
-			input.system === semanticReviewInstructions
-				? { approved: false, reason: "step lacks an observable criterion" }
-				: ++calls === 1
-					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
-					: current,
-		receipt: "r",
-		inputTokens: 1,
-		outputTokens: 1,
-	});
+	f.ports.inference.complete = async (input) => (
+		inputs.push(input),
+		{
+			value:
+				input.system === semanticReviewInstructions
+					? { approved: false, reason: "step lacks an observable criterion" }
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
+			receipt: "r",
+			inputTokens: 1,
+			outputTokens: 1,
+		}
+	);
 	const pending = f.submit();
 	await expect(f.run(pending.requestRef!)).rejects.toThrow(
 		"semantic_review_failed",
 	);
-	expect(f.modelCalls()).toBe(3);
+	expect(inputs.length).toBe(3);
 	expect(buildInstructions).toContain("各番号付き手順に");
 });
 
@@ -1234,32 +1237,35 @@ test("v8 correction is re-rendered and re-reviewed under the original four-call 
 });
 test("v8 correction cannot publish without reserved re-review or after a second contradiction", async () => {
 	for (const budget of [3, 4]) {
-		const { f } = currentFixture();
+		const { f, inputs } = currentFixture();
 		f.request.limits.modelCalls = budget;
 		let calls = 0;
-		f.ports.inference.complete = async (input) => ({
-			value:
-				input.system === semanticReviewInstructions
-					? {
-							approved: false,
-							reason: "conflict",
-							correction: {
-								localizedInstructions: "同じ版で照合する。",
-								document: richDocument,
-							},
-						}
-					: ++calls === 1
-						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
-						: current,
-			receipt: "r",
-			inputTokens: 1,
-			outputTokens: 1,
-		});
+		f.ports.inference.complete = async (input) => (
+			inputs.push(input),
+			{
+				value:
+					input.system === semanticReviewInstructions
+						? {
+								approved: false,
+								reason: "conflict",
+								correction: {
+									localizedInstructions: "同じ版で照合する。",
+									document: richDocument,
+								},
+							}
+						: ++calls === 1
+							? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+							: current,
+				receipt: "r",
+				inputTokens: 1,
+				outputTokens: 1,
+			}
+		);
 		const p = f.submit();
 		await expect(f.run(p.requestRef!)).rejects.toThrow(
 			budget === 3 ? "budget_exceeded" : "semantic_review_failed",
 		);
-		expect(f.modelCalls()).toBe(budget);
+		expect(inputs.length).toBe(budget);
 	}
 });
 test("v8 review corrections cannot mutate canonical fields, waive checks or approve themselves", async () => {
@@ -1299,24 +1305,27 @@ test("v8 review corrections cannot mutate canonical fields, waive checks or appr
 			},
 		},
 	]) {
-		const { f } = currentFixture();
+		const { f, inputs } = currentFixture();
 		f.request.limits.modelCalls = 4;
 		let calls = 0;
-		f.ports.inference.complete = async (input) => ({
-			value:
-				input.system === semanticReviewInstructions
-					? payload
-					: ++calls === 1
-						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
-						: current,
-			receipt: "r",
-			inputTokens: 1,
-			outputTokens: 1,
-		});
+		f.ports.inference.complete = async (input) => (
+			inputs.push(input),
+			{
+				value:
+					input.system === semanticReviewInstructions
+						? payload
+						: ++calls === 1
+							? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+							: current,
+				receipt: "r",
+				inputTokens: 1,
+				outputTokens: 1,
+			}
+		);
 		const p = f.submit();
 		await expect(f.run(p.requestRef!)).rejects.toThrow(
 			"semantic_review_failed",
 		);
-		expect(f.modelCalls()).toBe(3);
+		expect(inputs.length).toBe(3);
 	}
 });
