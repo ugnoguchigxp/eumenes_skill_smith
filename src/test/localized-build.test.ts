@@ -1339,3 +1339,11 @@ test("v8 runnable references require real imports, fixtures and outcomes without
 		"実行していない場合に成功を主張するなら拒否",
 	);
 });
+
+test("v8 completion gates distinguish observable pass/fail from unmeasured task outcomes", () => {
+	expect(buildInstructions).toContain("未測定を合格に数えない");
+	expect(buildInstructions).toContain("モード/経路ごとに合格を分け");
+	expect(semanticReviewInstructions).toContain(
+		"fixture成功を実タスク合格へ転用",
+	);
+});
