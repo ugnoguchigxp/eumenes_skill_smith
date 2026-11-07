@@ -399,3 +399,50 @@ test("H3 balanced fences and ordinary subordinate headings remain usable in FINA
 	if (r.kind === "ready")
 		expect(r.skill.content).toContain(localizedInstructions);
 });
+
+for (const strategy of ["reuse", "adapt"] as const)
+	for (const partial of [false, true])
+		test(`H4 ${strategy}: missing disclosure/section coverage blocks FINAL delivery ${partial}`, async () => {
+			const { f } = currentFixture();
+			let calls = 0;
+			const d = {
+				...current,
+				strategy,
+				...(strategy === "adapt"
+					? {
+							patches: [
+								{
+									sourceRef: "skill:compare@1",
+									sectionId: "inspect",
+									body: "確認する",
+								},
+							],
+						}
+					: {}),
+			};
+			f.ports.inference.complete = async () => ({
+				value:
+					++calls === 1
+						? partial
+							? {
+									kind: "disclose",
+									items: [{ ref: "skill:compare@1", sectionIds: ["inspect"] }],
+								}
+							: legacy
+						: d,
+				receipt: "receipt",
+				inputTokens: 1,
+				outputTokens: 1,
+			});
+			const p = f.submit();
+			await expect(f.run(p.requestRef!)).rejects.toThrow(
+				"source_not_disclosed",
+			);
+			const r = await f.service.getSkillValidated(
+				p.requestRef!,
+				f.auth,
+				f.read,
+				new AbortController().signal,
+			);
+			expect("skill" in r).toBe(false);
+		});

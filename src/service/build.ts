@@ -665,6 +665,7 @@ export async function executeBuild<Tx>(
 			const next = discloseEvidence(
 				state.evidence,
 				turn.items.filter((i) => state.evidence.some((e) => e.ref === i.ref)),
+				assembly.mode !== "legacy",
 			);
 			const byRef = new Map(disclosed.map((d) => [d.ref, d]));
 			for (const item of next) {
@@ -682,7 +683,11 @@ export async function executeBuild<Tx>(
 							merged.push(s);
 						}
 					}
-					byRef.set(item.ref, { ...prior, sections: merged, body: undefined });
+					byRef.set(item.ref, {
+						...prior,
+						sections: merged,
+						body: item.body ?? prior.body,
+					});
 				} else if (item.body !== undefined) {
 					byRef.set(item.ref, { ...prior, body: item.body });
 				}
@@ -720,6 +725,26 @@ export async function executeBuild<Tx>(
 					if (compact.data.coverage !== "absent")
 						requireThat(!compact.data.exploration, "invalid_exploration");
 					candidate = toStoredReady(compact.data);
+				}
+				if (
+					assembly.mode !== "legacy" &&
+					(candidate.strategy === "reuse" || candidate.strategy === "adapt")
+				) {
+					for (const ref of candidate.sourceRefs) {
+						const e = state.evidence.find((e) => e.ref === ref);
+						const seen = disclosed.find((d) => d.ref === ref);
+						requireThat(
+							e &&
+								seen &&
+								seen.body === e.body &&
+								(e.sections ?? []).every((section) =>
+									seen.sections?.some(
+										(s) => s.id === section.id && s.body === section.body,
+									),
+								),
+							"source_not_disclosed",
+						);
+					}
 				}
 				checkLocalizedHost(request.task, candidate);
 				checkDecision(candidate, state.evidence, p, {

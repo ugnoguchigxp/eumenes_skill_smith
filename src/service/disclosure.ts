@@ -33,6 +33,7 @@ export function evidenceCardView(e: Evidence): {
 export function discloseEvidence(
 	evidence: Evidence[],
 	requests: { ref: string; sectionIds?: string[] }[],
+	includeBody = false,
 ): {
 	ref: string;
 	title: string;
@@ -60,6 +61,7 @@ export function discloseEvidence(
 				title: e.title,
 				status: e.status,
 				sections,
+				...(includeBody ? { body: e.body } : {}),
 			});
 		} else {
 			// No section IDs from source: full body fallback (proposal 05).
