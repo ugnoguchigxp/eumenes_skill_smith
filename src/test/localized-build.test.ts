@@ -1329,3 +1329,13 @@ test("v8 review corrections cannot mutate canonical fields, waive checks or appr
 		expect(inputs.length).toBe(3);
 	}
 });
+
+test("v8 runnable references require real imports, fixtures and outcomes without inventing execution", () => {
+	expect(buildInstructions).toContain("最小の実行可能例を最低1つ");
+	expect(buildInstructions).toContain(
+		"外部通信やパッケージ取得を自動で追加しない",
+	);
+	expect(semanticReviewInstructions).toContain(
+		"実行していない場合に成功を主張するなら拒否",
+	);
+});
