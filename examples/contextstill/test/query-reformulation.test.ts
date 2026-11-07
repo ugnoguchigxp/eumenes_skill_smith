@@ -342,6 +342,8 @@ test("M3 auto reserves two physical searches plus one shared auxiliary call and 
 	await source.search("non title", 1, f.signal, context);
 	await source.search("non title", 1, f.signal, context);
 	expect(model).toBe(1);
+	expect(ledger.find((x) => x.kind === "modelCalls").inputTokens).toBeNull();
+	expect(ledger.find((x) => x.kind === "modelCalls").receipt).toBeString();
 	expect(counts).toEqual({ modelCalls: 1, sourceCalls: 4 });
 	expect(ledger.filter((x) => x.kind === "sourceCalls")).toHaveLength(4);
 });

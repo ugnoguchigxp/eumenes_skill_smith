@@ -153,7 +153,12 @@ export async function executeBuild<Tx>(
 ): Promise<Executed> {
 	const r = p.record,
 		request = r.request,
-		{ signal, reserve, noteUsage } = context;
+		{ signal, noteUsage } = context;
+	let sharedModelCallsUsed = r.usage.modelCalls;
+	const reserve: ExecutionContext["reserve"] = async (kind) => {
+		await context.reserve(kind);
+		if (kind === "modelCalls") sharedModelCallsUsed++;
+	};
 	const checkpoint = () => {
 		signal.throwIfAborted();
 		requireThat(ports.now() < request.limits.deadlineAt, "deadline_exceeded");
@@ -170,9 +175,48 @@ export async function executeBuild<Tx>(
 		reasoningTokens: null as number | null,
 		cachedInputTokens: null as number | null,
 	};
-	const auxiliary = { input: 0 as number | null, output: 0 as number | null };
+	const auxiliary = {
+		input: 0 as number | null,
+		output: 0 as number | null,
+		reasoningTokens: null as number | null,
+		cachedInputTokens: null as number | null,
+	};
+	let auxiliaryReasoningReported = false,
+		auxiliaryCachedReported = false;
+	let reasoningReported = false,
+		cachedReported = false;
+	const observed = (
+		a: number | null,
+		aReported: boolean,
+		b: number | null,
+		bReported: boolean,
+	): number | null =>
+		!aReported ? b : !bReported ? a : a === null || b === null ? null : a + b;
+	const reportedUsage = () => ({
+		inputTokens:
+			tokens.input === null || auxiliary.input === null
+				? null
+				: tokens.input + auxiliary.input,
+		outputTokens:
+			tokens.output === null || auxiliary.output === null
+				? null
+				: tokens.output + auxiliary.output,
+		reasoningTokens: observed(
+			tokens.reasoningTokens,
+			reasoningReported,
+			auxiliary.reasoningTokens,
+			auxiliaryReasoningReported,
+		),
+		cachedInputTokens: observed(
+			tokens.cachedInputTokens,
+			cachedReported,
+			auxiliary.cachedInputTokens,
+			auxiliaryCachedReported,
+		),
+	});
 	const sourceContext: ExecutionContext = {
 		...context,
+		reserve,
 		noteUsage: async (usage) => {
 			auxiliary.input =
 				auxiliary.input === null || usage.inputTokens === null
@@ -182,17 +226,25 @@ export async function executeBuild<Tx>(
 				auxiliary.output === null || usage.outputTokens === null
 					? null
 					: auxiliary.output + usage.outputTokens;
-			await noteUsage?.({
-				...usage,
-				inputTokens:
-					tokens.input === null || auxiliary.input === null
-						? null
-						: tokens.input + auxiliary.input,
-				outputTokens:
-					tokens.output === null || auxiliary.output === null
-						? null
-						: tokens.output + auxiliary.output,
-			});
+			if (usage.reasoningTokens !== undefined) {
+				auxiliary.reasoningTokens = observed(
+					auxiliary.reasoningTokens,
+					auxiliaryReasoningReported,
+					usage.reasoningTokens,
+					true,
+				);
+				auxiliaryReasoningReported = true;
+			}
+			if (usage.cachedInputTokens !== undefined) {
+				auxiliary.cachedInputTokens = observed(
+					auxiliary.cachedInputTokens,
+					auxiliaryCachedReported,
+					usage.cachedInputTokens,
+					true,
+				);
+				auxiliaryCachedReported = true;
+			}
+			await noteUsage?.({ ...usage, ...reportedUsage() });
 		},
 	};
 	const metered = ports.assemblyMode !== "legacy" && ports.source?.meteredCalls;
@@ -550,8 +602,6 @@ export async function executeBuild<Tx>(
 	let modelCallsUsed = 0;
 	let decision: Decision | undefined, receipt: string | undefined;
 
-	let reasoningReported = false;
-	let cachedReported = false;
 	let repair: { code: string; instruction: string } | undefined;
 	let lastFailure = "invalid_model_output";
 	let reSearchUsed = false;
@@ -559,7 +609,7 @@ export async function executeBuild<Tx>(
 	let currentBuildTurn = assembly.mode !== "baseline";
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
-		modelCallsUsed = attempt + 1;
+		modelCallsUsed = sharedModelCallsUsed + 1;
 		const turnSchema = currentBuildTurn
 			? assembly.turnSchema
 			: legacyModelTurnSchema;
@@ -588,6 +638,11 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		const answer = await ports.inference.complete(modelInput, signal);
 		context.noteCall?.({
+			receipt: answer.receipt,
+			inputTokens: answer.inputTokens,
+			outputTokens: answer.outputTokens,
+			reasoningTokens: answer.reasoningTokens,
+			cachedInputTokens: answer.cachedInputTokens,
 			kind: "modelCalls",
 			operation: "build",
 			outcome: "ok",
@@ -625,22 +680,13 @@ export async function executeBuild<Tx>(
 						: tokens.cachedInputTokens + cached;
 			}
 		}
-		if (noteUsage) {
+		if (noteUsage)
 			await noteUsage({
-				inputTokens:
-					tokens.input === null || auxiliary.input === null
-						? null
-						: tokens.input + auxiliary.input,
-				outputTokens:
-					tokens.output === null || auxiliary.output === null
-						? null
-						: tokens.output + auxiliary.output,
-				reasoningTokens: tokens.reasoningTokens,
-				cachedInputTokens: tokens.cachedInputTokens,
+				...reportedUsage(),
 				receipt: answer.receipt,
 				callKind: "build",
 			});
-		}
+
 		const parsed = turnSchema.safeParse(answer.value);
 		if (!parsed.success) {
 			lastFailure = "invalid_model_output";
@@ -845,6 +891,11 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		const answer = await ports.inference.complete(input, signal);
 		context.noteCall?.({
+			receipt: answer.receipt,
+			inputTokens: answer.inputTokens,
+			outputTokens: answer.outputTokens,
+			reasoningTokens: answer.reasoningTokens,
+			cachedInputTokens: answer.cachedInputTokens,
 			kind: "modelCalls",
 			operation: "semantic-review",
 			outcome: "ok",
@@ -857,29 +908,28 @@ export async function executeBuild<Tx>(
 			tokens.output === null || answer.outputTokens === null
 				? null
 				: tokens.output + answer.outputTokens;
-		tokens.reasoningTokens =
-			tokens.reasoningTokens === null || answer.reasoningTokens == null
-				? null
-				: tokens.reasoningTokens + answer.reasoningTokens;
-		tokens.cachedInputTokens =
-			tokens.cachedInputTokens === null || answer.cachedInputTokens == null
-				? null
-				: tokens.cachedInputTokens + answer.cachedInputTokens;
+		if (answer.reasoningTokens !== undefined) {
+			tokens.reasoningTokens = observed(
+				tokens.reasoningTokens,
+				reasoningReported,
+				answer.reasoningTokens,
+				true,
+			);
+			reasoningReported = true;
+		}
+		if (answer.cachedInputTokens !== undefined) {
+			tokens.cachedInputTokens = observed(
+				tokens.cachedInputTokens,
+				cachedReported,
+				answer.cachedInputTokens,
+				true,
+			);
+			cachedReported = true;
+		}
+
 		receipt = answer.receipt;
-		await noteUsage?.({
-			inputTokens:
-				tokens.input === null || auxiliary.input === null
-					? null
-					: tokens.input + auxiliary.input,
-			outputTokens:
-				tokens.output === null || auxiliary.output === null
-					? null
-					: tokens.output + auxiliary.output,
-			reasoningTokens: tokens.reasoningTokens,
-			cachedInputTokens: tokens.cachedInputTokens,
-			receipt,
-			callKind: "build",
-		});
+		await noteUsage?.({ ...reportedUsage(), receipt, callKind: "build" });
+
 		const result = reviewSchema.safeParse(answer.value);
 		requireThat(
 			result.success && result.data.approved,
@@ -904,14 +954,12 @@ export async function executeBuild<Tx>(
 			);
 	}
 	checkpoint();
-	tokens.input =
-		tokens.input === null || auxiliary.input === null
-			? null
-			: tokens.input + auxiliary.input;
-	tokens.output =
-		tokens.output === null || auxiliary.output === null
-			? null
-			: tokens.output + auxiliary.output;
+	const total = reportedUsage();
+	tokens.input = total.inputTokens;
+	tokens.output = total.outputTokens;
+	tokens.reasoningTokens = total.reasoningTokens;
+	tokens.cachedInputTokens = total.cachedInputTokens;
+
 	return { decision, evidence: state.evidence, receipt, tokens };
 }
 

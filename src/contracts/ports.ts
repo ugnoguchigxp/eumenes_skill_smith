@@ -150,14 +150,21 @@ export interface ObservedUsage {
 	callKind:
 		"build" | "reflection" | "workflow" | "delivery_validate" | "reformulation";
 }
+export interface CallObservation {
+	kind: "modelCalls" | "sourceCalls";
+	operation: string;
+	outcome: "ok" | "error";
+	receipt?: string;
+	inputTokens?: number | null;
+	outputTokens?: number | null;
+	reasoningTokens?: number | null;
+	cachedInputTokens?: number | null;
+}
 export interface ExecutionContext {
 	signal: AbortSignal;
 	/** Optional per-call audit; no provider numbers invented. */
-	noteCall?(call: {
-		kind: "modelCalls" | "sourceCalls";
-		operation: string;
-		outcome: "ok" | "error";
-	}): void;
+	noteCall?(call: CallObservation): void;
+
 	/** Each reservation must commit before any external call. */
 	reserve(kind: "modelCalls" | "sourceCalls"): Promise<void>;
 	/**

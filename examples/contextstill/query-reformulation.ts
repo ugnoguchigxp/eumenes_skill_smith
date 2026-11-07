@@ -119,6 +119,11 @@ export function createReformulatingSource(
 					value = answer.value;
 					await context?.noteUsage?.({ ...answer, callKind: "reformulation" });
 					context?.noteCall?.({
+						receipt: answer.receipt,
+						inputTokens: answer.inputTokens,
+						outputTokens: answer.outputTokens,
+						reasoningTokens: answer.reasoningTokens,
+						cachedInputTokens: answer.cachedInputTokens,
 						kind: "modelCalls",
 						operation: "reformulation",
 						outcome: "ok",

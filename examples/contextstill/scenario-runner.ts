@@ -347,12 +347,9 @@ export interface RecordProvenance {
 }
 
 export interface RunUsage {
-	physicalCallLedger: {
+	physicalCallLedger: (import("../../src/contracts/ports.js").CallObservation & {
 		taskId: string;
-		kind: "modelCalls" | "sourceCalls";
-		operation: string;
-		outcome: "ok" | "error";
-	}[];
+	})[];
 	/** Collected builder InferenceTask count (measured). */
 	buildInferenceTasks: number;
 	/** Collected judge InferenceTask count (measured). */

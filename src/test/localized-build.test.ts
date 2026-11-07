@@ -539,3 +539,37 @@ test("H2 final boundary audit marks freshness and whole search/successor metadat
 	expect(data.search.untrusted).toBe(true);
 	expect(data.search.datamark).toBe("<<UNTRUSTED>>");
 });
+
+test("M3 actual shared reservations appear in disclosure progress and observed auxiliary totals", async () => {
+	const { f, inputs } = currentFixture();
+	f.auth.searchTask = "public task";
+	f.request.limits.modelCalls = 4;
+	f.ports.source = {
+		meteredCalls: true,
+		search: async (_query, _limit, _signal, context) => {
+			await context!.reserve("modelCalls");
+			await context!.noteUsage?.({
+				callKind: "reformulation",
+				inputTokens: 5,
+				outputTokens: 7,
+				reasoningTokens: 2,
+				cachedInputTokens: 1,
+			});
+			return { cards: [], warnings: [], degraded: [], truncated: false };
+		},
+		get: async () => {
+			throw new Error("not_used");
+		},
+		validate: async () => true,
+	};
+	const r = await ready(f);
+	expect((inputs[0]!.data as any).disclosureProgress.modelCallsUsed).toBe(2);
+	expect((inputs[1]!.data as any).disclosureProgress.modelCallsUsed).toBe(3);
+	expect(r.build.usage).toMatchObject({
+		modelCalls: 4,
+		inputTokens: 8,
+		outputTokens: 10,
+		reasoningTokens: 2,
+		cachedInputTokens: 1,
+	});
+});

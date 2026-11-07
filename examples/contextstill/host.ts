@@ -157,11 +157,8 @@ export function createExampleHost(
 		assemblyMode: options.assemblyMode ?? (injected ? "baseline" : "legacy"),
 		skillMarkdown: contextStillSkillMarkdown,
 	};
-	const callLedger: {
-		kind: "modelCalls" | "sourceCalls";
-		operation: string;
-		outcome: "ok" | "error";
-	}[] = [];
+	const callLedger: import("../../src/contracts/ports.js").CallObservation[] =
+		[];
 	const service = createSkillSmith(ports);
 	const write = <T>(op: () => T) => db.transaction(op)();
 	return {
