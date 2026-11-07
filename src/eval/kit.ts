@@ -1,3 +1,4 @@
+import { digest, requireThat } from "../service/identity.js";
 import { z } from "zod";
 import {
 	evalConditionSchema,
@@ -62,19 +63,41 @@ export async function runEvalSuite(
 	synthesisNotClearlyBetter: boolean[];
 }> {
 	const parsed = evalSuiteSchema.parse(suite);
+	requireThat(
+		new Set(parsed.tasks.map((task) => task.id)).size === parsed.tasks.length,
+		"eval_duplicate_task",
+	);
+	requireThat(
+		new Set(
+			parsed.records.map((pack) =>
+				JSON.stringify([pack.taskId, pack.condition]),
+			),
+		).size === parsed.records.length,
+		"eval_duplicate_condition",
+	);
 	if (audit) assertEvalSuiteAudited(parsed, audit);
 	const comparisons: EvalComparison[] = [];
 	const flags: boolean[] = [];
 	for (const task of parsed.tasks) {
 		const runs: EvalRunResult[] = [];
+		const taskDigest = digest(task);
 		for (const condition of ["none", "agent_skills", "skillsmith"] as const) {
 			const pack = parsed.records.find(
 				(r) => r.taskId === task.id && r.condition === condition,
 			);
-			const result = await runner(task, condition, pack?.records ?? []);
-			runs.push(
-				evalRunResultSchema.parse({ ...result, taskId: task.id, condition }),
+			const conditionTask = structuredClone(task);
+			const result = await runner(
+				conditionTask,
+				condition,
+				structuredClone(pack?.records ?? []),
 			);
+			requireThat(digest(conditionTask) === taskDigest, "eval_task_mutated");
+			const parsedResult = evalRunResultSchema.parse(result);
+			requireThat(
+				parsedResult.taskId === task.id && parsedResult.condition === condition,
+				"eval_run_identity_mismatch",
+			);
+			runs.push(parsedResult);
 		}
 		const cmp = compareConditionRuns(runs);
 		comparisons.push(cmp);

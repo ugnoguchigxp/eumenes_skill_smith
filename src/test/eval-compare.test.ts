@@ -134,3 +134,24 @@ test("strategy and abstention fields appear in paired A/B/C deltas", () => {
 		unlabeled: 0,
 	});
 });
+
+test("comparison rejects duplicate conditions instead of silently taking the last label", () => {
+	expect(() =>
+		compareConditionRuns([
+			{ ...base, condition: "none", kind: "ready" },
+			{ ...base, condition: "none", kind: "ready" },
+		]),
+	).toThrow("eval_duplicate_condition");
+});
+test("comparison rejects an empty or oversized run set with a controlled error", () => {
+	expect(() => compareConditionRuns([])).toThrow("eval_run_count");
+	expect(() =>
+		compareConditionRuns(
+			Array.from({ length: 4 }, () => ({
+				...base,
+				condition: "none" as const,
+				kind: "ready" as const,
+			})),
+		),
+	).toThrow("eval_run_count");
+});

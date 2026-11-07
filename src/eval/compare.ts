@@ -1,3 +1,4 @@
+import { requireThat } from "../service/identity.js";
 import {
 	evalComparisonSchema,
 	evalRunResultSchema,
@@ -13,27 +14,17 @@ function labeled(
 	return run?.judgment?.[key];
 }
 
-function advantage(
-	a: boolean | undefined,
-	b: boolean | undefined,
-	preferTrue: boolean,
-	aName: EvalCondition,
-	bName: EvalCondition,
-): "none" | "agent_skills" | "skillsmith" | "tie" | "incomplete" {
-	if (a === undefined || b === undefined) return "incomplete";
-	if (a === b) return "tie";
-	const aWins = preferTrue ? a && !b : !a && b;
-	return aWins
-		? (aName as "agent_skills" | "skillsmith")
-		: (bName as "agent_skills" | "skillsmith");
-}
-
 /**
  * Compare up to three condition runs for one task.
  * Does not declare SkillSmith the winner; encodes falsification-friendly deltas.
  */
 export function compareConditionRuns(runs: EvalRunResult[]): EvalComparison {
+	requireThat(runs.length >= 1 && runs.length <= 3, "eval_run_count");
 	const parsed = runs.map((r) => evalRunResultSchema.parse(r));
+	requireThat(
+		new Set(parsed.map((r) => r.condition)).size === parsed.length,
+		"eval_duplicate_condition",
+	);
 	const by = Object.fromEntries(parsed.map((r) => [r.condition, r])) as Partial<
 		Record<EvalCondition, EvalRunResult>
 	>;
@@ -102,8 +93,6 @@ export function compareConditionRuns(runs: EvalRunResult[]): EvalComparison {
 		else if (r.abstention?.excessive === true) labeledExcessive++;
 		else unlabeled++;
 	}
-
-	void advantage;
 
 	return evalComparisonSchema.parse({
 		taskId,

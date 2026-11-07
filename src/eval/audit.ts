@@ -123,7 +123,7 @@ export function auditEvalSuite(
 			}
 		}
 		// Task manifest equality is structural: each condition runner must receive the same task object.
-		// Unequal copies in suite.tasks are not possible (one task entry); runners that mutate per condition are audited by contract fixtures.
+		// runEvalSuite clones each condition input and rejects task mutation at the runner boundary.
 		const manifest = taskManifest(task);
 		if (!manifest.goal || !manifest.acceptance.length) {
 			findings.push({

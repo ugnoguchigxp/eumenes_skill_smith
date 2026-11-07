@@ -69,3 +69,77 @@ test("workflow induction uses InferencePort and stays a candidate shape", async 
 	expect(candidate.sections[0]!.id).toBe("start");
 	expect(candidate.conditions[0]).toContain("成功");
 });
+
+const isolationSuite = () => ({
+	id: "isolated",
+	tasks: [
+		{
+			id: "task",
+			goal: "確認する",
+			acceptance: [{ id: "a", text: "対応を確認する" }],
+			constraints: [],
+			expectedRefs: [],
+		},
+	],
+	records: [],
+});
+for (const nested of [false, true]) {
+	test(`eval kit rejects ${nested ? "nested" : "top-level"} task mutation before a later condition runs`, async () => {
+		let calls = 0;
+		await expect(
+			runEvalSuite(isolationSuite(), async (task, condition) => {
+				calls++;
+				if (nested) task.acceptance[0]!.text = "changed";
+				else task.goal = "changed";
+				return {
+					taskId: task.id,
+					condition,
+					kind: "ready",
+					usedRefs: [],
+					modelCalls: 0,
+					sourceCalls: 0,
+					inputTokens: null,
+					outputTokens: null,
+				};
+			}),
+		).rejects.toThrow("eval_task_mutated");
+		expect(calls).toBe(1);
+	});
+}
+for (const wrong of ["task", "condition"] as const) {
+	test(`eval kit rejects a runner result with wrong ${wrong} identity`, async () => {
+		await expect(
+			runEvalSuite(isolationSuite(), async (task, condition) => ({
+				taskId: wrong === "task" ? "other" : task.id,
+				condition: wrong === "condition" ? "skillsmith" : condition,
+				kind: "ready",
+				usedRefs: [],
+				modelCalls: 0,
+				sourceCalls: 0,
+				inputTokens: null,
+				outputTokens: null,
+			})),
+		).rejects.toThrow("eval_run_identity_mismatch");
+	});
+}
+test("eval kit rejects duplicate tasks and record packs before any runner call", async () => {
+	const suite = isolationSuite();
+	suite.tasks.push(structuredClone(suite.tasks[0]!));
+	await expect(
+		runEvalSuite(suite, async () => {
+			throw Error("must not run");
+		}),
+	).rejects.toThrow("eval_duplicate_task");
+	const withPacks = {
+		...isolationSuite(),
+		records: [
+			{ taskId: "task", condition: "none" as const, records: [] },
+			{ taskId: "task", condition: "none" as const, records: [] },
+		],
+	};
+	await expect(
+		runEvalSuite(withPacks, async () => {
+			throw Error("must not run");
+		}),
+	).rejects.toThrow("eval_duplicate_condition");
+});

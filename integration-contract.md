@@ -322,3 +322,6 @@ scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来�
 
 ## 2026-11-07 review R5: cancellation at reflection/workflow await boundaries
 `propose`/`induceWorkflow` は開始時に加え、予約commit直後とInferencePort完了直後にAbortSignalを再検査する。予約中にcancelされたら推論を開始せず、providerがsignalを無視して完了してもcancel後の候補を返さない。既commitの予約は消費したままで、返却型・保存時の認可/receipt/版検査は維持する。新たな推論・I/O・予約は追加しない。
+
+## 2026-11-07 review R6: fair comparison identity
+評価kitは各conditionへtaskとrecordの独立cloneを渡し、taskの改変を検出したら比較を中止する。runnerの返すtaskId/conditionを既定値で上書きして正当化せず、要求identityと一致することを検査する。比較入力は1–3件でcondition重複を拒否し、suite中のtask ID/record pack identityの重複も拒否する。正常時の返却schema・採点rubric・生成物は変更しない。意味判定は追加せず構造の同一性だけを検査する。
