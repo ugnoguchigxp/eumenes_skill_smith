@@ -38,7 +38,11 @@ const presentation = {
 	language: "ja",
 	localizedInstructions: "正本を確認し、差異の根拠を対応付ける。",
 };
-const current = { ...legacy, ...presentation };
+const current = {
+	...legacy,
+	...presentation,
+	sourceReview: { assessment: "test double", flaggedItems: [] },
+};
 
 function currentFixture() {
 	const f = fixture({ assemblyMode: "baseline" });
@@ -238,6 +242,7 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 		sections: [{ id: "explore", body: "観測する" }],
 		assumptions: [{ text: "任意前提", mandatory: false, resolved: false }],
 		localizedInstructions: "隔離して観測する。",
+		sourceReview: { assessment: "test double", flaggedItems: [] },
 		localizedHost: [
 			{ id: "acceptance:acceptance:1", text: "受入訳" },
 			{ id: "constraint:constraint:1", text: "制約訳" },
@@ -594,3 +599,40 @@ for (const missing of ["generator", "presentation"] as const)
 		if (final.kind === "rejected") expect(final.code).toBe("build_revoked");
 		expect("skill" in final).toBe(false);
 	});
+
+test("v5 source review is mandatory for new terminal answers and host renders flagged claims safely", async () => {
+	const missing = { ...current } as Record<string, unknown>;
+	delete missing.sourceReview;
+	expect(modelTurnSchema.safeParse(missing).success).toBe(false);
+	const { f } = currentFixture();
+	let n = 0;
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic review" }
+				: ++n === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: {
+							...current,
+							sourceReview: {
+								assessment: "疑義あり",
+								flaggedItems: [
+									{
+										claim: "# unsafe <tag>",
+										reason: "版条件が不明",
+										disposition: "needs_confirmation",
+									},
+								],
+							},
+						},
+		receipt: "test",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const r = await ready(f);
+	const artifact = renderSkillMarkdown(r.build.content).content;
+	expect(artifact).toContain("## 要確認の出典記述");
+	expect(artifact).toContain("要確認・未検証");
+	expect(artifact).not.toContain("# unsafe <tag>");
+	expect(artifact).toContain("版条件が不明");
+});

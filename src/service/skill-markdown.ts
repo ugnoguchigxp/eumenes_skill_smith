@@ -12,7 +12,7 @@ export {
 } from "./skill-document.js";
 import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v4";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v5";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
@@ -160,6 +160,7 @@ export function renderSkillMarkdown(
 		language: d.language,
 		localizedInstructions: d.localizedInstructions,
 		localizedHost: d.localizedHost,
+		sourceReview: d.sourceReview,
 	};
 	if (Object.values(presentation).some((v) => v !== undefined))
 		requireThat(

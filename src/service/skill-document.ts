@@ -102,6 +102,15 @@ export function assembleSkillBody(
 					),
 				)
 			: "",
+		d.sourceReview?.flaggedItems.length
+			? "## 要確認の出典記述\n\n" +
+				list(
+					d.sourceReview.flaggedItems.map(
+						(x) =>
+							`${markdownPlainText(x.claim)}: ${markdownPlainText(x.reason)}（${x.disposition === "removed" ? "手順から除外" : "要確認・未検証"}）`,
+					),
+				)
+			: "",
 		"## 確認\n\n" +
 			list(
 				d.verification.map((v, i) => hostText("verification:" + i, v)),

@@ -48,6 +48,7 @@ test("baseline decisionSchema rejects coverage; compact accepts coverage and exp
 		title: "根拠の確認",
 		description: "根拠を確認する。調査の開始時に使う。",
 		language: "ja",
+		sourceReview: { assessment: "test double", flaggedItems: [] },
 		localizedInstructions: "根拠を確認し、結果を照合する。",
 	};
 	const reuse = {
@@ -177,6 +178,7 @@ test("toStoredReady maps exploration slots into fixed section ids", () => {
 		title: "安全な探索",
 		description: "対象を安全に調べる。根拠がないときに使う。",
 		language: "ja",
+		sourceReview: { assessment: "test double", flaggedItems: [] },
 		localizedInstructions: "対象を確認し、隔離して試し、観測結果を照合する。",
 		kind: "ready",
 		strategy: "provisional",

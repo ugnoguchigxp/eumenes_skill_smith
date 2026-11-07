@@ -201,3 +201,15 @@ H2 final boundary audit: freshness entries and the entire current search/success
 M3 final accounting audit: disclosureProgress.modelCallsUsed includes committed auxiliary reservations and the about-to-be-reserved builder call, so the builder sees the actual remaining shared allowance. Model-call audit rows retain the provider's per-call receipt and nullable token fields; cumulative build usage merges observed auxiliary reasoning/cache counts without inventing omitted values.
 
 L3 delivery isolation audit: current execution requires a positive matching generator instruction stamp and complete current presentation; unversioned or legacy-shaped stored builds are usable only in the explicit archival profile, never through the current final delivery API.
+
+
+## 品質改善 v5（実装前設計）
+
+1. 出典は正しさの保証ではない。現行 build は sourceReview（assessment と flaggedItems）を必須とし、LLM が API・手順・版条件を点検する。疑義は削除または「要確認」とし、host は flaggedItems の claim/reason/disposition を必ず描画する。意味検証は既存の予約済み呼出しを拡張し、新規呼出しや予算拡大はしない。点検不能は成功にしない。reuse は原文の誤りを正しいと断言する義務ではない。
+2. 厳格採点 v2 は correctness/actionability/essentialCoverage を独立に 0–10 で測る。incorrectSteps に実行可能な誤りを列挙し、1 件以上なら総合点は最大 5。出典忠実性とは独立であり、実行結果は記録がなければ未測定。過去版の記録は再利用しない。
+3. canonical acceptance/constraints/assumptions は保存を維持。入力の visibility は reader（既定）/environment/evaluation。reader の制約・受入条件と verification は必ず host が描画するが内部 ID は非表示。environment/evaluation は body から外し、build.content の canonical metadata に残す。visibility は caller が明示し、LLM は要求条件を降格できない。モデル由来の assumptions は visibility を付けられるが意味検証で課題上の必須条件の隠蔽を拒否する。モックの readonly は host が environment と指定。本文・手順にも評価事情を転載しない。キーワード削除は行わない。
+4. compose は interactions（point/handling）を最低 1 件返す。構造検査は存在のみ、相互作用の妥当性と手順への反映は LLM の意味検証で判断し、無理な衝突を作らない。host がプレーンテキストで描画する。
+5. provisional は domainAnchors（term/documentPointer）を最低 1 件返す。host は「未確認の手がかり」として描画。分野固有の探索語・公式文書の探し方であり、URLや確認済みの手順を捏造しない。根拠不足は世界的不存在としない。
+6. 再評価は builder-only packets を先に生成し、build 答案確定後に別工程で judge packet を開く。同じ Grok Bot による作成・採点であり独立したモデル・人手評価ではない。gold を見る前に builder 記録を固定し、6 件の個別点と残欠陥を報告する。
+
+旧保存形式は読めるが現行 terminal schema は品質欄を必須とする。H1–H4、complete、auth、入出力上限、既存の予算と fail-closed は維持する。

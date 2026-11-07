@@ -4,6 +4,7 @@ import { requireThat } from "./identity.js";
 
 const reserved = new Set([
 	"手順",
+	"要確認の出典記述",
 	"受け入れ条件",
 	"受入条件",
 	"制約",

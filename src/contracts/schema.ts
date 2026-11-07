@@ -70,6 +70,18 @@ export const authoritySchema = z.strictObject({
 	permissions: z.array(z.enum(["build", "report", "manage"])).max(3),
 });
 export type Authority = z.infer<typeof authoritySchema>;
+export const sourceReviewSchema = z.strictObject({
+	assessment: text,
+	flaggedItems: z
+		.array(
+			z.strictObject({
+				claim: text,
+				reason: text,
+				disposition: z.enum(["removed", "needs_confirmation"]),
+			}),
+		)
+		.max(16),
+});
 export const skillPresentationSchema = z.strictObject({
 	name: z
 		.string()
@@ -81,6 +93,7 @@ export const skillPresentationSchema = z.strictObject({
 	language: z.string().trim().min(1).max(64),
 	localizedInstructions: text,
 	localizedHost: z.array(clause).max(96).optional(),
+	sourceReview: sourceReviewSchema.optional(),
 });
 const legacyReady = z.strictObject({
 	kind: z.literal("ready"),
@@ -112,6 +125,7 @@ const storedReady = legacyReady
 		localizedInstructions:
 			skillPresentationSchema.shape.localizedInstructions.optional(),
 		localizedHost: skillPresentationSchema.shape.localizedHost,
+		sourceReview: sourceReviewSchema.optional(),
 	})
 	.refine((d) => {
 		const values = [
@@ -126,7 +140,10 @@ const storedReady = legacyReady
 			values.every((v) => v !== undefined)
 		);
 	}, "incomplete_skill_presentation");
-const currentReady = legacyReady.extend(skillPresentationSchema.shape);
+const currentReady = legacyReady.extend({
+	...skillPresentationSchema.shape,
+	sourceReview: sourceReviewSchema,
+});
 export const decisionSchema = z.discriminatedUnion("kind", [
 	storedReady,
 	z.strictObject({
