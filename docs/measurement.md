@@ -96,3 +96,6 @@ exact は on ではなく auto の非発火確認です。original と compose �
 
 ## Review M1 — historical vs current scores (2026-11-07)
 Historical snapshots retain their exact identities and numbers. Current scores require a complete match of suite and seed bytes, all instruction/schema identities, renderer version, profile, assembly, evidence and reformulation conditions. Missing identity is stale, never current. Score snapshots reject duplicate/missing task IDs and non-integer/out-of-range scores. Historical files are not rewritten.
+
+## Review M2 — judge-only fidelity evidence (2026-11-07)
+Current retrieval judges receive full reference bodies/sections only after builder completion, plus the final artifact rather than internal JSON. Generated artifacts, search metadata and source material are enclosed as untrusted judge data. Retrieval name selection, constraint preservation, source fidelity and execution evidence are separately recorded; executionOutcome is unmeasured without an actual execution. Archival judge inputs remain explicitly legacy. Independent-provider evaluation, human calibration, multi-run variance and actual worker improvement remain unmeasured; no provider values are fabricated.

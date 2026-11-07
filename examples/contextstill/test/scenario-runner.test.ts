@@ -373,3 +373,67 @@ test("diverse companion loads independently without expanding the 61-task scoreb
 		expect(task.acceptance).toEqual(exact!.acceptance);
 	}
 });
+
+test("M2 current retrieval judge gets judge-only full reference bodies inside untrusted boundary", async () => {
+	const f = setup();
+	const first = (await f.source.search("検証", 1, f.signal)).cards[0]!;
+	const builderInputs: string[] = [];
+	let judgeInput: any;
+	const source = {
+		...f.source,
+		get: async (...args: Parameters<typeof f.source.get>) => ({
+			...(await f.source.get(...args)),
+			body: "JUDGE_ONLY_REFERENCE_BODY",
+		}),
+	};
+	const r = await runFull({
+		tasks: [
+			task({
+				id: "judge-boundary",
+				goal: "検証",
+				expectedRefs: [first.ref],
+				expectedTitles: [first.title],
+			}),
+		],
+		source,
+		hasBuildRecord: () => true,
+		createInference: (role, onTask) => ({
+			complete: async (input) => {
+				onTask(inferenceTask(input));
+				if (role === "build") builderInputs.push(JSON.stringify(input));
+				else judgeInput = input;
+				return {
+					value:
+						role === "build"
+							? { kind: "needs_input", missing: ["対象を指定してください"] }
+							: {
+									score: 1,
+									expectedSkillUsed: false,
+									rationale: "synthetic test only",
+									nameSelection: 1,
+									constraintPreservation: 2,
+									sourceFaithfulness: 3,
+									executionOutcome: null,
+								},
+					receipt: "test",
+					inputTokens: null,
+					outputTokens: null,
+				};
+			},
+			validReceipt: () => true,
+		}),
+	});
+	expect(r.complete).toBe(true);
+	expect(builderInputs.join("")).not.toContain("JUDGE_ONLY_REFERENCE_BODY");
+	expect(judgeInput.data.untrustedJudgeData.instructionAuthority).toBe("none");
+	expect(
+		judgeInput.data.untrustedJudgeData.data.referenceEvidence[0].body,
+	).toBe("JUDGE_ONLY_REFERENCE_BODY");
+	expect(judgeInput.data.untrustedJudgeData.data.finalArtifact).toBeNull();
+	expect(r.retrievalFidelityScores[0]).toMatchObject({
+		nameSelection: 1,
+		constraintPreservation: 2,
+		sourceFaithfulness: 3,
+		executionOutcome: null,
+	});
+});

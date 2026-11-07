@@ -1,3 +1,10 @@
+import {
+	CURRENT_JUDGE_INSTRUCTIONS,
+	JUDGE_DATA_BOUNDARY,
+	fidelityJudgeSchema,
+	fidelityJudgeOutputSchema,
+	untrustedJudgeData,
+} from "../../src/eval/scenario-score.js";
 import { SKILL_RENDERER_VERSION } from "../../src/service/skill-markdown.js";
 import { semanticReviewInstructions } from "../../src/instructions/build.js";
 import type { SkillArtifact } from "../../src/index.js";
@@ -256,8 +263,14 @@ export function instructionDigests(assemblyMode: AssemblyMode = "baseline") {
 					? compactBuildInstructions + semanticReviewInstructions
 					: buildInstructions + semanticReviewInstructions,
 		),
-		judgeInstructionsDigest: digest(JUDGE_INSTRUCTIONS),
-		judgeSchemaDigest: digest(judgeOutputSchema),
+		judgeInstructionsDigest: digest(
+			assemblyMode === "legacy"
+				? JUDGE_INSTRUCTIONS
+				: CURRENT_JUDGE_INSTRUCTIONS,
+		),
+		judgeSchemaDigest: digest(
+			assemblyMode === "legacy" ? judgeOutputSchema : fidelityJudgeOutputSchema,
+		),
 	};
 }
 
@@ -363,6 +376,13 @@ export async function runFull(deps: FullDeps) {
 	const pendingBuild: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const pendingJudge: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const scores: AssemblyScore[] = [];
+	const retrievalFidelityScores: {
+		taskId: string;
+		nameSelection: number;
+		constraintPreservation: number;
+		sourceFaithfulness: number;
+		executionOutcome: null;
+	}[] = [];
 	const composeScores: {
 		taskId: string;
 		coverage: number;
@@ -537,7 +557,10 @@ export async function runFull(deps: FullDeps) {
 					);
 					// Judge-only ground truth documents; never inserted into builder task/data.
 					const referenceEvidence = [];
-					if (compose)
+					if (
+						compose ||
+						(assemblyMode !== "legacy" && task.axis === "retrieval")
+					)
 						for (const ref of task.expectedRefs) {
 							evalEvidenceGetCalls++;
 							const doc = await deps.source.get(
@@ -548,6 +571,9 @@ export async function runFull(deps: FullDeps) {
 								ref: doc.ref,
 								title: doc.title,
 								body: doc.body,
+								...(assemblyMode !== "legacy"
+									? { sections: doc.sections ?? [] }
+									: {}),
 							});
 						}
 					const data = judgeData({
@@ -561,33 +587,49 @@ export async function runFull(deps: FullDeps) {
 						body,
 						missing,
 					});
+					const judgePayload = contrast
+						? { ...data, expectedRefsRetrieved: contrastRetrieved }
+						: absent
+							? {
+									...data,
+									// Watch-list only; not gold and never sent to the builder.
+									nearestFalseFriendRefs: task.nearestFalseFriendRefs,
+								}
+							: compose
+								? { ...data, evidenceSupply, referenceEvidence }
+								: data;
 					const judged = await judge.complete(
 						{
-							system: contrast
-								? ABSTENTION_JUDGE_INSTRUCTIONS
-								: absent
-									? ABSENT_JUDGE_INSTRUCTIONS
-									: compose
-										? COMPOSE_JUDGE_INSTRUCTIONS
-										: JUDGE_INSTRUCTIONS,
-							data: contrast
-								? { ...data, expectedRefsRetrieved: contrastRetrieved }
-								: absent
-									? {
-											...data,
-											// Watch-list only; not gold and never sent to the builder.
-											nearestFalseFriendRefs: task.nearestFalseFriendRefs,
-										}
-									: compose
-										? { ...data, evidenceSupply, referenceEvidence }
-										: data,
+							system:
+								(contrast
+									? ABSTENTION_JUDGE_INSTRUCTIONS
+									: absent
+										? ABSENT_JUDGE_INSTRUCTIONS
+										: compose
+											? COMPOSE_JUDGE_INSTRUCTIONS
+											: assemblyMode === "legacy"
+												? JUDGE_INSTRUCTIONS
+												: CURRENT_JUDGE_INSTRUCTIONS) +
+								(assemblyMode !== "legacy" && (contrast || absent || compose)
+									? "\n" + JUDGE_DATA_BOUNDARY
+									: ""),
+							data:
+								assemblyMode === "legacy"
+									? judgePayload
+									: untrustedJudgeData({
+											...judgePayload,
+											referenceEvidence,
+											finalArtifact: ready?.skill.content ?? null,
+										}),
 							schema: contrast
 								? abstentionJudgeOutputSchema
 								: absent
 									? absentJudgeOutputSchema
 									: compose
 										? composeJudgeOutputSchema
-										: judgeOutputSchema,
+										: assemblyMode === "legacy"
+											? judgeOutputSchema
+											: fidelityJudgeOutputSchema,
 							requestRef: `scenario-judge:${task.id}`,
 							maxOutputTokens: contrast || absent || compose ? 1200 : 400,
 							deadlineAt: fixedDeadline,
@@ -603,7 +645,9 @@ export async function runFull(deps: FullDeps) {
 								? absentJudgeSchema
 								: compose
 									? composeJudgeSchema
-									: assemblyJudgeSchema
+									: assemblyMode === "legacy"
+										? assemblyJudgeSchema
+										: fidelityJudgeSchema
 					).safeParse(judged.value);
 					if (!parsed.success) {
 						status(
@@ -611,6 +655,25 @@ export async function runFull(deps: FullDeps) {
 							parsed.error.issues[0]?.message ?? "judge_schema_invalid",
 						);
 						continue;
+					}
+					if (
+						assemblyMode !== "legacy" &&
+						task.axis === "retrieval" &&
+						!contrast
+					) {
+						const {
+							nameSelection,
+							constraintPreservation,
+							sourceFaithfulness,
+							executionOutcome,
+						} = fidelityJudgeSchema.parse(judged.value);
+						retrievalFidelityScores.push({
+							taskId: task.id,
+							nameSelection,
+							constraintPreservation,
+							sourceFaithfulness,
+							executionOutcome,
+						});
 					}
 					if (contrast) {
 						const detailed = abstentionJudgeSchema.parse(judged.value);
@@ -696,6 +759,7 @@ export async function runFull(deps: FullDeps) {
 		absentScores,
 		abstentionScores,
 		statuses,
+		retrievalFidelityScores,
 		scores,
 		pendingBuild,
 		pendingJudge,
