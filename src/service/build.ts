@@ -448,22 +448,31 @@ export async function executeBuild<Tx>(
 			sourceNotices,
 			reSearch,
 		} = state;
-		const candidateCards = candidates.map((e) => ({
-			ref: e.ref,
-			version: e.version,
-			title: e.title,
-			status: e.status,
-			complete: e.complete,
-			external: e.external,
-			scope: e.scope,
-		}));
+		const candidateCards = (
+			assembly.mode === "legacy"
+				? <T extends { ref: string }>(items: T[]) => ({ items })
+				: spotlightUntrusted
+		)(
+			candidates.map((e) => ({
+				ref: e.ref,
+				version: e.version,
+				title: e.title,
+				status: e.status,
+				complete: e.complete,
+				external: e.external,
+				scope: e.scope,
+			})),
+		).items;
 		return {
 			task: request.task,
 			environment: request.environment,
 			audience: request.audience,
 			policy: p.policy,
 			candidateCards,
-			evidenceIndex: evidence.map(evidenceCardView),
+			evidenceIndex:
+				assembly.mode === "legacy"
+					? evidence.map(evidenceCardView)
+					: spotlightUntrusted(evidence.map(evidenceCardView)).items,
 			untrustedEvidence: spotlightUntrusted(disclosed),
 			disclosureProgress: {
 				rounds: disclosureTrace.rounds,
@@ -487,6 +496,9 @@ export async function executeBuild<Tx>(
 				...(sourceNotices || sourceSearch
 					? {
 							external: {
+								...(assembly.mode === "legacy"
+									? {}
+									: { untrusted: true, datamark: "<<UNTRUSTED>>" }),
 								warnings: (
 									sourceNotices?.warnings ?? sourceSearch!.warnings
 								).filter((w) =>

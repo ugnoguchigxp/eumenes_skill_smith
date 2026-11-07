@@ -54,6 +54,17 @@ const STRATEGY: Record<string, string> = {
 	provisional: "暫定",
 };
 
+/** Plain text at Markdown interpolation boundaries; controls cannot create blocks. */
+export const markdownPlainText = (text: string) =>
+	text
+		.replace(
+			// eslint-disable-next-line no-control-regex -- flatten controls at the trust boundary
+			/[\u0000-\u001f\u007f-\u009f\u2028\u2029\u202a-\u202e\u2066-\u2069]/g,
+			" ",
+		)
+		.replace(/[\\`*_{}[\]()#+.!|~=-]/g, (c) => `\\${c}`)
+		.replace(/[&<>]/g, (c) => `&#${c.charCodeAt(0)};`);
+
 const clip = (t: string, n: number) =>
 	t.length > n ? t.slice(0, n - 1) + "…" : t;
 
@@ -239,7 +250,9 @@ export function renderSkillMarkdown(
 				? list(
 						d.sourceRefs.map((ref) => {
 							const title = titles.get(ref);
-							return title ? `${title}（\`${ref}\`）` : `\`${ref}\``;
+							return title
+								? `${markdownPlainText(title)}（\`${markdownPlainText(ref)}\`）`
+								: `\`${markdownPlainText(ref)}\``;
 						}),
 					)
 				: "出典なし。この指針は検索で得た公式の Skill に基づいていない。"),
