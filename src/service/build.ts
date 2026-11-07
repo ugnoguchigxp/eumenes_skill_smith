@@ -501,14 +501,21 @@ export async function executeBuild<Tx>(
 				modelCallsLimit: request.limits.modelCalls,
 				modelCallsUsed: modelCallsUsed,
 			},
-			freshness: evidence.map((e) => ({
-				ref: e.ref,
-				status: e.status,
-				retrievedAt: e.retrievedAt ?? null,
-				supersededBy: e.supersededBy ?? null,
-				version: e.version,
-			})),
+			freshness: (assembly.mode === "legacy"
+				? <T extends { ref: string }>(items: T[]) => ({ items })
+				: spotlightUntrusted)(
+				evidence.map((e) => ({
+					ref: e.ref,
+					status: e.status,
+					retrievedAt: e.retrievedAt ?? null,
+					supersededBy: e.supersededBy ?? null,
+					version: e.version,
+				})),
+			).items,
 			search: {
+				...(assembly.mode === "legacy"
+					? {}
+					: { untrusted: true, datamark: "<<UNTRUSTED>>" }),
 				externalUsed,
 				...(successors.length ? { successors } : {}),
 				...(reSearch.length ? { reSearch } : {}),

@@ -674,3 +674,5 @@ The supported frontmatter contract is pinned to the Agent Skills specification s
 
 ## Review L3 — one pure document assembly (2026-11-07)
 Current Build.content.body is the host-assembled canonical Markdown body produced by assembleSkillBody, not a second model body plus a legacy tail. Rendering checks canonical equality then adds frontmatter; no independently maintained host-tail representation exists on the current path. Legacy execution-body construction/extraction lives in legacy-content.ts and is selected only by complete absence of presentation fields. All host typed text is rendered as plain text; only instructions may contain model Markdown. Extractor exceptions/empty output become coded final unavailable replies. Earlier sections explicitly marked historical are not current contracts.
+
+H2 final boundary audit: freshness entries and the entire current search/successor subtree are also explicitly marked untrusted, not just candidate/index titles and external notices. Archival shapes remain unchanged.

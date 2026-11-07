@@ -530,3 +530,12 @@ test("L3 reference IDs remain data even with backticks and block delimiters in F
 		expect(r.skill.content).toContain("&#96;");
 	}
 });
+
+test("H2 final boundary audit marks freshness and whole search/successor metadata untrusted", async () => {
+	const { f, inputs } = currentFixture();
+	await deliverCurrent(f);
+	const data = inputs[0]!.data as any;
+	expect(data.freshness[0].untrusted).toBe(true);
+	expect(data.search.untrusted).toBe(true);
+	expect(data.search.datamark).toBe("<<UNTRUSTED>>");
+});
