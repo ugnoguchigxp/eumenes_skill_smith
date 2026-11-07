@@ -93,6 +93,10 @@ export function assembleSkillBody(
 	if (d.document) {
 		const doc = skillDocumentSchema.parse(d.document);
 		requireThat(
+			doc.sections.some((section) => section.kind === "principles"),
+			"skill_principles_missing",
+		);
+		requireThat(
 			d.strategy !== "provisional" || !!doc.provisionalNotice,
 			"skill_provisional_notice_missing",
 		);

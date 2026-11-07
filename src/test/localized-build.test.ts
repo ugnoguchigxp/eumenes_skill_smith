@@ -34,6 +34,11 @@ const legacy = {
 const presentation = {
 	document: {
 		sections: [
+			{
+				kind: "principles" as const,
+				heading: "必須原則",
+				body: "根拠と対象の対応を保持する。",
+			},
 			{ kind: "workflow" as const, heading: "手順" },
 			{ kind: "completion" as const, heading: "確認" },
 		],
@@ -870,7 +875,11 @@ for (const strategy of ["reuse", "adapt", "compose", "provisional"] as const) {
 			});
 			const r = await ready(f);
 			const text = renderSkillMarkdown(r.build.content).content;
-			expect(text.match(/^## .+$/gm)).toEqual(["## 手順", "## 確認"]);
+			expect(text.match(/^## .+$/gm)).toEqual([
+				"## 必須原則",
+				"## 手順",
+				"## 確認",
+			]);
 			const checks = text.split("## 確認")[1]!;
 			for (const v of [
 				"対象の状態を変更しない",
@@ -1001,7 +1010,7 @@ test("v7 final functional sections, ASCII slug and real resource links; no audit
 	const { reply, inputs } = await deliverDocument();
 	expect(reply.kind).toBe("ready");
 	if (reply.kind !== "ready") return;
-	expect(reply.skill.rendererVersion).toBe("skill-markdown.v8");
+	expect(reply.skill.rendererVersion).toBe("skill-markdown.v11");
 	expect(reply.skill.name).toBe("compare-source-records");
 	expect(reply.skill.content.match(/^## .+$/gm)).toEqual([
 		"## 目的",
@@ -1036,7 +1045,7 @@ test("v7 final functional sections, ASCII slug and real resource links; no audit
 		richDocument,
 	);
 });
-test("v7 small subjects do not structurally require modes, principles, safety or resources", () => {
+test("v11 archived schema remains compatible; small subjects need no modes or resources", () => {
 	expect(modelTurnSchema.safeParse(current).success).toBe(true);
 	const doc = {
 		...richDocument,
@@ -1408,6 +1417,17 @@ test("v10 uncertainty routing distinguishes information collection from unsafe o
 });
 
 test("v10 section minimalism preserves conditions rather than enforcing a topic template", () => {
-	expect(buildInstructions).toContain("重複する独立節を省き");
-	expect(buildInstructions).toContain("重要な条件を行動や確認へ保つ");
+	expect(buildInstructions).toContain("必須原則は独立節として短く設け");
+	expect(buildInstructions).toContain("具体的行動/確認との逐語重複は避ける");
+});
+
+test("v11 new rendering fails closed without LLM-authored principles", async () => {
+	const document = {
+		...richDocument,
+		sections: richDocument.sections.filter((s) => s.kind !== "principles"),
+	};
+	expect(decisionSchema.safeParse({ ...current, document }).success).toBe(true);
+	await expect(deliverDocument(document)).rejects.toThrow(
+		"skill_principles_missing",
+	);
 });

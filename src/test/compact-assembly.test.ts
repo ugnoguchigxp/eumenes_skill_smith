@@ -51,6 +51,11 @@ test("baseline decisionSchema rejects coverage; compact accepts coverage and exp
 		sourceReview: { assessment: "test double", flaggedItems: [] },
 		document: {
 			sections: [
+				{
+					kind: "principles",
+					heading: "必須原則",
+					body: "対象と根拠を対応付ける。",
+				},
 				{ kind: "workflow", heading: "手順" },
 				{ kind: "completion", heading: "確認" },
 			],
@@ -190,6 +195,11 @@ test("toStoredReady maps exploration slots into fixed section ids", () => {
 		sourceReview: { assessment: "test double", flaggedItems: [] },
 		document: {
 			sections: [
+				{
+					kind: "principles",
+					heading: "必須原則",
+					body: "対象と根拠を対応付ける。",
+				},
 				{ kind: "workflow", heading: "手順" },
 				{ kind: "completion", heading: "確認" },
 			],

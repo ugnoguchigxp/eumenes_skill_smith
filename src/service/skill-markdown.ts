@@ -15,7 +15,7 @@ export {
 } from "./skill-document.js";
 import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v8";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v11";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
