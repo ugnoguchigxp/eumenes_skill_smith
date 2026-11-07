@@ -1,4 +1,14 @@
 import {
+	archivedComposeJudgeSchema,
+	archivedComposeJudgeOutputSchema,
+	ARCHIVED_COMPOSE_JUDGE_INSTRUCTIONS,
+} from "./archived-compose-judge.js";
+import {
+	archivedAbsentJudgeSchema,
+	archivedAbsentJudgeOutputSchema,
+	ARCHIVED_ABSENT_JUDGE_INSTRUCTIONS,
+} from "./archived-absent-judge.js";
+import {
 	CURRENT_JUDGE_INSTRUCTIONS,
 	JUDGE_DATA_BOUNDARY,
 	fidelityJudgeSchema,
@@ -397,6 +407,13 @@ export async function runFull(deps: FullDeps) {
 	const pendingBuild: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const pendingJudge: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const scores: AssemblyScore[] = [];
+	const qualityScores: {
+		taskId: string;
+		correctness: number;
+		actionability: number;
+		essentialCoverage: number;
+		incorrectSteps: string[];
+	}[] = [];
 	const retrievalFidelityScores: {
 		taskId: string;
 		nameSelection: number;
@@ -652,9 +669,13 @@ export async function runFull(deps: FullDeps) {
 								(contrast
 									? ABSTENTION_JUDGE_INSTRUCTIONS
 									: absent
-										? ABSENT_JUDGE_INSTRUCTIONS
+										? assemblyMode === "legacy"
+											? ARCHIVED_ABSENT_JUDGE_INSTRUCTIONS
+											: ABSENT_JUDGE_INSTRUCTIONS
 										: compose
-											? COMPOSE_JUDGE_INSTRUCTIONS
+											? assemblyMode === "legacy"
+												? ARCHIVED_COMPOSE_JUDGE_INSTRUCTIONS
+												: COMPOSE_JUDGE_INSTRUCTIONS
 											: assemblyMode === "legacy"
 												? JUDGE_INSTRUCTIONS
 												: CURRENT_JUDGE_INSTRUCTIONS) +
@@ -675,9 +696,13 @@ export async function runFull(deps: FullDeps) {
 							schema: contrast
 								? abstentionJudgeOutputSchema
 								: absent
-									? absentJudgeOutputSchema
+									? assemblyMode === "legacy"
+										? archivedAbsentJudgeOutputSchema
+										: absentJudgeOutputSchema
 									: compose
-										? composeJudgeOutputSchema
+										? assemblyMode === "legacy"
+											? archivedComposeJudgeOutputSchema
+											: composeJudgeOutputSchema
 										: assemblyMode === "legacy"
 											? judgeOutputSchema
 											: fidelityJudgeOutputSchema,
@@ -694,9 +719,13 @@ export async function runFull(deps: FullDeps) {
 						contrast
 							? abstentionJudgeSchema
 							: absent
-								? absentJudgeSchema
+								? assemblyMode === "legacy"
+									? archivedAbsentJudgeSchema
+									: absentJudgeSchema
 								: compose
-									? composeJudgeSchema
+									? assemblyMode === "legacy"
+										? archivedComposeJudgeSchema
+										: composeJudgeSchema
 									: assemblyMode === "legacy"
 										? assemblyJudgeSchema
 										: fidelityJudgeSchema
@@ -707,6 +736,21 @@ export async function runFull(deps: FullDeps) {
 							parsed.error.issues[0]?.message ?? "judge_schema_invalid",
 						);
 						continue;
+					}
+					if (assemblyMode !== "legacy" && !contrast) {
+						const detailed = parsed.data as unknown as {
+							correctness: number;
+							actionability: number;
+							essentialCoverage: number;
+							incorrectSteps: string[];
+						};
+						qualityScores.push({
+							taskId: task.id,
+							correctness: detailed.correctness,
+							actionability: detailed.actionability,
+							essentialCoverage: detailed.essentialCoverage,
+							incorrectSteps: detailed.incorrectSteps,
+						});
 					}
 					if (
 						assemblyMode !== "legacy" &&
@@ -737,7 +781,11 @@ export async function runFull(deps: FullDeps) {
 							appropriateGap: detailed.appropriateGap,
 						});
 					} else if (compose) {
-						const detailed = composeJudgeSchema.parse(judged.value);
+						const detailed = (
+							assemblyMode === "legacy"
+								? archivedComposeJudgeSchema
+								: composeJudgeSchema
+						).parse(judged.value);
 						composeScores.push({
 							taskId: task.id,
 							coverage: detailed.coverage,
@@ -747,7 +795,11 @@ export async function runFull(deps: FullDeps) {
 						});
 					}
 					if (absent) {
-						const detailed = absentJudgeSchema.parse(judged.value);
+						const detailed = (
+							assemblyMode === "legacy"
+								? archivedAbsentJudgeSchema
+								: absentJudgeSchema
+						).parse(judged.value);
 						absentScores.push({
 							taskId: task.id,
 							boundedExploration: detailed.boundedExploration,
@@ -819,6 +871,7 @@ export async function runFull(deps: FullDeps) {
 		absentScores,
 		abstentionScores,
 		statuses,
+		qualityScores,
 		retrievalFidelityScores,
 		scores,
 		pendingBuild,

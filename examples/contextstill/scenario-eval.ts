@@ -313,6 +313,7 @@ try {
 			mixedAxes: result.mixedAxes,
 			statuses: result.statuses,
 			scores: result.scores,
+			qualityScores: result.qualityScores,
 			retrievalFidelityScores: result.retrievalFidelityScores,
 			composeScores: result.composeScores,
 			absentScores: result.absentScores,
