@@ -1437,3 +1437,20 @@ test("v11 normalization and provisional observations are LLM judgments, not topi
 	expect(buildInstructions).toContain("不足している観測値・入手先");
 	expect(semanticReviewInstructions).toContain("全references");
 });
+
+test("v11 post-build self-review uses the existing reserved call and immutable gates", async () => {
+	const { reply, inputs } = await deliverDocument();
+	expect(reply.kind).toBe("ready");
+	const data = inputs.at(-1)?.data as {
+		reviewPlan: { phase: string; weights?: { correctness: number } }[];
+	};
+	expect(data.reviewPlan.map((p) => p.phase)).toEqual([
+		"canonical-faithfulness",
+		"post-build-self-review",
+	]);
+	expect(data.reviewPlan[1]?.weights?.correctness).toBe(35);
+	expect(inputs.length).toBe(3);
+	expect(semanticReviewInstructions).toContain(
+		"既存予算を越えて修正済み扱いにしない",
+	);
+});

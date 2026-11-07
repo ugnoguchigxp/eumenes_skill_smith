@@ -899,6 +899,19 @@ export async function executeBuild<Tx>(
 				system: semanticReviewInstructions,
 				data: {
 					originalTask: request.task,
+					reviewPlan: [
+						{ phase: "canonical-faithfulness" },
+						{
+							phase: "post-build-self-review",
+							weights: {
+								correctness: 35,
+								actionability: 25,
+								coverage: 20,
+								concision: 10,
+								format: 10,
+							},
+						},
+					],
 					untrustedReview: spotlightUntrusted([
 						{
 							ref: "review",
