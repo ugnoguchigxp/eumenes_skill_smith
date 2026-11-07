@@ -1393,3 +1393,9 @@ test("v10 unsupported operation proof fails the existing reserved semantic gate"
 	await expect(f.run(p.requestRef!)).rejects.toThrow("semantic_review_failed");
 	expect(inputs.length).toBe(3);
 });
+
+test("v10 boundary examples test invariants and negative controls without fake execution", () => {
+	expect(buildInstructions).toContain("実際のAPI/最終出力境界");
+	expect(buildInstructions).toContain("意図的な違反を検出できる負例");
+	expect(buildInstructions).toContain("模造の成功を水増ししない");
+});
