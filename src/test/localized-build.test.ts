@@ -1186,3 +1186,137 @@ test("v8 missing per-step operational criteria fail the existing budgeted semant
 	expect(f.modelCalls()).toBe(3);
 	expect(buildInstructions).toContain("各番号付き手順に");
 });
+
+test("v8 correction is re-rendered and re-reviewed under the original four-call cap", async () => {
+	const { f, inputs } = currentFixture();
+	f.request.limits.modelCalls = 4;
+	let buildCalls = 0,
+		reviews = 0;
+	const fixed = "原資料を変更せず、同じ版の差異を照合し、不一致なら停止する。";
+	f.ports.inference.complete = async (input) => {
+		inputs.push(input);
+		return {
+			value:
+				input.system === semanticReviewInstructions
+					? ++reviews === 1
+						? {
+								approved: false,
+								reason: "body/reference conflict",
+								correction: {
+									localizedInstructions: fixed,
+									document: richDocument,
+								},
+							}
+						: { approved: true, reason: "corrected rendered files match" }
+					: ++buildCalls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
+			receipt: "r",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	const result = await deliverCurrent(f);
+	expect(result.kind).toBe("ready");
+	if (result.kind !== "ready") return;
+	expect(result.skill.content).toContain(fixed);
+	expect(result.skill.files).toHaveLength(1);
+	expect(result.build.content.decision.verification).toEqual(
+		current.verification,
+	);
+	expect(result.build.content.decision.sourceRefs).toEqual(current.sourceRefs);
+	expect(result.build.usage.modelCalls).toBe(4);
+	expect(reviews).toBe(2);
+	const last = JSON.stringify(inputs.at(-1)?.data);
+	expect(last).toContain(fixed);
+	expect(last).toContain("同一版の各欄を照合する");
+	expect(last).toContain("原資料を変更しない");
+});
+test("v8 correction cannot publish without reserved re-review or after a second contradiction", async () => {
+	for (const budget of [3, 4]) {
+		const { f } = currentFixture();
+		f.request.limits.modelCalls = budget;
+		let calls = 0;
+		f.ports.inference.complete = async (input) => ({
+			value:
+				input.system === semanticReviewInstructions
+					? {
+							approved: false,
+							reason: "conflict",
+							correction: {
+								localizedInstructions: "同じ版で照合する。",
+								document: richDocument,
+							},
+						}
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
+			receipt: "r",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const p = f.submit();
+		await expect(f.run(p.requestRef!)).rejects.toThrow(
+			budget === 3 ? "budget_exceeded" : "semantic_review_failed",
+		);
+		expect(f.modelCalls()).toBe(budget);
+	}
+});
+test("v8 review corrections cannot mutate canonical fields, waive checks or approve themselves", async () => {
+	for (const payload of [
+		{
+			approved: false,
+			reason: "x",
+			correction: {
+				localizedInstructions: "照合する。",
+				document: richDocument,
+				verification: [],
+			},
+		},
+		{
+			approved: false,
+			reason: "x",
+			correction: {
+				localizedInstructions: "照合する。",
+				document: richDocument,
+				sourceRefs: [],
+			},
+		},
+		{
+			approved: true,
+			reason: "x",
+			correction: {
+				localizedInstructions: "照合する。",
+				document: richDocument,
+			},
+		},
+		{
+			approved: false,
+			reason: "x",
+			correction: {
+				localizedInstructions: "x".repeat(8001),
+				document: richDocument,
+			},
+		},
+	]) {
+		const { f } = currentFixture();
+		f.request.limits.modelCalls = 4;
+		let calls = 0;
+		f.ports.inference.complete = async (input) => ({
+			value:
+				input.system === semanticReviewInstructions
+					? payload
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
+			receipt: "r",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const p = f.submit();
+		await expect(f.run(p.requestRef!)).rejects.toThrow(
+			"semantic_review_failed",
+		);
+		expect(f.modelCalls()).toBe(3);
+	}
+});
