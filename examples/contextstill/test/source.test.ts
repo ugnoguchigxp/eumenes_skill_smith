@@ -1,3 +1,4 @@
+import { sourceOperation } from "../source-budget.js";
 import { expect, test } from "bun:test";
 import { createFixtureSource } from "../source.js";
 import { createExampleHost } from "../host.js";
@@ -178,3 +179,81 @@ test("SourcePort exposes the published successor of a superseded item as a ref",
 	expect(current.status).toBe("active");
 	expect(current.supersededBy).toBeUndefined();
 });
+
+test("fixture source does not invoke transport after cancellation during reservation", async () => {
+	const controller = new AbortController();
+	let calls = 0,
+		reservations = 0;
+	const source = createFixtureSource(async () => {
+		calls++;
+		return new Response("unused");
+	}, "synthetic");
+	await expect(
+		source.search("public", 1, controller.signal, {
+			signal: controller.signal,
+			reserve: async () => {
+				reservations++;
+				controller.abort(new Error("stop"));
+			},
+		}),
+	).rejects.toThrow("stop");
+	expect(reservations).toBe(1);
+	expect(calls).toBe(0);
+});
+test("fixture source rejects cancellation delivered with the stream EOF", async () => {
+	const f = setup([item()]);
+	const controller = new AbortController();
+	const source = createFixtureSource(async (request) => {
+		const response = await f.handler(request);
+		const text = await response.text();
+		let sent = false;
+		return new Response(
+			new ReadableStream<Uint8Array>(
+				{
+					pull(stream) {
+						if (!sent) {
+							sent = true;
+							stream.enqueue(new TextEncoder().encode(text));
+						} else {
+							controller.abort(new Error("stop"));
+							stream.close();
+						}
+					},
+				},
+				{ highWaterMark: 0 },
+			),
+			{ headers: { "content-type": "application/json" } },
+		);
+	}, f.token);
+	await expect(source.search("検証", 1, controller.signal)).rejects.toThrow(
+		"stop",
+	);
+});
+for (const phase of ["reservation", "operation"] as const) {
+	test(`fallback source operation rejects cancellation during ${phase}`, async () => {
+		const f = setup();
+		const controller = new AbortController();
+		let calls = 0,
+			reservations = 0;
+		await expect(
+			sourceOperation(
+				{ ...f.source, meteredCalls: false },
+				{
+					signal: controller.signal,
+					reserve: async () => {
+						reservations++;
+						if (phase === "reservation") controller.abort(new Error("stop"));
+					},
+				},
+				"synthetic",
+				async () => {
+					calls++;
+					if (phase === "operation") controller.abort(new Error("stop"));
+					return 42;
+				},
+			),
+		).rejects.toThrow("stop");
+		expect(reservations).toBe(1);
+		expect(calls).toBe(phase === "reservation" ? 0 : 1);
+	});
+}

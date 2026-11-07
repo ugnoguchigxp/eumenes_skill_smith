@@ -9,8 +9,10 @@ export async function sourceOperation<T>(
 ): Promise<T> {
 	context?.signal.throwIfAborted();
 	if (context && !inner.meteredCalls) await context.reserve("sourceCalls");
+	context?.signal.throwIfAborted();
 	try {
 		const result = await f();
+		context?.signal.throwIfAborted();
 		if (!inner.meteredCalls)
 			context?.noteCall?.({ kind: "sourceCalls", operation, outcome: "ok" });
 		return result;

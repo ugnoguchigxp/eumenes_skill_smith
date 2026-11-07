@@ -69,6 +69,7 @@ export function createFixtureSource(
 		signal.throwIfAborted();
 		await context?.reserve("sourceCalls");
 		try {
+			signal.throwIfAborted();
 			const id = crypto.randomUUID();
 			const response = await transport(
 				new Request("http://127.0.0.1/mcp", {
@@ -97,6 +98,7 @@ export function createFixtureSource(
 				while (true) {
 					signal.throwIfAborted();
 					const next = await reader.read();
+					signal.throwIfAborted();
 					if (next.done) break;
 					size += next.value.byteLength;
 					if (size > MAX_BYTES)
@@ -108,6 +110,7 @@ export function createFixtureSource(
 				await reader.cancel();
 				reader.releaseLock();
 			}
+			signal.throwIfAborted();
 			const rpc = envelope.parse(JSON.parse(text));
 			if (rpc.id !== id) throw new Error("contextstill_id_mismatch");
 			if (rpc.result.isError) throw new Error("contextstill_tool_error");

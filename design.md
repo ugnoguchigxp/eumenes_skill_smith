@@ -810,3 +810,6 @@ scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来�
 
 ## 2026-11-07 review R8: optional expected-digest manifest fail closed
 評価CLIのcompanion expected-digestsは不存在(ENOENT)だけを省略可能とする。存在するがJSON/schema不正、読込不能等なら中止し、auditを無効にして継続しない。manifestはstring→非空stringのrecordとして検査する。`.json`以外のsuite名には`.expected-digests.json`を追記し、suite自身を誤ってmanifestとして読まない。正常なaudit/返却schema/生成物は不変。
+
+## 2026-11-07 review R9: fixture I/O cancellation windows
+fixture SourcePortは予約完了後、stream read完了後（EOFを含む）、reader後始末完了後にcancelを再検査する。fallback sourceOperationも予約後と操作後を検査し、cancel後の追加I/Oや正常応答を防ぐ。予約済み予算は戻さず、通信/readerを増やさない。正常なsource応答・生成物は不変。
