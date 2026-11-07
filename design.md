@@ -807,3 +807,6 @@ scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来�
 
 ## 2026-11-07 review R7: public projection is not secret redaction
 公開scope/space/列のprojectionはcredential/log storageを選択しないが、公開本文に含まれる自由文を意味判定して除去する処理ではない。export前の内容確認と許可はホストの責任であり、scopeマークだけで秘密が無いと保証しない。この明確化はデータ・生成物・予算を変更しない。
+
+## 2026-11-07 review R8: optional expected-digest manifest fail closed
+評価CLIのcompanion expected-digestsは不存在(ENOENT)だけを省略可能とする。存在するがJSON/schema不正、読込不能等なら中止し、auditを無効にして継続しない。manifestはstring→非空stringのrecordとして検査する。`.json`以外のsuite名には`.expected-digests.json`を追記し、suite自身を誤ってmanifestとして読まない。正常なaudit/返却schema/生成物は不変。

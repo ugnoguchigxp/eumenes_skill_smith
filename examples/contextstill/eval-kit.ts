@@ -1,3 +1,4 @@
+import { z } from "zod";
 // Quality-eval kit entry: audits suite integrity, then compares recorded results.
 // Usage: bun examples/contextstill/eval-kit.ts [suite.json] [--require-records]
 // Inference records (inputDigest-bound) and comparison result JSON are separate concerns.
@@ -21,12 +22,16 @@ const suite = evalSuiteSchema.parse(JSON.parse(readFileSync(path, "utf8")));
 
 // Optional companion file: expected digests for tamper detection.
 // Shape: { "taskId:condition": "expectedInputDigest", ... }
-const digestPath = path.replace(/\.json$/, ".expected-digests.json");
+const digestPath = path.endsWith(".json")
+	? path.replace(/\.json$/, ".expected-digests.json")
+	: path + ".expected-digests.json";
 let expectedDigests: Record<string, string> | undefined;
 try {
-	expectedDigests = JSON.parse(readFileSync(digestPath, "utf8"));
-} catch {
-	expectedDigests = undefined;
+	expectedDigests = z
+		.record(z.string(), z.string().min(1))
+		.parse(JSON.parse(readFileSync(digestPath, "utf8")));
+} catch (error) {
+	if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
 }
 
 const audit = auditEvalSuite(suite, { expectedDigests, requireRecords });
