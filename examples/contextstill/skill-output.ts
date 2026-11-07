@@ -2,7 +2,7 @@ import { skillBundleDigest } from "../../src/service/skill-markdown.js";
 import { referencePathSchema } from "../../src/contracts/schema.js";
 import { artifactDigest } from "../../src/service/identity.js";
 import { mkdirSync, writeFileSync, lstatSync } from "node:fs";
-import { dirname, resolve, relative, sep } from "node:path";
+import { dirname, resolve, relative, sep, parse } from "node:path";
 import { validateSkillMarkdown, type SkillArtifact } from "../../src/index.js";
 
 export function writeSkillArtifact(
@@ -37,14 +37,17 @@ export function writeSkillArtifact(
 	)
 		throw new Error("skill_bundle_digest_mismatch");
 	const root = resolve(outputDir);
-	// Check every path before creating/writing anything. Never traverse an existing symlink.
+	// Preflight all existing ancestors/targets before writing. The host must exclude
+	// concurrent path mutation; this is not a race-safe sandbox or atomic bundle write.
 	for (const rel of [skill.path, ...files.map((f) => f.path)]) {
-		let path = root;
-		for (const part of relative(root, resolve(root, rel)).split(sep)) {
+		let path = parse(root).root;
+		for (const part of relative(path, resolve(root, rel)).split(sep)) {
 			path = resolve(path, part);
 			try {
-				if (lstatSync(path).isSymbolicLink())
-					throw new Error("skill_output_symlink");
+				const entry = lstatSync(path);
+				if (entry.isSymbolicLink()) throw new Error("skill_output_symlink");
+				if (entry.isFile() && entry.nlink > 1)
+					throw new Error("skill_output_hardlink");
 			} catch (error) {
 				if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
 			}

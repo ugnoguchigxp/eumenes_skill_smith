@@ -8,6 +8,8 @@ import {
 	existsSync,
 	mkdirSync,
 	symlinkSync,
+	linkSync,
+	writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
@@ -259,3 +261,75 @@ test("v7 writer refuses an existing reference-directory symlink before writing S
 		rmSync(dir, { recursive: true, force: true });
 	}
 });
+
+for (const position of ["root", "ancestor", "dangling-root"] as const) {
+	test(`writer rejects ${position} symlink before writing`, () => {
+		const dir = mkdtempSync(resolve(tmpdir(), "skill-root-link-"));
+		const content = '---\nname: "safe"\ndescription: "Checks."\n---\nCheck.';
+		const skill = {
+			name: "safe",
+			path: "safe/SKILL.md",
+			content,
+			digest: artifactDigest(content),
+			rendererVersion: "synthetic",
+			sourceExtractorVersion: "none",
+		};
+		const outside = resolve(dir, "outside");
+		const link = resolve(dir, "link");
+		try {
+			if (position !== "dangling-root") mkdirSync(outside);
+			symlinkSync(outside, link);
+			const output = position === "ancestor" ? resolve(link, "nested") : link;
+			expect(() => writeSkillArtifact(output, skill)).toThrow(
+				"skill_output_symlink",
+			);
+			expect(
+				existsSync(
+					resolve(
+						outside,
+						position === "ancestor" ? "nested/safe/SKILL.md" : "safe/SKILL.md",
+					),
+				),
+			).toBe(false);
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
+	});
+}
+for (const reference of [false, true]) {
+	test(`writer rejects existing ${reference ? "reference" : "main"} hardlink before any write`, () => {
+		const dir = mkdtempSync(resolve(tmpdir(), "skill-hard-link-"));
+		const content = '---\nname: "safe"\ndescription: "Checks."\n---\nCheck.';
+		const main = {
+			name: "safe",
+			path: "safe/SKILL.md",
+			content,
+			digest: artifactDigest(content),
+			rendererVersion: "synthetic",
+			sourceExtractorVersion: "none",
+		};
+		const file = {
+			path: "safe/references/detail.md",
+			content: "detail",
+			digest: artifactDigest("detail"),
+		};
+		const outside = resolve(dir, "outside.md");
+		try {
+			writeFileSync(outside, "preserve");
+			const target = resolve(dir, reference ? file.path : main.path);
+			mkdirSync(resolve(target, ".."), { recursive: true });
+			linkSync(outside, target);
+			expect(() =>
+				writeSkillArtifact(dir, {
+					...main,
+					files: [file],
+					bundleDigest: skillBundleDigest(main, [file]),
+				}),
+			).toThrow("skill_output_hardlink");
+			expect(readFileSync(outside, "utf8")).toBe("preserve");
+			if (reference) expect(existsSync(resolve(dir, main.path))).toBe(false);
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
+	});
+}

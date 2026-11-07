@@ -789,3 +789,6 @@ CLI/シェル/設定例は、組込み前に無害なローカル実行または
 
 ## 2026-11-07 review R1: failure ledger authorization
 `fail` は producer epoch/runToken と現在の build 権限・principal/scope/authority epoch・source authorization を、使用量/改訂の書込みより先に検査する。拒否または既に終端の要求は行を一切変更しない。有効な失敗では既予約分と実測使用量を従来どおり保持する。成功した生成物・モデル呼出・予算上限は変更しない。
+
+## 2026-11-07 review R2: artifact writer filesystem boundary
+writer は名前/パス/digestの検証後、最初の書込み前に出力rootとその祖先を含む全既存パスをlstatし、symlink（danglingを含む）を拒否する。既存の書込み対象が複数hardlinkを持つ通常ファイルなら拒否し、別名のinodeを書き換えない。出力はホスト所有の排他的な作業ディレクトリで行う。事前検査とwriteの間に他プロセスがパスを入れ替える競合への防御やbundle全体のatomic性は保証しない。正常なファイルの内容/返却pathは変更しない。
