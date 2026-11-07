@@ -178,3 +178,66 @@ test("report-only authorization cannot read a build", async () => {
 			.kind,
 	).toBe("rejected");
 });
+
+for (const denial of [
+	"principal",
+	"scope",
+	"epoch",
+	"permission",
+	"revoked",
+] as const) {
+	test(`unauthorized failure (${denial}) cannot mutate usage or revision`, () => {
+		const f = fixture();
+		const request = f.submit();
+		const prepared = f.write(() =>
+			f.service.prepare(f.db, request.requestRef!, 0, f.auth),
+		)!;
+		const before = f.ports.repository.request(f.db, request.requestRef!);
+		const auth = structuredClone(f.auth);
+		if (denial === "principal") auth.principal = "other";
+		if (denial === "scope") auth.scope = "other";
+		if (denial === "epoch") auth.epoch++;
+		if (denial === "permission") auth.permissions = ["report"];
+		if (denial === "revoked") f.setValid(false);
+		expect(
+			f.write(() =>
+				f.service.fail(f.db, prepared, auth, "failed", {
+					input: 37,
+					output: 9,
+					reasoningTokens: 4,
+					cachedInputTokens: 2,
+				}),
+			),
+		).toBe(false);
+		expect(f.ports.repository.request(f.db, request.requestRef!)).toEqual(
+			before,
+		);
+	});
+}
+test("authorized failure preserves observed usage and terminates once", () => {
+	const f = fixture();
+	const request = f.submit();
+	const prepared = f.write(() =>
+		f.service.prepare(f.db, request.requestRef!, 0, f.auth),
+	)!;
+	expect(
+		f.write(() =>
+			f.service.fail(f.db, prepared, f.auth, "failed", {
+				input: 37,
+				output: 9,
+			}),
+		),
+	).toBe(true);
+	const row = f.ports.repository.request(f.db, request.requestRef!);
+	expect(row?.usage.inputTokens).toBe(37);
+	expect(row?.usage.outputTokens).toBe(9);
+	expect(
+		f.write(() =>
+			f.service.fail(f.db, prepared, f.auth, "late", {
+				input: 999,
+				output: 999,
+			}),
+		),
+	).toBe(false);
+	expect(f.ports.repository.request(f.db, request.requestRef!)).toEqual(row);
+});

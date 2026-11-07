@@ -631,7 +631,11 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		) => {
 			const current = repo.request(tx, s.record.ref);
 			if (!(
-				current?.epoch === s.record.epoch && current.runToken === s.runToken
+				current &&
+				!current.outcome &&
+				valid(tx, current, auth) &&
+				current.epoch === s.record.epoch &&
+				current.runToken === s.runToken
 			))
 				return false;
 			if (tokens) {

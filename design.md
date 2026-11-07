@@ -786,3 +786,6 @@ CLI/シェル/設定例は、組込み前に無害なローカル実行または
 
 ### v11案4: 出力前のrubric自己点検
 全ファイル描画後・公開前にreviewPlanでcanonical-faithfulness→post-build-self-reviewの2フェーズを指定する。後者は正確35/具体25/網羅20/簡潔10/形式10に対し誤り・不可欠な欠落・冗長をLLMが照合する。独立の追加推論ではなく既存の予約済み意味検証呼出しへ併合する（Python/Goは既存4/4で追加呼出しを賄えない）。初稿にも同じ基準を渡し自己修正した案を要求する。重要な問題はapproved=false、既存の表示限定correction→再描画→再予約された再検証を使い、予算不足は従来通りfail closed。予約/I-O/2回上限/原条件不変の検査を変更しない。独立した別LLM評価や追加実行と称さない。
+
+## 2026-11-07 review R1: failure ledger authorization
+`fail` は producer epoch/runToken と現在の build 権限・principal/scope/authority epoch・source authorization を、使用量/改訂の書込みより先に検査する。拒否または既に終端の要求は行を一切変更しない。有効な失敗では既予約分と実測使用量を従来どおり保持する。成功した生成物・モデル呼出・予算上限は変更しない。
