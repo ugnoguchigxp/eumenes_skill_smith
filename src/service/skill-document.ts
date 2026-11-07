@@ -97,6 +97,15 @@ export function assembleSkillBody(
 			? "## 制約\n\n" +
 				list(constraints.map((c) => hostText("constraint:" + c.id, c.text)))
 			: "",
+		d.interactions?.length
+			? "## 組み合わせの接点\n\n" +
+				list(
+					d.interactions.map(
+						(x) =>
+							`${markdownPlainText(x.point)}: ${markdownPlainText(x.handling)}`,
+					),
+				)
+			: "",
 		d.sourceReview?.flaggedItems.length
 			? "## 要確認の出典記述\n\n" +
 				list(

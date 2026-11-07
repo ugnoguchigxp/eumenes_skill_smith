@@ -695,3 +695,40 @@ test("v5 reader text has no internal IDs while evaluation metadata stays canonic
 		"モック文字列一致",
 	);
 });
+
+test("v5 composition requires structured interaction points and renders their handling", async () => {
+	for (const interactions of [
+		undefined,
+		[{ point: "条件の接点", handling: "先に型を決めてから処理する" }],
+	]) {
+		const { f } = currentFixture();
+		let n = 0;
+		f.ports.inference.complete = async (input) => ({
+			value:
+				input.system === semanticReviewInstructions
+					? { approved: true, reason: "synthetic" }
+					: ++n === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: {
+								...current,
+								strategy: "compose",
+								sections: [{ id: "merged", body: "比較する" }],
+								interactions,
+							},
+			receipt: "test",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		if (!interactions) {
+			const p = f.submit();
+			await expect(f.run(p.requestRef!)).rejects.toThrow(
+				"composition_interactions_missing",
+			);
+		} else {
+			const r = await ready(f);
+			const text = renderSkillMarkdown(r.build.content).content;
+			expect(text).toContain("## 組み合わせの接点");
+			expect(text).toContain(interactions[0]!.handling);
+		}
+	}
+});

@@ -95,6 +95,11 @@ export const skillPresentationSchema = z.strictObject({
 	localizedInstructions: text,
 	localizedHost: z.array(clause).max(96).optional(),
 	sourceReview: sourceReviewSchema.optional(),
+	interactions: z
+		.array(z.strictObject({ point: text, handling: text }))
+		.min(1)
+		.max(16)
+		.optional(),
 });
 const legacyReady = z.strictObject({
 	kind: z.literal("ready"),
@@ -128,6 +133,11 @@ const storedReady = legacyReady
 			skillPresentationSchema.shape.localizedInstructions.optional(),
 		localizedHost: skillPresentationSchema.shape.localizedHost,
 		sourceReview: sourceReviewSchema.optional(),
+		interactions: z
+			.array(z.strictObject({ point: text, handling: text }))
+			.min(1)
+			.max(16)
+			.optional(),
 	})
 	.refine((d) => {
 		const values = [

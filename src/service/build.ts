@@ -48,6 +48,14 @@ export function checkDecision(
 	p: Prepared,
 	options?: { rejectBodyRewrite?: boolean },
 ) {
+	if (
+		decision.localizedInstructions !== undefined &&
+		decision.strategy === "compose"
+	)
+		requireThat(
+			!!decision.interactions?.length,
+			"composition_interactions_missing",
+		);
 	const selected = decision.sourceRefs.map((ref) => {
 		const e = evidence.find((e) => e.ref === ref);
 		requireThat(e && e.status === "active" && e.complete, "source_unavailable");
