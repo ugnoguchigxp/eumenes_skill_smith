@@ -1,7 +1,10 @@
 import { validateModelMarkdown } from "./model-markdown.js";
 import { z } from "zod";
 import { YAML } from "bun";
-import { skillPresentationSchema } from "../contracts/schema.js";
+import {
+	skillPresentationSchema,
+	skillNameSchema,
+} from "../contracts/schema.js";
 import type { Build, Reply } from "../contracts/types.js";
 import { legacyMainInstructions } from "./legacy-content.js";
 import { assembleSkillBody } from "./skill-document.js";
@@ -12,7 +15,7 @@ export {
 } from "./skill-document.js";
 import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v6";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v7";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
@@ -25,6 +28,19 @@ export interface SkillArtifact {
 	name: string;
 	path: string;
 	content: string;
+	bundleDigest?: string;
+	files?: { path: string; content: string; digest: string }[];
+}
+
+/** Explicit whole-bundle identity; SKILL content digest retains its old byte contract. */
+export function skillBundleDigest(
+	main: { path: string; digest: string },
+	files: { path: string; digest: string }[],
+) {
+	return digest([
+		{ path: main.path, digest: main.digest },
+		...files.map(({ path, digest }) => ({ path, digest })),
+	]);
 }
 
 /** Audit projection is separate from SKILL content; callers may persist it as a sidecar. */
@@ -37,8 +53,7 @@ export function skillAuditMetadata(build: Build["content"]) {
 	});
 }
 
-const validName = (name: string) =>
-	name.length <= 64 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name);
+const validName = (name: string) => skillNameSchema.safeParse(name).success;
 
 const slug = (text: string, max: number) =>
 	text
@@ -140,7 +155,7 @@ export function validateSkillMarkdownFormat(
 
 /** Backwards-compatible alias; FORMAT only, not a safety verdict. */
 export const validateSkillMarkdown = validateSkillMarkdownFormat;
-export const SKILL_FORMAT_VERSION = "agent-skills-frontmatter.2026-11-07";
+export const SKILL_FORMAT_VERSION = "skill-frontmatter-unicode.2026-11-07";
 
 export interface SkillMarkdownOptions {
 	/**
@@ -165,6 +180,7 @@ export function renderSkillMarkdown(
 		validateModelMarkdown(d.title ?? name, d.localizedInstructions);
 	const presentation = {
 		name: d.name,
+		document: d.document,
 		title: d.title,
 		description: d.description,
 		language: d.language,
@@ -205,10 +221,24 @@ export function renderSkillMarkdown(
 	// JSON double-quoted strings are valid YAML scalars; quotes/newlines cannot escape frontmatter.
 	const content = `---\nname: ${JSON.stringify(name)}\ndescription: ${JSON.stringify(description)}\n---\n\n${body}\n`;
 	validateSkillMarkdown(content, name);
+	const files = d.document?.references.map((ref) => ({
+		path: `${name}/${ref.path}`,
+		content: ref.content,
+		digest: artifactDigest(ref.content),
+	}));
 	return {
 		name,
 		path: `${name}/SKILL.md`,
 		content,
+		...(files
+			? {
+					files,
+					bundleDigest: skillBundleDigest(
+						{ path: `${name}/SKILL.md`, digest: artifactDigest(content) },
+						files,
+					),
+				}
+			: {}),
 		digest: artifactDigest(content),
 		rendererVersion: SKILL_RENDERER_VERSION,
 		sourceExtractorVersion:

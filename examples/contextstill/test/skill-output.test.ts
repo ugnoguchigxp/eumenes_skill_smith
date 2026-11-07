@@ -1,6 +1,14 @@
+import { skillBundleDigest } from "../../../src/service/skill-markdown.js";
 import { artifactDigest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import {
+	mkdtempSync,
+	readFileSync,
+	rmSync,
+	existsSync,
+	mkdirSync,
+	symlinkSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { writeSkillArtifact } from "../skill-output.js";
@@ -158,6 +166,95 @@ test("scenario CLI writes and reports SKILL.md paths under the requested output 
 			const text = readFileSync(file.path, "utf8");
 			expect(() => validateSkillMarkdown(text)).not.toThrow();
 		}
+	} finally {
+		rmSync(dir, { recursive: true, force: true });
+	}
+});
+
+test("v7 writer emits separately digested Unicode bundles and rejects invalid files before any write", () => {
+	const dir = mkdtempSync(resolve(tmpdir(), "skill-v7-"));
+	const content =
+		'---\nname: "比較"\ndescription: "比較するときに使う。"\n---\n\n## 標準ワークフロー\n\n比較する。';
+	const main = {
+		name: "比較",
+		path: "比較/SKILL.md",
+		content,
+		digest: artifactDigest(content),
+		rendererVersion: "skill-markdown.v7",
+		sourceExtractorVersion: "none",
+	};
+	const file = {
+		path: "比較/references/detail.md",
+		content: "### 詳細\n照合する。",
+		digest: artifactDigest("### 詳細\n照合する。"),
+	};
+	try {
+		for (const files of [
+			[{ ...file, path: "比較/references/../../escape.md" }],
+			[file, file],
+			[{ ...file, digest: "wrong" }],
+			[{ ...file, path: "比較/references/detail.md\n" }],
+		]) {
+			expect(() =>
+				writeSkillArtifact(dir, {
+					...main,
+					files,
+					bundleDigest: skillBundleDigest(main, files),
+				}),
+			).toThrow();
+			expect(existsSync(resolve(dir, main.path))).toBe(false);
+		}
+		expect(() => writeSkillArtifact(dir, { ...main, files: [file] })).toThrow(
+			"skill_bundle_digest_mismatch",
+		);
+		expect(() =>
+			writeSkillArtifact(dir, {
+				...main,
+				files: [file],
+				bundleDigest: "wrong",
+			}),
+		).toThrow("skill_bundle_digest_mismatch");
+		writeSkillArtifact(dir, {
+			...main,
+			files: [file],
+			bundleDigest: skillBundleDigest(main, [file]),
+		});
+		expect(readFileSync(resolve(dir, file.path), "utf8")).toBe(file.content);
+		expect(readFileSync(resolve(dir, main.path), "utf8")).toBe(content);
+	} finally {
+		rmSync(dir, { recursive: true, force: true });
+	}
+});
+test("v7 writer refuses an existing reference-directory symlink before writing SKILL", () => {
+	const dir = mkdtempSync(resolve(tmpdir(), "skill-v7-link-"));
+	const content =
+		'---\nname: "safe"\ndescription: "Use for checks."\n---\nCheck.';
+	const main = {
+		name: "safe",
+		path: "safe/SKILL.md",
+		content,
+		digest: artifactDigest(content),
+		rendererVersion: "skill-markdown.v7",
+		sourceExtractorVersion: "none",
+	};
+	const file = {
+		path: "safe/references/detail.md",
+		content: "detail",
+		digest: artifactDigest("detail"),
+	};
+	try {
+		mkdirSync(resolve(dir, "outside"));
+		mkdirSync(resolve(dir, "safe"));
+		symlinkSync(resolve(dir, "outside"), resolve(dir, "safe/references"));
+		expect(() =>
+			writeSkillArtifact(dir, {
+				...main,
+				files: [file],
+				bundleDigest: skillBundleDigest(main, [file]),
+			}),
+		).toThrow("skill_output_symlink");
+		expect(existsSync(resolve(dir, main.path))).toBe(false);
+		expect(existsSync(resolve(dir, "outside/detail.md"))).toBe(false);
 	} finally {
 		rmSync(dir, { recursive: true, force: true });
 	}

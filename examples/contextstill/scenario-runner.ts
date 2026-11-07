@@ -721,6 +721,8 @@ export async function runFull(deps: FullDeps) {
 											...judgePayload,
 											referenceEvidence,
 											finalArtifact: ready?.skill.content ?? null,
+											artifactFiles: ready?.skill.files ?? [],
+											artifactBundleDigest: ready?.skill.bundleDigest ?? null,
 											artifactMetadata,
 											artifactMetadataDigest: artifactMetadata
 												? digest(artifactMetadata)

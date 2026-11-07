@@ -86,12 +86,83 @@ export const sourceReviewSchema = z.strictObject({
 const nonSourceAdditions = z
 	.array(z.strictObject({ practice: text, reason: text }))
 	.max(16);
+/** Unicode content names, not arbitrary paths; language correctness is judged by inference. */
+export const skillNameSchema = z
+	.string()
+	.min(1)
+	.max(64)
+	.regex(
+		/^[\p{Ll}\p{Lo}\p{Lm}\p{N}]+(?:-[\p{Ll}\p{Lo}\p{Lm}\p{N}]+)*(?![\s\S])/u,
+	);
+export const referencePathSchema = z
+	.string()
+	.max(96)
+	.regex(/^references\/[a-z0-9]+(?:-[a-z0-9]+)*\.md(?![\s\S])/);
+export const skillDocumentSchema = z
+	.strictObject({
+		sections: z
+			.array(
+				z.strictObject({
+					kind: z.enum([
+						"purpose",
+						"modes",
+						"principles",
+						"safety",
+						"workflow",
+						"completion",
+					]),
+					heading: z.string().trim().min(1).max(128),
+					body: text.optional(),
+				}),
+			)
+			.min(2)
+			.max(6),
+		references: z
+			.array(
+				z.strictObject({
+					path: referencePathSchema,
+					title: z.string().trim().min(1).max(128),
+					content: text,
+				}),
+			)
+			.max(8),
+		resourceHeading: z.string().trim().min(1).max(128).optional(),
+		provisionalNotice: z.string().trim().min(1).max(512).optional(),
+	})
+	.superRefine((d, ctx) => {
+		const kinds = d.sections.map((s) => s.kind);
+		if (
+			!unique(kinds) ||
+			!kinds.includes("workflow") ||
+			!kinds.includes("completion")
+		)
+			ctx.addIssue({
+				code: "custom",
+				message: "skill_document_sections_invalid",
+			});
+		for (const s of d.sections)
+			if (
+				(s.kind === "workflow" && s.body !== undefined) ||
+				(s.kind !== "workflow" &&
+					s.kind !== "completion" &&
+					s.body === undefined)
+			)
+				ctx.addIssue({
+					code: "custom",
+					message: "skill_document_section_body_invalid",
+				});
+		if (
+			!unique(d.references.map((r) => r.path)) ||
+			(d.references.length > 0 && !d.resourceHeading)
+		)
+			ctx.addIssue({
+				code: "custom",
+				message: "skill_document_references_invalid",
+			});
+	});
 export const skillPresentationSchema = z.strictObject({
-	name: z
-		.string()
-		.min(1)
-		.max(64)
-		.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+	name: skillNameSchema,
+	document: skillDocumentSchema.optional(),
 	title: z.string().trim().min(1).max(256),
 	description: z.string().trim().min(1).max(1024),
 	language: z.string().trim().min(1).max(64),
@@ -145,6 +216,7 @@ const storedReady = legacyReady
 	.extend({
 		assumptions: scopedAssumptions,
 		name: skillPresentationSchema.shape.name.optional(),
+		document: skillDocumentSchema.optional(),
 		title: skillPresentationSchema.shape.title.optional(),
 		description: skillPresentationSchema.shape.description.optional(),
 		language: skillPresentationSchema.shape.language.optional(),
@@ -173,12 +245,15 @@ const storedReady = legacyReady
 			d.localizedInstructions,
 		];
 		return (
-			(values.every((v) => v === undefined) && d.localizedHost === undefined) ||
+			(values.every((v) => v === undefined) &&
+				d.localizedHost === undefined &&
+				d.document === undefined) ||
 			values.every((v) => v !== undefined)
 		);
 	}, "incomplete_skill_presentation");
 const currentReady = legacyReady.extend({
 	...skillPresentationSchema.shape,
+	document: skillDocumentSchema,
 	assumptions: scopedAssumptions,
 	sourceReview: sourceReviewSchema,
 	nonSourceAdditions,

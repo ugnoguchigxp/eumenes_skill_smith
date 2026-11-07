@@ -32,6 +32,14 @@ const legacy = {
 	assumptions: [],
 };
 const presentation = {
+	document: {
+		sections: [
+			{ kind: "workflow" as const, heading: "手順" },
+			{ kind: "completion" as const, heading: "確認" },
+		],
+		references: [],
+		provisionalNotice: "暫定・未検証。停止条件で停止する。",
+	},
 	name: "compare-source-differences",
 	title: "原資料の相違を比較する",
 	description:
@@ -103,7 +111,9 @@ test("current ready fields are required, legacy storage allows only complete abs
 		const missing = { ...current } as Record<string, unknown>;
 		delete missing[field];
 		expect(modelTurnSchema.safeParse(missing).success).toBe(false);
-		expect(decisionSchema.safeParse(missing).success).toBe(false);
+		expect(decisionSchema.safeParse(missing).success).toBe(
+			field === "document",
+		);
 	}
 });
 
@@ -235,7 +245,7 @@ async function deliverCurrent(f: ReturnType<typeof fixture>) {
 		new AbortController().signal,
 	);
 }
-test("H1 final artifact preserves host invariants, localized originals and provisional warning", async () => {
+test("H1 final artifact preserves translations and canonical audit originals with provisional warning", async () => {
 	const { f } = currentFixture();
 	let call = 0;
 	const d = {
@@ -273,14 +283,14 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 	if (result.kind === "ready")
 		for (const text of [
 			"暫定・未検証",
-			"原資料を変更しない",
-			"差異の出所を照合する",
-			"任意前提",
+			"確認訳",
 			"制約訳",
 			"前提訳",
 			"## 確認",
 		])
 			expect(result.skill.content).toContain(text);
+	expect(JSON.stringify(result)).toContain("原資料を変更しない");
+	expect(JSON.stringify(result)).toContain("任意前提");
 });
 test("H1 semantic contradiction and unreservable review fail closed without final artifact", async () => {
 	for (const budget of [2, 3]) {
@@ -932,4 +942,206 @@ test("v6 source identifier in instructions is refused, never silently removed", 
 	await expect(f.run(p.requestRef!)).rejects.toThrow(
 		"skill_provenance_in_body",
 	);
+});
+
+const richDocument = {
+	sections: [
+		{
+			kind: "purpose" as const,
+			heading: "目的",
+			body: "原資料の違いを説明できるようにする。",
+		},
+		{
+			kind: "principles" as const,
+			heading: "必須原則",
+			body: "同じ対象と版を比較する。",
+		},
+		{
+			kind: "safety" as const,
+			heading: "情報・ツールの安全性",
+			body: "原資料を変更しない。",
+		},
+		{ kind: "workflow" as const, heading: "標準ワークフロー" },
+		{
+			kind: "completion" as const,
+			heading: "完成条件",
+			body: "説明できない差異が残ったら完了にしない。",
+		},
+	],
+	references: [
+		{
+			path: "references/comparison.md",
+			title: "詳細な比較の例",
+			content: "### 比較の例\n\n同一版の各欄を照合する。",
+		},
+	],
+	resourceHeading: "リソース",
+};
+async function deliverDocument(document = richDocument, outputBytes?: number) {
+	const { f, inputs } = currentFixture();
+	if (outputBytes !== undefined) f.request.limits.outputBytes = outputBytes;
+	let calls = 0;
+	f.ports.inference.complete = async (input) => {
+		inputs.push(input);
+		return {
+			value:
+				input.system === semanticReviewInstructions
+					? { approved: true, reason: "synthetic review" }
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: { ...current, name: "原資料の比較", document },
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	return { reply: await deliverCurrent(f), inputs, f };
+}
+test("v7 final functional sections, Unicode name and real resource links; no audit headings or IDs", async () => {
+	const { reply, inputs } = await deliverDocument();
+	expect(reply.kind).toBe("ready");
+	if (reply.kind !== "ready") return;
+	expect(reply.skill.rendererVersion).toBe("skill-markdown.v7");
+	expect(reply.skill.name).toBe("原資料の比較");
+	expect(reply.skill.content.match(/^## .+$/gm)).toEqual([
+		"## 目的",
+		"## 必須原則",
+		"## 情報・ツールの安全性",
+		"## 標準ワークフロー",
+		"## 完成条件",
+		"## リソース",
+	]);
+	for (const forbidden of [
+		"## モード",
+		"## 出典",
+		"## 前提",
+		"## 受け入れ条件",
+		"skill:compare@1",
+	])
+		expect(reply.skill.content).not.toContain(forbidden);
+	expect(reply.skill.content).toContain("原資料を変更しない");
+	expect(reply.skill.content).toContain("差異の出所を照合する");
+	expect(reply.skill.content).toContain(
+		"[詳細な比較の例](references/comparison.md)",
+	);
+	expect(reply.skill.files?.[0]?.path).toBe(
+		"原資料の比較/references/comparison.md",
+	);
+	expect(JSON.stringify(inputs.at(-1)?.data)).toContain(
+		"同一版の各欄を照合する",
+	);
+	expect(JSON.stringify(inputs.at(-1)?.data)).toContain("skill:compare@1");
+	expect(reply.build.usage.modelCalls).toBe(3);
+	expect(skillAuditMetadata(reply.build.content).decision.document).toEqual(
+		richDocument,
+	);
+});
+test("v7 small subjects do not structurally require modes, principles, safety or resources", () => {
+	expect(modelTurnSchema.safeParse(current).success).toBe(true);
+	const doc = {
+		...richDocument,
+		sections: [
+			{ kind: "modes", heading: "モード", body: "比較対象を先に選ぶ。" },
+			...richDocument.sections,
+		],
+	};
+	expect(modelTurnSchema.safeParse({ ...current, document: doc }).success).toBe(
+		true,
+	);
+	const missing = { ...current } as Record<string, unknown>;
+	delete missing.document;
+	expect(modelTurnSchema.safeParse(missing).success).toBe(false);
+	expect(decisionSchema.safeParse(missing).success).toBe(true);
+	expect(
+		decisionSchema.safeParse({ ...legacy, document: richDocument }).success,
+	).toBe(false);
+});
+test("v7 section and reference schemas reject duplicate roles, unknown roles, missing core sections and unsafe paths", () => {
+	for (const document of [
+		{
+			...richDocument,
+			sections: [...richDocument.sections, richDocument.sections[0]],
+		},
+		{
+			...richDocument,
+			sections: richDocument.sections.filter((x) => x.kind !== "completion"),
+		},
+		{
+			...richDocument,
+			sections: [
+				{ kind: "provenance", heading: "出典", body: "x" },
+				...richDocument.sections,
+			],
+		},
+		{
+			...richDocument,
+			sections: [
+				{ kind: "workflow", heading: "手順", body: "two authorities" },
+				{ kind: "completion", heading: "確認" },
+			],
+		},
+		{
+			...richDocument,
+			references: [...richDocument.references, ...richDocument.references],
+		},
+		{ ...richDocument, resourceHeading: undefined },
+		...[
+			"../escape.md",
+			"references/../escape.md",
+			"/tmp/escape.md",
+			"references/a/b.md",
+			"references/a%2fb.md",
+			"references/a.md\n",
+		].map((path) => ({
+			...richDocument,
+			references: [{ ...richDocument.references[0], path }],
+		})),
+	])
+		expect(modelTurnSchema.safeParse({ ...current, document }).success).toBe(
+			false,
+		);
+});
+test("v7 reference files cannot hide model HTML, open fences, dangerous URLs, H2 or provenance IDs", async () => {
+	const { reply } = await deliverDocument();
+	if (reply.kind !== "ready") throw new Error("fixture");
+	for (const content of [
+		"<script>bad</script>",
+		"```\nx",
+		"[x](javascript:alert)",
+		"## 出典",
+		"skill:compare@1",
+	]) {
+		const build = structuredClone(reply.build.content);
+		build.decision.document!.references[0]!.content = content;
+		expect(() => renderSkillMarkdown(build)).toThrow();
+	}
+});
+test("v7 changing only a reference changes bundle identity without changing SKILL byte identity", async () => {
+	const { reply } = await deliverDocument();
+	if (reply.kind !== "ready") throw new Error("fixture");
+	const build = structuredClone(reply.build.content);
+	build.decision.document!.references[0]!.content += "\n\n変更を追跡する。";
+	const changed = renderSkillMarkdown(build);
+	expect(changed.content).toBe(reply.skill.content);
+	expect(changed.digest).toBe(reply.skill.digest);
+	expect(changed.files?.[0]?.digest).not.toBe(reply.skill.files?.[0]?.digest);
+	expect(changed.bundleDigest).not.toBe(reply.skill.bundleDigest);
+});
+test("v7 final byte limit includes all reference files; revoked authority still withholds bundle", async () => {
+	const { reply, f } = await deliverDocument();
+	if (reply.kind !== "ready") throw new Error("fixture");
+	const { reply: limited } = await deliverDocument(
+		richDocument,
+		Buffer.byteLength(JSON.stringify({ ...reply, skill: undefined })) + 128,
+	);
+	expect(limited.kind).not.toBe("ready");
+	f.setValid(false);
+	const revoked = await f.service.getSkillValidated(
+		reply.requestRef!,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+	expect(revoked.kind).toBe("rejected");
+	expect("skill" in revoked).toBe(false);
 });

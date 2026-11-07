@@ -230,3 +230,16 @@ reuse は原則だけの出典に縛られて抽象論で止まらず、LLM が�
 renderer は skill-markdown.v6。参照IDが本文に残る場合は黙って削除せず構造違反として拒否する。quality-judge.v2 の採点軸と誤手順時最大5点は維持し、出典/監査節を表示しないことや一般知識の補足自体を減点しないよう明記して採点指示digestを更新する。実行結果は依然未測定。旧スコアは現行版へ流用しない。
 
 評価器は本文とは別に skillAuditMetadata（canonical task/policy/dependencies/decision）を judge-only の未信頼データへ渡す。一般知識の追加や非表示条件を採点役が監査できるようにし、本文に出典節を復活させない。本文digestと監査metadata digestを別々に記録する。
+
+
+## v7: System Estimation 型の機能別文書・段階的開示
+
+作成LLMが依頼言語と題材から、目的・モード（必要時のみ）・必須原則・情報/ツール安全性・標準ワークフロー・完成条件・リソースの機能を選択する。ホストは語彙で題材/節の要否を分類しない。現在の terminal ready は document を要求する。document.sections は kind と依頼言語の heading/body の組であり workflow/completion は各1件必須、その他は任意・重複不可。localizedInstructions は workflow の本文として保持し、二重の手順を持たない。completion 本文に加え従来の reader 制約・必須の適用条件・verification をホストが決定的に描画する。出典・provenance・前提・受入条件の監査節を本文へ復活させない。canonical task/decision/依存資料と H1–H4 の監査記録を保持する。意味検証が欠落、矛盾、翻訳の意味、節の適否、追加実践を判定し、判定不能/失敗時は fail closed。既存の予約済み呼出しだけを使用し、予算・complete checks・認可は変更しない。
+
+長い詳細は document.references の references/<安全な単一basename>.md に分離する。最大8ファイル、各本文上限は既存 text 上限、全体は既存 outputBytes/inputBytes に含む。パスはASCII lowercase kebab-caseの .md のみ（相対トラバーサル、絶対パス、重複、予約ファイル拒否）。スクリプト実行・任意ファイル書込は提供しない。リソース節の見出しはLLMが付け、ホストが既知ファイルだけの相対リンクを描画。各追加ファイルは digest で束縛し、完全性検査・意味検証・採点入力には本文と別ファイルをともに渡す。再配布/complete checksは文書全体に継続適用する。
+
+SkillArtifact は既存 content/path/digest と返却種別を維持し、任意の files 配列を追加する。files は成果物rootからの相対path/content/digest。既存SKILL digest は従来通り当該文字列だけのdigestで、追加ファイルを偽って包含しない。保存側は全ファイルのパス・一意性・digestを検査してから書く。artifact metadata は document/references を含むcanonical decisionを保持する。古い記録の document 欠落は旧形式として読めるが、新規terminalには必須。名称は依頼言語の内容名（Unicode小文字/非大文字文字/数字と区切りハイフン、64文字以下）を許可し、パス区切り/ドット/制御文字を禁止する。ASCII名も引き続き許可し、言語の意味判断はLLMのみ。
+
+回帰試験は最終文字列の任意節の有無、旧監査見出し不在、reader条件保持、reference同梱・リンク・digest・安全パス拒否、Unicode名、LLM意味検証への全ファイル入力を扱う。再生成は6件固定のbuilder-only packetsとrecorded-inferenceで行い、gold入力を作成者へ渡さない。既知の過去goldによる完全盲検不能は明記する。
+
+補足: v7のbundleDigestはSKILL path/digestと全参照path/digestの順序付き集合を束縛する。保存・採点で別々に保持し、既存SKILL digestの意味を変えない。保存は全ファイル検査完了後に行い、既存symlinkを通る出力を拒否する。訳文があるreader条項は訳文だけを本文へ描画し、原文はcanonical監査へ保持する（意味保存は既存LLM検証）。

@@ -1,4 +1,6 @@
 import type { Build } from "../contracts/types.js";
+import { skillDocumentSchema } from "../contracts/schema.js";
+import { validateModelMarkdown } from "./model-markdown.js";
 import { requireThat } from "./identity.js";
 /** Flatten every block/control boundary before any Markdown interpolation. */
 const singleLineText = (text: string) =>
@@ -60,7 +62,9 @@ export function assembleSkillBody(
 	const hostText = (id: string, original: string) => {
 		const localized = d.localizedHost?.find((x) => x.id === id)?.text;
 		return localized
-			? `${markdownPlainText(localized)}（原文: ${markdownPlainText(original)}）`
+			? d.document
+				? markdownPlainText(localized)
+				: `${markdownPlainText(localized)}（原文: ${markdownPlainText(original)}）`
 			: markdownPlainText(original);
 	};
 	const checks = [
@@ -69,12 +73,15 @@ export function assembleSkillBody(
 			.map((c) => hostText("constraint:" + c.id, c.text)),
 		...d.assumptions.flatMap((a, i) =>
 			!a.visibility || a.visibility === "reader"
-				? ["適用前に確認する: " + hostText("assumption:" + i, a.text)]
+				? [
+						(d.document ? "" : "適用前に確認する: ") +
+							hostText("assumption:" + i, a.text),
+					]
 				: [],
 		),
 		...d.verification.map((v, i) => hostText("verification:" + i, v)),
 	];
-	const body = [
+	let body = [
 		`# ${markdownPlainText(d.title ?? name)}`,
 		"## 手順\n\n" +
 			(d.strategy === "provisional"
@@ -83,10 +90,55 @@ export function assembleSkillBody(
 			instructions,
 		"## 確認\n\n" + list(checks, true),
 	].join("\n\n");
+	if (d.document) {
+		const doc = skillDocumentSchema.parse(d.document);
+		requireThat(
+			d.strategy !== "provisional" || !!doc.provisionalNotice,
+			"skill_provisional_notice_missing",
+		);
+		for (const section of doc.sections) {
+			validateModelMarkdown(section.heading, section.body ?? "");
+		}
+		for (const ref of doc.references)
+			validateModelMarkdown(ref.title, ref.content);
+		if (doc.resourceHeading) validateModelMarkdown(doc.resourceHeading, "");
+		if (doc.provisionalNotice) validateModelMarkdown(doc.provisionalNotice, "");
+		body = [
+			`# ${markdownPlainText(d.title ?? name)}`,
+			...doc.sections.map((section) => {
+				const content =
+					section.kind === "workflow"
+						? [
+								doc.provisionalNotice && d.strategy === "provisional"
+									? `> ${markdownPlainText(doc.provisionalNotice)}`
+									: "",
+								instructions,
+							]
+								.filter(Boolean)
+								.join("\n\n")
+						: section.kind === "completion"
+							? [section.body, list(checks, true)].filter(Boolean).join("\n\n")
+							: section.body;
+				return `## ${markdownPlainText(section.heading)}\n\n${content}`;
+			}),
+			...(doc.references.length
+				? [
+						`## ${markdownPlainText(doc.resourceHeading!)}\n\n` +
+							doc.references
+								.map(
+									(ref) => `- [${markdownPlainText(ref.title)}](${ref.path})`,
+								)
+								.join("\n"),
+					]
+				: []),
+		].join("\n\n");
+	}
 	// Exact identifiers are structural provenance, not a vocabulary-based meaning judgement.
 	requireThat(
-		d.sourceRefs.every(
-			(ref) => !body.includes(ref) && !body.includes(markdownPlainText(ref)),
+		d.sourceRefs.every((ref) =>
+			[body, ...(d.document?.references.map((r) => r.content) ?? [])].every(
+				(text) => !text.includes(ref) && !text.includes(markdownPlainText(ref)),
+			),
 		),
 		"skill_provenance_in_body",
 	);

@@ -891,6 +891,7 @@ export async function executeBuild<Tx>(
 							decision.sourceRefs.includes(e.ref),
 						),
 						artifact: artifact.content,
+						files: artifact.files ?? [],
 					},
 				]),
 			},

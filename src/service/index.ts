@@ -64,7 +64,8 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			: assembly.mode === "legacy";
 		const presentationOk =
 			assembly.mode === "legacy" ||
-			b.content.decision.localizedInstructions !== undefined;
+			(b.content.decision.localizedInstructions !== undefined &&
+				b.content.decision.document !== undefined);
 		return (
 			!!origin &&
 			valid(tx, origin, auth) &&
