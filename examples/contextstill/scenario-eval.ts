@@ -1,3 +1,4 @@
+import { parseDocumentLimit } from "./builder-packets.js";
 import { writeSkillArtifact } from "./skill-output.js";
 // Scenario eval (proposal 26/35/32): typed three-axis suite, two modes; absent uses a dedicated judge.
 // Usage:
@@ -64,6 +65,7 @@ function loadRecords(path: string): InferenceRecord[] {
 	return Array.isArray(data) ? (data as InferenceRecord[]) : [];
 }
 
+const documentLimit = parseDocumentLimit(process.argv);
 const searchProfile = parseSearchProfile(process.argv);
 const assemblyMode = parseAssemblyMode(process.argv);
 const evidenceSupply = parseEvidenceSupply(process.argv);
@@ -176,6 +178,7 @@ const effectiveReformulation = () =>
 const identityFor = () =>
 	buildEvalIdentity({
 		searchProfile,
+		documentLimit,
 		assemblyMode,
 		suiteId: suite.id,
 		suitePath,
@@ -203,6 +206,7 @@ try {
 			mode: "retrieval-only",
 			suite: suite.id,
 			searchProfile,
+			documentLimit,
 			assemblyMode,
 			queryReformulationMode: queryReformulation,
 			replayNamespace,
@@ -269,6 +273,7 @@ try {
 			},
 			tasks,
 			source,
+			documentLimit,
 			assemblyMode,
 			evidenceSupply,
 			abstentionContrast,
@@ -300,6 +305,7 @@ try {
 			mode: "full",
 			suite: suite.id,
 			searchProfile,
+			documentLimit,
 			assemblyMode,
 			queryReformulationMode: queryReformulation,
 			replayNamespace,
@@ -313,6 +319,7 @@ try {
 			mixedAxes: result.mixedAxes,
 			statuses: result.statuses,
 			scores: result.scores,
+			deliveryOutcomes: result.deliveryOutcomes,
 			qualityScores: result.qualityScores,
 			retrievalFidelityScores: result.retrievalFidelityScores,
 			composeScores: result.composeScores,

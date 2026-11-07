@@ -1,4 +1,7 @@
-import { ABSTENTION_JUDGE_INSTRUCTIONS } from "../abstention-isolation.js";
+import {
+	CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS,
+	currentAbstentionJudgeOutputSchema,
+} from "../abstention-isolation.js";
 import { JUDGE_DATA_BOUNDARY } from "../../../src/eval/scenario-score.js";
 import { semanticReviewInstructions } from "../../../src/instructions/build.js";
 import { digest } from "../../../src/service/identity.js";
@@ -68,9 +71,16 @@ test("contrast judge digests are stable; current build digest tracked separately
 	expect(off.abstentionContrast).toBe("off");
 	expect(on.abstentionContrast).toBe("on");
 	expect(on.abstentionJudgeInstructionsDigest).toBe(
-		digest(ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY),
+		digest(CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY),
 	);
 	expect(on.abstentionJudgeSchemaDigest).toBe(
+		digest(currentAbstentionJudgeOutputSchema),
+	);
+	expect(on.abstentionJudgeSchemaDigest).not.toBe(
+		digests.abstentionJudgeSchemaDigest,
+	);
+	const archived = buildEvalIdentity({ ...base, assemblyMode: "legacy" });
+	expect(archived.abstentionJudgeSchemaDigest).toBe(
 		digests.abstentionJudgeSchemaDigest,
 	);
 	expect(off.buildInstructionsDigest).toBe(

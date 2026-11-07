@@ -428,6 +428,9 @@ test("M2 current retrieval judge gets judge-only full reference bodies inside un
 		}),
 	});
 	expect(r.complete).toBe(true);
+	expect(r.deliveryOutcomes).toEqual([
+		{ taskId: "judge-boundary", kind: "needs_input" },
+	]);
 	expect(builderInputs.join("")).not.toContain("JUDGE_ONLY_REFERENCE_BODY");
 	expect(judgeInput.data.untrustedJudgeData.instructionAuthority).toBe("none");
 	expect(

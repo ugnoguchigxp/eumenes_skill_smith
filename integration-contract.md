@@ -213,3 +213,7 @@ L3 delivery isolation audit: current execution requires a positive matching gene
 6. 再評価は builder-only packets を先に生成し、build 答案確定後に別工程で judge packet を開く。同じ Grok Bot による作成・採点であり独立したモデル・人手評価ではない。gold を見る前に builder 記録を固定し、6 件の個別点と残欠陥を報告する。
 
 旧保存形式は読めるが現行 terminal schema は品質欄を必須とする。H1–H4、complete、auth、入出力上限、既存の予算と fail-closed は維持する。
+
+### v5 再評価時の文書取得条件
+
+8 文書を先行取得すると、12 回の Source 共有予算内でも意味検証後の再配布時の検証が予約できず成果物が配布されない例があった。予算や再検証は緩めない。評価 CLI に --documents（1–8、既定8）を設け、文書取得数を減らす条件を明記して再試行できるようにする。旧条件の配布失敗を成功や採点済みと扱わない。答案そのものは採点用データを読む前の記録を固定し、条件変更後にも同一の答案を使ったことを digest で監査する。同じモデルが再試行するため独立盲検とは表現しない。

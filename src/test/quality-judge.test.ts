@@ -1,3 +1,4 @@
+import { currentAbstentionJudgeSchema } from "../../examples/contextstill/abstention-isolation.js";
 import { test, expect } from "bun:test";
 import {
 	fidelityJudgeSchema,
@@ -16,6 +17,14 @@ const base = {
 	incorrectSteps: [],
 };
 for (const [schema, extra] of [
+	[
+		currentAbstentionJudgeSchema,
+		{
+			treatsExistingAsAbsent: false,
+			excessiveAbstention: false,
+			appropriateGap: false,
+		},
+	],
 	[
 		fidelityJudgeSchema,
 		{

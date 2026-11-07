@@ -4,6 +4,9 @@ import { digest } from "../../src/index.js";
 import {
 	assemblyJudgeSchema,
 	judgeOutputSchema,
+	qualityJudgeFields,
+	enforceQualityCap,
+	QUALITY_JUDGE_INSTRUCTIONS,
 } from "../../src/eval/scenario-score.js";
 
 export type AbstentionContrast = "off" | "on";
@@ -50,6 +53,15 @@ appropriateGap: expectedRefsRetrieved が空で、needs_input / unavailable と�
 一つの出力を appropriateGap と treatsExistingAsAbsent の両方で true にしない。appropriateGap と excessiveAbstention の両方でも true にしない。届いた根拠を使った reuse / adapt / compose の ready はいずれも false でよい（棄権ではない）。
 検索未到達の存在 Skill を、欠落軸（true-absent）の探索成功として加点しない。treatsExistingAsAbsent または excessiveAbstention が true の出力は高評価しない。適切な棄権は根拠を使った組み立てより高くしなくてよいが、欠落主張や捏造よりは低くしない。
 rationale は日本語で、検索集合・出力の種類・各真偽値の根拠を具体的に書く。出力は schema に合う JSON のみ。`;
+
+export const currentAbstentionJudgeSchema = abstentionJudgeSchema
+	.extend(qualityJudgeFields)
+	.superRefine(enforceQualityCap);
+export const currentAbstentionJudgeOutputSchema = z.toJSONSchema(
+	currentAbstentionJudgeSchema,
+);
+export const CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS =
+	ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + QUALITY_JUDGE_INSTRUCTIONS;
 
 export function abstentionJudgeDigests() {
 	return {

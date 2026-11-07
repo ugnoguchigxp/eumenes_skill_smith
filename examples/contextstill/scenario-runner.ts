@@ -1,4 +1,9 @@
 import {
+	currentAbstentionJudgeSchema,
+	currentAbstentionJudgeOutputSchema,
+	CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS,
+} from "./abstention-isolation.js";
+import {
 	archivedComposeJudgeSchema,
 	archivedComposeJudgeOutputSchema,
 	ARCHIVED_COMPOSE_JUDGE_INSTRUCTIONS,
@@ -239,6 +244,7 @@ export type TaskStatus =
 
 /** Binds a report to suite/seed bytes and the instruction/schema digests that shaped records. */
 export interface RunIdentity {
+	documentLimit?: number;
 	rendererVersion: string;
 	artifactDigests: Record<string, string>;
 	searchProfile: SearchProfile;
@@ -296,6 +302,7 @@ export function buildEvalIdentity(input: {
 	suitePath: string;
 	seedPath: string;
 	assemblyMode?: AssemblyMode;
+	documentLimit?: number;
 	queryReformulation?: QueryReformulation;
 	evidenceSupply?: EvidenceSupply;
 	abstentionContrast?: AbstentionContrast;
@@ -305,6 +312,7 @@ export function buildEvalIdentity(input: {
 	const queryReformulation = input.queryReformulation ?? "off";
 	return {
 		rendererVersion: SKILL_RENDERER_VERSION,
+		documentLimit: input.documentLimit ?? 8,
 		artifactDigests: input.artifactDigests ?? {},
 		searchProfile: input.searchProfile,
 		evidenceSupply: input.evidenceSupply ?? "natural",
@@ -328,14 +336,17 @@ export function buildEvalIdentity(input: {
 		...instructionDigests(assemblyMode),
 		...(assemblyMode !== "legacy"
 			? {
+					abstentionJudgeInstructionsDigest: digest(
+						CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
+					),
+					abstentionJudgeSchemaDigest: digest(
+						currentAbstentionJudgeOutputSchema,
+					),
 					composeJudgeInstructionsDigest: digest(
 						COMPOSE_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
 					),
 					absentJudgeInstructionsDigest: digest(
 						ABSENT_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
-					),
-					abstentionJudgeInstructionsDigest: digest(
-						ABSTENTION_JUDGE_INSTRUCTIONS + "\n" + JUDGE_DATA_BOUNDARY,
 					),
 				}
 			: {}),
@@ -388,6 +399,7 @@ export interface FullDeps {
 	hasBuildRecord: (digest: string) => boolean;
 	/** Opt-in compact assembly (proposal 36). Default baseline. */
 	assemblyMode?: AssemblyMode;
+	documentLimit?: number;
 	evidenceSupply?: EvidenceSupply;
 	/** Proposal 33: judge tasks with expectedRefs by the contrast judge. Default off. */
 	abstentionContrast?: AbstentionContrast;
@@ -398,6 +410,13 @@ export interface FullDeps {
 const fixedDeadline = 1_700_000_000_000 + 120_000;
 
 export async function runFull(deps: FullDeps) {
+	const documentLimit = deps.documentLimit ?? 8;
+	if (
+		!Number.isInteger(documentLimit) ||
+		documentLimit < 1 ||
+		documentLimit > 8
+	)
+		throw new Error("invalid_document_limit");
 	const statuses: {
 		taskId: string;
 		axis: string;
@@ -407,6 +426,8 @@ export async function runFull(deps: FullDeps) {
 	const pendingBuild: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const pendingJudge: { taskId: string; tasks: InferenceTask[] }[] = [];
 	const scores: AssemblyScore[] = [];
+	const deliveryOutcomes: { taskId: string; kind: string; code?: string }[] =
+		[];
 	const qualityScores: {
 		taskId: string;
 		correctness: number;
@@ -555,7 +576,7 @@ export async function runFull(deps: FullDeps) {
 					requestId: `scenario:${task.id}`,
 					modelCalls: 4,
 					candidates: 8,
-					documents: 8,
+					documents: documentLimit,
 					assemblyMode,
 				},
 			);
@@ -579,6 +600,11 @@ export async function runFull(deps: FullDeps) {
 					status("awaiting_build_inference");
 					continue;
 				}
+				deliveryOutcomes.push({
+					taskId: task.id,
+					kind: reply.kind,
+					...("code" in reply ? { code: reply.code } : {}),
+				});
 				const ready = reply.kind === "ready" ? reply : null;
 				if (ready) {
 					artifactDigests[task.id] = ready.skill.digest;
@@ -667,7 +693,9 @@ export async function runFull(deps: FullDeps) {
 						{
 							system:
 								(contrast
-									? ABSTENTION_JUDGE_INSTRUCTIONS
+									? assemblyMode === "legacy"
+										? ABSTENTION_JUDGE_INSTRUCTIONS
+										: CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS
 									: absent
 										? assemblyMode === "legacy"
 											? ARCHIVED_ABSENT_JUDGE_INSTRUCTIONS
@@ -694,7 +722,9 @@ export async function runFull(deps: FullDeps) {
 												ready?.skill.rendererVersion ?? SKILL_RENDERER_VERSION,
 										}),
 							schema: contrast
-								? abstentionJudgeOutputSchema
+								? assemblyMode === "legacy"
+									? abstentionJudgeOutputSchema
+									: currentAbstentionJudgeOutputSchema
 								: absent
 									? assemblyMode === "legacy"
 										? archivedAbsentJudgeOutputSchema
@@ -717,7 +747,9 @@ export async function runFull(deps: FullDeps) {
 					provenance.judgeArtifactDigest = ready?.skill.digest ?? null;
 					const parsed = (
 						contrast
-							? abstentionJudgeSchema
+							? assemblyMode === "legacy"
+								? abstentionJudgeSchema
+								: currentAbstentionJudgeSchema
 							: absent
 								? assemblyMode === "legacy"
 									? archivedAbsentJudgeSchema
@@ -737,7 +769,7 @@ export async function runFull(deps: FullDeps) {
 						);
 						continue;
 					}
-					if (assemblyMode !== "legacy" && !contrast) {
+					if (assemblyMode !== "legacy") {
 						const detailed = parsed.data as unknown as {
 							correctness: number;
 							actionability: number;
@@ -772,7 +804,11 @@ export async function runFull(deps: FullDeps) {
 						});
 					}
 					if (contrast) {
-						const detailed = abstentionJudgeSchema.parse(judged.value);
+						const detailed = (
+							assemblyMode === "legacy"
+								? abstentionJudgeSchema
+								: currentAbstentionJudgeSchema
+						).parse(judged.value);
 						abstentionScores.push({
 							taskId: task.id,
 							expectedRefsRetrieved: contrastRetrieved,
@@ -871,6 +907,7 @@ export async function runFull(deps: FullDeps) {
 		absentScores,
 		abstentionScores,
 		statuses,
+		deliveryOutcomes,
 		qualityScores,
 		retrievalFidelityScores,
 		scores,
