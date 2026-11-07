@@ -134,6 +134,34 @@ function mainInstructions(build: Build["content"]): string {
 	return body.slice(0, body.length - tail.length).replace(/\n\n$/, "");
 }
 
+export function hostEntries(
+	task: Build["content"]["task"],
+	d: Build["content"]["decision"],
+) {
+	return [
+		...task.acceptance.map((c) => ({ id: "acceptance:" + c.id, text: c.text })),
+		...task.constraints.map((c) => ({
+			id: "constraint:" + c.id,
+			text: c.text,
+		})),
+		...d.verification.map((text, i) => ({ id: "verification:" + i, text })),
+		...d.assumptions.map((a, i) => ({ id: "assumption:" + i, text: a.text })),
+	];
+}
+export function checkLocalizedHost(
+	task: Build["content"]["task"],
+	d: Build["content"]["decision"],
+) {
+	if (!d.localizedHost) return;
+	const expected = hostEntries(task, d).map((x) => x.id);
+	requireThat(
+		d.localizedHost.length === expected.length &&
+			new Set(d.localizedHost.map((x) => x.id)).size === expected.length &&
+			d.localizedHost.every((x) => expected.includes(x.id)),
+		"localized_host_ids_invalid",
+	);
+}
+
 const list = (items: string[], ordered = false) =>
 	items.map((t, i) => `${ordered ? `${i + 1}.` : "-"} ${t}`).join("\n");
 
@@ -152,6 +180,7 @@ export function renderSkillMarkdown(
 		description: d.description,
 		language: d.language,
 		localizedInstructions: d.localizedInstructions,
+		localizedHost: d.localizedHost,
 	};
 	if (Object.values(presentation).some((v) => v !== undefined))
 		requireThat(
@@ -172,6 +201,11 @@ export function renderSkillMarkdown(
 	const instructions = [policy, main].filter((t) => t.trim()).join("\n\n");
 	requireThat(instructions.trim().length > 0, "skill_body_empty");
 	const { acceptance, constraints } = build.task;
+	checkLocalizedHost(build.task, d);
+	const hostText = (id: string, original: string) => {
+		const localized = d.localizedHost?.find((x) => x.id === id)?.text;
+		return localized ? `${localized}（原文: ${original}）` : original;
+	};
 	const legacyBody = [
 		`# ${d.title ?? name}`,
 		d.strategy === "provisional"
@@ -180,12 +214,25 @@ export function renderSkillMarkdown(
 		"## 手順\n\n" + instructions,
 		acceptance.length
 			? "## 受け入れ条件\n\n" +
-				list(acceptance.map((c) => `${c.id}: ${c.text}`))
+				list(
+					acceptance.map(
+						(c) => `${c.id}: ${hostText("acceptance:" + c.id, c.text)}`,
+					),
+				)
 			: "",
 		constraints.length
-			? "## 制約\n\n" + list(constraints.map((c) => `${c.id}: ${c.text}`))
+			? "## 制約\n\n" +
+				list(
+					constraints.map(
+						(c) => `${c.id}: ${hostText("constraint:" + c.id, c.text)}`,
+					),
+				)
 			: "",
-		"## 確認\n\n" + list(d.verification, true),
+		"## 確認\n\n" +
+			list(
+				d.verification.map((v, i) => hostText("verification:" + i, v)),
+				true,
+			),
 		"## 出典\n\n" +
 			`方針: ${STRATEGY[d.strategy] ?? d.strategy}。出典は参照用の資料であり、実行に成功した証拠ではない。\n\n` +
 			(d.sourceRefs.length
@@ -213,25 +260,7 @@ export function renderSkillMarkdown(
 	]
 		.filter(Boolean)
 		.join("\n\n");
-	const body =
-		d.localizedInstructions !== undefined
-			? [
-					`# ${d.title}`,
-					policy,
-					d.localizedInstructions,
-					"## 出典\n\n" +
-						(d.sourceRefs.length
-							? list(
-									d.sourceRefs.map((ref) => {
-										const title = titles.get(ref);
-										return title ? `${title}（\`${ref}\`）` : `\`${ref}\``;
-									}),
-								)
-							: "—"),
-				]
-					.filter(Boolean)
-					.join("\n\n")
-			: legacyBody;
+	const body = legacyBody;
 	// JSON double-quoted strings are valid YAML scalars; quotes/newlines cannot escape frontmatter.
 	const content = `---\nname: ${JSON.stringify(name)}\ndescription: ${JSON.stringify(description)}\n---\n\n${body}\n`;
 	validateSkillMarkdown(content, name);

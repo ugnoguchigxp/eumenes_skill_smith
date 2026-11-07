@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { disclosureInstructions } from "../instructions/build.js";
+import { renderSkillMarkdown, checkLocalizedHost } from "./skill-markdown.js";
+import {
+	semanticReviewInstructions,
+	disclosureInstructions,
+} from "../instructions/build.js";
 import {
 	CONTRACT,
 	compactReadySchema,
@@ -705,6 +709,7 @@ export async function executeBuild<Tx>(
 						requireThat(!compact.data.exploration, "invalid_exploration");
 					candidate = toStoredReady(compact.data);
 				}
+				checkLocalizedHost(request.task, candidate);
 				checkDecision(candidate, state.evidence, p, {
 					rejectBodyRewrite: assembly.mode === "compact",
 				});
@@ -735,6 +740,72 @@ export async function executeBuild<Tx>(
 	}
 	checkpoint();
 	requireThat(decision, lastFailure);
+	if (decision.kind === "ready" && assembly.mode !== "legacy") {
+		const reviewSchema = z.strictObject({
+			approved: z.boolean(),
+			reason: z.string().min(1).max(2000),
+		});
+		const artifact = renderSkillMarkdown(
+			buildContent(p, decision, state.evidence),
+		);
+		const input = {
+			system: semanticReviewInstructions,
+			data: {
+				originalTask: request.task,
+				untrustedReview: spotlightUntrusted([
+					{
+						ref: "review",
+						decision,
+						sources: state.evidence.filter((e) =>
+							decision.sourceRefs.includes(e.ref),
+						),
+						artifact: artifact.content,
+					},
+				]),
+			},
+			schema: z.toJSONSchema(reviewSchema),
+			deadlineAt: request.limits.deadlineAt,
+			maxOutputTokens: request.limits.outputTokens,
+			requestRef: r.ref,
+		};
+		requireThat(
+			bytes(input) <= request.limits.inputBytes,
+			"context_budget_exceeded",
+		);
+		await reserve("modelCalls");
+		checkpoint();
+		const answer = await ports.inference.complete(input, signal);
+		tokens.input =
+			tokens.input === null || answer.inputTokens === null
+				? null
+				: tokens.input + answer.inputTokens;
+		tokens.output =
+			tokens.output === null || answer.outputTokens === null
+				? null
+				: tokens.output + answer.outputTokens;
+		tokens.reasoningTokens =
+			tokens.reasoningTokens === null || answer.reasoningTokens == null
+				? null
+				: tokens.reasoningTokens + answer.reasoningTokens;
+		tokens.cachedInputTokens =
+			tokens.cachedInputTokens === null || answer.cachedInputTokens == null
+				? null
+				: tokens.cachedInputTokens + answer.cachedInputTokens;
+		receipt = answer.receipt;
+		await noteUsage?.({
+			inputTokens: tokens.input,
+			outputTokens: tokens.output,
+			reasoningTokens: tokens.reasoningTokens,
+			cachedInputTokens: tokens.cachedInputTokens,
+			receipt,
+			callKind: "build",
+		});
+		const result = reviewSchema.safeParse(answer.value);
+		requireThat(
+			result.success && result.data.approved,
+			"semantic_review_failed",
+		);
+	}
 	if (decision.kind === "ready") {
 		const selected = state.evidence.filter(
 			(e) => decision.sourceRefs.includes(e.ref) && e.external,

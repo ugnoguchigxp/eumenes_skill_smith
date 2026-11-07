@@ -215,3 +215,6 @@ string as its existing body field (including the new presentation). This prevent
 host-appended internal JSON/body-tail checks from masking omissions in the actual
 artifact. Archived legacy runs retain their original judge body and exact digests.
 No judge instructions, rubric, schema, or gold routing are changed.
+
+## Review H1 — host-owned invariants (2026-11-07)
+Current artifacts always render acceptance, constraints, verification, assumptions and provisional status outside model-authored instructions. Optional localizedHost entries cover every stable host ID exactly once; originals remain in Build and in the artifact for audit. A separate semantic review via InferencePort must confirm meaning preservation, source fidelity and non-contradiction, within the existing shared model/input/output budget. Unreservable or invalid review fails closed. Legacy archival replay is isolated and is not current validation. Semantic review is not human calibration or execution authorization.

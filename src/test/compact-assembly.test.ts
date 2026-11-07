@@ -4,6 +4,7 @@ import {
 	COMPACT_INSTRUCTION_VERSION,
 	INSTRUCTION_VERSION,
 	buildInstructions,
+	semanticReviewInstructions,
 	compactBuildInstructions,
 } from "../instructions/build.js";
 import {
@@ -22,9 +23,12 @@ import { checkDecision } from "../service/build.js";
 import type { Evidence, Prepared, ReadyDecision } from "../contracts/types.js";
 
 test("baseline buildInstructions and INSTRUCTION_VERSION stay unchanged by compact path", () => {
-	expect(INSTRUCTION_VERSION).toBe("build." + digest(buildInstructions));
+	expect(INSTRUCTION_VERSION).toBe(
+		"build." + digest(buildInstructions + semanticReviewInstructions),
+	);
 	expect(COMPACT_INSTRUCTION_VERSION).toBe(
-		"build.compact." + digest(compactBuildInstructions),
+		"build.compact." +
+			digest(compactBuildInstructions + semanticReviewInstructions),
 	);
 	expect(COMPACT_INSTRUCTION_VERSION).not.toBe(INSTRUCTION_VERSION);
 	expect(compactBuildInstructions).not.toBe(buildInstructions);

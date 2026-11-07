@@ -80,6 +80,7 @@ export const skillPresentationSchema = z.strictObject({
 	description: z.string().trim().min(1).max(1024),
 	language: z.string().trim().min(1).max(64),
 	localizedInstructions: text,
+	localizedHost: z.array(clause).max(96).optional(),
 });
 const legacyReady = z.strictObject({
 	kind: z.literal("ready"),
@@ -110,6 +111,7 @@ const storedReady = legacyReady
 		language: skillPresentationSchema.shape.language.optional(),
 		localizedInstructions:
 			skillPresentationSchema.shape.localizedInstructions.optional(),
+		localizedHost: skillPresentationSchema.shape.localizedHost,
 	})
 	.refine((d) => {
 		const values = [

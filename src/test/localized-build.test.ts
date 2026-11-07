@@ -9,6 +9,7 @@ import {
 } from "../contracts/schema.js";
 import {
 	buildInstructions,
+	semanticReviewInstructions,
 	disclosureInstructions,
 	INSTRUCTION_VERSION,
 } from "../instructions/build.js";
@@ -35,13 +36,13 @@ const presentation = {
 	description:
 		"原資料の相違と出所を対応付ける。資料の比較を依頼されたときに使う。",
 	language: "ja",
-	localizedInstructions:
-		"## 手順\n\n正本を確認し、差異の根拠を対応付ける。\n\n## 確認\n\n差異の出所を照合する。\n\n## 受け入れ条件\n\n差異と出所が説明されている。\n\n## 制約\n\n原資料を変更しない。",
+	localizedInstructions: "正本を確認し、差異の根拠を対応付ける。",
 };
 const current = { ...legacy, ...presentation };
 
 function currentFixture() {
 	const f = fixture({ assemblyMode: "baseline" });
+	f.request.limits.modelCalls = 3;
 	let calls = 0;
 	const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
 	f.ports.inference.complete = async (input) => {
@@ -49,9 +50,11 @@ function currentFixture() {
 		calls++;
 		return {
 			value:
-				calls === 1
-					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
-					: current,
+				input.system === semanticReviewInstructions
+					? { approved: true, reason: "test double" }
+					: calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
 			receipt: "receipt",
 			inputTokens: 1,
 			outputTokens: 1,
@@ -63,7 +66,9 @@ function currentFixture() {
 test("current digest changes while initial disclosure payload stays archived", async () => {
 	const { f, inputs } = currentFixture();
 	const result = await ready(f);
-	expect(INSTRUCTION_VERSION).toBe("build." + digest(buildInstructions));
+	expect(INSTRUCTION_VERSION).toBe(
+		"build." + digest(buildInstructions + semanticReviewInstructions),
+	);
 	expect(INSTRUCTION_VERSION).not.toBe(
 		"build." + digest(disclosureInstructions),
 	);
@@ -72,7 +77,7 @@ test("current digest changes while initial disclosure payload stays archived", a
 	expect(inputs[1]!.system).toBe(buildInstructions);
 	expect(inputs[1]!.schema).toEqual(z.toJSONSchema(modelTurnSchema));
 	expect(result.build.generator?.instructions).toBe(INSTRUCTION_VERSION);
-	expect(result.build.usage.modelCalls).toBe(2);
+	expect(result.build.usage.modelCalls).toBe(3);
 	expect(JSON.stringify(inputs)).not.toContain("expectedRefs");
 	expect(JSON.stringify(inputs)).not.toContain("gold");
 });
@@ -202,7 +207,7 @@ test("current localized artifacts still revalidate authority on delivery and cac
 	const result = await ready(f);
 	const cached = f.submit({ ...f.request, requestId: "request:cached" });
 	expect(cached.kind).toBe("ready");
-	expect(inputs).toHaveLength(2);
+	expect(inputs).toHaveLength(3);
 	f.setValid(false);
 	const reply = await f.service.getSkillValidated(
 		result.requestRef,
@@ -212,4 +217,112 @@ test("current localized artifacts still revalidate authority on delivery and cac
 	);
 	expect(reply.kind).toBe("rejected");
 	expect("skill" in reply).toBe(false);
+});
+
+async function deliverCurrent(f: ReturnType<typeof fixture>) {
+	const r = await ready(f);
+	return f.service.getSkillValidated(
+		r.requestRef,
+		f.auth,
+		f.read,
+		new AbortController().signal,
+	);
+}
+test("H1 final artifact preserves host invariants, localized originals and provisional warning", async () => {
+	const { f } = currentFixture();
+	let call = 0;
+	const d = {
+		...current,
+		strategy: "provisional",
+		sourceRefs: [],
+		sections: [{ id: "explore", body: "観測する" }],
+		assumptions: [{ text: "任意前提", mandatory: false, resolved: false }],
+		localizedInstructions: "隔離して観測する。",
+		localizedHost: [
+			{ id: "acceptance:acceptance:1", text: "受入訳" },
+			{ id: "constraint:constraint:1", text: "制約訳" },
+			{ id: "verification:0", text: "確認訳" },
+			{ id: "assumption:0", text: "前提訳" },
+		],
+	};
+	f.ports.inference.complete = async (input) => ({
+		value:
+			input.system === semanticReviewInstructions
+				? { approved: true, reason: "synthetic review" }
+				: ++call === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: d,
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	const result = await deliverCurrent(f);
+	expect(result.kind).toBe("ready");
+	if (result.kind === "ready")
+		for (const text of [
+			"暫定・未検証",
+			"原資料を変更しない",
+			"差異の出所を照合する",
+			"任意前提",
+			"制約訳",
+			"## 受け入れ条件",
+			"## 制約",
+			"## 確認",
+			"## 前提",
+		])
+			expect(result.skill.content).toContain(text);
+});
+test("H1 semantic contradiction and unreservable review fail closed without final artifact", async () => {
+	for (const budget of [2, 3]) {
+		const { f } = currentFixture();
+		f.request.limits.modelCalls = budget;
+		let calls = 0;
+		f.ports.inference.complete = async (input) => ({
+			value:
+				input.system === semanticReviewInstructions
+					? { approved: false, reason: "synthetic contradiction" }
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: { ...current, localizedInstructions: "原資料を書き換える" },
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const pending = f.submit();
+		await expect(f.run(pending.requestRef!)).rejects.toThrow(
+			budget === 2 ? "budget_exceeded" : "semantic_review_failed",
+		);
+		const final = await f.service.getSkillValidated(
+			pending.requestRef!,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect("skill" in final).toBe(false);
+	}
+});
+test("H1 localized host IDs must be complete and unique", async () => {
+	for (const localizedHost of [
+		[],
+		[
+			{ id: "constraint:constraint:1", text: "x" },
+			{ id: "constraint:constraint:1", text: "x" },
+		],
+	]) {
+		const { f } = currentFixture();
+		let calls = 0;
+		f.ports.inference.complete = async () => ({
+			value:
+				++calls === 1
+					? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+					: { ...current, localizedHost },
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		const pending = f.submit();
+		await expect(f.run(pending.requestRef!)).rejects.toThrow(
+			"localized_host_ids_invalid",
+		);
+	}
 });
