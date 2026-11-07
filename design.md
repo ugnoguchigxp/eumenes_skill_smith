@@ -752,3 +752,6 @@ Default replay uses execution.v2: semanticInputId hashes system/data/schema and 
 
 ## Review M6 — artifact byte identity (2026-11-07)
 SkillArtifact carries SHA-256 of exact UTF-8 content, rendererVersion and sourceExtractorVersion. Current per-task artifact digests are bound into RunIdentity, judge data/provenance and score rows. A renderer/extractor or byte change creates a new artifact, never inherited score success. Current scoreboards require matching artifact bindings across ready score rows, run identity and judge provenance; historical rows without them stay stale. File writers check artifact integrity. Authorization/source validation still occurs on each delivery.
+
+## Review L1 — indexed title equality (2026-11-07)
+Snapshot/seed writers persist normalized title_key (NFKC, ECMAScript trim, ASCII case fold) and a (title_key,handle) index. Pin queries bind the key and visibility filters in SQL with LIMIT before reading document_json. Old snapshots without the normalized column/index must be rebuilt offline; no read-time full scan or silent write migration is used.

@@ -1,3 +1,4 @@
+import { titleKey } from "./title-key.js";
 import { Database } from "bun:sqlite";
 import { digest } from "../../src/index.js";
 import {
@@ -21,12 +22,7 @@ const visible =
 	"scope='global' AND space IN ('coding','general','eumenes') AND status!='retracted' AND (retrieval='searchable' OR status='superseded')";
 const searchable = `${visible} AND status='active' AND retrieval='searchable'`;
 const cut = (text: string, count: number) => [...text].slice(0, count).join("");
-/** Title-pin key: NFKC + trim + ASCII-only case fold. No fuzzy match, no translation. */
-export const titleKey = (text: string) =>
-	text
-		.normalize("NFKC")
-		.trim()
-		.replace(/[A-Z]/g, (c) => c.toLowerCase());
+export { titleKey } from "./title-key.js";
 
 export class ContextStillFixture {
 	private readonly db: Database;
@@ -44,6 +40,17 @@ export class ContextStillFixture {
 				.get();
 			if (JSON.parse(marker?.value ?? "null") !== FORMAT)
 				throw new Error("wrong_format");
+			if (
+				!this.db
+					.query<{ name: string }, []>("PRAGMA table_info(items)")
+					.all()
+					.some((c) => c.name === "title_key") ||
+				!this.db
+					.query<{ name: string }, []>("PRAGMA index_list(items)")
+					.all()
+					.some((i) => i.name === "items_title_key")
+			)
+				throw new Error("title_index_missing");
 		} catch {
 			this.db.close();
 			throw new Error("fixture_snapshot_required");
@@ -198,11 +205,9 @@ export class ContextStillFixture {
 		const pinned = key
 			? this.db
 					.query<Row & { title: string }, (string | number)[]>(
-						`SELECT handle,revision,document_json,title FROM items WHERE ${baseFilters.join(" AND ")} ORDER BY handle`,
+						`SELECT handle,revision,document_json,title FROM items WHERE title_key=? AND ${baseFilters.join(" AND ")} ORDER BY handle LIMIT ?`,
 					)
-					.all(...baseParams)
-					.filter((r) => titleKey(r.title) === key)
-					.slice(0, args.limit)
+					.all(key, ...baseParams, args.limit)
 			: [];
 		// Keep the match universe identical; only the profile changes order.
 		// Materialize scores in the FTS MATCH context (FTS5 auxiliary function requirement).

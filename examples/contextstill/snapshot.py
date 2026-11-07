@@ -9,6 +9,7 @@ from pathlib import Path
 import sqlite3
 import subprocess
 import tempfile
+import unicodedata
 
 FORMAT = "skillsmith-contextstill-fixture.v1"
 ROOT = Path(__file__).resolve().parents[2]
@@ -19,6 +20,12 @@ EP = "id,handle,title,situation,intent,decision,observations,action,outcome,less
 
 def encode(value):
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+
+def title_key(text):
+    # Same whitespace set as ECMAScript String.trim, not Python's broader strip().
+    whitespace = "\u0009\u000a\u000b\u000c\u000d\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff"
+    return unicodedata.normalize("NFKC", text).strip(whitespace).translate(str.maketrans("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"))
 
 
 def project(source, dest):
@@ -114,7 +121,7 @@ def project(source, dest):
                 for public, column in (("outcomeKind", "outcome_kind"), ("eventStart", "event_start"), ("eventEnd", "event_end"), ("timePrecision", "time_precision")):
                     item[public] = row[column]
                 search_text = "\n".join(row[k] for k in ("situation", "intent", "decision", "observations", "action", "outcome", "lesson"))
-            dest.execute("INSERT INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", (row["handle"], kind, row.get("type"), row["space"], row["scope"], row["status"], row["retrieval"], row.get("layer"), row["revision"], row["title"], search_text, encode(item)))
+            dest.execute("INSERT INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", (row["handle"], kind, row.get("type"), row["space"], row["scope"], row["status"], row["retrieval"], row.get("layer"), row["revision"], row["title"], search_text, encode(item), title_key(row["title"])))
             counts[kind] += 1
     # The named columns contain no judgment detail or model traces.
     for row in source.execute("SELECT a_id,b_id FROM distill_pair_judgments WHERE verdict IN ('conflict','unknown') AND resolution NOT IN ('a_wins','b_wins','owner_resolved')"):

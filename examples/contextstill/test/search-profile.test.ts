@@ -1,3 +1,4 @@
+import { titleKey } from "../title-key.js";
 import { expect, test } from "bun:test";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -113,4 +114,30 @@ test("CLI reports the selected profile, including the omitted-flag baseline", ()
 			JSON.parse(readFileSync(report.reportFile, "utf8")).searchProfile,
 		).toBe(profile ?? "bm25");
 	}
+});
+
+test("L1 title pin uses normalized key index before reading document JSON", async () => {
+	const f = setup([
+		item({ handle: handle("a"), title: " ＧＯ Ｓｔｙｌｅ " }),
+		item({ handle: handle("b"), title: "Go Style" }),
+		item({ handle: handle("c"), title: "日本語の題名" }),
+	]);
+	const plan = f.writer
+		.query<{ detail: string }, [string]>(
+			"EXPLAIN QUERY PLAN SELECT handle,revision,document_json FROM items WHERE title_key=? ORDER BY handle LIMIT 1",
+		)
+		.all(titleKey("go style"));
+	expect(plan.map((p) => p.detail).join(" ")).toContain("items_title_key");
+	expect(
+		(await f.source.search("go style", 2, f.signal)).cards.map((c) => c.ref),
+	).toEqual([`contextstill:${handle("a")}`, `contextstill:${handle("b")}`]);
+	expect(
+		(await f.source.search("　日本語の題名　", 1, f.signal)).cards[0]!.ref,
+	).toBe(`contextstill:${handle("c")}`);
+	f.put(item({ handle: handle("a"), title: " ＧＯ Ｓｔｙｌｅ " }), {
+		retrieval: "evidence_only",
+	});
+	expect((await f.source.search("go style", 1, f.signal)).cards[0]!.ref).toBe(
+		`contextstill:${handle("b")}`,
+	);
 });

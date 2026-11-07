@@ -1,3 +1,4 @@
+import { titleKey } from "./title-key.js";
 import { Database } from "bun:sqlite";
 import { createHash } from "node:crypto";
 import {
@@ -174,7 +175,7 @@ export function seedDatabase(
 			db.exec(readFileSync(new URL("./schema.sql", import.meta.url), "utf8"));
 			db.transaction(() => {
 				const insert = db.query(
-					"INSERT INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+					"INSERT INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
 				);
 				for (const row of records) {
 					if (row.record !== "knowledge") continue;
@@ -200,6 +201,7 @@ export function seedDatabase(
 						item.title,
 						searchText,
 						JSON.stringify(item),
+						titleKey(item.title),
 					);
 				}
 				for (const row of records)

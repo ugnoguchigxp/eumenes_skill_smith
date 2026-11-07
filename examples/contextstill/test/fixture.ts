@@ -5,7 +5,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FORMAT } from "../contracts.js";
 import type { PublicItem } from "../contracts.js";
-import { ContextStillFixture, type SearchProfile } from "../database.js";
+import {
+	ContextStillFixture,
+	titleKey,
+	type SearchProfile,
+} from "../database.js";
 import { createMcpHandler } from "../mcp.js";
 import { createFixtureSource } from "../source.js";
 
@@ -100,7 +104,7 @@ export function setup(
 		} = {},
 	) {
 		writer
-			.query("INSERT OR REPLACE INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?)")
+			.query("INSERT OR REPLACE INTO items VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)")
 			.run(
 				document.handle,
 				document.kind,
@@ -114,6 +118,7 @@ export function setup(
 				document.title,
 				JSON.stringify(document),
 				JSON.stringify(document),
+				titleKey(document.title),
 			);
 		writer.exec("INSERT INTO items_fts(items_fts) VALUES('rebuild')");
 	}
