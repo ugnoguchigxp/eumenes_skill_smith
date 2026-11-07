@@ -107,3 +107,31 @@ test("aggregateUsageLedger keeps null when any call is unknown", () => {
 	expect(ledger.totals.outputTokens).toBeNull();
 	expect(ledger.totals.reasoningTokens).toBeNull();
 });
+
+test("M4 billing completeness matrix: separate unknown, included unknown, mixed known and absent", () => {
+	const call = (
+		outputTokens: number | null,
+		reasoningTokens: number | null,
+		reasoningIncludedInOutput: boolean,
+	) => ({
+		callKind: "build" as const,
+		inputTokens: 1,
+		outputTokens,
+		reasoningTokens,
+		reasoningIncludedInOutput,
+		outcome: "ok" as const,
+	});
+	for (const [calls, total, observed] of [
+		[[call(20, null, false)], null, 20],
+		[[call(20, null, true)], 20, 20],
+		[[call(20, null, false), call(5, 7, false)], null, 32],
+		[[call(20, null, true), call(5, 7, false)], 32, 32],
+		[[call(null, 7, false)], null, 7],
+		[[call(20, 7, true)], 20, 20],
+		[[], 0, 0],
+	] as const) {
+		const ledger = aggregateUsageLedger([...calls]);
+		expect(ledger.totals.billableOutputTokens).toBe(total);
+		expect(ledger.totals.observedBillableOutputTokens).toBe(observed);
+	}
+});

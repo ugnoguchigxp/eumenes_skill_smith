@@ -33,6 +33,7 @@ export const usageLedgerSchema = z.strictObject({
 		cachedInputTokens: z.number().int().nonnegative().nullable(),
 		/** outputTokens plus separate reasoning when not already included. */
 		billableOutputTokens: z.number().int().nonnegative().nullable(),
+		observedBillableOutputTokens: z.number().int().nonnegative(),
 	}),
 });
 export type UsageLedger = z.infer<typeof usageLedgerSchema>;
@@ -55,28 +56,21 @@ export function aggregateUsageLedger(
 	const outputTokens = sumNullable(parsed.map((c) => c.outputTokens));
 	const reasoningTokens = sumNullable(parsed.map((c) => c.reasoningTokens));
 	const cachedInputTokens = sumNullable(parsed.map((c) => c.cachedInputTokens));
-	let billableOutputTokens: number | null = outputTokens;
-	if (billableOutputTokens !== null && reasoningTokens !== null) {
-		const extra = parsed.reduce((n, c) => {
-			if (c.reasoningIncludedInOutput) return n;
-			if (c.reasoningTokens === null) return n;
-			return n + c.reasoningTokens;
-		}, 0);
-		// If any call had null reasoning while claiming separate, billable becomes null.
-		if (
-			parsed.some(
-				(c) => !c.reasoningIncludedInOutput && c.reasoningTokens === null,
-			)
-		)
-			billableOutputTokens = null;
-		else billableOutputTokens += extra;
-	} else if (
-		reasoningTokens === null &&
-		parsed.some((c) => !c.reasoningIncludedInOutput)
-	) {
-		// Unknown separate reasoning — do not invent billable total beyond output.
-		billableOutputTokens = outputTokens;
-	}
+	const observedBillableOutputTokens = parsed.reduce(
+		(sum, c) =>
+			sum +
+			(c.outputTokens ?? 0) +
+			(c.reasoningIncludedInOutput ? 0 : (c.reasoningTokens ?? 0)),
+		0,
+	);
+	const billableOutputTokens = parsed.some(
+		(c) =>
+			c.outputTokens === null ||
+			(!c.reasoningIncludedInOutput && c.reasoningTokens === null),
+	)
+		? null
+		: observedBillableOutputTokens;
+
 	return usageLedgerSchema.parse({
 		calls: parsed,
 		totals: {
@@ -85,6 +79,7 @@ export function aggregateUsageLedger(
 			reasoningTokens,
 			cachedInputTokens,
 			billableOutputTokens,
+			observedBillableOutputTokens,
 		},
 	});
 }
