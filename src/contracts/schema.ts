@@ -95,6 +95,11 @@ export const skillPresentationSchema = z.strictObject({
 	localizedInstructions: text,
 	localizedHost: z.array(clause).max(96).optional(),
 	sourceReview: sourceReviewSchema.optional(),
+	domainAnchors: z
+		.array(z.strictObject({ term: text, documentPointer: text }))
+		.min(1)
+		.max(16)
+		.optional(),
 	interactions: z
 		.array(z.strictObject({ point: text, handling: text }))
 		.min(1)
@@ -117,14 +122,24 @@ const legacyReady = z.strictObject({
 				text,
 				mandatory: z.boolean(),
 				resolved: z.boolean(),
-				visibility: visibility.optional(),
 			}),
 		)
 		.max(16),
 });
+const scopedAssumptions = z
+	.array(
+		z.strictObject({
+			text,
+			mandatory: z.boolean(),
+			resolved: z.boolean(),
+			visibility: visibility.optional(),
+		}),
+	)
+	.max(16);
 // Legacy storage accepts absence, never an incomplete presentation group.
 const storedReady = legacyReady
 	.extend({
+		assumptions: scopedAssumptions,
 		name: skillPresentationSchema.shape.name.optional(),
 		title: skillPresentationSchema.shape.title.optional(),
 		description: skillPresentationSchema.shape.description.optional(),
@@ -133,6 +148,11 @@ const storedReady = legacyReady
 			skillPresentationSchema.shape.localizedInstructions.optional(),
 		localizedHost: skillPresentationSchema.shape.localizedHost,
 		sourceReview: sourceReviewSchema.optional(),
+		domainAnchors: z
+			.array(z.strictObject({ term: text, documentPointer: text }))
+			.min(1)
+			.max(16)
+			.optional(),
 		interactions: z
 			.array(z.strictObject({ point: text, handling: text }))
 			.min(1)
@@ -154,6 +174,7 @@ const storedReady = legacyReady
 	}, "incomplete_skill_presentation");
 const currentReady = legacyReady.extend({
 	...skillPresentationSchema.shape,
+	assumptions: scopedAssumptions,
 	sourceReview: sourceReviewSchema,
 });
 export const decisionSchema = z.discriminatedUnion("kind", [

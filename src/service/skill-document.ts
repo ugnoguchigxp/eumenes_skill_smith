@@ -97,6 +97,15 @@ export function assembleSkillBody(
 			? "## 制約\n\n" +
 				list(constraints.map((c) => hostText("constraint:" + c.id, c.text)))
 			: "",
+		d.domainAnchors?.length
+			? "## 未確認の手がかり\n\n公式資料の探索起点であり、適用可能性や正しさを検証した記録ではない。\n\n" +
+				list(
+					d.domainAnchors.map(
+						(x) =>
+							`${markdownPlainText(x.term)}: ${markdownPlainText(x.documentPointer)}`,
+					),
+				)
+			: "",
 		d.interactions?.length
 			? "## 組み合わせの接点\n\n" +
 				list(

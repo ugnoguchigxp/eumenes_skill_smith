@@ -182,6 +182,9 @@ test("toStoredReady maps exploration slots into fixed section ids", () => {
 		localizedInstructions: "対象を確認し、隔離して試し、観測結果を照合する。",
 		kind: "ready",
 		strategy: "provisional",
+		domainAnchors: [
+			{ term: "対象の版", documentPointer: "対象の公式リファレンス" },
+		],
 		sourceRefs: [],
 		sections: [],
 		patches: [],

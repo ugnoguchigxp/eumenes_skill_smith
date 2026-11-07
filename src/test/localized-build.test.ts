@@ -238,6 +238,9 @@ test("H1 final artifact preserves host invariants, localized originals and provi
 	const d = {
 		...current,
 		strategy: "provisional",
+		domainAnchors: [
+			{ term: "対象の版", documentPointer: "対象の公式リファレンス" },
+		],
 		sourceRefs: [],
 		sections: [{ id: "explore", body: "観測する" }],
 		assumptions: [{ text: "任意前提", mandatory: false, resolved: false }],
@@ -729,6 +732,50 @@ test("v5 composition requires structured interaction points and renders their ha
 			const text = renderSkillMarkdown(r.build.content).content;
 			expect(text).toContain("## 組み合わせの接点");
 			expect(text).toContain(interactions[0]!.handling);
+		}
+	}
+});
+
+test("v5 provisional needs explicit unverified domain anchors in FINAL artifact", async () => {
+	for (const domainAnchors of [
+		undefined,
+		[
+			{
+				term: "分野固有の手がかり",
+				documentPointer: "公式資料の該当節を調べる",
+			},
+		],
+	]) {
+		const { f } = currentFixture();
+		let n = 0;
+		f.ports.inference.complete = async (input) => ({
+			value:
+				input.system === semanticReviewInstructions
+					? { approved: true, reason: "synthetic" }
+					: ++n === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: {
+								...current,
+								strategy: "provisional",
+								sourceRefs: [],
+								sections: [{ id: "explore", body: "観測する" }],
+								domainAnchors,
+							},
+			receipt: "test",
+			inputTokens: 1,
+			outputTokens: 1,
+		});
+		if (!domainAnchors) {
+			const p = f.submit();
+			await expect(f.run(p.requestRef!)).rejects.toThrow(
+				"provisional_domain_anchors_missing",
+			);
+		} else {
+			const r = await ready(f);
+			const text = renderSkillMarkdown(r.build.content).content;
+			expect(text).toContain("## 未確認の手がかり");
+			expect(text).toContain("検証した記録ではない");
+			expect(text).toContain(domainAnchors[0]!.term);
 		}
 	}
 });

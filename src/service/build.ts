@@ -50,6 +50,14 @@ export function checkDecision(
 ) {
 	if (
 		decision.localizedInstructions !== undefined &&
+		decision.strategy === "provisional"
+	)
+		requireThat(
+			!!decision.domainAnchors?.length,
+			"provisional_domain_anchors_missing",
+		);
+	if (
+		decision.localizedInstructions !== undefined &&
 		decision.strategy === "compose"
 	)
 		requireThat(
