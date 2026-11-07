@@ -1363,3 +1363,33 @@ test("v9 deduplicates by LLM judgment while preserving stops and canonical scope
 		"必須の停止・権限・対象範囲は短縮で落とさない",
 	);
 });
+
+test("v10 operation examples require pre-inclusion evidence without new tool calls", () => {
+	expect(buildInstructions).toContain("CLI/シェル/設定例は組込み前");
+	expect(buildInstructions).toContain("未検証の例は入れず");
+	expect(semanticReviewInstructions).toContain("裏付けのない具体例は拒否");
+});
+test("v10 unsupported operation proof fails the existing reserved semantic gate", async () => {
+	const { f, inputs } = currentFixture();
+	let calls = 0;
+	f.ports.inference.complete = async (input) => {
+		inputs.push(input);
+		return {
+			value:
+				input.system === semanticReviewInstructions
+					? {
+							approved: false,
+							reason: "operation has no document/execution proof",
+						}
+					: ++calls === 1
+						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
+						: current,
+			receipt: "r",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	const p = f.submit();
+	await expect(f.run(p.requestRef!)).rejects.toThrow("semantic_review_failed");
+	expect(inputs.length).toBe(3);
+});
