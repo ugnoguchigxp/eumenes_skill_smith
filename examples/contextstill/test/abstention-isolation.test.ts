@@ -1,3 +1,4 @@
+import { semanticReviewInstructions } from "../../../src/instructions/build.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -70,7 +71,9 @@ test("contrast judge digests are stable; current build digest tracked separately
 	expect(on.abstentionJudgeSchemaDigest).toBe(
 		digests.abstentionJudgeSchemaDigest,
 	);
-	expect(off.buildInstructionsDigest).toBe(digest(buildInstructions));
+	expect(off.buildInstructionsDigest).toBe(
+		digest(buildInstructions + semanticReviewInstructions),
+	);
 	expect(parseAbstentionContrast([])).toBe("off");
 	expect(parseAbstentionContrast(["--abstention-contrast", "on"])).toBe("on");
 	expect(() => parseAbstentionContrast(["--abstention-contrast"])).toThrow();

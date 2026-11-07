@@ -5,6 +5,8 @@ import type { Build, Reply } from "../contracts/types.js";
 import { bodyTail } from "./build.js";
 import { digest, requireThat } from "./identity.js";
 
+export const SKILL_RENDERER_VERSION = "skill-markdown.v2";
+
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
 	| (Extract<Reply, { kind: "ready" }> & { skill: SkillArtifact });

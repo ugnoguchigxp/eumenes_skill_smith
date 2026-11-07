@@ -227,3 +227,6 @@ Current model instructions are parsed with a pinned CommonMark AST parser. No H1
 
 ## Review H4 — disclosure coverage (2026-11-07)
 Current reuse/adapt require the selected current body and every source section to have been disclosed to the builder. Current section disclosure includes the source body; partial section access is insufficient for whole-source reuse/adapt. Coverage compares actual bytes, not merely ref presence. Legacy archival replay preserves its old transport shape and is not a current success.
+
+## Review M1 — historical vs current scores (2026-11-07)
+Historical snapshots retain their exact identities and numbers. Current scores require a complete match of suite and seed bytes, all instruction/schema identities, renderer version, profile, assembly, evidence and reformulation conditions. Missing identity is stale, never current. Score snapshots reject duplicate/missing task IDs and non-integer/out-of-range scores. Historical files are not rewritten.

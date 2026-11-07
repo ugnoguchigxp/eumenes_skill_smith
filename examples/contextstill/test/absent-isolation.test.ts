@@ -1,3 +1,4 @@
+import { semanticReviewInstructions } from "../../../src/instructions/build.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -64,7 +65,9 @@ test("absent judge digests are stable; current build digest tracked separately f
 	expect(identity.absentJudgeSchemaDigest).toBe(
 		digests.absentJudgeSchemaDigest,
 	);
-	expect(identity.buildInstructionsDigest).toBe(digest(buildInstructions));
+	expect(identity.buildInstructionsDigest).toBe(
+		digest(buildInstructions + semanticReviewInstructions),
+	);
 	expect(identity.composeJudgeInstructionsDigest).toMatch(/^[a-f0-9]{64}$/);
 });
 

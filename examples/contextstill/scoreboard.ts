@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { buildEvalIdentity } from "./scenario-runner.js";
 // Canonical measurement entrypoint: aggregates existing recorded SKILL scores and retrieval-only
 // hit@k into one per-slice board. No LLM calls, no DB writes. Means are never blended across slices.
 //   bun examples/contextstill/scoreboard.ts [--json] [--dir examples/contextstill/scenarios]
@@ -145,6 +147,81 @@ function conditionMismatch(r: any, profile: Profile): string | null {
 	return null;
 }
 
+/** Validate a scored snapshot before Map construction (no silent duplicate overwrite). */
+export function validateScoreRows(report: any, expectedIds: string[]) {
+	const rows = z
+		.array(
+			z.object({
+				taskId: z.string().min(1),
+				score: z.number().int().min(0).max(10).nullable(),
+			}),
+		)
+		.parse(report.scores);
+	const ids = rows.map((x) => x.taskId);
+	if (new Set(ids).size !== ids.length) throw new Error("score_duplicate_task");
+	if (expectedIds.some((id) => !ids.includes(id)))
+		throw new Error("score_missing_task");
+}
+export function currentIdentityMatches(
+	actual: any,
+	expected: Record<string, unknown>,
+): boolean {
+	return (
+		!!actual &&
+		Object.entries(expected).every(
+			([k, v]) => Object.hasOwn(actual, k) && actual[k] === v,
+		)
+	);
+}
+function currentView<
+	T extends {
+		n: number;
+		scored: number;
+		unscored: number;
+		meanScore: number | null;
+		scores: ScoreRow[];
+	},
+>(
+	snapshot: T,
+	sf: any,
+	dir: string,
+	suiteFile: string,
+	profile: Profile,
+	mode: "auto" | "off",
+) {
+	const suite = read(dir, suiteFile);
+	const effective = mode === "off" ? "off" : sf?.identity?.queryReformulation;
+	const expected = buildEvalIdentity({
+		searchProfile: profile,
+		suiteId: suite.id,
+		suitePath: resolve(dir, suiteFile),
+		seedPath: resolve("data/contextstill/seed.sqlite"),
+		queryReformulation: effective === "on" ? "on" : "off",
+		assemblyMode: "baseline",
+		evidenceSupply: "natural",
+		abstentionContrast: "off",
+	});
+	const matches =
+		!!sf &&
+		(sf.queryReformulationMode ?? "off") === mode &&
+		(effective === "on" || effective === "off") &&
+		currentIdentityMatches(
+			sf.identity,
+			expected as unknown as Record<string, unknown>,
+		);
+	return {
+		...snapshot,
+		scored: matches ? snapshot.scored : 0,
+		unscored: matches ? snapshot.unscored : snapshot.n,
+		meanScore: matches ? snapshot.meanScore : null,
+		scores: matches
+			? snapshot.scores
+			: snapshot.scores.map((s) => ({ ...s, score: null })),
+		status: matches ? "current" : sf ? "stale" : "未測定",
+		historicalSnapshot: snapshot,
+	};
+}
+
 export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 	const suite = JSON.parse(
 		readFileSync(resolve(dir, "suite-3axis.json"), "utf8"),
@@ -161,6 +238,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 		const cells = PROFILES.map((profile): Cell => {
 			const sf = read(dir, def.scoreFiles[profile]);
 			if (sf) {
+				validateScoreRows(sf, taskIds);
 				const bad = conditionMismatch(sf, profile);
 				if (bad)
 					throw new Error(`${def.scoreFiles[profile]}: non-canonical ${bad}`);
@@ -246,6 +324,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 			const scoreName = DEFAULT_SCORE_FILES[def.id] ?? null;
 			const sf = scoreName ? read(dir, scoreName) : null;
 			if (sf) {
+				validateScoreRows(sf, taskIds);
 				if (sf.searchProfile !== "bm25" || sf.queryReformulationMode !== "auto")
 					throw new Error(`${scoreName}: not product default`);
 			}
@@ -290,14 +369,37 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 				scores,
 			};
 		}
+
 		return {
+			historicalSnapshot: true,
+			currentCells: cells.map((c) =>
+				currentView(
+					c,
+					read(dir, def.scoreFiles[c.profile]),
+					dir,
+					"suite-3axis.json",
+					c.profile,
+					"off",
+				),
+			),
 			id: def.id,
 			axis: def.axis,
 			queryStyle: def.queryStyle,
 			label: def.label,
 			n: taskIds.length,
 			cells,
-			productDefault,
+			productDefault: productDefault
+				? currentView(
+						productDefault,
+						DEFAULT_SCORE_FILES[def.id]
+							? read(dir, DEFAULT_SCORE_FILES[def.id]!)
+							: null,
+						dir,
+						"suite-3axis.json",
+						"bm25",
+						"auto",
+					)
+				: null,
 		};
 	});
 	const diverseRetrieval = read(dir, "retrieval-diverse-default.json");
@@ -312,6 +414,10 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 				throw new Error("retrieval-diverse-default.json: not product default");
 		}
 		if (diverseScores) {
+			validateScoreRows(
+				diverseScores,
+				read(dir, "suite-diverse.json").tasks.map((t: any) => t.id),
+			);
 			if (
 				diverseScores.searchProfile !== "bm25" ||
 				diverseScores.queryReformulationMode !== "auto"
@@ -369,7 +475,16 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 		blendedMean: null,
 		note: "SKILL score is a provisional 0-10 LLM judgment (not human-calibrated). Means are per slice x condition only; no blended mean across slices or axes. Provider tokens unmeasured. Diverse companion is not part of the 61-task total.",
 		slices,
-		diverseCompanion,
+		diverseCompanion: diverseCompanion
+			? currentView(
+					diverseCompanion,
+					diverseScores,
+					dir,
+					"suite-diverse.json",
+					"bm25",
+					"auto",
+				)
+			: null,
 	};
 }
 
@@ -385,7 +500,7 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 		"SKILL点は LLM 判定の暫定値（0-10、人手較正なし）。平均は区分×条件ごとのみ。全体平均は出さない。",
 	);
 	L.push(
-		"条件: handle / bm25（いずれも assembly baseline・evidence natural・言い換えoff・棄権対比off）",
+		"歴史的 snapshot（現行点ではない）: handle / bm25（いずれも assembly baseline・evidence natural・言い換えoff・棄権対比off）",
 	);
 	L.push("");
 	L.push(
@@ -400,7 +515,7 @@ export function renderText(b: ReturnType<typeof buildScoreboard>): string {
 	}
 	L.push("");
 	L.push(
-		"製品既定（bm25・題名一致固定・言い換え auto＝日本語または題名非一致）。平均は区分ごと。全体平均は出さない。",
+		"現行・製品既定（stale は未測定）（bm25・題名一致固定・言い換え auto＝日本語または題名非一致）。平均は区分ごと。全体平均は出さない。",
 	);
 	for (const s of b.slices)
 		if (s.productDefault) {

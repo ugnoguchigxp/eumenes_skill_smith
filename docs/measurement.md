@@ -93,3 +93,6 @@ exact は on ではなく auto の非発火確認です。original と compose �
 | diverse-6tvplq-question | 1 |
 
 既定での SKILL 点は 10/10、平均 9（いずれも 9）です。記録は `scores-diverse-default.json` です。題名どおり・英語・日本語の既定点は `scores-{exact|en|jp}-default.json` です。区分をまたぐ平均や本番品質の主張には使いません。ビルド指示・judge・INSTRUCTION_VERSION は変更していません。
+
+## Review M1 — historical vs current scores (2026-11-07)
+Historical snapshots retain their exact identities and numbers. Current scores require a complete match of suite and seed bytes, all instruction/schema identities, renderer version, profile, assembly, evidence and reformulation conditions. Missing identity is stale, never current. Score snapshots reject duplicate/missing task IDs and non-integer/out-of-range scores. Historical files are not rewritten.

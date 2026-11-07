@@ -1,3 +1,5 @@
+import { SKILL_RENDERER_VERSION } from "../../src/service/skill-markdown.js";
+import { semanticReviewInstructions } from "../../src/instructions/build.js";
 import type { SkillArtifact } from "../../src/index.js";
 // Proposal 26/35: two-mode scenario runner (retrieval-only / full) over typed three-axis tasks.
 // retrieval-only calls SourcePort.search only and never creates inference; it invents no 0-10 scores.
@@ -220,6 +222,7 @@ export type TaskStatus =
 
 /** Binds a report to suite/seed bytes and the instruction/schema digests that shaped records. */
 export interface RunIdentity {
+	rendererVersion: string;
 	searchProfile: SearchProfile;
 	assemblyMode: AssemblyMode;
 	evidenceSupply: EvidenceSupply;
@@ -250,8 +253,8 @@ export function instructionDigests(assemblyMode: AssemblyMode = "baseline") {
 			assemblyMode === "legacy"
 				? disclosureInstructions
 				: assemblyMode === "compact"
-					? compactBuildInstructions
-					: buildInstructions,
+					? compactBuildInstructions + semanticReviewInstructions
+					: buildInstructions + semanticReviewInstructions,
 		),
 		judgeInstructionsDigest: digest(JUDGE_INSTRUCTIONS),
 		judgeSchemaDigest: digest(judgeOutputSchema),
@@ -276,6 +279,7 @@ export function buildEvalIdentity(input: {
 	const assemblyMode = input.assemblyMode ?? "baseline";
 	const queryReformulation = input.queryReformulation ?? "off";
 	return {
+		rendererVersion: SKILL_RENDERER_VERSION,
 		searchProfile: input.searchProfile,
 		evidenceSupply: input.evidenceSupply ?? "natural",
 		...composeJudgeDigests(),

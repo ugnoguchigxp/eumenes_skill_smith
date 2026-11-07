@@ -1,7 +1,12 @@
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { disclosureInstructions } from "../../../src/instructions/build.js";
-import { buildScoreboard, renderText } from "../scoreboard.js";
+import {
+	buildScoreboard,
+	renderText,
+	validateScoreRows,
+	currentIdentityMatches,
+} from "../scoreboard.js";
 
 const b = buildScoreboard();
 const cell = (slice: string, p: "handle" | "bm25") =>
@@ -79,21 +84,22 @@ test("scoreboard retains the archived build instruction version", () => {
 test("product default SKILL scores stay off the two-column board and out of the 61 total", () => {
 	expect(b.totalTasks).toBe(61);
 	expect(b.blendedMean).toBeNull();
-	const exact = b.slices.find(
-		(s) => s.id === "retrieval/exact",
-	)!.productDefault!;
+	const exact = b.slices.find((s) => s.id === "retrieval/exact")!
+		.productDefault!.historicalSnapshot;
 	expect(exact.scored).toBe(16);
 	expect(exact.meanScore).toBe(8.88);
 	expect(exact.scores.map((s) => s.score)).toEqual([
 		9, 9, 9, 9, 7, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
 	]);
 	expect(exact.hitAt8).toEqual({ hit: 16, of: 16 });
-	const en = b.slices.find((s) => s.id === "retrieval/en")!.productDefault!;
+	const en = b.slices.find((s) => s.id === "retrieval/en")!.productDefault!
+		.historicalSnapshot;
 	expect(en.meanScore).toBe(8);
 	expect(en.scores.map((s) => s.score)).toEqual([
 		9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 1,
 	]);
-	const jp = b.slices.find((s) => s.id === "retrieval/jp")!.productDefault!;
+	const jp = b.slices.find((s) => s.id === "retrieval/jp")!.productDefault!
+		.historicalSnapshot;
 	expect(jp.meanScore).toBe(8.5);
 	expect(jp.scores.map((s) => s.score)).toEqual([
 		9, 9, 9, 9, 9, 9, 9, 1, 9, 9, 9, 9, 9, 9, 9, 9,
@@ -108,12 +114,55 @@ test("product default SKILL scores stay off the two-column board and out of the 
 	expect(cell("retrieval/exact", "handle").meanScore).toBe(2);
 	expect(cell("retrieval/exact", "bm25").meanScore).toBeNull();
 	expect(b.diverseCompanion?.n).toBe(10);
-	expect(b.diverseCompanion?.meanScore).toBe(9);
+	expect(b.diverseCompanion?.historicalSnapshot.meanScore).toBe(9);
 	expect(
-		b.diverseCompanion?.scores.map((s: { score: number | null }) => s.score),
+		b.diverseCompanion?.historicalSnapshot.scores.map(
+			(s: { score: number | null }) => s.score,
+		),
 	).toEqual([9, 9, 9, 9, 9, 9, 9, 9, 9, 9]);
 	const text = renderText(b);
 	expect(text).not.toMatch(/SKILL点は未再生/);
 	expect(text).not.toMatch(/全体平均\s*[0-9]/);
 	expect(text).toMatch(/別枠 suite-diverse（10 件、61 件には含めない）/);
+});
+
+test("M1 current scoreboard does not relabel stale historical scores", () => {
+	for (const s of b.slices) {
+		for (const c of s.currentCells) expect(c.meanScore).toBeNull();
+		if (s.productDefault)
+			expect([s.productDefault.scored, s.productDefault.meanScore]).toEqual([
+				0,
+				null,
+			]);
+	}
+	expect(b.diverseCompanion?.status).toBe("stale");
+	expect(renderText(b)).toContain("未測定");
+	const expected = {
+		buildInstructionsDigest: "a",
+		rendererVersion: "b",
+		suiteFileSha256: "c",
+		seedFileSha256: "d",
+		evidenceSupply: "natural",
+	};
+	expect(currentIdentityMatches({ ...expected }, expected)).toBe(true);
+	for (const key of Object.keys(expected)) {
+		const bad = { ...expected } as any;
+		delete bad[key];
+		expect(currentIdentityMatches(bad, expected)).toBe(false);
+		bad[key] = "changed";
+		expect(currentIdentityMatches(bad, expected)).toBe(false);
+	}
+});
+test("M1 score snapshots reject duplicate missing and out-of-range values", () => {
+	for (const scores of [
+		[
+			{ taskId: "x", score: 9 },
+			{ taskId: "x", score: 9 },
+		],
+		[],
+		[{ taskId: "x", score: 11 }],
+		[{ taskId: "x", score: -1 }],
+		[{ taskId: "x", score: 1.2 }],
+	])
+		expect(() => validateScoreRows({ scores }, ["x"])).toThrow();
 });
