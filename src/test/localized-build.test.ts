@@ -1347,3 +1347,10 @@ test("v8 completion gates distinguish observable pass/fail from unmeasured task 
 		"fixture成功を実タスク合格へ転用",
 	);
 });
+
+test("v9 completion text avoids evaluation boilerplate without dropping task-specific stops", () => {
+	expect(buildInstructions).toContain("完成条件は対象固有の合否を短く");
+	expect(semanticReviewInstructions).toContain(
+		"対象に関係しない定型文や評価メタを繰り返さない",
+	);
+});
