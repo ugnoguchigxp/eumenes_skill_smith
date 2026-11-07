@@ -989,7 +989,7 @@ async function deliverDocument(document = richDocument, outputBytes?: number) {
 					? { approved: true, reason: "synthetic review" }
 					: ++calls === 1
 						? { kind: "disclose", items: [{ ref: "skill:compare@1" }] }
-						: { ...current, name: "原資料の比較", document },
+						: { ...current, name: "compare-source-records", document },
 			receipt: "receipt",
 			inputTokens: 1,
 			outputTokens: 1,
@@ -997,12 +997,12 @@ async function deliverDocument(document = richDocument, outputBytes?: number) {
 	};
 	return { reply: await deliverCurrent(f), inputs, f };
 }
-test("v7 final functional sections, Unicode name and real resource links; no audit headings or IDs", async () => {
+test("v7 final functional sections, ASCII slug and real resource links; no audit headings or IDs", async () => {
 	const { reply, inputs } = await deliverDocument();
 	expect(reply.kind).toBe("ready");
 	if (reply.kind !== "ready") return;
-	expect(reply.skill.rendererVersion).toBe("skill-markdown.v7");
-	expect(reply.skill.name).toBe("原資料の比較");
+	expect(reply.skill.rendererVersion).toBe("skill-markdown.v8");
+	expect(reply.skill.name).toBe("compare-source-records");
 	expect(reply.skill.content.match(/^## .+$/gm)).toEqual([
 		"## 目的",
 		"## 必須原則",
@@ -1025,7 +1025,7 @@ test("v7 final functional sections, Unicode name and real resource links; no aud
 		"[詳細な比較の例](references/comparison.md)",
 	);
 	expect(reply.skill.files?.[0]?.path).toBe(
-		"原資料の比較/references/comparison.md",
+		"compare-source-records/references/comparison.md",
 	);
 	expect(JSON.stringify(inputs.at(-1)?.data)).toContain(
 		"同一版の各欄を照合する",
@@ -1144,4 +1144,17 @@ test("v7 final byte limit includes all reference files; revoked authority still 
 	);
 	expect(revoked.kind).toBe("rejected");
 	expect("skill" in revoked).toBe(false);
+});
+
+test("v8 rejects non-ASCII slugs at generation without changing body language", () => {
+	for (const name of ["日本語", "withCaps", "a\n", "../escape", "double--dash"])
+		expect(modelTurnSchema.safeParse({ ...current, name }).success).toBe(false);
+	expect(
+		modelTurnSchema.safeParse({
+			...current,
+			name: "python-indent-4",
+			language: "ja",
+			title: "字下げを整える",
+		}).success,
+	).toBe(true);
 });

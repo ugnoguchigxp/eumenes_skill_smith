@@ -86,14 +86,12 @@ export const sourceReviewSchema = z.strictObject({
 const nonSourceAdditions = z
 	.array(z.strictObject({ practice: text, reason: text }))
 	.max(16);
-/** Unicode content names, not arbitrary paths; language correctness is judged by inference. */
+/** ASCII content slugs, never paths; body language is judged by inference. */
 export const skillNameSchema = z
 	.string()
 	.min(1)
 	.max(64)
-	.regex(
-		/^[\p{Ll}\p{Lo}\p{Lm}\p{N}]+(?:-[\p{Ll}\p{Lo}\p{Lm}\p{N}]+)*(?![\s\S])/u,
-	);
+	.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*(?![\s\S])/);
 export const referencePathSchema = z
 	.string()
 	.max(96)

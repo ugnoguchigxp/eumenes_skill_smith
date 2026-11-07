@@ -171,29 +171,29 @@ test("scenario CLI writes and reports SKILL.md paths under the requested output 
 	}
 });
 
-test("v7 writer emits separately digested Unicode bundles and rejects invalid files before any write", () => {
+test("v7 writer emits separately digested ASCII bundles and rejects invalid files before any write", () => {
 	const dir = mkdtempSync(resolve(tmpdir(), "skill-v7-"));
 	const content =
-		'---\nname: "比較"\ndescription: "比較するときに使う。"\n---\n\n## 標準ワークフロー\n\n比較する。';
+		'---\nname: "comparison"\ndescription: "比較するときに使う。"\n---\n\n## 標準ワークフロー\n\n比較する。';
 	const main = {
-		name: "比較",
-		path: "比較/SKILL.md",
+		name: "comparison",
+		path: "comparison/SKILL.md",
 		content,
 		digest: artifactDigest(content),
 		rendererVersion: "skill-markdown.v7",
 		sourceExtractorVersion: "none",
 	};
 	const file = {
-		path: "比較/references/detail.md",
+		path: "comparison/references/detail.md",
 		content: "### 詳細\n照合する。",
 		digest: artifactDigest("### 詳細\n照合する。"),
 	};
 	try {
 		for (const files of [
-			[{ ...file, path: "比較/references/../../escape.md" }],
+			[{ ...file, path: "comparison/references/../../escape.md" }],
 			[file, file],
 			[{ ...file, digest: "wrong" }],
-			[{ ...file, path: "比較/references/detail.md\n" }],
+			[{ ...file, path: "comparison/references/detail.md\n" }],
 		]) {
 			expect(() =>
 				writeSkillArtifact(dir, {

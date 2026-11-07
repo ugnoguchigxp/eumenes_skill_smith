@@ -243,3 +243,7 @@ SkillArtifact は既存 content/path/digest と返却種別を維持し、任意
 回帰試験は最終文字列の任意節の有無、旧監査見出し不在、reader条件保持、reference同梱・リンク・digest・安全パス拒否、Unicode名、LLM意味検証への全ファイル入力を扱う。再生成は6件固定のbuilder-only packetsとrecorded-inferenceで行い、gold入力を作成者へ渡さない。既知の過去goldによる完全盲検不能は明記する。
 
 補足: v7のbundleDigestはSKILL path/digestと全参照path/digestの順序付き集合を束縛する。保存・採点で別々に保持し、既存SKILL digestの意味を変えない。保存は全ファイル検査完了後に行い、既存symlinkを通る出力を拒否する。訳文があるreader条項は訳文だけを本文へ描画し、原文はcanonical監査へ保持する（意味保存は既存LLM検証）。
+
+
+## v8 段階1: ASCII内容スラッグ
+nameは英小文字・数字を単一ハイフンで繋ぐ64文字以下のスラッグだけに戻す。見出し/description/本文の依頼言語は変えない。Unicode/大文字/末尾改行/パスは生成時と配送時に拒否する。rendererはv8、既存ファイル返却/bundle/認可/完全性/予算/I/O制限は変更しない。6件について前段の総合・正確さ・具体性・網羅を個別比較し、いずれかが低下した段は採用しない。平均で劣化を隠さない。goldはbuilderに渡さず、答案とファイルを固定後だけjudge工程を開く。

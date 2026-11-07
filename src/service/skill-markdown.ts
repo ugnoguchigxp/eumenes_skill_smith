@@ -15,7 +15,7 @@ export {
 } from "./skill-document.js";
 import { artifactDigest, digest, requireThat } from "./identity.js";
 
-export const SKILL_RENDERER_VERSION = "skill-markdown.v7";
+export const SKILL_RENDERER_VERSION = "skill-markdown.v8";
 
 export type SkillReply =
 	| Exclude<Reply, { kind: "ready" }>
@@ -155,7 +155,7 @@ export function validateSkillMarkdownFormat(
 
 /** Backwards-compatible alias; FORMAT only, not a safety verdict. */
 export const validateSkillMarkdown = validateSkillMarkdownFormat;
-export const SKILL_FORMAT_VERSION = "skill-frontmatter-unicode.2026-11-07";
+export const SKILL_FORMAT_VERSION = "agent-skills-frontmatter-ascii.v2";
 
 export interface SkillMarkdownOptions {
 	/**
