@@ -755,3 +755,6 @@ SkillArtifact carries SHA-256 of exact UTF-8 content, rendererVersion and source
 
 ## Review L1 — indexed title equality (2026-11-07)
 Snapshot/seed writers persist normalized title_key (NFKC, ECMAScript trim, ASCII case fold) and a (title_key,handle) index. Pin queries bind the key and visibility filters in SQL with LIMIT before reading document_json. Old snapshots without the normalized column/index must be rebuilt offline; no read-time full scan or silent write migration is used.
+
+## Review L2 — pinned frontmatter format (2026-11-07)
+The supported frontmatter contract is pinned to the Agent Skills specification snapshot retrieved 2026-11-07 from https://agentskills.io/specification (no numeric upstream version is published). See docs/skill-format.md for the exact supported contract. All six supported fields are type-checked, including string-only metadata values and compatibility length. validateSkillMarkdownFormat is explicitly structural format validation, not a safety/semantic/execution verdict; the compatibility alias validateSkillMarkdown remains available.

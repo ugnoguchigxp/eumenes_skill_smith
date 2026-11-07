@@ -1,4 +1,5 @@
 import { validateModelMarkdown } from "./model-markdown.js";
+import { z } from "zod";
 import { YAML } from "bun";
 import { skillPresentationSchema } from "../contracts/schema.js";
 import type { Build, Reply } from "../contracts/types.js";
@@ -83,7 +84,7 @@ function describe(build: Build["content"]): string {
 }
 
 /** Structural format validation only; not a safety, semantic, or execution verdict. */
-export function validateSkillMarkdown(
+export function validateSkillMarkdownFormat(
 	content: string,
 	directoryName?: string,
 ): void {
@@ -126,8 +127,22 @@ export function validateSkillMarkdown(
 			fields.description.length <= 1024,
 		"skill_description_invalid",
 	);
+	const optionalFields = z.object({
+		license: z.string().optional(),
+		compatibility: z.string().min(1).max(500).optional(),
+		metadata: z.record(z.string(), z.string()).optional(),
+		"allowed-tools": z.string().optional(),
+	});
+	requireThat(
+		optionalFields.safeParse(fields).success,
+		"skill_frontmatter_optional_invalid",
+	);
 	requireThat(match[2]!.trim().length > 0, "skill_body_empty");
 }
+
+/** Backwards-compatible alias; FORMAT only, not a safety verdict. */
+export const validateSkillMarkdown = validateSkillMarkdownFormat;
+export const SKILL_FORMAT_VERSION = "agent-skills-frontmatter.2026-11-07";
 
 export interface SkillMarkdownOptions {
 	/**

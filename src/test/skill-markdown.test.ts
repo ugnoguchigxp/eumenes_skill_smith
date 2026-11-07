@@ -450,3 +450,29 @@ test("M6 FINAL artifact identity binds exact bytes, renderer and extractor", asy
 	expect(renderSkillMarkdown(changed).digest).not.toBe(skill.digest);
 	expect(artifactDigest(skill.content + "\n")).not.toBe(skill.digest);
 });
+
+for (const field of [
+	"license: 123",
+	"compatibility: [bad]",
+	"compatibility: " + "x".repeat(501),
+	"compatibility: ''",
+	"metadata: false",
+	"metadata: [bad]",
+	"metadata: {a: 1}",
+	"metadata: {a: {nested: text}}",
+	"allowed-tools: [Read]",
+])
+	test(`L2 rejects typed optional frontmatter: ${field.slice(0, 40)}`, () => {
+		expect(() =>
+			validateSkillMarkdown(
+				document().replace("description:", field + "\ndescription:"),
+			),
+		).toThrow("skill_frontmatter_optional_invalid");
+	});
+test("L2 all supported optional frontmatter fields follow the pinned spec", () => {
+	const text = document().replace(
+		"description:",
+		"license: MIT\ncompatibility: Bun 1.4.4\nmetadata: {author: 'test', version: '1'}\nallowed-tools: Read Bash(git:*)\ndescription:",
+	);
+	expect(() => validateSkillMarkdown(text)).not.toThrow();
+});

@@ -12,6 +12,8 @@ export { SkillSmithError, canonical, digest } from "./service/identity.js";
 export {
 	renderSkillMarkdown,
 	validateSkillMarkdown,
+	validateSkillMarkdownFormat,
+	SKILL_FORMAT_VERSION,
 	skillName,
 	defaultSkillName,
 } from "./service/skill-markdown.js";
