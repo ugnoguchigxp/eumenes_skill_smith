@@ -792,3 +792,6 @@ CLI/シェル/設定例は、組込み前に無害なローカル実行または
 
 ## 2026-11-07 review R2: artifact writer filesystem boundary
 writer は名前/パス/digestの検証後、最初の書込み前に出力rootとその祖先を含む全既存パスをlstatし、symlink（danglingを含む）を拒否する。既存の書込み対象が複数hardlinkを持つ通常ファイルなら拒否し、別名のinodeを書き換えない。出力はホスト所有の排他的な作業ディレクトリで行う。事前検査とwriteの間に他プロセスがパスを入れ替える競合への防御やbundle全体のatomic性は保証しない。正常なファイルの内容/返却pathは変更しない。
+
+## 2026-11-07 review R3: builder-only stdout
+scenario CLIの既定stdoutはhost-only評価レポート（hit/rank/gold由来の集計を含む）でありbuilderへ渡してはならない。`--builder-only` は別の明示モードとしてprovider向けpending build/reformulationのclosed packetだけをstdoutとbuilder-packets.jsonへ出力し、judge記録/hostレポート/scoreファイルを読込/出力しない。通常のhostレポート契約は維持する。retrieval-only/oracle/abstention-contrastとの混用は拒否する。packet境界は役割別dataの最上位キーallowlistと既知host-only構造キーの再帰拒否を用い、不明な構造はfail closed。digestを維持したままデータを削除しない。本文の意味や単語は分類せず、自由文に埋め込んだ情報すべてを検出する保証とはしない。

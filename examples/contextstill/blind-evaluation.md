@@ -7,3 +7,9 @@
 5. 成果物 digest と採点記録を結び付け、前後を同じ尺度の結果と偽らない。旧点は旧採点、新点は v2 と表示する。
 
 同じ Grok Bot が作成と採点を行う場合、手順上の情報分離であり独立したモデルや人間による盲検ではない。既知の過去レビューを忘れたとは主張しない。実行の成功は実験記録がなければ未測定。
+
+## レビュー追補 (2026-11-07 JST): stdout の役割
+
+既定CLI stdoutは**host-only**です。hit/rank/score/searchPreviewはbuilderへ渡せません。新しいbuilder作業は `scenario-eval.ts --builder-only --output-dir <専用ディレクトリ> ...` を使い、stdoutまたは `builder-packets.json` だけを渡します。pending中の終了値は2、build/reformulation pendingがなくなれば0です（judge完了を意味しません）。judge記録は読まず、judge pending/host report/scoreを出力しません。oracle/retrieval-only/abstention-contrast併用は拒否します。既定hostモードの完了レポート契約は変えません。
+
+品質比較の現行基準は `quality-judge.v4.format100`（正確35/具体25/網羅20/簡潔10/形式10）です。上記v5/v2記述は歴史記録であり、現行100点比較とは別です。builder packetのgold排除は構造境界であり、任意の自由文を自動的に秘密除去する機能ではありません。

@@ -1,4 +1,4 @@
-import { parseDocumentLimit } from "./builder-packets.js";
+import { builderPackets, parseDocumentLimit } from "./builder-packets.js";
 import { writeSkillArtifact } from "./skill-output.js";
 // Scenario eval (proposal 26/35/32): typed three-axis suite, two modes; absent uses a dedicated judge.
 // Usage:
@@ -14,6 +14,7 @@ import { writeSkillArtifact } from "./skill-output.js";
 //            multi default: data/contextstill/multi-query-records.json (missing means pending)
 //            --abstention-contrast off|on (default off; proposal 33 opt-in, requires --full)
 //            --build-records path --judge-records path --scores path --db path
+// --builder-only: stdout/files contain only provider pending packets; never host scores or judge tasks.
 // retrieval-only: SourcePort search only; optional auxiliary inference, no build/judge or 0-10 scores.
 // full: product execute + recordedInference + recorded LLM judge. Missing records write pending tasks and exit 2.
 // New reports go to --output-dir (default data/contextstill/scenario-reports); the repo scores.json is
@@ -71,7 +72,17 @@ const assemblyMode = parseAssemblyMode(process.argv);
 const evidenceSupply = parseEvidenceSupply(process.argv);
 const queryReformulation = parseQueryReformulation(process.argv);
 const retrievalOnly = process.argv.includes("--retrieval-only");
+const builderOnly = process.argv.includes("--builder-only");
 const abstentionContrast = parseAbstentionContrast(process.argv);
+if (
+	builderOnly &&
+	(retrievalOnly ||
+		evidenceSupply !== "natural" ||
+		abstentionContrast !== "off")
+)
+	throw new Error(
+		"builder-only requires full natural evaluation without abstention contrast",
+	);
 if (
 	abstentionContrast === "on" &&
 	(retrievalOnly || !process.argv.includes("--full"))
@@ -244,12 +255,14 @@ try {
 				"examples/contextstill/scenarios/build-records.json",
 			),
 		);
-		const judgeRecords = loadRecords(
-			arg(
-				"--judge-records",
-				"examples/contextstill/scenarios/judge-records.json",
-			),
-		);
+		const judgeRecords = builderOnly
+			? []
+			: loadRecords(
+					arg(
+						"--judge-records",
+						"examples/contextstill/scenarios/judge-records.json",
+					),
+				);
 		const skillFiles: {
 			taskId: string;
 			path: string;
@@ -287,84 +300,95 @@ try {
 			hasBuildRecord: (d) => buildRecords.some((r) => r.inputDigest === d),
 			reformulation: reformulationLedger,
 		});
-		const pendingDir = outputDir ?? resolve("data/contextstill");
-		const pendingFiles: string[] = [];
-		for (const [name, items] of [
-			["scenario-build-pending.json", result.pendingBuild],
-			["scenario-judge-pending.json", result.pendingJudge],
-			["scenario-reformulation-pending.json", result.pendingReformulation],
-		] as const) {
-			if (!items.length) continue;
-			const path = resolve(pendingDir, name);
-			writeFileSync(path, JSON.stringify(items, null, 2));
-			pendingFiles.push(path);
+		if (builderOnly) {
+			const packets = builderPackets(
+				result.pendingBuild,
+				result.pendingReformulation,
+			);
+			const json = JSON.stringify(packets, null, 2);
+			writeFileSync(resolve(reportDir, "builder-packets.json"), json);
+			console.log(json);
+			process.exitCode = packets.length ? 2 : 0;
+		} else {
+			const pendingDir = outputDir ?? resolve("data/contextstill");
+			const pendingFiles: string[] = [];
+			for (const [name, items] of [
+				["scenario-build-pending.json", result.pendingBuild],
+				["scenario-judge-pending.json", result.pendingJudge],
+				["scenario-reformulation-pending.json", result.pendingReformulation],
+			] as const) {
+				if (!items.length) continue;
+				const path = resolve(pendingDir, name);
+				writeFileSync(path, JSON.stringify(items, null, 2));
+				pendingFiles.push(path);
+			}
+			const report = {
+				ok: result.complete,
+				skillFiles,
+				mode: "full",
+				suite: suite.id,
+				searchProfile,
+				documentLimit,
+				assemblyMode,
+				queryReformulationMode: queryReformulation,
+				replayNamespace,
+				identity: { ...identityFor(), artifactDigests: result.artifactDigests },
+				filter,
+				status: result.complete ? "complete" : "incomplete",
+				tasks: tasks.length,
+				scored: result.scores.length,
+				meanScore: result.meanScore,
+				axisMeans: result.axisMeans,
+				mixedAxes: result.mixedAxes,
+				statuses: result.statuses,
+				scores: result.scores,
+				deliveryOutcomes: result.deliveryOutcomes,
+				qualityScores: result.qualityScores,
+				retrievalFidelityScores: result.retrievalFidelityScores,
+				composeScores: result.composeScores,
+				absentScores: result.absentScores,
+				...(abstentionContrast === "on"
+					? { abstentionScores: result.abstentionScores }
+					: {}),
+				evidenceSupply,
+				recordProvenance: result.recordProvenance,
+				usage: result.usage,
+				pendingFiles,
+				...(effectiveReformulation() !== "off" ? { reformulationTraces } : {}),
+				searchPreview: result.searchPreview,
+				note: result.complete
+					? result.mixedAxes
+						? "Scores are LLM judgments of skill assembly. Mixed axes: meanScore is withheld; see axisMeans (proposal 34)."
+						: "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
+					: "Incomplete: meanScore is withheld because not every task was scored.",
+			};
+			const legacyDefault =
+				suite.format === "legacy" &&
+				!outputDir &&
+				!axis &&
+				!queryStyle &&
+				searchProfile === "handle" &&
+				assemblyMode === "baseline" &&
+				effectiveReformulation() === "off" &&
+				evidenceSupply === "natural" &&
+				abstentionContrast === "off";
+			const scorePath = raw("--scores")
+				? resolve(raw("--scores")!)
+				: legacyDefault
+					? resolve("examples/contextstill/scenarios/scores.json")
+					: resolve(reportDir, `full-${suite.id}.json`);
+			// Incomplete runs must not write score files as if complete (proposal 26/35).
+			if (result.complete)
+				writeFileSync(scorePath, JSON.stringify(report, null, 2));
+			console.log(
+				JSON.stringify(
+					{ ...report, scoreFile: result.complete ? scorePath : null },
+					null,
+					2,
+				),
+			);
+			if (!result.complete) process.exitCode = 2;
 		}
-		const report = {
-			ok: result.complete,
-			skillFiles,
-			mode: "full",
-			suite: suite.id,
-			searchProfile,
-			documentLimit,
-			assemblyMode,
-			queryReformulationMode: queryReformulation,
-			replayNamespace,
-			identity: { ...identityFor(), artifactDigests: result.artifactDigests },
-			filter,
-			status: result.complete ? "complete" : "incomplete",
-			tasks: tasks.length,
-			scored: result.scores.length,
-			meanScore: result.meanScore,
-			axisMeans: result.axisMeans,
-			mixedAxes: result.mixedAxes,
-			statuses: result.statuses,
-			scores: result.scores,
-			deliveryOutcomes: result.deliveryOutcomes,
-			qualityScores: result.qualityScores,
-			retrievalFidelityScores: result.retrievalFidelityScores,
-			composeScores: result.composeScores,
-			absentScores: result.absentScores,
-			...(abstentionContrast === "on"
-				? { abstentionScores: result.abstentionScores }
-				: {}),
-			evidenceSupply,
-			recordProvenance: result.recordProvenance,
-			usage: result.usage,
-			pendingFiles,
-			...(effectiveReformulation() !== "off" ? { reformulationTraces } : {}),
-			searchPreview: result.searchPreview,
-			note: result.complete
-				? result.mixedAxes
-					? "Scores are LLM judgments of skill assembly. Mixed axes: meanScore is withheld; see axisMeans (proposal 34)."
-					: "Scores are LLM judgments of skill assembly, not canned fixture verdicts."
-				: "Incomplete: meanScore is withheld because not every task was scored.",
-		};
-		const legacyDefault =
-			suite.format === "legacy" &&
-			!outputDir &&
-			!axis &&
-			!queryStyle &&
-			searchProfile === "handle" &&
-			assemblyMode === "baseline" &&
-			effectiveReformulation() === "off" &&
-			evidenceSupply === "natural" &&
-			abstentionContrast === "off";
-		const scorePath = raw("--scores")
-			? resolve(raw("--scores")!)
-			: legacyDefault
-				? resolve("examples/contextstill/scenarios/scores.json")
-				: resolve(reportDir, `full-${suite.id}.json`);
-		// Incomplete runs must not write score files as if complete (proposal 26/35).
-		if (result.complete)
-			writeFileSync(scorePath, JSON.stringify(report, null, 2));
-		console.log(
-			JSON.stringify(
-				{ ...report, scoreFile: result.complete ? scorePath : null },
-				null,
-				2,
-			),
-		);
-		if (!result.complete) process.exitCode = 2;
 	}
 } finally {
 	fixture.close();

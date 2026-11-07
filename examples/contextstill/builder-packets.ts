@@ -3,12 +3,28 @@ import type { InferenceTask } from "./recorded.js";
 /** Structural evaluation boundary, not a semantic content classifier. */
 const hostOnly = new Set([
 	"expectedRefs",
+	"expectedTitle",
 	"expectedTitles",
 	"nearestFalseFriendRefs",
 	"axis",
 	"untrustedJudgeData",
+	"untrustedQualityData",
 	"gold",
 	"scores",
+	"searchPreview",
+	"allRequiredHitAt8",
+	"allRequiredHitAt20Diagnostic",
+	"retrievalRank",
+	"ranks",
+	"meanScore",
+	"axisMeans",
+	"qualityScores",
+	"retrievalFidelityScores",
+	"composeScores",
+	"absentScores",
+	"abstentionScores",
+	"recordProvenance",
+	"labels",
 ]);
 function assertBuilderData(value: unknown): void {
 	if (!value || typeof value !== "object") return;
@@ -16,6 +32,34 @@ function assertBuilderData(value: unknown): void {
 		if (hostOnly.has(key)) throw new Error("builder_packet_host_label:" + key);
 		assertBuilderData(child);
 	}
+}
+const buildKeys = new Set([
+	"task",
+	"environment",
+	"audience",
+	"policy",
+	"candidateCards",
+	"evidenceIndex",
+	"untrustedEvidence",
+	"disclosureProgress",
+	"freshness",
+	"search",
+	"repair",
+]);
+const reviewKeys = new Set(["originalTask", "reviewPlan", "untrustedReview"]);
+const reformulationKeys = new Set(["searchTask"]);
+function assertBuilderEnvelope(data: unknown, role: "build" | "reformulation") {
+	if (!data || typeof data !== "object" || Array.isArray(data))
+		throw new Error("builder_packet_data_invalid");
+	assertBuilderData(data);
+	const allowed =
+		role === "reformulation"
+			? reformulationKeys
+			: Object.hasOwn(data, "originalTask")
+				? reviewKeys
+				: buildKeys;
+	for (const key of Object.keys(data))
+		if (!allowed.has(key)) throw new Error("builder_packet_data_key:" + key);
 }
 export type PendingBuilderRow = { taskId: string; tasks: InferenceTask[] };
 /** Never accept a host suite/report or judge records here; only provider-facing pending turns. */
@@ -31,7 +75,7 @@ export function builderPackets(
 	).flatMap(([role, rows]) =>
 		rows.flatMap((row) =>
 			row.tasks.map((task) => {
-				assertBuilderData(task.data);
+				assertBuilderEnvelope(task.data, role);
 				// A closed projection prevents arbitrary host row/turn extensions from crossing the boundary.
 				const input = {
 					namespace: task.namespace,
