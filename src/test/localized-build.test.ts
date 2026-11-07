@@ -1158,3 +1158,9 @@ test("v8 rejects non-ASCII slugs at generation without changing body language", 
 		}).success,
 	).toBe(true);
 });
+
+test("v8 localizes uncertainty without certifying version compatibility or execution", () => {
+	expect(buildInstructions).toContain("実在が確かなAPI/コマンドは通常手順");
+	expect(buildInstructions).toContain("実在性/版互換/対象適合/実行済み");
+	expect(semanticReviewInstructions).toContain("全てを未確認と呼ぶ必要はない");
+});
