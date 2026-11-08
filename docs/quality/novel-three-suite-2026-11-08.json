@@ -1,0 +1,80 @@
+{
+	"id": "novel-three-2026-11-08",
+	"provenance": "Three new subject areas selected after freezing e61b3fe. Public ContextStill seed; no new source injected, oracle retrieval, generated answers, or production execution. The three previously highlighted tasks are excluded. Development-only three-case challenge, not proof against all overfitting.",
+	"tasks": [
+		{
+			"id": "timezone-daily-boundary",
+			"goal": "ユーザーがAsia/TokyoやAmerica/New_Yorkを選べる利用状況ダッシュボードです。表示時刻だけが現地時刻で、初期表示の日付と日別APIの集計がUTCのままになっています。表示・既定日付・APIへ渡す文脈・日境界を一貫させる修正と検証の計画を作ってください。DBやフロントエンドのライブラリは未確定です。夏時間で一日が24時間でない日、日付をまたぐ時刻、無効なzoneを含め、具体APIや実施結果を捏造せず計画してください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の条件を守り、実行順・確認方法・停止条件のある計画を示す。未確認の実施結果やAPI仕様を断定しない。"
+				}
+			],
+			"expectedRefs": [
+				"contextstill:kn_2j4omkkwaxorsmsemjjk6npm7u",
+				"contextstill:kn_44qlujmug44whxsfyi2ssrgjmu"
+			],
+			"expectedTitles": [
+				"日付の既定値は UTC ではなく timeZone を考慮したローカル日付を使う",
+				"Web UIのTimezone設定は表示formatterだけでなく日次集計APIにも渡す"
+			],
+			"withheldChecks": [
+				{
+					"id": "end-to-end-zone",
+					"text": "formatterだけを変更せず、同じzoneを既定日付とAPI集計へ伝播する。UTC日付の切出しを既定日に使わず、無効zoneを黙って別zoneへ読み替えない。"
+				},
+				{
+					"id": "calendar-day-boundary",
+					"text": "現地日の開始以上・次の現地日の開始未満など一貫した境界を定義し、UTC固定24時間の加算を避ける。New Yorkの夏時間開始23時間・終了25時間とTokyoの日付越えを検証できる。未確定DBのtimezone変換能力を保証しない。"
+				}
+			]
+		},
+		{
+			"id": "asciidoc-opaque-roundtrip",
+			"goal": "AsciiDocをWYSIWYGへ読み込み、編集後に再出力するエディタを改修します。未対応の拡張ブロックが読み込み時に欠落しています。未対応部分をrawAsciiDocBlockとして保持し、画面ではpreに近い編集可能な表示にし、書き出し時に元のsourceを復元する計画を作ってください。空行・改行・日本語・記号を保ち、HTMLのような文字列も実行させない必要があります。既存parserやeditorのAPIは未提示なので、未知の関数名や互換性を確定しないでください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の条件を守り、実行順・確認方法・停止条件のある計画を示す。未確認の実施結果やAPI仕様を断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_3jzof3zv2adiizwcahlsmtpqdy"],
+			"expectedTitles": [
+				"未対応の AsciiDoc 構文は壊さず rawAsciiDocBlock として保持する"
+			],
+			"withheldChecks": [
+				{
+					"id": "lossless-source",
+					"text": "未対応部分を削除・無言の変換をせずraw sourceを保持する。無編集時のimport/export一致、raw部分を編集した場合の新source反映、空行・改行・Unicode・周辺ブロック境界を観測して判定する。"
+				},
+				{
+					"id": "inert-editor-boundary",
+					"text": "表示時のエスケープと書出しsourceを分離して二重エスケープを防ぎ、HTMLらしい入力を実行可能なHTMLへ挿入しない。具体的parser/editor APIの未知を明示し、実エディタ結合と合成fixtureの成功を混同しない。"
+				}
+			]
+		},
+		{
+			"id": "keyboard-ime-focus",
+			"goal": "ブラウザの作業画面にキーボードショートカットを導入する計画を作ってください。Windows/LinuxはCtrl、macOSはCommandを使い、input・textarea・contenteditableでの入力と日本語IME変換を妨げず、キー長押しで削除を繰り返さないようにします。ブラウザや支援技術との衝突、フォーカス、ショートカットの表示・解除、危険操作の確認またはUndoを含めて検証したいです。採用フレームワークは未定なので固有APIを捏造せず、計画だけ作ってください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の条件を守り、実行順・確認方法・停止条件のある計画を示す。未確認の実施結果やAPI仕様を断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_35kvtbbfzkyfhiuwoqkrmqjs3q"],
+			"expectedTitles": ["Webアプリのキーボードショートカット実装手順"],
+			"withheldChecks": [
+				{
+					"id": "input-and-platform",
+					"text": "編集可能要素・IME変換を実行やpreventDefaultより先に除外し、OSごとのCtrl/Metaと表示を一致させる。keyを使いkeyCode/whichへの新規依存を避け、repeatで危険操作が多重発火しない。"
+				},
+				{
+					"id": "accessible-lifecycle",
+					"text": "ブラウザ/OS/支援技術の既定操作を一律に妨げず、実際に扱った場合だけpreventDefaultする。フォーカスとキーボード操作、一覧・無効化または再割当て、確認/Undo、リスナーの重複と解除を検証可能な計画にする。"
+				}
+			]
+		}
+	]
+}
