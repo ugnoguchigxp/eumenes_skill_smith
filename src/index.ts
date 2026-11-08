@@ -24,3 +24,11 @@ export type {
 } from "./service/skill-markdown.js";
 
 export * from "./contracts/approved-skills.js";
+
+export {
+	BUILD_JOB_KIND,
+	buildJobPayloadSchema,
+	createBuildQueueJobs,
+	createBuildJobHandler,
+} from "./integration/queue.js";
+export type { BuildQueue, BuildJobHandler } from "./integration/queue.js";

@@ -63,6 +63,8 @@ export interface Ports<Tx> {
 	repository: Repository<Tx>;
 	/** Optional approved immutable publications. Omission keeps existing generation behavior. */
 	approvedSkills?: import("./approved-skills.js").ApprovedSkillStore<Tx>;
+	/** Independent route for the short applicability decision; omission preserves the injected default. */
+	selectionInference?: Ports<Tx>["inference"];
 	authority: {
 		valid(tx: Tx, authority: Authority, sourceRefs: string[]): boolean;
 	};
@@ -130,7 +132,12 @@ export interface Ports<Tx> {
 	jobs: {
 		enqueue(
 			tx: Tx,
-			input: { requestRef: string; epoch: number; deadlineAt: number },
+			input: {
+				requestRef: string;
+				epoch: number;
+				deadlineAt: number;
+				scope?: string;
+			},
 		): string;
 		cancel(tx: Tx, jobRef: string): void;
 	};

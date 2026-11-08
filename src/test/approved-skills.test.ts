@@ -622,3 +622,51 @@ test("selection failure records elapsed failure without fabricated usage or mode
 	});
 	expect(usage).toHaveLength(0);
 });
+
+test("a dedicated selection provider owns its receipt without changing body generation", async () => {
+	const f = await published();
+	let selectedCalls = 0;
+	f.ports.selectionInference = {
+		complete: async () => {
+			selectedCalls++;
+			return {
+				value: {
+					kind: "selected",
+					ref: f.publication.ref,
+					assessment: "complete fit",
+				},
+				receipt: "selector-owned",
+				inputTokens: 100,
+				outputTokens: 20,
+			};
+		},
+		validReceipt: (_tx, r) => r === "selector-owned",
+	};
+	const before = f.modelCalls();
+	const selected = await f.service.selectSkill(f.prepared, f.context);
+	expect(selectedCalls).toBe(1);
+	expect(f.modelCalls()).toBe(before);
+	const result = f.write(() =>
+		f.service.bindSkillSelection(f.db, f.prepared, selected, f.auth),
+	);
+	expect(
+		(
+			await f.service.getSkillDelivery(
+				result.requestRef!,
+				f.auth,
+				f.read,
+				signal(),
+			)
+		).kind,
+	).toBe("ready");
+	f.ports.selectionInference.validReceipt = () => false;
+	const next = f.service.prepareSkillSelection(
+		f.db,
+		{ ...f.target, requestId: "bad-selector-receipt" },
+		f.auth,
+	);
+	const invalid = await f.service.selectSkill(next, f.context);
+	expect(() =>
+		f.write(() => f.service.bindSkillSelection(f.db, next, invalid, f.auth)),
+	).toThrow("selection_unavailable");
+});

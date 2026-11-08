@@ -85,7 +85,10 @@ try {
 				return output;
 			},
 		};
-		const service = createSkillSmith({ ...library.ports, inference });
+		const service = createSkillSmith({
+			...library.ports,
+			selectionInference: inference,
+		});
 		const base = sqliteRepository.request(
 			library.db,
 			library.ports.repository.build(
@@ -137,13 +140,18 @@ try {
 					let reservedModels = 0,
 						reply: unknown = null,
 						correct = false,
-						actualRef: string | null = null;
+						actualRef: string | null = null,
+						prepareMs: number | null = null,
+						bindMs: number | null = null,
+						deliveryMs: number | null = null;
 					try {
+						const preparing = performance.now();
 						const prepared = service.prepareSkillSelection(
 							library.db,
 							request,
 							base.authority,
 						);
+						prepareMs = performance.now() - preparing;
 						const selection = await service.selectSkill(prepared, {
 							signal: abort,
 							reserve: async (kind) => {
@@ -154,6 +162,7 @@ try {
 						});
 						if (selection.decision.kind === "selected") {
 							actualRef = selection.decision.ref;
+							const binding = performance.now();
 							const bound = library.db.transaction(() =>
 								service.bindSkillSelection(
 									library.db,
@@ -162,6 +171,8 @@ try {
 									base.authority,
 								),
 							)();
+							bindMs = performance.now() - binding;
+							const delivering = performance.now();
 							reply = await service.getSkillDelivery(
 								bound.requestRef!,
 								base.authority,
@@ -182,6 +193,7 @@ try {
 									noteCall: (c) => calls.push(c),
 								},
 							);
+							deliveryMs = performance.now() - delivering;
 						} else {
 							// A miss is handed to the existing generation queue, never counted as usable-ready.
 							reply = library.db.transaction(() =>
@@ -216,6 +228,9 @@ try {
 						actualRef,
 						correct,
 						durationMs,
+						prepareMs,
+						bindMs,
+						deliveryMs,
 						kind,
 						usableWithinTarget:
 							correct &&

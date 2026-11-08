@@ -47,6 +47,7 @@ export function createApprovedSkillOperations<Tx>(
 	) => import("../contracts/types.js").Reply,
 ) {
 	const repo = p.repository;
+	const selectionInference = () => p.selectionInference ?? p.inference;
 	const selectorVersion = digest(skillSelectionInstructions);
 	const limits = resolveServiceLimits(p.limits);
 	const issued = new WeakMap<SelectedSkill, string>();
@@ -232,9 +233,9 @@ export function createApprovedSkillOperations<Tx>(
 			),
 		]);
 		const start = performance.now();
-		let out: Awaited<ReturnType<typeof p.inference.complete>>;
+		let out: Awaited<ReturnType<Ports<Tx>["inference"]["complete"]>>;
 		try {
-			out = await p.inference.complete(input, signal);
+			out = await selectionInference().complete(input, signal);
 		} catch (error) {
 			context.noteCall?.({
 				kind: "modelCalls",
@@ -301,7 +302,7 @@ export function createApprovedSkillOperations<Tx>(
 		requireThat(
 			decision.kind === "selected" &&
 				selected.receipt &&
-				p.inference.validReceipt(tx, selected.receipt),
+				selectionInference().validReceipt(tx, selected.receipt),
 			"selection_unavailable",
 		);
 		const chosen = s.candidates.find((r) => r.ref === decision.ref),
@@ -351,7 +352,7 @@ export function createApprovedSkillOperations<Tx>(
 		requireThat(
 			selected.decision.kind === "miss" &&
 				(selected.receipt
-					? p.inference.validReceipt(tx, selected.receipt)
+					? selectionInference().validReceipt(tx, selected.receipt)
 					: s.candidates.length === 0),
 			"selection_unavailable",
 		);

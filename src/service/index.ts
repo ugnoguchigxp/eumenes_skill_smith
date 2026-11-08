@@ -237,6 +237,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			row.outcome = { kind: "ready", buildRef: cached.ref };
 		else if (!row.waitingParent)
 			row.jobRef = p.jobs.enqueue(tx, {
+				scope: auth.scope,
 				requestRef: row.ref,
 				epoch: row.epoch,
 				deadlineAt: request.limits.deadlineAt,
@@ -274,6 +275,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			return false;
 		}
 		row.jobRef = p.jobs.enqueue(tx, {
+			scope: auth.scope,
 			requestRef: ref,
 			epoch: row.epoch,
 			deadlineAt: row.request.limits.deadlineAt,
@@ -475,13 +477,15 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		auth: Authority,
 		code: string,
 		kind: "unavailable" | "cancelled" = "unavailable",
+		notifyJob = true,
 	) {
 		const row = repo.request(tx, ref);
 		if (!row || !valid(tx, row, auth)) return false;
 		if (row.outcome) return false;
 		row.epoch++;
-		if (row.jobRef) p.jobs.cancel(tx, row.jobRef);
+		// Publish domain termination in the same writer before notifying a queue that may call back.
 		finish(tx, row, { kind, code });
+		if (notifyJob && row.jobRef) p.jobs.cancel(tx, row.jobRef);
 		return true;
 	}
 	function get(tx: Tx, ref: string, auth: Authority): Reply {
@@ -773,8 +777,13 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		bindUse,
 		forget,
 		execute: (s: Prepared, c: ExecutionContext) => executeBuild(p, s, c),
-		cancel: (tx: Tx, ref: string, auth: Authority) =>
-			terminate(tx, ref, auth, "user_cancelled", "cancelled"),
+		cancel: (
+			tx: Tx,
+			ref: string,
+			auth: Authority,
+			origin: "caller" | "job" = "caller",
+		) =>
+			terminate(tx, ref, auth, "user_cancelled", "cancelled", origin !== "job"),
 		reserveDelivery,
 		noteUsage,
 		fail: (
@@ -788,6 +797,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				reasoningTokens?: number | null;
 				cachedInputTokens?: number | null;
 			},
+			origin: "caller" | "job" = "caller",
 		) => {
 			const current = repo.request(tx, s.record.ref);
 			if (!(
@@ -807,7 +817,14 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 					current.usage.cachedInputTokens = tokens.cachedInputTokens ?? null;
 				update(tx, current);
 			}
-			return terminate(tx, s.record.ref, auth, code);
+			return terminate(
+				tx,
+				s.record.ref,
+				auth,
+				code,
+				"unavailable",
+				origin !== "job",
+			);
 		},
 		pending: (tx: Tx, limit = 100) => repo.openRequests(tx, limit),
 		...createResultOperations(p, limits),
