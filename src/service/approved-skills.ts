@@ -42,14 +42,17 @@ export function createApprovedSkillOperations<Tx>(
 		tx: Tx,
 		request: unknown,
 		auth: Authority,
-		reuse: ReuseBuild,
+		reuse?: ReuseBuild,
+		rejectPublishedCache?: boolean,
 	) => import("../contracts/types.js").Reply,
 ) {
 	const repo = p.repository;
+	const selectorVersion = digest(skillSelectionInstructions);
 	const limits = resolveServiceLimits(p.limits);
 	const issued = new WeakMap<SelectedSkill, string>();
 	function selectionDigest(s: Omit<PreparedSkillSelection, "digest">) {
 		return digest({
+			selectorVersion,
 			catalog: s.catalog,
 			request: s.request,
 			authority: s.authority,
@@ -60,7 +63,12 @@ export function createApprovedSkillOperations<Tx>(
 		const mark = b.publication;
 		if (!mark) return true;
 		const r = p.approvedSkills?.get(tx, mark.ref);
-		return !!r && r.digest === mark.digest && available(p, tx, r, auth);
+		return (
+			mark.selectorVersion === selectorVersion &&
+			!!r &&
+			r.digest === mark.digest &&
+			available(p, tx, r, auth)
+		);
 	}
 	function artifact(
 		read: <T>(op: (tx: Tx) => T) => T,
@@ -194,13 +202,16 @@ export function createApprovedSkillOperations<Tx>(
 		for (const candidate of s.candidates) checkArtifact(candidate);
 		context.signal.throwIfAborted();
 		requireThat(s.request.limits.deadlineAt > p.now(), "deadline_exceeded");
-		if (!s.candidates.length)
-			return {
+		if (!s.candidates.length) {
+			const selected: SelectedSkill = {
 				preparedDigest: s.digest,
 				decision: { kind: "miss", reason: "no_approved_candidate" },
 				receipt: null,
 				usage: noUsage(),
 			};
+			issued.set(selected, digest(selected));
+			return selected;
+		}
 		const input = {
 			system: skillSelectionInstructions,
 			data: skillSelectionInput(s),
@@ -310,6 +321,7 @@ export function createApprovedSkillOperations<Tx>(
 			publication: {
 				ref: r.ref,
 				digest: r.digest,
+				selectorVersion,
 				receipt: selected.receipt,
 				assessment: decision.assessment,
 				selectionDigest: digest({
@@ -321,6 +333,31 @@ export function createApprovedSkillOperations<Tx>(
 			},
 		});
 	}
+	/** Honor a current rejection instead of silently replaying a prior publication selection. */
+	function submitAfterSkillMiss(
+		tx: Tx,
+		s: PreparedSkillSelection,
+		selected: SelectedSkill,
+		authority: Authority,
+	) {
+		const auth = authoritySchema.parse(authority);
+		requireThat(
+			issued.get(selected) === digest(selected) &&
+				selectionDigest(s) === s.digest &&
+				selected.preparedDigest === s.digest &&
+				digest(auth) === digest(s.authority),
+			"selection_not_attested",
+		);
+		requireThat(
+			selected.decision.kind === "miss" &&
+				(selected.receipt
+					? p.inference.validReceipt(tx, selected.receipt)
+					: s.candidates.length === 0),
+			"selection_unavailable",
+		);
+		return submit(tx, s.request, auth, undefined, true);
+	}
+
 	return {
 		current,
 		artifact,
@@ -330,6 +367,7 @@ export function createApprovedSkillOperations<Tx>(
 			skillSelectionInput,
 			selectSkill,
 			bindSkillSelection,
+			submitAfterSkillMiss,
 		},
 	};
 }

@@ -131,6 +131,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		input: unknown,
 		authority: Authority,
 		reuse?: ReuseBuild,
+		rejectPublishedCache = false,
 	): Reply {
 		const request = requestSchema.parse(input),
 			auth = authoritySchema.parse(authority);
@@ -227,7 +228,12 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			for (const e of content.dependencies) repo.link(tx, build.ref, e.ref);
 			row.usage = reuse.usage;
 			row.outcome = { kind: "ready", buildRef: build.ref };
-		} else if (cached && cached.key === key && usable(tx, cached, auth))
+		} else if (
+			cached &&
+			cached.key === key &&
+			(!rejectPublishedCache || !cached.publication) &&
+			usable(tx, cached, auth)
+		)
 			row.outcome = { kind: "ready", buildRef: cached.ref };
 		else if (!row.waitingParent)
 			row.jobRef = p.jobs.enqueue(tx, {
@@ -743,7 +749,8 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	const approved = createApprovedSkillOperations(
 		p,
 		usable,
-		(tx, input, auth, reuse) => submitInternal(tx, input, auth, reuse),
+		(tx, input, auth, reuse, rejectPublishedCache) =>
+			submitInternal(tx, input, auth, reuse, rejectPublishedCache),
 	);
 	return {
 		...approved.operations,

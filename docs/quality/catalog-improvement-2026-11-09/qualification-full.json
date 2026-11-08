@@ -1,0 +1,37 @@
+{
+	"id": "catalog-model-v2-full",
+	"frozenBeforeLive": true,
+	"levels": [10000],
+	"repetitionsPerCasePerLevel": 3,
+	"baseSuite": "../low-latency-2026-11-08/selection-suite.json",
+	"compatibleCases": 3,
+	"incompatibleCases": 3,
+	"totalPaidAttempts": 27,
+	"readyTargetMs": 3000,
+	"attemptTimeoutMs": 8000,
+	"maxUsd": 15,
+	"journal": "artifacts/practical-2026-11-08/costs.jsonl",
+	"model": "gpt-4.1",
+	"outputTokens": 256,
+	"scope": "Three real frozen reviewed artifacts plus synthetic storage/index distractors. Half the distractors use other environment IDs; half use the same environment with unrelated CSS metadata. Synthetic records are not new content-generation successes. Real cloud selection, durable SQLite binding and existing local source validation; all outcomes including misses/timeouts reported. Catalog construction excluded from request latency and reported separately.",
+	"retries": 0,
+	"warmupExcluded": 0,
+	"additionalCases": [
+		{
+			"id": "timezone-and-historical-calendar",
+			"goal": "利用状況の日次集計でAsia/TokyoとAmerica/New_Yorkのzoneを揃える計画に加え、ユリウス暦からグレゴリオ暦への国別移行日も正確に扱う手順を必須として計画してください。暦移行の仕様調査と検証も同じSKILLで満たす必要があります。",
+			"expected": null
+		},
+		{
+			"id": "editor-and-collaborative-merge",
+			"goal": "AsciiDocの未対応ブロックをraw sourceとして保持する改修計画に加え、複数ユーザーの同時編集をCRDTで収束させるアルゴリズムと競合検証も必須の計画にしてください。共同編集の設計を省略できません。",
+			"expected": null
+		},
+		{
+			"id": "browser-and-native-shortcuts",
+			"goal": "ブラウザの入力欄とIMEを妨げないキー操作に加え、アプリが非アクティブでもOS全体でショートカットを捕捉するnative常駐機能の実装と権限確認を必須として計画してください。常駐機能の手順が必要です。",
+			"expected": null
+		}
+	],
+	"stage": "Model/prompt qualification after one observed partial-match error and indexed-query fix. All27 attempts retained. Extra objectives are held out from the previous live suite; no new body is generated."
+}

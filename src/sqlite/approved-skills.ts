@@ -55,9 +55,10 @@ export function sqliteApprovedSkills(
 		const policy = query.environment.policy;
 		const rows = db
 			.query(
-				`SELECT knowledge_approved_skills.rowid AS sequence,data_json FROM knowledge_approved_skills
-${search ? "JOIN knowledge_approved_search ON knowledge_approved_search.rowid=knowledge_approved_skills.rowid" : ""}
-WHERE ${search ? "knowledge_approved_search MATCH ? AND" : ""} scope=? AND ${fields.environment}=? AND ${fields.audience}=?
+				`
+${search ? "WITH matches AS MATERIALIZED (SELECT rowid AS match_rowid,rank AS match_rank FROM knowledge_approved_search WHERE knowledge_approved_search MATCH ?)" : ""}
+SELECT knowledge_approved_skills.rowid AS sequence,data_json FROM ${search ? "matches CROSS JOIN knowledge_approved_skills ON knowledge_approved_skills.rowid=matches.match_rowid" : "knowledge_approved_skills"}
+WHERE scope=? AND ${fields.environment}=? AND ${fields.audience}=?
 AND ${fields.policyId}=? AND ${fields.policyVersion}=? AND ${fields.policyDigest}=? AND ${fields.policyGeneration}=?
 AND ${fields.expiry}>? AND knowledge_approved_skills.rowid<?
 AND NOT EXISTS (
@@ -71,7 +72,7 @@ AND NOT EXISTS (
    AND json_extract(original.value,'$.digest')=json_extract(provided.value,'$.digest')
    AND json_extract(original.value,'$.generation')=json_extract(provided.value,'$.generation')
  ))
-ORDER BY ${search ? "knowledge_approved_search.rank," : ""} knowledge_approved_skills.rowid DESC LIMIT ? OFFSET ?`,
+ORDER BY ${search ? "matches.match_rank," : ""} knowledge_approved_skills.rowid DESC LIMIT ? OFFSET ?`,
 			)
 			.all(
 				...(search ? [search] : []),

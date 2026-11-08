@@ -190,7 +190,7 @@ test("search projection follows deletion and indexed structural filters stay in 
 	f.service.prepareSkillSelection(f.db, f.request, f.auth);
 	f.db.query = original;
 	const sql = queries.find((q) =>
-		q.startsWith("SELECT knowledge_approved_skills.rowid"),
+		q.includes("SELECT knowledge_approved_skills.rowid"),
 	)!;
 	const env = f.request.environment;
 	const plan = f.db

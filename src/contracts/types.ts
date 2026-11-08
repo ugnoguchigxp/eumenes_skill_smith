@@ -72,6 +72,7 @@ export interface Build {
 		ref: string;
 		digest: string;
 		selectionDigest: string;
+		selectorVersion?: string;
 		receipt: string;
 		assessment: string;
 	};

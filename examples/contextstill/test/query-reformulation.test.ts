@@ -8,6 +8,7 @@ import {
 	REFORMULATION_INSTRUCTIONS,
 	containsJapanese,
 	createAutoReformulatingSource,
+	createLegacyAutoReformulatingSource,
 	createReformulatingSource,
 	parseQueryReformulation,
 	reformulationOutputSchema,
@@ -261,7 +262,7 @@ test("parse: omitted is auto; auto/off/on explicit; unknown errors", () => {
 	);
 });
 
-test("auto fires on Japanese and non-title English, skips normalized title matches", async () => {
+test("archival auto fires on Japanese and non-title English, skips normalized title matches", async () => {
 	expect(containsJapanese("APIキー")).toBe(true);
 	expect(containsJapanese("ｶﾀｶﾅ")).toBe(true);
 	expect(containsJapanese("検証")).toBe(true);
@@ -277,7 +278,7 @@ test("auto fires on Japanese and non-title English, skips normalized title match
 			f.source.search(q, l, s)
 		),
 	};
-	const source = createAutoReformulatingSource(
+	const source = createLegacyAutoReformulatingSource(
 		inner,
 		createReformulatingSource(
 			inner,
@@ -304,12 +305,12 @@ test("auto fires on Japanese and non-title English, skips normalized title match
 	});
 });
 
-test("auto does not skip reformulation for a filtered-out title", async () => {
+test("archival auto does not skip reformulation for a filtered-out title", async () => {
 	const f = setup([
 		item({ title: "Hidden title", handle: handle("c"), status: "superseded" }),
 	]);
 	const inputs: unknown[] = [];
-	const source = createAutoReformulatingSource(
+	const source = createLegacyAutoReformulatingSource(
 		f.source,
 		createReformulatingSource(
 			f.source,
@@ -321,7 +322,7 @@ test("auto does not skip reformulation for a filtered-out title", async () => {
 	expect(inputs).toHaveLength(1);
 });
 
-test("M3 auto reserves two physical searches plus one shared auxiliary call and memoizes only query", async () => {
+test("archival M3 auto reserves two physical searches plus one shared auxiliary call and memoizes only query", async () => {
 	const f = setup();
 	let model = 0;
 	const counts = { modelCalls: 0, sourceCalls: 0 };
@@ -331,7 +332,7 @@ test("M3 auto reserves two physical searches plus one shared auxiliary call and 
 		echoModel(() => model++),
 		{ deadlineAt },
 	);
-	const source = createAutoReformulatingSource(f.source, aux);
+	const source = createLegacyAutoReformulatingSource(f.source, aux);
 	const context = {
 		signal: f.signal,
 		reserve: async (kind: "modelCalls" | "sourceCalls") => {
@@ -347,11 +348,11 @@ test("M3 auto reserves two physical searches plus one shared auxiliary call and 
 	expect(counts).toEqual({ modelCalls: 1, sourceCalls: 4 });
 	expect(ledger.filter((x) => x.kind === "sourceCalls")).toHaveLength(4);
 });
-test("M3 exhausted shared model budget prevents auxiliary provider call and rewritten search", async () => {
+test("archival M3 exhausted shared model budget prevents auxiliary provider call and rewritten search", async () => {
 	const f = setup();
 	let model = 0;
 	let sourceCalls = 0;
-	const source = createAutoReformulatingSource(
+	const source = createLegacyAutoReformulatingSource(
 		f.source,
 		createReformulatingSource(
 			f.source,
@@ -412,4 +413,71 @@ test("M3 core and auxiliary share model cap, without raising existing limit", as
 	} finally {
 		host.close();
 	}
+});
+
+test("current auto sends every language and exact title to one LLM query chooser", async () => {
+	const f = setup([item({ title: "Never commit secrets" })]),
+		inputs: unknown[] = [],
+		queries: string[] = [];
+	const inner = {
+		...f.source,
+		search: (q: string, l: number, s: AbortSignal) => (
+			queries.push(q),
+			f.source.search(q, l, s)
+		),
+	};
+	const source = createAutoReformulatingSource(
+		inner,
+		createReformulatingSource(
+			inner,
+			echoModel((i) => inputs.push(i)),
+			{ deadlineAt },
+		),
+	);
+	const tasks = [
+		"Never commit secrets",
+		"入力の検証",
+		"Validar entrada",
+		"Eingaben pruefen",
+	];
+	for (const query of tasks) await source.search(query, 8, f.signal);
+	expect(inputs.map((i) => (i as { data: unknown }).data)).toEqual(
+		tasks.map((searchTask) => ({ searchTask })),
+	);
+	expect(queries).toEqual(tasks);
+});
+
+test("current auto avoids speculative source I/O and retains memoized one-query accounting", async () => {
+	const f = setup(),
+		counts = { modelCalls: 0, sourceCalls: 0 };
+	let model = 0;
+	const source = createAutoReformulatingSource(
+		f.source,
+		createReformulatingSource(
+			f.source,
+			echoModel(() => model++),
+			{ deadlineAt },
+		),
+	);
+	const context = {
+		signal: f.signal,
+		reserve: async (kind: "modelCalls" | "sourceCalls") => {
+			counts[kind]++;
+		},
+	};
+	await source.search("one public query", 1, f.signal, context);
+	await source.search("one public query", 1, f.signal, context);
+	expect(model).toBe(1);
+	expect(counts).toEqual({ modelCalls: 1, sourceCalls: 2 });
+	let sourceCalls = 0;
+	await expect(
+		source.search("another public query", 1, f.signal, {
+			signal: f.signal,
+			reserve: async (kind) => {
+				if (kind === "modelCalls") throw Error("budget_exceeded");
+				sourceCalls++;
+			},
+		}),
+	).rejects.toThrow("budget_exceeded");
+	expect(sourceCalls).toBe(0);
 });

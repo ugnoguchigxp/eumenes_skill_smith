@@ -13,7 +13,7 @@ import { seedDatabase } from "./seed.js";
 import { createFixtureSource } from "./source.js";
 import { createMcpHandler } from "./mcp.js";
 import {
-	createAutoReformulatingSource,
+	createLegacyAutoReformulatingSource as createAutoReformulatingSource,
 	createReformulatingSource,
 } from "./query-reformulation.js";
 import { recordedInference } from "./recorded.js";

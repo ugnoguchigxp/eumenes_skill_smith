@@ -23,7 +23,7 @@ export function containsJapanese(text: string): boolean {
 	);
 }
 
-/** Strict CLI parsing; omitted means auto (Japanese or non-title searchTasks). */
+/** Strict CLI parsing; omitted means auto (LLM query choice, independent of language/title). */
 export function parseQueryReformulation(
 	argv: string[],
 ): QueryReformulationMode {
@@ -117,7 +117,14 @@ export function createReformulatingSource(
 						signal,
 					);
 					value = answer.value;
-					await context?.noteUsage?.({ ...answer, callKind: "reformulation" });
+					await context?.noteUsage?.({
+						receipt: answer.receipt,
+						inputTokens: answer.inputTokens,
+						outputTokens: answer.outputTokens,
+						reasoningTokens: answer.reasoningTokens,
+						cachedInputTokens: answer.cachedInputTokens,
+						callKind: "reformulation",
+					});
 					context?.noteCall?.({
 						receipt: answer.receipt,
 						inputTokens: answer.inputTokens,
@@ -157,12 +164,12 @@ export function createReformulatingSource(
 }
 
 /**
- * Product default: routes a searchTask through the reformulating source only when it contains
+ * Archival replay only: routes a searchTask through the reformulating source only when it contains
  * Japanese script or does not exactly match a filtered title. The plain search uses
  * the same title pin and visibility filters, so an exact match appears first; no
  * private task fields or gold labels enter the decision or auxiliary model input.
  */
-export function createAutoReformulatingSource(
+export function createLegacyAutoReformulatingSource(
 	inner: SourcePort,
 	reformulating: SourcePort,
 	onFire?: () => void,
@@ -193,6 +200,33 @@ export function createAutoReformulatingSource(
 		validate: (refs, signal, context) =>
 			sourceOperation(inner, context, "validate", () =>
 				inner.validate(refs, signal, context),
+			),
+	};
+}
+
+/** Current auto mode delegates query choice to the supplied LLM for every public task.
+ * Callers with an already prepared public query explicitly use off. No language/title classifier.
+ */
+export function createAutoReformulatingSource(
+	_inner: SourcePort,
+	reformulating: SourcePort,
+	onFire?: () => void,
+): SourcePort {
+	return {
+		meteredCalls: true,
+		search: async (searchTask, limit, signal, context) => {
+			onFire?.();
+			return sourceOperation(reformulating, context, "search", () =>
+				reformulating.search(searchTask, limit, signal, context),
+			);
+		},
+		get: (ref, signal, context) =>
+			sourceOperation(reformulating, context, "get", () =>
+				reformulating.get(ref, signal, context),
+			),
+		validate: (refs, signal, context) =>
+			sourceOperation(reformulating, context, "validate", () =>
+				reformulating.validate(refs, signal, context),
 			),
 	};
 }

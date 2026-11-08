@@ -534,3 +534,91 @@ test("artifact capacity rejects actual oversized bundles before storing ready", 
 	);
 	expect(f.db.query("SELECT ref FROM knowledge_builds").all()).toHaveLength(0);
 });
+
+test("a current miss bypasses an earlier publication-bound cache entry", async () => {
+	const f = await published();
+	const first = await f.service.selectSkill(f.prepared, f.context);
+	const accepted = f.write(() =>
+		f.service.bindSkillSelection(f.db, f.prepared, first, f.auth),
+	);
+	expect(accepted.kind).toBe("ready");
+	f.setOutput({
+		kind: "miss",
+		reason: "An additional mandatory objective needs a new procedure.",
+	});
+	const request = { ...f.target, requestId: "after-current-rejection" };
+	const prepared = f.service.prepareSkillSelection(f.db, request, f.auth);
+	const miss = await f.service.selectSkill(prepared, f.context);
+	const result = f.write(() =>
+		f.service.submitAfterSkillMiss(f.db, prepared, miss, f.auth),
+	);
+	expect(result.kind).toBe("pending");
+	expect(
+		sqliteRepository.request(f.db, result.requestRef!)!.jobRef,
+	).not.toBeNull();
+});
+
+test("old selector versions cannot deliver a previously bound publication", async () => {
+	const f = await published(),
+		selected = await f.service.selectSkill(f.prepared, f.context);
+	const result = f.write(() =>
+		f.service.bindSkillSelection(f.db, f.prepared, selected, f.auth),
+	);
+	if (result.kind !== "ready") throw Error("ready_required");
+	const build = sqliteRepository.build(f.db, result.build.ref)!;
+	build.publication!.selectorVersion = "obsolete";
+	f.db
+		.query("UPDATE knowledge_builds SET data_json=? WHERE ref=?")
+		.run(JSON.stringify(build), build.ref);
+	expect(
+		(
+			await f.service.getSkillDelivery(
+				result.requestRef!,
+				f.auth,
+				f.read,
+				signal(),
+			)
+		).kind,
+	).not.toBe("ready");
+	const request = { ...f.target, requestId: "reselect-current-version" };
+	const prepared = f.service.prepareSkillSelection(f.db, request, f.auth);
+	const current = await f.service.selectSkill(prepared, f.context);
+	const bound = f.write(() =>
+		f.service.bindSkillSelection(f.db, prepared, current, f.auth),
+	);
+	expect(
+		(
+			await f.service.getSkillDelivery(
+				bound.requestRef!,
+				f.auth,
+				f.read,
+				signal(),
+			)
+		).kind,
+	).toBe("ready");
+});
+
+test("selection failure records elapsed failure without fabricated usage or model payload", async () => {
+	const f = await published(),
+		calls: unknown[] = [],
+		usage: unknown[] = [];
+	f.ports.inference.complete = async () => {
+		throw Error("provider_unavailable");
+	};
+	await expect(
+		f.service.selectSkill(f.prepared, {
+			...f.context,
+			noteCall: (c) => calls.push(c),
+			noteUsage: async (u) => {
+				usage.push(u);
+			},
+		}),
+	).rejects.toThrow("provider_unavailable");
+	expect(calls).toHaveLength(1);
+	expect(calls[0]).toMatchObject({
+		kind: "modelCalls",
+		operation: "skill_selection",
+		outcome: "error",
+	});
+	expect(usage).toHaveLength(0);
+});

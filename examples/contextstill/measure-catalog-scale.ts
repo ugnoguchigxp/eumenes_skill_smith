@@ -21,10 +21,15 @@ const root = resolve(import.meta.dir, "../.."),
 const json = (path: string) =>
 	JSON.parse(readFileSync(join(root, path), "utf8"));
 const protocol = json(
-	"docs/quality/catalog-improvement-2026-11-09/scale-protocol.json",
+	process.argv[3] ??
+		"docs/quality/catalog-improvement-2026-11-09/scale-protocol.json",
 );
 const suite = json("docs/quality/low-latency-2026-11-08/selection-suite.json"),
 	config = json("docs/quality/cloud-eval-generation-settings.json");
+const model = [config.executor, config.judge].find(
+	(m) => m.id === protocol.model,
+);
+if (!model) throw Error("unapproved_selection_model");
 const journal = join(root, "artifacts/practical-2026-11-08/costs.jsonl");
 const lock = openSync(journal + ".lock", "wx", 0o600);
 const temp = mkdtempSync(join(tmpdir(), "smith-approved-measure-"));
@@ -35,7 +40,7 @@ writeFileSync(
 	JSON.stringify({
 		suiteDigest: digest(suite),
 		protocolDigest: digest(protocol),
-		model: config.executor.id,
+		model: model.id,
 		startedAt: new Date().toISOString(),
 		retries: 0,
 	}),
@@ -52,7 +57,7 @@ try {
 		resolve(root, "../eumenes"),
 		config.connectionId,
 	);
-	if (config.maxUsd !== 15 || !saved.models.includes(config.executor.id))
+	if (config.maxUsd !== 15 || !saved.models.includes(model.id))
 		throw Error("model_or_budget_contract_changed");
 	const budget = createCloudBudget({ ...saved, maxUsd: 15, journal });
 	const spentBefore = budget.spent();
@@ -69,7 +74,7 @@ try {
 			validReceipt: (_tx, r) => receipts.has(r),
 			complete: async (input, signal) => {
 				const output = await budget.complete(
-					config.executor,
+					model,
 					"catalog-scale:" + active,
 					input,
 					signal,
@@ -115,7 +120,10 @@ try {
 				repetition < protocol.repetitionsPerCasePerLevel;
 				repetition++
 			)
-				for (const task of suite.cases) {
+				for (const task of [
+					...suite.cases,
+					...(protocol.additionalCases ?? []),
+				]) {
 					active = `${level}:${task.id}:${repetition}`;
 					const started = performance.now(),
 						abort = AbortSignal.timeout(protocol.attemptTimeoutMs),
@@ -177,7 +185,12 @@ try {
 						} else {
 							// A miss is handed to the existing generation queue, never counted as usable-ready.
 							reply = library.db.transaction(() =>
-								service.submit(library.db, request, base.authority),
+								service.submitAfterSkillMiss(
+									library.db,
+									prepared,
+									selection,
+									base.authority,
+								),
 							)();
 						}
 						const expectedRef =

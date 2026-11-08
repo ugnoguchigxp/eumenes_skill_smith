@@ -414,6 +414,7 @@ export const buildSchema = z.strictObject({
 			ref: id,
 			digest: id,
 			selectionDigest: id,
+			selectorVersion: id.optional(),
 			receipt: id,
 			assessment: text,
 		})
