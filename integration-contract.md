@@ -1,5 +1,15 @@
 # SkillSmithとEumenesの接続契約
 
+## 技術品質改善の実装契約 2026-11-08
+
+結果・振り返り・workflow・候補管理は、通常取得と同じ元要求のprincipal/scope/authority epochを照合する。権限は操作別にbuild/report/manageを使い、report-onlyの正当な利用を保つ。AuthorityPortには元要求のsourceRefsに加えbuildRef・executionRef・根拠を渡す。scopeだけの利用記録や空の根拠で実行所有権を省略しない。暗黙の別主体への管理委譲は行わず、ホストが検証済みの元主体として明示的に操作を結び付ける。拒否は書込み前に行う。
+
+SQLiteの履歴参照は既存JSONの識別子をSQLで絞り、選択行だけをschema検証する。0001-initは変更せず追加索引migrationを使う。壊れたJSONの索引キーはNULLとし、無関係な行を解析しない。対象行の破損は従来どおりcorrupt_storageで拒否する。
+
+検証用の一時パスのみ実体化し、製品writerのsymlink/hardlink境界は維持する。実ホスト・実LLM・独立評価はfixtureと分け、CIは変更しない。
+
+2026-11-08の読取り再照合では、Eumenesは `fb8eac06ba1e32891c51355c4e067d678e7fd555`。knowledge domainとSkill単体のsearch/current公開操作は未接続だった。本体には別作業の134項目の差分があるため変更せず、サーバーの起動・停止もしない。以下の初期調査とは版を区別する。SkillSmithのZodは既知問題の修正で4.6.6へ更新した。
+
 更新日: 2026-11-07  
 状態: コアのport・schemaと固定試験を作成。本体の組込み試験は未実施。
 

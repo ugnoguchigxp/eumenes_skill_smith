@@ -1,3 +1,4 @@
+import { executionAuthorized } from "./authority.js";
 import { z } from "zod";
 import { resultSchema, sectionSchema } from "../contracts/schema.js";
 import type {
@@ -27,10 +28,15 @@ export function createResultOperations<Tx>(
 	function reportResult(tx: Tx, input: unknown, auth: Authority) {
 		const r = resultSchema.parse(input);
 		requireThat(
-			auth.permissions.includes("report") &&
-				p.authority.valid(tx, auth, r.evidence) &&
-				repo.hasUse(tx, auth.scope, r.buildRef, r.executionRef) &&
-				!repo.blocked(tx, r.buildRef),
+			executionAuthorized(
+				p,
+				tx,
+				r.buildRef,
+				r.executionRef,
+				auth,
+				"report",
+				r.evidence,
+			),
 			"permission_denied",
 		);
 		const hash = digest(r),
@@ -91,10 +97,16 @@ export function createResultOperations<Tx>(
 	): PreparedReflection | null {
 		const report = repo.report(tx, auth.scope, executionRef);
 		requireThat(
-			auth.permissions.includes("report") &&
-				report &&
-				p.authority.valid(tx, auth, report.input.evidence) &&
-				!repo.blocked(tx, report.input.buildRef),
+			report &&
+				executionAuthorized(
+					p,
+					tx,
+					report.input.buildRef,
+					executionRef,
+					auth,
+					"report",
+					report.input.evidence,
+				),
 			"permission_denied",
 		);
 		if (!report.input.improvement) return null;
@@ -152,7 +164,15 @@ export function createResultOperations<Tx>(
 				row.authority.epoch === auth.epoch &&
 				row.authority.principal === auth.principal &&
 				!repo.blocked(tx, row.ref) &&
-				p.authority.valid(tx, auth, s.report.input.evidence) &&
+				executionAuthorized(
+					p,
+					tx,
+					s.report.input.buildRef,
+					s.report.input.executionRef,
+					auth,
+					"report",
+					s.report.input.evidence,
+				) &&
 				current?.digest === row.reportDigest,
 			"stale_result",
 		);
@@ -227,7 +247,15 @@ export function createResultOperations<Tx>(
 				row.reserved &&
 				!repo.blocked(tx, row.ref) &&
 				current?.digest === row.reportDigest &&
-				p.authority.valid(tx, auth, s.report.input.evidence) &&
+				executionAuthorized(
+					p,
+					tx,
+					s.report.input.buildRef,
+					s.report.input.executionRef,
+					auth,
+					"report",
+					s.report.input.evidence,
+				) &&
 				p.inference.validReceipt(tx, result.receipt),
 			"stale_result",
 		);
@@ -266,7 +294,15 @@ export function createResultOperations<Tx>(
 				row.scope === auth.scope &&
 				row.authority.epoch === auth.epoch &&
 				row.authority.principal === auth.principal &&
-				p.authority.valid(tx, auth, s.report.input.evidence) &&
+				executionAuthorized(
+					p,
+					tx,
+					s.report.input.buildRef,
+					s.report.input.executionRef,
+					auth,
+					"report",
+					s.report.input.evidence,
+				) &&
 				!repo.blocked(tx, row.ref),
 			"permission_denied",
 		);
@@ -290,7 +326,15 @@ export function createResultOperations<Tx>(
 			auth.permissions.includes("manage") &&
 				proposal?.scope === auth.scope &&
 				!repo.blocked(tx, ref) &&
-				p.authority.valid(tx, auth, evidence),
+				executionAuthorized(
+					p,
+					tx,
+					proposal.buildRef,
+					proposal.executionRef,
+					auth,
+					"manage",
+					[...proposal.evidence, ...evidence],
+				),
 			"permission_denied",
 		);
 		requireThat(
@@ -324,7 +368,15 @@ export function createResultOperations<Tx>(
 			auth.permissions.includes("manage") &&
 				proposal?.scope === auth.scope &&
 				!repo.blocked(tx, proposalRef) &&
-				p.authority.valid(tx, auth, proposal.evidence),
+				executionAuthorized(
+					p,
+					tx,
+					proposal.buildRef,
+					proposal.executionRef,
+					auth,
+					"manage",
+					proposal.evidence,
+				),
 			"permission_denied",
 		);
 		requireThat(proposal.revision === expectedRevision, "proposal_conflict");
@@ -365,7 +417,15 @@ export function createResultOperations<Tx>(
 			auth.permissions.includes("manage") &&
 				proposal?.scope === auth.scope &&
 				!repo.blocked(tx, proposalRef) &&
-				p.authority.valid(tx, auth, proposal.evidence),
+				executionAuthorized(
+					p,
+					tx,
+					proposal.buildRef,
+					proposal.executionRef,
+					auth,
+					"manage",
+					proposal.evidence,
+				),
 			"permission_denied",
 		);
 		requireThat(proposal.revision === expectedRevision, "proposal_conflict");
@@ -415,10 +475,15 @@ export function createResultOperations<Tx>(
 		auth: Authority,
 	): PreparedWorkflow {
 		requireThat(
-			auth.permissions.includes("report") &&
-				p.authority.valid(tx, auth, input.evidence) &&
-				repo.hasUse(tx, auth.scope, input.buildRef, input.executionRef) &&
-				!repo.blocked(tx, input.buildRef),
+			executionAuthorized(
+				p,
+				tx,
+				input.buildRef,
+				input.executionRef,
+				auth,
+				"report",
+				input.evidence,
+			),
 			"permission_denied",
 		);
 		requireThat(input.succeededSummaries.length >= 1, "verification_required");
@@ -505,9 +570,15 @@ export function createResultOperations<Tx>(
 				auth.scope === s.authority.scope &&
 				auth.principal === s.authority.principal &&
 				auth.epoch === s.authority.epoch &&
-				p.authority.valid(tx, auth, s.evidence) &&
-				repo.hasUse(tx, auth.scope, s.buildRef, s.executionRef) &&
-				!repo.blocked(tx, s.buildRef) &&
+				executionAuthorized(
+					p,
+					tx,
+					s.buildRef,
+					s.executionRef,
+					auth,
+					"report",
+					s.evidence,
+				) &&
 				p.inference.validReceipt(tx, result.receipt),
 			"stale_result",
 		);

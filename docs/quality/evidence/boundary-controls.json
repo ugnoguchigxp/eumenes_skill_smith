@@ -1,0 +1,64 @@
+{
+	"at": "2026-11-07T23:06:07.355Z",
+	"tests": [
+		"src/test/result-authority.test.ts",
+		"src/test/requests.test.ts",
+		"src/test/build.test.ts",
+		"src/test/localized-build.test.ts",
+		"src/test/proposal-cancellation.test.ts",
+		"src/test/skill-markdown.test.ts",
+		"src/test/usage-ledger.test.ts"
+	],
+	"results": [
+		{
+			"control": "principal",
+			"detected": true,
+			"durationMs": 436.47887499999996
+		},
+		{
+			"control": "epoch",
+			"detected": true,
+			"durationMs": 461.14149999999995
+		},
+		{
+			"control": "origin-sources",
+			"detected": true,
+			"durationMs": 441.2054579999999
+		},
+		{
+			"control": "execution",
+			"detected": true,
+			"durationMs": 462.30087500000013
+		},
+		{
+			"control": "budget-reservation",
+			"detected": true,
+			"durationMs": 464.7186670000001
+		},
+		{
+			"control": "run-token",
+			"detected": true,
+			"durationMs": 448.25149999999985
+		},
+		{
+			"control": "receipt",
+			"detected": true,
+			"durationMs": 432.5116659999999
+		},
+		{
+			"control": "delivery",
+			"detected": true,
+			"durationMs": 429.26416700000027
+		},
+		{
+			"control": "cancellation",
+			"detected": true,
+			"durationMs": 438.54325000000017
+		},
+		{
+			"control": "canonical-body",
+			"detected": true,
+			"durationMs": 435.0482499999998
+		}
+	]
+}

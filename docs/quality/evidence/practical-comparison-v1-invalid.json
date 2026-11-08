@@ -1,0 +1,146 @@
+{
+	"context": "Public-seed-derived planning responses. Source query shared and cached; no production effects; no human calibration.",
+	"complete": true,
+	"quality": {
+		"attempted": 20,
+		"scored": 11,
+		"ready": 5,
+		"outcomes": {
+			"unavailable": 1,
+			"ready": 5,
+			"needs_input": 5
+		},
+		"failures": {
+			"semantic_review_failed": 3,
+			"budget_exceeded": 1,
+			"cloud_incomplete": 5
+		}
+	},
+	"conditions": {
+		"none": {
+			"attempted": 60,
+			"acceptance_met": 49,
+			"misapplied_or_unsupported_judge": 1,
+			"executor_calls": 60,
+			"propagated_without_executor": 0,
+			"executor_p50_ms": 4673.838291499997,
+			"executor_p95_ms": 6502.918249999988,
+			"preparation_token_cost_usd": 0.0,
+			"executor_token_cost_usd": 0.08574240000000002,
+			"strategy_token_cost_usd": 0.08574240000000002,
+			"cost_per_accepted_proxy_usd": 0.0017498448979591842,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 12,
+					"strategy_token_cost_usd": 0.0202532
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 14,
+					"strategy_token_cost_usd": 0.021243600000000005
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 10,
+					"strategy_token_cost_usd": 0.024257599999999997
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 13,
+					"strategy_token_cost_usd": 0.019988000000000002
+				}
+			}
+		},
+		"agent_skills": {
+			"attempted": 60,
+			"acceptance_met": 53,
+			"misapplied_or_unsupported_judge": 4,
+			"executor_calls": 60,
+			"propagated_without_executor": 0,
+			"executor_p50_ms": 4749.809021000005,
+			"executor_p95_ms": 6850.439624999999,
+			"preparation_token_cost_usd": 0.0548412,
+			"executor_token_cost_usd": 0.1217172,
+			"strategy_token_cost_usd": 0.1765584,
+			"cost_per_accepted_proxy_usd": 0.003331290566037736,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.036626000000000006
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.043913200000000006
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 12,
+					"strategy_token_cost_usd": 0.050765600000000015
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 11,
+					"strategy_token_cost_usd": 0.045253600000000005
+				}
+			}
+		},
+		"skillsmith": {
+			"attempted": 60,
+			"acceptance_met": 15,
+			"misapplied_or_unsupported_judge": 14,
+			"executor_calls": 15,
+			"propagated_without_executor": 45,
+			"executor_p50_ms": 7224.252124999999,
+			"executor_p95_ms": 11280.244166999997,
+			"preparation_token_cost_usd": 1.3346384000000002,
+			"executor_token_cost_usd": 0.0460932,
+			"strategy_token_cost_usd": 1.3807316000000003,
+			"cost_per_accepted_proxy_usd": 0.09204877333333335,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 6,
+					"strategy_token_cost_usd": 0.456676
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 6,
+					"strategy_token_cost_usd": 0.45310839999999997
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 3,
+					"strategy_token_cost_usd": 0.3986356000000001
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 0,
+					"strategy_token_cost_usd": 0.0723116
+				}
+			}
+		}
+	},
+	"api_budget": {
+		"limit_usd": 10,
+		"known_token_estimate_usd": 3.606403599999995,
+		"unknown_reserved_usd": 4.528887,
+		"accounted_usd": 8.135290600000003,
+		"physical_calls": 966
+	},
+	"measurement_scope": [
+		"Run input/output token counts and duration are the executor stage only. Preparation is paid once and reused for the three repeats.",
+		"Strategy cost is preparation plus executor API token estimates. Judge/diagnostic cost is included in the overall 10 USD accounting, excluded from strategy operation comparison.",
+		"Shared query reformulation was charged once to SkillSmith when generated; Agent Skills reuses that fixed query. This is an experimental allocation, not independent production pricing.",
+		"Time is API inference time, not full host/task completion time.",
+		"Initial incompatible and interrupted attempts remain in the global budget journal. Unknown charges retain full reservations.",
+		"No blended SKILL quality mean is calculated; no utility or production superiority is claimed."
+	],
+	"adoption_gate": {
+		"group_acceptance_not_worse_than_both": false,
+		"result": "not_accepted",
+		"reason": "Group non-regression and useful generation conditions are not established. Retain safety gates and investigate generation/information fit."
+	}
+}

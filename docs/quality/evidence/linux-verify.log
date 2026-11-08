@@ -1,0 +1,686 @@
+bun install v1.4.4 (38afee6c8)
+
++ @types/bun@1.3.14
++ @types/node@25.9.3
++ oxlint@1.86.0
++ typescript@7.0.2
++ mdast-util-from-markdown@2.0.2
++ zod@4.6.6
+
+44 packages installed [771.00ms]
+$ bun scripts/verify.ts
+$ bun check
+✓ No type errors in 151 files [85.10ms]
+$ oxlint --deny-warnings
+Found 0 warnings and 0 errors.
+Finished in 19ms on 151 files with 96 rules using 2 threads.
+$ bun fmt --check
+All 262 files are formatted.
+bun test v1.4.4 (38afee6c8)
+
+src/test/compact-assembly.test.ts:
+(pass) baseline buildInstructions and INSTRUCTION_VERSION stay unchanged by compact path [0.12ms]
+(pass) baseline decisionSchema rejects coverage; compact accepts coverage and exploration [3.43ms]
+(pass) reuse with non-empty sections still fails structural check [0.16ms]
+(pass) compact adapt that pastes a disclosed body into sections is rejected [0.11ms]
+(pass) toStoredReady maps exploration slots into fixed section ids [0.12ms]
+
+src/test/release.test.ts:
+(pass) release rejects stale inputs, tampering and mixed files; extracted consumer completes lifecycle [455.51ms]
+
+src/test/quality-100.test.ts:
+(pass) 100-point rubric enforces integer weights and exact sum without changing legacy scales [0.49ms]
+(pass) incorrect concrete examples cap both correctness and total, fail closed [0.10ms]
+
+src/test/eval-audit.test.ts:
+(pass) audit passes a complete suite without expected digests [0.26ms]
+(pass) missing condition pack fails audit [0.55ms]
+(pass) duplicate condition pack fails audit [0.03ms]
+(pass) tampered inputDigest fails when expected digests are supplied [0.20ms]
+(pass) requireRecords fails on empty pack [0.02ms]
+(pass) lexicalOverlap is 字面一致 and can be high under meaning reversal [0.43ms]
+(pass) Japanese unsegmented text is not treated as semantic faithfulness [0.05ms]
+(pass) contract fixture: baseline and skillsmith share the same task manifest [1.32ms]
+
+src/test/execution-verified.test.ts:
+(pass) only succeeded bound executions can mark a proposal execution-verified [9.95ms]
+(pass) failed reports cannot mark execution-verified [5.09ms]
+(pass) correcting succeeded report to failed clears executionVerified [2.31ms]
+(pass) candidateVerification binds to proposal digest and invalidates on text change [2.02ms]
+(pass) bindCandidateVerification rejects mismatched digest [1.86ms]
+
+src/test/successors.test.ts:
+(pass) a superseded document's published successor is fetched within the document budget [1.55ms]
+(pass) missing, cyclic and over-budget successors are reported as insufficiency, not followed [4.53ms]
+(pass) successor reads spend the shared source budget and cannot exceed it [0.60ms]
+(pass) a successor outside the requester's scope is not adopted [1.01ms]
+(pass) a transport failure while fetching a successor is reported as error [1.03ms]
+
+src/test/re-search-replacement.test.ts:
+(pass) re-search admits a new card when the initial working set is full [1.67ms]
+(pass) re-search keeps first-round warnings for a retained external card [1.76ms]
+
+src/test/eval-compare.test.ts:
+(pass) comparison encodes deltas without a hardcoded winner [0.98ms]
+(pass) skillsmith acceptance lead is visible but falsifiable [0.05ms]
+(pass) unlabeled runs stay incomplete instead of inventing a winner [0.07ms]
+(pass) strategy and abstention fields appear in paired A/B/C deltas [0.19ms]
+(pass) comparison rejects duplicate conditions instead of silently taking the last label [0.02ms]
+(pass) comparison rejects an empty or oversized run set with a controlled error [0.13ms]
+
+src/test/sqlite.test.ts:
+(pass) build identity and replay survive closing and reopening a real database [28.46ms]
+(pass) a crash does not replenish a reserved call budget or lose a start reservation [21.35ms]
+(pass) corrupt stored JSON is refused instead of typed through [3.90ms]
+
+src/test/eval-kit-workflow.test.ts:
+(pass) runEvalSuite compares conditions without declaring a hardcoded winner [0.68ms]
+(pass) workflow induction uses InferencePort and stays a candidate shape [0.24ms]
+(pass) eval kit rejects top-level task mutation before a later condition runs [0.07ms]
+(pass) eval kit rejects nested task mutation before a later condition runs [0.03ms]
+(pass) eval kit rejects a runner result with wrong task identity [0.07ms]
+(pass) eval kit rejects a runner result with wrong condition identity [0.02ms]
+(pass) eval kit rejects duplicate tasks and record packs before any runner call [0.16ms]
+
+src/test/eval-baseline.test.ts:
+(pass) baseline discloses then applies using the same evidence set [0.32ms]
+(pass) full body fallback when the source has no section IDs [0.02ms]
+(pass) baseline skip leaves synthesis out of the path [0.24ms]
+
+src/test/localized-build.test.ts:
+(pass) current digest changes while initial disclosure payload stays archived [7.84ms]
+(pass) current ready fields are required, legacy storage allows only complete absence [0.53ms]
+(pass) name/title/description/language/instructions have structural bounds, not keyword language routing [0.23ms]
+(pass) renderer uses builder title/description/body; source title is provenance only [5.22ms]
+(pass) legacy initial terminal ready cannot bypass current fields or the call budget [1.13ms]
+(pass) current schema repair never falls back to legacy rendering [1.59ms]
+(pass) current localized ready retains required-assumption, source-ref and capability checks [4.21ms]
+(pass) current localized artifacts still revalidate authority on delivery and cache by current version [4.55ms]
+(pass) H1 final artifact preserves translations and canonical audit originals with provisional scope in audit and functional stops [3.43ms]
+(pass) H1 semantic contradiction and unreservable review fail closed without final artifact [4.87ms]
+(pass) H1 localized host IDs must be complete and unique [2.80ms]
+(pass) H2 source title cannot inject structure into FINAL delivery [2.73ms]
+(pass) H3 final delivery refuses model structure: skill_title_multiline [3.08ms]
+(pass) H3 final delivery refuses model structure: skill_model_reserved_heading [1.69ms]
+(pass) H3 final delivery refuses model structure: skill_model_reserved_heading [1.60ms]
+(pass) H3 final delivery refuses model structure: skill_model_html [1.55ms]
+(pass) H3 final delivery refuses model structure: skill_model_frontmatter [1.72ms]
+(pass) H3 final delivery refuses model structure: skill_model_unclosed_fence [3.03ms]
+(pass) H3 final delivery refuses model structure: skill_model_url [1.99ms]
+(pass) H3 balanced fences and ordinary subordinate headings remain usable in FINAL string [3.55ms]
+(pass) H4 reuse: missing disclosure/section coverage blocks FINAL delivery false [1.33ms]
+(pass) H4 reuse: missing disclosure/section coverage blocks FINAL delivery true [2.90ms]
+(pass) H4 adapt: missing disclosure/section coverage blocks FINAL delivery false [1.34ms]
+(pass) H4 adapt: missing disclosure/section coverage blocks FINAL delivery true [1.16ms]
+(pass) L3 one canonical body serves internal content and FINAL artifact; mismatches fail closed [2.78ms]
+(pass) L3 model typed host fields cannot create Markdown/HTML outside instructions in FINAL string [4.45ms]
+(pass) L3 reference IDs remain data even with backticks and block delimiters in FINAL string [2.53ms]
+(pass) H2 final boundary audit marks freshness and whole search/successor metadata untrusted [4.13ms]
+(pass) M3 actual shared reservations appear in disclosure progress and observed auxiliary totals [2.32ms]
+(pass) L3 current FINAL delivery rejects archived stored build without generator [2.13ms]
+(pass) L3 current FINAL delivery rejects archived stored build without presentation [3.71ms]
+(pass) v5 source review is mandatory for new terminal answers and host retains flagged claims in metadata only [2.59ms]
+(pass) v5 reader text has no internal IDs while evaluation metadata stays canonical [2.39ms]
+(pass) v5 composition requires structured interaction points and retains handling in metadata [5.17ms]
+(pass) v5 provisional needs explicit unverified domain anchors in metadata [3.33ms]
+(pass) v6 functional FINAL string only; canonical audit fields retained: reuse [3.95ms]
+(pass) v6 functional FINAL string only; canonical audit fields retained: adapt [2.47ms]
+(pass) v6 functional FINAL string only; canonical audit fields retained: compose [2.17ms]
+(pass) v6 functional FINAL string only; canonical audit fields retained: provisional [3.17ms]
+(pass) v6 new terminal answers must classify general knowledge additions as metadata [0.10ms]
+(pass) v6 source identifier in instructions is refused, never silently removed [1.56ms]
+(pass) v7 final functional sections, ASCII slug and real resource links; no audit headings or IDs [4.35ms]
+(pass) v11 archived schema remains compatible; small subjects need no modes or resources [0.17ms]
+(pass) v7 section and reference schemas reject duplicate roles, unknown roles, missing core sections and unsafe paths [0.39ms]
+(pass) v7 reference files cannot hide model HTML, open fences, dangerous URLs, H2 or provenance IDs [4.24ms]
+(pass) v7 changing only a reference changes bundle identity without changing SKILL byte identity [4.42ms]
+(pass) v7 final byte limit includes all reference files; revoked authority still withholds bundle [7.00ms]
+(pass) v8 rejects non-ASCII slugs at generation without changing body language [2.37ms]
+(pass) v8 localizes uncertainty without certifying version compatibility or execution [0.03ms]
+(pass) v8 missing per-step operational criteria fail the existing budgeted semantic gate [1.89ms]
+(pass) v8 correction is re-rendered and re-reviewed under the original four-call cap [7.76ms]
+(pass) v8 correction cannot publish without reserved re-review or after a second contradiction [5.03ms]
+(pass) v8 review corrections cannot mutate canonical fields, waive checks or approve themselves [5.80ms]
+(pass) v8 runnable references require real imports, fixtures and outcomes without inventing execution [0.04ms]
+(pass) v8 completion gates distinguish observable pass/fail from unmeasured task outcomes [0.01ms]
+(pass) v9 completion text avoids evaluation boilerplate without dropping task-specific stops
+(pass) v9 deduplicates by LLM judgment while preserving stops and canonical scope
+(pass) v10 operation examples require pre-inclusion evidence without new tool calls [0.01ms]
+(pass) v10 unsupported operation proof fails the existing reserved semantic gate [2.74ms]
+(pass) v10 boundary examples test invariants and negative controls without fake execution [0.02ms]
+(pass) v10 uncertainty routing distinguishes information collection from unsafe operations [0.01ms]
+(pass) v10 section minimalism preserves conditions rather than enforcing a topic template [0.01ms]
+(pass) v11 new rendering fails closed without LLM-authored principles [1.47ms]
+(pass) v11 normalization and provisional observations are LLM judgments, not topic routing [0.02ms]
+(pass) v11 post-build self-review uses the existing reserved call and immutable gates [3.26ms]
+(pass) final renderer refuses traversal links in instructions and bundled references [2.59ms]
+
+src/test/valid-id-injection.test.ts:
+(pass) valid-ID reuse of malicious body is structurally ready (attack surface) [1.01ms]
+(pass) compose with valid IDs can carry attack text from model sections [0.33ms]
+(pass) repair that only fixes IDs can leave prior attack wording for the next turn [1.07ms]
+(pass) eval-only continuous mark differs from JSON attribute datamark [0.08ms]
+
+src/test/source-notices.test.ts:
+(pass) search-wide warnings and degraded notices reach inference as untrusted data [1.08ms]
+(pass) warnings among chosen candidates are forwarded verbatim [0.88ms]
+(pass) source contract violation is refused before inference: legacy array shape [0.56ms]
+(pass) source contract violation is refused before inference: warning naming an unreturned ref [0.45ms]
+(pass) source contract violation is refused before inference: non-external card [0.44ms]
+(pass) source contract violation is refused before inference: free-text notice [0.48ms]
+
+src/test/scenario-score.test.ts:
+(pass) scenario suite names expected seed skills [0.03ms]
+(pass) retrievalRank is 1-based and null when the expected skill is absent [0.06ms]
+(pass) scoreFromJudge keeps the LLM score and does not invent one [0.37ms]
+(pass) parseAnyScenarioSuite accepts the legacy and typed three-axis suites [1.47ms]
+(pass) empty expected refs are allowed only on the absent axis [0.18ms]
+(pass) allRequiredHit needs every ref; first-hit rank is not success for compose [0.07ms]
+(pass) builder view carries no gold labels [0.29ms]
+
+src/test/skill-markdown.test.ts:
+(pass) ready delivery has a deterministic validated artifact without changing stored content [2.79ms]
+(pass) reuse artifact embeds selected body even when sections is empty [3.52ms]
+(pass) compose retains instruction order, provenance and verification [1.47ms]
+(pass) adapt artifact contains patched source sections, not the replaced section [1.32ms]
+(pass) provisional is explicitly unverified with assumptions and no invented source [1.46ms]
+(pass) pending and needs_input keep the question and have no skill artifact [0.85ms]
+(pass) name generation is bounded, kebab-case, deterministic, distinguishes slug collisions [0.10ms]
+(pass) YAML quoting handles newlines, delimiters, colons and quotes in goal [1.40ms]
+(pass) reject invalid name "" [0.10ms]
+(pass) reject invalid name "Upper"
+(pass) reject invalid name "-start"
+(pass) reject invalid name "end-"
+(pass) reject invalid name "two--hyphens"
+(pass) reject invalid name "../escape"
+(pass) reject invalid name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" [0.01ms]
+(pass) reject invalid format: skill_frontmatter_missing 14 [0.01ms]
+(pass) reject invalid format: skill_frontmatter_invalid 20
+(pass) reject invalid format: skill_frontmatter_invalid 20
+(pass) reject invalid format: skill_description_invalid 29
+(pass) reject invalid format: skill_description_invalid 69
+(pass) reject invalid format: skill_description_invalid 1094
+(pass) reject invalid format: skill_body_empty 56 [0.04ms]
+(pass) reject invalid format: skill_frontmatter_field_invalid 115
+(pass) directory name must match, and CRLF frontmatter is accepted [0.06ms]
+(pass) explicit bad export name and empty assembled body fail closed [1.18ms]
+(pass) final delivery respects unchanged output byte limit even when internal JSON fits [1.92ms]
+(pass) final delivery does not bypass revoked authority [0.94ms]
+(pass) final delivery revalidates external sources before disclosing a skill [1.37ms]
+(pass) reuse renders through deterministic sourceMarkdown; envelope stays in internal build [1.73ms]
+(pass) compose and provisional never invoke sourceMarkdown [1.25ms]
+(pass) template is Japanese: no English headings, notes or internal markers [1.18ms]
+(pass) reuse name derives from primary source title; others keep goal identity [4.10ms]
+(pass) M6 FINAL artifact identity binds exact bytes, renderer and extractor [1.81ms]
+(pass) L2 rejects typed optional frontmatter: license: 123 [0.12ms]
+(pass) L2 rejects typed optional frontmatter: compatibility: [bad] [0.06ms]
+(pass) L2 rejects typed optional frontmatter: compatibility: xxxxxxxxxxxxxxxxxxxxxxxxx [0.06ms]
+(pass) L2 rejects typed optional frontmatter: compatibility: '' [0.07ms]
+(pass) L2 rejects typed optional frontmatter: metadata: false [0.68ms]
+(pass) L2 rejects typed optional frontmatter: metadata: [bad] [0.11ms]
+(pass) L2 rejects typed optional frontmatter: metadata: {a: 1} [0.13ms]
+(pass) L2 rejects typed optional frontmatter: metadata: {a: {nested: text}} [0.09ms]
+(pass) L2 rejects typed optional frontmatter: allowed-tools: [Read] [0.07ms]
+(pass) L2 all supported optional frontmatter fields follow the pinned spec [0.10ms]
+(pass) L3 legacy source extractor failures become coded FINAL unavailable (false) [3.19ms]
+(pass) L3 legacy source extractor failures become coded FINAL unavailable (true) [1.61ms]
+
+src/test/spotlight-freshness.test.ts:
+(pass) untrustedEvidence is datamarked with a spotlight boundary [1.32ms]
+(pass) freshness exposes retrievedAt and superseded signals [1.12ms]
+
+src/test/eval-recall.test.ts:
+(pass) recall@k counts labeled refs in the top-N cards only [0.45ms]
+(pass) perfect recall when every expected ref is in the cutoff [0.07ms]
+(pass) empty retrieval yields zero recall without inventing hits [0.02ms]
+
+src/test/results.test.ts:
+(pass) results bind to a verified execution and deduplicate reports and corrected totals [1.55ms]
+(pass) a different child goal does not inherit a parent's build by ID alone [1.06ms]
+(pass) an unrelated scope and unbound execution cannot report results [1.28ms]
+(pass) ordinary successful results do not trigger an unconditional reflection [1.34ms]
+(pass) a build ID cannot be bound by a different principal in the same scope [1.03ms]
+
+src/test/proposal-cancellation.test.ts:
+(pass) reflection cancellation at before prevents a late candidate [1.28ms]
+(pass) reflection cancellation at reservation prevents a late candidate [1.20ms]
+(pass) reflection cancellation at provider prevents a late candidate [1.18ms]
+(pass) workflow cancellation at before prevents a late candidate [1.16ms]
+(pass) workflow cancellation at reservation prevents a late candidate [1.32ms]
+(pass) workflow cancellation at provider prevents a late candidate [2.68ms]
+
+src/test/workflow-product.test.ts:
+(pass) prepare/induce/save workflow stores a proposed candidate only [1.61ms]
+(pass) workflow save refuses after authority becomes invalid during inference [1.27ms]
+(pass) workflow save refuses when the bound report is corrected mid-flight [1.41ms]
+
+src/test/proposals.test.ts:
+(pass) reflection is conditional, reserved once, and persists only a candidate [2.14ms]
+(pass) a corrected report invalidates a reflection already in flight [1.54ms]
+(pass) a report privilege change prevents consuming a reflection budget [1.07ms]
+
+src/test/crash-recovery.test.ts:
+(pass) SIGKILL recovery preserves durable invariants at accepted [64.06ms]
+(pass) SIGKILL recovery preserves durable invariants at reserved [64.01ms]
+(pass) SIGKILL recovery preserves durable invariants at response [73.55ms]
+(pass) SIGKILL recovery preserves durable invariants at transaction [73.99ms]
+(pass) SIGKILL recovery preserves durable invariants at settled [97.75ms]
+(pass) SIGKILL recovery preserves durable invariants at delivered [75.62ms]
+(pass) SIGKILL recovery preserves durable invariants at acknowledged [72.78ms]
+(pass) SIGKILL recovery preserves durable invariants at revoked [66.35ms]
+
+src/test/forget.test.ts:
+(pass) revocation immediately blocks indirect descendants before bounded erasure finishes [1.42ms]
+(pass) forgetting a source while generation runs prevents delayed resurrection [0.80ms]
+(pass) source changes are revalidated before each external distribution [1.06ms]
+
+src/test/history-lookup.test.ts:
+(pass) lookup migration upgrades v1 rows, is repeatable and indexes malformed JSON safely [0.32ms]
+(pass) indexed history lookups isolate unrelated malformed rows and preserve report corrections [3.43ms]
+
+src/test/requests.test.ts:
+(pass) parent-bound requests cannot enqueue before release or enqueue twice [0.48ms]
+(pass) same request replay returns the same reference and conflicting input rolls back [0.41ms]
+(pass) an enqueue failure rolls back even a partially inserted job [0.29ms]
+(pass) cancelled requests reject late model results [0.81ms]
+(pass) expired activation never launches a model [0.35ms]
+(pass) generation deadline does not invalidate a build completed in time [0.86ms]
+(pass) scope and authority epoch are checked on every read [0.80ms]
+(pass) a stale producer cannot adopt after a newer preparation [0.64ms]
+(pass) failed external work retains the consumed budget [0.47ms]
+(pass) a lost inference receipt cannot produce a build [0.64ms]
+(pass) delivery insertion failure rolls back the build and terminal outcome [0.72ms]
+(pass) an expired status read never mutates a read-only transaction [0.32ms]
+(pass) an old producer failure cannot terminate a new producer [0.68ms]
+(pass) external read failure returns unavailable without restarting generation [1.02ms]
+(pass) report-only authorization cannot read a build [0.80ms]
+(pass) unauthorized failure (principal) cannot mutate usage or revision [0.40ms]
+(pass) unauthorized failure (scope) cannot mutate usage or revision [0.35ms]
+(pass) unauthorized failure (epoch) cannot mutate usage or revision [0.34ms]
+(pass) unauthorized failure (permission) cannot mutate usage or revision [0.34ms]
+(pass) unauthorized failure (revoked) cannot mutate usage or revision [0.34ms]
+(pass) authorized failure preserves observed usage and terminates once [0.47ms]
+
+src/test/injection.test.ts:
+(pass) injection that fabricates capabilities or sources fails structural checks [0.27ms]
+(pass) build path does not follow injection text into system instructions [0.91ms]
+
+src/test/model-markdown.test.ts:
+(pass) model Markdown rejects unsafe local link targets [1.02ms]
+(pass) model Markdown rejects unsafe local image targets [2.13ms]
+(pass) model Markdown rejects unsafe local definition targets [1.18ms]
+(pass) model Markdown permits local bundle links, anchors, queries and existing external schemes [0.43ms]
+
+src/test/bun-version.test.ts:
+(pass) verify bun version gate accepts 1.4.4 and rejects older patch [0.07ms]
+
+src/test/observations.test.ts:
+(pass) physical model observation and durable usage with none failure [1.07ms]
+(pass) physical model observation and durable usage with provider failure [0.62ms]
+(pass) physical model observation and durable usage with observer failure [0.57ms]
+
+src/test/grounded-propose.test.ts:
+(pass) propose receives build body and success/failure contrast [1.61ms]
+
+src/test/quality-v11.test.ts:
+(pass) v11 weighted rubric has exact sum and criterion-specific reasons [0.40ms]
+(pass) v11 incorrect concrete examples have a strict cap [0.01ms]
+
+src/test/usage-ledger.test.ts:
+(pass) failed multi-call build retains observed tokens via noteUsage [0.80ms]
+(pass) reasoning metadata stays null when provider omits it [0.71ms]
+(pass) provider reasoning tokens accumulate without inventing when one call omits [0.80ms]
+(pass) aggregateUsageLedger does not double-count included reasoning [0.52ms]
+(pass) aggregateUsageLedger keeps null when any call is unknown [0.03ms]
+(pass) M4 billing completeness matrix: separate unknown, included unknown, mixed known and absent [0.12ms]
+
+src/test/build.test.ts:
+(pass) a saved acceptance returns pending, then a complete body with unchanged conditions [0.84ms]
+(pass) exact reuse needs no further inference [0.87ms]
+(pass) a changed acceptance never hits the old build [0.84ms]
+(pass) unknown work yields a provisional strategy through the injected LLM [1.05ms]
+(pass) an unresolved mandatory assumption cannot become ready [0.75ms]
+(pass) unoffered capability IDs and source references are refused [1.53ms]
+(pass) adaptation patches only exact section IDs [0.83ms]
+(pass) a nonexistent section cannot be patched by approximate text matching [1.21ms]
+(pass) needs_input is terminal and an answer creates a new request [0.94ms]
+(pass) malformed input and unsupported contracts are refused [0.64ms]
+(pass) malformed model output spends the bounded repair allowance [0.73ms]
+(pass) prompt material is isolated as data and a fabricated reference is rejected [2.72ms]
+(pass) search cards are not treated as fetched bodies and reads obey the document limit [0.97ms]
+(pass) a revision change between discovery and read is rejected before inference [1.00ms]
+(pass) completed public replies satisfy the transport schema [1.52ms]
+(pass) oversized input is refused before reserving a model call [0.59ms]
+(pass) the output limit includes the envelope and metadata, not only the body [1.38ms]
+(pass) malformed evidence from registry.read is a source contract violation [1.37ms]
+(pass) well-formed evidence still builds after boundary validation [0.76ms]
+(pass) instruction version is the digest of the live instruction text [0.07ms]
+(pass) a structural decision failure can be repaired within the model call budget [1.03ms]
+(pass) structural repair stops at the model call limit and keeps the failure code [0.87ms]
+(pass) selected external evidence is validated in one source call [1.50ms]
+(pass) duplicate refs across local and external keep the first-seen card [0.80ms]
+(pass) cached external builds revalidate and refuse revoked sources on delivery [1.11ms]
+
+src/test/quality-judge.test.ts:
+(pass) strict judge requires separate correctness and enforces error cap treatsExistingAsAbsent,excessiveAbstention,appropriateGap [0.33ms]
+(pass) strict judge requires separate correctness and enforces error cap nameSelection,constraintPreservation,sourceFaithfulness,executionOutcome [0.30ms]
+(pass) strict judge requires separate correctness and enforces error cap coverage,coherence,conflictHandling [0.23ms]
+(pass) strict judge requires separate correctness and enforces error cap boundedExploration,inventsOfficialSkill,claimsVerified [0.22ms]
+(pass) strict rubric is versioned and distinguishes source fidelity from correctness [0.01ms]
+
+src/test/disclosure-progress.test.ts:
+(pass) disclose unknown-only refs become repairable failures [0.91ms]
+(pass) duplicate disclose reports duplicateOnly with zero added bytes [1.01ms]
+(pass) compareDisclosureRounds measures bytes without inventing quality [0.42ms]
+
+src/test/eval-judge-metrics.test.ts:
+(pass) calibrateJudge reports agreement without inventing scores [0.35ms]
+(pass) calibrateJudge returns null rates when nothing compares [0.02ms]
+(pass) auxiliary metrics are labeled heuristics and never claim acceptance [0.03ms]
+
+src/test/early-gap.test.ts:
+(pass) model may return needs_input early when retrieval is poor [0.84ms]
+(pass) empty local retrieval can end as unavailable without composing [0.59ms]
+
+src/test/result-authority.test.ts:
+(pass) result boundary rejects principal in report without mutation [1.61ms]
+(pass) result boundary rejects principal in reflection without mutation [2.77ms]
+(pass) result boundary rejects principal in workflow without mutation [1.50ms]
+(pass) result boundary rejects principal in review without mutation [1.32ms]
+(pass) result boundary rejects principal in mark without mutation [1.25ms]
+(pass) result boundary rejects principal in bind without mutation [1.25ms]
+(pass) result boundary rejects principal in reserve without mutation [1.19ms]
+(pass) result boundary rejects principal in save without mutation [1.25ms]
+(pass) result boundary rejects principal in fail without mutation [1.25ms]
+(pass) result boundary rejects scope in report without mutation [1.18ms]
+(pass) result boundary rejects scope in reflection without mutation [1.17ms]
+(pass) result boundary rejects scope in workflow without mutation [1.15ms]
+(pass) result boundary rejects scope in review without mutation [1.15ms]
+(pass) result boundary rejects scope in mark without mutation [1.13ms]
+(pass) result boundary rejects scope in bind without mutation [1.17ms]
+(pass) result boundary rejects scope in reserve without mutation [2.19ms]
+(pass) result boundary rejects scope in save without mutation [1.31ms]
+(pass) result boundary rejects scope in fail without mutation [1.18ms]
+(pass) result boundary rejects epoch in report without mutation [1.18ms]
+(pass) result boundary rejects epoch in reflection without mutation [1.14ms]
+(pass) result boundary rejects epoch in workflow without mutation [1.12ms]
+(pass) result boundary rejects epoch in review without mutation [1.20ms]
+(pass) result boundary rejects epoch in mark without mutation [1.12ms]
+(pass) result boundary rejects epoch in bind without mutation [1.19ms]
+(pass) result boundary rejects epoch in reserve without mutation [1.09ms]
+(pass) result boundary rejects epoch in save without mutation [1.20ms]
+(pass) result boundary rejects epoch in fail without mutation [1.14ms]
+(pass) result boundary rejects permission in report without mutation [2.14ms]
+(pass) result boundary rejects permission in reflection without mutation [1.50ms]
+(pass) result boundary rejects permission in workflow without mutation [1.20ms]
+(pass) result boundary rejects permission in review without mutation [1.13ms]
+(pass) result boundary rejects permission in mark without mutation [1.15ms]
+(pass) result boundary rejects permission in bind without mutation [1.14ms]
+(pass) result boundary rejects permission in reserve without mutation [1.12ms]
+(pass) result boundary rejects permission in save without mutation [1.23ms]
+(pass) result boundary rejects permission in fail without mutation [1.15ms]
+(pass) result boundary rejects execution in report without mutation [1.23ms]
+(pass) result boundary rejects execution in reflection without mutation [1.11ms]
+(pass) result boundary rejects execution in workflow without mutation [1.16ms]
+(pass) result boundary rejects execution in review without mutation [1.15ms]
+(pass) result boundary rejects execution in mark without mutation [1.96ms]
+(pass) result boundary rejects execution in bind without mutation [1.31ms]
+(pass) result boundary rejects execution in reserve without mutation [1.11ms]
+(pass) result boundary rejects execution in save without mutation [1.13ms]
+(pass) result boundary rejects execution in fail without mutation [1.05ms]
+(pass) result boundary rejects source in report without mutation [1.08ms]
+(pass) result boundary rejects source in reflection without mutation [1.06ms]
+(pass) result boundary rejects source in workflow without mutation [1.11ms]
+(pass) result boundary rejects source in review without mutation [1.11ms]
+(pass) result boundary rejects source in mark without mutation [1.08ms]
+(pass) result boundary rejects source in bind without mutation [1.04ms]
+(pass) result boundary rejects source in reserve without mutation [1.08ms]
+(pass) result boundary rejects source in save without mutation [1.07ms]
+(pass) result boundary rejects source in fail without mutation [2.08ms]
+(pass) report-only owner retains result/reflection/workflow access and execution is checked [2.17ms]
+
+src/test/limits.test.ts:
+(pass) service limits keep package defaults when omitted [0.02ms]
+(pass) pending retryAfterMs follows injected service limits [3.18ms]
+(pass) submit horizon override rejects deadlines beyond the configured window [0.52ms]
+(pass) build expiry uses the configured TTL [1.20ms]
+
+src/test/re-search.test.ts:
+(pass) model can request one budgeted re_search without keyword gating [1.31ms]
+(pass) a second re_search is refused within the same build [1.16ms]
+
+src/test/disclosure.test.ts:
+(pass) first model input carries evidenceIndex without bodies [0.86ms]
+(pass) disclose adds requested sections; full body when no section IDs [1.03ms]
+
+src/test/cache-identity.test.ts:
+(pass) same task with refreshed deadline hits cache [0.98ms]
+(pass) acceptance change misses cache [0.84ms]
+(pass) archival replay stamps its generator instructions for usable() [0.75ms]
+(pass) usable refuses builds whose generator instructions drifted [0.83ms]
+(pass) cache identity manifest separates deadline from content keys [0.22ms]
+
+src/test/external-query-noninterference.test.ts:
+(pass) re_search model query does not reach external SourcePort [1.00ms]
+(pass) changing private goal canary does not change external re_search payload [1.69ms]
+(pass) without searchTask, re_search stays local-only [0.78ms]
+
+ 359 pass
+ 0 fail
+ 1477 expect() calls
+Ran 359 tests across 44 files. [1.59s]
+bun test v1.4.4 (38afee6c8)
+
+examples/contextstill/test/mcp.test.ts:
+(pass) snapshot is required and raw production-style databases are rejected [19.11ms]
+(pass) MCP initializes, lists both native tools and accepts initialized notification [13.29ms]
+(pass) auth, Host, Origin, path, method and content type are enforced [14.12ms]
+(pass) oversized bodies are rejected with and without Content-Length [12.87ms]
+(pass) invalid JSON, JSON-RPC, unknown methods/tools and invalid strict arguments fail [15.58ms]
+(pass) public filters precede limits, including a corrupt snapshot with private/retracted rows [27.03ms]
+(pass) superseded and candidate items can be read but are not searched [18.19ms]
+(pass) lexical search accepts Japanese and safely treats SQL/FTS syntax as data [13.55ms]
+(pass) conflict warnings name returned pairs; unsupported theme/depth is explicit [14.49ms]
+(pass) byte and Unicode bounds mark incomplete content without silently claiming completeness [17.53ms]
+
+examples/contextstill/test/scenario-runner.test.ts:
+(pass) retrieval-only makes zero inference calls and reports per-ref ranks [14.29ms]
+(pass) full mode with missing records is incomplete and withholds the mean [21.43ms]
+(pass) source.search throw isolates to one status row; later tasks still run [15.04ms]
+(pass) invalid judge value is status invalid; other tasks can still score; mean withheld [22.40ms]
+(pass) parseAssemblyMode defaults to baseline and rejects unknown values [0.04ms]
+(pass) buildEvalIdentity populates profile, assemblyMode, file hashes, and instruction digests [686.23ms]
+(pass) handle-profile records under bm25 do not silently reuse as scored [139.35ms]
+(pass) diverse companion loads independently without expanding the 61-task scoreboard [1.59ms]
+(pass) M2 current retrieval judge gets judge-only full reference bodies inside untrusted boundary [18.90ms]
+
+examples/contextstill/test/axis-means.test.ts:
+(pass) archived instruction version remains stable [0.37ms]
+(pass) original-five only keeps meanScore 4.2 and retrieval axis mean 4.2 [34.68ms]
+(pass) absent-only keeps its single-axis meanScore [28.00ms]
+(pass) compose-only (BM25 natural) keeps its single-axis meanScore [106.72ms]
+(pass) mixed retrieval + absent run withholds the blended mean [52.57ms]
+(pass) axis mean is withheld unless every task of that axis scored [0.09ms]
+
+examples/contextstill/test/skill-output.test.ts:
+(pass) full runner emits validated build files per task even while judge replay is pending [8.85ms]
+(pass) file writer rejects traversal, mismatched names and empty bodies before writing [0.71ms]
+(pass) scenario CLI writes and reports SKILL.md paths under the requested output directory [125.83ms]
+(pass) v7 writer emits separately digested ASCII bundles and rejects invalid files before any write [1.20ms]
+(pass) v7 writer refuses an existing reference-directory symlink before writing SKILL [0.67ms]
+(pass) writer rejects root symlink before writing [0.47ms]
+(pass) writer rejects ancestor symlink before writing [0.39ms]
+(pass) writer rejects dangling-root symlink before writing [0.22ms]
+(pass) writer rejects existing main hardlink before any write [0.44ms]
+(pass) writer rejects existing reference hardlink before any write [0.65ms]
+
+examples/contextstill/test/search-profile.test.ts:
+(pass) profile parsing is strict and defaults to bm25 [15.64ms]
+(pass) exact title pin moves the title match to rank 1 in both profiles [37.35ms]
+(pass) BM25 changes only order: score, handle ties, then short-only hits [49.02ms]
+(pass) CLI reports the selected profile, including the omitted-flag baseline [148.63ms]
+(pass) L1 title pin uses normalized key index before reading document JSON [19.37ms]
+
+examples/contextstill/test/condition-executor.test.ts:
+(pass) a delivered question preserves missing information and never runs the executor [0.11ms]
+(pass) generation failures stay failures; ready guidance runs exactly once [0.09ms]
+
+examples/contextstill/test/eval-cli.test.ts:
+(pass) eval CLI missing expected-digest manifest has explicit fail-closed behavior [34.23ms]
+(pass) eval CLI valid expected-digest manifest has explicit fail-closed behavior [33.57ms]
+(pass) eval CLI malformed expected-digest manifest has explicit fail-closed behavior [31.09ms]
+(pass) eval CLI null expected-digest manifest has explicit fail-closed behavior [28.17ms]
+(pass) eval CLI array expected-digest manifest has explicit fail-closed behavior [26.83ms]
+(pass) eval CLI wrong-value expected-digest manifest has explicit fail-closed behavior [27.22ms]
+(pass) eval CLI directory expected-digest manifest has explicit fail-closed behavior [27.37ms]
+(pass) eval CLI mismatch expected-digest manifest has explicit fail-closed behavior [27.62ms]
+(pass) non-json suite names use a separate expected-digest companion [29.64ms]
+
+examples/contextstill/test/multi-query.test.ts:
+(pass) cap enforced in schema AND runtime; malformed output never searches [15.64ms]
+(pass) RRF dedupes exact versions, preserves notices/versions, bounds output; no selection inference [13.80ms]
+(pass) get/validate remain delegated; abort prevents all auxiliary and source calls [13.43ms]
+(pass) multi identity differs from single, auxiliary reformulation stays independent of the current build version [59.99ms]
+(pass) CLI replay: single JP BM25 stays 15/16; off keeps old ranks and auto reformulates original five [847.93ms]
+(pass) fusion fails closed rather than discard warnings or return out-of-set notice refs [16.86ms]
+
+examples/contextstill/test/seed.test.ts:
+(pass) committed seed creates a public knowledge-only SQLite with matching provenance and restricted mode [665.42ms]
+(pass) committed seed works through the mock and SkillSmith without the source DB or service [697.50ms]
+(pass) seed export is deterministic and removes episode records and episode-derived examples [23.50ms]
+(pass) checksum and count mismatches fail before creating a DB [98.93ms]
+(pass) even correctly hashed bundles reject private scope, personal space, episode examples and extra fields [17.37ms]
+(pass) duplicate handles and unavailable successor/conflict references are rejected [13.66ms]
+(pass) existing fixtures require replace and an unrelated DB is never overwritten [26.66ms]
+
+examples/contextstill/test/source.test.ts:
+(pass) SourcePort preserves conditions and provenance as untrusted evidence with pinned versions [11.49ms]
+(pass) changed content invalidates old versions even if the upstream revision did not increment [14.34ms]
+(pass) withdrawn, incomplete and non-external dependencies cannot be validated [17.36ms]
+(pass) adapter rejects absent fixture stamps, wrong IDs/handles and incompatible trust [13.02ms]
+(pass) cancellation and unavailable transport fail instead of falling back to fixture content [12.64ms]
+(pass) standalone lifecycle reads the mock through SourcePort and revalidates before delivery [15.25ms]
+(pass) search conflicts reach the injected provider task; recorded outputs bind to the exact input [18.05ms]
+(pass) SourcePort exposes the published successor of a superseded item as a ref [13.51ms]
+(pass) fixture source does not invoke transport after cancellation during reservation [0.08ms]
+(pass) fixture source rejects cancellation delivered with the stream EOF [11.56ms]
+(pass) fallback source operation rejects cancellation during reservation [13.24ms]
+(pass) fallback source operation rejects cancellation during operation [13.00ms]
+
+examples/contextstill/test/provider-schema.test.ts:
+(pass) unsupported provider lookaround stays enforced by the original host schema [0.29ms]
+(pass) provider length constraints use a structural pattern without accepting empty queries [0.02ms]
+(pass) provider bridge preserves required nullable values and decodes only optional fields [0.45ms]
+(pass) provider union selects by schema discriminator, without repairing invalid model values [0.36ms]
+
+examples/contextstill/test/query-reformulation.test.ts:
+(pass) --query-reformulation is strict and auto by default [0.05ms]
+(pass) single canary: aux model input and DB query depend only on the public searchTask [33.16ms]
+(pass) multi canary: aux model input and DB query depend only on the public searchTask [29.60ms]
+(pass) wrapper sends the model's query to the DB and traces it [15.28ms]
+(pass) default off: identity has no reformulation digests; retrieval path is the plain source [14.24ms]
+(pass) single missing reformulation record goes pending and never invents a query (full) [13.72ms]
+(pass) single missing reformulation record goes pending in retrieval-only [13.84ms]
+(pass) multi missing reformulation record goes pending and never invents a query (full) [13.86ms]
+(pass) multi missing reformulation record goes pending in retrieval-only [12.36ms]
+(pass) parse: omitted is auto; auto/off/on explicit; unknown errors [0.05ms]
+(pass) auto fires on Japanese and non-title English, skips normalized title matches [11.71ms]
+(pass) auto does not skip reformulation for a filtered-out title [10.62ms]
+(pass) M3 auto reserves two physical searches plus one shared auxiliary call and memoizes only query [11.96ms]
+(pass) M3 exhausted shared model budget prevents auxiliary provider call and rewritten search [12.70ms]
+(pass) M3 validate reserves every get and stops at shared source cap [12.80ms]
+(pass) M3 core and auxiliary share model cap, without raising existing limit [14.36ms]
+
+examples/contextstill/test/recorded-identity.test.ts:
+(pass) M5 semantic ID excludes transient routing but execution ID binds cap and provider settings [0.10ms]
+(pass) M5 legacy records require explicit namespace; unknown usage remains null [0.10ms]
+
+examples/contextstill/test/compose-isolation.test.ts:
+(pass) evidence supply is strict and defaults to natural; current build digest tracked separately from archived instructions [73.20ms]
+(pass) natural compose retrieval rows remain byte-equivalent as parsed: handle 0/4, BM25 4/4 [59.76ms]
+(pass) oracle gets stored cards and bodies without search, delegates validation unchanged [1.18ms]
+(pass) oracle execute discloses real documents, never gold labels; missing next turn stays pending [2.63ms]
+(pass) oracle replay namespace cannot consume natural records for identical model data [0.08ms]
+(pass) original-five handle full replay remains 5 scored / mean 4.2 [33.04ms]
+(pass) compose judge receives reference bodies and dimensions only after build; missing judge remains pending [29.75ms]
+
+examples/contextstill/test/builder-packets.test.ts:
+(pass) builder-only packet projects provider turns, not surrounding gold or host suite [0.14ms]
+(pass) builder-only boundary rejects nested host labels and judge inputs instead of stripping silently [0.05ms]
+(pass) evaluation document admission can only shrink the existing eight-document limit [0.06ms]
+(pass) packet rejects nested host-only metric expectedTitle [0.02ms]
+(pass) packet rejects nested host-only metric untrustedQualityData
+(pass) packet rejects nested host-only metric searchPreview [0.01ms]
+(pass) packet rejects nested host-only metric allRequiredHitAt8
+(pass) packet rejects nested host-only metric allRequiredHitAt20Diagnostic
+(pass) packet rejects nested host-only metric retrievalRank
+(pass) packet rejects nested host-only metric ranks
+(pass) packet rejects nested host-only metric meanScore
+(pass) packet rejects nested host-only metric qualityScores
+(pass) builder packet data rejects unknown top-level fields and invalid role data [0.04ms]
+(pass) boundary leaves ordinary prose intact and admits semantic-review and reformulation packets [0.05ms]
+(pass) builder-only CLI excludes host metrics/gold and unread judge records (off) [118.89ms]
+(pass) builder-only CLI excludes host metrics/gold and unread judge records (on) [48.95ms]
+(pass) builder-only CLI rejects incompatible evaluation modes before opening files [111.30ms]
+
+examples/contextstill/test/skill-source.test.ts:
+(pass) ContextStill envelope renders only usable fields as Markdown [0.57ms]
+(pass) all non-empty knowledge fields render deterministically; others pass through [0.13ms]
+
+examples/contextstill/test/cloud-budget.test.ts:
+(pass) cloud response boundary rejects oversize without a valid inference result [1.68ms]
+(pass) cloud response boundary rejects missing-receipt without a valid inference result [1.38ms]
+(pass) concurrent calls wait for committed cost settlement instead of exceeding the cap [1.92ms]
+(pass) cancelling a cost waiter causes no second physical call [0.83ms]
+(pass) cloud budget reserves unknown failures across restarts and prevents any next physical call [0.72ms]
+(pass) cloud budget records paid usage even when structured output is incomplete [1.15ms]
+
+examples/contextstill/test/scoreboard.test.ts:
+(pass) 61 tasks in six slices, no blended mean [1.43ms]
+(pass) original five handle 4.2 (9,9,1,1,1), hit@8 2/5 [0.04ms]
+(pass) original five bm25 8.6 (9,9,9,9,7), hit@8 5/5 [0.02ms]
+(pass) exact handle SKILL mean 2 (two 9s and fourteen 1s), hit@8 2/16 [0.01ms]
+(pass) slices without SKILL records report 0/n and null mean [0.03ms]
+(pass) compose handle 1, bm25 8; absent handle 8
+(pass) scoreboard retains the archived build instruction version [0.02ms]
+(pass) product default SKILL scores stay off the two-column board and out of the 61 total [0.13ms]
+(pass) M1 current scoreboard does not relabel stale historical scores [0.14ms]
+(pass) M1 score snapshots reject duplicate missing and out-of-range values [3.28ms]
+(pass) M6 current score binding refuses mismatched final artifact or judge provenance [0.14ms]
+
+examples/contextstill/test/database-diagnostic.test.ts:
+(pass) fixture diagnostic preserves existing old-schema database [4.14ms]
+(pass) fixture diagnostic preserves existing wrong-format database [3.37ms]
+(pass) fixture diagnostic preserves existing raw database [1.23ms]
+
+examples/contextstill/test/snapshot.test.ts:
+(pass) public snapshot exporter: WAL consistency, private-data exclusion and file protection [141.46ms]
+
+examples/contextstill/test/absent-isolation.test.ts:
+(pass) absent judge digests are stable; current build digest tracked separately from archived instructions [19.83ms]
+(pass) natural compose retrieval canaries remain: handle 0/4, BM25 4/4 [63.04ms]
+(pass) absent retrieval-only stays N/A recall and never invents scores [10.23ms]
+(pass) absent builder never sees axis, gold labels, or false-friend canaries; missing stays pending [6.52ms]
+(pass) original-five handle full replay remains 5 scored / mean 4.2 [32.56ms]
+(pass) absent judge receives watch-list only after build; missing judge remains pending [7.96ms]
+
+examples/contextstill/test/abstention-isolation.test.ts:
+(pass) contrast judge digests are stable; current build digest tracked separately from archived instructions; flag strict [56.48ms]
+(pass) original-five handle full replay remains 5 scored / mean 4.2 with flag omitted [37.62ms]
+(pass) flag on reuses build records but never original-five judge records; stays pending [40.24ms]
+(pass) compose natural handle records also stay pending under contrast (no compose judge reuse) [27.25ms]
+(pass) natural compose retrieval canaries remain: handle 0/4, BM25 4/4 [58.94ms]
+(pass) builder never sees gold, axis, false-friend, or contrast canaries [7.10ms]
+
+examples/contextstill/test/call-observation.test.ts:
+(pass) source observer failure emits one physical observation (metered=false) [16.09ms]
+(pass) source observer failure emits one physical observation (metered=true) [13.66ms]
+(pass) malformed RPC content produces one error observation and no success [0.24ms]
+
+ 160 pass
+ 0 fail
+ 1001 expect() calls
+Ran 160 tests across 23 files. [6.30s]
+$ bun scripts/build.ts
+$ bun scripts/pack.ts
+{"artifact":"/tmp/skillsmith/artifacts/eumenes-skill-smith-0.1.0.tgz","files":79,"sourceGitCommit":null}

@@ -220,6 +220,7 @@ function currentView<
 	suiteFile: string,
 	profile: Profile,
 	mode: "auto" | "off",
+	seedPath: string,
 ) {
 	const suite = read(dir, suiteFile);
 	const effective = mode === "off" ? "off" : sf?.identity?.queryReformulation;
@@ -227,7 +228,7 @@ function currentView<
 		searchProfile: profile,
 		suiteId: suite.id,
 		suitePath: resolve(dir, suiteFile),
-		seedPath: resolve("data/contextstill/seed.sqlite"),
+		seedPath,
 		queryReformulation: effective === "on" ? "on" : "off",
 		assemblyMode: "baseline",
 		evidenceSupply: "natural",
@@ -260,7 +261,11 @@ function currentView<
 	};
 }
 
-export function buildScoreboard(dir = "examples/contextstill/scenarios") {
+export function buildScoreboard(
+	dir = "examples/contextstill/scenarios",
+	options: { seedPath?: string } = {},
+) {
+	const seedPath = options.seedPath ?? resolve("data/contextstill/seed.sqlite");
 	const suite = JSON.parse(
 		readFileSync(resolve(dir, "suite-3axis.json"), "utf8"),
 	);
@@ -418,6 +423,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 					"suite-3axis.json",
 					c.profile,
 					"off",
+					seedPath,
 				),
 			),
 			id: def.id,
@@ -436,6 +442,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 						"suite-3axis.json",
 						"bm25",
 						"auto",
+						seedPath,
 					)
 				: null,
 		};
@@ -521,6 +528,7 @@ export function buildScoreboard(dir = "examples/contextstill/scenarios") {
 					"suite-diverse.json",
 					"bm25",
 					"auto",
+					seedPath,
 				)
 			: null,
 	};

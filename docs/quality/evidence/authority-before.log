@@ -1,0 +1,1029 @@
+bun test v1.4.4 (38afee6c8)
+
+src/test/result-authority.test.ts:
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  digest: "7efde1e4b386c7468a8f57ba9c8130e7aaf871acd70d825239b3cb782fe0a8eb",
+  revision: 2,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in report without mutation [13.16ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  reflection: {
+    ref: "ref:83ae37ef-018b-42ab-9663-d2e6f2ffeeb3",
+    scope: "owner",
+    executionRef: "bound-execution",
+    reportDigest: "0e3dd394daa8e3ea4b74e76eede0b3c82d8b164b5153e57d9cf1bbfef1182599",
+    buildRef: "ref:f2426c86-3eac-4e4f-ad11-26aaa9a6811d",
+    authority: {
+      scope: "owner",
+      principal: "user",
+      epoch: 0,
+      sourceRefs: [ "message:1" ],
+      permissions: [ "build", "report", "manage" ],
+    },
+    reserved: false,
+    outcome: "pending",
+    proposalRef: null,
+    revision: 0,
+    inputTokens: null,
+    outputTokens: null,
+  },
+  report: {
+    input: {
+      reportId: "owner-report",
+      buildRef: "ref:f2426c86-3eac-4e4f-ad11-26aaa9a6811d",
+      executionRef: "bound-execution",
+      outcome: "succeeded",
+      evidence: [],
+      summary: "owner summary",
+      improvement: "compare observations",
+      expectedRevision: 0,
+    },
+    scope: "owner",
+    revision: 1,
+    digest: "0e3dd394daa8e3ea4b74e76eede0b3c82d8b164b5153e57d9cf1bbfef1182599",
+  },
+  grounding: {
+    buildBody: "資料の正本と相違を確認する。\n\n不確実な箇所を示し、報告を検証する。\n\n受入条件\nacceptance:1: 差異と出所が説明されている\n\n制約\nconstraint:1: 原資料を変更しない\n\n検証\n差異の各項目が原資料へたどれるか確認する。",
+    sourceRefs: [ "skill:compare@1" ],
+    dependencyVersions: [
+      {
+        id: "compare",
+        version: "1",
+        digest: "digest",
+        generation: 0,
+      }
+    ],
+    contrast: {
+      succeeded: [ "owner summary" ],
+      failed: [],
+    },
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in reflection without mutation [2.85ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  buildRef: "ref:0449522f-dc26-4f7e-86da-db0c687d4a50",
+  executionRef: "bound-execution",
+  taskGoal: "資料の相違を確認して報告する",
+  succeededSummaries: [ "observed success" ],
+  failedSummaries: [],
+  trajectories: [],
+  evidence: [],
+  reportDigest: "85817aacc81cc83fde03b69ac9395d8f003ff1a6b884239704ca416ce00f8039",
+  reportRevision: 1,
+  authority: {
+    scope: "owner",
+    principal: "other-principal",
+    epoch: 0,
+  },
+  inputDigest: "ed8743cd0f0ca21dc63ff02773f1b1892c52430507521cf03152c212d1d5fde7",
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in workflow without mutation [2.32ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:df7fba5a-98f5-46cb-a9e6-9f387fca9cf0",
+  scope: "owner",
+  buildRef: "ref:d9b2641f-811a-4991-bb4a-1d13389fc794",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [ "proof" ],
+  status: "validated",
+  revision: 1,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in review without mutation [2.00ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:69e2f49d-f674-40f2-b0da-c0fa78d54930",
+  scope: "owner",
+  buildRef: "ref:0ba268d4-db00-45ad-9f06-008e5b0c2643",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  executionVerified: true,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in mark without mutation [2.19ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:05056873-408c-48ea-8fc3-b6c3661cf531",
+  scope: "owner",
+  buildRef: "ref:eae6d0d1-5268-413f-a8ba-09b846ffa8fd",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  candidateVerification: {
+    status: "bound",
+    proposalDigest: "795bf267f3fcea3c841742d8c752a9fae2d3f2e7fcae1626cd4c1feb5da6fc3d",
+    reportDigest: "6f739bc66562b4e8ff613c4b41d0a33b95bfe7904cdec1a0ce65cf6232c27ef3",
+    reportRevision: 1,
+    verifierVersion: "candidate_verify.v1",
+    outcome: "succeeded",
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects principal in bind without mutation [1.89ms]
+(pass) result boundary rejects principal in reserve without mutation [3.02ms]
+(pass) result boundary rejects principal in save without mutation [1.85ms]
+(pass) result boundary rejects principal in fail without mutation [2.25ms]
+(pass) result boundary rejects scope in report without mutation [2.35ms]
+(pass) result boundary rejects scope in reflection without mutation [2.47ms]
+(pass) result boundary rejects scope in workflow without mutation [2.47ms]
+(pass) result boundary rejects scope in review without mutation [2.81ms]
+(pass) result boundary rejects scope in mark without mutation [1.71ms]
+(pass) result boundary rejects scope in bind without mutation [1.44ms]
+(pass) result boundary rejects scope in reserve without mutation [1.37ms]
+(pass) result boundary rejects scope in save without mutation [1.42ms]
+(pass) result boundary rejects scope in fail without mutation [1.34ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  digest: "b193820e9e3eea9eab8618961eb4d6f300402a3cc099ddaf9c35a51744da506e",
+  revision: 2,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in report without mutation [1.54ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  reflection: {
+    ref: "ref:89c91d8c-fe78-43d5-8de0-a11e44e0e92f",
+    scope: "owner",
+    executionRef: "bound-execution",
+    reportDigest: "c221c8ee146965579be8a2e6c371646801502a8c4b98adce6673f40a6526479d",
+    buildRef: "ref:97e695c9-ffd4-4e0c-8bb3-b896ab4d039c",
+    authority: {
+      scope: "owner",
+      principal: "user",
+      epoch: 0,
+      sourceRefs: [ "message:1" ],
+      permissions: [ "build", "report", "manage" ],
+    },
+    reserved: false,
+    outcome: "pending",
+    proposalRef: null,
+    revision: 0,
+    inputTokens: null,
+    outputTokens: null,
+  },
+  report: {
+    input: {
+      reportId: "owner-report",
+      buildRef: "ref:97e695c9-ffd4-4e0c-8bb3-b896ab4d039c",
+      executionRef: "bound-execution",
+      outcome: "succeeded",
+      evidence: [],
+      summary: "owner summary",
+      improvement: "compare observations",
+      expectedRevision: 0,
+    },
+    scope: "owner",
+    revision: 1,
+    digest: "c221c8ee146965579be8a2e6c371646801502a8c4b98adce6673f40a6526479d",
+  },
+  grounding: {
+    buildBody: "資料の正本と相違を確認する。\n\n不確実な箇所を示し、報告を検証する。\n\n受入条件\nacceptance:1: 差異と出所が説明されている\n\n制約\nconstraint:1: 原資料を変更しない\n\n検証\n差異の各項目が原資料へたどれるか確認する。",
+    sourceRefs: [ "skill:compare@1" ],
+    dependencyVersions: [
+      {
+        id: "compare",
+        version: "1",
+        digest: "digest",
+        generation: 0,
+      }
+    ],
+    contrast: {
+      succeeded: [ "owner summary" ],
+      failed: [],
+    },
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in reflection without mutation [2.27ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  buildRef: "ref:55bc4201-57f2-484f-8f53-8bd57cc91c13",
+  executionRef: "bound-execution",
+  taskGoal: "資料の相違を確認して報告する",
+  succeededSummaries: [ "observed success" ],
+  failedSummaries: [],
+  trajectories: [],
+  evidence: [],
+  reportDigest: "411949c89d026f3fab11d13e694efdc48da496bc607779d98334c11da5d02f8c",
+  reportRevision: 1,
+  authority: {
+    scope: "owner",
+    principal: "user",
+    epoch: 1,
+  },
+  inputDigest: "803ea1279725c8e061098fe521c84d23e592205c20446e721d10cba8f00eef17",
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in workflow without mutation [1.89ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:53a5f507-34e0-4e8b-b0e9-ca13ea05dd9d",
+  scope: "owner",
+  buildRef: "ref:c7707300-af4b-4dc6-975c-c621d5d12709",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [ "proof" ],
+  status: "validated",
+  revision: 1,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in review without mutation [1.58ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:7c0cfd4a-3abe-44b1-b3df-37828a0c041e",
+  scope: "owner",
+  buildRef: "ref:c8dd113a-c065-4ddb-89ec-e0147b980f54",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  executionVerified: true,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in mark without mutation [1.46ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:548f11ca-1311-4dee-8feb-e02c81152766",
+  scope: "owner",
+  buildRef: "ref:5539a0d0-edea-4cd3-90db-9e549e969f93",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  candidateVerification: {
+    status: "bound",
+    proposalDigest: "795bf267f3fcea3c841742d8c752a9fae2d3f2e7fcae1626cd4c1feb5da6fc3d",
+    reportDigest: "24ba0f74003b9bda1862c78907803f563e400d4e817bcb512e427b1b667b095a",
+    reportRevision: 1,
+    verifierVersion: "candidate_verify.v1",
+    outcome: "succeeded",
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects epoch in bind without mutation [1.46ms]
+(pass) result boundary rejects epoch in reserve without mutation [1.27ms]
+(pass) result boundary rejects epoch in save without mutation [1.33ms]
+(pass) result boundary rejects epoch in fail without mutation [1.24ms]
+(pass) result boundary rejects permission in report without mutation [2.14ms]
+(pass) result boundary rejects permission in reflection without mutation [1.83ms]
+(pass) result boundary rejects permission in workflow without mutation [1.87ms]
+(pass) result boundary rejects permission in review without mutation [3.04ms]
+(pass) result boundary rejects permission in mark without mutation [1.79ms]
+(pass) result boundary rejects permission in bind without mutation [1.32ms]
+(pass) result boundary rejects permission in reserve without mutation [1.58ms]
+(pass) result boundary rejects permission in save without mutation [2.85ms]
+(pass) result boundary rejects permission in fail without mutation [2.04ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  digest: "2e14b5eda01381935d0936804ed0b880f4ab91578af9dd3b2679a9419830f846",
+  revision: 2,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in report without mutation [1.65ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  reflection: {
+    ref: "ref:c810040d-b1b7-4c1d-b066-9eb774a9fa96",
+    scope: "owner",
+    executionRef: "bound-execution",
+    reportDigest: "01b30924b146d8f5da2157401e9a9f75dbdf60061d5772a6adaf6a5390362653",
+    buildRef: "ref:3a518c0b-a509-405a-a321-a145b579f300",
+    authority: {
+      scope: "owner",
+      principal: "user",
+      epoch: 0,
+      sourceRefs: [ "message:1" ],
+      permissions: [ "build", "report", "manage" ],
+    },
+    reserved: false,
+    outcome: "pending",
+    proposalRef: null,
+    revision: 0,
+    inputTokens: null,
+    outputTokens: null,
+  },
+  report: {
+    input: {
+      reportId: "owner-report",
+      buildRef: "ref:3a518c0b-a509-405a-a321-a145b579f300",
+      executionRef: "bound-execution",
+      outcome: "succeeded",
+      evidence: [],
+      summary: "owner summary",
+      improvement: "compare observations",
+      expectedRevision: 0,
+    },
+    scope: "owner",
+    revision: 1,
+    digest: "01b30924b146d8f5da2157401e9a9f75dbdf60061d5772a6adaf6a5390362653",
+  },
+  grounding: {
+    buildBody: "資料の正本と相違を確認する。\n\n不確実な箇所を示し、報告を検証する。\n\n受入条件\nacceptance:1: 差異と出所が説明されている\n\n制約\nconstraint:1: 原資料を変更しない\n\n検証\n差異の各項目が原資料へたどれるか確認する。",
+    sourceRefs: [ "skill:compare@1" ],
+    dependencyVersions: [
+      {
+        id: "compare",
+        version: "1",
+        digest: "digest",
+        generation: 0,
+      }
+    ],
+    contrast: {
+      succeeded: [ "owner summary" ],
+      failed: [],
+    },
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in reflection without mutation [1.41ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  buildRef: "ref:d5069a6d-a5d8-48d7-968c-ad12fe312720",
+  executionRef: "bound-execution",
+  taskGoal: "資料の相違を確認して報告する",
+  succeededSummaries: [ "observed success" ],
+  failedSummaries: [],
+  trajectories: [],
+  evidence: [],
+  reportDigest: "40bd7150795945cdf0d8a6cf3c0e02431d6c0abf1105b6e5afed037843686bea",
+  reportRevision: 1,
+  authority: {
+    scope: "owner",
+    principal: "user",
+    epoch: 0,
+  },
+  inputDigest: "0a9b187393cb99bc45fd88bfb54334058dca7a8021a2edfa5b01a5ffcf939b72",
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in workflow without mutation [1.35ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:1988ee8a-f034-4dfd-90b7-7cfba927450e",
+  scope: "owner",
+  buildRef: "ref:739d9ee4-a9c2-44cc-aeda-98c0a2266d2b",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [ "proof" ],
+  status: "validated",
+  revision: 1,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in review without mutation [1.28ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:6f1f3769-0237-4c1f-9ee8-d6cf1b556e8a",
+  scope: "owner",
+  buildRef: "ref:047bff10-bff7-4dff-9959-8addb111cad3",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  executionVerified: true,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in mark without mutation [1.29ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:139f956e-a74e-4ebb-86fa-c53a9b19f8d8",
+  scope: "owner",
+  buildRef: "ref:d0f73c6a-1a78-45b4-a63b-464ccb46801d",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  candidateVerification: {
+    status: "bound",
+    proposalDigest: "795bf267f3fcea3c841742d8c752a9fae2d3f2e7fcae1626cd4c1feb5da6fc3d",
+    reportDigest: "0094779b98e176decfb42919078fe6ffa1b48689504c246cd142f5d45b232d52",
+    reportRevision: 1,
+    verifierVersion: "candidate_verify.v1",
+    outcome: "succeeded",
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in bind without mutation [2.39ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: undefined
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in reserve without mutation [1.66ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:341391b7-2a8d-4259-b9ff-b5c47df8da47",
+  scope: "owner",
+  buildRef: "ref:9b670449-2ba9-42f2-9f6b-37fcf35403fc",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 0,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in save without mutation [1.50ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: true
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects execution in fail without mutation [1.39ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  digest: "0f3de516d5d44a277e434689909c33f61f22c11dfeb9357c04b4e98c1d9222d3",
+  revision: 2,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in report without mutation [1.40ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  reflection: {
+    ref: "ref:0022a2ee-7493-40ff-97b6-4eee74870890",
+    scope: "owner",
+    executionRef: "bound-execution",
+    reportDigest: "dc937e94634591f23d35f914b3a1b9c67ddab34866609fa9a52b7df357957fef",
+    buildRef: "ref:be79a848-c4bc-4131-99e8-80ba68d64ab3",
+    authority: {
+      scope: "owner",
+      principal: "user",
+      epoch: 0,
+      sourceRefs: [ "message:1" ],
+      permissions: [ "build", "report", "manage" ],
+    },
+    reserved: false,
+    outcome: "pending",
+    proposalRef: null,
+    revision: 0,
+    inputTokens: null,
+    outputTokens: null,
+  },
+  report: {
+    input: {
+      reportId: "owner-report",
+      buildRef: "ref:be79a848-c4bc-4131-99e8-80ba68d64ab3",
+      executionRef: "bound-execution",
+      outcome: "succeeded",
+      evidence: [],
+      summary: "owner summary",
+      improvement: "compare observations",
+      expectedRevision: 0,
+    },
+    scope: "owner",
+    revision: 1,
+    digest: "dc937e94634591f23d35f914b3a1b9c67ddab34866609fa9a52b7df357957fef",
+  },
+  grounding: {
+    buildBody: "資料の正本と相違を確認する。\n\n不確実な箇所を示し、報告を検証する。\n\n受入条件\nacceptance:1: 差異と出所が説明されている\n\n制約\nconstraint:1: 原資料を変更しない\n\n検証\n差異の各項目が原資料へたどれるか確認する。",
+    sourceRefs: [ "skill:compare@1" ],
+    dependencyVersions: [
+      {
+        id: "compare",
+        version: "1",
+        digest: "digest",
+        generation: 0,
+      }
+    ],
+    contrast: {
+      succeeded: [ "owner summary" ],
+      failed: [],
+    },
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in reflection without mutation [1.39ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  buildRef: "ref:02c7d383-91d7-4f6f-8f6f-06ab5dea6017",
+  executionRef: "bound-execution",
+  taskGoal: "資料の相違を確認して報告する",
+  succeededSummaries: [ "observed success" ],
+  failedSummaries: [],
+  trajectories: [],
+  evidence: [],
+  reportDigest: "cbf4097916fd343c72f24f5500cc89e2d3196744f9c7dd264d3b76bbaab6e72d",
+  reportRevision: 1,
+  authority: {
+    scope: "owner",
+    principal: "user",
+    epoch: 0,
+  },
+  inputDigest: "ba8f6ba5070887dcd92f7ecf0c15fd5c379aaac34eb521a4d792888d212aea5a",
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in workflow without mutation [1.33ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:668a1b81-bf80-4eae-944d-5162982796e8",
+  scope: "owner",
+  buildRef: "ref:b83a7a46-4cb5-4ca3-8abd-3cd4240b6230",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [ "proof" ],
+  status: "validated",
+  revision: 1,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in review without mutation [2.11ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:648cf5bf-ceed-4905-8612-ffd0303bdc15",
+  scope: "owner",
+  buildRef: "ref:9a4f8ec3-af7d-47e0-8593-6441986c1b73",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  executionVerified: true,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in mark without mutation [1.73ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:ea8d11a8-02ac-4751-babe-cf1e7ef2feea",
+  scope: "owner",
+  buildRef: "ref:fda5253e-0546-4f8a-9263-5a9b10136ac8",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 1,
+  candidateVerification: {
+    status: "bound",
+    proposalDigest: "795bf267f3fcea3c841742d8c752a9fae2d3f2e7fcae1626cd4c1feb5da6fc3d",
+    reportDigest: "8519957cac8316291f518371d4abf57cec83f0d8b913b47b6c5a569cdc8dfb99",
+    reportRevision: 1,
+    verifierVersion: "candidate_verify.v1",
+    outcome: "succeeded",
+  },
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in bind without mutation [1.53ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: undefined
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in reserve without mutation [1.38ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: {
+  ref: "ref:345bdfac-7d3c-4130-b272-3b1e6d723725",
+  scope: "owner",
+  buildRef: "ref:fc5c8831-c1cb-4ed6-9d48-79ab810d5dc4",
+  executionRef: "bound-execution",
+  sections: [
+    {
+      id: "check",
+      body: "check originals",
+    }
+  ],
+  conditions: [ "originals exist" ],
+  evidence: [],
+  status: "proposed",
+  revision: 0,
+}
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in save without mutation [1.33ms]
+60 |           case "reserve": return f.service.reserveReflection(f.db, reflection, auth);
+61 |           case "save": return f.service.saveProposal(f.db, reflection, result, auth);
+62 |           case "fail": return f.service.failReflection(f.db, reflection, auth);
+63 |         }
+64 |       });
+65 |       expect(invoke).toThrow();
+                          ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: true
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:65:22)
+(fail) result boundary rejects source in fail without mutation [1.31ms]
+82 |   expect(f.service.prepareReflection(f.db, "execution", auth)?.grounding?.buildBody).toBe(r.build.content.body);
+83 |   expect(f.service.prepareWorkflow(f.db, {
+84 |     buildRef: r.build.ref, executionRef: "execution", taskGoal: f.request.task.goal,
+85 |     succeededSummaries: ["observed"], evidence: [],
+86 |   }, auth).executionRef).toBe("execution");
+87 |   expect(refs.some((items) => items.includes("execution"))).toBe(true);
+                                                                 ^
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/test/result-authority.test.ts:87:61)
+(fail) report-only owner retains result/reflection/workflow access and execution is checked [1.37ms]
+
+31 tests failed:
+(fail) result boundary rejects principal in report without mutation [13.16ms]
+(fail) result boundary rejects principal in reflection without mutation [2.85ms]
+(fail) result boundary rejects principal in workflow without mutation [2.32ms]
+(fail) result boundary rejects principal in review without mutation [2.00ms]
+(fail) result boundary rejects principal in mark without mutation [2.19ms]
+(fail) result boundary rejects principal in bind without mutation [1.89ms]
+(fail) result boundary rejects epoch in report without mutation [1.54ms]
+(fail) result boundary rejects epoch in reflection without mutation [2.27ms]
+(fail) result boundary rejects epoch in workflow without mutation [1.89ms]
+(fail) result boundary rejects epoch in review without mutation [1.58ms]
+(fail) result boundary rejects epoch in mark without mutation [1.46ms]
+(fail) result boundary rejects epoch in bind without mutation [1.46ms]
+(fail) result boundary rejects execution in report without mutation [1.65ms]
+(fail) result boundary rejects execution in reflection without mutation [1.41ms]
+(fail) result boundary rejects execution in workflow without mutation [1.35ms]
+(fail) result boundary rejects execution in review without mutation [1.28ms]
+(fail) result boundary rejects execution in mark without mutation [1.29ms]
+(fail) result boundary rejects execution in bind without mutation [2.39ms]
+(fail) result boundary rejects execution in reserve without mutation [1.66ms]
+(fail) result boundary rejects execution in save without mutation [1.50ms]
+(fail) result boundary rejects execution in fail without mutation [1.39ms]
+(fail) result boundary rejects source in report without mutation [1.40ms]
+(fail) result boundary rejects source in reflection without mutation [1.39ms]
+(fail) result boundary rejects source in workflow without mutation [1.33ms]
+(fail) result boundary rejects source in review without mutation [2.11ms]
+(fail) result boundary rejects source in mark without mutation [1.73ms]
+(fail) result boundary rejects source in bind without mutation [1.53ms]
+(fail) result boundary rejects source in reserve without mutation [1.38ms]
+(fail) result boundary rejects source in save without mutation [1.33ms]
+(fail) result boundary rejects source in fail without mutation [1.31ms]
+(fail) report-only owner retains result/reflection/workflow access and execution is checked [1.37ms]
+
+ 24 pass
+ 31 fail
+ 81 expect() calls
+Ran 55 tests across 1 file. [169.00ms]

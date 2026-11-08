@@ -1,8 +1,10 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { skillBundleDigest } from "../../../src/service/skill-markdown.js";
 import { artifactDigest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import {
 	mkdtempSync,
+	realpathSync,
 	readFileSync,
 	rmSync,
 	existsSync,
@@ -24,11 +26,8 @@ import { createFixtureSource } from "../source.js";
 
 // Recorded inference only: verify emission before judge completion, with no fresh model calls.
 test("full runner emits validated build files per task even while judge replay is pending", async () => {
-	const dir = mkdtempSync(resolve(tmpdir(), "skill-output-"));
-	const fixture = new ContextStillFixture(
-		resolve("data/contextstill/seed.sqlite"),
-		"handle",
-	);
+	const dir = mkdtempSync(resolve(realpathSync(tmpdir()), "skill-output-"));
+	const fixture = new ContextStillFixture(resolve(seedFixturePath()), "handle");
 	const token = crypto.randomUUID();
 	const load = (name: string) =>
 		JSON.parse(
@@ -76,7 +75,7 @@ test("full runner emits validated build files per task even while judge replay i
 });
 
 test("file writer rejects traversal, mismatched names and empty bodies before writing", () => {
-	const dir = mkdtempSync(resolve(tmpdir(), "skill-output-"));
+	const dir = mkdtempSync(resolve(realpathSync(tmpdir()), "skill-output-"));
 	const content =
 		'---\nname: "safe-name"\ndescription: "Does checks. Use for checks."\n---\nInstructions.';
 	try {
@@ -125,12 +124,14 @@ test("file writer rejects traversal, mismatched names and empty bodies before wr
 });
 
 test("scenario CLI writes and reports SKILL.md paths under the requested output directory", () => {
-	const dir = mkdtempSync(resolve(tmpdir(), "skill-cli-"));
+	const dir = mkdtempSync(resolve(realpathSync(tmpdir()), "skill-cli-"));
 	try {
 		const result = Bun.spawnSync(
 			[
 				process.execPath,
 				"examples/contextstill/scenario-eval.ts",
+				"--db",
+				seedFixturePath(),
 				"--assembly-mode",
 				"legacy",
 				"--suite",
@@ -174,7 +175,7 @@ test("scenario CLI writes and reports SKILL.md paths under the requested output 
 });
 
 test("v7 writer emits separately digested ASCII bundles and rejects invalid files before any write", () => {
-	const dir = mkdtempSync(resolve(tmpdir(), "skill-v7-"));
+	const dir = mkdtempSync(resolve(realpathSync(tmpdir()), "skill-v7-"));
 	const content =
 		'---\nname: "comparison"\ndescription: "比較するときに使う。"\n---\n\n## 標準ワークフロー\n\n比較する。';
 	const main = {
@@ -228,7 +229,7 @@ test("v7 writer emits separately digested ASCII bundles and rejects invalid file
 	}
 });
 test("v7 writer refuses an existing reference-directory symlink before writing SKILL", () => {
-	const dir = mkdtempSync(resolve(tmpdir(), "skill-v7-link-"));
+	const dir = mkdtempSync(resolve(realpathSync(tmpdir()), "skill-v7-link-"));
 	const content =
 		'---\nname: "safe"\ndescription: "Use for checks."\n---\nCheck.';
 	const main = {
@@ -264,7 +265,9 @@ test("v7 writer refuses an existing reference-directory symlink before writing S
 
 for (const position of ["root", "ancestor", "dangling-root"] as const) {
 	test(`writer rejects ${position} symlink before writing`, () => {
-		const dir = mkdtempSync(resolve(tmpdir(), "skill-root-link-"));
+		const dir = mkdtempSync(
+			resolve(realpathSync(tmpdir()), "skill-root-link-"),
+		);
 		const content = '---\nname: "safe"\ndescription: "Checks."\n---\nCheck.';
 		const skill = {
 			name: "safe",
@@ -298,7 +301,9 @@ for (const position of ["root", "ancestor", "dangling-root"] as const) {
 }
 for (const reference of [false, true]) {
 	test(`writer rejects existing ${reference ? "reference" : "main"} hardlink before any write`, () => {
-		const dir = mkdtempSync(resolve(tmpdir(), "skill-hard-link-"));
+		const dir = mkdtempSync(
+			resolve(realpathSync(tmpdir()), "skill-hard-link-"),
+		);
 		const content = '---\nname: "safe"\ndescription: "Checks."\n---\nCheck.';
 		const main = {
 			name: "safe",

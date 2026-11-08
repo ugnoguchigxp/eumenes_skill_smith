@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { digest } from "../../../src/service/identity.js";
 // Proposal 34: per-axis judges are reported per axis; a mixed run never blends them.
 import { expect, test } from "bun:test";
@@ -23,7 +24,7 @@ async function replay(
 	build: InferenceRecord[],
 	judge: InferenceRecord[],
 ) {
-	const db = new ContextStillFixture("data/contextstill/seed.sqlite", profile);
+	const db = new ContextStillFixture(seedFixturePath(), profile);
 	const token = crypto.randomUUID();
 	try {
 		return await runFull({

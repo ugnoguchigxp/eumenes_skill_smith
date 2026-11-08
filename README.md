@@ -17,11 +17,17 @@ bun run context:check
 bun run verify
 ```
 
-verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、tgz内容と配布物からのimportを検査します。試験ではnetworkとBun.serveを禁止し、一時DBと注入したモデルを使います。
+verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、tgz内容と配布物からのimportを検査します。試験は公開seedから専用の一時DBを作るため、既存の作業用DBに依存しません。networkとBun.serveを禁止し、注入したモデルを使います。macOSでもTMPDIRの追加指定は不要です。
 
 `context:seed` は [公開seed](examples/contextstill/seed/README.md) のハッシュ・件数・参照を検査し、`data/contextstill/seed.sqlite` と検索索引を作成します。seedには知識だけを含め、経験、経験由来の事例、設定、認証情報、raw sourceは含めません。生成したSQLiteはGitとコア配布物から除外しています。
 
-`context:check` は疑似ContextStillと固定モデルによる接続確認です。文字列検索を使い、実LLMの品質評価は行いません。`context:eval` は固定fixtureの完全性検査であり、組み立て品質の評点ではありません。タスクシナリオで期待Skillが組み上がったかをLLMが評点するのは `bun run context:eval-scenarios` です。記録が無い呼び出しは推論タスクを書き出して待ち、記録がある呼び出しは毎回評点を出します。`--retrieval-only` は推論を一切呼ばず検索順位だけを測り、0〜10 の評点は出しません（提案 26）。`--search-profile handle|bm25` で mock 検索の順位だけを比較できます（既定は `handle`、提案 27）。旧5件の SKILL 組み立てでは BM25 が平均 4.2 から 8.6 になりましたが、日本語退行があるため既定は切り替えず、本番 ContextStill の検索改善を意味しません。評価報告には suite/seed と指示・schema の identity が付き、未採点を含む平均は出しません（提案 35）。既存のseed DBを作り直す場合は `bun run context:seed --replace` を使います。コピー済みの知識・経験DBを調べる場合は `bun run context:check data/contextstill/snapshot.sqlite` を指定します。詳しい手順は[単体試験基盤](examples/contextstill/README.md)を参照してください。
+`context:check` は疑似ContextStillと固定モデルによる接続確認です。`context:eval` は固定fixtureの完全性検査です。実LLMによる品質・実課題の効果は別に検証します。
+
+検索の現行既定は `bm25`、言い換えは `auto` です。`--search-profile handle|bm25` と `--query-reformulation off|on|auto|multi` で条件を明示できます。autoは公開searchTaskと公開カードだけを使う補助推論です。現在は文字種と題名一致による呼出し選択が残っており、意味判断をLLMに集約する比較は未完了です。過去の品質点は現在版への適合を確認してから使い、別条件の点数と混ぜません。
+
+`bun run context:eval-scenarios` は生成・採点の記録がなければ、未実施の推論タスクを書き出して待ちます。`--retrieval-only` は検索順位だけを測り、生成品質点を出しません。`bun run context:scoreboard` は記録のidentityと失効状態を照合します。手順と条件の履歴は[単体試験基盤](examples/contextstill/README.md)と[計測手順](docs/measurement.md)を参照してください。
+
+旧schemaのDBには再生成方法を示して停止し、自動上書きしません。内容を確認したうえで `bun run context:seed --replace` または `bun run context:snapshot --replace` を使います。コピー済みDBの確認は `bun run context:check data/contextstill/snapshot.sqlite` です。
 
 ## ホストからの利用
 
@@ -36,11 +42,15 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 - prepareReflection／reserveReflectionを保存してからproposeし、saveProposalは正式公開せず候補を保存します。
 - forgetは依存元を先に失効させ、残りの消去参照を返します。ホストはpendingを既存queueで消去し続けます。
 
-受付・保存・配達の原子性には、呼出元のwriter transactionが必要です。SQLite adapterは渡された接続にSQLを実行し、独自にcommitしません。手順はsrc/test/fixture.tsと各保存結合試験を参照できます。
+受付・保存・配達の原子性には、呼出元のwriter transactionが必要です。SQLite adapterは渡された接続にSQLを実行し、独自にcommitしません。[試験用consumer](src/test/fixture-host.ts)と各保存結合試験に実行例があります。結果報告・候補管理も元requestのprincipal・scope・epochと対象executionの権限を照合します。report-onlyは許可されますが、同scopeの別principalへの暗黙の委譲は行いません。
 
 ## 配布
 
-`bun run pack:core` は `artifacts/` へtgzと内容manifestを作ります。JavaScript、型宣言、package metadata、LICENSE、READMEを含め、ソース版、sourceDigestとファイルhashを記録します。examplesとseedはGitリポジトリから利用し、コアtgzには含めません。現在は開発段階で、パッケージの公開は行っていません。
+`bun run build` の後に `bun run pack:core` を実行します。ビルド入力・lockfile・生成出力のdigestを照合し、古いビルド、出力の改変、不要ファイル、symlinkを拒否します。`artifacts/` のtgzとmanifestには、基準commit、未コミット変更の有無、実ソース・ビルド入力・各ファイルのhashが付きます。未コミットの実装を基準commitそのものと表示しません。
+
+JavaScript、型宣言、package metadata、LICENSE、READMEだけを梱包します。examplesと公開seedはGitリポジトリから利用し、コアtgzには含めません。別consumerから配布物を読み込み、生成・結果報告・通知確認を通す固定試験があります。公開は行っていません。
+
+依存の更新・脆弱性確認・移行・切戻しと手動の配布判断は[保守手順](docs/quality/manual-release.md)を参照してください。CIの追加は行いません。
 
 ## ライセンス
 
@@ -54,25 +64,20 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 - [実装と検証の記録](implementation.md)
 - [文書レビューの記録](review.md)
 
-### Final SKILL.md artifacts
+### 最終SKILLの受け渡し
 
-Build decisions and saved Build records stay JSON. For final delivery use
-`service.getSkillValidated(ref, authority, read, signal)`: ready returns the internal
-build plus `skill: { name, path, content }`. `skill.content` is the consumable Agent
-Skills Markdown document; write it at `skill.path` (`<name>/SKILL.md`). Existing
-`get`/`getValidated` remain internal JSON/lifecycle transport APIs for compatibility.
-Non-ready responses preserve their question/error and have no skill artifact.
+`service.getSkillValidated(ref, authority, read, signal)` がreadyの場合、`skill` に主ファイルの `name/path/content/digest`、参照ファイルの `files`、全体の `bundleDigest` が返ります。全ファイルを一組として扱います。`get` / `getValidated` は内部のJSONと状態を扱う互換入口です。
 
-`renderSkillMarkdown(build.content, optionalName)` and `validateSkillMarkdown(text,
-optionalDirectoryName)` are public deterministic helpers. Rendering needs the assembled
-build, not bare decision JSON: reuse sections are empty, but the assembled body includes
-the selected source skill. Sources (title + ref) and assumption status are Markdown body data; source JSON envelopes are not pasted (see `skillMarkdown` port).
-Provisional instructions are explicitly unverified; validation checks format, not quality.
-Template strings (headings, notes, description) are Japanese; source text is not translated (design §21.2).
+```ts
+// リポジトリの例で提供するwriter。コアtgzには同梱しない。
+import { writeSkillArtifact } from "./examples/contextstill/skill-output.js";
+const reply = await service.getSkillValidated(ref, authority, read, signal);
+if (reply.kind === "ready") {
+  const mainFile = writeSkillArtifact(outputDir, reply.skill);
+  // mainFileと同じSkillディレクトリに全referencesが保存される。
+}
+```
 
-`bun run context:task DB QUERY RECORDS OUTPUT_DIR` writes a successful build to
-`OUTPUT_DIR/<name>/SKILL.md` (default `data/contextstill/task-output`) and reports
-`skillFile`. Full scenario evaluation writes each completed build to
-`--output-dir/skills/task-<encoded-task-id>/<name>/SKILL.md` and reports `skillFiles`,
-even if judge inference is pending. Retrieval-only emits no skills. Existing output
-byte limits still apply. Downstream agent task improvement versus JSON is unmeasured.
+writerは主ファイル・参照・bundleのdigestと出力先を先に検査し、symlink/hardlinkを拒否します。出力先は書込み権限を持つホストが用意し、同時のパス変更を防いでください。ファイル一式の保存は原子的ではないため、必要なら新しい専用ディレクトリへ保存後にホスト側で切り替えます。検査は形式と整合性を保証し、内容の品質評価を代替しません。
+
+`bun run context:task DB QUERY RECORDS OUTPUT_DIR` とシナリオ評価は、このwriterで主ファイルと全referencesを出力します。生成物にはsource・制約・未検証の仮説を含め、利用前に確認します。下流タスクでの効果は未測定です。

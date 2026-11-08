@@ -1,0 +1,56 @@
+bun test v1.4.4 (38afee6c8)
+
+examples/contextstill/test/mcp.test.ts:
+(pass) snapshot is required and raw production-style databases are rejected [12.20ms]
+(pass) MCP initializes, lists both native tools and accepts initialized notification [9.30ms]
+(pass) auth, Host, Origin, path, method and content type are enforced [7.42ms]
+(pass) oversized bodies are rejected with and without Content-Length [6.71ms]
+(pass) invalid JSON, JSON-RPC, unknown methods/tools and invalid strict arguments fail [7.11ms]
+(pass) public filters precede limits, including a corrupt snapshot with private/retracted rows [13.10ms]
+(pass) superseded and candidate items can be read but are not searched [9.93ms]
+(pass) lexical search accepts Japanese and safely treats SQL/FTS syntax as data [7.34ms]
+(pass) conflict warnings name returned pairs; unsupported theme/depth is explicit [7.17ms]
+(pass) byte and Unicode bounds mark incomplete content without silently claiming completeness [10.92ms]
+
+examples/contextstill/test/source.test.ts:
+(pass) SourcePort preserves conditions and provenance as untrusted evidence with pinned versions [6.94ms]
+(pass) changed content invalidates old versions even if the upstream revision did not increment [6.62ms]
+(pass) withdrawn, incomplete and non-external dependencies cannot be validated [8.89ms]
+(pass) adapter rejects absent fixture stamps, wrong IDs/handles and incompatible trust [8.44ms]
+(pass) cancellation and unavailable transport fail instead of falling back to fixture content [6.06ms]
+(pass) standalone lifecycle reads the mock through SourcePort and revalidates before delivery [16.27ms]
+(pass) search conflicts reach the injected provider task; recorded outputs bind to the exact input [12.79ms]
+(pass) SourcePort exposes the published successor of a superseded item as a ref [7.09ms]
+(pass) fixture source does not invoke transport after cancellation during reservation [0.07ms]
+(pass) fixture source rejects cancellation delivered with the stream EOF [5.91ms]
+(pass) fallback source operation rejects cancellation during reservation [6.55ms]
+(pass) fallback source operation rejects cancellation during operation [5.91ms]
+
+examples/contextstill/test/call-observation.test.ts:
+(pass) source observer failure emits one physical observation (metered=false) [6.56ms]
+(pass) source observer failure emits one physical observation (metered=true) [5.79ms]
+(pass) malformed RPC content produces one error observation and no success [0.10ms]
+
+examples/contextstill/test/builder-packets.test.ts:
+(pass) builder-only packet projects provider turns, not surrounding gold or host suite [0.12ms]
+(pass) builder-only boundary rejects nested host labels and judge inputs instead of stripping silently [0.03ms]
+(pass) evaluation document admission can only shrink the existing eight-document limit [0.04ms]
+(pass) packet rejects nested host-only metric expectedTitle [0.01ms]
+(pass) packet rejects nested host-only metric untrustedQualityData
+(pass) packet rejects nested host-only metric searchPreview
+(pass) packet rejects nested host-only metric allRequiredHitAt8
+(pass) packet rejects nested host-only metric allRequiredHitAt20Diagnostic
+(pass) packet rejects nested host-only metric retrievalRank
+(pass) packet rejects nested host-only metric ranks
+(pass) packet rejects nested host-only metric meanScore
+(pass) packet rejects nested host-only metric qualityScores
+(pass) builder packet data rejects unknown top-level fields and invalid role data [0.04ms]
+(pass) boundary leaves ordinary prose intact and admits semantic-review and reformulation packets [0.03ms]
+(pass) builder-only CLI excludes host metrics/gold and unread judge records (off) [779.85ms]
+(pass) builder-only CLI excludes host metrics/gold and unread judge records (on) [67.07ms]
+(pass) builder-only CLI rejects incompatible evaluation modes before opening files [128.87ms]
+
+ 42 pass
+ 0 fail
+ 165 expect() calls
+Ran 42 tests across 4 files. [1216.00ms]

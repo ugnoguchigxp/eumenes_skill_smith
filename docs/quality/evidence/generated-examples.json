@@ -1,0 +1,47 @@
+[
+	{
+		"taskId": "review-injection",
+		"artifactDigest": "2eed0e938b10847ef8ac37c0a23692b1588d539dd2de83d01507bfd546bcf4b8",
+		"referencePath": "review-result-dispatch-plan/references/dispatch-fixture.md",
+		"codeSha256": "8bdcc7356144b13026186553c8a2d776332c3f17332e8fd588fbe009b986d407",
+		"runtime": "Bun 1.4.4",
+		"exitCode": 0,
+		"scope": "Inspected pure self-contained fixture; no network, production DB or task environment effects."
+	},
+	{
+		"taskId": "cache-ownership",
+		"artifactDigest": "cf56ddcbdafee14304e2e30b63b3c6a75210c8541c01e796c0c4207292c1f458",
+		"referencePath": "service-owned-cache-keys/references/cache-key-contract.md",
+		"codeSha256": "b74f56b343520cadb80b29eb0d64e33eb034c798cd028c55bb56273740fc4fe1",
+		"runtime": "Python 3",
+		"exitCode": 0,
+		"scope": "Inspected pure self-contained fixture; no network, production DB or task environment effects."
+	},
+	{
+		"taskId": "jitter-tests",
+		"artifactDigest": "cadbace7e9eddb8d39a859b19e3c0e9e2dff2e06f947e303bb67971f5bbd7ab7",
+		"referencePath": "deterministic-retry-jitter/references/jitter-fixture.md",
+		"codeSha256": "55c0afbd3cff006d1c9e7bfa3315a50dad5abe2ff2e4ca7cf14f3aa9478e739e",
+		"runtime": "Python 3",
+		"exitCode": 0,
+		"scope": "Inspected pure self-contained fixture; no network, production DB or task environment effects."
+	},
+	{
+		"taskId": "rename-scope",
+		"artifactDigest": "71f8e2ab87dec20d01c357869ef34270c156f9454c3f117938c41c48e55fb99f",
+		"referencePath": "module-fix-scope-gate/references/scope-gate-example.md",
+		"codeSha256": "1e06aeffb2c2d881b9ca9bc5c0d0c858c1a3c80099bda665ab38e5456a40f2b6",
+		"runtime": "Python 3",
+		"exitCode": 0,
+		"scope": "Inspected pure self-contained fixture; no network, production DB or task environment effects."
+	},
+	{
+		"taskId": "workspace-cache",
+		"artifactDigest": "f3c6f87513c70881ae7a3ebba2d818a926fef396cc46f32116085a3b60f45a10",
+		"referencePath": "workspace-plugin-cache-isolation/references/cache-key-fixture.md",
+		"codeSha256": "06581d2271e51b1fe5cf0d5f85ecba458de5723f61ed9e69bf1f2fdaa5f73aa7",
+		"runtime": "Python 3",
+		"exitCode": 0,
+		"scope": "Inspected pure fixture; no network, DB or task environment effects."
+	}
+]

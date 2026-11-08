@@ -68,6 +68,8 @@ export function createFixtureSource(
 	) {
 		signal.throwIfAborted();
 		await context?.reserve("sourceCalls");
+		const started = performance.now();
+		let result: unknown;
 		try {
 			signal.throwIfAborted();
 			const id = crypto.randomUUID();
@@ -114,20 +116,23 @@ export function createFixtureSource(
 			const rpc = envelope.parse(JSON.parse(text));
 			if (rpc.id !== id) throw new Error("contextstill_id_mismatch");
 			if (rpc.result.isError) throw new Error("contextstill_tool_error");
-			context?.noteCall?.({
-				kind: "sourceCalls",
-				operation: name,
-				outcome: "ok",
-			});
-			return JSON.parse(rpc.result.content[0].text) as unknown;
+			result = JSON.parse(rpc.result.content[0].text) as unknown;
 		} catch (error) {
 			context?.noteCall?.({
 				kind: "sourceCalls",
 				operation: name,
 				outcome: "error",
+				durationMs: performance.now() - started,
 			});
 			throw error;
 		}
+		context?.noteCall?.({
+			kind: "sourceCalls",
+			operation: name,
+			outcome: "ok",
+			durationMs: performance.now() - started,
+		});
+		return result;
 	}
 	const get: SourcePort["get"] = async (ref, signal, context) => {
 		const handle = handleOf(ref);

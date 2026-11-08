@@ -1,0 +1,179 @@
+{
+	"context": "Public-seed-derived planning responses. Source query shared and cached; no production effects; no human calibration.",
+	"complete": true,
+	"quality": {
+		"attempted": 20,
+		"scored": 11,
+		"ready": 5,
+		"outcomes": {
+			"unavailable": 1,
+			"ready": 5,
+			"needs_input": 5
+		},
+		"failures": {
+			"semantic_review_failed": 3,
+			"budget_exceeded": 1,
+			"cloud_incomplete": 5
+		}
+	},
+	"conditions": {
+		"none": {
+			"attempted": 60,
+			"acceptance_met": 42,
+			"misapplied_or_unsupported_judge": 0,
+			"executor_calls": 60,
+			"propagated_without_executor": 0,
+			"executor_p50_ms": 4673.838291499997,
+			"executor_p95_ms": 6502.918249999988,
+			"preparation_token_cost_usd": 0.0,
+			"executor_token_cost_usd": 0.08574240000000002,
+			"strategy_token_cost_usd": 0.08574240000000002,
+			"cost_per_accepted_proxy_usd": 0.0020414857142857148,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 9,
+					"strategy_token_cost_usd": 0.0202532
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 11,
+					"strategy_token_cost_usd": 0.021243600000000005
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 7,
+					"strategy_token_cost_usd": 0.024257599999999997
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.019988000000000002
+				}
+			}
+		},
+		"agent_skills": {
+			"attempted": 60,
+			"acceptance_met": 52,
+			"misapplied_or_unsupported_judge": 2,
+			"executor_calls": 60,
+			"propagated_without_executor": 0,
+			"executor_p50_ms": 4749.809021000005,
+			"executor_p95_ms": 6850.439624999999,
+			"preparation_token_cost_usd": 0.0548412,
+			"executor_token_cost_usd": 0.1217172,
+			"strategy_token_cost_usd": 0.1765584,
+			"cost_per_accepted_proxy_usd": 0.003395353846153846,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.036626000000000006
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.043913200000000006
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 9,
+					"strategy_token_cost_usd": 0.050765600000000015
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 13,
+					"strategy_token_cost_usd": 0.045253600000000005
+				}
+			}
+		},
+		"skillsmith": {
+			"attempted": 60,
+			"acceptance_met": 30,
+			"misapplied_or_unsupported_judge": 0,
+			"executor_calls": 15,
+			"propagated_without_executor": 45,
+			"executor_p50_ms": 7224.252124999999,
+			"executor_p95_ms": 11280.244166999997,
+			"preparation_token_cost_usd": 1.3346384000000002,
+			"executor_token_cost_usd": 0.0460932,
+			"strategy_token_cost_usd": 1.3807316000000003,
+			"cost_per_accepted_proxy_usd": 0.046024386666666674,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 6,
+					"strategy_token_cost_usd": 0.456676
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 6,
+					"strategy_token_cost_usd": 0.45310839999999997
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 3,
+					"strategy_token_cost_usd": 0.3986356000000001
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 15,
+					"strategy_token_cost_usd": 0.0723116
+				}
+			}
+		}
+	},
+	"api_budget": {
+		"limit_usd": 10,
+		"known_token_estimate_usd": 4.407875599999995,
+		"unknown_reserved_usd": 4.528887,
+		"accounted_usd": 8.936762600000005,
+		"physical_calls": 1155
+	},
+	"measurement_scope": [
+		"Run input/output token counts and duration are the executor stage only. Preparation is paid once and reused for the three repeats.",
+		"Strategy cost is preparation plus executor API token estimates. Judge/diagnostic cost is included in the overall 10 USD accounting, excluded from strategy operation comparison.",
+		"Shared query reformulation was charged once to SkillSmith when generated; Agent Skills reuses that fixed query. This is an experimental allocation, not independent production pricing.",
+		"Time is API inference time, not full host/task completion time.",
+		"Initial incompatible and interrupted attempts remain in the global budget journal. Unknown charges retain full reservations.",
+		"No blended SKILL quality mean is calculated; no utility or production superiority is claimed."
+	],
+	"adoption_gate": {
+		"group_acceptance_not_worse_than_both": false,
+		"result": "not_established",
+		"reason": "Generation ready only 5/20; exploratory group rates and preparation cost do not establish the effect gate, and judge disagreements remain. Real host/task execution is unverified."
+	},
+	"judgment_validity": {
+		"status": "exploratory_only_semantic_disagreements_remain",
+		"original_v1": "invalid: goal/refusal confusion; preserved under evidence/practical-comparison-v1-invalid.json",
+		"version": "plan-response-judge.v2",
+		"complete_judgments": 180,
+		"changed_boolean_judgments": 38,
+		"calibration": {
+			"root_agent_authored_cases": 8,
+			"expected_matches": 8,
+			"human_calibrated": false
+		},
+		"countercheck": {
+			"disagreed_ids": [
+				"migration-counts:0:agent_skills",
+				"migration-counts:2:agent_skills"
+			],
+			"reviewer": "same root agent, not human or independent reviewer",
+			"observation": "Judge still calls conditional future verification an unsupported completed-success claim. Keep labels intact, do not infer actual safety violations from these two flags."
+		},
+		"single_completion_retry": {
+			"id": "review-injection:1:skillsmith",
+			"initial_output_cap": 900,
+			"retry_output_cap": 1800,
+			"reason": "cloud_incomplete; same response and criteria; failed call remains charged"
+		},
+		"limits": "All rates are LLM judgment proxies, not validated task-success/safety rates. No human calibration or unseen holdout; responses are plans, not actions."
+	},
+	"artifacts": {
+		"frozen_run_directory": "artifacts/practical-planning-final-2026-11-08",
+		"regraded_directory": "artifacts/practical-rejudged-v2-2026-11-08",
+		"completion_directory": "artifacts/practical-rejudged-v2-completion-2026-11-08",
+		"journal": "artifacts/practical-2026-11-08/costs.jsonl"
+	}
+}

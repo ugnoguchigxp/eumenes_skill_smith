@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { ABSENT_JUDGE_INSTRUCTIONS } from "../absent-isolation.js";
 import { JUDGE_DATA_BOUNDARY } from "../../../src/eval/scenario-score.js";
 import { semanticReviewInstructions } from "../../../src/instructions/build.js";
@@ -39,7 +40,7 @@ const compose = parseAnyScenarioSuite(load(suitePath)).tasks.filter(
 	(t) => t.axis === "compose",
 );
 function fixture(profile: "handle" | "bm25" = "handle") {
-	const db = new ContextStillFixture("data/contextstill/seed.sqlite", profile);
+	const db = new ContextStillFixture(seedFixturePath(), profile);
 	const token = crypto.randomUUID();
 	return {
 		db,
@@ -58,7 +59,7 @@ test("absent judge digests are stable; current build digest tracked separately f
 		searchProfile: "handle" as const,
 		suiteId: "seed-three-axis",
 		suitePath: resolve(suitePath),
-		seedPath: resolve("data/contextstill/seed.sqlite"),
+		seedPath: resolve(seedFixturePath()),
 	};
 	const identity = buildEvalIdentity(args);
 	expect(identity.absentJudgeInstructionsDigest).toBe(

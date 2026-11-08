@@ -1,0 +1,50 @@
+bun test v1.4.4 (38afee6c8)
+
+examples/contextstill/test/call-observation.test.ts:
+11 | 	const context={signal,reserve:async()=>{reservations++;},noteCall:(call:CallObservation)=>{calls.push(call);throw Error("observer_failed");}};
+12 | 	const ref="contextstill:"+handle("a");
+13 | 	const result=metered?f.source.get(ref,signal,context):sourceOperation({...f.source,meteredCalls:false},context,"get",()=>f.source.get(ref,signal));
+14 | 	await expect(result).rejects.toThrow("observer_failed");
+15 | 	expect(reservations).toBe(1);
+16 | 	expect(calls).toHaveLength(1);
+                    ^
+error: expect(received).toHaveLength(expected)
+
+Expected length: 1
+Received length: 2
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/test/call-observation.test.ts:16:16)
+(fail) source observer failure emits one physical observation (metered=false) [13.86ms]
+11 | 	const context={signal,reserve:async()=>{reservations++;},noteCall:(call:CallObservation)=>{calls.push(call);throw Error("observer_failed");}};
+12 | 	const ref="contextstill:"+handle("a");
+13 | 	const result=metered?f.source.get(ref,signal,context):sourceOperation({...f.source,meteredCalls:false},context,"get",()=>f.source.get(ref,signal));
+14 | 	await expect(result).rejects.toThrow("observer_failed");
+15 | 	expect(reservations).toBe(1);
+16 | 	expect(calls).toHaveLength(1);
+                    ^
+error: expect(received).toHaveLength(expected)
+
+Expected length: 1
+Received length: 2
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/test/call-observation.test.ts:16:16)
+(fail) source observer failure emits one physical observation (metered=true) [6.83ms]
+18 | });
+19 | test("malformed RPC content produces one error observation and no success",async()=>{
+20 | 	const source=createFixtureSource(async(request)=>{const input=await request.json();return Response.json({jsonrpc:"2.0",id:input.id,result:{content:[{type:"text",text:"{bad"}]}});},"fixture");
+21 | 	const signal=new AbortController().signal,calls:CallObservation[]=[];
+22 | 	await expect(source.get("contextstill:"+handle("a"),signal,{signal,reserve:async()=>{},noteCall:(call)=>calls.push(call)})).rejects.toThrow();
+23 | 	expect(calls).toHaveLength(1);
+                    ^
+error: expect(received).toHaveLength(expected)
+
+Expected length: 1
+Received length: 2
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/test/call-observation.test.ts:23:16)
+(fail) malformed RPC content produces one error observation and no success [0.17ms]
+
+ 0 pass
+ 3 fail
+ 8 expect() calls
+Ran 3 tests across 1 file. [67.00ms]

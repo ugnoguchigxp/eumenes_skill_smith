@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -34,7 +35,7 @@ const compose = parseAnyScenarioSuite(load(suitePath)).tasks.filter(
 );
 const signal = () => new AbortController().signal;
 function fixture(profile: "handle" | "bm25" = "handle") {
-	const db = new ContextStillFixture("data/contextstill/seed.sqlite", profile);
+	const db = new ContextStillFixture(seedFixturePath(), profile);
 	const token = crypto.randomUUID();
 	return {
 		db,
@@ -57,7 +58,7 @@ test("evidence supply is strict and defaults to natural; current build digest tr
 		searchProfile: "handle" as const,
 		suiteId: "seed-three-axis",
 		suitePath: resolve(suitePath),
-		seedPath: resolve("data/contextstill/seed.sqlite"),
+		seedPath: resolve(seedFixturePath()),
 	};
 	const natural = buildEvalIdentity(args);
 	expect(natural.evidenceSupply).toBe("natural");

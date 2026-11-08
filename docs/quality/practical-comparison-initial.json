@@ -1,0 +1,91 @@
+{
+	"experiment": "4.1-mini generated guidance, strict schema v2; planning responses only",
+	"attempted": 180,
+	"scored": 180,
+	"generation_ready": 0,
+	"conditions": {
+		"none": {
+			"attempted": 60,
+			"acceptance_met": 25,
+			"misapplied_or_unsupported": 6,
+			"executor_p50_ms": 4243.3240000000005,
+			"executor_p95_ms": 5499.9975830000185,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 7
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 6
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 7
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 5
+				}
+			}
+		},
+		"agent_skills": {
+			"attempted": 60,
+			"acceptance_met": 38,
+			"misapplied_or_unsupported": 9,
+			"executor_p50_ms": 3986.638250000001,
+			"executor_p95_ms": 5971.831833999997,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 15
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 13
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 7
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 3
+				}
+			}
+		},
+		"skillsmith": {
+			"attempted": 60,
+			"acceptance_met": 31,
+			"misapplied_or_unsupported": 7,
+			"executor_p50_ms": 4021.094041000004,
+			"executor_p95_ms": 5441.660957999993,
+			"groups": {
+				"reuse": {
+					"attempted": 15,
+					"acceptance_met": 7
+				},
+				"adapt": {
+					"attempted": 15,
+					"acceptance_met": 9
+				},
+				"compose": {
+					"attempted": 15,
+					"acceptance_met": 7
+				},
+				"insufficient": {
+					"attempted": 15,
+					"acceptance_met": 8
+				}
+			}
+		}
+	},
+	"costs_at_comparison_completion": {
+		"known_token_estimate_usd": 1.0955387999999986,
+		"unknown_reserved_usd": 0.546107,
+		"accounted_usd": 1.6416457999999992,
+		"physical_calls": 525
+	},
+	"limitation": "SKILL完成0件のため、SkillSmithの有用性の比較結果として採用しない。生成失敗からの下流回答の記録であり、既存方式に勝つという結論を出さない。人手較正なし。",
+	"interpretation": "初期比較の生成側は接続試験のreadonly contextを引き継いでおり、計画だけを作成するという条件が十分に示されていなかった。利用可能SKILLが0件だったため、有用性やモデル一般性能の比較へ採用しない。結果を消さず、条件を修正した試行と分ける。"
+}

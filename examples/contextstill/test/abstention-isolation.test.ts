@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import {
 	CURRENT_ABSTENTION_JUDGE_INSTRUCTIONS,
 	currentAbstentionJudgeOutputSchema,
@@ -44,7 +45,7 @@ const compose = parseAnyScenarioSuite(load(suitePath)).tasks.filter(
 );
 const legacy = parseAnyScenarioSuite(load(`${scen}/suite.json`)).tasks;
 function fixture(profile: "handle" | "bm25" = "handle") {
-	const db = new ContextStillFixture("data/contextstill/seed.sqlite", profile);
+	const db = new ContextStillFixture(seedFixturePath(), profile);
 	const token = crypto.randomUUID();
 	return {
 		db,
@@ -64,7 +65,7 @@ test("contrast judge digests are stable; current build digest tracked separately
 		searchProfile: "handle" as const,
 		suiteId: "seed-three-axis",
 		suitePath: resolve(suitePath),
-		seedPath: resolve("data/contextstill/seed.sqlite"),
+		seedPath: resolve(seedFixturePath()),
 	};
 	const off = buildEvalIdentity(base);
 	const on = buildEvalIdentity({ ...base, abstentionContrast: "on" });

@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import {
@@ -187,7 +188,7 @@ test("multi identity differs from single, auxiliary reformulation stays independ
 		searchProfile: "bm25" as const,
 		suiteId: "s",
 		suitePath: "examples/contextstill/scenarios/suite.json",
-		seedPath: "data/contextstill/seed.sqlite",
+		seedPath: seedFixturePath(),
 	};
 	const multi = buildEvalIdentity({ ...paths, queryReformulation: "multi" });
 	const single = buildEvalIdentity({ ...paths, queryReformulation: "on" });
@@ -225,6 +226,8 @@ test("CLI replay: single JP BM25 stays 15/16; off keeps old ranks and auto refor
 			const result = Bun.spawnSync([
 				process.execPath,
 				"examples/contextstill/scenario-eval.ts",
+				"--db",
+				seedFixturePath(),
 				"--retrieval-only",
 				"--replay-namespace",
 				"legacy",

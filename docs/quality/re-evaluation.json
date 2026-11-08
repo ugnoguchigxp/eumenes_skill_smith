@@ -1,0 +1,645 @@
+{
+	"rubric_version": "1.1.0",
+	"mode": "technical",
+	"depth": "deep",
+	"technical_profile": "library",
+	"assessment_kind": "re-evaluated",
+	"target": {
+		"locator": "/Users/y.noguchi/Code/eumenes_skill_smith",
+		"snapshot": "working-tree-code-sha256:31f47b53eadf4452861c98def6bbdff9deeed39fee0e9c4da65c68af227384ec",
+		"reviewed_at": "2026-11-08",
+		"stage": "prototype: core+SQLite+fixtures verified; live planning study complete with judge disagreements; host/pilot pending",
+		"scope": "technical/deep/libraryの再評価。CIの重みは除外しない。コア、SQLite、例、ローカル配布を評価。本体接続・実作業の効果・人手較正は未検証。seed由来の計画回答を実ユーザー履歴と呼ばない。同一担当が反証を確認し、独立した人手レビューとはしない。"
+	},
+	"evidence": [
+		{
+			"id": "E01",
+			"kind": "primary_doc",
+			"locator": "README.md:3-43; design.md:5-148; plan.md:3,51-64,239-252 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "Eumenesのための同一プロセスのTypeScriptライブラリ。P1-P3の固定試験段階。P4-P8の製品接続とlive・効果評価は未実施。LLMが意味判断、コードが権限・保存・予算を担う。",
+			"scope": "現在のコアと例を評価。隣接Eumenes/ContextStill本体やサービスは対象外。"
+		},
+		{
+			"id": "E02",
+			"kind": "code",
+			"locator": "src/service/index.ts:29-171,247-438,445-608; src/service/build.ts:40-170,510-1032; src/contracts/schema.ts:20-72 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "submit→prepare/reserve→execute→settle→getSkillValidatedを追跡。schemaで入出力を限定し、CAS・runToken・epoch、policy/registry/sourceの再照合を行い、本文と配達intentをtransactionに保存する。",
+			"scope": "transactionとAuthority/Registry/Inferenceの真正性はホスト契約。実ホストとの結合は未検証。"
+		},
+		{
+			"id": "E03",
+			"kind": "execution",
+			"locator": "verify.log (同一チャットのマージ前検証、同一SHA)",
+			"observed_at": "2026-11-07",
+			"observation": "Bun 1.4.4 / macOS arm64。新規worktree、bun install --frozen-lockfile、context:seed、context:checkの後、TMPDIR=/private/tmp bun run verify。exit 0。本体290件・例142件、計432 pass/0 fail。型125ファイル、整形220ファイル、lint/build/pack/importも成功。",
+			"scope": "本レビューでは同一SHA・未変更の既存通し検証を再利用。実LLM・製品ホスト・本番負荷の証明ではない。ログを保存。"
+		},
+		{
+			"id": "E04",
+			"kind": "execution",
+			"locator": "review-probes.test.ts:7-83; probes.log",
+			"observed_at": "2026-11-07",
+			"observation": "隔離worktreeで TMPDIR=/private/tmp bun test src/test/review-probes.test.ts、exit 0 (3 probes/9 assertions)。現行baselineの3呼出しを合成ダブルで通し、同じscopeの別principalによるreport correctionの受理とreport-only別principalへのreflection grounding本文返却を再現。通常getは拒否。実行所有権を検査するAuthorityPortを用いてもreportResultはexecutionRefを検査対象に渡さない。",
+			"scope": "認証済みの複数主体がscopeを共有し、このAPIを呼べる場合。IDを知る必要がある。製品公開APIは未接続であり、現実の侵害を意味しない。モデル品質の試験ではない。"
+		},
+		{
+			"id": "E05",
+			"kind": "code",
+			"locator": "src/sqlite/index.ts:20-169; src/test/requests.test.ts; src/test/sqlite.test.ts; src/test/forget.test.ts; src/test/proposal-cancellation.test.ts @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "再起動後の冪等再利用、予算保持、部分保存rollback、遅延producer・取消後の拒否、依存閉包の即時失効と段階消去を具体的に試験。E03で実行済み。",
+			"scope": "主に固定fixture。外部queue・複数プロセスでのクラッシュ復旧までは未実証。"
+		},
+		{
+			"id": "E06",
+			"kind": "code",
+			"locator": "src/service/model-markdown.ts:1-93; src/service/skill-document.ts:5-16,93-140; src/service/build.ts:876-1006; examples/contextstill/builder-packets.ts; src/test/localized-build.test.ts; src/test/model-markdown.test.ts @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "ASTによる構造検査、ローカルURL境界、escaped host text、現行生成物の意味レビュー、builderとhost/judgeデータの分離がある。負例、拒否・再レビュー、gold混入の試験を確認。",
+			"scope": "意味レビューは同じInferencePort。実LLMへの攻撃成功率・人手較正は未測定。legacyの攻撃面テストを現行成功とは数えない。"
+		},
+		{
+			"id": "E07",
+			"kind": "code",
+			"locator": "src/contracts/limits.ts; src/contracts/schema.ts:36-44; src/service/build.ts:180-283,632-725,932-1032; src/eval/usage-ledger.ts; src/test/usage-ledger.test.ts; examples/contextstill/test/builder-packets.test.ts @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "呼出し回数、入出力byte、生成期限に上限。外部I/O前に永続予算を予約し、補助推論も共有。未知usageをnullに保持する。",
+			"scope": "制約の強制を確認。代表的実処理のp95待ち時間、費用対効果、負荷時の飽和は未測定。"
+		},
+		{
+			"id": "E08",
+			"kind": "execution",
+			"locator": "scoreboard.json; docs/measurement.md:98-108; examples/contextstill/scoreboard.ts:208-261 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "隔離worktree・新規同梱seedで bun run context:scoreboard -- --json、exit 0。現行既定のexact/en/jpとdiverseはstale・scored 0、original/composeは未測定。旧品質点を現行点へ流用しない動作を確認。",
+			"scope": "検索hitの過去記録と現在の生成品質は別。コミットメッセージの283等は現在の再現可能な品質点として扱わない。"
+		},
+		{
+			"id": "E09",
+			"kind": "execution",
+			"locator": "src/sqlite/index.ts:292-319; review-probes.test.ts:85-111; probes.log @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "reportsByBuildはscope内の全結果を取得してJSON/Zod parseし、proposalsByExecutionも同形。隔離probeでは対象buildに無関係な1000結果をすべてJSON.parseした。該当結果は0件。",
+			"scope": "線形解析コストを確認しただけで、実運用の遅延閾値違反や障害は主張しない。"
+		},
+		{
+			"id": "E10",
+			"kind": "code",
+			"locator": "README.md:24,57-93; docs/measurement.md:30-38; examples/contextstill/scenario-eval.ts; examples/contextstill/query-reformulation.ts:19-24,159-187; src/service/skill-markdown.ts:19-39,230-251 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "READMEは既定検索handle・切替なしと説明。一方現行CLI/計測書はbm25・auto。最終成果物のREADMEには旧来の出典節等が残り、現在の追加reference filesの保存手順も十分に反映されていない。",
+			"scope": "主に開発者の導入・再現条件の誤認。コアの実際の検索はホストSourcePortに依存し、bm25は例の既定。"
+		},
+		{
+			"id": "E11",
+			"kind": "execution",
+			"locator": "default-tmpdir.log; canonical-tmpdir.log; examples/contextstill/test/skill-output.test.ts:27; examples/contextstill/skill-output.ts:40-53 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "macOS arm64/Bun1.4.4、新規seedの同一checkoutで bun test examples/contextstill/test/skill-output.test.ts はexit 1/6 fail。TMPDIR=/private/tmpを与えた同じコマンドはexit 0。tmpdirの祖先symlinkが意図されたwriter境界で拒否される。",
+			"scope": "writerの拒否は保護として正当。問題はテストが標準macOSのtmpdirをそのまま渡すこと。全体チェックを通すため境界を弱める必要はない。"
+		},
+		{
+			"id": "E12",
+			"kind": "code",
+			"locator": "package.json; bun.lock; scripts/build.ts; scripts/pack.ts; LICENSE; examples/contextstill/seed/README.md; node_modules/{zod,mdast-util-from-markdown}/package.json @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "Bun/TS/Zod等の版固定・lockfile。tgzはdist/README/LICENSE/package metadataのみをstageし、SHA/sourceDigest/元commitを記録、抽出後のimportまで検査。根本と直接runtime依存2件はMITを宣言。seedも公開許可・MITを記録。",
+			"scope": "脆弱性スキャン、継続的な依存更新運用、実リリースの署名/配信運用は未評価。法的適合性の保証ではない。"
+		},
+		{
+			"id": "E13",
+			"kind": "primary_doc",
+			"locator": "docs/proposals/16-real-task-strategy-pilot.md:1-46; examples/contextstill/blind-evaluation.md:1-15; plan.md:239-252 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "なし/静的Agent Skills/SkillSmithの比較ハーネスはあるが、実課題10-20件のpilotと人手評価は未実施と明記。同じGrok Botの生成・採点は独立盲検ではない。",
+			"scope": "実利用成功率、継続利用、導入費用、独立評価、人的資源はUnknown。未測定を価値ゼロとは扱わない。"
+		},
+		{
+			"id": "E14",
+			"kind": "external_observation",
+			"locator": "https://agentskills.io/specification (retrieved 2026-11-07, unversioned official specification)",
+			"observed_at": "2026-11-07",
+			"observation": "Agent SkillsはSKILL.mdと任意のscripts/references/assetsによる形式と段階開示を定義する。",
+			"scope": "静的な可搬形式の比較。製品間の総合的な性能優劣を示す資料ではない。"
+		},
+		{
+			"id": "E15",
+			"kind": "external_observation",
+			"locator": "https://langchain-ai.github.io/langmem/reference/prompt_optimization/ (retrieved 2026-11-07, current official API docs)",
+			"observed_at": "2026-11-07",
+			"observation": "LangMemは軌跡・feedbackとpromptを入力に、gradient/prompt_memory/metapromptで更新を生成するAPIを持つ。",
+			"scope": "手順学習・指示改善は既存領域。SkillSmithと同条件の比較実験は実施していない。"
+		},
+		{
+			"id": "E16",
+			"kind": "external_observation",
+			"locator": "https://dspy.ai/3.4.0/getting-started/metrics/ (retrieved 2026-11-07, official docs 3.4.0)",
+			"observed_at": "2026-11-07",
+			"observation": "DSPyはデータ例と生成出力から評価値を返すmetricを、評価・最適化に用いる。",
+			"scope": "評価と指示改善の隣接代替。Skill配布・権限境界の同等性は未確認。"
+		},
+		{
+			"id": "E17",
+			"kind": "code",
+			"locator": "git log @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a; GROKBOT_HANDOFF.md; implementation.md; plan.md:15-64,239-252",
+			"observed_at": "2026-11-07",
+			"observation": "同一著者の開発履歴と引継ぎ・設計・段階gateがある。レビュー指摘を受けた修正が多数あり、初期実装と試験は提供されている。",
+			"scope": "短い開発期間とcommit数を持続性・需要・実ユーザーfeedbackの代用にはしない。"
+		},
+		{
+			"id": "E18",
+			"kind": "code",
+			"locator": "src/service/build.ts (1032 lines); src/service/index.ts (655 lines); src/service/results.ts (554 lines); src/instructions/build.ts:18-38,54-78; design.md:580-808 @ 47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+			"observed_at": "2026-11-07",
+			"observation": "検索・開示・生成・構造修復・意味レビュー・usage更新がexecuteBuildへ集中。指示には過去の追補・特定の例の説明も残る。共有portと純粋な組立て・文書検査は既に分離されている。",
+			"scope": "行数だけを欠陥とはしない。分割は責務の局所化と検証可能性を目的とし、新しいagent frameworkを必要としない。"
+		},
+		{
+			"id": "E21",
+			"kind": "execution",
+			"locator": "src/test/result-authority.test.ts; evidence/authority-before.log; evidence/authority-after.log",
+			"observation": "修正前31失敗。9操作×6負例とreport-only正常例で主体・scope・epoch・実行・元参照を照合し、拒否時の非変更を確認。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E22",
+			"kind": "execution",
+			"locator": "evidence/macos-verify.log; evidence/linux-verify.log",
+			"observation": "Bun 1.4.4; macOS arm64 default TMPDIR and Linux aarch64 isolated copy: verify exit 0, typecheck 151 files, core 359 + examples 160 = 519 tests, lint/format/build/pack passed.",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E23",
+			"kind": "execution",
+			"locator": "evidence/boundary-controls.json; evidence/boundary-controls.log",
+			"observation": "隔離コピーでprincipal、epoch、元参照、execution、予算、runToken、receipt、配達保存、取消、canonical本文の保護を外し10/10検出。baseline成功。構文エラーを採用しない。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E24",
+			"kind": "execution",
+			"locator": "src/test/crash-recovery.test.ts; src/test/recovery-worker.ts",
+			"observation": "SIGKILL後の開始予約、予算、応答、transaction、commit、配達、ack、forgetの8境界を実DBで確認。実ホストjournalは未検証。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E25",
+			"kind": "execution",
+			"locator": "src/test/history-lookup.test.ts; evidence/storage-measurement.json",
+			"observation": "索引migration、破損行隔離、訂正、query planを確認。対象外100/1000/10000、対象0/1/8、計3600回で対象外parse0、p95最大0.089875ms、増加倍率最大1.089。合成履歴参照に限る。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E26",
+			"kind": "execution",
+			"locator": "src/test/release.test.ts; scripts/source-manifest.ts; dependencies-2026-11-08.json",
+			"observation": "古いbuild、改変、DB混入、symlinkを拒否。tgz consumerで公開APIの生成・報告・通知ackを確認。source/lock/build入力とdirtyを記録。Zod修正版4.6.6へ更新し再audit0。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E27",
+			"kind": "code",
+			"locator": "src/service/authority.ts; src/service/evidence-search.ts; src/service/usage.ts; src/test/observations.test.ts; examples/contextstill/test/call-observation.test.ts",
+			"observation": "認可・検索共有状態・usageを共通化。診断callbackより先にusageを保存し、provider失敗でtokenを創作しない。durationに本文を入れない。 Source observer duplicate success/error was reproduced (3 failures before, passed after). Cloud I/O and receipt are bounded without changing meaning checks.",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E28",
+			"kind": "primary_doc",
+			"locator": "README.md; manual-release.md; implementation-2026-11-08.md",
+			"observation": "bm25/auto、全reference/bundle、temp/DB診断と移行/配布手順を同期。autoの文字種分岐、近似copy判定、指示の整理は残作業。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E29",
+			"kind": "execution",
+			"locator": "practical-comparison-initial.json; artifacts/practical-budgeted-2026-11-08/quality.json",
+			"observation": "20課題・3方式各3回の180回答を別モデルで採点。初期生成ready0、9/20採点、11未採点。接続試験contextの不適合があり、有用性・全体品質・性能合格へ採用しない。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E30",
+			"kind": "code",
+			"locator": "Eumenes fb8eac06ba1e32891c51355c4e067d678e7fd555 capabilities/service/index.ts; integration-contract.md",
+			"observation": "knowledge domainが無く、Skill単体search/currentは未接続。別作業の134項目の差分を変更せず、サーバーを起動しない。設定はbackend domain操作でDBをread-onlyにして読む。",
+			"observed_at": "2026-11-08",
+			"scope": "今回のlibrary/adapter/例に限定。fixture、実践課題、実ホスト受入を区別。"
+		},
+		{
+			"id": "E31",
+			"kind": "execution",
+			"locator": "practical-comparison-final.json; evidence/current-replay.json; evidence/generated-examples.json",
+			"observation": "Final planning study: 20 attempts, ready 5 / needs_input 5 / unavailable 1 / error 9; all 20 statuses and 5 artifact digests replayed offline; 5 generated self-contained examples executed. 180 response attempts; regrading preserves responses and criteria; semantic disagreements remain. Budget accounted USD 8.9367626 including unknown reserves.",
+			"observed_at": "2026-11-08",
+			"scope": "Public-seed-derived plans only, no real host operations, unseen holdout or human calibration. Judge labels are exploratory; no success/safety rate or superiority claim."
+		}
+	],
+	"claims": [],
+	"findings": [
+		{
+			"id": "F01",
+			"status": "withdrawn",
+			"severity": "High",
+			"priority": "P0",
+			"priority_reason": "複数principalが同scopeで結果・振り返りAPIを利用する前に必要。",
+			"confidence": "High",
+			"title": "結果と振り返り経路で生成元主体の境界が欠ける",
+			"root_cause": "reportResult/prepareReflectionはscopeとreport権限・evidence有効性しか照合せず、元request/buildのprincipal/epochとexecution所有権を再検査しない。",
+			"evidence_ids": ["E02", "E04", "E21"],
+			"condition": "別principalが同じscopeの有効なreport権限を持ち、対象build/execution IDを知る。",
+			"consequence": "他主体の結果を訂正でき、reflection groundingから通常getでは返らない本文を取得できる。改善候補の根拠汚染にもつながる。",
+			"counterevidence": "get/bindUseではprincipalを照合し拒否する。scopeを主体ごとに分けるかホストが追加境界を強制すれば緩和可能。本体公開接続は未実装で実侵害は確認していない。 新snapshotで修正と対応する負例/正常例を確認した。",
+			"fix": "既存の認可契約を共通化し、report-onlyの正当な利用を保持しながら元のprincipal/scope/epochとexecutionRefの権限を結果・振り返り・workflowで照合する。",
+			"verification": "同scope別principal/epoch/未所有executionを各APIで拒否し、DBのrevision・本文・候補・予算が変化しない。正当なreport-only主体と明示的な管理操作は通す。",
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "security",
+					"criterion": "access",
+					"reason": "既存の主体境界を異なる公開操作から迂回する。"
+				}
+			],
+			"withdrawal_reason": "修正済みを新snapshotの対応する実行証拠で確認。"
+		},
+		{
+			"id": "F02",
+			"status": "withdrawn",
+			"severity": "Low",
+			"priority": "P2",
+			"priority_reason": "長期保存・利用件数増加の前に、回避可能な全件解析を除く。",
+			"confidence": "High",
+			"title": "結果・候補の参照がscope全件のJSON解析になる",
+			"root_cause": "SQLでbuildRef/executionRefを絞らずTypeScriptでparseして絞り込む。",
+			"evidence_ids": ["E09", "E25"],
+			"condition": "同scopeの異なるbuild/executionの結果・候補が蓄積する。",
+			"consequence": "無関係な1000件も毎回parseし、必要な結果数に関係なく時間と一時メモリが増える。",
+			"counterevidence": "1000件probeでは障害・遅延予算超過を観測していない。現段階の固定fixtureでは小さい。 新snapshotで修正と対応する負例/正常例を確認した。",
+			"fix": "既存SQLite adapterのSQL条件と対応index/migrationで対象を絞り、選択した行だけをschema検証する。",
+			"verification": "対象1件の参照で無関係な1000/10000行をparseしない。query planが対応indexを使い、既存データmigration後も結果訂正と候補失効が一致する。",
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "maintainability",
+					"criterion": "debt",
+					"reason": "保存量に伴う隠れた処理費と改善負担が残る。"
+				}
+			],
+			"withdrawal_reason": "修正済みを新snapshotの対応する実行証拠で確認。"
+		},
+		{
+			"id": "F03",
+			"status": "withdrawn",
+			"severity": "Medium",
+			"priority": "P1",
+			"priority_reason": "開発者・CIが標準手順で同じ検証結果を得るため、次の配布前に必要。",
+			"confidence": "High",
+			"title": "macOSの標準一時フォルダで出力テスト6件が失敗する",
+			"root_cause": "安全な出力writerは祖先symlinkを拒否するが、testがmacOS tmpdirの別名パスを実体化せず使う。",
+			"evidence_ids": ["E03", "E11", "E22"],
+			"condition": "この環境の既定TMPDIRで公開seedを初期化し、標準verify/outputテストを実行する。",
+			"consequence": "正当な通常環境で試験が通らず、TMPDIRを手動で変更しなければ回帰と環境差を切り分けられない。",
+			"counterevidence": "TMPDIR=/private/tmpでは全出力テストおよび全432件が通過する。writerのsymlink拒否は仕様上正当。 新snapshotで修正と対応する負例/正常例を確認した。",
+			"fix": "test fixtureのtemp rootをrealpathで取得する共通helperに統一。製品のsymlink/hardlink拒否を維持し、標準検証のmacOS/Linux条件を固定する。",
+			"verification": "環境変数を追加せず新規checkoutの標準verifyが両OSで成功し、symlink/hardlink/traversal負例は引き続き拒否される。",
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "testing",
+					"criterion": "automation",
+					"reason": "回帰検証が通常開発環境で失敗する。"
+				},
+				{
+					"track": "technical",
+					"dimension": "operability",
+					"criterion": "lifecycle",
+					"reason": "文書化された導入から検証完了へ進む経路が環境知識に依存する。"
+				}
+			],
+			"withdrawal_reason": "修正済みを新snapshotの対応する実行証拠で確認。"
+		},
+		{
+			"id": "F04",
+			"status": "withdrawn",
+			"severity": "Low",
+			"priority": "P2",
+			"priority_reason": "同じ設定での利用と品質再現を妨げるため、現行仕様の整理時に対応。",
+			"confidence": "High",
+			"title": "READMEの検索既定と成果物説明が現行実装に追従していない",
+			"root_cause": "仕様変更が追補され、入口READMEと例・計測書の現在値が同期されていない。",
+			"evidence_ids": ["E10", "E18", "E28"],
+			"condition": "利用者がREADMEの既定・生成物の説明をそのまま採用する。",
+			"consequence": "handle/bm25や補助推論の有無を誤認し、reference filesを含む保存手順や出典節の期待が食い違う。",
+			"counterevidence": "計測書には現在のbm25/autoが記載され、コードも既定を明示している。実装契約自体が不定という主張ではない。 新snapshotで修正と対応する負例/正常例を確認した。",
+			"fix": "READMEと現行の出力/計測契約を同期し、歴史的仕様を別欄へ移す。追加ファイルを含む現行保存例を示す。",
+			"verification": "新規利用者がREADMEのみから実行した設定・生成ファイル一式が実装と一致し、旧スコアは歴史的記録として識別できる。",
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "maintainability",
+					"criterion": "clarity",
+					"reason": "入口の説明と実装が一致しない。"
+				},
+				{
+					"track": "technical",
+					"dimension": "operability",
+					"criterion": "interaction",
+					"reason": "利用・再現・保存時の誤解を誘発する。"
+				}
+			],
+			"withdrawal_reason": "修正済みを新snapshotの対応する実行証拠で確認。"
+		}
+	],
+	"tracks": {
+		"technical": {
+			"dimensions": {
+				"architecture": {
+					"criteria": {
+						"boundaries": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "portと責務を維持し、認可・検索・集計の変更を局所化。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"flow": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E24", "E22"],
+							"rationale": "予約から通知ackまでの一貫性と実プロセス終了を確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"fit": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E30", "E22"],
+							"rationale": "同一プロセス・単一writerの基本制約に合うが、本体接続は未確定。"
+						}
+					}
+				},
+				"correctness": {
+					"criteria": {
+						"contracts": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E21", "E22"],
+							"rationale": "公開入口の認可・構造・保存互換・全artifactを、正常/負例と抽出consumerで確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。",
+							"anchor_support": "修正前/後の回帰、実ソース違反10/10、SIGKILL8境界、配布改変拒否とconsumerにより、library契約の重要な失敗と代替説明を直接確認した。"
+						},
+						"edge_cases": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E22"],
+							"rationale": "権限、破損、境界、取消、後継、legacyの回帰と違反検出を確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"concurrency": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E24", "E22"],
+							"rationale": "runToken/epoch/CAS、予約、rollback、遅延完了を確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						}
+					}
+				},
+				"security": {
+					"criteria": {
+						"access": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E22"],
+							"rationale": "元主体・操作権限・実行所有権の違反を副作用なく拒否。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"input_secrets": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "AST・出力パス・digest・gold隔離と配布範囲を確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"abuse": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E22"],
+							"rationale": "回数・byte・取消・receiptを維持し、予算予約の脱落を検出。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						}
+					}
+				},
+				"reliability": {
+					"criteria": {
+						"failure": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "外部失敗・診断失敗でも消費予算と観測usageを保持。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"recovery": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E24", "E22"],
+							"rationale": "SIGKILL後の予約保持、原子的保存、同じ通知IDと冪等ackを確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"resilience": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E22"],
+							"rationale": "依存障害・縮退・上限・失効時は無制限retryせず拒否。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						}
+					}
+				},
+				"maintainability": {
+					"criteria": {
+						"clarity": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E28", "E22"],
+							"rationale": "入口の設定・出力・診断を同期し、主要経路を追跡できる。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"change": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "認可・SQL・usage/検索の異なる変更をhelperと回帰試験へ限定。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"debt": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E28", "E22"],
+							"rationale": "全scope解析と集計重複を除いたが、指示履歴・意味ヒューリスティック・本体未接続が残る。"
+						}
+					}
+				},
+				"common_components": {
+					"criteria": {
+						"duplication": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "request/execution認可とusageの絶対更新を共通化し、複数経路で照合。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"reuse": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "Zod/SQLite/AST/recorded-inferenceを再利用し、独立runnerやORMを増やさない。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"abstraction": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "helperを実際の共有状態・認可・集計へ限定し、新server/frameworkを作らない。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						}
+					}
+				},
+				"testing": {
+					"criteria": {
+						"risk_coverage": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E23", "E22"],
+							"rationale": "権限・予算・取消・復旧・配布の重要境界を回帰と違反注入で直接検査。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。",
+							"anchor_support": "修正前/後の回帰、実ソース違反10/10、SIGKILL8境界、配布改変拒否とconsumerにより、library契約の重要な失敗と代替説明を直接確認した。"
+						},
+						"quality": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E23", "E22"],
+							"rationale": "実回帰と10種の負例が検出力を実証。DB状態を直接assertし、同じhelperを期待値にしない。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。",
+							"anchor_support": "修正前/後の回帰、実ソース違反10/10、SIGKILL8境界、配布改変拒否とconsumerにより、library契約の重要な失敗と代替説明を直接確認した。"
+						},
+						"automation": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "High",
+							"evidence_ids": ["E22"],
+							"rationale": "標準verifyを両OSで再現。CIを作らず重みも除外しない。"
+						}
+					}
+				},
+				"supply_chain": {
+					"criteria": {
+						"dependencies": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "版・lock・出所・license・auditを記録し、既知問題を実際に修正更新。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"build_release": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "source/lock/dist/tgzとdirtyを照合し、古いbuild/改変を拒否。抽出consumerを検証。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"license": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "root、runtime/dev依存、公開seedの同梱条件を確認。第三者の法的監査は未実施。"
+						}
+					}
+				},
+				"performance": {
+					"criteria": {
+						"budget": {
+							"status": "unknown",
+							"value": null,
+							"evidence_ids": ["E29", "E31"],
+							"unknown_reason": "Completed cost/time observations exist, but only 5/20 ready and judge disagreements remain. Representative successful-task cost/benefit and host completion time are not established."
+						},
+						"hot_path": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E25", "E22"],
+							"rationale": "索引で絞り、量・対象数・cold/warm・解析数を固定して測定。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"measurement": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E25", "E22"],
+							"rationale": "履歴参照baseline・閾値とAPI費用記録を得た。実用効果の代表的測定は不足。"
+						}
+					}
+				},
+				"operability": {
+					"criteria": {
+						"signals": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E27", "E22"],
+							"rationale": "理由コード・旧DB診断・usage/durationを、通常ログに秘密や本文を入れず観測。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"lifecycle": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E26", "E22"],
+							"rationale": "導入・追加migration・旧形式診断・SIGKILL復旧・抽出consumerを両OSで確認。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						},
+						"interaction": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E28", "E22"],
+							"rationale": "生成・全files保存・報告・回復の手順と失敗境界を提供。",
+							"countercheck": "対応する拒否、保存状態、実回帰・違反注入を照合。実ホストや実運用、実LLMの意味品質へ一般化しない。"
+						}
+					}
+				}
+			}
+		}
+	}
+}

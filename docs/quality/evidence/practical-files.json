@@ -1,0 +1,175 @@
+{
+	"archive": "artifacts/quality-evidence-2026-11-08.tgz",
+	"archiveSha256": "dd311b47bc5c9ccc5b63aeac2c64a79a92d3ac348d1ba7da229c785eb6b3d285",
+	"contents": {
+		"artifacts/judge-calibration-v2-2026-11-08/budget.json": {
+			"sha256": "146874a644ee978c8c01e09ab8dbfdcb6373846a411b039c1d3ba7c6d6298c4a",
+			"bytes": 58
+		},
+		"artifacts/judge-calibration-v2-2026-11-08/complete.json": {
+			"sha256": "9b07f546eef12a35aa21619da4fb6964042f1fbddaf9e0a095295dbe1465fd51",
+			"bytes": 39
+		},
+		"artifacts/judge-calibration-v2-2026-11-08/inputs.json": {
+			"sha256": "10bc4dee2a46076fa0c41704e21a7d762ff0c0a75a85697b5ffafc17e132f588",
+			"bytes": 2564
+		},
+		"artifacts/judge-calibration-v2-2026-11-08/manifest.json": {
+			"sha256": "e2725aad1b0560cb7cb7fba649fae2ede84217efd8655ae308fd0ab0c4444249",
+			"bytes": 2387
+		},
+		"artifacts/judge-calibration-v2-2026-11-08/records.json": {
+			"sha256": "9d25b169ed63a69376179a720df62ffedd3aa33ea17ea0ba9aaf35901f7baf49",
+			"bytes": 35468
+		},
+		"artifacts/practical-2026-11-08/costs.jsonl": {
+			"sha256": "6b94a15623605b84ed9da4255176ddfdce9773e3dafbf187bfb0c60a8183694d",
+			"bytes": 680231
+		},
+		"artifacts/practical-planning-final-2026-11-08/baseline.json": {
+			"sha256": "bda38579a8c6f3b43eab024cbbd91daf29e17b895846323613bb33ec0e728749",
+			"bytes": 102030
+		},
+		"artifacts/practical-planning-final-2026-11-08/comparison-protocol.json": {
+			"sha256": "fe12e403d8652e5804fdcc33680c19bacaa646fbc1efe63a37aea45dfc0d1764",
+			"bytes": 375
+		},
+		"artifacts/practical-planning-final-2026-11-08/comparison.json": {
+			"sha256": "773828735456fb5ca6f412bfcb1feaec057e6013da789865af13d1e89619d8fa",
+			"bytes": 960337
+		},
+		"artifacts/practical-planning-final-2026-11-08/current-replay.json": {
+			"sha256": "9db9761cccf7ca623a6e68b1337aa8d4095dfd38a4d90a90f2ef78062affdd5a",
+			"bytes": 2906
+		},
+		"artifacts/practical-planning-final-2026-11-08/example-verification/cache-ownership-0.py": {
+			"sha256": "b74f56b343520cadb80b29eb0d64e33eb034c798cd028c55bb56273740fc4fe1",
+			"bytes": 1459
+		},
+		"artifacts/practical-planning-final-2026-11-08/example-verification/jitter-tests-0.py": {
+			"sha256": "55c0afbd3cff006d1c9e7bfa3315a50dad5abe2ff2e4ca7cf14f3aa9478e739e",
+			"bytes": 1730
+		},
+		"artifacts/practical-planning-final-2026-11-08/example-verification/rename-scope-0.py": {
+			"sha256": "1e06aeffb2c2d881b9ca9bc5c0d0c858c1a3c80099bda665ab38e5456a40f2b6",
+			"bytes": 729
+		},
+		"artifacts/practical-planning-final-2026-11-08/example-verification/results.json": {
+			"sha256": "77c5d5b9fc61c04f1bac0756f561898a12460625621b3581e74842e62b2f598b",
+			"bytes": 2251
+		},
+		"artifacts/practical-planning-final-2026-11-08/example-verification/workspace-cache.py": {
+			"sha256": "06581d2271e51b1fe5cf0d5f85ecba458de5723f61ed9e69bf1f2fdaa5f73aa7",
+			"bytes": 1307
+		},
+		"artifacts/practical-planning-final-2026-11-08/failures.json": {
+			"sha256": "ad52405294488dc4b43a392e24786aae70c11b6b3eb4b47261ce5faadd633146",
+			"bytes": 453
+		},
+		"artifacts/practical-planning-final-2026-11-08/manifest.json": {
+			"sha256": "8bb62d67004340a23d7590d41b892fcde5c04957573086f5d659ac8f67011ac3",
+			"bytes": 803
+		},
+		"artifacts/practical-planning-final-2026-11-08/measurement-scope.json": {
+			"sha256": "96a963fa0a404bbe4be39f1d4eb1329ea163ab775e9e39823cdf0b1d192eecb9",
+			"bytes": 808
+		},
+		"artifacts/practical-planning-final-2026-11-08/pending-input.json": {
+			"sha256": "54e763bb3fbd94fcd9d81b94de548cbf335d522f7efe9576f0447b78942eb951",
+			"bytes": 4316
+		},
+		"artifacts/practical-planning-final-2026-11-08/quality-parts.json": {
+			"sha256": "a9d63d330e1d47862a9a8b1a3d9101d0a4a9035d080e863bb07ea1eb9e135b1b",
+			"bytes": 155092
+		},
+		"artifacts/practical-planning-final-2026-11-08/quality.json": {
+			"sha256": "ecc41367fae15664a0aed1b73b906d508b343249d672d737f666c7b4faebbc55",
+			"bytes": 184140
+		},
+		"artifacts/practical-planning-final-2026-11-08/records.json": {
+			"sha256": "e2cafc7c04ec424688f9d998c7cdb4512b7c70c8fc6793db7917f76dfb2c2e63",
+			"bytes": 4716815
+		},
+		"artifacts/practical-planning-final-2026-11-08/runs.json": {
+			"sha256": "ab07b2769c5789e005b5aa7fedb130a27e6b67aaeef1564a3e6f185b4298e464",
+			"bytes": 579284
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/cache-ownership/service-owned-cache-keys/SKILL.md": {
+			"sha256": "cf56ddcbdafee14304e2e30b63b3c6a75210c8541c01e796c0c4207292c1f458",
+			"bytes": 6725
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/cache-ownership/service-owned-cache-keys/references/cache-key-contract.md": {
+			"sha256": "fd03a799828ea6df09a6e636cd09c27a70c943d11c23564d6a97380644ef9e4b",
+			"bytes": 2251
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/SKILL.md": {
+			"sha256": "cadbace7e9eddb8d39a859b19e3c0e9e2dff2e06f947e303bb67971f5bbd7ab7",
+			"bytes": 5903
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/references/jitter-fixture.md": {
+			"sha256": "4824dd2b8bdac3cc00629a15ec6dae6084e684effa45c56f52ab70e976a072ff",
+			"bytes": 2244
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/rename-scope/module-fix-scope-gate/SKILL.md": {
+			"sha256": "71f8e2ab87dec20d01c357869ef34270c156f9454c3f117938c41c48e55fb99f",
+			"bytes": 6157
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/rename-scope/module-fix-scope-gate/references/scope-gate-example.md": {
+			"sha256": "2d3008de90e6b88bcdb5428239f08c91cd133e6a520045f38da43fe95f3a8079",
+			"bytes": 1380
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/review-injection/review-result-dispatch-plan/SKILL.md": {
+			"sha256": "2eed0e938b10847ef8ac37c0a23692b1588d539dd2de83d01507bfd546bcf4b8",
+			"bytes": 5201
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/review-injection/review-result-dispatch-plan/references/dispatch-fixture.md": {
+			"sha256": "0ada45fe298b8f4555e163d17a70adf5a957f762daeef8b940b39de11a25379a",
+			"bytes": 1957
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/workspace-cache/workspace-plugin-cache-isolation/SKILL.md": {
+			"sha256": "f3c6f87513c70881ae7a3ebba2d818a926fef396cc46f32116085a3b60f45a10",
+			"bytes": 6738
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills/workspace-cache/workspace-plugin-cache-isolation/references/cache-key-fixture.md": {
+			"sha256": "b05cad49a8d4d18b4b50c9827b92f1d1e71fba7768299a48050822fa3a0b751e",
+			"bytes": 1925
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills.json": {
+			"sha256": "f405599449fc49ab437eed1e07f3e00f79c15eb9c76f7e3a62d2067057b97e92",
+			"bytes": 44040
+		},
+		"artifacts/practical-rejudged-v2-2026-11-08/budget.json": {
+			"sha256": "1e2f5b9614d57997349c30ef7acddcce5776d9aca9748ecb3f7da139a59e6136",
+			"bytes": 58
+		},
+		"artifacts/practical-rejudged-v2-2026-11-08/manifest.json": {
+			"sha256": "3423ed508adaa50cfd6ef3f51a02e5667935d84a2a4110593bf0dac5ed83bb2d",
+			"bytes": 2388
+		},
+		"artifacts/practical-rejudged-v2-2026-11-08/records.json": {
+			"sha256": "7ddd556a2c3ca4a25af93ecf16b93b3059200464a2e4a9212cb1d948bce53c1c",
+			"bytes": 1223538
+		},
+		"artifacts/practical-rejudged-v2-completion-2026-11-08/budget.json": {
+			"sha256": "a799af52f3dbb159ac8b5ca45c4fa40e4a32a9802ce6fc8bb7e6026622004b7b",
+			"bytes": 58
+		},
+		"artifacts/practical-rejudged-v2-completion-2026-11-08/complete.json": {
+			"sha256": "e2cc599ae9a82cac0ad0b75377163283169d5ed1b721d540b3584ce2bf205452",
+			"bytes": 39
+		},
+		"artifacts/practical-rejudged-v2-completion-2026-11-08/inputs.json": {
+			"sha256": "49d86707fcec6f0a179005ac4aea5428c1b6dd2b6bda15bfd8e612092f07266d",
+			"bytes": 4712
+		},
+		"artifacts/practical-rejudged-v2-completion-2026-11-08/manifest.json": {
+			"sha256": "9e89862ef70259de2da5ca302feef66833ff724527fa94bf848c1fdaadfa3a4a",
+			"bytes": 2389
+		},
+		"artifacts/practical-rejudged-v2-completion-2026-11-08/records.json": {
+			"sha256": "05ad8d95f8d636d6655445b37f79540bd608668cd18cac35b6c789e355ad2909",
+			"bytes": 8463
+		}
+	},
+	"scope": "Public-seed-derived evaluation records and global cost journal; excludes databases, settings keys, dependencies and credentials. Older attempts remain in their original local directories."
+}

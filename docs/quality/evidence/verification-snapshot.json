@@ -1,0 +1,18 @@
+{
+	"sourceTreeSha256": "9f013b060d5781349307021542f609a7f7e122028c0b56e950ddf143156b0ccd",
+	"codeSnapshotSha256": "31f47b53eadf4452861c98def6bbdff9deeed39fee0e9c4da65c68af227384ec",
+	"sourceFiles": 340,
+	"runtime": "Bun 1.4.4",
+	"platforms": ["macOS arm64", "Linux aarch64"],
+	"dockerImage": "sha256:4aa7dc7d28ded23b2dbdfe4dd53436a0d9e390fed0afda95ccb36aedb35bd8d5",
+	"commands": [
+		"bun install --frozen-lockfile --ignore-scripts (Linux fresh copy)",
+		"bun run verify"
+	],
+	"testCounts": {
+		"core": 359,
+		"examples": 160,
+		"typeFiles": 151
+	},
+	"limitations": "Ignored artifacts, production data/settings/credentials, dependencies and git metadata are not copied."
+}

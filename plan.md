@@ -1,7 +1,9 @@
 # Eumenes SkillSmith 実装計画
 
-更新日: 2026-11-06  
+更新日: 2026-11-08
 状態: コア・SQLite adapterの実装とfixture検証を進行中。本体組込み・live受入は未実施。
+
+2026-11-07の評価を受け、[技術品質85点に向けた改善計画](docs/technical-quality-85-plan.md)を追加した。CIの追加・改修を除き、既存指摘と契約・復旧・性能・評価の追加検証を整理する。品質改善の実装と追加検証を進め、[改善記録](docs/quality/implementation-2026-11-08.md)へ結果を残す。P0〜P8の本体組込み・正式公開の完了状態は、このコア改善だけでは変更しない。
 
 2026-11-06の追加依頼により、ContextStillの公開範囲をread-onlyでコピーする独立試験基盤を `examples/contextstill` に追加した。元DBを変更せず、コピーしたローカルDBだけで検索・取得・SourcePort接続・固定モデルによる保存結合を確認する。これはP4/P8の実接続・実LLM評価を完了したことを意味しない。使い方と制限は[単体試験基盤](examples/contextstill/README.md)、引継ぎは[Grokbot向け手順](GROKBOT_HANDOFF.md)を参照する。
 
@@ -210,6 +212,7 @@ fixture通過後に、実ContextStill・Registry・保存済み推論設定と�
 
 ## 16. 参照
 
+- [技術品質85点に向けた改善計画](docs/technical-quality-85-plan.md)
 - [実装と検証の記録](implementation.md)
 - [本体接続契約](integration-contract.md)
 - [知識ドメイン設計](design.md)

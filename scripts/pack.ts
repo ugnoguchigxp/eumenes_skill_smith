@@ -1,28 +1,22 @@
-import { createHash } from "node:crypto";
-import {
-	mkdtemp,
-	mkdir,
-	readdir,
-	readFile,
-	writeFile,
-	cp,
-	rm,
-} from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, writeFile, cp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { sha, files, hashes as fileHashes, inputs } from "./source-manifest.js";
 const root = resolve(import.meta.dir, "..");
-const sha = (s: Uint8Array | string) =>
-	createHash("sha256").update(s).digest("hex");
-async function files(dir: string, prefix = ""): Promise<string[]> {
-	const list: string[] = [];
-	for (const e of await readdir(join(dir, prefix), { withFileTypes: true })) {
-		const path = prefix ? prefix + "/" + e.name : e.name;
-		if (e.isSymbolicLink()) throw new Error("package_symlink");
-		if (e.isDirectory()) list.push(...(await files(dir, path)));
-		else list.push(path);
-	}
-	return list.sort();
-}
+const buildInputs = await inputs(root);
+const built = JSON.parse(
+	await readFile(join(root, "artifacts/build-input.json"), "utf8"),
+);
+if (
+	built.sourceDigest !== buildInputs.sourceDigest ||
+	built.buildInputDigest !== buildInputs.buildInputDigest
+)
+	throw new Error("stale_build_inputs: run build before pack:core");
+if (
+	built.outputDigest !==
+	sha(JSON.stringify(await fileHashes(join(root, "dist"))))
+)
+	throw new Error("build_output_changed: run build before pack:core");
 const pkg = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
 const stage = await mkdtemp(join(tmpdir(), "skillsmith-pack-"));
 try {
@@ -71,17 +65,21 @@ try {
 		(await git.exited) === 0
 			? (await new Response(git.stdout).text()).trim()
 			: null;
-	const sources = await Promise.all(
-		(await files(join(root, "src")))
-			.filter((p) => !p.startsWith("test/"))
-			.map(async (p) => [p, sha(await readFile(join(root, "src", p)))]),
+	const dirtyProcess = Bun.spawn(
+		["git", "status", "--porcelain", "--untracked-files=normal"],
+		{ cwd: root, stdout: "pipe", stderr: "ignore" },
 	);
+	const sourceGitDirty =
+		(await dirtyProcess.exited) === 0
+			? !!(await new Response(dirtyProcess.stdout).text()).trim()
+			: null;
 	const manifest = {
 		package: pkg.name,
 		version: pkg.version,
 		contractVersion: "skillsmith.v1",
 		sourceGitCommit: commit,
-		sourceDigest: sha(JSON.stringify(sources)),
+		sourceGitDirty,
+		...buildInputs,
 		files: hashes,
 	};
 	await writeFile(
@@ -91,6 +89,13 @@ try {
 	for (const [path, hash] of Object.entries(hashes))
 		if (sha(await readFile(join(target, path))) !== hash)
 			throw new Error("package_checksum");
+	if (JSON.stringify(buildInputs) !== JSON.stringify(await inputs(root)))
+		throw new Error("package_inputs_changed");
+	if (
+		built.outputDigest !==
+		sha(JSON.stringify(await fileHashes(join(root, "dist"))))
+	)
+		throw new Error("package_output_changed");
 	await mkdir(join(root, "artifacts"), { recursive: true });
 	const artifact = join(
 		root,

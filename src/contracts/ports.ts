@@ -151,6 +151,8 @@ export interface ObservedUsage {
 		"build" | "reflection" | "workflow" | "delivery_validate" | "reformulation";
 }
 export interface CallObservation {
+	/** Monotonic elapsed time of this physical call; never includes payload text. */
+	durationMs?: number;
 	kind: "modelCalls" | "sourceCalls";
 	operation: string;
 	outcome: "ok" | "error";

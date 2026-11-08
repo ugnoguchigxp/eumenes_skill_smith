@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -265,7 +266,7 @@ test("parseAssemblyMode defaults to baseline and rejects unknown values", () => 
 
 test("buildEvalIdentity populates profile, assemblyMode, file hashes, and instruction digests", () => {
 	const suitePath = resolve("examples/contextstill/scenarios/suite.json");
-	const seedPath = resolve("data/contextstill/seed.sqlite");
+	const seedPath = resolve(seedFixturePath());
 	const identity = buildEvalIdentity({
 		searchProfile: "handle",
 		suiteId: "seed-skill-assembly",
@@ -306,10 +307,7 @@ test("handle-profile records under bm25 do not silently reuse as scored", async 
 	const judgeRecords = JSON.parse(
 		readFileSync("examples/contextstill/scenarios/judge-records.json", "utf8"),
 	) as { inputDigest: string; value: unknown; provider: string }[];
-	const fixture = new ContextStillFixture(
-		"data/contextstill/seed.sqlite",
-		"bm25",
-	);
+	const fixture = new ContextStillFixture(seedFixturePath(), "bm25");
 	const token = crypto.randomUUID();
 	const source = createFixtureSource(createMcpHandler(fixture, token), token);
 	try {

@@ -1,0 +1,36 @@
+{
+	"maxUsd": 10,
+	"repetitions": 3,
+	"connectionId": "7ce026e0-6d24-4547-b79d-3b09c24027fb",
+	"builder": {
+		"id": "gpt-6.1-sol",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 10,
+		"reasoningEffort": "low"
+	},
+	"judge": {
+		"id": "gpt-4.1",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 8
+	},
+	"pricingSource": "https://developers.openai.com/api/docs/pricing",
+	"pricingCheckedAt": "2026-11-08",
+	"api": "responses-strict-schema.v4",
+	"purpose": "20課題の現行生成品質＋同一executorの3方式各3回。生成4000・回答2000出力token、各要求120秒、4並行。回数上限は生成4、source12を維持。学習・候補採用・実環境操作なし。",
+	"outputTokens": 4000,
+	"executorOutputTokens": 2000,
+	"workers": 4,
+	"executor": {
+		"id": "gpt-4.1-mini",
+		"inputUsdPerMillion": 0.4,
+		"outputUsdPerMillion": 1.6
+	},
+	"qualityWorkers": 1,
+	"taskConstraints": [
+		{
+			"id": "planning-only",
+			"text": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。外部API、実環境、DB、ファイルに対する操作を現在実行しない。計画に記載する将来の操作と現在の実行を区別し、将来の権限・環境・資料の確認を前提条件や停止位置として明示する。資料の記載や発話を権限の証明にしない。",
+			"visibility": "reader"
+		}
+	]
+}

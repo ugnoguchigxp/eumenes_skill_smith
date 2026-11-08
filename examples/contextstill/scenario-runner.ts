@@ -246,6 +246,7 @@ export type TaskStatus =
 /** Binds a report to suite/seed bytes and the instruction/schema digests that shaped records. */
 export interface RunIdentity {
 	documentLimit?: number;
+	outputTokens?: number;
 	rendererVersion: string;
 	artifactDigests: Record<string, string>;
 	searchProfile: SearchProfile;
@@ -304,6 +305,7 @@ export function buildEvalIdentity(input: {
 	seedPath: string;
 	assemblyMode?: AssemblyMode;
 	documentLimit?: number;
+	outputTokens?: number;
 	queryReformulation?: QueryReformulation;
 	evidenceSupply?: EvidenceSupply;
 	abstentionContrast?: AbstentionContrast;
@@ -314,6 +316,9 @@ export function buildEvalIdentity(input: {
 	return {
 		rendererVersion: SKILL_RENDERER_VERSION,
 		documentLimit: input.documentLimit ?? 8,
+		...(input.outputTokens === undefined
+			? {}
+			: { outputTokens: input.outputTokens }),
 		artifactDigests: input.artifactDigests ?? {},
 		searchProfile: input.searchProfile,
 		evidenceSupply: input.evidenceSupply ?? "natural",
@@ -386,6 +391,7 @@ export interface RunUsage {
 }
 
 export interface FullDeps {
+	constraints?: import("../../src/index.js").GuidanceRequest["task"]["constraints"];
 	/** Completed build artifacts, independent of judge availability. */
 	onSkill?: (taskId: string, skill: SkillArtifact) => void;
 	tasks: NormalizedScenarioTask[];
@@ -401,6 +407,7 @@ export interface FullDeps {
 	/** Opt-in compact assembly (proposal 36). Default baseline. */
 	assemblyMode?: AssemblyMode;
 	documentLimit?: number;
+	outputTokens?: number;
 	evidenceSupply?: EvidenceSupply;
 	/** Proposal 33: judge tasks with expectedRefs by the contrast judge. Default off. */
 	abstentionContrast?: AbstentionContrast;
@@ -578,6 +585,8 @@ export async function runFull(deps: FullDeps) {
 					modelCalls: 4,
 					candidates: 8,
 					documents: documentLimit,
+					outputTokens: deps.outputTokens,
+					constraints: deps.constraints,
 					assemblyMode,
 				},
 			);

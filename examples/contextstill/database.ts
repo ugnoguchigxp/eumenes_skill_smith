@@ -50,9 +50,16 @@ export class ContextStillFixture {
 					.all()
 					.some((i) => i.name === "items_title_key")
 			)
-				throw new Error("title_index_missing");
-		} catch {
+				throw new Error(
+					"fixture_schema_outdated: rebuild with context:seed --replace or context:snapshot --replace",
+				);
+		} catch (error) {
 			this.db.close();
+			if (
+				error instanceof Error &&
+				error.message.startsWith("fixture_schema_outdated:")
+			)
+				throw error;
 			throw new Error("fixture_snapshot_required");
 		}
 	}

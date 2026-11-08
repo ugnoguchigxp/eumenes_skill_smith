@@ -1,3 +1,4 @@
+import { requestAuthorized } from "./authority.js";
 import { renderSkillMarkdown, type SkillReply } from "./skill-markdown.js";
 import {
 	CONTRACT,
@@ -30,14 +31,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	const limits = resolveServiceLimits(p.limits);
 	const assembly = resolveAssembly(p.assemblyMode ?? "baseline");
 	function valid(tx: Tx, row: RequestRecord, auth: Authority) {
-		return (
-			auth.permissions.includes("build") &&
-			row.authority.scope === auth.scope &&
-			row.authority.principal === auth.principal &&
-			row.authority.epoch === auth.epoch &&
-			!repo.blocked(tx, row.ref) &&
-			p.authority.valid(tx, auth, row.authority.sourceRefs)
-		);
+		return requestAuthorized(p, tx, row, auth, "build");
 	}
 	function update(tx: Tx, row: RequestRecord) {
 		const rev = row.revision;

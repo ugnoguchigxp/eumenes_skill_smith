@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { expect, test } from "bun:test";
 import { resolve } from "node:path";
 import { contextStillSourceMarkdown } from "../skill-source.js";
@@ -15,10 +16,7 @@ const banned = [
 ];
 
 test("ContextStill envelope renders only usable fields as Markdown", async () => {
-	const fixture = new ContextStillFixture(
-		resolve("data/contextstill/seed.sqlite"),
-		"handle",
-	);
+	const fixture = new ContextStillFixture(resolve(seedFixturePath()), "handle");
 	const token = crypto.randomUUID();
 	try {
 		const source = createFixtureSource(createMcpHandler(fixture, token), token);

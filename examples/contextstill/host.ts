@@ -12,6 +12,10 @@ export type ExampleHostOptions = {
 	modelCalls?: number;
 	candidates?: number;
 	documents?: number;
+	/** Explicit evaluation output allowance; existing callers retain 1200. */
+	outputTokens?: number;
+	/** Task context supplied by the evaluation host; defaults remain wiring-only. */
+	constraints?: GuidanceRequest["task"]["constraints"];
 	/** Current baseline by default with injected inference; legacy is archival/wiring-only. */
 	assemblyMode?: "baseline" | "compact" | "legacy";
 };
@@ -53,7 +57,7 @@ export function createExampleHost(
 			acceptance: options.acceptance ?? [
 				{ id: "connection", text: "外部根拠を取得し、版を検査して保存できる" },
 			],
-			constraints: [
+			constraints: options.constraints ?? [
 				{
 					id: "readonly",
 					text: "コピー元とスナップショットを変更しない",
@@ -75,7 +79,7 @@ export function createExampleHost(
 			documents: options.documents ?? 3,
 			inputBytes: 131072,
 			outputBytes: 32768,
-			outputTokens: 1200,
+			outputTokens: options.outputTokens ?? 1200,
 		},
 	};
 	const receipts = new Set<string>();

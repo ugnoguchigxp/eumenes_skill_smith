@@ -18,6 +18,11 @@ import type {
 } from "../contracts/types.js";
 import { requireThat, SkillSmithError } from "../service/identity.js";
 
+const reportBuildKey =
+	"CASE WHEN json_valid(data_json) THEN json_extract(data_json,'$.input.buildRef') END";
+const proposalExecutionKey =
+	"CASE WHEN json_valid(data_json) THEN json_extract(data_json,'$.executionRef') END";
+
 export const migrations = [
 	{
 		id: "knowledge/0001-init",
@@ -35,6 +40,18 @@ CREATE TABLE knowledge_report_receipts(scope TEXT NOT NULL,report_id TEXT NOT NU
 CREATE TABLE knowledge_reflections(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,report_digest TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL,UNIQUE(scope,report_digest));
 CREATE TABLE knowledge_proposals(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,revision INTEGER NOT NULL,data_json TEXT NOT NULL);
 `,
+	},
+	{
+		id: "knowledge/0002-history-lookups",
+		sql:
+			[
+				"CREATE INDEX IF NOT EXISTS knowledge_results_build ON knowledge_results(scope," +
+					reportBuildKey +
+					",execution_ref)",
+				"CREATE INDEX IF NOT EXISTS knowledge_proposals_execution ON knowledge_proposals(scope," +
+					proposalExecutionKey +
+					")",
+			].join(";\n") + ";",
 	},
 ] as const;
 function parseStored<T>(raw: string, schema: z.ZodType<T>): T {
@@ -291,14 +308,13 @@ export const sqliteRepository: Repository<Database> = {
 	},
 	reportsByBuild(db, scope, buildRef) {
 		const rows = db
-			.query("SELECT data_json FROM knowledge_results WHERE scope=?")
-			.all(scope) as { data_json: string }[];
-		const out: Report[] = [];
-		for (const row of rows) {
-			const parsed = parseStored(row.data_json, reportRecordSchema);
-			if (parsed.input.buildRef === buildRef) out.push(parsed);
-		}
-		return out;
+			.query(
+				"SELECT data_json FROM knowledge_results WHERE scope=? AND " +
+					reportBuildKey +
+					"=? ORDER BY execution_ref",
+			)
+			.all(scope, buildRef) as { data_json: string }[];
+		return rows.map((row) => parseStored(row.data_json, reportRecordSchema));
 	},
 	proposal: (db, ref) =>
 		json<Proposal>(
@@ -309,14 +325,13 @@ export const sqliteRepository: Repository<Database> = {
 		),
 	proposalsByExecution(db, scope, executionRef) {
 		const rows = db
-			.query("SELECT data_json FROM knowledge_proposals WHERE scope=?")
-			.all(scope) as { data_json: string }[];
-		const out: Proposal[] = [];
-		for (const row of rows) {
-			const parsed = parseStored(row.data_json, proposalSchema);
-			if (parsed.executionRef === executionRef) out.push(parsed);
-		}
-		return out;
+			.query(
+				"SELECT data_json FROM knowledge_proposals WHERE scope=? AND " +
+					proposalExecutionKey +
+					"=? ORDER BY rowid",
+			)
+			.all(scope, executionRef) as { data_json: string }[];
+		return rows.map((row) => parseStored(row.data_json, proposalSchema));
 	},
 	putProposal(db, p, expected) {
 		requireThat(!blocked(db, p.ref), "reference_revoked");

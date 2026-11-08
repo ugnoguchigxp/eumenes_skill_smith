@@ -1,0 +1,137 @@
+{
+	"rubric_version": "1.1.0",
+	"technical_profile": "library",
+	"mode": "technical",
+	"assessment_kind": "re-evaluated",
+	"target": {
+		"locator": "/Users/y.noguchi/Code/eumenes_skill_smith",
+		"snapshot": "working-tree-code-sha256:31f47b53eadf4452861c98def6bbdff9deeed39fee0e9c4da65c68af227384ec",
+		"reviewed_at": "2026-11-08",
+		"stage": "prototype: core+SQLite+fixtures verified; live planning study complete with judge disagreements; host/pilot pending",
+		"scope": "technical/deep/libraryの再評価。CIの重みは除外しない。コア、SQLite、例、ローカル配布を評価。本体接続・実作業の効果・人手較正は未検証。seed由来の計画回答を実ユーザー履歴と呼ばない。同一担当が反証を確認し、独立した人手レビューとはしない。"
+	},
+	"depth": "deep",
+	"tracks": {
+		"technical": {
+			"raw_observed_score": 74.7,
+			"provisional_score": 74.7,
+			"score": null,
+			"score_status": "provisional",
+			"coverage_percent": 98.3,
+			"excluded_dimension_weight_percent": 0.0,
+			"raw_bounds": [73.4, 75.1],
+			"bounds": [73.4, 75.1],
+			"confidence": "Medium",
+			"required_dimensions_complete": true,
+			"incomplete_required_dimensions": [],
+			"unresolved_severe_suspicions": [],
+			"gates": [],
+			"production_readiness": "no blocker identified in reviewed scope",
+			"dimensions": {
+				"architecture": {
+					"status": "assessed",
+					"score": 6.7,
+					"coverage_percent": 100.0,
+					"bounds": [6.7, 6.7],
+					"base_weight": 12,
+					"confidence": "Medium",
+					"effective_weight_percent": 12.0
+				},
+				"correctness": {
+					"status": "assessed",
+					"score": 8.3,
+					"coverage_percent": 100.0,
+					"bounds": [8.3, 8.3],
+					"base_weight": 20,
+					"confidence": "Medium",
+					"effective_weight_percent": 20.0
+				},
+				"security": {
+					"status": "assessed",
+					"score": 7.5,
+					"coverage_percent": 100.0,
+					"bounds": [7.5, 7.5],
+					"base_weight": 10,
+					"confidence": "Medium",
+					"effective_weight_percent": 10.0
+				},
+				"reliability": {
+					"status": "assessed",
+					"score": 7.5,
+					"coverage_percent": 100.0,
+					"bounds": [7.5, 7.5],
+					"base_weight": 8,
+					"confidence": "Medium",
+					"effective_weight_percent": 8.0
+				},
+				"maintainability": {
+					"status": "assessed",
+					"score": 6.7,
+					"coverage_percent": 100.0,
+					"bounds": [6.7, 6.7],
+					"base_weight": 12,
+					"confidence": "Medium",
+					"effective_weight_percent": 12.0
+				},
+				"common_components": {
+					"status": "assessed",
+					"score": 7.5,
+					"coverage_percent": 100.0,
+					"bounds": [7.5, 7.5],
+					"base_weight": 5,
+					"confidence": "Medium",
+					"effective_weight_percent": 5.0
+				},
+				"testing": {
+					"status": "assessed",
+					"score": 8.3,
+					"coverage_percent": 100.0,
+					"bounds": [8.3, 8.3],
+					"base_weight": 15,
+					"confidence": "High",
+					"effective_weight_percent": 15.0
+				},
+				"supply_chain": {
+					"status": "assessed",
+					"score": 6.7,
+					"coverage_percent": 100.0,
+					"bounds": [6.7, 6.7],
+					"base_weight": 10,
+					"confidence": "Medium",
+					"effective_weight_percent": 10.0
+				},
+				"performance": {
+					"status": "partial",
+					"score": 6.3,
+					"coverage_percent": 66.7,
+					"bounds": [4.2, 7.5],
+					"base_weight": 5,
+					"confidence": "Medium",
+					"effective_weight_percent": 5.0
+				},
+				"operability": {
+					"status": "assessed",
+					"score": 7.5,
+					"coverage_percent": 100.0,
+					"bounds": [7.5, 7.5],
+					"base_weight": 3,
+					"confidence": "Medium",
+					"effective_weight_percent": 3.0
+				}
+			}
+		}
+	},
+	"confirmed_findings": {
+		"Critical": 0,
+		"High": 0,
+		"Medium": 0,
+		"Low": 0
+	},
+	"priorities": {
+		"P0": 0,
+		"P1": 0,
+		"P2": 0,
+		"P3": 0
+	},
+	"suspected_findings": 0
+}

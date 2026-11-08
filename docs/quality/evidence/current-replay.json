@@ -1,0 +1,124 @@
+{
+	"networkForbidden": true,
+	"listenerForbidden": true,
+	"matchedArtifacts": true,
+	"statusesMatch": true,
+	"artifacts": {
+		"review-injection": "2eed0e938b10847ef8ac37c0a23692b1588d539dd2de83d01507bfd546bcf4b8",
+		"cache-ownership": "cf56ddcbdafee14304e2e30b63b3c6a75210c8541c01e796c0c4207292c1f458",
+		"jitter-tests": "cadbace7e9eddb8d39a859b19e3c0e9e2dff2e06f947e303bb67971f5bbd7ab7",
+		"rename-scope": "71f8e2ab87dec20d01c357869ef34270c156f9454c3f117938c41c48e55fb99f",
+		"workspace-cache": "f3c6f87513c70881ae7a3ebba2d818a926fef396cc46f32116085a3b60f45a10"
+	},
+	"statuses": [
+		{
+			"taskId": "backup-verify",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		},
+		{
+			"taskId": "sandbox-review",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "review-injection",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "least-permissions",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		},
+		{
+			"taskId": "cache-ownership",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "migration-readonly",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "budget_exceeded"
+		},
+		{
+			"taskId": "permanent-queue",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "cloud_incomplete"
+		},
+		{
+			"taskId": "jitter-tests",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "cache-disable",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		},
+		{
+			"taskId": "rename-scope",
+			"axis": "retrieval",
+			"status": "scored"
+		},
+		{
+			"taskId": "queue-migration",
+			"axis": "compose",
+			"status": "error",
+			"detail": "cloud_incomplete"
+		},
+		{
+			"taskId": "safe-diagnostics",
+			"axis": "compose",
+			"status": "error",
+			"detail": "cloud_incomplete"
+		},
+		{
+			"taskId": "retry-control",
+			"axis": "compose",
+			"status": "error",
+			"detail": "cloud_incomplete"
+		},
+		{
+			"taskId": "workspace-cache",
+			"axis": "compose",
+			"status": "scored"
+		},
+		{
+			"taskId": "permission-boundary",
+			"axis": "compose",
+			"status": "error",
+			"detail": "cloud_incomplete"
+		},
+		{
+			"taskId": "backup-actual",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "unknown-sdk",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "payment-unknown",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "migration-counts",
+			"axis": "absent",
+			"status": "scored"
+		},
+		{
+			"taskId": "private-authority",
+			"axis": "absent",
+			"status": "scored"
+		}
+	]
+}

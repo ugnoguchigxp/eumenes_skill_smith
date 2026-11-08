@@ -10,15 +10,27 @@ export async function sourceOperation<T>(
 	context?.signal.throwIfAborted();
 	if (context && !inner.meteredCalls) await context.reserve("sourceCalls");
 	context?.signal.throwIfAborted();
+	const started = performance.now();
+	let result: T;
 	try {
-		const result = await f();
+		result = await f();
 		context?.signal.throwIfAborted();
-		if (!inner.meteredCalls)
-			context?.noteCall?.({ kind: "sourceCalls", operation, outcome: "ok" });
-		return result;
 	} catch (error) {
 		if (!inner.meteredCalls)
-			context?.noteCall?.({ kind: "sourceCalls", operation, outcome: "error" });
+			context?.noteCall?.({
+				kind: "sourceCalls",
+				operation,
+				outcome: "error",
+				durationMs: performance.now() - started,
+			});
 		throw error;
 	}
+	if (!inner.meteredCalls)
+		context?.noteCall?.({
+			kind: "sourceCalls",
+			operation,
+			outcome: "ok",
+			durationMs: performance.now() - started,
+		});
+	return result;
 }

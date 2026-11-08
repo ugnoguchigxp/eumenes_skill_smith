@@ -1,0 +1,22 @@
+{
+	"maxUsd": 10,
+	"repetitions": 3,
+	"connectionId": "7ce026e0-6d24-4547-b79d-3b09c24027fb",
+	"builder": {
+		"id": "gpt-4.1-mini",
+		"inputUsdPerMillion": 0.4,
+		"outputUsdPerMillion": 1.6
+	},
+	"judge": {
+		"id": "gpt-4.1",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 8
+	},
+	"pricingSource": "https://developers.openai.com/api/docs/pricing",
+	"pricingCheckedAt": "2026-11-08",
+	"api": "responses-strict-schema.v2",
+	"purpose": "20課題の現行生成品質＋同一executorの3方式各3回。生成4000・回答2000出力token、各要求120秒、4並行。回数上限は生成4、source12を維持。学習・候補採用・実環境操作なし。",
+	"outputTokens": 4000,
+	"executorOutputTokens": 2000,
+	"workers": 4
+}

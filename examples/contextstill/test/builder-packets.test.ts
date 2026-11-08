@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import {
 	mkdtempSync,
 	readFileSync,
@@ -155,6 +156,8 @@ for (const reformulation of ["off", "on"]) {
 			const args = [
 				process.execPath,
 				"examples/contextstill/scenario-eval.ts",
+				"--db",
+				seedFixturePath(),
 				"--builder-only",
 				"--suite",
 				suite,

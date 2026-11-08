@@ -1,3 +1,4 @@
+import { seedFixturePath } from "./seed-fixture.js";
 import { digest } from "../../../src/service/identity.js";
 import { expect, test } from "bun:test";
 import { disclosureInstructions } from "../../../src/instructions/build.js";
@@ -9,7 +10,7 @@ import {
 	artifactBindingsValid,
 } from "../scoreboard.js";
 
-const b = buildScoreboard();
+const b = buildScoreboard(undefined, { seedPath: seedFixturePath() });
 const cell = (slice: string, p: "handle" | "bm25") =>
 	b.slices.find((s) => s.id === slice)!.cells.find((c) => c.profile === p)!;
 

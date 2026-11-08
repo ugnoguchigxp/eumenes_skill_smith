@@ -1,0 +1,265 @@
+{
+	"kind": "acceptance_target_design",
+	"rubric_version": "1.1.0",
+	"technical_profile": "library",
+	"baseline_snapshot": "47cfdf5e8d42ee19d59edb6e3d2e4bdc5c5fc85a",
+	"created_at": "2026-11-07",
+	"status": "implementation_in_progress_actual_scores_separate",
+	"goal": 85,
+	"ci_changes": false,
+	"formal_score": null,
+	"forecast_score": null,
+	"meaning": "各target_valueは受入後に得たい基準値。観測済みの採点・達成確率・改善後の予測点ではない。実際のExpected評価およびRe-evaluated評価は証拠取得後に別台帳で行う。",
+	"baseline": {
+		"provisional_score": 59,
+		"raw_observed_score": 60.9,
+		"coverage_percent": 91.7,
+		"formal_score": null,
+		"security_cap": 59,
+		"unassessed_criteria": [
+			"supply_chain.dependencies",
+			"performance.budget",
+			"performance.hot_path",
+			"performance.measurement"
+		]
+	},
+	"dimension_definitions": {
+		"architecture": {
+			"weight": 12,
+			"criteria": {
+				"boundaries": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q04", "Q10"],
+					"required_evidence": "複数consumerの契約試験と、認可・検索・指示の代表変更で影響が責務内に収まる実績。"
+				},
+				"flow": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q05", "Q06", "Q10"],
+					"required_evidence": "予約から配達ackまでの状態不変条件を実DB・実ホスト境界で検証し、途中失敗や二重実行でも保存が一貫する。"
+				},
+				"fit": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q00", "Q07", "Q10"],
+					"required_evidence": "同一プロセス・単一writer・既存queue/推論を使い、固定した量と期限の範囲で動作することを実測する。"
+				}
+			}
+		},
+		"correctness": {
+			"weight": 20,
+			"criteria": {
+				"contracts": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q01", "Q02", "Q05", "Q09"],
+					"required_evidence": "公開操作の正常・不正入力・保存互換・成果物一式を、公開入口から仕様に基づいて検証する。"
+				},
+				"edge_cases": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q01", "Q05", "Q08"],
+					"required_evidence": "境界値・後継・混合scope・未信頼資料・制約変更で不変条件を確認し、意味判断の実測を固定fixtureと区別する。"
+				},
+				"concurrency": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q05", "Q06", "Q10"],
+					"required_evidence": "単一writerのまま複数の生成worker、取消、失効、遅延応答、配達競合を制御し、二重採用と部分保存を起こさない。"
+				}
+			}
+		},
+		"security": {
+			"weight": 10,
+			"criteria": {
+				"access": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q01", "Q05", "Q10"],
+					"required_evidence": "principal/scope/epoch/実行所有権/委譲の負例を全操作で実施し、拒否時の本文・改訂・候補・予算の副作用0を実ホストでも確認する。"
+				},
+				"input_secrets": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q05", "Q08"],
+					"required_evidence": "未信頼の全入力経路、Markdown/URL/パス、builder・judge分離と出力の負例を現行版で実測する。"
+				},
+				"abuse": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q05", "Q07", "Q10"],
+					"required_evidence": "上限・取消・連続取得・依存障害の代表条件で負担を抑え、権限や必須条件を緩めず停止・回復する。"
+				}
+			}
+		},
+		"reliability": {
+			"weight": 8,
+			"criteria": {
+				"failure": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q05", "Q06", "Q10"],
+					"required_evidence": "外部呼出し前・中・結果取得後・保存途中・配達前後の失敗でも、必要な結果・消費量・再処理intentを保持する。"
+				},
+				"recovery": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q06", "Q09", "Q10"],
+					"required_evidence": "実プロセス終了と再起動、配達未ack、途中migration、失効済みDBの復元を隔離した実境界で試し、再送と二重抑制を確認する。"
+				},
+				"resilience": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q06", "Q07"],
+					"required_evidence": "source/推論/queueの障害と上限到達で、状態と観測を保ち、回復後に正当に再開できる。"
+				}
+			}
+		},
+		"maintainability": {
+			"weight": 12,
+			"criteria": {
+				"clarity": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q04"],
+					"required_evidence": "README・現行契約・実装例の一致を別consumerによる導入と失敗回復で確認する。"
+				},
+				"change": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q04", "Q05"],
+					"required_evidence": "認可修正・SQL改善・LLM指示変更の異なる変更で、共通機構の再利用と対象を絞った回帰検出の実績を残す。"
+				},
+				"debt": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q03", "Q04", "Q07"],
+					"required_evidence": "観測した全scope解析・複数責務・旧仕様の維持負担を減らし、変更時の影響範囲と性能の回帰がないことを示す。"
+				}
+			}
+		},
+		"common_components": {
+			"weight": 5,
+			"criteria": {
+				"duplication": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q01", "Q04", "Q05"],
+					"required_evidence": "認可・usage・文書組立ての繰り返しを必要な範囲で共有し、各経路の結果が契約上同じになることを検証する。"
+				},
+				"reuse": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q04", "Q09", "Q10"],
+					"required_evidence": "既存port・writer・queue・推論・AST/schemaを複数の利用先で使い、別の意味判断器や実行engineを増やさない。"
+				},
+				"abstraction": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q04", "Q10"],
+					"required_evidence": "現実のconsumerと代表変更を通して、portとhelperの便益が確認でき、未使用の抽象を導入しない。"
+				}
+			}
+		},
+		"testing": {
+			"weight": 15,
+			"criteria": {
+				"risk_coverage": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q01", "Q05", "Q06", "Q08", "Q10"],
+					"required_evidence": "重要操作の権限・失効・保存・配達・実LLM品質を対応付け、実不具合の回帰と代表的な相互作用を検出する。"
+				},
+				"quality": {
+					"target_value": 4,
+					"evidence_status": "not_verified",
+					"work_items": ["Q05", "Q08"],
+					"required_evidence": "仕様に基づくassertion、意図的違反による検出能力、独立評価との照合、flaky条件の分離を実証する。"
+				},
+				"automation": {
+					"target_value": 2,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q09"],
+					"required_evidence": "標準のローカルverifyと手動配布前検査を文書の手順どおり再現する。CIを追加せず、CI実績を必要とする高い評価を見込まない。"
+				}
+			}
+		},
+		"supply_chain": {
+			"weight": 10,
+			"criteria": {
+				"dependencies": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q09"],
+					"required_evidence": "版・出所・実行時到達性・既知の脆弱性の適用可否を記録し、更新と互換検証を手動の配布手順で再現する。"
+				},
+				"build_release": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q09", "Q10"],
+					"required_evidence": "元commit/sourceDigest/lockfile/tgzの一致と、抽出後consumerの利用を配布前に検査し、改ざん・混入負例を拒否する。"
+				},
+				"license": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q09"],
+					"required_evidence": "コード・実行時依存・seedの出所と公開根拠・同梱条件を追跡し、更新時にも点検した履歴を残す。"
+				}
+			}
+		},
+		"performance": {
+			"weight": 5,
+			"criteria": {
+				"budget": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q00", "Q07", "Q08"],
+					"required_evidence": "固定した代表課題・並行数・provider条件で待ち時間と総費用を測り、合意した予算とp95の条件を満たす。"
+				},
+				"hot_path": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q03", "Q07"],
+					"required_evidence": "保存量・対象件数を変えた測定で索引・取得・解析量の妥当性を示し、観測したボトルネックを除く。"
+				},
+				"measurement": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q07", "Q08", "Q09"],
+					"required_evidence": "条件・生データ・失敗を含むbaselineと再測定を残し、配布前の手動比較で退行を検出できる。"
+				}
+			}
+		},
+		"operability": {
+			"weight": 3,
+			"criteria": {
+				"signals": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q06", "Q07"],
+					"required_evidence": "状態・安全な理由コード・call/usageから障害を診断し、秘密や本文を出さず回復手順を選べることを再現する。"
+				},
+				"lifecycle": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q09", "Q10"],
+					"required_evidence": "新規導入・既存データ更新・再起動・切戻し・失効/消去を、別環境とconsumerで実施する。"
+				},
+				"interaction": {
+					"target_value": 3,
+					"evidence_status": "not_verified",
+					"work_items": ["Q02", "Q08", "Q10"],
+					"required_evidence": "公開APIの正常経路だけでなく入力不足・予算切れ・外部障害・成果物保存からの回復を対象利用者の課題で確認する。"
+				}
+			}
+		}
+	},
+	"target_arithmetic": {
+		"exact_weighted_sum": "1025/12",
+		"display_weighted_sum": "85.4",
+		"dimension_weight_sum": 100,
+		"ci_criterion_target": 2,
+		"meaning": "目標基準値の条件付き加重和。評価実績と予測ではない。"
+	}
+}
