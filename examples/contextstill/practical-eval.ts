@@ -87,7 +87,13 @@ const config = {
 	executor: rawConfig.executor ?? rawConfig.builder,
 	qualityWorkers: rawConfig.qualityWorkers ?? rawConfig.workers,
 };
-if (config.maxUsd > 10 || config.maxUsd <= 0 || config.repetitions !== 3)
+// The user authorized an additional USD 5 on 2026-11-08; prior reservations remain in the same journal.
+if (
+	!Number.isFinite(config.maxUsd) ||
+	config.maxUsd > 15 ||
+	config.maxUsd <= 0 ||
+	config.repetitions !== 3
+)
 	throw Error("evaluation_contract_changed");
 if (
 	config.outputTokens !== 4000 ||
@@ -175,10 +181,18 @@ try {
 	for (const model of [config.builder, config.executor, config.judge])
 		if (!saved.models.includes(model.id))
 			throw Error("evaluation_model_not_in_catalog");
+	const incompleteResponses = load<Record<string, unknown>>(
+		join(out, "incomplete-responses.json"),
+		{},
+	);
 	const budget = createCloudBudget({
 		...saved,
 		maxUsd: config.maxUsd,
 		journal,
+		onIncomplete: (event) => {
+			incompleteResponses[event.requestDigest] = event;
+			save("incomplete-responses.json", incompleteResponses);
+		},
 	});
 	const records = load<(InferenceRecord & Partial<InferenceTask>)[]>(
 		join(out, "records.json"),

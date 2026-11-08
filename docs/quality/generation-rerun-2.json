@@ -1,0 +1,17 @@
+{
+	"baselineReady": 5,
+	"ready": 13,
+	"outcomes": {
+		"ready": 13,
+		"needs_input": 5
+	},
+	"errors": {
+		"cloud_output_limit": 2
+	},
+	"globalAccountedUsd": 11.213667000000001,
+	"cumulativeLimitUsd": 15,
+	"qualityGraded": false,
+	"rawDirectory": "artifacts/generation-scoped-2026-11-08",
+	"limits": "Single trial on public-seed-derived plans; no real task actions or superiority claim. Missing information cases retained. Remaining two output limits diagnosed from unaccepted fragments.",
+	"nextCondition": "Same hard cap, soft target leaves 512 tokens at 4000; compact JSON separators; concise audit reasoning with mandatory information and code retained."
+}

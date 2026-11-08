@@ -67,6 +67,14 @@ export function createCloudBudget(options: {
 	journal: string;
 	fetch?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 	onSchemaFailure?: (message: string) => void;
+	/** Opt-in evaluation evidence only; fragments must never become inference records. */
+	onIncomplete?: (event: {
+		requestDigest: string;
+		purpose: string;
+		responseId: string | null;
+		reason: string | null;
+		outputText: string;
+	}) => void;
 }) {
 	const events: Entry[] = existsSync(options.journal)
 		? readFileSync(options.journal, "utf8")
@@ -255,14 +263,6 @@ export function createCloudBudget(options: {
 								: undefined,
 					});
 				}
-				if (result.status !== "completed")
-					throw Error(
-						result.incomplete_details?.reason === "max_output_tokens"
-							? "cloud_output_limit"
-							: "cloud_incomplete",
-					);
-				if (typeof result.id !== "string" || !result.id.length)
-					throw Error("cloud_receipt_missing");
 				const output = result.output
 					?.filter((item: { type: string }) => item.type === "message")
 					.flatMap(
@@ -272,6 +272,26 @@ export function createCloudBudget(options: {
 					.filter((part: { type: string }) => part.type === "output_text")
 					.map((part: { text: string }) => part.text)
 					.join("");
+				if (result.status !== "completed") {
+					options.onIncomplete?.({
+						requestDigest: entry.requestDigest,
+						purpose,
+						responseId: typeof result.id === "string" ? result.id : null,
+						reason:
+							result.incomplete_details?.reason === "max_output_tokens" ||
+							result.incomplete_details?.reason === "content_filter"
+								? result.incomplete_details.reason
+								: null,
+						outputText: output ?? "",
+					});
+					throw Error(
+						result.incomplete_details?.reason === "max_output_tokens"
+							? "cloud_output_limit"
+							: "cloud_incomplete",
+					);
+				}
+				if (typeof result.id !== "string" || !result.id.length)
+					throw Error("cloud_receipt_missing");
 				return {
 					value: decodeProviderValue(JSON.parse(output).result, input.schema),
 					receipt: result.id as string,

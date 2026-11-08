@@ -1,0 +1,841 @@
+{
+	"cohort": {
+		"tasks": 20,
+		"model": "gpt-6.1-sol",
+		"reasoning_effort": "low",
+		"output_tokens_cap": 4000,
+		"model_calls_cap": 4,
+		"source_calls_cap": 12,
+		"builder_deadline_ms": 120000,
+		"negative_information_cases": 5
+	},
+	"batches": [
+		{
+			"condition": "baseline",
+			"raw_directory": "artifacts/practical-planning-final-2026-11-08",
+			"physical_call_ordinals": [535, 609],
+			"inference_calls": 65,
+			"ready": 5,
+			"outcomes": {
+				"unavailable": 1,
+				"ready": 5,
+				"needs_input": 5
+			},
+			"errors": {
+				"semantic_review_failed": 3,
+				"budget_exceeded": 1,
+				"cloud_incomplete": 5
+			},
+			"preparation_token_estimate_usd": 1.3346384,
+			"token_estimate_per_ready_usd": 0.26692768,
+			"api_duration_total_ms": 898275.910955,
+			"per_task": {
+				"backup-verify": {
+					"token_cost_usd": 0.0849376,
+					"api_duration_ms": 53823.395916999994,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"sandbox-review": {
+					"token_cost_usd": 0.0920296,
+					"api_duration_ms": 59892.91229199999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "sandbox-review",
+						"kind": "unavailable",
+						"code": "source_unavailable"
+					}
+				},
+				"review-injection": {
+					"token_cost_usd": 0.080598,
+					"api_duration_ms": 48355.23504100001,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "review-injection",
+						"kind": "ready"
+					}
+				},
+				"least-permissions": {
+					"token_cost_usd": 0.095108,
+					"api_duration_ms": 68352.15725000002,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"cache-ownership": {
+					"token_cost_usd": 0.08564920000000001,
+					"api_duration_ms": 56924.428709,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "cache-ownership",
+						"kind": "ready"
+					}
+				},
+				"migration-readonly": {
+					"token_cost_usd": 0.0955828,
+					"api_duration_ms": 60333.23870799993,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "budget_exceeded"
+					}
+				},
+				"permanent-queue": {
+					"token_cost_usd": 0.0762408,
+					"api_duration_ms": 56436.37904100004,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_incomplete"
+					}
+				},
+				"jitter-tests": {
+					"token_cost_usd": 0.0874068,
+					"api_duration_ms": 53999.26404099999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "jitter-tests",
+						"kind": "ready"
+					}
+				},
+				"cache-disable": {
+					"token_cost_usd": 0.093752,
+					"api_duration_ms": 62621.25120899989,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"rename-scope": {
+					"token_cost_usd": 0.0826012,
+					"api_duration_ms": 47644.95162599988,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "rename-scope",
+						"kind": "ready"
+					}
+				},
+				"queue-migration": {
+					"token_cost_usd": 0.0734876,
+					"api_duration_ms": 61869.86945800006,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_incomplete"
+					}
+				},
+				"safe-diagnostics": {
+					"token_cost_usd": 0.0751492,
+					"api_duration_ms": 57119.96358300012,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_incomplete"
+					}
+				},
+				"retry-control": {
+					"token_cost_usd": 0.0760232,
+					"api_duration_ms": 55704.58179100009,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_incomplete"
+					}
+				},
+				"workspace-cache": {
+					"token_cost_usd": 0.08732800000000002,
+					"api_duration_ms": 53882.48979000002,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "workspace-cache",
+						"kind": "ready"
+					}
+				},
+				"permission-boundary": {
+					"token_cost_usd": 0.07643280000000001,
+					"api_duration_ms": 55172.760291999904,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_incomplete"
+					}
+				},
+				"backup-actual": {
+					"token_cost_usd": 0.013516400000000001,
+					"api_duration_ms": 18662.283582999953,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "backup-actual",
+						"kind": "needs_input"
+					}
+				},
+				"unknown-sdk": {
+					"token_cost_usd": 0.0150092,
+					"api_duration_ms": 7227.553333000047,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "unknown-sdk",
+						"kind": "needs_input"
+					}
+				},
+				"payment-unknown": {
+					"token_cost_usd": 0.0148416,
+					"api_duration_ms": 7075.803208000027,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "payment-unknown",
+						"kind": "needs_input"
+					}
+				},
+				"migration-counts": {
+					"token_cost_usd": 0.015356,
+					"api_duration_ms": 8265.40949900006,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "migration-counts",
+						"kind": "needs_input"
+					}
+				},
+				"private-authority": {
+					"token_cost_usd": 0.0135884,
+					"api_duration_ms": 4911.982583999983,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "private-authority",
+						"kind": "needs_input"
+					}
+				}
+			},
+			"quality_grades_used": false
+		},
+		{
+			"condition": "trial_1",
+			"raw_directory": "artifacts/generation-rerun-2026-11-08",
+			"physical_call_ordinals": [1156, 1216],
+			"inference_calls": 61,
+			"ready": 4,
+			"outcomes": {
+				"needs_input": 12,
+				"ready": 4
+			},
+			"errors": {
+				"semantic_review_failed": 2,
+				"cloud_output_limit": 2
+			},
+			"preparation_token_estimate_usd": 0.9327435999999999,
+			"token_estimate_per_ready_usd": 0.23318589999999997,
+			"api_duration_total_ms": 560911.221008,
+			"per_task": {
+				"backup-verify": {
+					"token_cost_usd": 0.034328000000000004,
+					"api_duration_ms": 12438.273668000002,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "backup-verify",
+						"kind": "needs_input"
+					}
+				},
+				"sandbox-review": {
+					"token_cost_usd": 0.08435880000000001,
+					"api_duration_ms": 58442.161583999994,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"review-injection": {
+					"token_cost_usd": 0.0324524,
+					"api_duration_ms": 14784.702625000005,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "review-injection",
+						"kind": "needs_input"
+					}
+				},
+				"least-permissions": {
+					"token_cost_usd": 0.081176,
+					"api_duration_ms": 57140.198625000005,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "least-permissions",
+						"kind": "ready"
+					}
+				},
+				"cache-ownership": {
+					"token_cost_usd": 0.0217452,
+					"api_duration_ms": 9078.68420899997,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "cache-ownership",
+						"kind": "needs_input"
+					}
+				},
+				"migration-readonly": {
+					"token_cost_usd": 0.0826596,
+					"api_duration_ms": 54432.07279199996,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"permanent-queue": {
+					"token_cost_usd": 0.0370632,
+					"api_duration_ms": 12943.20895900004,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "permanent-queue",
+						"kind": "needs_input"
+					}
+				},
+				"jitter-tests": {
+					"token_cost_usd": 0.0811992,
+					"api_duration_ms": 46935.134415999986,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "jitter-tests",
+						"kind": "ready"
+					}
+				},
+				"cache-disable": {
+					"token_cost_usd": 0.0331968,
+					"api_duration_ms": 12922.889249,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "cache-disable",
+						"kind": "needs_input"
+					}
+				},
+				"rename-scope": {
+					"token_cost_usd": 0.0760696,
+					"api_duration_ms": 52255.74112499994,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "rename-scope",
+						"kind": "ready"
+					}
+				},
+				"queue-migration": {
+					"token_cost_usd": 0.0724264,
+					"api_duration_ms": 59786.09508399997,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_output_limit"
+					}
+				},
+				"safe-diagnostics": {
+					"token_cost_usd": 0.0368972,
+					"api_duration_ms": 14032.055793000036,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "safe-diagnostics",
+						"kind": "needs_input"
+					}
+				},
+				"retry-control": {
+					"token_cost_usd": 0.0717456,
+					"api_duration_ms": 55169.22762599995,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_output_limit"
+					}
+				},
+				"workspace-cache": {
+					"token_cost_usd": 0.03349,
+					"api_duration_ms": 13701.260834999965,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "workspace-cache",
+						"kind": "needs_input"
+					}
+				},
+				"permission-boundary": {
+					"token_cost_usd": 0.0928924,
+					"api_duration_ms": 54093.083958999894,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "permission-boundary",
+						"kind": "ready"
+					}
+				},
+				"backup-actual": {
+					"token_cost_usd": 0.0122664,
+					"api_duration_ms": 6774.299041999853,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "backup-actual",
+						"kind": "needs_input"
+					}
+				},
+				"unknown-sdk": {
+					"token_cost_usd": 0.011962,
+					"api_duration_ms": 5921.204709000187,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "unknown-sdk",
+						"kind": "needs_input"
+					}
+				},
+				"payment-unknown": {
+					"token_cost_usd": 0.0131392,
+					"api_duration_ms": 7310.877832999919,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "payment-unknown",
+						"kind": "needs_input"
+					}
+				},
+				"migration-counts": {
+					"token_cost_usd": 0.0121136,
+					"api_duration_ms": 6447.859834000119,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "migration-counts",
+						"kind": "needs_input"
+					}
+				},
+				"private-authority": {
+					"token_cost_usd": 0.011562,
+					"api_duration_ms": 6302.189041000092,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "private-authority",
+						"kind": "needs_input"
+					}
+				}
+			},
+			"quality_grades_used": false
+		},
+		{
+			"condition": "selected",
+			"raw_directory": "artifacts/generation-scoped-2026-11-08",
+			"physical_call_ordinals": [1217, 1284],
+			"inference_calls": 68,
+			"ready": 13,
+			"outcomes": {
+				"ready": 13,
+				"needs_input": 5
+			},
+			"errors": {
+				"cloud_output_limit": 2
+			},
+			"preparation_token_estimate_usd": 1.3441607999999996,
+			"token_estimate_per_ready_usd": 0.10339698461538459,
+			"api_duration_total_ms": 864882.1836599994,
+			"per_task": {
+				"backup-verify": {
+					"token_cost_usd": 0.0904404,
+					"api_duration_ms": 54342.808875,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "backup-verify",
+						"kind": "ready"
+					}
+				},
+				"sandbox-review": {
+					"token_cost_usd": 0.0850428,
+					"api_duration_ms": 56014.296291,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "sandbox-review",
+						"kind": "ready"
+					}
+				},
+				"review-injection": {
+					"token_cost_usd": 0.0821984,
+					"api_duration_ms": 49110.68200099998,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "review-injection",
+						"kind": "ready"
+					}
+				},
+				"least-permissions": {
+					"token_cost_usd": 0.08470720000000001,
+					"api_duration_ms": 56821.45241699999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "least-permissions",
+						"kind": "ready"
+					}
+				},
+				"cache-ownership": {
+					"token_cost_usd": 0.08460680000000001,
+					"api_duration_ms": 56177.64975099993,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "cache-ownership",
+						"kind": "ready"
+					}
+				},
+				"migration-readonly": {
+					"token_cost_usd": 0.0887632,
+					"api_duration_ms": 55408.72387400002,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "migration-readonly",
+						"kind": "ready"
+					}
+				},
+				"permanent-queue": {
+					"token_cost_usd": 0.0786128,
+					"api_duration_ms": 53621.93962600001,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_output_limit"
+					}
+				},
+				"jitter-tests": {
+					"token_cost_usd": 0.0845016,
+					"api_duration_ms": 50301.84491600003,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "jitter-tests",
+						"kind": "ready"
+					}
+				},
+				"cache-disable": {
+					"token_cost_usd": 0.0847512,
+					"api_duration_ms": 55089.92950000003,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "cache-disable",
+						"kind": "ready"
+					}
+				},
+				"rename-scope": {
+					"token_cost_usd": 0.0800152,
+					"api_duration_ms": 49100.7014149999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "rename-scope",
+						"kind": "ready"
+					}
+				},
+				"queue-migration": {
+					"token_cost_usd": 0.0759264,
+					"api_duration_ms": 58392.272666999954,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_output_limit"
+					}
+				},
+				"safe-diagnostics": {
+					"token_cost_usd": 0.0925764,
+					"api_duration_ms": 58308.23408299987,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "safe-diagnostics",
+						"kind": "ready"
+					}
+				},
+				"retry-control": {
+					"token_cost_usd": 0.0950228,
+					"api_duration_ms": 60756.161291000084,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "retry-control",
+						"kind": "ready"
+					}
+				},
+				"workspace-cache": {
+					"token_cost_usd": 0.08976959999999999,
+					"api_duration_ms": 60932.5375819999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "workspace-cache",
+						"kind": "ready"
+					}
+				},
+				"permission-boundary": {
+					"token_cost_usd": 0.0841576,
+					"api_duration_ms": 51878.31524799985,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "permission-boundary",
+						"kind": "ready"
+					}
+				},
+				"backup-actual": {
+					"token_cost_usd": 0.0129032,
+					"api_duration_ms": 7374.334500000114,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "backup-actual",
+						"kind": "needs_input"
+					}
+				},
+				"unknown-sdk": {
+					"token_cost_usd": 0.0132756,
+					"api_duration_ms": 11067.10462499992,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "unknown-sdk",
+						"kind": "needs_input"
+					}
+				},
+				"payment-unknown": {
+					"token_cost_usd": 0.0127844,
+					"api_duration_ms": 8044.335873999982,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "payment-unknown",
+						"kind": "needs_input"
+					}
+				},
+				"migration-counts": {
+					"token_cost_usd": 0.012655999999999999,
+					"api_duration_ms": 6874.773207999882,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "migration-counts",
+						"kind": "needs_input"
+					}
+				},
+				"private-authority": {
+					"token_cost_usd": 0.0114492,
+					"api_duration_ms": 5264.085915999953,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "private-authority",
+						"kind": "needs_input"
+					}
+				}
+			},
+			"quality_grades_used": false
+		},
+		{
+			"condition": "rejected_headroom",
+			"raw_directory": "artifacts/generation-headroom-2026-11-08",
+			"physical_call_ordinals": [1285, 1352],
+			"inference_calls": 68,
+			"ready": 6,
+			"outcomes": {
+				"needs_input": 8,
+				"ready": 6,
+				"unavailable": 2
+			},
+			"errors": {
+				"cloud_output_limit": 1,
+				"semantic_review_failed": 3
+			},
+			"preparation_token_estimate_usd": 1.2873127999999994,
+			"token_estimate_per_ready_usd": 0.21455213333333323,
+			"api_duration_total_ms": 826400.6175870005,
+			"per_task": {
+				"backup-verify": {
+					"token_cost_usd": 0.082284,
+					"api_duration_ms": 50745.400498999996,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "backup-verify",
+						"kind": "needs_input"
+					}
+				},
+				"sandbox-review": {
+					"token_cost_usd": 0.0699968,
+					"api_duration_ms": 50658.20262399999,
+					"model_calls": 3,
+					"outcome": {
+						"kind": "error",
+						"code": "cloud_output_limit"
+					}
+				},
+				"review-injection": {
+					"token_cost_usd": 0.0780408,
+					"api_duration_ms": 45127.807042000015,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "review-injection",
+						"kind": "ready"
+					}
+				},
+				"least-permissions": {
+					"token_cost_usd": 0.07959160000000001,
+					"api_duration_ms": 50940.144541999995,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "least-permissions",
+						"kind": "ready"
+					}
+				},
+				"cache-ownership": {
+					"token_cost_usd": 0.0218364,
+					"api_duration_ms": 9505.359875000024,
+					"model_calls": 3,
+					"outcome": {
+						"taskId": "cache-ownership",
+						"kind": "needs_input"
+					}
+				},
+				"migration-readonly": {
+					"token_cost_usd": 0.087282,
+					"api_duration_ms": 55032.38533500003,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "migration-readonly",
+						"kind": "ready"
+					}
+				},
+				"permanent-queue": {
+					"token_cost_usd": 0.09694720000000001,
+					"api_duration_ms": 60360.972833000065,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "permanent-queue",
+						"kind": "unavailable",
+						"code": "semantic_verification_budget_exhausted"
+					}
+				},
+				"jitter-tests": {
+					"token_cost_usd": 0.08694679999999999,
+					"api_duration_ms": 54429.297416999994,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "jitter-tests",
+						"kind": "ready"
+					}
+				},
+				"cache-disable": {
+					"token_cost_usd": 0.0849136,
+					"api_duration_ms": 54504.37470800005,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "cache-disable",
+						"kind": "needs_input"
+					}
+				},
+				"rename-scope": {
+					"token_cost_usd": 0.07743520000000001,
+					"api_duration_ms": 50366.33404200006,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"queue-migration": {
+					"token_cost_usd": 0.09708919999999999,
+					"api_duration_ms": 69566.30450200004,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "queue-migration",
+						"kind": "unavailable",
+						"code": "context_budget_exceeded"
+					}
+				},
+				"safe-diagnostics": {
+					"token_cost_usd": 0.091568,
+					"api_duration_ms": 61705.2884180001,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "safe-diagnostics",
+						"kind": "ready"
+					}
+				},
+				"retry-control": {
+					"token_cost_usd": 0.097124,
+					"api_duration_ms": 60607.151832,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"workspace-cache": {
+					"token_cost_usd": 0.0876024,
+					"api_duration_ms": 57061.18008399999,
+					"model_calls": 4,
+					"outcome": {
+						"taskId": "workspace-cache",
+						"kind": "ready"
+					}
+				},
+				"permission-boundary": {
+					"token_cost_usd": 0.0851156,
+					"api_duration_ms": 56555.78554199997,
+					"model_calls": 4,
+					"outcome": {
+						"kind": "error",
+						"code": "semantic_review_failed"
+					}
+				},
+				"backup-actual": {
+					"token_cost_usd": 0.0122752,
+					"api_duration_ms": 7638.250166999991,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "backup-actual",
+						"kind": "needs_input"
+					}
+				},
+				"unknown-sdk": {
+					"token_cost_usd": 0.013218,
+					"api_duration_ms": 8242.990457999986,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "unknown-sdk",
+						"kind": "needs_input"
+					}
+				},
+				"payment-unknown": {
+					"token_cost_usd": 0.0137724,
+					"api_duration_ms": 9164.250875000143,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "payment-unknown",
+						"kind": "needs_input"
+					}
+				},
+				"migration-counts": {
+					"token_cost_usd": 0.012533599999999999,
+					"api_duration_ms": 7256.752709000022,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "migration-counts",
+						"kind": "needs_input"
+					}
+				},
+				"private-authority": {
+					"token_cost_usd": 0.01174,
+					"api_duration_ms": 6932.384083000012,
+					"model_calls": 2,
+					"outcome": {
+						"taskId": "private-authority",
+						"kind": "needs_input"
+					}
+				}
+			},
+			"quality_grades_used": false
+		}
+	],
+	"selected_condition": "selected",
+	"headroom_adopted": false,
+	"budget": {
+		"authorized_cumulative_usd": 15,
+		"known_token_estimate_usd": 7.9720927999999995,
+		"unknown_reserved_usd": 4.528887,
+		"accounted_usd": 12.500979800000007,
+		"accounted_peak_usd": 13.658588599999998,
+		"additional_observed_token_estimate_usd": 3.5642172000000008,
+		"physical_calls": 1352
+	},
+	"limits": [
+		"Generation and delivery counts only; not real task success or a quality score.",
+		"One stochastic cohort per condition, used for development/adoption; no unseen holdout or human calibration.",
+		"Preparation costs include reformulation, generation, failed output and semantic review, exclude quality judge/executor. Overall budget includes every prior diagnostic/judge/unknown reserve.",
+		"Time is sum of provider-call durations, excludes source, persistence, rendering and scheduling.",
+		"Cached input charged at full rate for a conservative token-price estimate; not an invoice."
+	]
+}

@@ -26,4 +26,4 @@ API上限には回答と推論の両方が含まれる。[公式仕様](https://
 
 [修正前の回帰](evidence/generation-budget-before.log)、[8つの取得・版・撤回の確認](evidence/generation-budget-after.log)、[macOS](evidence/generation-macos-verify.log)、[Linux](evidence/generation-linux-verify.log)、[実装の指紋](evidence/generation-code-snapshot.json)を保存した。前回の技術評価74.7点は以前のsnapshotのまま保持し、今回の修正予定や固定試験数だけで加点しない。
 
-この実装ラウンドで追加の有料推論はまだ行っていない。通算の費用計上は8.936763 USDのままである。新しい20課題の再測定は、現行の10 USD枠に対する追加予算の回答待ち。旧未知費用の予約を解放して枠を作らない。
+その後、ユーザーが追加5 USD、累計15 USDを承認した。再測定で採用版はready 13/20、適切な保留5、出力上限2となった。[追加検証の結果](generation-results-2026-11-08.md)を参照。累計計上12.500980 USDには旧未知費用の保持予約も含み、予約を解放して枠を作っていない。

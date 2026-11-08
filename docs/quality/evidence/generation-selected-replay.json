@@ -1,0 +1,247 @@
+{
+	"networkForbidden": true,
+	"listenerForbidden": true,
+	"matchedInputs": 68,
+	"statusesMatch": true,
+	"deliveriesMatch": true,
+	"artifactDigestsMatch": true,
+	"artifactCount": 13,
+	"fullArtifactsCompared": true,
+	"artifacts": {
+		"backup-verify": {
+			"main": "722fc8d438ed21002143d3e1078b0862b7c20b52d92ed561e36a606ef1a714f8",
+			"bundle": "3b922d19809c2ed4468b8fe677729c60cf4f3a3180bbdf856ca04ea446b66a19",
+			"files": [
+				{
+					"path": "production-db-backup-verification-plan/references/zip-check-fixture.md",
+					"digest": "b2a7d93fefd0566cf8f13b48fe163038c68b5712f479ebabf53f94ebb7dc5a23"
+				}
+			]
+		},
+		"sandbox-review": {
+			"main": "9f792348e4490a7348a004dab07bad6014916d3a458a80bf6dd53e4c258b4197",
+			"bundle": "b0568a2e5692f139af22bae844d2a158b3c0b7c72f7078b5e23a91952cb001be",
+			"files": [
+				{
+					"path": "qoredb-sandbox-production-checks/references/change-scope-fixture.md",
+					"digest": "777f1b97229642d052e14d845be32c6c01e43e83c71d56717f98e3bbf7a8ff79"
+				}
+			]
+		},
+		"review-injection": {
+			"main": "1e9061761b21a4cb464dc07d31f0541f9f59a43d8d9fc212d388072fbbf70f25",
+			"bundle": "85dfc874d34376abc3e35cc2f57365fd175c84a4cde5252f5f73bd02864eeb00",
+			"files": [
+				{
+					"path": "review-result-injection-plan/references/dispatch-fixture.md",
+					"digest": "d6c4b615b881dca3732ce07b33bea29b162fd1e3c697991e1cd67394ce5e4516"
+				}
+			]
+		},
+		"least-permissions": {
+			"main": "3d5b5af87c7d63b4747dc14ccd1ac9b88174ce3a0418187183a5629dfb6675f7",
+			"bundle": "076580aee15677fed7899a201df5c9dc11002cdbc2566959cc07f2ffb6436d67",
+			"files": [
+				{
+					"path": "desktop-window-permission-reduction/references/permission-set-fixture.md",
+					"digest": "7e07a2408d4ef04294e89593dedf965503f27ba6b3ea6edd7ded50db1c932511"
+				}
+			]
+		},
+		"cache-ownership": {
+			"main": "d5945bcc8e2f6886d183724d9078189f339832b230b1f8d165d6b9da285926f7",
+			"bundle": "b7bebcc5fde5e773d2ce668b3750bb101d24b86e08cedbfc2004ddd106c4a259",
+			"files": [
+				{
+					"path": "service-owned-cache-keys/references/cache-key-fixture.md",
+					"digest": "2e59f1f91e0b74340418b02ed12b50d73ff624c78f31ab375af819b69a84be42"
+				}
+			]
+		},
+		"migration-readonly": {
+			"main": "cc00654e7009b452cdb16cd946d4280ba4910b95e77532f83892a9f4eeb7c2eb",
+			"bundle": "5e57493b7056db47f53d7e1ca147696fdb7ec2deed11fb7be9907223c54e44c1",
+			"files": [
+				{
+					"path": "queue-migration-preflight-plan/references/preflight-gate-fixture.md",
+					"digest": "11078c2068a49dbb63f13e919a24b14aa2903ff0e2285cc7b53eb5eca83b92fc"
+				}
+			]
+		},
+		"jitter-tests": {
+			"main": "62e1ea86af7c33abac1ee9b0454ca33207c031c8d2ea26908ec919c4c8a8612f",
+			"bundle": "7f3418bb2f15ff0c5c507c99c9ceab392eac0a3a192ad34af0aa5cbefb12b3d0",
+			"files": [
+				{
+					"path": "deterministic-retry-jitter/references/jitter-fixture.md",
+					"digest": "82b28217179ad5ca480ec7fc1274d4aa4cef71a82941674992d77efc7666c014"
+				}
+			]
+		},
+		"cache-disable": {
+			"main": "40f6f4884f2fe184982ecbf7640f43c65f7b4ec1491a9adfe84a857fea94f973",
+			"bundle": "a346024ccf320de5c337622caaa86441208218cfb3d7e1fba5d111a2a79384a3",
+			"files": [
+				{
+					"path": "recover-isolate-config-cache/references/cache-key-fixture.md",
+					"digest": "2b68c2af7efb3964c8e7acf15c6072c663ff25742f0e1b8ab34687fe8912da32"
+				}
+			]
+		},
+		"rename-scope": {
+			"main": "72e61139249f8c51aab96ee6784ebb7afc20960a823c17c1414cbb25fd76d0fa",
+			"bundle": "d4de052d007b07a64e312c1e0d7f89108ccf28afca020cf8d328aa3b578b9598",
+			"files": [
+				{
+					"path": "module-fix-scope-gate/references/scope-gate-example.md",
+					"digest": "c385855e801dfb014fb5efb3e2fa5893a802c112027ca6fb06ad5142c2d935f0"
+				}
+			]
+		},
+		"safe-diagnostics": {
+			"main": "d63dcf8eb424c46f80f626a629d98a85a96b8f27ffc0549c9267a1ef61641aaa",
+			"bundle": "739808b099fb5add31ff4800798873b1c46addd8daec9499a406ea71a47afe0d",
+			"files": [
+				{
+					"path": "secret-safe-diagnostic-plan/references/redaction-boundary-fixture.md",
+					"digest": "eadf3d914bd28872fa637e0b28d8ee5fbe499c81a781853b9e40db32a43f8b1c"
+				}
+			]
+		},
+		"retry-control": {
+			"main": "6f24165f13470827754b8c15b8ef4ebfb666ebdc110732ca800500197f6ead71",
+			"bundle": "0ebfdbda6d63ebd503bd89914110f58bb368ca1717b0d41173b067f8bc1a019c",
+			"files": [
+				{
+					"path": "queue-retry-policy/references/retry-policy-fixture.md",
+					"digest": "8941ac64f81d5e35cf97fa681c004d02615536d2a5c50a907ddd69427470e345"
+				}
+			]
+		},
+		"workspace-cache": {
+			"main": "494cb7a88fb3cc2838b75b37b7439f123e23fa28d5fec11b57bc8a018fb51338",
+			"bundle": "ea8c77a46bbca95e085c9fc4865a4264deee190581616dc776d043783b59695d",
+			"files": [
+				{
+					"path": "workspace-plugin-cache-isolation/references/cache-key-fixture.md",
+					"digest": "82b2e446d5bb97efa490895906e097d5ba1af30315ed64dc7f7c89ccabbcfd06"
+				}
+			]
+		},
+		"permission-boundary": {
+			"main": "2b32b91ebfd39cc5cd0378c728c598943b5e74dce2f3fa4223ae69a3ab9c8291",
+			"bundle": "574e076746cd1a33fa2aaed6262641812a3bdda34d3069cd514d38d7e6d4ab57",
+			"files": [
+				{
+					"path": "window-permission-boundary/references/permission-boundary-fixture.md",
+					"digest": "3a8a7d52f5ab7315f6ce84409c879be78feae23efe17fe57c4f19c5f6b61c9de"
+				}
+			]
+		}
+	},
+	"statuses": [
+		{
+			"taskId": "backup-verify",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "sandbox-review",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "review-injection",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "least-permissions",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "cache-ownership",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "migration-readonly",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "permanent-queue",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "cloud_output_limit"
+		},
+		{
+			"taskId": "jitter-tests",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "cache-disable",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "rename-scope",
+			"axis": "retrieval",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "queue-migration",
+			"axis": "compose",
+			"status": "error",
+			"detail": "cloud_output_limit"
+		},
+		{
+			"taskId": "safe-diagnostics",
+			"axis": "compose",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "retry-control",
+			"axis": "compose",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "workspace-cache",
+			"axis": "compose",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "permission-boundary",
+			"axis": "compose",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "backup-actual",
+			"axis": "absent",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "unknown-sdk",
+			"axis": "absent",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "payment-unknown",
+			"axis": "absent",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "migration-counts",
+			"axis": "absent",
+			"status": "awaiting_judge"
+		},
+		{
+			"taskId": "private-authority",
+			"axis": "absent",
+			"status": "awaiting_judge"
+		}
+	],
+	"limits": "Exact current inference identities for the selected condition; no new provider outputs or quality grades."
+}

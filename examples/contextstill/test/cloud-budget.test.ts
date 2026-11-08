@@ -7,7 +7,9 @@ import { createCloudBudget } from "../cloud-budget.js";
 test("output truncation retains its cause and reasoning usage without accepting partial JSON", async () => {
 	const dir = mkdtempSync(join(tmpdir(), "cloud-truncation-"));
 	try {
+		const incomplete: { outputText: string; reason: string | null }[] = [];
 		const budget = createCloudBudget({
+			onIncomplete: (event) => incomplete.push(event),
 			baseUrl: "https://fixture.invalid/v1",
 			credential: "fixture",
 			maxUsd: 10,
@@ -53,6 +55,9 @@ test("output truncation retains its cause and reasoning usage without accepting 
 			outputTokens: 100,
 		});
 		expect(budget.spent()).toBeCloseTo(0.00011);
+		expect(incomplete).toMatchObject([
+			{ outputText: '{"result":', reason: "max_output_tokens" },
+		]);
 	} finally {
 		rmSync(dir, { recursive: true, force: true });
 	}

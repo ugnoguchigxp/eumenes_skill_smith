@@ -1,0 +1,16 @@
+{
+	"baseCommit": "3f9dfc91fd5ac3d28febfc1d6f69603fd468b026",
+	"sourceSnapshotSha256": "a9c6b6744f61f3b89f5584ec2da4a4affe01fcb692144f34ccc44b50a522d7c0",
+	"platforms": ["macOS arm64", "Linux aarch64"],
+	"runtime": "Bun 1.4.4",
+	"codeFilesMatchLinuxFrozenCopy": true,
+	"coreTests": 359,
+	"exampleTests": 169,
+	"typeFiles": 152,
+	"logs": {
+		"generation-selected-macos-verify.log": "404a1d8e69634250ab4e9c94152bb50968e806d274ea01c4ccaaa2ba3c7764fc",
+		"generation-selected-linux-verify.log": "9046b44359bc7941789b264f29f5ac25a86ea1f7888885c8bf3049cae9ccac74"
+	},
+	"userSeedUnchanged": true,
+	"cleanEvidenceReplayWithoutCopiedDbOrCredentials": true
+}

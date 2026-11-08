@@ -1,0 +1,503 @@
+{
+	"archive": "docs/quality/evidence/generation-evidence-2026-11-08.tgz",
+	"archiveSha256": "b17a874f354cce5b2e80e52977606e7151d7c572ffbc0bc47543d5663e6ca8aa",
+	"files": {
+		"artifacts/generation-headroom-2026-11-08/comparison-protocol.json": {
+			"bytes": 2079,
+			"sha256": "970c0d079b0a4590dfddd6dc49d615de7aca68e0b68da491bf52256a2bd80266"
+		},
+		"artifacts/generation-headroom-2026-11-08/failed-inputs.json": {
+			"bytes": 47005,
+			"sha256": "61125d0cbd880106b65377f4c9eed7afa1236fa82539c25f60f8cae2d238da72"
+		},
+		"artifacts/generation-headroom-2026-11-08/failures.json": {
+			"bytes": 95,
+			"sha256": "40c9447d79e0c76861e92a5e7d73f1659eb6cb41edf06a80127716518058550a"
+		},
+		"artifacts/generation-headroom-2026-11-08/generation.json": {
+			"bytes": 1966,
+			"sha256": "c7e97cf64b2a5da5fee151ceb3f9f54220f9a1c92ed3dc797513bcdd368a9234"
+		},
+		"artifacts/generation-headroom-2026-11-08/incomplete-responses.json": {
+			"bytes": 13156,
+			"sha256": "bfe83c1ea8088d52fbf437c929af01d13be6ac990794b666b474ddbaec2af876"
+		},
+		"artifacts/generation-headroom-2026-11-08/manifest.json": {
+			"bytes": 1163,
+			"sha256": "0cef75da086888a4718057d542478fcff4b8d8207199051ba577d85a14337812"
+		},
+		"artifacts/generation-headroom-2026-11-08/pending-input.json": {
+			"bytes": 21364,
+			"sha256": "715666e340a4205158ec4b7ee18cfa4be45f9447529b6910d9bc62a25d8ff5b4"
+		},
+		"artifacts/generation-headroom-2026-11-08/quality-parts.json": {
+			"bytes": 499542,
+			"sha256": "2420fc8994fde2242cb36dfcc35bd07d9f7e6d8f80bab68be98bfe6e49b181e3"
+		},
+		"artifacts/generation-headroom-2026-11-08/quality.json": {
+			"bytes": 519522,
+			"sha256": "8c23f751987356cd645e2fc4b58b558f407425951c7d5c2d705572498553eff3"
+		},
+		"artifacts/generation-headroom-2026-11-08/records.json": {
+			"bytes": 1866971,
+			"sha256": "54f1caa08c72f9733b87cba2ce1ad8b6f1dc8f0f2acc2b115c3d18b078e698bd"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/jitter-tests/reproducible-retry-jitter/SKILL.md": {
+			"bytes": 5912,
+			"sha256": "fef255080511630bb5ee15f382bcf24ddb8cd46563c55760692310a9990f8181"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/jitter-tests/reproducible-retry-jitter/references/jitter-fixture.md": {
+			"bytes": 2524,
+			"sha256": "2e1c08fc301440e53c8cd8db5d1947059d9d428b7e6abfcafbb115707182c0bc"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/least-permissions/desktop-window-permission-release-plan/SKILL.md": {
+			"bytes": 7257,
+			"sha256": "8bfc8a9ab66592785528b44e9c3b59ec093730d9410b94513ea450b57df2f5bd"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/least-permissions/desktop-window-permission-release-plan/references/permission-matrix-fixture.md": {
+			"bytes": 1612,
+			"sha256": "474f3b225ea3425a2dfa2e273857c1ec04bb83636f70609370f2a86d34050e97"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/migration-readonly/queue-migration-preflight-plan/SKILL.md": {
+			"bytes": 6496,
+			"sha256": "164848c730b6fa9e1a7efabbf525e3daafd8cf698f60ec0ed938dc1e5f6ee81c"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/migration-readonly/queue-migration-preflight-plan/references/preflight-gate-fixture.md": {
+			"bytes": 2195,
+			"sha256": "72336f646e343d9f0af3b7457ae6f46117e6330bf79baa972ab2dc34c69cc999"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/review-injection/review-recorder-injection-plan/SKILL.md": {
+			"bytes": 5630,
+			"sha256": "1120c80acd875a0781ccebe87e48974a2c7fc6722fa330ede2d97842664586dd"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/review-injection/review-recorder-injection-plan/references/recorder-selection-fixture.md": {
+			"bytes": 2227,
+			"sha256": "f76b064cc6134120ba3415910fdad0949d4e7d64a798c35bb94db1d033158a8f"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/safe-diagnostics/redaction-preserving-diagnostics/SKILL.md": {
+			"bytes": 6739,
+			"sha256": "144049586f7968780b8814b3d4330c225ce09f6c64805e0c51a304d4a7832027"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/safe-diagnostics/redaction-preserving-diagnostics/references/diagnostic-fixture.md": {
+			"bytes": 2509,
+			"sha256": "4fe4e1913dfcc093f0d7adf31c3044cb099e98d2b4e10f4a220492288e8a430b"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/workspace-cache/workspace-plugin-cache-key-plan/SKILL.md": {
+			"bytes": 7799,
+			"sha256": "81d202f4ca488b0b520a4a5cc670ccbf04e94f5e6076cb8c58242a97997f7800"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills/workspace-cache/workspace-plugin-cache-key-plan/references/cache-key-fixture.md": {
+			"bytes": 2338,
+			"sha256": "6a09b25d82fb0e3f30990c29344b28b7d3910ce247f8a4cee8dc0db22ed5cccd"
+		},
+		"artifacts/generation-headroom-2026-11-08/skills.json": {
+			"bytes": 57640,
+			"sha256": "6ac1b4817d70270ed9db61b66dd34fd6d43b2c74eb0e67f572e59e829d347760"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/docs/quality/cloud-eval-generation-settings.json": {
+			"bytes": 1447,
+			"sha256": "eea8c866c922c385e5ced39e1d80a1c319ad50a7a56990f02d906b775b26415e"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/docs/quality/practical-suite.json": {
+			"bytes": 21437,
+			"sha256": "adeb903558bf0a6496f600e7ae1d2b323a096107b3d1818660107d46c3562f97"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/examples/contextstill/cloud-budget.ts": {
+			"bytes": 9442,
+			"sha256": "dad43d40880d361acced83d94a3c28cd727315fbc2d16d7d9ceb81b39e0a256d"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/examples/contextstill/practical-eval.ts": {
+			"bytes": 20439,
+			"sha256": "1548a21630b3ae2f77af8495a18db1d449735fe93b00cebcdab909f9bcdca362"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/examples/contextstill/provider-schema.ts": {
+			"bytes": 3044,
+			"sha256": "3656317cc474cafe90e3fa18e19bfea07fbddb2bd89ef74419ca7be46fc3d26b"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/src/instructions/build.ts": {
+			"bytes": 26179,
+			"sha256": "df435a5b545b7db96540fe3e6e4671a707eef5df6801261f21f22d50a356abe8"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/src/service/build.ts": {
+			"bytes": 20568,
+			"sha256": "ff824b3e117d89cdf7ae1ad40e643e6928623ce10557271c58c22117fbff8e65"
+		},
+		"artifacts/generation-headroom-2026-11-08/source-snapshot/src/service/evidence-search.ts": {
+			"bytes": 9367,
+			"sha256": "4a74a45d8e50718d978cd42b7e16ff625e1d4a4a84680f7242def1fae43f3d84"
+		},
+		"artifacts/generation-rerun-2026-11-08/comparison-protocol.json": {
+			"bytes": 1751,
+			"sha256": "9b1b617148c7dbea7d6a16f36438dacbe0e78b7decc0e687f6d0dc9db0fb5a7e"
+		},
+		"artifacts/generation-rerun-2026-11-08/failed-inputs.json": {
+			"bytes": 99339,
+			"sha256": "1c807495a2b941b804704728815c9a18d03deb8794708aa292ffbb713e0a8003"
+		},
+		"artifacts/generation-rerun-2026-11-08/failures.json": {
+			"bytes": 187,
+			"sha256": "c97e933621d4b645b0265b12ecbb1b4b0ca54db76f077f18ee458336edd1d067"
+		},
+		"artifacts/generation-rerun-2026-11-08/generation.json": {
+			"bytes": 1876,
+			"sha256": "769c901f99633d75145f8a1c88c4d49babddf75b3b73834c0e24698df79bbd69"
+		},
+		"artifacts/generation-rerun-2026-11-08/manifest.json": {
+			"bytes": 1163,
+			"sha256": "aa34bb0abcd78de2f367945f23b6cd75ffdb20d41d0f67e5a4dbeca0734d6647"
+		},
+		"artifacts/generation-rerun-2026-11-08/pending-input.json": {
+			"bytes": 21358,
+			"sha256": "1b40255fa99e9b7351f8540e9d6d03c591d5cb39bcb0eb6b189cb1e6d83d42a7"
+		},
+		"artifacts/generation-rerun-2026-11-08/quality-parts.json": {
+			"bytes": 428640,
+			"sha256": "b22607efbb500b484cbfdefd68eadcbfa9ee3542c5db5e2613d023b355b470e2"
+		},
+		"artifacts/generation-rerun-2026-11-08/quality.json": {
+			"bytes": 447477,
+			"sha256": "50fe0e98315ed12a7f01265c0e189ba1d75968b941b032791ec1148e1cff5c81"
+		},
+		"artifacts/generation-rerun-2026-11-08/records.json": {
+			"bytes": 1391243,
+			"sha256": "1060d9017a194237231011e484bda9280ae14810a231727ab676a4df9950d825"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/SKILL.md": {
+			"bytes": 5757,
+			"sha256": "1c6d35baee6e9c5bb7adb5117cf684fccf126272004ddb0896659b55b2db1c94"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/references/jitter-fixture.md": {
+			"bytes": 1932,
+			"sha256": "6dbf9996ab5d7f99bf6136ee603b909d618ef8f0b7cb8054c369b137f11cb435"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/least-permissions/desktop-window-permission-release-plan/SKILL.md": {
+			"bytes": 7914,
+			"sha256": "dc6ec171b0134f2dc3d34ca7ee844d4aa0a34c294b38fd10b5fffc1929691158"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/least-permissions/desktop-window-permission-release-plan/references/permission-review-fixture.md": {
+			"bytes": 1105,
+			"sha256": "11c385365c00c33e080c209af3200b26e4237b97055829af38f32209f353c585"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/permission-boundary/window-permission-boundary-plan/SKILL.md": {
+			"bytes": 6660,
+			"sha256": "68c828ccca9c1f34ff512f4f75a6cd2e68cf1cbacf54fe4a5857916a3c0dfa92"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/permission-boundary/window-permission-boundary-plan/references/boundary-fixture.md": {
+			"bytes": 3083,
+			"sha256": "f6c645315da5e823f5613a38bbb4c162c86264c16412133e3aed9f58ec37034b"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/rename-scope/single-module-fix-before-reorganization/SKILL.md": {
+			"bytes": 6030,
+			"sha256": "21e64e089d6edba8b911ec062feb7d096e6ab7eec455c43696f43fc87be2d4b6"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills/rename-scope/single-module-fix-before-reorganization/references/scope-gate-examples.md": {
+			"bytes": 1109,
+			"sha256": "519ef12fb9f339485071e965c0562655adaaf95896c8d847ede1707efb3984a6"
+		},
+		"artifacts/generation-rerun-2026-11-08/skills.json": {
+			"bytes": 36494,
+			"sha256": "173e3a21977e214e2f181dcd2d3d23b95add36427abe8f820ad0f3605276fe7e"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/docs/quality/cloud-eval-generation-settings.json": {
+			"bytes": 1447,
+			"sha256": "eea8c866c922c385e5ced39e1d80a1c319ad50a7a56990f02d906b775b26415e"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/docs/quality/practical-suite.json": {
+			"bytes": 21437,
+			"sha256": "adeb903558bf0a6496f600e7ae1d2b323a096107b3d1818660107d46c3562f97"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/examples/contextstill/cloud-budget.ts": {
+			"bytes": 8788,
+			"sha256": "208bc1e0296e807e4f99307921f0a594ba8aa4ac141266a29525557885804730"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/examples/contextstill/practical-eval.ts": {
+			"bytes": 20181,
+			"sha256": "90f5cd36931e878f6be1f849f6b0ea7fa201a2a6198ff946d78da891d2e9ed4c"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/examples/contextstill/provider-schema.ts": {
+			"bytes": 3044,
+			"sha256": "3656317cc474cafe90e3fa18e19bfea07fbddb2bd89ef74419ca7be46fc3d26b"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/src/instructions/build.ts": {
+			"bytes": 23767,
+			"sha256": "3939540d125a8a9ddef6f8155b51a2fb679f599f4fb9ad50e0d83bb77ef11bcb"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/src/service/build.ts": {
+			"bytes": 20311,
+			"sha256": "f964ad2d1332a113a6e7fb9ad118ffbf6142b2a545d3425f60c86d265966eb6f"
+		},
+		"artifacts/generation-rerun-2026-11-08/source-snapshot/src/service/evidence-search.ts": {
+			"bytes": 9367,
+			"sha256": "4a74a45d8e50718d978cd42b7e16ff625e1d4a4a84680f7242def1fae43f3d84"
+		},
+		"artifacts/generation-scoped-2026-11-08/comparison-protocol.json": {
+			"bytes": 1920,
+			"sha256": "3107988e83885d3e0fddf523838195e79feed0d1b0388e4c259bd42095f1d4a9"
+		},
+		"artifacts/generation-scoped-2026-11-08/current-replay.json": {
+			"bytes": 7960,
+			"sha256": "752b787027532b556830f321bd7580b126eb78483e8f1e854214fc741cca54d0"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/backup-verify-0.py": {
+			"bytes": 1033,
+			"sha256": "4d7ae57b09a6a7f6f7f1c0260011721da40445c99319949be5ae5131b3994bff"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/cache-disable-0.py": {
+			"bytes": 1133,
+			"sha256": "d0abb8de42ec93710835148dc287f014bfed0507a4d95acea7a26cac09ae62f2"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/cache-ownership-0.py": {
+			"bytes": 1562,
+			"sha256": "b4bb092ece53ae5d981f277ca89eaec0d18cab28a6c2823a0b24b9f9156fe6e4"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/jitter-tests-0.py": {
+			"bytes": 1925,
+			"sha256": "08930ad6c4cd1f07e8f6b6aa9e34b36f90b015e38cd489edfff6007120f5412e"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/least-permissions-0.py": {
+			"bytes": 1350,
+			"sha256": "7f0ba5b10d13577fb454cc23e349cbdf191973a70774e788926d22b4b9d661a6"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/migration-readonly-0.py": {
+			"bytes": 763,
+			"sha256": "790b207bbe8e488c0ec4cef57472a34d97930c5edaab367df920f55bf9fe7838"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/permission-boundary-0.py": {
+			"bytes": 2229,
+			"sha256": "d5608e19df87e5e2f3a5d4bd1bc30c06233b244d7de34645f112a997379aab2a"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/rename-scope-0.py": {
+			"bytes": 907,
+			"sha256": "e70205a0c471d58b8616f5dbbf2a186f7224dbde2dbb969af3c21bb92ac5a1b7"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/results.json": {
+			"bytes": 7001,
+			"sha256": "dab45831b209abae238f7e39cb814a3833d1599ea86ad92aaaa0d5b928b521ee"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/retry-control-0.py": {
+			"bytes": 1559,
+			"sha256": "d055ed677a41f2b2be526d75c21ee113be47d4c5ee81b3b5fea9d5d989d1cf71"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/review-injection-0.mjs": {
+			"bytes": 1501,
+			"sha256": "d7ebd1d372d436ada69c5e8f2fa2ebe6ce61808111ac5a9714dd0cea2d802d28"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/safe-diagnostics-0.py": {
+			"bytes": 1978,
+			"sha256": "9634e0f608dbb1a0eb4fa62c5a6f4e5d812c7b71a8f9b14a6a5660f739cd2e1c"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/sandbox-review-0.py": {
+			"bytes": 752,
+			"sha256": "62e3005f1f4dc063c2ce976b896154f130c6e3dfdafe2e0f886b09568de8fcbb"
+		},
+		"artifacts/generation-scoped-2026-11-08/example-verification/workspace-cache-0.py": {
+			"bytes": 1318,
+			"sha256": "6f193e20793d95c80dc7f0f6fbb87cc73212cdfd6b66f95e728db4926a274690"
+		},
+		"artifacts/generation-scoped-2026-11-08/failed-inputs.json": {
+			"bytes": 117966,
+			"sha256": "3523fdeabc224190bf69f957bff70a3800c8d533fee5bf66353f57b7f51b558c"
+		},
+		"artifacts/generation-scoped-2026-11-08/failures.json": {
+			"bytes": 187,
+			"sha256": "abebc9845d2b1781db938192d0ef0a823c9e8fd907ff95a34f66a50d5f4353fd"
+		},
+		"artifacts/generation-scoped-2026-11-08/generation.json": {
+			"bytes": 1696,
+			"sha256": "1630f66a8d50bdf38cf568c0c0a69392d6e9dcac388700252c9d1ea0f62d0d7a"
+		},
+		"artifacts/generation-scoped-2026-11-08/incomplete-responses.json": {
+			"bytes": 29211,
+			"sha256": "f57909649dbd7fd9819df7f42f13c960fe3854a05c78dc8f9652bbd832a25fbf"
+		},
+		"artifacts/generation-scoped-2026-11-08/manifest.json": {
+			"bytes": 1163,
+			"sha256": "6f0f9f00f64e4b3b9967d6aedaab132b195b7022dde75c8d3a15638776805fed"
+		},
+		"artifacts/generation-scoped-2026-11-08/pending-input.json": {
+			"bytes": 21406,
+			"sha256": "d228f51244af5c80a0daa5e1038544605041746c5c8fa0a09b622a38bb049b34"
+		},
+		"artifacts/generation-scoped-2026-11-08/quality-parts.json": {
+			"bytes": 767817,
+			"sha256": "9cfc36ef53757d282c19be4b47f000c6cb30eec0b76c2b27eb1b02ec78b714c2"
+		},
+		"artifacts/generation-scoped-2026-11-08/quality.json": {
+			"bytes": 791565,
+			"sha256": "69d17fd4e12f573ecc7ec146f27c366420d382fb93e4a5659def591f31ad733d"
+		},
+		"artifacts/generation-scoped-2026-11-08/records.json": {
+			"bytes": 1780287,
+			"sha256": "3f49a0e4990ac5e622f8431ac2d1073ab927c10f8fa49c7aadd63e44515d70b2"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/backup-verify/production-db-backup-verification-plan/SKILL.md": {
+			"bytes": 7418,
+			"sha256": "722fc8d438ed21002143d3e1078b0862b7c20b52d92ed561e36a606ef1a714f8"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/backup-verify/production-db-backup-verification-plan/references/zip-check-fixture.md": {
+			"bytes": 1686,
+			"sha256": "b2a7d93fefd0566cf8f13b48fe163038c68b5712f479ebabf53f94ebb7dc5a23"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/cache-disable/recover-isolate-config-cache/SKILL.md": {
+			"bytes": 7088,
+			"sha256": "40f6f4884f2fe184982ecbf7640f43c65f7b4ec1491a9adfe84a857fea94f973"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/cache-disable/recover-isolate-config-cache/references/cache-key-fixture.md": {
+			"bytes": 1659,
+			"sha256": "2b68c2af7efb3964c8e7acf15c6072c663ff25742f0e1b8ab34687fe8912da32"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/cache-ownership/service-owned-cache-keys/SKILL.md": {
+			"bytes": 6923,
+			"sha256": "d5945bcc8e2f6886d183724d9078189f339832b230b1f8d165d6b9da285926f7"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/cache-ownership/service-owned-cache-keys/references/cache-key-fixture.md": {
+			"bytes": 2286,
+			"sha256": "2e59f1f91e0b74340418b02ed12b50d73ff624c78f31ab375af819b69a84be42"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/SKILL.md": {
+			"bytes": 5562,
+			"sha256": "62e1ea86af7c33abac1ee9b0454ca33207c031c8d2ea26908ec919c4c8a8612f"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/jitter-tests/deterministic-retry-jitter/references/jitter-fixture.md": {
+			"bytes": 2557,
+			"sha256": "82b28217179ad5ca480ec7fc1274d4aa4cef71a82941674992d77efc7666c014"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/least-permissions/desktop-window-permission-reduction/SKILL.md": {
+			"bytes": 7044,
+			"sha256": "3d5b5af87c7d63b4747dc14ccd1ac9b88174ce3a0418187183a5629dfb6675f7"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/least-permissions/desktop-window-permission-reduction/references/permission-set-fixture.md": {
+			"bytes": 2141,
+			"sha256": "7e07a2408d4ef04294e89593dedf965503f27ba6b3ea6edd7ded50db1c932511"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/migration-readonly/queue-migration-preflight-plan/SKILL.md": {
+			"bytes": 7198,
+			"sha256": "cc00654e7009b452cdb16cd946d4280ba4910b95e77532f83892a9f4eeb7c2eb"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/migration-readonly/queue-migration-preflight-plan/references/preflight-gate-fixture.md": {
+			"bytes": 1345,
+			"sha256": "11078c2068a49dbb63f13e919a24b14aa2903ff0e2285cc7b53eb5eca83b92fc"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/permission-boundary/window-permission-boundary/SKILL.md": {
+			"bytes": 6477,
+			"sha256": "2b32b91ebfd39cc5cd0378c728c598943b5e74dce2f3fa4223ae69a3ab9c8291"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/permission-boundary/window-permission-boundary/references/permission-boundary-fixture.md": {
+			"bytes": 2991,
+			"sha256": "3a8a7d52f5ab7315f6ce84409c879be78feae23efe17fe57c4f19c5f6b61c9de"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/rename-scope/module-fix-scope-gate/SKILL.md": {
+			"bytes": 6278,
+			"sha256": "72e61139249f8c51aab96ee6784ebb7afc20960a823c17c1414cbb25fd76d0fa"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/rename-scope/module-fix-scope-gate/references/scope-gate-example.md": {
+			"bytes": 1536,
+			"sha256": "c385855e801dfb014fb5efb3e2fa5893a802c112027ca6fb06ad5142c2d935f0"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/retry-control/queue-retry-policy/SKILL.md": {
+			"bytes": 7295,
+			"sha256": "6f24165f13470827754b8c15b8ef4ebfb666ebdc110732ca800500197f6ead71"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/retry-control/queue-retry-policy/references/retry-policy-fixture.md": {
+			"bytes": 2229,
+			"sha256": "8941ac64f81d5e35cf97fa681c004d02615536d2a5c50a907ddd69427470e345"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/review-injection/review-result-injection-plan/SKILL.md": {
+			"bytes": 5817,
+			"sha256": "1e9061761b21a4cb464dc07d31f0541f9f59a43d8d9fc212d388072fbbf70f25"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/review-injection/review-result-injection-plan/references/dispatch-fixture.md": {
+			"bytes": 2340,
+			"sha256": "d6c4b615b881dca3732ce07b33bea29b162fd1e3c697991e1cd67394ce5e4516"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/safe-diagnostics/secret-safe-diagnostic-plan/SKILL.md": {
+			"bytes": 6866,
+			"sha256": "d63dcf8eb424c46f80f626a629d98a85a96b8f27ffc0549c9267a1ef61641aaa"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/safe-diagnostics/secret-safe-diagnostic-plan/references/redaction-boundary-fixture.md": {
+			"bytes": 2726,
+			"sha256": "eadf3d914bd28872fa637e0b28d8ee5fbe499c81a781853b9e40db32a43f8b1c"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/sandbox-review/qoredb-sandbox-production-checks/SKILL.md": {
+			"bytes": 7434,
+			"sha256": "9f792348e4490a7348a004dab07bad6014916d3a458a80bf6dd53e4c258b4197"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/sandbox-review/qoredb-sandbox-production-checks/references/change-scope-fixture.md": {
+			"bytes": 1364,
+			"sha256": "777f1b97229642d052e14d845be32c6c01e43e83c71d56717f98e3bbf7a8ff79"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/workspace-cache/workspace-plugin-cache-isolation/SKILL.md": {
+			"bytes": 7800,
+			"sha256": "494cb7a88fb3cc2838b75b37b7439f123e23fa28d5fec11b57bc8a018fb51338"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills/workspace-cache/workspace-plugin-cache-isolation/references/cache-key-fixture.md": {
+			"bytes": 2028,
+			"sha256": "82b2e446d5bb97efa490895906e097d5ba1af30315ed64dc7f7c89ccabbcfd06"
+		},
+		"artifacts/generation-scoped-2026-11-08/skills.json": {
+			"bytes": 125706,
+			"sha256": "2e0471d8ac9ee8ddc711aae9a3f1fec71adc812d2c48f14cbf61d76b2b0738b8"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/docs/quality/cloud-eval-generation-settings.json": {
+			"bytes": 1447,
+			"sha256": "eea8c866c922c385e5ced39e1d80a1c319ad50a7a56990f02d906b775b26415e"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/docs/quality/practical-suite.json": {
+			"bytes": 21437,
+			"sha256": "adeb903558bf0a6496f600e7ae1d2b323a096107b3d1818660107d46c3562f97"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/examples/contextstill/cloud-budget.ts": {
+			"bytes": 9442,
+			"sha256": "dad43d40880d361acced83d94a3c28cd727315fbc2d16d7d9ceb81b39e0a256d"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/examples/contextstill/practical-eval.ts": {
+			"bytes": 20439,
+			"sha256": "1548a21630b3ae2f77af8495a18db1d449735fe93b00cebcdab909f9bcdca362"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/examples/contextstill/provider-schema.ts": {
+			"bytes": 3044,
+			"sha256": "3656317cc474cafe90e3fa18e19bfea07fbddb2bd89ef74419ca7be46fc3d26b"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/src/instructions/build.ts": {
+			"bytes": 25612,
+			"sha256": "8140fe84de4d870473b27a1d5ffba20c4b0befca4237dbb0b9088a176c09fe02"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/src/service/build.ts": {
+			"bytes": 20311,
+			"sha256": "f964ad2d1332a113a6e7fb9ad118ffbf6142b2a545d3425f60c86d265966eb6f"
+		},
+		"artifacts/generation-scoped-2026-11-08/source-snapshot/src/service/evidence-search.ts": {
+			"bytes": 9367,
+			"sha256": "4a74a45d8e50718d978cd42b7e16ff625e1d4a4a84680f7242def1fae43f3d84"
+		},
+		"artifacts/practical-2026-11-08/costs.jsonl": {
+			"bytes": 800221,
+			"sha256": "271bea9939b92f6caf10a3d3cc4df172504aceb8abb59bf83bde20941d6f0513"
+		},
+		"artifacts/practical-planning-final-2026-11-08/failures.json": {
+			"bytes": 453,
+			"sha256": "ad52405294488dc4b43a392e24786aae70c11b6b3eb4b47261ce5faadd633146"
+		},
+		"artifacts/practical-planning-final-2026-11-08/manifest.json": {
+			"bytes": 803,
+			"sha256": "8bb62d67004340a23d7590d41b892fcde5c04957573086f5d659ac8f67011ac3"
+		},
+		"artifacts/practical-planning-final-2026-11-08/quality.json": {
+			"bytes": 184140,
+			"sha256": "ecc41367fae15664a0aed1b73b906d508b343249d672d737f666c7b4faebbc55"
+		},
+		"artifacts/practical-planning-final-2026-11-08/records.json": {
+			"bytes": 4716815,
+			"sha256": "e2cafc7c04ec424688f9d998c7cdb4512b7c70c8fc6793db7917f76dfb2c2e63"
+		},
+		"artifacts/practical-planning-final-2026-11-08/skills.json": {
+			"bytes": 44040,
+			"sha256": "f405599449fc49ab437eed1e07f3e00f79c15eb9c76f7e3a62d2067057b97e92"
+		},
+		"docs/quality/evidence/replay-selected.mjs": {
+			"bytes": 4846,
+			"sha256": "2f938a8a5311bd5f95fc6ebb249e3c5b7ca06b575802a366d4ea6cccad098f57"
+		}
+	},
+	"scope": "Public-seed-derived inference evidence, all three candidate source snapshots and full budget journal. Excludes all databases, credentials, settings keys, dependency directories and runtime host configuration."
+}

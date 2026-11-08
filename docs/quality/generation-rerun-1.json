@@ -1,0 +1,33 @@
+{
+	"baseline": {
+		"commit": "eef6a64",
+		"ready": 5,
+		"needs_input": 5,
+		"semantic_review_failed": 3,
+		"incomplete": 5,
+		"source_budget_or_unavailable": 2
+	},
+	"rerun": {
+		"baseCommit": "3f9dfc9",
+		"ready": 4,
+		"outcomes": {
+			"needs_input": 12,
+			"ready": 4
+		},
+		"errors": {
+			"semantic_review_failed": 2,
+			"cloud_output_limit": 2
+		},
+		"qualityGraded": false,
+		"newObservedTokenCostUsd": 0.9327436,
+		"globalAccountedUsd": 9.869506200000005,
+		"cumulativeLimitUsd": 15
+	},
+	"audit": {
+		"readyWithoutRequiredCodeExample": ["least-permissions", "rename-scope"],
+		"languageMismatch": ["review-injection"],
+		"hypothesis": "Separate current deliverable prerequisites from future execution prerequisites; require executable code example consistently; preserve abstention when requested facts or authority are actually missing."
+	},
+	"conclusion": "Not accepted as a completion-rate improvement; preserve all results. Source exhaustion removed, but extra abstention and two truncations remain. Follow-up changes only common instructions and incomplete-response evidence capture.",
+	"rawDirectory": "artifacts/generation-rerun-2026-11-08"
+}

@@ -1,0 +1,102 @@
+{
+	"ready": 6,
+	"outcomes": [
+		{
+			"taskId": "backup-verify",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "review-injection",
+			"kind": "ready"
+		},
+		{
+			"taskId": "least-permissions",
+			"kind": "ready"
+		},
+		{
+			"taskId": "cache-ownership",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "migration-readonly",
+			"kind": "ready"
+		},
+		{
+			"taskId": "permanent-queue",
+			"kind": "unavailable",
+			"code": "semantic_verification_budget_exhausted"
+		},
+		{
+			"taskId": "jitter-tests",
+			"kind": "ready"
+		},
+		{
+			"taskId": "cache-disable",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "queue-migration",
+			"kind": "unavailable",
+			"code": "context_budget_exceeded"
+		},
+		{
+			"taskId": "safe-diagnostics",
+			"kind": "ready"
+		},
+		{
+			"taskId": "workspace-cache",
+			"kind": "ready"
+		},
+		{
+			"taskId": "backup-actual",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "unknown-sdk",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "payment-unknown",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "migration-counts",
+			"kind": "needs_input"
+		},
+		{
+			"taskId": "private-authority",
+			"kind": "needs_input"
+		}
+	],
+	"errors": [
+		{
+			"taskId": "sandbox-review",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "cloud_output_limit"
+		},
+		{
+			"taskId": "rename-scope",
+			"axis": "retrieval",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		},
+		{
+			"taskId": "retry-control",
+			"axis": "compose",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		},
+		{
+			"taskId": "permission-boundary",
+			"axis": "compose",
+			"status": "error",
+			"detail": "semantic_review_failed"
+		}
+	],
+	"qualityGraded": false,
+	"accountedUsd": 12.500979800000007,
+	"adopted": false,
+	"reason": "Regressed from 13 ready to 6 and introduced extra budget-related abstention. Soft headroom and compact-output instruction were removed. No fourth paid trial.",
+	"rawDirectory": "artifacts/generation-headroom-2026-11-08"
+}

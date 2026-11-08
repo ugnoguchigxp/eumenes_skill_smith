@@ -1,0 +1,145 @@
+[
+	{
+		"taskId": "backup-verify",
+		"artifactDigest": "722fc8d438ed21002143d3e1078b0862b7c20b52d92ed561e36a606ef1a714f8",
+		"referencePath": "production-db-backup-verification-plan/references/zip-check-fixture.md",
+		"codeSha256": "25e8dc9c758ce496dda6336137acb71de2638d31992b7b80750e13f3eaa33804",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "5件の期待値に一致\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "sandbox-review",
+		"artifactDigest": "9f792348e4490a7348a004dab07bad6014916d3a458a80bf6dd53e4c258b4197",
+		"referencePath": "qoredb-sandbox-production-checks/references/change-scope-fixture.md",
+		"codeSha256": "4a5b129ffc4678daacc17d2b3cb3d8bd2a2ffea4508bcab6fb00e309df4c03e2",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "合成差分の正例1件・負例3件が期待どおり\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "review-injection",
+		"artifactDigest": "1e9061761b21a4cb464dc07d31f0541f9f59a43d8d9fc212d388072fbbf70f25",
+		"referencePath": "review-result-injection-plan/references/dispatch-fixture.md",
+		"codeSha256": "b6dea970ec4cfc1d913d9baedd551f9cd886aae3fd19d789b4bd4f4e854b8c98",
+		"runtime": "Bun 1.4.4",
+		"exitCode": 0,
+		"stdout": "",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "least-permissions",
+		"artifactDigest": "3d5b5af87c7d63b4747dc14ccd1ac9b88174ce3a0418187183a5629dfb6675f7",
+		"referencePath": "desktop-window-permission-reduction/references/permission-set-fixture.md",
+		"codeSha256": "69431b1f959e85a11c063ed059cd506cc50e3f7900719a53eba8ca2b0f803d3b",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "集合照合例の期待値と一致\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "cache-ownership",
+		"artifactDigest": "d5945bcc8e2f6886d183724d9078189f339832b230b1f8d165d6b9da285926f7",
+		"referencePath": "service-owned-cache-keys/references/cache-key-fixture.md",
+		"codeSha256": "419dbae16783b4be87ce0fc7b0eeea95b61e54150f84efea19650cdbe6c35af7",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "fixture passed\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "migration-readonly",
+		"artifactDigest": "cc00654e7009b452cdb16cd946d4280ba4910b95e77532f83892a9f4eeb7c2eb",
+		"referencePath": "queue-migration-preflight-plan/references/preflight-gate-fixture.md",
+		"codeSha256": "d538a5c97d5aed58614dadb05b4d32a7966b8aed208a1af491b3363c1695ae98",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "文書境界fixture合格\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "jitter-tests",
+		"artifactDigest": "62e1ea86af7c33abac1ee9b0454ca33207c031c8d2ea26908ec919c4c8a8612f",
+		"referencePath": "deterministic-retry-jitter/references/jitter-fixture.md",
+		"codeSha256": "059f61b3b125b24c6225248e688f16f40f4ca14689c5288cc8c06fc89c2de737",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "cache-disable",
+		"artifactDigest": "40f6f4884f2fe184982ecbf7640f43c65f7b4ec1491a9adfe84a857fea94f973",
+		"referencePath": "recover-isolate-config-cache/references/cache-key-fixture.md",
+		"codeSha256": "4974f4e00aacb4d3881ece2e481d447e97ba6b668ffe1571f3f7f3c10715b2ba",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "rename-scope",
+		"artifactDigest": "72e61139249f8c51aab96ee6784ebb7afc20960a823c17c1414cbb25fd76d0fa",
+		"referencePath": "module-fix-scope-gate/references/scope-gate-example.md",
+		"codeSha256": "c209575f1809649a64b18127401e05c1702c7cd64a7645fba3392a5145064edd",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "4件の合成判定が期待値と一致\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "safe-diagnostics",
+		"artifactDigest": "d63dcf8eb424c46f80f626a629d98a85a96b8f27ffc0549c9267a1ef61641aaa",
+		"referencePath": "secret-safe-diagnostic-plan/references/redaction-boundary-fixture.md",
+		"codeSha256": "f39d1f52cbff60d7112cc8cefbfe08c5d2fdf2ad86cc205234c80614ac719f93",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "fixture assertions passed\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "retry-control",
+		"artifactDigest": "6f24165f13470827754b8c15b8ef4ebfb666ebdc110732ca800500197f6ead71",
+		"referencePath": "queue-retry-policy/references/retry-policy-fixture.md",
+		"codeSha256": "e51090bf0fa354cb0ca9c555d6bfcbfc5a9efb68d6b91684da50d7c25f44c3ce",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "workspace-cache",
+		"artifactDigest": "494cb7a88fb3cc2838b75b37b7439f123e23fa28d5fec11b57bc8a018fb51338",
+		"referencePath": "workspace-plugin-cache-isolation/references/cache-key-fixture.md",
+		"codeSha256": "f1692eabd99e99c466034ce314200cf6b04fe6b82a0f5dbbe332cc3ff951ad77",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "fixture checks passed\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	},
+	{
+		"taskId": "permission-boundary",
+		"artifactDigest": "2b32b91ebfd39cc5cd0378c728c598943b5e74dce2f3fa4223ae69a3ab9c8291",
+		"referencePath": "window-permission-boundary/references/permission-boundary-fixture.md",
+		"codeSha256": "6e475a35b935c0de2d325262795618ba8b3b0516be26c647ea6201878bd46aeb",
+		"runtime": "Python 3 isolated mode",
+		"exitCode": 0,
+		"stdout": "fixture assertions passed\n",
+		"stderr": "",
+		"scope": "Inspected pure in-memory fixture only; no task environment, network, credentials or production data."
+	}
+]
