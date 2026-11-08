@@ -1,0 +1,127 @@
+{
+	"archive": "novel-three-evidence-2026-11-08.tgz",
+	"sha256": "c59a8c8240e0e6dd8aa84596b65400f5ea2eb0f0c6b288e1da7e914c67246c1a",
+	"files": [
+		{
+			"path": "artifacts/novel-three-2026-11-08/api-timings.json",
+			"bytes": 4511,
+			"sha256": "a3b61f5b35ff703155a66bfcfa47e77d5dc0f1bcad3c5e778f65a2b4baa6936c"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/budget.json",
+			"bytes": 6608,
+			"sha256": "399bb161d9134158b69b49a3484096f2f1cdb601a89ba9f451277f8ba51207e8"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/complete.json",
+			"bytes": 79,
+			"sha256": "77edc6d9261d84f44824d92b55c9ab870f474909bf0531c7381ee04091b27485"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/example-verification.json",
+			"bytes": 1788,
+			"sha256": "95a926b425682cf435c4f9bf3c3887d9013cb0838386540e539a4296f93f56ad"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/grading-materials.json",
+			"bytes": 52582,
+			"sha256": "32350144deb7b3a6abca8bc20fffe17f8e9a04864988513117394e35eccdbcd5"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/manifest.json",
+			"bytes": 61886,
+			"sha256": "9c34e298984e86b00c1074f0d06efd00834ab079105fda0b49d1f3bd2b2eb887"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/outcomes.json",
+			"bytes": 42379,
+			"sha256": "c58133636cfa2c9b5c06f4f7fce44e1022f871bd4d65e8dd8e0c87adc2b01fe2"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/records.json",
+			"bytes": 409197,
+			"sha256": "f410b21e0b1523c3c8cf10e8b1db9ba66f76cc055d27bf558867399c156850ac"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/replay-and-bytes.json",
+			"bytes": 2085,
+			"sha256": "df53fa7880ceedce2c4216fc7fa2cb133900564c028c863a7f437f68d38b5253"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/reviewed-skills.json",
+			"bytes": 32083,
+			"sha256": "8a1c03ad06691576b8ca5cba459c9f26b9a267ec1c583fc0ce1f242834f1ac53"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/skills.json",
+			"bytes": 9438,
+			"sha256": "81c465e26289c5ed882e82ded22461d55f269a3fef5a84d2d00d28d4cf41f93a"
+		},
+		{
+			"path": "artifacts/novel-three-2026-11-08/timings.json",
+			"bytes": 728,
+			"sha256": "eb8bee1c57dab8552ed503b674336732af08eda1b52762971fac3788b4586cc5"
+		},
+		{
+			"path": "artifacts/novel-three-grades-2026-11-08/budget.json",
+			"bytes": 59,
+			"sha256": "6ac67b521bfaf0acb6519ed6ffd61ddcf53e264702b929e2af03a64bb1dd459e"
+		},
+		{
+			"path": "artifacts/novel-three-grades-2026-11-08/complete.json",
+			"bytes": 57,
+			"sha256": "34e8d01386ccef18dd503b5fad94765d8e1c80d6e2d3bdb3c003d2fd93c7734d"
+		},
+		{
+			"path": "artifacts/novel-three-grades-2026-11-08/manifest.json",
+			"bytes": 7826,
+			"sha256": "1f277770a0508b2b554527784fab2864be43825381c84ed911a22a76e69ef260"
+		},
+		{
+			"path": "artifacts/novel-three-grades-2026-11-08/records.json",
+			"bytes": 155026,
+			"sha256": "fa2a62caacde979385e72823f449b14f5136d8a08a4dbb6449cd5d38c3789005"
+		},
+		{
+			"path": "artifacts/practical-2026-11-08/costs.jsonl",
+			"bytes": 830310,
+			"sha256": "32385a54a3263e4031e9977e5eef3d214bf974f4ea1cc86540e9dc508e6fba8d"
+		},
+		{
+			"path": "artifacts/generation-scoped-2026-11-08/records.json",
+			"bytes": 1780287,
+			"sha256": "3f49a0e4990ac5e622f8431ac2d1073ab927c10f8fa49c7aadd63e44515d70b2"
+		},
+		{
+			"path": "docs/quality/evidence/replay-novel-three.mjs",
+			"bytes": 8035,
+			"sha256": "c3a98bfd9f43ee4e29010099477ef592bb3153181ba31cdcb621cf37676f8027"
+		},
+		{
+			"path": "docs/quality/evidence/summarize-novel-three.py",
+			"bytes": 16301,
+			"sha256": "70a74fd8c6477c87682112dde4785ab5a6fe896c730eec505f60cb019db098e5"
+		},
+		{
+			"path": "docs/quality/evidence/novel-three-adjudication.json",
+			"bytes": 2301,
+			"sha256": "272959968b5ed344263b29c35b797c26618c7c5f4b3df12f16aac3db467f0b26"
+		},
+		{
+			"path": "docs/quality/evidence/novel-three-preregistration.json",
+			"bytes": 11073,
+			"sha256": "596625c7f5463efed3b1ea6fcc8dbf58846088e74b6ba7d40d9d86b8f419f7ea"
+		},
+		{
+			"path": "docs/quality/novel-three-suite-2026-11-08.json",
+			"bytes": 5633,
+			"sha256": "81ea165e79ade7a2e6795df80723bc280a48da024e440197e1c1a7e91938339c"
+		},
+		{
+			"path": "docs/quality/novel-three-protocol-2026-11-08.md",
+			"bytes": 3138,
+			"sha256": "771645b01ac680c585ecde7ec430644c867f1da2fe5891c168fea3b263166930"
+		}
+	],
+	"scope": "Frozen fresh generation, grading, timings, examples, failed replies, baseline source-use records, latest cumulative journal and offline tools. No SQLite DB, credentials, settings key or dependencies."
+}

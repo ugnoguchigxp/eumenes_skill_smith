@@ -1,0 +1,48 @@
+{
+	"fixedTests": {
+		"passed": 532,
+		"failed": 0,
+		"core": 359,
+		"examples": 173
+	},
+	"typedFiles": 155,
+	"checks": ["typecheck", "lint", "format", "tests", "build", "pack"],
+	"liveGeneration": {
+		"attempted": 3,
+		"modelResponsesCompleted": 12,
+		"bodyGenerated": 3,
+		"semanticApproved": 3,
+		"normalDeliveryReady": 1,
+		"outputByteCapRejections": 2
+	},
+	"independentGrading": {
+		"graded": 3,
+		"evidenceAndCriterionIdsValid": 3,
+		"directTextAdjudicationRequired": true
+	},
+	"codeExamples": {
+		"passed": 3,
+		"failed": 0,
+		"scope": "Synthetic pure standard-library fixtures only"
+	},
+	"offlineReplay": {
+		"complete": true,
+		"networkCalls": 0,
+		"paidApiCalls": 0,
+		"sqliteInputRequired": false,
+		"credentialsRequired": false,
+		"seedRebuiltFromPublicFixture": true,
+		"dependencies": "Reused installed dependency tree; not a fresh dependency installation",
+		"matchedReplayInputs": 12,
+		"matchingBodyBundles": 3,
+		"originalDeliveryOutcomesRetained": {
+			"ready": 1,
+			"unavailable": 2
+		},
+		"scoresAndTimingAndFeesJsonMatch": true,
+		"markdownReportBytesMatch": true,
+		"archiveSha256": "c59a8c8240e0e6dd8aa84596b65400f5ea2eb0f0c6b288e1da7e914c67246c1a",
+		"pathCondition": "Use the real checkout path. The initial temporary /var alias was rejected by the existing symlink output guard; the successful run used its /private/var real path without changing the guard."
+	},
+	"limits": "No product behavior changed for the new scenarios. These outcomes do not establish production effectiveness or absence of overfitting."
+}

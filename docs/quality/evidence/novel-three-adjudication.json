@@ -1,0 +1,28 @@
+{
+	"reviewer": "Codex reading of all three main documents, references, fixed criteria and actual execution evidence; not human calibration",
+	"rubricWeights": {
+		"correctness": 35,
+		"actionability": 25,
+		"coverage": 20,
+		"concision": 10,
+		"format": 10
+	},
+	"sharedAdjustment": {
+		"dimension": "concision",
+		"maximum": 8,
+		"reason": "Apply the same minor-redundancy anchor used in the previous report. All three repeat the planning-only/authority restriction in completion item 1 after stating it earlier. No wording or scores were changed in the frozen generated skills.",
+		"evidenceQuote": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。"
+	},
+	"taskAdjustments": [
+		{
+			"taskId": "keyboard-ime-focus",
+			"dimensions": { "coverage": 8 },
+			"criterionStatuses": { "input-and-platform": "partial" },
+			"evidenceQuote": "キー判定、変換状態、反復、伝播、取消し、登録解除の契約を照合し、根拠のない固有APIは実装案へ入れない。",
+			"reason": "The frozen input-and-platform criterion explicitly requires key and avoidance of a new keyCode/which dependency. The document defers key discrimination to future documentation and never names key, keyCode, or which. The independent judge incorrectly claimed that key usage was explicit. The fixture models matched as an already supplied boolean, so it does not establish how the real key is selected.",
+			"improvement": "Add the key-based DOM boundary contract and reject legacy keyCode/which-based matching, with layout/modifier and composition cases. Preserve the framework-independent design and do not claim that the synthetic boolean fixture tests real DOM key events."
+		}
+	],
+	"delivery": "Document content scores do not compensate for transport failures. All three bodies were generated and semantically approved; only one of three passed the unchanged 32768-byte reply cap. The two rejected replies remain unavailable after diagnostic extraction.",
+	"limits": "Three new topics from the same public seed, one sample per topic, the same planning-only deliverable family, one uncalibrated independent judge plus Codex adjudication. This is evidence about these three cases, not proof that overfitting is absent or that production execution succeeds."
+}

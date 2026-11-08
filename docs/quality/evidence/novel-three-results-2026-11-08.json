@@ -1,0 +1,394 @@
+{
+	"baseCommit": "e61b3fec0365c068b4af948c41c536d7f1de8cb5",
+	"bodyGenerated": 3,
+	"semanticallyApproved": 3,
+	"normalDeliveryReady": 1,
+	"contentCriteriaFullyMet": 2,
+	"meanContentScore": 96.66666666666667,
+	"preparationMs": 2253.578917,
+	"batchDurationMs": 176244.5965,
+	"meanTaskDurationMs": 58743.68165233333,
+	"tokens": {
+		"inputTokens": 81678,
+		"outputTokens": 13216,
+		"reasoningTokens": 393,
+		"cachedInputTokens": 14806
+	},
+	"gradingTokens": {
+		"inputTokens": 30629,
+		"outputTokens": 2087
+	},
+	"fees": {
+		"generationUsd": 0.2927856,
+		"gradingUsd": 0.077954,
+		"knownCumulativeUsd": 8.945472400000002,
+		"unknownReservedUsd": 4.528887,
+		"accountedUsd": 13.474359400000008,
+		"accountedPeakUsd": 14.99428380000001,
+		"capUsd": 15
+	},
+	"novelty": {
+		"oldExpectedRefs": 15,
+		"oldActuallyUsedOrReviewedRefs": 17,
+		"newExpectedRefs": [
+			"contextstill:kn_2j4omkkwaxorsmsemjjk6npm7u",
+			"contextstill:kn_35kvtbbfzkyfhiuwoqkrmqjs3q",
+			"contextstill:kn_3jzof3zv2adiizwcahlsmtpqdy",
+			"contextstill:kn_44qlujmug44whxsfyi2ssrgjmu"
+		],
+		"oldExpectedIntersection": [],
+		"oldUsedIntersection": [],
+		"repeatedGoalTexts": 0,
+		"excludedTasks": ["backup-verify", "sandbox-review", "permission-boundary"],
+		"limits": "Same public seed and same general planning-only task family; three subject shifts cannot disprove all overfitting.",
+		"newActuallyUsedRefs": [
+			"contextstill:kn_35kvtbbfzkyfhiuwoqkrmqjs3q",
+			"contextstill:kn_3jzof3zv2adiizwcahlsmtpqdy",
+			"contextstill:kn_iyekpgpgme6vg6qsserymbwggy",
+			"contextstill:kn_kctjnrpiix7ozf3u4fw4ydhkyu",
+			"contextstill:kn_m6ecfy7awldnqlj5ngk5zpfdh4"
+		],
+		"newUsedIntersectionWithOldUsed": []
+	},
+	"integrity": {
+		"preregisteredHashesMatch": true,
+		"matchedReplayInputs": 12,
+		"hiddenCriteriaInBuilder": false,
+		"frozenBodiesAndReferencesMatchReview": true,
+		"originalFailureStatusesRetained": true
+	},
+	"rows": [
+		{
+			"taskId": "timezone-daily-boundary",
+			"name": "consistent-dashboard-timezones",
+			"artifactPath": "novel-skills/2026-11-08/consistent-dashboard-timezones/SKILL.md",
+			"bundleDigest": "6c80bb2411e46b985c587c23aa9ae4b9ae298889b0fb0967045a737a22005686",
+			"durationMs": 59192.11270799999,
+			"apiDurationMs": 59071.404081999994,
+			"phases": [
+				{
+					"phase": "query",
+					"httpDurationMs": 1703.8750420000001,
+					"clientDurationMs": 1707.641791,
+					"inputTokens": 384,
+					"outputTokens": 44,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 0,
+					"costUsd": 0.00022400000000000002,
+					"receipt": "resp_0753ca6f954d4df8016aefdfdef25c87d0a7a38273f2a29a65"
+				},
+				{
+					"phase": "disclose",
+					"httpDurationMs": 2499.3296659999996,
+					"clientDurationMs": 2502.674333,
+					"inputTokens": 4865,
+					"outputTokens": 102,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 0,
+					"costUsd": 0.01075,
+					"receipt": "resp_025d55350ac6abed016aefdfe0722887d0879bba389b2da45c"
+				},
+				{
+					"phase": "ready",
+					"httpDurationMs": 48442.914583,
+					"clientDurationMs": 48447.009834,
+					"inputTokens": 11454,
+					"outputTokens": 3919,
+					"reasoningTokens": 126,
+					"cachedInputTokens": 0,
+					"costUsd": 0.062098,
+					"receipt": "resp_0be6f87636a42507016aefdfe2f8b087d08f14d6d86ae78185"
+				},
+				{
+					"phase": "semantic-review",
+					"httpDurationMs": 6425.284790999998,
+					"clientDurationMs": 6427.343958000005,
+					"inputTokens": 10545,
+					"outputTokens": 386,
+					"reasoningTokens": 49,
+					"cachedInputTokens": 0,
+					"costUsd": 0.02495,
+					"receipt": "resp_00fad0a7392f8ef8016aefe0136b5087d0bcdb9690905ad84c"
+				}
+			],
+			"inputTokens": 27248,
+			"outputTokens": 4451,
+			"reasoningTokens": 175,
+			"cachedInputTokens": 0,
+			"costUsd": 0.098022,
+			"delivery": {
+				"taskId": "timezone-daily-boundary",
+				"originalOutcome": "unavailable",
+				"replayOutcome": "unavailable",
+				"code": "context_budget_exceeded",
+				"outputLimitBytes": 32768,
+				"innerReplyBytes": 23293,
+				"finalReplyBytes": 34275,
+				"mainBytes": 7480,
+				"referenceBytes": 2880,
+				"bundleDigest": "6c80bb2411e46b985c587c23aa9ae4b9ae298889b0fb0967045a737a22005686",
+				"usedRefs": [
+					"contextstill:kn_iyekpgpgme6vg6qsserymbwggy",
+					"contextstill:kn_m6ecfy7awldnqlj5ngk5zpfdh4"
+				],
+				"reviewedBodyIdentical": true,
+				"deliveryAccepted": false
+			},
+			"rawModelTotal": 99,
+			"scores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"score": 98.0,
+			"criteria": {
+				"end-to-end-zone": "met",
+				"calendar-day-boundary": "met"
+			},
+			"example": {
+				"taskId": "timezone-daily-boundary",
+				"path": "consistent-dashboard-timezones/references/day-boundary-fixture.md",
+				"referenceSha256": "bc96df74233c96b0b2282c24fbc33931dfb725e9669847d134f7fb39a34e23dc",
+				"codeSha256": "915a9c2371a68b3e25954b10c02ef8a707a4038f2edc03cc3768b4c0dbec8cce",
+				"exitCode": 0,
+				"durationMs": 161.811666,
+				"stdout": "fixtureの全assert合格\n",
+				"stderr": "",
+				"scope": "Reviewed pure standard-library synthetic fixture. No production system, parser/editor DOM or real dashboard operations."
+			}
+		},
+		{
+			"taskId": "asciidoc-opaque-roundtrip",
+			"name": "asciidoc-raw-block-roundtrip-plan",
+			"artifactPath": "novel-skills/2026-11-08/asciidoc-raw-block-roundtrip-plan/SKILL.md",
+			"bundleDigest": "3ff64cfe81c1c3b6c697e6d62b9435a31f1a029998e4cd4f5e48c75003b93452",
+			"durationMs": 58081.66245799999,
+			"apiDurationMs": 58002.12766699999,
+			"phases": [
+				{
+					"phase": "query",
+					"httpDurationMs": 971.6852919999947,
+					"clientDurationMs": 974.0214160000032,
+					"inputTokens": 329,
+					"outputTokens": 40,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 0,
+					"costUsd": 0.00019559999999999998,
+					"receipt": "resp_00cc87291502b187016aefe019dc6c87d084915163808f87ef"
+				},
+				{
+					"phase": "disclose",
+					"httpDurationMs": 2245.3421249999956,
+					"clientDurationMs": 2248.106249999997,
+					"inputTokens": 4785,
+					"outputTokens": 79,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 1081,
+					"costUsd": 0.01036,
+					"receipt": "resp_0e377ce9271fb78c016aefe01ae62487d0b48dfd1b90bfa20c"
+				},
+				{
+					"phase": "ready",
+					"httpDurationMs": 47321.059958,
+					"clientDurationMs": 47324.862624999994,
+					"inputTokens": 10745,
+					"outputTokens": 3604,
+					"reasoningTokens": 51,
+					"cachedInputTokens": 4759,
+					"costUsd": 0.05753,
+					"receipt": "resp_0bc6fc00980f6096016aefe01d2e2487d0adb888415e9576ff"
+				},
+				{
+					"phase": "semantic-review",
+					"httpDurationMs": 7464.040292000005,
+					"clientDurationMs": 7470.434666000001,
+					"inputTokens": 9459,
+					"outputTokens": 429,
+					"reasoningTokens": 56,
+					"cachedInputTokens": 1563,
+					"costUsd": 0.023208,
+					"receipt": "resp_0aed11c88a4c7005016aefe04c7aec87d080b86936624480b6"
+				}
+			],
+			"inputTokens": 25318,
+			"outputTokens": 4152,
+			"reasoningTokens": 107,
+			"cachedInputTokens": 7403,
+			"costUsd": 0.0912936,
+			"delivery": {
+				"taskId": "asciidoc-opaque-roundtrip",
+				"originalOutcome": "ready",
+				"replayOutcome": "ready",
+				"code": null,
+				"outputLimitBytes": 32768,
+				"innerReplyBytes": 21811,
+				"finalReplyBytes": 31122,
+				"mainBytes": 7034,
+				"referenceBytes": 1638,
+				"bundleDigest": "3ff64cfe81c1c3b6c697e6d62b9435a31f1a029998e4cd4f5e48c75003b93452",
+				"usedRefs": [
+					"contextstill:kn_3jzof3zv2adiizwcahlsmtpqdy",
+					"contextstill:kn_kctjnrpiix7ozf3u4fw4ydhkyu"
+				],
+				"reviewedBodyIdentical": true,
+				"deliveryAccepted": true
+			},
+			"rawModelTotal": 98,
+			"scores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"score": 98.0,
+			"criteria": {
+				"lossless-source": "met",
+				"inert-editor-boundary": "met"
+			},
+			"example": {
+				"taskId": "asciidoc-opaque-roundtrip",
+				"path": "asciidoc-raw-block-roundtrip-plan/references/source-preservation-fixture.md",
+				"referenceSha256": "ac0e5a86b3a4d7ab4d418b9d110fc57e48efc627793838a303ed8f0597c657db",
+				"codeSha256": "f27e8d82177512777a4a86c0db4029a3d1a5c59d0dbdd88e0a469a13f8c051ff",
+				"exitCode": 0,
+				"durationMs": 63.910042,
+				"stdout": "原文保持fixtureの期待値と負例判定が一致\n",
+				"stderr": "",
+				"scope": "Reviewed pure standard-library synthetic fixture. No production system, parser/editor DOM or real dashboard operations."
+			}
+		},
+		{
+			"taskId": "keyboard-ime-focus",
+			"name": "browser-shortcut-planning",
+			"artifactPath": "novel-skills/2026-11-08/browser-shortcut-planning/SKILL.md",
+			"bundleDigest": "c3c0b740e076eb810f39644636fb9ee982264ee49f049948d1257613f2c455d7",
+			"durationMs": 58957.26979100001,
+			"apiDurationMs": 58891.69437400001,
+			"phases": [
+				{
+					"phase": "query",
+					"httpDurationMs": 1345.1105410000018,
+					"clientDurationMs": 1345.9885419999919,
+					"inputTokens": 332,
+					"outputTokens": 42,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 0,
+					"costUsd": 0.0002,
+					"receipt": "resp_0f69af85d300301c016aefe053f19c87d0985e82c71a96330f"
+				},
+				{
+					"phase": "disclose",
+					"httpDurationMs": 2542.265791999991,
+					"clientDurationMs": 2543.8071659999987,
+					"inputTokens": 4918,
+					"outputTokens": 132,
+					"reasoningTokens": 0,
+					"cachedInputTokens": 1081,
+					"costUsd": 0.011156,
+					"receipt": "resp_0fc5d3c5f099d01b016aefe055947c87d094e2b2646885fbdc"
+				},
+				{
+					"phase": "ready",
+					"httpDurationMs": 46955.15770800001,
+					"clientDurationMs": 46957.988667,
+					"inputTokens": 13670,
+					"outputTokens": 3935,
+					"reasoningTokens": 71,
+					"cachedInputTokens": 4759,
+					"costUsd": 0.06669,
+					"receipt": "resp_03ac5da1fef3fea6016aefe057f1e487d0bdf37dfe00042fc4"
+				},
+				{
+					"phase": "semantic-review",
+					"httpDurationMs": 8049.160333000007,
+					"clientDurationMs": 8051.529249999992,
+					"inputTokens": 10192,
+					"outputTokens": 504,
+					"reasoningTokens": 40,
+					"cachedInputTokens": 1563,
+					"costUsd": 0.025424,
+					"receipt": "resp_0eac007e0e1fba39016aefe086de0487d0b52bbfc2689e032f"
+				}
+			],
+			"inputTokens": 29112,
+			"outputTokens": 4613,
+			"reasoningTokens": 111,
+			"cachedInputTokens": 7403,
+			"costUsd": 0.10347,
+			"delivery": {
+				"taskId": "keyboard-ime-focus",
+				"originalOutcome": "unavailable",
+				"replayOutcome": "unavailable",
+				"code": "context_budget_exceeded",
+				"outputLimitBytes": 32768,
+				"innerReplyBytes": 24134,
+				"finalReplyBytes": 35558,
+				"mainBytes": 8448,
+				"referenceBytes": 2379,
+				"bundleDigest": "c3c0b740e076eb810f39644636fb9ee982264ee49f049948d1257613f2c455d7",
+				"usedRefs": ["contextstill:kn_35kvtbbfzkyfhiuwoqkrmqjs3q"],
+				"reviewedBodyIdentical": true,
+				"deliveryAccepted": false
+			},
+			"rawModelTotal": 98,
+			"scores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 8,
+				"concision": 8,
+				"format": 10
+			},
+			"score": 94.0,
+			"criteria": {
+				"input-and-platform": "partial",
+				"accessible-lifecycle": "met"
+			},
+			"example": {
+				"taskId": "keyboard-ime-focus",
+				"path": "browser-shortcut-planning/references/shortcut-policy-fixture.md",
+				"referenceSha256": "07a0fd0ee50f8e801ff261595a7eee84b7302403bf16990493eb220fad91bc87",
+				"codeSha256": "88bcf0a8811b9ffe355dc98deeadbb05422bd327741ece1239863afdb25cb065",
+				"exitCode": 0,
+				"durationMs": 38.62674999999999,
+				"stdout": "",
+				"stderr": "",
+				"scope": "Reviewed pure standard-library synthetic fixture. No production system, parser/editor DOM or real dashboard operations."
+			}
+		}
+	],
+	"adjudication": {
+		"reviewer": "Codex reading of all three main documents, references, fixed criteria and actual execution evidence; not human calibration",
+		"rubricWeights": {
+			"correctness": 35,
+			"actionability": 25,
+			"coverage": 20,
+			"concision": 10,
+			"format": 10
+		},
+		"sharedAdjustment": {
+			"dimension": "concision",
+			"maximum": 8,
+			"reason": "Apply the same minor-redundancy anchor used in the previous report. All three repeat the planning-only/authority restriction in completion item 1 after stating it earlier. No wording or scores were changed in the frozen generated skills.",
+			"evidenceQuote": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。"
+		},
+		"taskAdjustments": [
+			{
+				"taskId": "keyboard-ime-focus",
+				"dimensions": {
+					"coverage": 8
+				},
+				"criterionStatuses": {
+					"input-and-platform": "partial"
+				},
+				"evidenceQuote": "キー判定、変換状態、反復、伝播、取消し、登録解除の契約を照合し、根拠のない固有APIは実装案へ入れない。",
+				"reason": "The frozen input-and-platform criterion explicitly requires key and avoidance of a new keyCode/which dependency. The document defers key discrimination to future documentation and never names key, keyCode, or which. The independent judge incorrectly claimed that key usage was explicit. The fixture models matched as an already supplied boolean, so it does not establish how the real key is selected.",
+				"improvement": "Add the key-based DOM boundary contract and reject legacy keyCode/which-based matching, with layout/modifier and composition cases. Preserve the framework-independent design and do not claim that the synthetic boolean fixture tests real DOM key events."
+			}
+		],
+		"delivery": "Document content scores do not compensate for transport failures. All three bodies were generated and semantically approved; only one of three passed the unchanged 32768-byte reply cap. The two rejected replies remain unavailable after diagnostic extraction.",
+		"limits": "Three new topics from the same public seed, one sample per topic, the same planning-only deliverable family, one uncalibrated independent judge plus Codex adjudication. This is evidence about these three cases, not proof that overfitting is absent or that production execution succeeds."
+	}
+}
