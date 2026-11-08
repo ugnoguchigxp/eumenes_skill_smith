@@ -2,7 +2,7 @@
 
 Eumenesの会話・作業担当へ、今回の目的と制約に合う実行用Skillを渡すTypeScriptライブラリです。正式Skill・経験の検索、LLMによる適用・差分・合成、保存済みの開始予約、実行結果と改善候補を扱います。
 
-現在はコアとSQLite adapterの実装・固定試験段階です。[疑似ContextStillの単体試験基盤](examples/contextstill/README.md)と、[Grokbot向け引継ぎ](GROKBOT_HANDOFF.md)を用意しています。Eumenesの本体サービス、ContextStillの実接続、会話・担当、MCPへの製品組込みは未完了です。固定モデルの試験は、実LLMによる意味判断の性能を証明するものではありません。
+コアとSQLite adapterを実装し、Eumenesのジョブと永続ストアに一時DBで接続する試験を行っています。[疑似ContextStillの試験基盤](examples/contextstill/README.md)と[登録数別の実クラウド測定](docs/quality/catalog-improvement-2026-11-09/results.md)があります。Eumenesの本体サービス、ContextStillの実接続、会話・担当、MCPへの製品組込みは未完了です。
 
 ## はじめに
 
@@ -23,7 +23,7 @@ verifyは型、lint、format、固定試験、JavaScript・型宣言のbuild、t
 
 `context:check` は疑似ContextStillと固定モデルによる接続確認です。`context:eval` は固定fixtureの完全性検査です。実LLMによる品質・実課題の効果は別に検証します。
 
-検索の現行既定は `bm25`、言い換えは `auto` です。`--search-profile handle|bm25` と `--query-reformulation off|on|auto|multi` で条件を明示できます。autoは公開searchTaskと公開カードだけを使う補助推論です。現在は文字種と題名一致による呼出し選択が残っており、意味判断をLLMに集約する比較は未完了です。過去の品質点は現在版への適合を確認してから使い、別条件の点数と混ぜません。
+検索の現行既定は `bm25`、言い換えは `auto` です。`--search-profile handle|bm25` と `--query-reformulation off|on|auto|multi` で条件を明示できます。autoでは文字種や題名一致を使って経路を切り替えず、公開searchTaskの言い換えをLLMに委ねます。ホストが検索文を用意する場合はoffを指定できます。旧autoは凍結済み評価の再生に限って使用します。
 
 `bun run context:eval-scenarios` は生成・採点の記録がなければ、未実施の推論タスクを書き出して待ちます。`--retrieval-only` は検索順位だけを測り、生成品質点を出しません。`bun run context:scoreboard` は記録のidentityと失効状態を照合します。手順と条件の履歴は[単体試験基盤](examples/contextstill/README.md)と[計測手順](docs/measurement.md)を参照してください。
 

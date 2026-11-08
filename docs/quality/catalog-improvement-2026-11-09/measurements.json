@@ -1,0 +1,1103 @@
+{
+	"catalogRuns": [
+		{
+			"name": "catalog-scale-v1",
+			"commit": "b76191e0a382c8a0dc67849aaf1b6a6bd5599413",
+			"manifest": {
+				"suiteDigest": "51f6fecb53de7bbeef00dd8128ed136f5c5c43763c80aad698293f831e1ebc7c",
+				"protocolDigest": "44629422162988d8dbdf42ea33aba1d53522cbdf83c80ae4d64391ff8542c561",
+				"model": "gpt-4.1-mini",
+				"startedAt": "2026-11-08T22:50:43.110Z",
+				"retries": 0
+			},
+			"budget": {
+				"spentBefore": 13.535176200000002,
+				"accountedUsd": 13.588164599999994,
+				"incrementalUsd": 0.05298839999999139,
+				"capUsd": 15
+			},
+			"tokens": {
+				"inputTokens": {
+					"reported": 54,
+					"total": 106347
+				},
+				"outputTokens": {
+					"reported": 54,
+					"total": 6531
+				},
+				"reasoningTokens": {
+					"reported": 54,
+					"total": 0
+				},
+				"cachedInputTokens": {
+					"reported": 54,
+					"total": 11136
+				}
+			},
+			"levels": [
+				{
+					"registrations": 9,
+					"attempts": 18,
+					"positive": 9,
+					"correctPositive": 9,
+					"usableWithin3s": 9,
+					"negative": 9,
+					"correctNegative": 9,
+					"positiveMs": {
+						"median": 1729.7798330000005,
+						"p95": 2661.775791,
+						"max": 2661.775791
+					},
+					"prepareMs": null,
+					"bindMs": null,
+					"deliveryMs": null,
+					"selectionMs": {
+						"median": 1711.2857079999994,
+						"p95": 2645.9886669999996,
+						"max": 2645.9886669999996
+					}
+				},
+				{
+					"registrations": 1000,
+					"attempts": 18,
+					"positive": 9,
+					"correctPositive": 9,
+					"usableWithin3s": 9,
+					"negative": 9,
+					"correctNegative": 8,
+					"positiveMs": {
+						"median": 1851.516499999998,
+						"p95": 2555.450582999998,
+						"max": 2555.450582999998
+					},
+					"prepareMs": null,
+					"bindMs": null,
+					"deliveryMs": null,
+					"selectionMs": {
+						"median": 1710.1165000000037,
+						"p95": 2408.427499999998,
+						"max": 2408.427499999998
+					}
+				},
+				{
+					"registrations": 10000,
+					"attempts": 18,
+					"positive": 9,
+					"correctPositive": 9,
+					"usableWithin3s": 6,
+					"negative": 9,
+					"correctNegative": 6,
+					"positiveMs": {
+						"median": 2849.475833000004,
+						"p95": 7539.541708999997,
+						"max": 7539.541708999997
+					},
+					"prepareMs": null,
+					"bindMs": null,
+					"deliveryMs": null,
+					"selectionMs": {
+						"median": 1603.7702500000014,
+						"p95": 5794.048417000013,
+						"max": 5794.048417000013
+					}
+				}
+			],
+			"failures": [
+				{
+					"attempt": "1000:adaptation-required:2",
+					"level": 1000,
+					"expected": null,
+					"actualRef": "5858669c-bff2-4ca8-a2ae-3fe9673f8b54",
+					"correct": false,
+					"durationMs": 1473.762708000002,
+					"kind": "ready",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1389.8064159999994,
+							"receipt": "resp_0282ee4e85e0f4cc016af0fcfd623887d1a061fbb694277e7b",
+							"inputTokens": 1173,
+							"outputTokens": 163,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 0
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.7628330000006827
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.3897919999944861
+						}
+					]
+				},
+				{
+					"attempt": "10000:raw-plan:0",
+					"level": 10000,
+					"expected": "asciidoc-opaque-roundtrip",
+					"actualRef": "5858669c-bff2-4ca8-a2ae-3fe9673f8b54",
+					"correct": true,
+					"durationMs": 3383.212416999995,
+					"kind": "ready",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1603.7702500000014,
+							"receipt": "resp_07ab8422c81a3693016af0fd0686e487d1b30a1b0726b046b8",
+							"inputTokens": 2102,
+							"outputTokens": 149,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 1920
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.7063749999942956
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.3503330000094138
+						}
+					]
+				},
+				{
+					"attempt": "10000:adaptation-required:0",
+					"level": 10000,
+					"expected": null,
+					"actualRef": null,
+					"correct": false,
+					"durationMs": 1675.8089579999942,
+					"kind": "unavailable",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1204.021166999999,
+							"receipt": "resp_04d7d5973662c184016af0fd0e3d6887d1979db5cbaa3ed21e",
+							"inputTokens": 1173,
+							"outputTokens": 101,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 1024
+						}
+					]
+				},
+				{
+					"attempt": "10000:raw-plan:1",
+					"level": 10000,
+					"expected": "asciidoc-opaque-roundtrip",
+					"actualRef": "5858669c-bff2-4ca8-a2ae-3fe9673f8b54",
+					"correct": true,
+					"durationMs": 7539.541708999997,
+					"kind": "ready",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 5794.048417000013,
+							"receipt": "resp_0a8ea9def6916d2e016af0fd141a7887d1a201d1cbeb49dedb",
+							"inputTokens": 2102,
+							"outputTokens": 174,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 0
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.37166699999943376
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.25383300000976305
+						}
+					]
+				},
+				{
+					"attempt": "10000:adaptation-required:1",
+					"level": 10000,
+					"expected": null,
+					"actualRef": null,
+					"correct": false,
+					"durationMs": 1585.0512499999895,
+					"kind": "unavailable",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1049.5716249999969,
+							"receipt": "resp_005b6a6d45c519f0016af0fd200a3087d1932d587c6707eb2c",
+							"inputTokens": 1173,
+							"outputTokens": 85,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 0
+						}
+					]
+				},
+				{
+					"attempt": "10000:raw-plan:2",
+					"level": 10000,
+					"expected": "asciidoc-opaque-roundtrip",
+					"actualRef": "5858669c-bff2-4ca8-a2ae-3fe9673f8b54",
+					"correct": true,
+					"durationMs": 3248.6850419999973,
+					"kind": "ready",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1466.9298750000016,
+							"receipt": "resp_020a9ac3b847e751016af0fd25b71887d19609bca22f35c07f",
+							"inputTokens": 2102,
+							"outputTokens": 145,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 1920
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.700542000005953
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.4127910000097472
+						}
+					]
+				},
+				{
+					"attempt": "10000:adaptation-required:2",
+					"level": 10000,
+					"expected": null,
+					"actualRef": null,
+					"correct": false,
+					"durationMs": 1751.862832999992,
+					"kind": "unavailable",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1240.658666000003,
+							"receipt": "resp_02079fa111dcc82e016af0fd2d597c87d1ae414896a647fd8a",
+							"inputTokens": 1173,
+							"outputTokens": 95,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 0
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "catalog-qualification-mini-v2",
+			"commit": "dbf720d1b4ea9fcd76378693feba038c20a21942",
+			"manifest": {
+				"suiteDigest": "51f6fecb53de7bbeef00dd8128ed136f5c5c43763c80aad698293f831e1ebc7c",
+				"protocolDigest": "fea1bc8f267820835ebb00b6508b439ece483aadde731fd6cceece6b9be572c9",
+				"model": "gpt-4.1-mini",
+				"startedAt": "2026-11-08T23:01:59.024Z",
+				"retries": 0
+			},
+			"budget": {
+				"spentBefore": 13.588164599999994,
+				"accountedUsd": 13.611509799999993,
+				"incrementalUsd": 0.023345199999999622,
+				"capUsd": 15
+			},
+			"tokens": {
+				"inputTokens": {
+					"reported": 27,
+					"total": 53295
+				},
+				"outputTokens": {
+					"reported": 27,
+					"total": 1267
+				},
+				"reasoningTokens": {
+					"reported": 27,
+					"total": 0
+				},
+				"cachedInputTokens": {
+					"reported": 27,
+					"total": 1536
+				}
+			},
+			"levels": [
+				{
+					"registrations": 10000,
+					"attempts": 27,
+					"positive": 9,
+					"correctPositive": 9,
+					"usableWithin3s": 9,
+					"negative": 18,
+					"correctNegative": 17,
+					"positiveMs": {
+						"median": 1205.3649169999999,
+						"p95": 1553.5794170000008,
+						"max": 1553.5794170000008
+					},
+					"prepareMs": null,
+					"bindMs": null,
+					"deliveryMs": null,
+					"selectionMs": {
+						"median": 1190.7583749999994,
+						"p95": 1532.9425840000004,
+						"max": 1532.9425840000004
+					}
+				}
+			],
+			"failures": [
+				{
+					"attempt": "10000:timezone-and-historical-calendar:1",
+					"level": 10000,
+					"expected": null,
+					"actualRef": "2a295bac-bd58-46b9-8e30-b4559f6e99d8",
+					"correct": false,
+					"durationMs": 1303.3452079999988,
+					"kind": "ready",
+					"usableWithinTarget": false,
+					"calls": [
+						{
+							"kind": "modelCalls",
+							"operation": "skill_selection",
+							"outcome": "ok",
+							"durationMs": 1285.6227910000016,
+							"receipt": "resp_0fb6b385cc400d5c016af0ff7d436c87d186f8cb5932b824ac",
+							"inputTokens": 1717,
+							"outputTokens": 61,
+							"reasoningTokens": 0,
+							"cachedInputTokens": 1536
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.48641700000007404
+						},
+						{
+							"kind": "sourceCalls",
+							"operation": "get_knowledge",
+							"outcome": "ok",
+							"durationMs": 0.36837499999819556
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "catalog-qualification-full-v2",
+			"commit": "dbf720d1b4ea9fcd76378693feba038c20a21942",
+			"manifest": {
+				"suiteDigest": "51f6fecb53de7bbeef00dd8128ed136f5c5c43763c80aad698293f831e1ebc7c",
+				"protocolDigest": "2916d16c04a39ecae74cf9fb13ff2328927a23cd927dfc49183caedf9bf28e54",
+				"model": "gpt-4.1",
+				"startedAt": "2026-11-08T23:02:32.726Z",
+				"retries": 0
+			},
+			"budget": {
+				"spentBefore": 13.611509799999993,
+				"accountedUsd": 13.725167799999987,
+				"incrementalUsd": 0.11365799999999382,
+				"capUsd": 15
+			},
+			"tokens": {
+				"inputTokens": {
+					"reported": 27,
+					"total": 53217
+				},
+				"outputTokens": {
+					"reported": 27,
+					"total": 903
+				},
+				"reasoningTokens": {
+					"reported": 27,
+					"total": 0
+				},
+				"cachedInputTokens": {
+					"reported": 27,
+					"total": 27904
+				}
+			},
+			"levels": [
+				{
+					"registrations": 10000,
+					"attempts": 27,
+					"positive": 9,
+					"correctPositive": 9,
+					"usableWithin3s": 9,
+					"negative": 18,
+					"correctNegative": 18,
+					"positiveMs": {
+						"median": 1185.6808749999982,
+						"p95": 2775.180375,
+						"max": 2775.180375
+					},
+					"prepareMs": null,
+					"bindMs": null,
+					"deliveryMs": null,
+					"selectionMs": {
+						"median": 1169.278041999998,
+						"p95": 2736.4781250000005,
+						"max": 2736.4781250000005
+					}
+				}
+			],
+			"failures": []
+		},
+		{
+			"name": "catalog-scale-final-full",
+			"commit": "14fff688eb11c57f27fda121a44b1241e955304c",
+			"manifest": {
+				"suiteDigest": "51f6fecb53de7bbeef00dd8128ed136f5c5c43763c80aad698293f831e1ebc7c",
+				"protocolDigest": "07aa759f63c13cb19233af95a90fd33373f42915870a094e622358b774f2974a",
+				"model": "gpt-4.1",
+				"startedAt": "2026-11-08T23:13:25.840Z",
+				"retries": 0
+			},
+			"budget": {
+				"spentBefore": 13.725167799999987,
+				"accountedUsd": 14.514583799999977,
+				"incrementalUsd": 0.7894159999999903,
+				"capUsd": 15
+			},
+			"tokens": {
+				"inputTokens": {
+					"reported": 180,
+					"total": 366820
+				},
+				"outputTokens": {
+					"reported": 180,
+					"total": 6972
+				},
+				"reasoningTokens": {
+					"reported": 180,
+					"total": 0
+				},
+				"cachedInputTokens": {
+					"reported": 180,
+					"total": 296448
+				}
+			},
+			"levels": [
+				{
+					"registrations": 9,
+					"attempts": 60,
+					"positive": 30,
+					"correctPositive": 30,
+					"usableWithin3s": 30,
+					"negative": 30,
+					"correctNegative": 30,
+					"positiveMs": {
+						"median": 1097.0307295000002,
+						"p95": 1750.5604589999998,
+						"max": 1885.334041000002
+					},
+					"prepareMs": {
+						"median": 4.955229499999405,
+						"p95": 6.46154199999728,
+						"max": 7.569333999999799
+					},
+					"bindMs": {
+						"median": 6.661333000002742,
+						"p95": 9.451207999999951,
+						"max": 10.356874999997672
+					},
+					"deliveryMs": {
+						"median": 8.06341649999922,
+						"p95": 13.220500000000357,
+						"max": 13.417374999997264
+					},
+					"selectionMs": {
+						"median": 1078.3633119999995,
+						"p95": 1726.722917,
+						"max": 1871.1421670000054
+					}
+				},
+				{
+					"registrations": 1000,
+					"attempts": 60,
+					"positive": 30,
+					"correctPositive": 30,
+					"usableWithin3s": 30,
+					"negative": 30,
+					"correctNegative": 30,
+					"positiveMs": {
+						"median": 1059.083520500004,
+						"p95": 1276.6301670000103,
+						"max": 1574.97645799999
+					},
+					"prepareMs": {
+						"median": 5.052979000007326,
+						"p95": 7.209915999992518,
+						"max": 7.272541000013007
+					},
+					"bindMs": {
+						"median": 5.886832999989565,
+						"p95": 9.73399999999674,
+						"max": 10.337625000000116
+					},
+					"deliveryMs": {
+						"median": 6.5911659999983385,
+						"p95": 9.367874999996275,
+						"max": 9.55558299999393
+					},
+					"selectionMs": {
+						"median": 1039.1876879999982,
+						"p95": 1256.1050830000022,
+						"max": 1552.8576250000042
+					}
+				},
+				{
+					"registrations": 10000,
+					"attempts": 60,
+					"positive": 30,
+					"correctPositive": 30,
+					"usableWithin3s": 30,
+					"negative": 30,
+					"correctNegative": 30,
+					"positiveMs": {
+						"median": 1022.383499500007,
+						"p95": 1478.3178340000159,
+						"max": 1752.2534159999923
+					},
+					"prepareMs": {
+						"median": 3.359478999991552,
+						"p95": 6.654915999999503,
+						"max": 11.970165999984602
+					},
+					"bindMs": {
+						"median": 4.316479499990237,
+						"p95": 8.293249999987893,
+						"max": 10.224000000016531
+					},
+					"deliveryMs": {
+						"median": 5.175271000000066,
+						"p95": 6.700167000002693,
+						"max": 7.300917000015033
+					},
+					"selectionMs": {
+						"median": 1006.7721250000031,
+						"p95": 1463.992041999998,
+						"max": 1741.1013749999984
+					}
+				}
+			],
+			"failures": []
+		}
+	],
+	"holdout": {
+		"commit": "de521714e5268280e5efc706b795b846c030318a",
+		"generation": {
+			"attempted": 3,
+			"ready": 2,
+			"timingCaptured": 3,
+			"complete": false
+		},
+		"timing": {
+			"preparationMs": 1967.196083,
+			"batchDurationMs": 182237.095417,
+			"tasks": [
+				{
+					"taskId": "outbound-fetch-policy",
+					"startedAt": "2026-11-08T23:18:48.754Z",
+					"endedAt": "2026-11-08T23:19:46.911Z",
+					"durationMs": 58158.096958999995,
+					"status": "error",
+					"code": "cloud_output_limit"
+				},
+				{
+					"taskId": "configuration-import-shapes",
+					"startedAt": "2026-11-08T23:19:46.920Z",
+					"endedAt": "2026-11-08T23:20:50.484Z",
+					"durationMs": 63564.498583,
+					"status": "ready"
+				},
+				{
+					"taskId": "form-error-association",
+					"startedAt": "2026-11-08T23:20:50.494Z",
+					"endedAt": "2026-11-08T23:21:50.985Z",
+					"durationMs": 60491.47866699999,
+					"status": "ready"
+				}
+			]
+		},
+		"tasks": [
+			{
+				"taskId": "outbound-fetch-policy",
+				"startedAt": "2026-11-08T23:18:48.754Z",
+				"endedAt": "2026-11-08T23:19:46.911Z",
+				"durationMs": 58158.096958999995,
+				"status": "error",
+				"code": "cloud_output_limit",
+				"sourceRefs": ["contextstill:kn_id3jvqsnxxaaolbscb3lacwwty"],
+				"bundleDigest": null,
+				"cloudCalls": 3,
+				"cloudTimings": [
+					{
+						"taskId": "outbound-fetch-policy",
+						"sample": "reformulation",
+						"model": "gpt-4.1-mini",
+						"inputDigest": "a52a84f91d369e3a9c7fdc1c38b2e8e21fa66b97bfd31b6108fc4f752489de09",
+						"startedAt": "2026-11-08T23:18:48.759Z",
+						"durationMs": 1355.0915830000004,
+						"receipt": "resp_04545e953debc8d5016af10358fbe087d1af67e48a7560a519",
+						"status": "completed"
+					},
+					{
+						"taskId": "outbound-fetch-policy",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "4f396ce4c01482a46910be9f770955926c580b7363ef95f0e0065120d7e337f2",
+						"startedAt": "2026-11-08T23:18:50.161Z",
+						"durationMs": 1876.6705000000002,
+						"receipt": "resp_0521ce1ef593b7e4016af1035a678487d184caa6fa9811480d",
+						"status": "completed"
+					},
+					{
+						"taskId": "outbound-fetch-policy",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "a9e9e447d9d89eacfda8f5f03a5a69e131b1f50141c31fb37c270fe5fcb31d99",
+						"startedAt": "2026-11-08T23:18:52.050Z",
+						"durationMs": 54860.016708,
+						"status": "error",
+						"code": "cloud_output_limit"
+					}
+				],
+				"tokens": {
+					"inputTokens": {
+						"reported": 3,
+						"total": 15257
+					},
+					"outputTokens": {
+						"reported": 3,
+						"total": 4094
+					},
+					"reasoningTokens": {
+						"reported": 3,
+						"total": 96
+					},
+					"cachedInputTokens": {
+						"reported": 2,
+						"total": 0,
+						"missing": 1
+					}
+				},
+				"costUsd": 0.0705104,
+				"incompleteReasons": ["max_output_tokens"],
+				"scoringStatus": "partial-envelope-body-only",
+				"score": 98,
+				"modelScore": 98,
+				"dimensions": {
+					"correctness": 10,
+					"actionability": 10,
+					"coverage": 10,
+					"concision": 8,
+					"format": 10
+				},
+				"adjudication": null,
+				"criteria": [
+					{
+						"id": "usable-plan",
+						"status": "met",
+						"passageId": "p4",
+						"reason": "仕様や構成の可観測条件や必要な順序・停止条件・合否判断が具体的に記載されている。"
+					},
+					{
+						"id": "complete-target-validation",
+						"status": "met",
+						"passageId": "p6",
+						"reason": "全DNS回答、mapped IPv6変換、禁止アドレス網羅、実接続照合、redirect再検査など検証基準を満たしている。"
+					},
+					{
+						"id": "bounded-and-honest",
+						"status": "met",
+						"passageId": "p8",
+						"reason": "timeout/サイズ/redirect段の絶対上限を必須視し、合成と実クライアントの挙動一致・未確認時の停止も明記されている。"
+					}
+				],
+				"gradeTokens": {
+					"inputTokens": {
+						"reported": 1,
+						"total": 8548
+					},
+					"outputTokens": {
+						"reported": 1,
+						"total": 685
+					},
+					"reasoningTokens": {
+						"reported": 1,
+						"total": 0
+					},
+					"cachedInputTokens": {
+						"reported": 1,
+						"total": 0
+					}
+				},
+				"codeExamples": [
+					{
+						"taskId": "outbound-fetch-policy",
+						"artifactStatus": "partial-envelope-body-only",
+						"path": "references/synthetic-address-check.md",
+						"sha256": "d1dc5254e0e74b794e1652f5286e5672d22c9ba691e98005d0ba709144eb8002",
+						"exitCode": 0,
+						"stdout": "fixtureのみ合格\n",
+						"stderr": "",
+						"scope": "Manually inspected standalone synthetic assertions, stdin only. No production task, filesystem, network, browser or screen reader exercised."
+					}
+				]
+			},
+			{
+				"taskId": "configuration-import-shapes",
+				"startedAt": "2026-11-08T23:19:46.920Z",
+				"endedAt": "2026-11-08T23:20:50.484Z",
+				"durationMs": 63564.498583,
+				"status": "ready",
+				"sourceRefs": [
+					"contextstill:kn_agkjo56fu66kkc2xgfy4wtpbsy",
+					"contextstill:kn_7vheyfb6irnaftrcskeh2hcidm",
+					"contextstill:kn_xthfmwxgewht7tifrginesvtuq"
+				],
+				"bundleDigest": "dfe5a3aba2f461b772c7732a276307934fbf3a14441dba21eefb690a4e14cf34",
+				"cloudCalls": 4,
+				"cloudTimings": [
+					{
+						"taskId": "configuration-import-shapes",
+						"sample": "reformulation",
+						"model": "gpt-4.1-mini",
+						"inputDigest": "1aa36e7e87a00580a73b1567b9bb98d73fed9f9071249d912bccc6e08e28cb9a",
+						"startedAt": "2026-11-08T23:19:46.921Z",
+						"durationMs": 988.1616250000006,
+						"receipt": "resp_0a786d425d6a6cf0016af1039321b887d18945085bf7202447",
+						"status": "completed"
+					},
+					{
+						"taskId": "configuration-import-shapes",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "145ffa497bd1e70ff0f4f93ccfbf18b970234447cbd4aaf77df8c216bcdeaaaa",
+						"startedAt": "2026-11-08T23:19:47.937Z",
+						"durationMs": 2647.741584000003,
+						"receipt": "resp_08c1d18673251337016af103942a4887d19bddddad41abb59e",
+						"status": "completed"
+					},
+					{
+						"taskId": "configuration-import-shapes",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "0bc5892307ff0adaca2e581aa9a238abb7a8429248ca989c4b22ff12ef9ac0f1",
+						"startedAt": "2026-11-08T23:19:50.594Z",
+						"durationMs": 52148.4545,
+						"receipt": "resp_05f901890a0b9878016af10396d13087d1a49661c9bef6ac64",
+						"status": "completed"
+					},
+					{
+						"taskId": "configuration-import-shapes",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "1e116ff5e3f8823d19b53a2c7b218ba1c79aebe27a3f32a35d920d71f3b00924",
+						"startedAt": "2026-11-08T23:20:42.776Z",
+						"durationMs": 7680.003082999989,
+						"receipt": "resp_0a7a23dfd964b5b9016af103cb302c87d184555e2e9b60b86c",
+						"status": "completed"
+					}
+				],
+				"tokens": {
+					"inputTokens": {
+						"reported": 4,
+						"total": 27174
+					},
+					"outputTokens": {
+						"reported": 4,
+						"total": 4517
+					},
+					"reasoningTokens": {
+						"reported": 4,
+						"total": 83
+					},
+					"cachedInputTokens": {
+						"reported": 4,
+						"total": 5840,
+						"missing": 0
+					}
+				},
+				"costUsd": 0.098574,
+				"incompleteReasons": [],
+				"scoringStatus": "complete-artifact",
+				"score": 98,
+				"modelScore": 99,
+				"dimensions": {
+					"correctness": 10,
+					"actionability": 10,
+					"coverage": 10,
+					"concision": 8,
+					"format": 10
+				},
+				"adjudication": "完成条件で計画限定の長文を再掲。前回と同じ基準で簡潔性9→8。",
+				"criteria": [
+					{
+						"id": "usable-plan",
+						"status": "met",
+						"passageId": "p10",
+						"reason": "全工程を網羅し順序・合否判定・停止や実環境検証条件も明記。計画対象外の事項についても実行を行わない旨が徹底されている。"
+					},
+					{
+						"id": "two-import-contracts",
+						"status": "met",
+						"passageId": "p13",
+						"reason": "全量インポート（CSV→正規JSON経由）と差分（既存JSONBへのpath更新）が完全に分離されて記述され、相互の誤用を禁止している。"
+					},
+					{
+						"id": "target-and-seed-consistency",
+						"status": "met",
+						"passageId": "p14",
+						"reason": "対象ユーザー・画面限定とseed整合を両立させ、対象外への波及判定や復旧時の対象外不変確認、実DBとseed両方での照合が明記されている。"
+					}
+				],
+				"gradeTokens": {
+					"inputTokens": {
+						"reported": 1,
+						"total": 10878
+					},
+					"outputTokens": {
+						"reported": 1,
+						"total": 836
+					},
+					"reasoningTokens": {
+						"reported": 1,
+						"total": 0
+					},
+					"cachedInputTokens": {
+						"reported": 1,
+						"total": 0
+					}
+				},
+				"codeExamples": [
+					{
+						"taskId": "configuration-import-shapes",
+						"artifactStatus": "complete-artifact",
+						"path": "scoped-jsonb-csv-import-plan/references/scope-fixture.md",
+						"sha256": "1fb1acb9f824b6db45b7857fba3fb20856851456beaa396114a6f1072f5a5f63",
+						"exitCode": 0,
+						"stdout": "",
+						"stderr": "",
+						"scope": "Manually inspected standalone synthetic assertions, stdin only. No production task, filesystem, network, browser or screen reader exercised."
+					}
+				]
+			},
+			{
+				"taskId": "form-error-association",
+				"startedAt": "2026-11-08T23:20:50.494Z",
+				"endedAt": "2026-11-08T23:21:50.985Z",
+				"durationMs": 60491.47866699999,
+				"status": "ready",
+				"sourceRefs": ["contextstill:kn_alt47jpykgdcrqwod3tskeutzy"],
+				"bundleDigest": "891916eb203109dbe54be572f137dfc79aba6a1232fa09cbd05762d110d11492",
+				"cloudCalls": 4,
+				"cloudTimings": [
+					{
+						"taskId": "form-error-association",
+						"sample": "reformulation",
+						"model": "gpt-4.1-mini",
+						"inputDigest": "11128cef56e7c912f5582c69f348bd6e2347fe806926134aec13ec4755058168",
+						"startedAt": "2026-11-08T23:20:50.496Z",
+						"durationMs": 1175.4880830000038,
+						"receipt": "resp_076a693232741544016af103d2b3cc87d1ab171caf43fb42e7",
+						"status": "completed"
+					},
+					{
+						"taskId": "form-error-association",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "b2fd3fb3b5d69689d99d8240cf8c5ab7f3273db69ec50362547fe238e5fce004",
+						"startedAt": "2026-11-08T23:20:51.760Z",
+						"durationMs": 2345.485415999996,
+						"receipt": "resp_019c576f5b8aa441016af103d3fdd887d1b2034a7e510c1cd7",
+						"status": "completed"
+					},
+					{
+						"taskId": "form-error-association",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "2ae4c4d01203cd938bbf23b2c890fdf3da30a93a9745f13bd970f29f4590c32e",
+						"startedAt": "2026-11-08T23:20:54.111Z",
+						"durationMs": 48725.827332999994,
+						"receipt": "resp_0878a7d35a5d45f8016af103d6608487d18acdcd1ca3121323",
+						"status": "completed"
+					},
+					{
+						"taskId": "form-error-association",
+						"sample": "quality-build",
+						"model": "gpt-6.1-sol",
+						"inputDigest": "aba31478c5b2d3f9d958b8e5e9eac5c49bd917b384dbe9fa52f939a4519ea25b",
+						"startedAt": "2026-11-08T23:21:42.856Z",
+						"durationMs": 8106.5465829999885,
+						"receipt": "resp_06e586bae6326f5f016af1040712f487d18c274b59a24966fa",
+						"status": "completed"
+					}
+				],
+				"tokens": {
+					"inputTokens": {
+						"reported": 4,
+						"total": 25050
+					},
+					"outputTokens": {
+						"reported": 4,
+						"total": 4398
+					},
+					"reasoningTokens": {
+						"reported": 4,
+						"total": 126
+					},
+					"cachedInputTokens": {
+						"reported": 4,
+						"total": 7403,
+						"missing": 0
+					}
+				},
+				"costUsd": 0.0927644,
+				"incompleteReasons": [],
+				"scoringStatus": "complete-artifact",
+				"score": 98,
+				"modelScore": 98,
+				"dimensions": {
+					"correctness": 10,
+					"actionability": 10,
+					"coverage": 10,
+					"concision": 8,
+					"format": 10
+				},
+				"adjudication": null,
+				"criteria": [
+					{
+						"id": "usable-plan",
+						"status": "met",
+						"passageId": "p10",
+						"reason": "計画全体で順序付け、合否、停止条件および実環境検証の要否が明示されている。"
+					},
+					{
+						"id": "explicit-associations",
+						"status": "met",
+						"passageId": "p13",
+						"reason": "ID・for属性、aria-describedbyの扱い、状態変化時の参照変更と多入力の厳密な検証が具体的に書かれている。"
+					},
+					{
+						"id": "verification-boundary",
+						"status": "met",
+						"passageId": "p15",
+						"reason": "静的DOM検査とブラウザ・スクリーンリーダーによる検証手順の分離・記載があり、検証“済み”や未知APIに頼る記述はない。"
+					}
+				],
+				"gradeTokens": {
+					"inputTokens": {
+						"reported": 1,
+						"total": 9929
+					},
+					"outputTokens": {
+						"reported": 1,
+						"total": 652
+					},
+					"reasoningTokens": {
+						"reported": 1,
+						"total": 0
+					},
+					"cachedInputTokens": {
+						"reported": 1,
+						"total": 0
+					}
+				},
+				"codeExamples": [
+					{
+						"taskId": "form-error-association",
+						"artifactStatus": "complete-artifact",
+						"path": "form-label-error-association-plan/references/association-fixture.md",
+						"sha256": "f5980d53f84f73f87d26e7dc36a2b8e28e01e8c1b96805335210f1f93f02e9fd",
+						"exitCode": 0,
+						"stdout": "fixture assertions passed\n",
+						"stderr": "",
+						"scope": "Manually inspected standalone synthetic assertions, stdin only. No production task, filesystem, network, browser or screen reader exercised."
+					}
+				]
+			}
+		],
+		"generationUsd": 0.2618488,
+		"gradingUsd": 0.07609400000000122,
+		"gradingTokens": {
+			"inputTokens": {
+				"reported": 3,
+				"total": 29355
+			},
+			"outputTokens": {
+				"reported": 3,
+				"total": 2173
+			},
+			"reasoningTokens": {
+				"reported": 3,
+				"total": 0
+			},
+			"cachedInputTokens": {
+				"reported": 3,
+				"total": 0
+			}
+		}
+	},
+	"spending": {
+		"priorAccountedUsd": 13.535176200000002,
+		"currentRunUsd": 1.3173503999999774,
+		"knownCumulativeUsd": 10.323639599999973,
+		"heldReservations": 23,
+		"heldUsd": 4.528887,
+		"accountedUsd": 14.85252659999998,
+		"limitUsd": 20
+	},
+	"verification": {
+		"snapshot": "c3173eaaa657992a9a4c4093a3abc6ca3778d0e4",
+		"macOS": {
+			"arch": "arm64",
+			"bun": "1.4.4",
+			"checkout": "isolated worktree, reused pinned local dependencies",
+			"verifyExitCode": 0
+		},
+		"linux": {
+			"arch": "arm64",
+			"bun": "1.4.4",
+			"checkout": "git archive exact snapshot with fresh frozen install; Git and Python added to slim image",
+			"verifyExitCode": 0
+		},
+		"typecheckedFiles": 175,
+		"tests": {
+			"core": 413,
+			"examples": 176,
+			"failed": 0
+		},
+		"dependencyAudit": {},
+		"dependenciesChanged": false,
+		"ciChanged": false
+	}
+}

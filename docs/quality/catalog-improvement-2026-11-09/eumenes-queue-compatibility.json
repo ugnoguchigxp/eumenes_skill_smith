@@ -1,0 +1,28 @@
+{
+	"complete": true,
+	"eumenesSnapshot": "40b9630c4dbae20ad3837fdd7e5397c721300ae5",
+	"productNetworkCalls": 0,
+	"paidLlmCalls": 0,
+	"fixtureInferenceCalls": 3,
+	"results": {
+		"completedDelivery": {
+			"jobState": "completed",
+			"delivery": "ready",
+			"reportRevision": 1
+		},
+		"restart": "same artifact after reopening real host store and recovering queue",
+		"cancellation": "domain and actual queue cancelled without callback recursion",
+		"falseSettlement": {
+			"jobState": "failed",
+			"domainState": "rejected"
+		},
+		"runningRecovery": {
+			"jobState": "interrupted",
+			"domainState": "unavailable",
+			"code": "backend_restarted",
+			"reserved": 1
+		},
+		"revocation": "previous completed artifact unavailable after revocation"
+	},
+	"scope": "Real public queue and SqliteStore implementations in an isolated temporary DB; inference/registry/policy/identity attestations are fixed test ports. Not production deployment or a real host inference/source-API benchmark."
+}

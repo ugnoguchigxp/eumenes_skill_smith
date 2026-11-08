@@ -1,5 +1,13 @@
 # SkillSmithとEumenesの接続契約
 
+## Eumenesジョブ接続試験 2026-11-09
+
+`createBuildQueueJobs(queue)`と`createBuildJobHandler({service, write, authorityFor})`を公開した。`knowledge.build.v1`の登録・取消しはホストの公開Queue APIを使い、要求保存と同じwriterに入る。`authorityFor`はホストが保存した要求から権限を復元する信頼境界であり、job payloadや利用者の申告で権限を発行しない。handlerはclaimのscope、対象、job ID、epochを照合し、準備・予約・使用量・確定をホストのwriter、外部実行をwriterの外で行う。呼出し元とjob callbackの双方から取消しが反射しないよう、所有する状態を確定してから相手側へ通知する。
+
+未知の完了はinterruptとし、自動再試行はしない。再起動で実行中の記録が失われても、終端通知と保存済みのjob ID・epochが一致するときだけ依頼を確定する。予約済みの呼出し数は保持し、遅れて届いた結果は採用しない。保存が拒否された結果をqueue完了にしない。
+
+`bun examples/eumenes/verify-queue.ts EUMENES_CHECKOUT OUTPUT_JSON`は、本体の公開queueとSqliteStoreを一時DBで組み合わせる。`40b9630`の本体コードで実行し、ready配達、結果記録、ストア再開後の再取得、別queueによる実行中jobの復旧、取消し、receipt拒否、失効後の非配達を確認した。推論・資料・権限等は試験用portで、稼働中のサービスや本体DBは使わない。製品組込みには実認可、推論、正式Skillと外部資料の版・完全性の公開契約、通知の接続が残る。外部検索の応答だけでは、現在のSourcePortが要求する版に紐づいた本文と完全性を検証できていない。
+
 ## 承認済みSKILLの高速配達 2026-11-08
 
 `getSkillDelivery`の単一本文契約、SQLiteでの承認済みpublication保存、LLM選択、タスク別Buildへの結付けを追加した。[接続と承認の詳細](docs/approved-skills.md)を参照。既存get系・厳密キャッシュ・job生成・意味レビュー・結果の元主体検査を維持する。承認callbackはホストの所有domainで正確なdigest・scope・適用条件・失効を照合する。

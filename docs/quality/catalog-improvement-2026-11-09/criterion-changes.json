@@ -1,0 +1,74 @@
+[
+	{
+		"track": "technical",
+		"dimension": "architecture",
+		"criterion": "fit",
+		"before": 2,
+		"after": 3,
+		"evidence": ["E32", "E33", "E34"],
+		"rationale": "Bounded lookup now fits the measured catalog sizes, and the same writer and public job interface integrate in actual host storage."
+	},
+	{
+		"track": "technical",
+		"dimension": "correctness",
+		"criterion": "edge_cases",
+		"before": 3,
+		"after": 4,
+		"evidence": ["E32", "E35", "E38"],
+		"rationale": "Former false absence, revocation/refill, stale selector and denied current miss invariants have focused negative tests, plus failures observed in actual inference."
+	},
+	{
+		"track": "technical",
+		"dimension": "maintainability",
+		"criterion": "clarity",
+		"before": 2,
+		"after": 3,
+		"evidence": ["E34", "E39"],
+		"rationale": "Public selection, miss handling, migration and queue integration are traceable in separate responsibilities with runnable example."
+	},
+	{
+		"track": "technical",
+		"dimension": "maintainability",
+		"criterion": "debt",
+		"before": 2,
+		"after": 3,
+		"evidence": ["E36", "E39"],
+		"rationale": "Current query path drops language/title branches and speculative retrieval; candidate and approval modules now have separate duties."
+	},
+	{
+		"track": "technical",
+		"dimension": "testing",
+		"criterion": "risk_coverage",
+		"before": 3,
+		"after": 4,
+		"evidence": ["E32", "E34", "E35", "E37", "E38"],
+		"rationale": "Adds defect-detecting tests for known misses, queue/settlement interactions and archived live scale and held-out cases to the existing boundary suite."
+	},
+	{
+		"track": "technical",
+		"dimension": "performance",
+		"criterion": "hot_path",
+		"before": 2,
+		"after": 3,
+		"evidence": ["E32", "E33"],
+		"rationale": "Measured bottleneck and bounded lookup fixed; actual-cloud approval path remains below 3s at tested sizes."
+	},
+	{
+		"track": "technical",
+		"dimension": "operability",
+		"criterion": "lifecycle",
+		"before": 2,
+		"after": 3,
+		"evidence": ["E34", "E38", "E39"],
+		"rationale": "Actual host queue and store can complete, cancel and reopen with recorded wiring and negative receipt checks; package consumers pass."
+	},
+	{
+		"track": "project",
+		"dimension": "expansion",
+		"criterion": "scalability",
+		"before": 1,
+		"after": 2,
+		"evidence": ["E32", "E33"],
+		"rationale": "Demonstrated catalog growth under structurally mixed registrations without losing those measured fast-path goals."
+	}
+]
