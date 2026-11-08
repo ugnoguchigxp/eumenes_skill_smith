@@ -1,0 +1,14 @@
+{
+	"complete": true,
+	"networkCalls": 0,
+	"databaseOrCredentialRequired": false,
+	"matchedReports": [
+		"generation-tokens-2026-11-08.json",
+		"skill-content-scores-2026-11-08.json",
+		"skill-grading-usage-2026-11-08.json",
+		"skill-content-scores-2026-11-08.md"
+	],
+	"artifactDigestChecks": "13 complete artifacts, main plus every reference, checked during report generation",
+	"archiveFiles": 21,
+	"archiveSha256": "03964957f7999a286b2d9df8846aff0d61182d1a5751c5df34bbf5adbb93246d"
+}

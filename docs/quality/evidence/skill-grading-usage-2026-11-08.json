@@ -1,0 +1,29 @@
+{
+	"calls": 32,
+	"inputTokens": 224780,
+	"outputTokens": 19135,
+	"knownCostUsd": 0.6026400000000002,
+	"byPurpose": {
+		"initial-invalid": {
+			"calls": 15,
+			"inputTokens": 83630,
+			"outputTokens": 10067,
+			"costUsd": 0.24779600000000002
+		},
+		"calibration": {
+			"calls": 2,
+			"inputTokens": 3822,
+			"outputTokens": 753,
+			"costUsd": 0.013668
+		},
+		"revised-artifacts": {
+			"calls": 15,
+			"inputTokens": 137328,
+			"outputTokens": 8315,
+			"costUsd": 0.34117600000000003
+		}
+	},
+	"accountedUsd": 13.10361980000001,
+	"accountedPeakUsd": 14.99428380000001,
+	"capUsd": 15
+}

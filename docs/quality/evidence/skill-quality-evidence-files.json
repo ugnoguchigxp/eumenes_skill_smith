@@ -1,0 +1,112 @@
+{
+	"archive": "skill-quality-evidence-2026-11-08.tgz",
+	"archiveSha256": "03964957f7999a286b2d9df8846aff0d61182d1a5751c5df34bbf5adbb93246d",
+	"files": [
+		{
+			"path": "artifacts/skill-grades-2026-11-08/budget.json",
+			"bytes": 59,
+			"sha256": "921e5821db75f5d1d634f02e9e7d238779d271ad82dfe9894970aaa3199e99bd"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/complete.json",
+			"bytes": 58,
+			"sha256": "258d128eaddc5cbdd266966f05a7030d54903d5882b592f5beaf62a963c9610e"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/generation-tokens.json",
+			"bytes": 202972,
+			"sha256": "cbfe2f9f43f678f1e8a4eba34da9ed0a95f7506f5419b09b1a185147a40b67b0"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/manifest.json",
+			"bytes": 7502,
+			"sha256": "60d2975b0263b1fdc3825067c59dc7afcdeef29c7723a63b54c69effa428e5f5"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/materials.json",
+			"bytes": 229017,
+			"sha256": "ac2a8eb2db5eee9f639ae32fdd500f4e9a9db823c62ffdaf06a986084aeb34ee"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/records.json",
+			"bytes": 406507,
+			"sha256": "a4de285a430e17090dfb49f06e59306e1cf9f7a9d67c801151a6c9817e0aa3a1"
+		},
+		{
+			"path": "artifacts/skill-grades-2026-11-08/usage-receipts.json",
+			"bytes": 226572,
+			"sha256": "9364c9766c8a7e22e259f0b3fb1ce11be8c6a4f5b4975bed7ad29979d540e208"
+		},
+		{
+			"path": "artifacts/skill-grades-v2-2026-11-08/budget.json",
+			"bytes": 58,
+			"sha256": "38def6410ebb7cf964dd214a342c59bf0573f543e5a320c03f5ec7243c9c451e"
+		},
+		{
+			"path": "artifacts/skill-grades-v2-2026-11-08/complete.json",
+			"bytes": 58,
+			"sha256": "258d128eaddc5cbdd266966f05a7030d54903d5882b592f5beaf62a963c9610e"
+		},
+		{
+			"path": "artifacts/skill-grades-v2-2026-11-08/manifest.json",
+			"bytes": 7826,
+			"sha256": "b89f721d74cdb09684c903dc4add7da64263f5c9d072f5b4f6355ee74437dcff"
+		},
+		{
+			"path": "artifacts/skill-grades-v2-2026-11-08/records.json",
+			"bytes": 682131,
+			"sha256": "44ab00c2ca8f06cedb63b5e318ef9bccb05e8507507633d254c7012835813487"
+		},
+		{
+			"path": "artifacts/skill-grade-calibration-2026-11-08/budget.json",
+			"bytes": 59,
+			"sha256": "3cf766c3546b2ca1478255d8ba3659a5867f7a915145fcac67945712d096746a"
+		},
+		{
+			"path": "artifacts/skill-grade-calibration-2026-11-08/complete.json",
+			"bytes": 57,
+			"sha256": "8baf99dae6bafde398050ed40484f79ada88b29541db4f407e38c469ba5ee768"
+		},
+		{
+			"path": "artifacts/skill-grade-calibration-2026-11-08/manifest.json",
+			"bytes": 7826,
+			"sha256": "b50b609811dc088583c12fda9905bceaf09fac6223065f175b1d5c06eff5016f"
+		},
+		{
+			"path": "artifacts/skill-grade-calibration-2026-11-08/materials.json",
+			"bytes": 1844,
+			"sha256": "f7949d17d476a1627ab32d98518c9b14e12959b2e315a4a77d21f94d4b932d1d"
+		},
+		{
+			"path": "artifacts/skill-grade-calibration-2026-11-08/records.json",
+			"bytes": 28079,
+			"sha256": "803adef39da30496ce1f451f7258bcad9d2217b2bd3cc6e358d3f0392ac03f74"
+		},
+		{
+			"path": "artifacts/practical-2026-11-08/costs.jsonl",
+			"bytes": 820385,
+			"sha256": "b37b8ba904ba2b5ee0484ae512bb0ae50e7e4adacfb873f0a9ca3b6a8f5da752"
+		},
+		{
+			"path": "examples/contextstill/grade-saved-skills.ts",
+			"bytes": 10573,
+			"sha256": "c5a1a3b3a4911573897fbe68d4f0f78f05ad574f764b09566e846ca76b840f72"
+		},
+		{
+			"path": "docs/quality/evidence/measure-generation.py",
+			"bytes": 6936,
+			"sha256": "ef5358a9e6fd3839f2d3fef68eb9c3cbdb9ed63a8fd41df8b067cb75eab447a2"
+		},
+		{
+			"path": "docs/quality/evidence/summarize-skill-grades.py",
+			"bytes": 16073,
+			"sha256": "1084a0085344ea1dbd9163ca8f8470c9f8c3d0f680c5795dc0c7fca34cc05b10"
+		},
+		{
+			"path": "docs/quality/evidence/skill-grade-adjudication-2026-11-08.json",
+			"bytes": 3546,
+			"sha256": "84c1d565b932b86b5ac1162499c1658dddef218b4ddab6b85768a39ec166eaff"
+		}
+	],
+	"limits": "No DB, credentials or settings key. Initial invalid grades retained. Extract the older generation archive first, this archive second, into a fresh work area."
+}

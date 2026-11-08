@@ -1,0 +1,44 @@
+{
+	"status": "partial-envelope-body-only",
+	"document": {
+		"sections": [
+			{
+				"kind": "purpose",
+				"heading": "目的",
+				"body": "存在しないローカルパスを参照するジョブの反復を止めつつ、一時的な通信障害のジョブを復旧可能な状態で残す。今回の成果物は整理計画であり、実環境への操作や検証の実行ではない。"
+			},
+			{
+				"kind": "principles",
+				"heading": "必須原則",
+				"body": "入力の永続的欠落と依存先の一時的不調を区別する。原因未確定のジョブは保全し、一括削除・一括恒久失敗にしない。ジョブの再試行とキュー全体の制御は別に扱い、状態名やエラー文字列だけで処分を決めない。"
+			},
+			{
+				"kind": "safety",
+				"heading": "操作と権限の境界",
+				"body": "現在は外部API、実環境、DB、ファイルを操作しない。以下の操作は将来の権限ある実行者向けであり、資料や発話は権限証明にならない。対象環境・操作権限・復旧方法が未確認なら接続や変更へ進まず、提供済み記録の整理と管理者への照会に留める。ローカルファイルの削除は今回の整理対象に含めない。"
+			},
+			{
+				"kind": "workflow",
+				"heading": "標準ワークフロー",
+				"body": null
+			},
+			{
+				"kind": "completion",
+				"heading": "完成条件",
+				"body": "無効入力の反復停止と通信障害ジョブの復旧可能性を別々に判定する。実施時には対象IDの照合、再取得時刻、復旧後の完了、他ジョブへの影響が下記の検証条件を満たした範囲だけを完了とする。"
+			}
+		],
+		"references": [
+			{
+				"path": "references/queue-policy-fixture.md",
+				"title": "分類方針の自己完結検査例",
+				"content": "Python標準機能だけで分類と遅延の不変条件を検査する合成例。実行者が許可されたローカル環境で実行する。外部接続・ファイル操作はなく、実キューのAPIや状態遷移を模造するものではない。現在は未実行であり、実機の合格根拠にはならない。\n\n```python\nimport copy\n\n# kindは調査後の分類。エラー文字列から自動確定しない。\ndef plan(job, now, delay):\n    if delay <= 0:\n        raise ValueError('positive delay required')\n    if job['kind'] == 'missing_confirmed' and job['approved']:\n        return {'action': 'isolate', 'next_at': None}\n    if job['kind'] == 'transient_transport':\n        return {'action': 'retry', 'next_at': now + delay}\n    return {'action': 'hold', 'next_at': None}\n\ndef valid(job, result, now, delay):\n    if job['kind'] == 'transient_transport':\n        return (result['action'] == 'retry'\n                and result['next_at'] is not None\n                and result['next_at'] >= now + delay)\n    if job['kind'] == 'missing_confirmed' and job['approved']:\n        return result == {'action': 'isolate', 'next_at': None}\n    return result == {'action': 'hold', 'next_at': None}\n\njobs = [\n    {'id': 'a', 'kind': 'missing_confirmed', 'approved': True},\n    {'id': 'b', 'kind': 'transient_transport', 'approved': False},\n    {'id': 'c', 'kind': 'permission_denied', 'approved': True},\n    {'id': 'd', 'kind': 'missing_confirmed', 'approved': False},\n    {'id': 'e', 'kind': 'mount_unknown', 'approved': True},\n]\nbefore = copy.deepcopy(jobs)\nnow, delay = 100, 7  # 合成時刻。実運用の推奨秒数ではない。\nresults = [plan(j, now, delay) for j in jobs]\nexpected = [\n    {'action': 'isolate', 'next_at': None},\n    {'action': 'retry', 'next_at': 107},\n    {'action': 'hold', 'next_at': None},\n    {'action': 'hold', 'next_at': None},\n    {'action': 'hold', 'next_at': None},\n]\nassert results == expected\nassert jobs == before\nassert all(valid(j, r, now, delay) for j, r in zip(jobs, results))\n# 負例：即時再試行・通信障害の隔離・未確定入力の隔離を拒否する。\nassert not valid(jobs[1], {'action': 'retry', 'next_at': 100}, now, delay)\nassert not valid(jobs[1], {'action': 'isolate', 'next_at': None}, now, delay)\nassert not valid(jobs[2], {'action': 'isolate', 'next_at': None}, now, delay)\ntry:\n    plan(jobs[1], now, 0)\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('zero delay accepted')\nprint('分類方針fixtureのみ合格')\n```\n\n全assert通過・終了コード0がこの例の終了条件。失敗時は規則を修正するまで対象環境への適用に進まない。"
+			}
+		],
+		"resourceHeading": "検証用の補助資料",
+		"provisionalNotice": null
+	},
+	"localizedInstructions": "1. **既存記録を棚卸しする。** 提供済みのジョブ情報から、ID、種別、パス、実行ワーカー、エラー原因、試行時刻・回数、状態、次回予定、ロック、依存するサービスを整理する。件数だけでなくID集合を保存する。記録不足は「未確定」とし、同じメッセージという理由だけで同一原因と判定しない。\n\n2. **将来の観測・変更の入口を確定する。** 管理者から対象キュー・ワーカーの環境と版、読み取り・変更の権限、復旧手順を取得し、その版の公式資料または管理対象の実装で状態遷移、再試行、ロック・リース、隔離機能を照合する。対象不明なら接続しない。読み取りだけ許可されていれば観測までとし、変更権限や復旧方法が欠ければ状態変更を止める。API名やDB列名はこの計画から推定しない。\n\n3. **原因を三分する。** 権限ある実行者がワーカーと同じファイルシステムの見え方・実行ユーザーで対象パスを観測する。利用者端末にないだけでは欠落確定としない。マウント、作業ディレクトリ、パス解釈、生成元の完了状態も照合する。①正しい環境で欠落し、生成待ち・復元予定がなく、入力を無効と扱う承認があるものは隔離候補。②接続失敗・タイムアウト等で入力不備の証拠がないものは通信再試行候補。③権限拒否、マウント障害、生成待ち、設定不整合、原因の競合は保留とする。③は診断へ戻し、恒久失敗や削除に進めない。\n\n4. **変更案を対象IDで承認する。** 変更前の状態・診断情報と復旧に必要な記録を保存し、対象ID、分類根拠、予定遷移、除外理由を一覧化する。隔離候補は自動取得されない保持領域・状態へ移し、根拠を残す案とする。対応機能がなければ管理者と代替手段を決めるまで停止する。実行中・有効リース中のジョブは変更対象から除き、正式な解放手順を待つ。キュー全削除、全失敗ジョブの再投入、ロックの強制解除は行わない。\n\n5. **通信再試行の方針を別に定める。** 通信不調だけで完了・スキップ・恒久失敗にしない。正の再試行遅延、上限付きバックオフと分散、通知・手動判断へ移す試行数または経過時間を運用者と定める。到達時もジョブは保全する。次回予定が現在時刻より後で、ワーカーと監督プロセスの次ループでも即時再取得されないことを合格条件にする。レーン全体の自動停止は追加せず、明示承認された停止方針がある場合だけ対象・解除条件を設定する。他ジョブを進めるかは順序保証に従い、FIFO等の仕様が不明なら追い越しを導入しない。タイムアウト前に外部側で処理済みの可能性があれば、結果照会や冪等性の根拠を得るまで再送を止める。\n\n6. **少数試行と再評価を経て拡大する。** まず補助資料の分類fixtureを点検し、将来の許可された検証環境で実際の状態遷移・監督ループ・復旧後再実行を試す。その後、承認済みの小さいID集合だけに適用し、変更前後の集合一致と対象外変更0件を判定する。不一致、二重実行、即時ループがあれば拡大を止め、監査記録を保全して原因を見直す。復旧は承認済み手順に限り、無条件に再投入しない。\n\n7. **再発と整理効果を観測して閉じる。** 実施前に観測期間、再試行上限、他ジョブ待ち時間の許容値を合意する。その期間で隔離対象の再取得0件、通信復旧後の同一論理ジョブの完了、重複副作用0件、対象外の進行が許容値内であることを判定する。無効パスの新規流入が続けば生成元のパス検証・共有方式を調査し、原因が確定した範囲だけ修正案にする。流入継続や未観測項目が残れば、既存分の隔離と再発対策の未完了を分けて報告する。",
+	"rawResponseId": "resp_031c88b22ecc193a016aefcafa937887d0955d474be787b244",
+	"limitation": "Outer JSON and final metadata are truncated; grade only the complete body and references, never treat this as a published/validated SkillArtifact."
+}

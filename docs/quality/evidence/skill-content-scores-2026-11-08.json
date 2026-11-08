@@ -1,0 +1,430 @@
+{
+	"rubricWeights": {
+		"correctness": 35,
+		"actionability": 25,
+		"coverage": 20,
+		"concision": 10,
+		"format": 10
+	},
+	"completedArtifacts": 13,
+	"completeMean": 96.96153846153847,
+	"completeModelMean": 98.1923076923077,
+	"dimensionMeans": {
+		"correctness": 10,
+		"actionability": 9.76923076923077,
+		"coverage": 9.76923076923077,
+		"concision": 8,
+		"format": 10
+	},
+	"criteriaMet": 11,
+	"criteriaPartial": 2,
+	"rows": [
+		{
+			"taskId": "backup-verify",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/production-db-backup-verification-plan/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 9,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 95.5,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 9,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 95.5,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_02e715068b98af50016aefd9ce3f1887d09292d0cd00adb0e7",
+			"bundleDigest": "3b922d19809c2ed4468b8fe677729c60cf4f3a3180bbdf856ca04ea446b66a19"
+		},
+		{
+			"taskId": "sandbox-review",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/qoredb-sandbox-production-checks/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 9,
+				"coverage": 9,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 93.5,
+			"criterionStatus": "partial",
+			"gradeReceipt": "resp_0c31f25c0f698471016aefd9ce446887d0a40a5bb16d24043e",
+			"bundleDigest": "b0568a2e5692f139af22bae844d2a158b3c0b7c72f7078b5e23a91952cb001be"
+		},
+		{
+			"taskId": "review-injection",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/review-result-injection-plan/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_0fe6caa6ac6627c5016aefd9d1a6a487d086b016eb7bf544af",
+			"bundleDigest": "85dfc874d34376abc3e35cc2f57365fd175c84a4cde5252f5f73bd02864eeb00"
+		},
+		{
+			"taskId": "least-permissions",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/desktop-window-permission-reduction/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_0f021101752e8826016aefd9d232ac87d097a7cb9e2000113e",
+			"bundleDigest": "076580aee15677fed7899a201df5c9dc11002cdbc2566959cc07f2ffb6436d67"
+		},
+		{
+			"taskId": "cache-ownership",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/service-owned-cache-keys/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_042349ded7c7a283016aefd9d52cd887d0a695da95e527155d",
+			"bundleDigest": "b7bebcc5fde5e773d2ce668b3750bb101d24b86e08cedbfc2004ddd106c4a259"
+		},
+		{
+			"taskId": "migration-readonly",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/queue-migration-preflight-plan/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_0f6d0feb71f321e3016aefd9d6c27887d0a75f68614aad5c62",
+			"bundleDigest": "5e57493b7056db47f53d7e1ca147696fdb7ec2deed11fb7be9907223c54e44c1"
+		},
+		{
+			"taskId": "permanent-queue",
+			"status": "partial-envelope-body-only",
+			"artifactPath": "graded-skills/2026-11-08/partial-bodies/permanent-queue.json",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"adjudicatedTotal": 99.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_07cadf98e32ad833016aefd9d8e1e487d098fe3a5fd2dc7c24",
+			"bundleDigest": null
+		},
+		{
+			"taskId": "jitter-tests",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/deterministic-retry-jitter/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_00cfc11e96e0ab7c016aefd9da6dec87d0839a464844ae179c",
+			"bundleDigest": "7f3418bb2f15ff0c5c507c99c9ceab392eac0a3a192ad34af0aa5cbefb12b3d0"
+		},
+		{
+			"taskId": "cache-disable",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/recover-isolate-config-cache/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_068b50902ec581c2016aefd9dd522487d0b335f034eabeefc5",
+			"bundleDigest": "a346024ccf320de5c337622caaa86441208218cfb3d7e1fba5d111a2a79384a3"
+		},
+		{
+			"taskId": "rename-scope",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/module-fix-scope-gate/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_033aea026fac0e31016aefd9df44cc87d0a6cbbf18996c7a13",
+			"bundleDigest": "d4de052d007b07a64e312c1e0d7f89108ccf28afca020cf8d328aa3b578b9598"
+		},
+		{
+			"taskId": "queue-migration",
+			"status": "partial-envelope-body-only",
+			"artifactPath": "graded-skills/2026-11-08/partial-bodies/queue-migration.json",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_0c544ba091b63e4a016aefd9e1639c87d08765933a92fda14e",
+			"bundleDigest": null
+		},
+		{
+			"taskId": "safe-diagnostics",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/secret-safe-diagnostic-plan/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_050a2ab22e3d8661016aefd9e60be887d0b2b6a850ae5cc457",
+			"bundleDigest": "739808b099fb5add31ff4800798873b1c46addd8daec9499a406ea71a47afe0d"
+		},
+		{
+			"taskId": "retry-control",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/queue-retry-policy/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"modelTotal": 98,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_09ddadd704a369bb016aefd9e5ef3487d0b9db939fa43a5408",
+			"bundleDigest": "0ebfdbda6d63ebd503bd89914110f58bb368ca1717b0d41173b067f8bc1a019c"
+		},
+		{
+			"taskId": "workspace-cache",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/workspace-plugin-cache-isolation/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 98.0,
+			"criterionStatus": "met",
+			"gradeReceipt": "resp_0b73d2a3207f7872016aefd9eaa0f887d0b1eeaf8915c8f250",
+			"bundleDigest": "ea8c77a46bbca95e085c9fc4865a4264deee190581616dc776d043783b59695d"
+		},
+		{
+			"taskId": "permission-boundary",
+			"status": "complete-artifact",
+			"artifactPath": "graded-skills/2026-11-08/window-permission-boundary/SKILL.md",
+			"modelScores": {
+				"correctness": 10,
+				"actionability": 10,
+				"coverage": 10,
+				"concision": 9,
+				"format": 10
+			},
+			"modelTotal": 99,
+			"adjudicatedScores": {
+				"correctness": 10,
+				"actionability": 9,
+				"coverage": 8,
+				"concision": 8,
+				"format": 10
+			},
+			"adjudicatedTotal": 91.5,
+			"criterionStatus": "partial",
+			"gradeReceipt": "resp_07c3dd71113c7469016aefd9eb25e887d08c6026f40daae19e",
+			"bundleDigest": "574e076746cd1a33fa2aaed6262641812a3bdda34d3069cd514d38d7e6d4ab57"
+		}
+	],
+	"adjudication": {
+		"reviewer": "Codex: direct reading of all 13 frozen main documents and references, plus the two extracted bodies; not human review",
+		"basis": "saved-skill-grader.v2 weights 35/25/20/10/10. Model scores retained in full. Changes below are explicit evidence-based adjudication, not a replacement model run.",
+		"sharedAdjustment": {
+			"dimension": "concision",
+			"maximum": 8,
+			"scope": "13 complete artifacts only",
+			"reason": "All 13 repeat the planning-only/authority constraint verbatim as completion item 1, after already describing it in purpose or safety. Workflow outcomes are also repeated in completion lists. This is a minor, observable redundancy, matching the rubric's 8-point anchor. Scores already 8 stay unchanged.",
+			"evidenceQuote": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。"
+		},
+		"taskAdjustments": [
+			{
+				"taskId": "sandbox-review",
+				"dimensions": {
+					"actionability": 9,
+					"coverage": 9
+				},
+				"criterionStatus": "partial",
+				"evidenceQuote": "対象版でproductionのtyped confirmationが要求される場合は、接続先と対象を読んでから`APPLY`を入力する。",
+				"reason": "The frozen acceptance criterion requires typed confirmation in production. The document makes that step conditional on the version requiring it, so the required path is not guaranteed. This is a coverage/actionability gap, not proof that QoreDB's API is incorrect.",
+				"improvement": "Treat production confirmation as a gate; if the target version cannot provide the required confirmation, stop and obtain an explicit approved alternative instead of silently proceeding."
+			},
+			{
+				"taskId": "permission-boundary",
+				"dimensions": {
+					"actionability": 9,
+					"coverage": 8
+				},
+				"criterionStatus": "partial",
+				"evidenceQuote": "window別許可集合、外部障害時の拒否、未確認事項ごとの停止位置が必要。",
+				"reason": "Input validation, per-window allow sets and external failures are concrete, but the frozen combined criterion also requires removing unnecessary plugin permissions. Neither the main document nor the reference supplies that inventory/removal procedure or its effective-permission check. An API allow-set example alone does not complete the distribution permission cleanup.",
+				"improvement": "Add the existing permission inventory and minimal-removal workflow, including checks for effective plugin permissions and denial through bypass routes, and connect them to the API-boundary test."
+			}
+		],
+		"judgeDisagreements": [
+			{
+				"taskId": "migration-readonly",
+				"reason": "The judge says today's activity is backup/count checking. The artifact explicitly limits today's activity to producing the document. The supplied planning-only constraint requires that restriction; no penalty is applied and the inaccurate judge explanation is not adopted."
+			},
+			{
+				"taskId": "retry-control",
+				"reason": "The judge suggests recommended initial retry values, but the task supplies no rate limits or SLO. This suggestion is optional; an arbitrary production default is not a confirmed fix. The document already supplies illustrative fixture values and requires environment-specific limits."
+			}
+		],
+		"limits": "No human calibration, hidden final test, production execution, broad API-version verification, or causal comparison of downstream task success. Content scores are not accuracy percentages, delivery success rates, or the project's technical score. Partial envelopes are excluded from the 13-artifact mean and completion count."
+	},
+	"limits": "No human calibration, hidden final test, production execution, broad API-version verification, or causal comparison of downstream task success. Content scores are not accuracy percentages, delivery success rates, or the project's technical score. Partial envelopes are excluded from the 13-artifact mean and completion count."
+}

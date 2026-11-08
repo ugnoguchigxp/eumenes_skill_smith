@@ -1,0 +1,44 @@
+{
+	"status": "partial-envelope-body-only",
+	"document": {
+		"sections": [
+			{
+				"kind": "purpose",
+				"heading": "目的",
+				"body": "nullableな旧IDを持つQueueを、再移行で登録を増やさず、障害時に旧実行系へ戻せるようにする作業計画。今回は文書作成だけを行い、API・実環境・DB・ファイルの操作、コード実行、公開は行わない。"
+			},
+			{
+				"kind": "principles",
+				"heading": "必須原則",
+				"body": "冪等性は安定した論理ジョブ識別と保存先での原子的な一意性の両方で守る。登録の重複防止と副作用の重複防止は別に判定する。旧系を残すだけで復帰可能とはせず、切替後の差分と実行済み状態まで扱う。"
+			},
+			{
+				"kind": "safety",
+				"heading": "実行境界",
+				"body": "将来の接続・変更・停止・復元は、対象と操作ごとの承認を得た実行者だけが行う。資料や発話は権限証明にしない。対象不明なら既存資料の収集に留め、未知の環境へ接続しない。旧コード・旧テーブル・バックアップは復帰可能期間中に削除しない。"
+			},
+			{
+				"kind": "workflow",
+				"heading": "標準ワークフロー",
+				"body": null
+			},
+			{
+				"kind": "completion",
+				"heading": "完成条件",
+				"body": "文書の完成には、キー契約、各段階の開始条件、件数式、切替と復帰の停止位置が揃っていることを要する。実移行の完了は、固定境界の差分ゼロ、再実行の追加ゼロ、smokeの期待値一致、旧系復帰経路の検証記録が揃った場合だけとする。"
+			}
+		],
+		"references": [
+			{
+				"path": "references/key-fixture.md",
+				"title": "キー正規化と競合検出の最小例",
+				"content": "標準Pythonだけを使う未実行の合成例。対象DBのAPIや並行制御を模造せず、キー契約の正負期待値だけを検査する。実運用では本文で確定した型・識別契約へ合わせる。この例ではIDは文字列またはnull、kind/key/versionは非空文字列に限定し、Unicode正規化や空白除去を行わない。\n```python\nimport hashlib\nimport json\n\nFIELDS = ('legacy_target_state_id',\n          'legacy_find_candidate_result_id',\n          'legacy_cover_evidence_result_id',\n          'target_kind', 'target_key', 'distillation_version')\n\ndef canonical(row):\n    values = [row[f] for f in FIELDS]  # 欠損は拒否\n    if any(v is not None and not isinstance(v, str) for v in values[:3]):\n        raise ValueError('ID型違反')\n    if any(not isinstance(v, str) or not v for v in values[3:]):\n        raise ValueError('必須値違反')\n    return json.dumps(['queue-key-v1', values], ensure_ascii=False,\n                      separators=(',', ':'), allow_nan=False)\n\ndef key(row):\n    return hashlib.sha256(canonical(row).encode('utf-8')).hexdigest()\n\nbase = dict(zip(FIELDS, [None, None, None, 'task', 'A', 'v1']))\nreordered = dict(reversed(list(base.items())))\nother = dict(base, target_key='B')\nassert key(base) == key(reordered)\nassert key(base) != key(other)\nassert key(base) != key(dict(base, legacy_target_state_id='null'))\n\n# ローカル辞書は検査用。DBの原子的挿入を保証しない。\nseen = {}\ndef register(row, payload):\n    k, identity = key(row), canonical(row)\n    if k in seen:\n        if seen[k] != (identity, payload):\n            raise ValueError('同一キーの内容競合')\n        return 0\n    seen[k] = (identity, payload)\n    return 1\n\nassert register(base, 'payload-A') == 1\nassert register(reordered, 'payload-A') == 0\nassert register(other, 'payload-B') == 1\nassert len(seen) == 2\ntry:\n    register(base, 'changed')\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('競合を見逃した')\ntry:\n    canonical(dict(base, target_key=None))\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError('不正値を見逃した')\n# 全assert通過で正常終了。これはキー例だけの合格。\n```\n同一複合値を持つ別ジョブを、この関数だけでは識別できない。実データでは元レコードとの対応を別途照合し、意図しない同一化があればキー設計へ戻る。"
+			}
+		],
+		"resourceHeading": "検証用参照",
+		"provisionalNotice": null
+	},
+	"localizedInstructions": "1. **対象と実行条件を確定する。** 将来の実行担当者は、運用台帳・責任者の承認から接続先と操作権限、現行スキーマ・配備設定・対応版の公式資料からDB版、一意制約の意味、トランザクション、Queueの停止・再開・ACK・再配送仕様を特定する。入手できない項目があれば既存記録の収集は続けるが、その項目に依存する接続・変更は開始しない。バッチ上限、許容負荷、smoke観測時間、復帰期限も承認値を記入し、空欄なら変更工程へ進まない。\n\n2. **キー契約を固定する。** 出発案は legacy_target_state_id、legacy_find_candidate_result_id、legacy_cover_evidence_result_id、target_kind、target_key、distillation_version の順序固定の複合値。実スキーマに存在する意味上の対応を定め、null・欠損・文字列・数値、文字エンコーディング、正規化規則、キー形式版を明文化する。nullableな旧IDだけの一意性には依存しない。正規化結果をUTF-8でSHA-256化し、非nullのidempotency_keyとして保存する案を採る。同じジョブは再実行でも同じキー、別ジョブは異なるキーになることを固定した元データと照合する。全旧IDがnullでも他項目で別ジョブを区別できれば許容するが、区別できなければ永続的な元レコード識別子を対応表で付与するなど設計を見直す。実行ごとの乱数・時刻で埋めない。versionの変更を単なる再実行とみなさず、新ジョブ化の可否を決める。\n\n3. **保存時の冪等性を設計・検証する。** 対象版の公式仕様で、非nullキーの一意制約と原子的な競合処理を確認し、既存キーの重複・nullがゼロになる追加移行をレビューする。キーだけでなく正規化元値と移行内容を比較し、同一内容はスキップ、異なる内容はエラー停止とする。並行挿入も一件だけが残ること、途中失敗からの再開で追加・上書き事故がないことを隔離環境で検証する。参照のキー例はこの段階の補助に使うが、DB検証の代用にしない。未検証なら本番書込みを止める。\n\n4. **preflightを行う。** この時点では旧daemonを止めず、旧コード・テーブルを保持する。対象範囲、状態別件数、除外理由、バックアップ識別子を記録し、隔離環境で復元可能性を確かめる。dry-runは固定スナップショットまたは明示した境界で、対象数＝新規予定＋既存同一＋承認済み除外、エラーゼロを要求する。稼働中の件数を後の件数と無条件に比較しない。新schemaの追加は旧系との互換性とロック影響が承認済みの場合だけ行い、不成立なら旧系を稼働させたまま設計へ戻る。\n\n5. **cutover直前に静止境界を作る。** 新workerはまだ起動せず、旧daemonを停止し、再起動抑止と処理中ジョブの終了または回収を確認する。投入元を停止・保留するか、切替後分を確実に追跡する境界を設ける。旧系停止と未確定処理ゼロを観測できなければ書込み移行しない。直前バックアップを取り直し、この境界でdry-runを再作成する。既存バックアップからの差分が未説明ならゲート不合格とする。\n\n6. **分割して書込み移行する。** 安定した順序と再開位置を使い、承認済みの件数・負荷上限内で処理する。バッチごとに新規・既存同一・除外・エラー、コミット済み位置、元レコードと移行先の対応を保存する。進捗と書込みは原子的に扱うか、再処理で安全に回復できる設計を実証する。同一境界のdry-runとwriteの区分別件数が一致し、エラーゼロであることを要求する。同じ範囲を再実行して追加ゼロも確認する。不一致や負荷超過なら次バッチを止め、旧系停止を維持して保全・原因調査または手順8へ進む。\n\n7. **新系へ切り替え、smokeする。** ゲート合格後にだけ投入先を新系へ変更し、新supervisor/workerを限定起動する。旧系は停止したまま保持する。承認済みテストジョブについて、投入・取得・完了・副作用が各期待件数と一致し、再投入と再配送でも追加登録・二重副作用ゼロであることを観測時間内に確認する。登録の一意制約だけでは副作用を保証しないため、実行台帳や副作用先の冪等性も照合する。失敗・タイムアウト・観測不能なら拡大せず手順8へ進む。合格後も段階的に負荷を増やし、遅延・エラーが承認閾値内である場合だけ継続する。\n\n8. **障害時は差分を保全して旧系へ戻す。** まず新規投入を保留し、新workerを停止・フェンスして新旧の同時処理を防ぐ。切替後の受付済み、未処理、処理中、完了済みと副作用を台帳で突き合わせる。未処理は旧形式へ損失なく戻せるものだけ移し、完了済みは旧系で再実行されない状態へ対応付ける。処理中・成否不明は隔離し、解消するまでその範囲を再開しない。新系受付がない場合に限り直前境界への復元だけで足りる可能性があるが、受付がある場合はバックアップの単純復元で差分を捨てない。旧形式への逆変換や副作用の重複抑止が成立しなければ、新旧停止を維持して復旧責任者へ引き継ぐ。成立後に旧系の投入先・実行主体を戻し、未処理欠落と二重副作用ゼロを照合する。\n\n9. **監視を終え、廃止を別承認する。** バックアップ、dry-run/write報告、backfill完了、smokeと復帰試験の記録が揃い、旧参照が履歴用途だけであることを依存箇所の一覧で照合する。復帰期限までは旧資産を保持する。未達なら削除せず計画を見直す。期限後の旧コード・テーブル削除は本切替とは別の承認付き作業とする。",
+	"rawResponseId": "resp_0f3c8b2c7bb7cfef016aefcbcadd0487d0bd15ffca2ac72a2e",
+	"limitation": "Outer JSON and final metadata are truncated; grade only the complete body and references, never treat this as a published/validated SkillArtifact."
+}

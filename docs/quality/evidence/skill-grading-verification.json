@@ -1,0 +1,33 @@
+{
+	"fixedVerification": {
+		"passed": 532,
+		"failed": 0,
+		"core": 359,
+		"examples": 173,
+		"typedFiles": 154,
+		"checks": [
+			"typecheck",
+			"lint",
+			"format",
+			"core tests",
+			"example tests",
+			"build",
+			"pack"
+		]
+	},
+	"integration": {
+		"gradedFrozenInputs": 15,
+		"validEvidenceAndCriteriaIds": 15,
+		"calibrationFixtures": 2,
+		"successfulIsolatedCodeExamplesFromPriorSelectedRun": 13,
+		"offlineFreshDirectoryReportsMatched": 4
+	},
+	"platform": "macOS native; no runtime production code changed in this grading task; prior selected runtime snapshot separately verified on Linux",
+	"sourceHashes": {
+		"examples/contextstill/grade-saved-skills.ts": "c5a1a3b3a4911573897fbe68d4f0f78f05ad574f764b09566e846ca76b840f72",
+		"examples/contextstill/test/grade-saved-skills.test.ts": "b0a7b725af27e4ad72213754cbcd800b299d70eacdbb3b139ddb08eb50d0f8bd",
+		"docs/quality/evidence/measure-generation.py": "ef5358a9e6fd3839f2d3fef68eb9c3cbdb9ed63a8fd41df8b067cb75eab447a2",
+		"docs/quality/evidence/summarize-skill-grades.py": "1084a0085344ea1dbd9163ca8f8470c9f8c3d0f680c5795dc0c7fca34cc05b10"
+	},
+	"limits": "532 fixed tests validate code contracts, not the accuracy of LLM judgments. Scoring calibration covers only two obvious dispatch examples; no human calibration or production success claim."
+}

@@ -1,0 +1,40 @@
+{
+	"reviewer": "Codex: direct reading of all 13 frozen main documents and references, plus the two extracted bodies; not human review",
+	"basis": "saved-skill-grader.v2 weights 35/25/20/10/10. Model scores retained in full. Changes below are explicit evidence-based adjudication, not a replacement model run.",
+	"sharedAdjustment": {
+		"dimension": "concision",
+		"maximum": 8,
+		"scope": "13 complete artifacts only",
+		"reason": "All 13 repeat the planning-only/authority constraint verbatim as completion item 1, after already describing it in purpose or safety. Workflow outcomes are also repeated in completion lists. This is a minor, observable redundancy, matching the rubric's 8-point anchor. Scores already 8 stay unchanged.",
+		"evidenceQuote": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。"
+	},
+	"taskAdjustments": [
+		{
+			"taskId": "sandbox-review",
+			"dimensions": { "actionability": 9, "coverage": 9 },
+			"criterionStatus": "partial",
+			"evidenceQuote": "対象版でproductionのtyped confirmationが要求される場合は、接続先と対象を読んでから`APPLY`を入力する。",
+			"reason": "The frozen acceptance criterion requires typed confirmation in production. The document makes that step conditional on the version requiring it, so the required path is not guaranteed. This is a coverage/actionability gap, not proof that QoreDB's API is incorrect.",
+			"improvement": "Treat production confirmation as a gate; if the target version cannot provide the required confirmation, stop and obtain an explicit approved alternative instead of silently proceeding."
+		},
+		{
+			"taskId": "permission-boundary",
+			"dimensions": { "actionability": 9, "coverage": 8 },
+			"criterionStatus": "partial",
+			"evidenceQuote": "window別許可集合、外部障害時の拒否、未確認事項ごとの停止位置が必要。",
+			"reason": "Input validation, per-window allow sets and external failures are concrete, but the frozen combined criterion also requires removing unnecessary plugin permissions. Neither the main document nor the reference supplies that inventory/removal procedure or its effective-permission check. An API allow-set example alone does not complete the distribution permission cleanup.",
+			"improvement": "Add the existing permission inventory and minimal-removal workflow, including checks for effective plugin permissions and denial through bypass routes, and connect them to the API-boundary test."
+		}
+	],
+	"judgeDisagreements": [
+		{
+			"taskId": "migration-readonly",
+			"reason": "The judge says today's activity is backup/count checking. The artifact explicitly limits today's activity to producing the document. The supplied planning-only constraint requires that restriction; no penalty is applied and the inaccurate judge explanation is not adopted."
+		},
+		{
+			"taskId": "retry-control",
+			"reason": "The judge suggests recommended initial retry values, but the task supplies no rate limits or SLO. This suggestion is optional; an arbitrary production default is not a confirmed fix. The document already supplies illustrative fixture values and requires environment-specific limits."
+		}
+	],
+	"limits": "No human calibration, hidden final test, production execution, broad API-version verification, or causal comparison of downstream task success. Content scores are not accuracy percentages, delivery success rates, or the project's technical score. Partial envelopes are excluded from the 13-artifact mean and completion count."
+}

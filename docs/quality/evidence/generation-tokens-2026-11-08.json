@@ -1,0 +1,6643 @@
+{
+	"definition": "API-reported usage; reasoning is included in output and cached input is included in input. Unknown is not zero. Costs conservatively charge cached input at full rate.",
+	"batches": [
+		{
+			"condition": "practical-planning-final",
+			"physicalCalls": 65,
+			"inputTokens": {
+				"measuredSubtotal": 363361,
+				"unknownCalls": 0
+			},
+			"outputTokens": {
+				"measuredSubtotal": 62093,
+				"unknownCalls": 0
+			},
+			"reasoningTokens": {
+				"measuredSubtotal": 1753,
+				"unknownCalls": 5
+			},
+			"cachedInputTokens": {
+				"measuredSubtotal": 72317,
+				"unknownCalls": 5
+			},
+			"knownCostUsd": 1.3346384,
+			"unsettledReservedUsd": 0,
+			"perTask": [
+				{
+					"taskId": "backup-verify",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23941,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3770,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 130,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5023,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0849376,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001456,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15734,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3326,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 55,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06472800000000001,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7967,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 413,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 75,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020064,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"ed03fe3a-14b7-4352-8102-3ec9af49c1fb",
+						"60328685-3e0b-419c-8635-31a8b43e5b93",
+						"2022dba9-1551-4b95-91f4-9d3ef5628a44",
+						"9e57ce5a-51f6-4b1d-90a9-e1ff4ebd0abb"
+					]
+				},
+				{
+					"taskId": "sandbox-review",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25825,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4090,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 179,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0920296,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 215,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 21,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001196,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16253,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3660,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 106,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.069106,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9357,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 409,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 73,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.022804,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"a0a4e193-6b49-42f2-9558-4fafbb07b38d",
+						"1c973d60-e2b7-485f-84c7-d992005a519a",
+						"7596e36e-6ca3-4b99-bc9f-8d344fb5c16b",
+						"b6c147c0-c7d9-419c-9aec-3eeb4b72dd7e"
+					]
+				},
+				{
+					"taskId": "review-injection",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23164,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3486,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 180,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.080598,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 27,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000134,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15712,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 2966,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 65,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.061084,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7225,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 493,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 115,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01938,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"e84791c3-c209-43a9-a8b9-68dc52c8a16b",
+						"f62b1b75-4eb2-4f3e-9f36-ce36edc2dbcf",
+						"9715e2cd-e513-4ded-bc25-14c2e0bdb35d",
+						"dd07f86d-0cb8-4af2-a4f5-ae700d0b9496"
+					]
+				},
+				{
+					"taskId": "least-permissions",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25023,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4562,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 383,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.095108,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 228,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 23,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000128,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15943,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3881,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 117,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.070696,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8852,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 658,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 266,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.024284,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"c7bfc0bd-34a8-4cc7-8f22-07ac1d35bb61",
+						"b9589684-a0c9-43da-b808-df6466b9a24d",
+						"b754e185-3c1f-4493-b660-5d4d8504b518",
+						"f6622129-67d6-4ee4-850d-03f533fb90f9"
+					]
+				},
+				{
+					"taskId": "cache-ownership",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24106,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3801,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 127,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08564920000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 232,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 24,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013120000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15777,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3338,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 56,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.064934,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8097,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 439,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 71,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020584,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"0b693977-998b-4df2-b007-7a8a642da7ee",
+						"42aee5aa-c95f-4a74-b086-f88037c040f8",
+						"d199f711-25cf-4b8a-b05d-48687d8f09a3",
+						"f1b69e29-2ce0-4c6f-a95d-aefedd995c86"
+					]
+				},
+				{
+					"taskId": "migration-readonly",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 26921,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4235,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 131,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0955828,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 239,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 27,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001388,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16792,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3791,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 73,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.071494,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9890,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 417,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 58,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02395,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"cfaa4cff-f22a-4944-b62d-5f2b31d4aeb8",
+						"55507c0e-d6f9-4d9d-bbed-ac1915ccb875",
+						"f2c8c518-0723-45af-bc48-402d1be8d284",
+						"512a11dd-4da4-4a0a-a370-b416355d8326"
+					]
+				},
+				{
+					"taskId": "permanent-queue",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 17669,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4155,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 1
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0762408,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 247,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014680000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 17422,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4125,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 1
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.076094,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"232f5407-def3-4da0-b82e-7c6fce2d408b",
+						"83b9e12f-399d-4abc-bc2f-74fd57891760",
+						"2b08eeb0-e260-430a-964a-82364ad04e0d"
+					]
+				},
+				{
+					"taskId": "jitter-tests",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24261,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3956,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 176,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0874068,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001508,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15772,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3467,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 72,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.066214,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8256,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 453,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 104,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021042,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"d2a768ad-0942-4a56-8534-329c5bc4f19e",
+						"6730d7f5-157e-4e12-aa24-5ddc02c0c9e0",
+						"67b74427-e581-4ef7-a2ee-41f04369e91a",
+						"8766bf81-eb83-4a76-a767-8576d36cf044"
+					]
+				},
+				{
+					"taskId": "cache-disable",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25326,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4376,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 177,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.093752,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000148,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16019,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3820,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 50,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.070238,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9073,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 522,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 127,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.023366,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"b30ab882-1cf7-4b6a-b882-f0fc9772272a",
+						"9e48e377-d8b6-4062-8983-bf5aedd810e0",
+						"2ea7d47e-3ccc-4cc3-be09-9b0a42f2c300",
+						"93c440bc-5404-4306-be6e-2fbd199798b0"
+					]
+				},
+				{
+					"taskId": "rename-scope",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23788,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3569,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 107,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0826012,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 237,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014920000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16115,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3160,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 58,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06383,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7436,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 375,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 49,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.018622,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"86a496b9-d799-421e-b963-4cd9a7c88ec8",
+						"e02e0359-6748-4808-b68b-67065db8a104",
+						"c558c004-b898-40a4-8bc4-7874fde25da3",
+						"4761a061-d8f6-4b73-ab26-d055eb7ab079"
+					]
+				},
+				{
+					"taskId": "queue-migration",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 16624,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4131,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 1
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0734876,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 249,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 80,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00022760000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16375,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4051,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 1
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.07325999999999999,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"dc00222d-9e27-41d9-b258-8ba3894d3d5a",
+						"79fdd2fa-b623-42c6-ae40-7230e54b9fbc",
+						"c5bec645-a1f0-42d9-ac71-e6ca56f40b23"
+					]
+				},
+				{
+					"taskId": "safe-diagnostics",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 17179,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4150,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 1
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0751492,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 40,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001572,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16946,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4110,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 1
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.074992,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"4fa37a50-9282-476f-a7a7-267d2c62278b",
+						"41087938-f4ef-4492-bbbc-af2475664f54",
+						"2e340cb2-a593-4787-ae10-c1cb657738ee"
+					]
+				},
+				{
+					"taskId": "retry-control",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 17545,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4161,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 1
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0760232,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015120000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 17311,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4125,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 1
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.075872,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"5cfc5bfd-0fd2-4d8d-897d-ff04743cbeb2",
+						"f669f037-6a1f-4ed0-9337-3d205857e890",
+						"380161f7-3de6-4ccb-814b-31e5700f2fd9"
+					]
+				},
+				{
+					"taskId": "workspace-cache",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24213,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3958,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 121,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6276,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08732800000000002,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000152,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15696,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3485,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 43,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5023,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.066242,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8277,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 438,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 78,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1253,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020934,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"f4bb74c7-cdb7-4383-bf67-e47a01711fa9",
+						"060a2f2e-3182-49ed-9a37-0cca88691dff",
+						"2989c111-eefd-44d5-94c7-f55965e12b9e",
+						"9199bdab-8d5a-4bb9-9e29-8e56bedad0bc"
+					]
+				},
+				{
+					"taskId": "permission-boundary",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 17722,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4168,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 1
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.07643280000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 243,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015480000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 17479,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4132,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 1
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.07627800000000001,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"e0dfb9dc-2b7e-4395-bd35-dd6bdcd5a2e1",
+						"e9c32f2e-3f05-4df4-8ba6-ef5975b443f5",
+						"be883e86-c409-4995-8ad2-b22b662660ad"
+					]
+				},
+				{
+					"taskId": "backup-actual",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 5920,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 230,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.013516400000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001404,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 5693,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 199,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013376,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"cf900951-1de9-4d84-955e-26ba509920bb",
+						"95f9e110-46cb-497b-8030-b239c234c63a"
+					]
+				},
+				{
+					"taskId": "unknown-sdk",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 5990,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 364,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0150092,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 27,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001392,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 5750,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 337,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01487,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"ca38c37d-85b8-42b5-ba29-8d5c5ddd3fe4",
+						"27e69c51-9f5c-45e1-b359-2aeea33c7b6d"
+					]
+				},
+				{
+					"taskId": "payment-unknown",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 6103,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 328,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0148416,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001456,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 5863,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 297,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.014696,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"f2787690-6d02-4e9a-b075-5053251673be",
+						"d3a37ae5-7be3-435b-8891-e49a270d03d4"
+					]
+				},
+				{
+					"taskId": "migration-counts",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 6057,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 379,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 42,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.015356,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 22,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00012600000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 5830,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 357,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 42,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01523,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"315453e8-78f0-40a1-afe8-b9c7c8fbc1d9",
+						"264c7e3f-5e71-4266-a24d-4363f7e0a181"
+					]
+				},
+				{
+					"taskId": "private-authority",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 5984,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 224,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0135884,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 235,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001404,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 5749,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 195,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013448,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"df19b59e-2827-4c75-a3f4-57f22153b7a3",
+						"addfd9f5-5c00-43f1-b814-ddcd2f365e1f"
+					]
+				}
+			]
+		},
+		{
+			"condition": "generation-rerun",
+			"physicalCalls": 61,
+			"inputTokens": {
+				"measuredSubtotal": 292912,
+				"unknownCalls": 0
+			},
+			"outputTokens": {
+				"measuredSubtotal": 35974,
+				"unknownCalls": 0
+			},
+			"reasoningTokens": {
+				"measuredSubtotal": 2336,
+				"unknownCalls": 0
+			},
+			"cachedInputTokens": {
+				"measuredSubtotal": 75799,
+				"unknownCalls": 2
+			},
+			"knownCostUsd": 0.9327435999999999,
+			"unsettledReservedUsd": 0,
+			"perTask": [
+				{
+					"taskId": "backup-verify",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 15081,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 476,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 121,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.034328000000000004,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000136,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14841,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 451,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 121,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.034192,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"71f0687c-c3be-4c4e-bdf6-0978fb4ab59a",
+						"f5b1af92-628d-4e89-8a96-f38b62b130cf",
+						"04589a8a-d07f-47b2-af36-d6e0ed443ef4"
+					]
+				},
+				{
+					"taskId": "sandbox-review",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22619,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3970,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 117,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08435880000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 215,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 28,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001308,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14038,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3436,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 64,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.062436000000000005,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8366,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 506,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 53,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021792,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"00998417-47ad-4f5d-8820-f242c24d4d3f",
+						"03056462-d3d8-4d27-80e2-43fa4f01b8cf",
+						"aedd5f8c-8a61-4aa5-bade-a38b626abd7c",
+						"ee3e2119-ffcc-458c-9c98-59af2527e040"
+					]
+				},
+				{
+					"taskId": "review-injection",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 14167,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 470,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 196,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0324524,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 26,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001324,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 13940,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 444,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 196,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.03232,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"ef86f2c9-f307-490b-9021-f97e304c3678",
+						"2624c125-1b31-4bbc-813d-92868ba803bd",
+						"8482fcab-572c-41a7-b667-0b6d97a5d667"
+					]
+				},
+				{
+					"taskId": "least-permissions",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22647,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3644,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 152,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6770,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.081176,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 228,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 23,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000128,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14120,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3218,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 116,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06042,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8299,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 403,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1400,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020628,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"e11732c7-4b9c-47ef-9b66-ecf424bc7654",
+						"b5e0166d-ff48-481f-8eee-fa49fa8ab07e",
+						"b079bed5-74e5-45c4-b666-3bf38ce2088d",
+						"75cbf875-bb57-40a3-aa78-6086f47c69fe"
+					]
+				},
+				{
+					"taskId": "cache-ownership",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 9579,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 316,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 68,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 2162,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0217452,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 232,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 24,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013120000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 9347,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 292,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 68,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 2162,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021614,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"81a9db3d-f9fc-48c6-a538-0f4bec47e749",
+						"e0ff8a74-e4c7-4135-a7a9-c7a92a7a964d",
+						"324759c6-9fd3-4929-82b1-a4f1826bc88a"
+					]
+				},
+				{
+					"taskId": "migration-readonly",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23501,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3625,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 186,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6770,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0826596,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 239,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013560000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14813,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3095,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 104,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.060576000000000005,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8449,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 505,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 82,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1400,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021948,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"a304bf8a-8f35-4493-aa70-0c27812cd0f2",
+						"49a7509e-52fc-4a60-b5c0-8f48430f3718",
+						"7f5757c3-6355-4ce6-88ba-040112c59ccb",
+						"bb15d84d-fd65-4d37-9333-8fda3a5c9f63"
+					]
+				},
+				{
+					"taskId": "permanent-queue",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 15866,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 597,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 109,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0370632,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 247,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001452,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15619,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 568,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 109,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.036918,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"33457d48-09e6-40ce-b8d0-8077e5986b87",
+						"4a002bf4-8f1c-42c2-97df-0da7c4bd0fdf",
+						"e217f685-444a-4ee6-aece-7357ec6c7e64"
+					]
+				},
+				{
+					"taskId": "jitter-tests",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22298,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3727,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 122,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6770,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0811992,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001492,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14063,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3231,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 78,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.060436000000000004,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8002,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 461,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 44,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1400,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020614,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"d4008e88-cd8f-41e7-8efd-0ebc19167d6e",
+						"1574abc2-d1e5-4514-9954-0c21d5b3f8bd",
+						"2c069f94-7a0d-45a5-b8a0-208ddc281836",
+						"4d478c03-04aa-4227-a6c8-171dca505d82"
+					]
+				},
+				{
+					"taskId": "cache-disable",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 14096,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 569,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 224,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0331968,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 37,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001528,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 13862,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 532,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 224,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.033044000000000004,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"6de02f89-f1e0-4061-8432-a0c61bab4d01",
+						"755c0ca1-8220-4982-85ad-2bbd556eb28a",
+						"ec985366-5273-468f-b219-9ec58a67746b"
+					]
+				},
+				{
+					"taskId": "rename-scope",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 21748,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3323,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 178,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6770,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0760696,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 237,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 33,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001476,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14004,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 2842,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 101,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.056428,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7507,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 448,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 77,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1400,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.019494,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"241b4929-0ebc-48f1-ac66-f3fd2e916035",
+						"f762bdf5-d90e-4c3f-92e2-bb5059ab08ee",
+						"d7dac4e3-3433-43a5-a089-0ffaf1f05b63",
+						"1c9b724d-9b32-44d3-a749-a5e9ec8029c6"
+					]
+				},
+				{
+					"taskId": "queue-migration",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 15848,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4149,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 127,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0724264,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 249,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 43,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001684,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15599,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4106,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 127,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.072258,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"7b0903c8-5600-4efa-aaa4-f4e459c33e95",
+						"442bee45-72dc-4a0a-88be-3fce70b0b3fa",
+						"e7100922-af0a-44a9-ae13-cf6fe620d371"
+					]
+				},
+				{
+					"taskId": "safe-diagnostics",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 15730,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 623,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 282,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0368972,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 50,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00017319999999999998,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15497,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 573,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 282,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.036724,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"aec89772-a5e5-4cd1-86fe-1cedef9f35e0",
+						"bd5602b8-1221-4e32-b8db-e201265c4ef6",
+						"f93b9ce4-916d-4456-8ae9-4345d0236161"
+					]
+				},
+				{
+					"taskId": "retry-control",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 15507,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4140,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 90,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0717456,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014960000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15273,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4105,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 90,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.071596,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"c80f790f-b219-459d-bbd9-098e7272c539",
+						"8098c06e-a595-4bf6-815b-2e98a9e7f4da",
+						"2c59de83-7b2d-4212-9631-f73c22be00ed"
+					]
+				},
+				{
+					"taskId": "workspace-cache",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 14270,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 567,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 217,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5370,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.03349,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 40,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00016,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14030,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 527,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 217,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.03333,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"49ade7f5-53e6-46b4-967e-fdd568caaa25",
+						"4f254463-f385-4d56-81a4-2718626d2c5f",
+						"0ed6f4db-40e5-4989-98da-0fee7cb5f0cb"
+					]
+				},
+				{
+					"taskId": "permission-boundary",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25595,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4236,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 75,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 6770,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0928924,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 243,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 32,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001484,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15323,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3777,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 41,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5370,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.068416,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 10029,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 427,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1400,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.024328,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"183c2da3-2f34-489c-a0b8-5602f30fdf56",
+						"63538353-a035-4b20-a4dc-e77b3f00a5f0",
+						"0f4ce71a-efbf-4f38-ab62-8c86aab6d6ca",
+						"30709ee6-0fb5-4b75-8725-9ed8e8c5c035"
+					]
+				},
+				{
+					"taskId": "backup-actual",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4800,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 329,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0122664,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001404,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4573,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 298,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.012126,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"58bf152f-5360-47da-9fd3-413514c01a50",
+						"a7d2fb29-8e60-4e20-9a11-959741235ec2"
+					]
+				},
+				{
+					"taskId": "unknown-sdk",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4894,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 281,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.011962,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000144,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4654,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 251,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.011818,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"00bb5e81-f4e9-4901-b571-142413a30047",
+						"b3497f45-720f-4ac7-beb2-2b11987f093b"
+					]
+				},
+				{
+					"taskId": "payment-unknown",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4930,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 389,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0131392,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 27,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001392,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4690,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 362,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"165c741b-3ea4-470b-b9b8-7921c56fa1e1",
+						"66a8e656-07c0-4747-9410-8c67eb49e49f"
+					]
+				},
+				{
+					"taskId": "migration-counts",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4926,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 286,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 43,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0121136,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 28,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013560000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4699,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 258,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 43,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.011978,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"0a2723ff-becb-4d61-a172-9dd70ee7469f",
+						"1a3e744e-013c-4251-b491-49f21cac6a84"
+					]
+				},
+				{
+					"taskId": "private-authority",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4810,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 257,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 29,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.011562,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 235,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000142,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4575,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01142,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"db801d7c-c49a-42ab-aa97-b53d7b9dd65e",
+						"ca1771c2-e1e2-4cf8-904f-c2c960080763"
+					]
+				}
+			]
+		},
+		{
+			"condition": "generation-scoped",
+			"physicalCalls": 68,
+			"inputTokens": {
+				"measuredSubtotal": 370793,
+				"unknownCalls": 0
+			},
+			"outputTokens": {
+				"measuredSubtotal": 61537,
+				"unknownCalls": 0
+			},
+			"reasoningTokens": {
+				"measuredSubtotal": 2094,
+				"unknownCalls": 0
+			},
+			"cachedInputTokens": {
+				"measuredSubtotal": 101153,
+				"unknownCalls": 2
+			},
+			"knownCostUsd": 1.3441607999999996,
+			"unsettledReservedUsd": 0,
+			"perTask": [
+				{
+					"taskId": "backup-verify",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24950,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4121,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 182,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0904404,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001504,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15279,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3644,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 89,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.066998,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9431,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 443,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 93,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.023292,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"919ff4d0-9faf-4bfb-bba0-240327386882",
+						"502c597a-ade0-4e4a-b7df-1ab6197b62a7",
+						"19443592-e8c6-4fcd-9f62-5db729384a5a",
+						"b3815d79-3073-4895-93ea-a3075baff395"
+					]
+				},
+				{
+					"taskId": "sandbox-review",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23305,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3897,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 174,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0850428,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 215,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 23,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001228,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14520,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3452,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 116,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06356,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8570,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 422,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 58,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02136,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"9c927565-fdaa-427d-9253-864cc2c83745",
+						"10ab701c-05ef-428f-bc05-f2daa2643be0",
+						"78a05590-5eaf-41e9-98c0-973cb42e34e1",
+						"4cca940c-e93f-41d7-8f78-0197243a979e"
+					]
+				},
+				{
+					"taskId": "review-injection",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22790,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3720,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 110,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0821984,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 26,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001324,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14446,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3249,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 62,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.061382,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8117,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 445,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 48,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020684,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"ce79443c-6c6a-4119-9f0c-6cda12b6cd7c",
+						"ab689e13-8ae1-4ddd-a8d4-8000772a71dd",
+						"a5b6c173-c583-4c36-8599-000bf76e0a74",
+						"e304ca67-0a96-4ae9-a2e8-16fa0489b27f"
+					]
+				},
+				{
+					"taskId": "least-permissions",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23246,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3879,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 139,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08470720000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 228,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001312,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14482,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3429,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 84,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.063254,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8536,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 425,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 55,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021322,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"c3ea49ca-61f5-4490-a28b-b9ffc7b02c26",
+						"c5d4d35c-15a8-4423-a37f-2b3b64c69395",
+						"78cc214b-0b72-40f8-9f32-982975322cc6",
+						"83ca6102-7028-462e-9ead-8ba03f059f3c"
+					]
+				},
+				{
+					"taskId": "cache-ownership",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23214,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3876,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 122,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08460680000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 232,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001328,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14449,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3442,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 89,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.063318,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8533,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 409,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 33,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021156,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"498eddf3-3291-472b-88d9-4569d205639d",
+						"0a252bb1-9553-4a9c-b47b-6dae49c3cf01",
+						"255a06f5-458a-4f0f-ba77-2b1bc797c38e",
+						"ca9627db-eeb8-471b-bd96-50244faa600c"
+					]
+				},
+				{
+					"taskId": "migration-readonly",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24733,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3994,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 104,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0887632,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 239,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001452,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15299,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3537,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 55,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.065968,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9195,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 426,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 49,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02265,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"831dcdfe-2bb8-41d7-bae4-d8807cd85296",
+						"44b7468d-22a7-451a-93ea-64a8dabf33f6",
+						"ba4b36da-8180-4e8d-a38e-761cd4bd671d",
+						"ec3de03d-45f9-4e92-a49b-cfefaee214bf"
+					]
+				},
+				{
+					"taskId": "permanent-queue",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 18576,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4215,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 100,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0786128,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 247,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015480000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 18329,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4180,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 100,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.078458,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"2c01cc9e-7c4e-4c4b-b780-e597e96ae0d3",
+						"c3c1a837-f5d7-4379-b138-cab92f38d73a",
+						"b772b19a-3736-4f7e-b518-8d515e7c69a4"
+					]
+				},
+				{
+					"taskId": "jitter-tests",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23185,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3879,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 197,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0845016,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001476,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14453,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3384,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 114,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.062746,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8499,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 461,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 83,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021608,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"cb05e250-05c9-48f2-b2a5-2d1b6cd60591",
+						"6674424c-4c7a-48d6-91e8-c5e453bd183d",
+						"81f9410c-a0e5-4c7a-b940-f7e29f6c8b18",
+						"6473ce75-37b7-4ccf-a86d-75917098b51d"
+					]
+				},
+				{
+					"taskId": "cache-disable",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23109,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3921,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 122,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0847512,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015120000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14412,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3461,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 73,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06343399999999999,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8463,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 424,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 49,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021166,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"84f33362-a40d-4120-9703-61ce7ba170db",
+						"63591172-eb60-4c0e-88c0-2f76debf6945",
+						"6453ea44-366f-46a9-8050-fb7cc971fe13",
+						"1ee7db0e-aa39-4202-a9fd-db4a3de98597"
+					]
+				},
+				{
+					"taskId": "rename-scope",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22415,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3585,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 165,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0800152,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 237,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014920000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14318,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3083,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 72,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.059466,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7860,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 468,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 93,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0204,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"049a3332-4cce-41ce-9b4a-8de3dcda933d",
+						"38fbb780-569f-4ce1-979c-6262063c43bc",
+						"546bdfb6-d8ae-4ebf-87fd-98155fc6f214",
+						"dcafab28-0c1d-44ab-bff0-2b0c5f5d062f"
+					]
+				},
+				{
+					"taskId": "queue-migration",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 17298,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4209,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 48,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0759264,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 249,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 43,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001684,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 17049,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4166,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 48,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.075758,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"ba958b7c-3015-4261-ba15-a49112e69a64",
+						"7d6b8d9d-b7ab-4890-bc10-c1d4de429e0a",
+						"0cc31584-2d21-46cf-8b58-0b1728aa1912"
+					]
+				},
+				{
+					"taskId": "safe-diagnostics",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 26300,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4066,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 133,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 11072,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0925764,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 37,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015240000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15967,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3584,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 80,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 9509,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.067774,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 10100,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 445,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 53,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02465,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"a4527493-f315-4771-81fa-ef8a30d27e54",
+						"8a1b75a0-7055-4c12-ae0a-397a9680e848",
+						"5a2c8025-d1db-40b4-b8bf-044a43993ffd",
+						"c8b3d8bc-0c1a-49ca-aa79-612c91b816ab"
+					]
+				},
+				{
+					"taskId": "retry-control",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25738,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4419,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 207,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0950228,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 32,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014480000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15764,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3938,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 80,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.070908,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9740,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 449,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 127,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02397,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"f1c8942c-2c1e-4abf-8c3d-5e20ec9f0077",
+						"2ca2f4fa-ad34-4845-a177-2df6f04899bf",
+						"c0cae993-9db9-4df5-94ae-d28ab7e7dec0",
+						"f5208f38-9c01-4293-9e5f-b1da54252473"
+					]
+				},
+				{
+					"taskId": "workspace-cache",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23858,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4274,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 143,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08976959999999999,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001536,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14480,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3790,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 94,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06686,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9138,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 448,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 49,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.022756,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"8f9a721a-4df0-4fd3-ba60-c981185513a8",
+						"754cab36-c4ee-4828-a6ec-e8a23ac80f74",
+						"982d0e30-2395-4205-af54-8f80fd7a8570",
+						"4558d7fc-41bd-4755-8c5d-0944fbc1efb9"
+					]
+				},
+				{
+					"taskId": "permission-boundary",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23486,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3786,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 81,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7403,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0841576,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 243,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015160000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14464,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3329,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 45,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5840,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.062217999999999996,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8779,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 423,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021788,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"15fe4ad1-eceb-4bfa-8af4-eb20d2e36f1a",
+						"4f9eb968-118f-4441-b4ba-f5f30028c58a",
+						"3f0a2099-2e2e-487b-8a8e-8f7cc06a1910",
+						"db2eba6b-a25b-4d3d-a935-62a9a33845d7"
+					]
+				},
+				{
+					"taskId": "backup-actual",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4966,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 362,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0129032,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001452,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4739,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 328,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.012758,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"91e09393-c3cc-479e-9665-abfe945d9a4a",
+						"def0316b-77d4-4cd8-94e7-e61ae321d2c6"
+					]
+				},
+				{
+					"taskId": "unknown-sdk",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4844,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 419,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 26,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0132756,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 26,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013759999999999998,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4604,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 393,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 26,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013138,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"1adf0781-fc97-430e-99ed-d3c7cc653843",
+						"37cbb56f-9db5-4bb2-8aa5-a7c7701105db"
+					]
+				},
+				{
+					"taskId": "payment-unknown",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 5028,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 344,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0127844,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 39,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001584,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4788,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 305,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.012626,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"5ae841ce-c996-461b-8c46-f85be0677b34",
+						"daf44a0d-33a2-4487-96e0-a6fe86c34339"
+					]
+				},
+				{
+					"taskId": "migration-counts",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4922,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 336,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 41,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.012655999999999999,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 22,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00012600000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4695,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 314,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 41,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01253,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"4ae35170-d72b-4c17-bdd6-a51febb6b260",
+						"ced649da-b761-4d03-a60d-48b20a250e6d"
+					]
+				},
+				{
+					"taskId": "private-authority",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4830,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 235,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0114492,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 235,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 22,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001292,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4595,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 213,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.01132,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"616c81cd-b302-44f4-bd6c-17469309f669",
+						"24842f3f-3b9a-4103-bee7-3af92ed5c1bd"
+					]
+				}
+			]
+		},
+		{
+			"condition": "generation-headroom",
+			"physicalCalls": 68,
+			"inputTokens": {
+				"measuredSubtotal": 371841,
+				"unknownCalls": 0
+			},
+			"outputTokens": {
+				"measuredSubtotal": 55630,
+				"unknownCalls": 0
+			},
+			"reasoningTokens": {
+				"measuredSubtotal": 2781,
+				"unknownCalls": 0
+			},
+			"cachedInputTokens": {
+				"measuredSubtotal": 112011,
+				"unknownCalls": 1
+			},
+			"knownCostUsd": 1.2873127999999994,
+			"unsettledReservedUsd": 0,
+			"perTask": [
+				{
+					"taskId": "backup-verify",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24900,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3312,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 200,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 5993,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.082284,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000144,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 3,
+							"inputTokens": {
+								"measuredSubtotal": 24660,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3282,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 200,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.08214,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"bd248717-dc72-43aa-8f92-6cf673fbcf5e",
+						"ffad508c-4d0b-49f4-b818-b53d91f510d1",
+						"b7438d9e-0c7f-4712-9531-051abf120d00",
+						"ee764c4c-87fe-4b8d-8ad1-653004ccee59"
+					]
+				},
+				{
+					"taskId": "sandbox-review",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 14902,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4073,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 74,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 1
+					},
+					"knownCostUsd": 0.0699968,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 215,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 23,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001228,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14687,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4050,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 74,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 1
+							},
+							"knownCostUsd": 0.069874,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"988d0eff-24b8-4a0c-8dc2-c39f4e7df65c",
+						"c5b16c3b-097c-46a7-918d-da2ccb49e090",
+						"7f3c7a73-8025-4996-9a04-d0c6705d0d6a"
+					]
+				},
+				{
+					"taskId": "review-injection",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22617,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3338,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 215,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0780408,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001308,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14609,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 2908,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 158,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.058297999999999996,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7781,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 405,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 57,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.019612,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"3f431494-c72b-4df8-8530-0cf932b83608",
+						"ceaa2161-c30f-4bf3-a445-c5ebafc251fd",
+						"b3319c06-9e22-4044-8c93-9729c627a5e5",
+						"6aea3365-fb6a-47ec-8a26-550230608343"
+					]
+				},
+				{
+					"taskId": "least-permissions",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23051,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3414,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 141,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.07959160000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 228,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014560000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14649,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 2952,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 76,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.058818,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8174,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 428,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 65,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020628,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"7cb0ed01-dcab-44e8-b732-beff610200a4",
+						"9c468db4-0281-46f1-aaf5-965d2f26a04a",
+						"e2f0bdba-759a-4f7d-be9f-70d7316c67a5",
+						"1d3926fe-81da-48d3-bc6c-31de856a0a75"
+					]
+				},
+				{
+					"taskId": "cache-ownership",
+					"physicalCalls": 3,
+					"inputTokens": {
+						"measuredSubtotal": 9727,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 293,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 36,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 2162,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0218364,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 232,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 21,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001264,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 9495,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 272,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 36,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 2162,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.02171,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"f88d32e8-f933-4282-90cf-3e188bb35e54",
+						"e6dbf798-9473-4395-bf4d-158aaca6c2b7",
+						"729255e3-5ecb-4371-a295-c7bce1f38c48"
+					]
+				},
+				{
+					"taskId": "migration-readonly",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24920,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3811,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 188,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.087282,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 239,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15422,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3313,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 78,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.063974,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9259,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 464,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 110,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.023158,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"3b6b3465-a68d-4072-a25c-39b38c1fb666",
+						"5aa04633-aff4-44e0-a23b-098ad1ff3fcf",
+						"018f9042-1c94-49bd-8707-2450c49bcc8f",
+						"34a79dc2-0f41-4288-bbb5-da8637b6775c"
+					]
+				},
+				{
+					"taskId": "permanent-queue",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 29138,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3931,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 272,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 10905,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.09694720000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 247,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001452,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 3,
+							"inputTokens": {
+								"measuredSubtotal": 28891,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3902,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 272,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 10905,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.096802,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"e87c67f7-cb7d-4fa2-b2a2-11a0aef4c342",
+						"8ddf39b1-0990-480f-8449-37b57b033314",
+						"8cda6ead-4c2c-4e74-84a4-491192571822",
+						"27526595-7143-4e5f-94a2-f008c45d3efc"
+					]
+				},
+				{
+					"taskId": "jitter-tests",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23560,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4046,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 169,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.08694679999999999,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 31,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001428,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14668,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3596,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 115,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06529599999999999,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8659,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 419,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 54,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.021508,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"c1342cd2-9c7a-4078-8f7c-f0b99c7384c2",
+						"db02bea5-7809-4af1-b217-6a47f2375861",
+						"0fa824f6-aa2c-46a0-942d-aabc99bd44b3",
+						"9dfe4d95-009e-400e-8169-deccc77ffcff"
+					]
+				},
+				{
+					"taskId": "cache-disable",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25224,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3505,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 183,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 10905,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0849136,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 25,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013360000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 3,
+							"inputTokens": {
+								"measuredSubtotal": 24990,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3480,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 183,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 10905,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.08478000000000001,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"707b8617-2bab-4a4c-8ad4-d01f4243a06b",
+						"368ef826-67fd-47bb-a56e-94e088ff79a5",
+						"ed529c6f-767d-4dbc-90fa-5e40abe95b24",
+						"7177b639-79df-4533-87e5-f338bb046b1d"
+					]
+				},
+				{
+					"taskId": "rename-scope",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 22405,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3329,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 164,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.07743520000000001,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 237,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014920000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14480,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 2813,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 90,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.05709,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 7688,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 482,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 74,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.020196,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"c6bd2fcb-7009-4ee8-b01d-4e73a955fe8b",
+						"a353eeed-cf25-4142-94c6-1499059f9d9c",
+						"401694fd-64e6-41cc-ab64-ac1813ca5473",
+						"792dc099-ae98-47eb-bbce-b1515e68dd6a"
+					]
+				},
+				{
+					"taskId": "queue-migration",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 26287,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4530,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 170,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.09708919999999999,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 249,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 46,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001732,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 15371,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 4045,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 101,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.07119199999999999,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 10667,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 439,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 69,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.025724,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"afcce0d2-cbfc-4112-8c7f-7e1a8d97c747",
+						"c040cdcc-2d71-4b46-b41c-54fb62ec1927",
+						"f6376364-be8b-40ab-aa68-3a444538203c",
+						"f36e9ddf-aa7c-41e1-a7b4-f85fb3499ce8"
+					]
+				},
+				{
+					"taskId": "safe-diagnostics",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 25918,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4034,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 254,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.091568,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 233,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 28,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000138,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16456,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3589,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 219,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.068802,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9229,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 417,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.022628,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"d53b4bdd-fbc8-4b59-9820-d5c96a90881c",
+						"d0109905-5924-4268-96ea-7770987522e0",
+						"c33e1b8b-0fec-4702-b400-47b78595388d",
+						"3cbb1895-126c-4faf-b8a5-1c2cd2449cb0"
+					]
+				},
+				{
+					"taskId": "retry-control",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 26946,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4385,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 289,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.097124,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 234,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00014,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 16751,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3759,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 160,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.071092,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9961,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 597,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 129,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.025892,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"f101d395-f4ac-4c18-9526-68d2b91003e4",
+						"7851385d-6232-435f-9d94-12f6cce3106b",
+						"3224f5a2-a17a-455a-b60f-74149faeba13",
+						"5fa7f82c-f3ff-4b35-9a19-8e470fe7cb04"
+					]
+				},
+				{
+					"taskId": "workspace-cache",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 24037,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 4024,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 185,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0876024,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 39,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001584,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14695,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3519,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 129,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.06458,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 9102,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 466,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 56,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.022864,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"df04a0d7-ff41-4a88-83e4-39c95af601db",
+						"ba424adf-4efa-4696-b69c-fee59f8f5307",
+						"4062d97f-b7c9-4966-acc8-d8b14c7641cf",
+						"b1e3b00f-674c-43f0-9726-302d23997d0b"
+					]
+				},
+				{
+					"taskId": "permission-boundary",
+					"physicalCalls": 4,
+					"inputTokens": {
+						"measuredSubtotal": 23610,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 3857,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 121,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 7556,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0851156,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 243,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00015160000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 2,
+							"inputTokens": {
+								"measuredSubtotal": 14611,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 3344,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 82,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 5993,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.062662,
+							"unsettledReservedUsd": 0
+						},
+						"semantic-review": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 8756,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 479,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 39,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1563,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.022302,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"9cd621f5-7664-4918-813e-320ad7541ac5",
+						"9b3dc1b3-9000-400b-b6b1-722ed6fd5021",
+						"9d054595-bb55-49e9-8091-95790b8c0a4d",
+						"5b84395b-8d25-4596-9cbc-a35b8580aa34"
+					]
+				},
+				{
+					"taskId": "backup-actual",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4861,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 316,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0122752,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 29,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013720000000000003,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4634,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 287,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.012138,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"d9ce34da-2491-469a-a92c-38d03056b2e9",
+						"582569fe-f5ca-45e6-b82f-62f9b6dbd478"
+					]
+				},
+				{
+					"taskId": "unknown-sdk",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4977,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 390,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 39,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.013218,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000144,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4737,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 360,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 39,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013074,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"0f560a13-fe68-43d7-aacc-d17fbc8add47",
+						"37cbfd16-d5c7-4d60-b11b-42ccd99e0b45"
+					]
+				},
+				{
+					"taskId": "payment-unknown",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 5001,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 444,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 0,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.0137724,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 240,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 34,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.0001504,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4761,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 410,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.013622,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"74c4315a-f948-45cd-a0d5-3575a1ddd375",
+						"7d74f47b-b54c-4ba2-a533-45d9f76989c6"
+					]
+				},
+				{
+					"taskId": "migration-counts",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4931,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 327,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 46,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.012533599999999999,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 227,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 28,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.00013560000000000002,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4704,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 299,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 46,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.012398,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"78249a18-acf8-4174-ac64-a951883af937",
+						"e56fe786-3e49-4ec8-86e7-cb70c11823ff"
+					]
+				},
+				{
+					"taskId": "private-authority",
+					"physicalCalls": 2,
+					"inputTokens": {
+						"measuredSubtotal": 4829,
+						"unknownCalls": 0
+					},
+					"outputTokens": {
+						"measuredSubtotal": 271,
+						"unknownCalls": 0
+					},
+					"reasoningTokens": {
+						"measuredSubtotal": 35,
+						"unknownCalls": 0
+					},
+					"cachedInputTokens": {
+						"measuredSubtotal": 1081,
+						"unknownCalls": 0
+					},
+					"knownCostUsd": 0.01174,
+					"unsettledReservedUsd": 0,
+					"phases": {
+						"query": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 235,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 30,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 0,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.000142,
+							"unsettledReservedUsd": 0
+						},
+						"build-and-disclosure": {
+							"physicalCalls": 1,
+							"inputTokens": {
+								"measuredSubtotal": 4594,
+								"unknownCalls": 0
+							},
+							"outputTokens": {
+								"measuredSubtotal": 241,
+								"unknownCalls": 0
+							},
+							"reasoningTokens": {
+								"measuredSubtotal": 35,
+								"unknownCalls": 0
+							},
+							"cachedInputTokens": {
+								"measuredSubtotal": 1081,
+								"unknownCalls": 0
+							},
+							"knownCostUsd": 0.011598,
+							"unsettledReservedUsd": 0
+						}
+					},
+					"eventIds": [
+						"eab51e09-08ab-4b5a-a1ee-70604fdd38f0",
+						"ec6ca860-b6ab-451b-beab-ce0ee378d791"
+					]
+				}
+			]
+		}
+	],
+	"global": {
+		"physicalCalls": 1384,
+		"inputTokens": {
+			"measuredSubtotal": 3381190,
+			"unknownCalls": 23
+		},
+		"outputTokens": {
+			"measuredSubtotal": 570097,
+			"unknownCalls": 23
+		},
+		"reasoningTokens": {
+			"measuredSubtotal": 8964,
+			"unknownCalls": 54
+		},
+		"cachedInputTokens": {
+			"measuredSubtotal": 373497,
+			"unknownCalls": 59
+		},
+		"knownCostUsd": 8.574732800000003,
+		"unsettledReservedUsd": 4.528887
+	}
+}
