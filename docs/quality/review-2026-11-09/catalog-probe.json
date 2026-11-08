@@ -1,0 +1,20 @@
+{
+	"snapshot": "fc555b4d0f708e57380924b053f84f0140d1efc2",
+	"networkCalls": 0,
+	"paidModelCalls": 0,
+	"fixtureGenerationCalls": 9,
+	"totalActivePublications": 9,
+	"baselineCompatibleCandidates": 1,
+	"defaultCandidateLimit": 8,
+	"defaultCompatibleCandidates": 0,
+	"defaultDecision": {
+		"kind": "miss",
+		"reason": "no_approved_candidate"
+	},
+	"widerCandidateLimit": 20,
+	"widerCompatibleCandidates": 1,
+	"originalStillAvailable": true,
+	"widerRecoversOriginal": true,
+	"condition": "One eligible publication followed by eight active approved publications for different exact environment IDs in the same scope. SQL LIMIT precedes compatibility filtering.",
+	"scope": "Deterministic SQLite/default-store candidate recall. Inference is a fixture, never an applicability-quality benchmark."
+}

@@ -1,0 +1,13 @@
+{
+	"sha256": {
+		"docs/quality/review-2026-11-09/assessment.md": "27058d1c8b46739e96998ac25bdb38ea8fa5efdfb6779866f9f9f82086eb830e",
+		"docs/quality/review-2026-11-09/audit.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+		"docs/quality/review-2026-11-09/catalog-probe.json": "d10e6d8ca871a236685c760d7a4769a4815c32843bd538032127a43ec6963e7d",
+		"docs/quality/review-2026-11-09/catalog-probe.ts": "1368259d6ed0283a92c74d8fe074a12e429f89d17978aa5b752c53157fe9e1f0",
+		"docs/quality/review-2026-11-09/criterion-changes.json": "8b6fb0e835a35f411e2f036401e593f0b99a9daaa48240b284197228f1671cca",
+		"docs/quality/review-2026-11-09/review.json": "be79e730c2cdfed08cb0cc2c6339a81755db45d961a166ec7a0631dacca6cf78",
+		"docs/quality/review-2026-11-09/score-summary.json": "fcfd9a6b3da7422fc301dc314b2b5a0d6034484953f3619d98b2571dbcdcc51c",
+		"docs/quality/review-2026-11-09/verification.json": "c7aea7a621de146b9859e99f4a7bf012b73eab6c35a40ff3a6285c8dec691305",
+		"docs/quality/review-2026-11-09/verify.log": "4fcb2516534503b2be9f65f7d443c77da870e5fe3a2d4f54de9fcf6cb97d3a22"
+	}
+}

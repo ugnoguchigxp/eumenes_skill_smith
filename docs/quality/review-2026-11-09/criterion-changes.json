@@ -1,0 +1,159 @@
+{
+	"sameRubric": "1.1.0",
+	"sameProfile": "library",
+	"sameApplicability": true,
+	"changes": [
+		{
+			"track": "technical",
+			"criterion": "architecture.fit",
+			"before": 1,
+			"after": 2,
+			"rationale": "Approved immutable lookup plus task binding now fits the demonstrated low-wait use case without deleting authority from the cache key. Cold misses and finite catalog recall remain important limits; no exceptional whole-workload fit claimed.",
+			"evidence": ["E21", "E22", "E23", "E25", "E29"]
+		},
+		{
+			"track": "technical",
+			"criterion": "correctness.contracts",
+			"before": 3,
+			"after": 4,
+			"rationale": "Within SDK wire/state contracts, final artifacts and independent audit satisfy their actual byte envelopes; legacy behavior and original rights are preserved. Full frozen bundles, small-public/large-private cases, invalid state/schema and source/epoch races are exercised. This scores observable contracts, not perfect semantic task coverage.",
+			"evidence": ["E21", "E22", "E23", "E24", "E26"]
+		},
+		{
+			"track": "technical",
+			"criterion": "security.access",
+			"before": 3,
+			"after": 4,
+			"rationale": "Origin resource/action identity remains strict while explicit scoped publication permits a new principal-owned binding. Foreign-origin audit, forged selections, epoch/approval/source changes, dependency forget and report execution bindings are checked.",
+			"evidence": ["E10", "E21", "E22", "E24"]
+		},
+		{
+			"track": "technical",
+			"criterion": "reliability.resilience",
+			"before": 1,
+			"after": 3,
+			"rationale": "Single-copy artifact projection resolves the demonstrated ordinary envelope failure; saturation still refuses actual oversized bundles and unavailable/changed sources. Host quotas remain bounded. No dependency-outage/load fleet claim.",
+			"evidence": ["E21", "E23", "E24", "E26"]
+		},
+		{
+			"track": "technical",
+			"criterion": "common_components.duplication",
+			"before": 2,
+			"after": 3,
+			"rationale": "One public packet projection is shared by settle and delivery, with separately authorized audit; the formerly repeated Build/body transport is removed for new consumers. Internal generator/audit representations and compatibility paths still cost maintenance.",
+			"evidence": ["E21", "E26"]
+		},
+		{
+			"track": "technical",
+			"criterion": "common_components.reuse",
+			"before": 3,
+			"after": 4,
+			"rationale": "Existing inference/source/authority/transaction/budget and rendering mechanisms serve approved reuse, task CLI, measured consumer, frozen replay and packaged SDK without a new agent framework.",
+			"evidence": ["E21", "E22", "E23", "E24", "E26"]
+		},
+		{
+			"track": "technical",
+			"criterion": "performance.budget",
+			"before": 0,
+			"after": 1,
+			"rationale": "Compatible approved reuse meets3s in30/30 observations, a real improvement from0/3 fresh requests. A request distribution including unsupported goals still has unproven cold completion and unknown coverage; whole-workload3s is not met.",
+			"evidence": ["E02", "E23", "E25", "E31"]
+		},
+		{
+			"track": "technical",
+			"criterion": "performance.hot_path",
+			"before": 1,
+			"after": 2,
+			"rationale": "The reuse path performs one compact selection and zero body generation; packet size and I/O are bounded. This fits the small demonstrated library. Latest-first candidate cutoff misses an older eligible record; catalog growth and cold generation remain limits.",
+			"evidence": ["E21", "E22", "E23", "E25"]
+		},
+		{
+			"track": "technical",
+			"criterion": "performance.measurement",
+			"before": 2,
+			"after": 3,
+			"rationale": "Frozen suite records60 actual cloud choices, per-call timing/tokens, negative and pending outcomes, source validation and whole delivery. Replay/current-projection and cumulative-budget counterchecks exist. Six repeated scenarios and local source I/O do not establish a production distribution.",
+			"evidence": ["E23", "E24", "E25", "E31"]
+		},
+		{
+			"track": "technical",
+			"criterion": "operability.signals",
+			"before": 2,
+			"after": 3,
+			"rationale": "Public state, audit, selection assessment/receipt, held costs and phase timing expose ordinary delivery and miss outcomes. Saved evidence separates ready, pending and error, including all60 attempts; model attribution errors are retained.",
+			"evidence": ["E21", "E23", "E27", "E31"]
+		},
+		{
+			"track": "technical",
+			"criterion": "operability.interaction",
+			"before": 1,
+			"after": 3,
+			"rationale": "Current public consumers retrieve a usable single bundle without duplicated internal data; compatible selections complete within3s and incompatible requests return an explicit generation path. SDK recovery/access tests hold; actual end-user deployment is unverified.",
+			"evidence": ["E21", "E23", "E24", "E26", "E29"]
+		},
+		{
+			"track": "project",
+			"criterion": "solution.mechanism",
+			"before": 1,
+			"after": 2,
+			"rationale": "Pre-validated immutable Skill selection actually addresses low-wait reuse for registered applicable tasks; arbitrary new generation remains a different uncompleted path.",
+			"evidence": ["E21", "E22", "E23"]
+		},
+		{
+			"track": "project",
+			"criterion": "solution.experience",
+			"before": 1,
+			"after": 2,
+			"rationale": "The target SDK owner has documented approval/selection/binding/delivery interfaces and exercised current consumer/replay paths to complete bundles. Real deployment onboarding/support cost remains unknown under adoption.",
+			"evidence": ["E23", "E24", "E26", "E29"]
+		},
+		{
+			"track": "project",
+			"criterion": "solution.outcomes",
+			"before": 1,
+			"after": 2,
+			"rationale": "Observed useful-artifact completion and latency improve on the registered reuse path and reject unsuitable tasks. This is a prototype outcome, not a causal field-work or task-success advantage.",
+			"evidence": ["E02", "E23", "E27"]
+		},
+		{
+			"track": "project",
+			"criterion": "differentiation.alternatives",
+			"before": 1,
+			"after": 2,
+			"rationale": "Saved Skill retrieval, direct ContextStill retrieval and background stores are credible alternatives. This SDK is now a viable implementation option for explicit version/approval/binding needs, without demonstrated superiority.",
+			"evidence": ["E21", "E22", "E23", "E30"]
+		},
+		{
+			"track": "project",
+			"criterion": "differentiation.tradeoffs",
+			"before": 1,
+			"after": 2,
+			"rationale": "The prototype trades preparation and approval/integration work for measured fast access while preserving source/authority lifecycle. That is a viable internal selection condition; unknown tasks and simple static retrieval may favor alternatives.",
+			"evidence": ["E22", "E23", "E25", "E29", "E30"]
+		},
+		{
+			"track": "project",
+			"criterion": "execution.delivery",
+			"before": 1,
+			"after": 2,
+			"rationale": "Approved reuse, compact delivery, task binding and regression evidence are delivered. Cold3s, real host and sustained outcomes remain uncompleted rather than counted as delivery.",
+			"evidence": ["E21", "E23", "E24", "E29"]
+		},
+		{
+			"track": "project",
+			"criterion": "execution.focus",
+			"before": 2,
+			"after": 3,
+			"rationale": "The revised scope reuses shared mechanisms, caps60 small calls within the existing cumulative15USD budget, preserves unknown costs and freezes conditions. Production dependencies and limits are reported instead of silently dropped.",
+			"evidence": ["E23", "E28", "E29", "E31"]
+		},
+		{
+			"track": "project",
+			"criterion": "execution.feedback",
+			"before": 2,
+			"after": 3,
+			"rationale": "Direct owner feedback about incomplete output, grading, tokens and latency led to measured changes and a changed architecture, with old failures preserved and positive/negative acceptance evidence. Actual field benefits remain unknown.",
+			"evidence": ["E23", "E27", "E28", "E31"]
+		}
+	]
+}

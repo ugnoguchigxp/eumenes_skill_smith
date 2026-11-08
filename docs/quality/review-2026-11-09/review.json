@@ -1,0 +1,1079 @@
+{
+	"rubric_version": "1.1.0",
+	"mode": "full",
+	"depth": "deep",
+	"technical_profile": "library",
+	"assessment_kind": "re-evaluated",
+	"target": {
+		"locator": "/Users/y.noguchi/Code/eumenes_skill_smith",
+		"snapshot": "fc555b4d0f708e57380924b053f84f0140d1efc2",
+		"reviewed_at": "2026-11-09",
+		"stage": "prototype library; approved-reuse path measured; production host integration and field outcomes remain unverified",
+		"scope": "Full/deep; unchanged rubric1.1.0/library weights and applicability compared with d0952b6. Same SDK, SQLite, host contracts, eval, artifact and 2-3s usable-result requirement; arbitrary cold requests remain in scope, not silently excluded. Production application attestation/deployment and sustained field outcomes remain project unknowns, not claims about SDK tests. No CI changes. Read-only review of the immutable product snapshot; reports only are written. Same reviewer performed a separate falsification pass, not an independent human audit."
+	},
+	"evidence": [
+		{
+			"id": "E01",
+			"kind": "code",
+			"locator": "README.md; src/contracts/ports.ts; src/service/index.ts:1-240 @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Same-process injected-port library. Trace: submit authorization/key/cache -> queue -> prepare/reserve -> execute -> settle -> current-source and authorization revalidation -> render and return SkillArtifact. Database transactions and provider authenticity are host contracts.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E02",
+			"kind": "execution",
+			"locator": "docs/quality/evidence/novel-three-results-2026-11-08.json; latency-analysis.json; derive-latency.py",
+			"observed_at": "2026-11-08",
+			"observation": "Frozen real-provider three-task study: mean host completion 58.7437s; body HTTP mean 47.5730s/80.984%; review 7.3128s; query 1.3402s; disclosure 2.4290s. All HTTP phases total 99.849% of wall time. Body mean output 3819.33 tokens. Zero of three ready within 3s. These observations remain failures even if content scores are high.",
+			"scope": "Three single samples; HTTP includes provider compute/queue/network. No TTFT, production load or general model speed claim."
+		},
+		{
+			"id": "E03",
+			"kind": "execution",
+			"locator": "docs/quality/evidence/novel-three-clean-replay.json; novel-three-results-2026-11-08.json; replay-novel-three.mjs",
+			"observed_at": "2026-11-08",
+			"observation": "Offline replay matched all 12 inference identities and all three body bundles. Transport outcomes reproduced: ready 1, unavailable 2. Inner/final byte pairs 23293/34275, 21811/31122, 24134/35558; cap32768. Bodies plus references 10360/8672/10827 bytes. Semantic approval did not prevent final transport failure.",
+			"scope": "Replay is not fresh generation. Original elapsed times retained; no limits changed."
+		},
+		{
+			"id": "E04",
+			"kind": "code",
+			"locator": "src/service/index.ts:508-552; src/service/build.ts:133-167; src/contracts/schema.ts:390-424; src/test/skill-markdown.test.ts @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Final reply embeds complete Build and rendered SkillArtifact. Build already contains assembled body plus canonical decision/document/references. The unchanged final byte guard correctly refuses the redundant envelope. A dedicated final-versus-internal-limit regression test exists.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E05",
+			"kind": "execution",
+			"locator": "probe-cache.mjs; cache-probe.json",
+			"observed_at": "2026-11-08",
+			"observation": "Command bun docs/quality/latency-review-2026-11-08/probe-cache.mjs, exit0, Bun1.4.4/macOS. One frozen AsciiDoc build initialized with 4 offline replay completions. 200 exact-goal cache deliveries after 10 warmups: all ready; added inference0; median1.527ms, p95 2.716ms, max3.887ms. Each does two local fixture source checks. A manually paraphrased goal queues generation.",
+			"scope": "In-memory host SQLite, local public source fixture, fixed clock and one artifact. No paid model or network calls; not an Eumenes/remote p95 SLO."
+		},
+		{
+			"id": "E06",
+			"kind": "code",
+			"locator": "src/service/index.ts:127-210; src/sqlite/index.ts:171-197; src/test/cache-identity.test.ts; examples/contextstill/host.ts:1-100 @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Cache key includes exact task, audience/environment/limits except deadline, authority scope/principal/epoch/sourceRefs and instruction digest. Cache hits check usability and source freshness. Example host creates a new in-memory DB, Registry search returns[], and read throws. Benchmark therefore does not represent a populated official Skill registry. No removal of goal from the key was tested or recommended.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E07",
+			"kind": "code",
+			"locator": "src/instructions/build.ts:18-45; src/contracts/schema.ts:74-266; src/service/build.ts:597-700 @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "The shared presentation instructions require a full task-local document, at least one self-contained code fixture, audit additions and post-generation semantic review. The review sees decision, sources, rendered main and files. The current compact option shares localization/presentation and semantic review, so it does not itself implement a ref-only fast resolver.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E08",
+			"kind": "code",
+			"locator": "examples/contextstill/query-reformulation.ts:17-65,110-150; src/service/evidence-search.ts:75-110; examples/contextstill/source.ts:180-202; src/contracts/limits.ts @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Auto reformulation uses Japanese-script/title checks; all three observed tasks paid an auxiliary query step. Source validate fetches each document serially in the fixture adapter. Delivery validation default timeout is5000ms, exceeding the desired entire3s budget. Timeout maximum alone is not observed latency; query+disclosure+review are still a minority of total wait.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E09",
+			"kind": "primary_doc",
+			"locator": "integration-contract.md:15-54,112-125; README.md:host integration @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "The repository records Registry Skill-only search/current and official publication/forget-journal work as pending integration contracts. No production host latency was established in this review. A new lookup path must reconcile existing public owner-domain APIs rather than assuming access to internal tables.",
+			"scope": "Neighbor Eumenes live state was not re-inspected; dated integration notes are not proof of present backend API absence."
+		},
+		{
+			"id": "E10",
+			"kind": "code",
+			"locator": "src/service/authority.ts; src/test/result-authority.test.ts; src/test/model-markdown.test.ts; src/test/limits.test.ts; examples/contextstill/skill-output.ts @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Action-specific permission, origin principal/scope/epoch and execution bindings are checked. Negative matrix covers6 authority mutations across9 operations without state mutation. Bounded calls/bytes/deadlines, AST markdown checks, path/digest/symlink/hardlink guards and original result rights remain enforced.",
+			"scope": "Core and adapter contracts. No assertion that prompts alone stop all semantic injection or that a real host is already secure."
+		},
+		{
+			"id": "E11",
+			"kind": "code",
+			"locator": "src/service/index.ts:238-420; src/sqlite/index.ts; src/test/crash-recovery.test.ts; src/test/proposal-cancellation.test.ts; src/test/requests.test.ts; src/test/forget.test.ts @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Reserve precedes I/O, CAS/runToken/epoch prevent stale settlement; build and delivery are committed together under the host writer. Crash/restart, replay, held quota, cancellation and dependency-closure revocation are tested. Final delivery refusal preserves the stored approved build instead of pretending success.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E12",
+			"kind": "execution",
+			"locator": "verification.json; verify.log; audit.log",
+			"observed_at": "2026-11-08",
+			"observation": "Isolated detached worktree at exact d0952b661ba8ee0599bf8dc187684235b4381799, real temporary path; installed pinned dependencies reused. Bun1.4.4/macOS arm64: bun run verify exit0, core359+examples173=532 pass; type155; lint/format/build/pack pass. bun audit --json exit0 returned {}. Original target source unchanged.",
+			"scope": "Not a fresh dependency install, production load, hidden-task trial, or a security-absence certificate."
+		},
+		{
+			"id": "E13",
+			"kind": "code",
+			"locator": "scripts/pack.ts; scripts/build.ts; scripts/verify.ts; docs/quality/manual-release.md; package.json; bun.lock; LICENSE; examples/contextstill/seed/manifest.json @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Dependencies are pinned, Zod4.6.6; actual package consumer and source/build/artifact-digest checks run in verification. Core package excludes fixtures and credentials. Local manual release and MIT declarations exist. No CI changes requested; private prototype has no demonstrated actual public release/update operations.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E14",
+			"kind": "execution",
+			"locator": "docs/quality/evidence/novel-three-adjudication.json; skill-grade-adjudication-2026-11-08.json; skill-content-scores-2026-11-08.json",
+			"observed_at": "2026-11-08",
+			"observation": "Independent grading can confuse source text with generated text. New keyboard grade claimed key usage although not present; Codex corrected coverage. Earlier free-quote grades failed evidence contracts11/15, then passage IDs were validated but semantic explanations still required direct review. 96\u201398 body scores do not measure pipeline readiness or downstream success.",
+			"scope": "Actual saved judgments and corrections, not an independent human-calibrated benchmark."
+		},
+		{
+			"id": "E15",
+			"kind": "execution",
+			"locator": "docs/quality/generation-results-2026-11-08.md; generation-comparison.json",
+			"observed_at": "2026-11-08",
+			"observation": "Selected20-task run ready13, needs_input5, output-limit2. A separate shorter-target run ready6 and was rejected. Three novel topics used5 refs with no intersection with prior17 used/reviewed refs, yet delivery ready1/3.",
+			"scope": "Single stochastic development runs; not a causal estimate that brevity caused the decrease or proof of no overfitting."
+		},
+		{
+			"id": "E16",
+			"kind": "primary_doc",
+			"locator": "https://developers.openai.com/api/docs/guides/latency-optimization (fetched2026-11-08)",
+			"observed_at": "2026-11-08",
+			"observation": "Official guidance prioritizes fewer generated tokens and fewer requests; input-token reduction often helps less, and streaming concerns user waiting. This supports the direction of investigation, not a promise of2\u20133s for the actual model.",
+			"scope": "Used general principles only; no new model recommendation, fine-tuning assumption or vendor latency promise."
+		},
+		{
+			"id": "E17",
+			"kind": "primary_doc",
+			"locator": "https://agentskills.io/specification; https://docs.langchain.com/oss/javascript/langgraph/memory (fetched2026-11-08)",
+			"observed_at": "2026-11-08",
+			"observation": "Agent Skills specifies metadata then main instructions then optional resources. LangGraph documentation separates memory creation on the request path from background updates and supports namespaced document storage/retrieval. These are relevant alternatives/patterns; no comparative production benchmark was obtained.",
+			"scope": "Official capability documentation, not evidence of competitors universally lacking authorization/versioning or guaranteeing a specific latency."
+		},
+		{
+			"id": "E18",
+			"kind": "code",
+			"locator": "src/eval/baseline.ts; src/service/assembly.ts; examples/contextstill/practical-eval.ts @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Direct guidance retrieval and current compact assembly are implemented alternatives. Existing180-answer model comparisons have known judge disagreements and development leakage limits; they do not establish a robust superiority claim over direct knowledge use/static skills.",
+			"scope": "Current snapshot unless the locator identifies a separately frozen observation."
+		},
+		{
+			"id": "E19",
+			"kind": "execution",
+			"locator": "User request2026-11-08; docs/quality/evidence/novel-three-results-2026-11-08.json; git history @ d0952b661ba8ee0599bf8dc187684235b4381799",
+			"observed_at": "2026-11-08",
+			"observation": "Owner explicitly requires2\u20133s and considers~59s unacceptable. Repeated requests led to token accounting and new subject/time probes, with published commits and preserved failures. Current cumulative accounted fee13.4743594/15USD includes unknown held4.528887USD; this review made zero new paid inference requests.",
+			"scope": "Direct internal-owner feedback, not market-wide demand, retained adoption or long-term staffing/funding."
+		},
+		{
+			"id": "E20",
+			"kind": "primary_doc",
+			"locator": "https://console.groq.com/docs/models; https://inference-docs.cerebras.ai/dedicated/overview; https://www.cerebras.ai/pricing (opened2026-11-08)",
+			"observed_at": "2026-11-08",
+			"observation": "Groq current official catalog lists GPT-OSS120B at500t/s and20B at1000t/s. Cerebras describes reserved production capacity as an enterprise offering and says performance/availability depend on model/configuration. These are provider statements, not measurements of this workload. A search snippet claiming3000t/s was not present in the fetched current pricing body and was not adopted.",
+			"scope": "Alternative fast inference merits a measured experiment. No account availability, schema compatibility, Japanese quality, TTFT, price guarantee or2\u20133s completion has been established."
+		},
+		{
+			"id": "E21",
+			"kind": "code",
+			"locator": "src/service/index.ts:35-249,490-655; src/contracts/schema.ts; src/service/skill-delivery.ts @ fc555b4",
+			"observed_at": "2026-11-09",
+			"observation": "Traced authenticated submit/key -> approved selection -> per-request owned Build -> public single-copy delivery -> separate bounded audit. Legacy calls retain their own byte checks; opt-in submitArtifact checks rendered packet capacity. Current policy, origin authority, publication and source freshness are checked on final delivery.",
+			"scope": "SDK and host-owned transaction contract; no production wrapper claim."
+		},
+		{
+			"id": "E22",
+			"kind": "code",
+			"locator": "src/service/approved-skills.ts; src/sqlite/approved-skills.ts; src/instructions/selection.ts; src/test/approved-skills.test.ts @ fc555b4",
+			"observed_at": "2026-11-09",
+			"observation": "Immutable publication is bound to host approval, scope and digest. One compact model decision, no new body generation. Private origin authorization stays strict; a different authorized principal gets a new binding. Tests exercise scope/epoch/permission/capability/policy/environment/approval/source/expiry, forged or modified selection, post-inference revocation, audit access and dependency-closure forget.",
+			"scope": "Host approval and authority callbacks are explicit obligations, not unconditional production approvals. Selection is process-local until binding; this limitation is documented."
+		},
+		{
+			"id": "E23",
+			"kind": "execution",
+			"locator": "docs/quality/low-latency-2026-11-08/summary.json; selection-suite.json; evidence.tgz; packet-equivalence.json; verification.json",
+			"observed_at": "2026-11-09",
+			"observation": "Frozen real-cloud selection run at f455f97: 60 requests, 30 compatible ready/30 incompatible pending, all expected choices. Positive median1690.33ms,p95 2504.61ms,max2744.24ms; all30 ready within3s. Final fc555 packet projection matches all30 saved ready packets. Three earlier bodies now deliver unchanged within9809-11765 bytes.",
+			"scope": "Six scenarios repeated10 times against3 development bodies; fixed replay business clock; durable local SQLite, actual cloud inference, local fixture source version I/O. Cold generation, production network, throughput and generalization are not measured; source and snapshot identities remain explicit."
+		},
+		{
+			"id": "E24",
+			"kind": "execution",
+			"locator": "verify.log; audit.json; verification.json in this review directory",
+			"observed_at": "2026-11-09",
+			"observation": "Detached worktree at fc555b4; bun run verify exit0:389 core+174 example=563 pass,164 typed files,lint/format/build/pack/import pass. Fresh bun audit --json exit0 reports{}. Installed pinned dependencies reused through a node_modules symlink.",
+			"scope": "macOS arm64/Bun1.4.4; test preload blocks network/listeners, temp state only; scanner does network metadata read. Not a fresh install, public release, production security certificate or paid new inference. Tracked target sources remain unchanged; node_modules symlink is untracked setup."
+		},
+		{
+			"id": "E25",
+			"kind": "execution",
+			"locator": "catalog-probe.ts; catalog-probe.json; src/sqlite/approved-skills.ts:33-40; src/service/approved-skills.ts:222-226 @ fc555b4",
+			"observed_at": "2026-11-09",
+			"observation": "Deterministic countercheck: one suitable approved Skill, then8 valid publications for different environment IDs in the same scope. Default candidate limit8 yields0 compatible candidates and no_approved_candidate despite the original remaining valid. Increasing only candidate limit to20 recovers that original. SQL LIMIT precedes compatibility filtering.",
+			"scope": "Default SQLite store, total9 active rows, no paid inference/network; host-specific stores may override retrieval. Reproduction tests candidate recall, not semantic model quality."
+		},
+		{
+			"id": "E26",
+			"kind": "code",
+			"locator": "scripts/build.ts; scripts/pack.ts; src/sqlite/index.ts:56-61; src/test/history-lookup.test.ts; examples/contextstill/test/approved-delivery.test.ts; docs/approved-skills.md @ fc555b4",
+			"observed_at": "2026-11-09",
+			"observation": "Current packet projection is shared by settle and delivery. Task CLI and current measurement consumer use runDelivery; historical run remains compatible. Additive migration is repeatable; publication persists across connections; partial reference bundle is refused. Existing package fingerprints and import consumers run successfully.",
+			"scope": "Concrete library consumers and local packaging, not deployed Eumenes lifecycle. No new dependency/framework or CI changes."
+		},
+		{
+			"id": "E27",
+			"kind": "execution",
+			"locator": "docs/quality/low-latency-2026-11-08/summary.json; docs/quality/evidence/novel-three-adjudication.json",
+			"observed_at": "2026-11-09",
+			"observation": "Unchanged body grades98/98/94; keyboard lacks the documented key/keyCode/which condition. Earlier judge semantic misattribution remains a substantiated limitation. Positive/negative ready and timing gates are now separate from body grading.",
+			"scope": "No new content grade or sixty-topic claim. No matched downstream success comparison, independent human calibration or field retention."
+		},
+		{
+			"id": "E28",
+			"kind": "primary_doc",
+			"locator": "Current chat owner requests and responses; docs/quality/latency-review-2026-11-08/assessment-and-plan.md; docs/quality/low-latency-2026-11-08/results.md",
+			"observed_at": "2026-11-09",
+			"observation": "Owner explicitly requested practical tasks, generation scores, full token accounting and2-3s usable delivery. Implemented revisions respond to those requests, preserve failed trials and publish cost/timing/quality separately. Current owner recognizes the progress and requests re-evaluation.",
+			"scope": "Direct internal stakeholder evidence; no broad-market demand, retained adoption, staffing or sustained funding claim."
+		},
+		{
+			"id": "E29",
+			"kind": "primary_doc",
+			"locator": "README.md:host integration; integration-contract.md:3-7; docs/approved-skills.md @ fc555b4",
+			"observed_at": "2026-11-09",
+			"observation": "Actual product host wiring remains incomplete. Fixture source requires stamps absent from production ContextStill. Owner-domain approval, source/current checks, queue and removal need real integration before production claims.",
+			"scope": "Current repository facts; no assumption that neighboring backend APIs are absent today. Neighbor production state not changed or re-inspected for this review."
+		},
+		{
+			"id": "E30",
+			"kind": "primary_doc",
+			"locator": "https://agentskills.io/specification#progressive-disclosure ; https://docs.langchain.com/oss/javascript/concepts/memory#writing-memories ; https://developers.openai.com/api/docs/guides/latency-optimization",
+			"observed_at": "2026-11-09",
+			"observation": "Official sources fetched2026-11-09: Agent Skills separates metadata/instructions/resources; LangGraph documents namespaced long-term stores and hot-path/background memory creation; OpenAI describes reducing generated tokens and requests. These establish existing alternatives and support the design direction.",
+			"scope": "No vendor latency promise, uniqueness claim or matched superiority benchmark. No prices/model migration recommendation derived from these documents."
+		},
+		{
+			"id": "E31",
+			"kind": "execution",
+			"locator": "docs/quality/low-latency-2026-11-08/evidence.tgz; summary.json; docs/quality/review-2026-11-09/verification.json",
+			"observed_at": "2026-11-09",
+			"observation": "Cumulative cap15USD;13.5351762 accounted,9.0062892 known token-price estimate plus4.528887 held unknown reservations across23 prior calls. The60 selection calls report121490 input/7638 output tokens, incremental0.0608168USD. Review itself adds0 paid calls.",
+			"scope": "Historical pricing configuration, not confirmed invoices. Cached and reasoning counts are subsets; no held reservations released. Budget is not evidence of sustained organizational resources."
+		}
+	],
+	"claims": [
+		{
+			"id": "C01",
+			"type": "Fact",
+			"statement": "The normal measured cold path is too slow for the new3s requirement.",
+			"evidence_ids": ["E02", "E19"],
+			"limitations": "Three fresh public-seed planning tasks on the recorded provider path, not a population p95 or an arbitrary-model impossibility proof."
+		},
+		{
+			"id": "C02",
+			"type": "Inference",
+			"statement": "Optimizing local SQL/rendering alone cannot close the gap; even eliminating every non-body stage leaves~47.57s under unchanged observed body generation.",
+			"evidence_ids": ["E02", "E05"],
+			"limitations": "Same recorded model/output/workload; not a universal lower bound for other models."
+		},
+		{
+			"id": "C03",
+			"type": "Assumption",
+			"statement": "Prepared approved Skill selection and authoritative revision checks can be served within3s after real-host integration.",
+			"limitations": "Selection and whole delivery are now measured only for the frozen local-source workload. Real-host source latency, concurrency, semantic reuse coverage and cold novel tasks remain unverified."
+		},
+		{
+			"id": "C04",
+			"type": "Unknown",
+			"statement": "Arbitrary previously unseen detailed Skill generation can finish in3s with the same quality and safety guarantees.",
+			"limitations": "No model/output/TTFT benchmark establishes this; returning pending is not completion."
+		},
+		{
+			"id": "C_REUSE",
+			"type": "Fact",
+			"statement": "The measured approved-reuse path delivers30/30 compatible requests within3s and routes30/30 incompatible requests to pending.",
+			"evidence_ids": ["E23"],
+			"limitations": "Three development bodies and six repeated scenarios, actual cloud but local fixture source I/O; not60 independent topics or cold completion."
+		},
+		{
+			"id": "C_CATALOG",
+			"type": "Fact",
+			"statement": "At nine active records the default newest-first candidate bound can hide a valid compatible publication.",
+			"evidence_ids": ["E25"],
+			"limitations": "Default SQLite adapter only; no semantic inference or production data was needed."
+		},
+		{
+			"id": "C_POSITION",
+			"type": "Inference",
+			"statement": "The project has progressed from a slow document generator to a plausible governed reusable-knowledge supplier, but field usefulness and advantage remain unestablished.",
+			"evidence_ids": ["E21", "E22", "E23", "E29", "E30"],
+			"limitations": "Viability within the SDK prototype scope, not a recommendation of superiority or an adoption forecast."
+		}
+	],
+	"findings": [
+		{
+			"id": "F01",
+			"status": "confirmed",
+			"severity": "High",
+			"priority": "P0",
+			"priority_reason": "Before claiming2\u20133s usable delivery or relying on the affected boundary.",
+			"confidence": "High",
+			"title": "Unsupported requests still lack a proven three-second usable-result path",
+			"root_cause": "Full document and code resources are regenerated inline, followed by semantic review.",
+			"condition": "No applicable approved Skill is visible/available and the request needs a genuinely new detailed body.",
+			"consequence": "The existing cold inline generation/review path remains; historical3 cases averaged58.74s. Fast selection results do not prove the whole request distribution meets3s.",
+			"counterevidence": "Approved reuse now achieves ready30/30,p95 2.50s; an unrelated goal correctly returns pending. Neither new generation nor arbitrary-goal reuse coverage was measured.",
+			"fix": "First measure real task coverage and fix candidate recall; define the intended catalog/rebuild operation. If cold completion also must be3s, separately validate a changed generation/output/inference path with quality gates.",
+			"verification": "Freeze new tasks, measure request-to-usable-ready latency and failures including cache misses, source checks and any selection model.",
+			"evidence_ids": ["E02", "E07", "E16", "E19", "E21", "E23", "E25", "E29"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "architecture",
+					"criterion": "fit",
+					"reason": "The primary architecture does not fit the explicit interactive deadline."
+				},
+				{
+					"track": "technical",
+					"dimension": "performance",
+					"criterion": "budget",
+					"reason": "Necessary latency capability fails in the observed normal workload."
+				}
+			]
+		},
+		{
+			"id": "F02",
+			"status": "withdrawn",
+			"severity": "High",
+			"priority": "P0",
+			"priority_reason": "Before claiming2\u20133s usable delivery or relying on the affected boundary.",
+			"confidence": "High",
+			"title": "Final reply duplication prevents usable delivery",
+			"root_cause": "The transport attaches a whole Build and repeats its rendered main/references in skill.",
+			"condition": "Approved new task body fits independently but the final compound JSON exceeds32768 bytes.",
+			"consequence": "Normal delivery fails2/3 despite correct guard behavior and complete stored bodies.",
+			"counterevidence": "Verified implementation in fc555: compact packet and independent audit, persisted publication and model selection/task binding. Three frozen bundles deliver within the unchanged32KB cap; paraphrase and negative ownership cases pass.",
+			"fix": "Add an explicit small public-delivery contract with artifact identity/bundle and minimal binding; retain internal build/audit via authorized separate lookup and preserve legacy calls.",
+			"verification": "All frozen bodies deliver through the new public path within the unchanged cap; unauthorized/stale/tampered/partial bundles still fail.",
+			"evidence_ids": ["E03", "E04", "E21", "E22", "E23", "E24", "E26"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "reliability",
+					"criterion": "resilience",
+					"reason": "Ordinary output saturation has no usable bounded primary result."
+				},
+				{
+					"track": "technical",
+					"dimension": "operability",
+					"criterion": "interaction",
+					"reason": "High body scores do not complete the primary consumption interaction."
+				}
+			],
+			"resolution": "Resolved within the reviewed SDK scope, not merely planned. Legacy transport remains explicitly compatible; real application integration remains unknown. Catalog cutoff is a separate F06 root cause."
+		},
+		{
+			"id": "F03",
+			"status": "withdrawn",
+			"severity": "Medium",
+			"priority": "P1",
+			"priority_reason": "Before the next low-latency pilot; use the existing shared mechanisms.",
+			"confidence": "High",
+			"title": "Exact task cache is not a reusable published Skill resolver",
+			"root_cause": "Task context is stored with the generated document; cache identity includes literal goal and environment/limits. The demo registry is empty and storage is ephemeral.",
+			"condition": "The caller asks the same job using different wording or starts a new example host.",
+			"consequence": "The existing fast exact-identity path is not reached; an ordinary paraphrase becomes pending generation.",
+			"counterevidence": "Verified implementation in fc555: compact packet and independent audit, persisted publication and model selection/task binding. Three frozen bundles deliver within the unchanged32KB cap; paraphrase and negative ownership cases pass.",
+			"fix": "Keep the exact cache key safe; add stable approved Skill identities with task bindings and LLM applicability selection via existing Registry/authority/source ports.",
+			"verification": "Paraphrases select a suitable approved Skill with provenance and no new document generation; unrelated/scope-incompatible requests do not auto-hit by similarity.",
+			"evidence_ids": ["E05", "E06", "E09", "E21", "E22", "E23", "E24", "E26"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "architecture",
+					"criterion": "fit",
+					"reason": "Cross-request reuse needed for low-latency interaction is not established."
+				}
+			],
+			"resolution": "Resolved within the reviewed SDK scope, not merely planned. Legacy transport remains explicitly compatible; real application integration remains unknown. Catalog cutoff is a separate F06 root cause."
+		},
+		{
+			"id": "F04",
+			"status": "confirmed",
+			"severity": "Medium",
+			"priority": "P1",
+			"priority_reason": "Before the next low-latency pilot; use the existing shared mechanisms.",
+			"confidence": "High",
+			"title": "Content grading is insufficient as the adoption gate",
+			"root_cause": "Model judges can attribute source instructions to generated content and body scores omit delivery/time success.",
+			"condition": "A judge sees source guidance and a superficially complete generated plan.",
+			"consequence": "The keyboard document is graded as explicitly using key although it omits that condition.",
+			"counterevidence": "Hard ready/time/negative gates are now separate and all60 expected decisions match. Exact bodies retain their corrected98/98/94 scores; blinded unseen applicability and task execution remain unverified.",
+			"fix": "Retain source-linked adjudication and add hard ready-within-budget/delivery/negative-boundary gates, with blinded non-development tasks.",
+			"verification": "Unsupported criterion claims are caught, pending/failure never count as fast-ready success, and corrected scores remain distinct from raw judgments.",
+			"evidence_ids": ["E14", "E15", "E23", "E27"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "testing",
+					"criterion": "quality",
+					"reason": "Existing synthetic contract tests are useful, but semantic grade evidence still requires direct validation."
+				}
+			]
+		},
+		{
+			"id": "F05",
+			"status": "confirmed",
+			"severity": "Low",
+			"priority": "P2",
+			"priority_reason": "Before the next low-latency pilot; use the existing shared mechanisms.",
+			"confidence": "High",
+			"title": "Query rewriting remains a separate language-triggered step",
+			"root_cause": "The example auto mode uses script/title heuristics to add another inference before retrieval.",
+			"condition": "A cold search goes through the example auto reformulation adapter; approved reuse does not invoke this step.",
+			"consequence": "About1.34s mean is spent rewriting; disabling it blindly may harm retrieval and still leaves the47.57s body call.",
+			"counterevidence": "No query rewrite appears on the new fast reuse path. The old measured1.34s is historical and only a small fraction of cold generation; no blind disabling is justified.",
+			"fix": "Let the calling LLM supply the authorized public query or pre-index multilingual metadata; validate retrieval quality and avoid keyword-specific routing.",
+			"verification": "Held-out multilingual/paraphrased queries retain retrieval/selection quality; no hidden/internal context is sent to external search.",
+			"evidence_ids": ["E02", "E08", "E21", "E23"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "performance",
+					"criterion": "hot_path",
+					"reason": "A smaller serial stage remains after the primary bottleneck; optimize only with quality evidence."
+				}
+			]
+		},
+		{
+			"id": "F06",
+			"status": "confirmed",
+			"severity": "Medium",
+			"priority": "P1",
+			"priority_reason": "Before growing the approved library or relying on reuse hit rate.",
+			"confidence": "High",
+			"title": "Candidate cutoff can hide an eligible approved Skill",
+			"root_cause": "The default SQLite store limits newest scope rows before the core filters exact environment/policy/capability compatibility; no continuation refills the candidate pool.",
+			"condition": "Nine active approved publications share one scope: one suitable older environment and eight newer different environments, with normal candidates=8.",
+			"consequence": "The suitable saved Skill is invisible and selectSkill returns no_approved_candidate; a caller following the documented fallback needlessly queues slow generation.",
+			"counterevidence": "The Skill remains valid; the same request with candidates=20 recovers it. Explicit host stores can implement better retrieval. No unauthorized or incorrect body was delivered.",
+			"fix": "Pass structural compatibility filters to owner/store retrieval or add bounded paging/refill before applying the final candidate budget. Keep semantic applicability with the LLM and avoid unbounded scans or keyword routing.",
+			"verification": "At default bounded candidate count, both9-row and>20-row mixed-environment/policy libraries find the eligible record; revoked/foreign candidates stay excluded, body reads/model calls remain bounded, and true absence still misses.",
+			"evidence_ids": ["E22", "E25", "E26"],
+			"impacts": [
+				{
+					"track": "technical",
+					"dimension": "architecture",
+					"criterion": "fit",
+					"reason": "Fit to a growing approved corpus remains limited."
+				},
+				{
+					"track": "technical",
+					"dimension": "performance",
+					"criterion": "hot_path",
+					"reason": "Avoidable misses send a reusable task down the expensive path."
+				},
+				{
+					"track": "project",
+					"dimension": "expansion",
+					"criterion": "scalability",
+					"reason": "Broader registration is not currently safe to assume will improve reuse coverage."
+				}
+			]
+		}
+	],
+	"tracks": {
+		"technical": {
+			"dimensions": {
+				"architecture": {
+					"criteria": {
+						"boundaries": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E01", "E10", "E21", "E24"],
+							"rationale": "Core/SQLite/host responsibilities are traceable and separate, verified across unit, consumer and recorded-provider paths.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"flow": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E01", "E11", "E21", "E24"],
+							"rationale": "Writer/CAS/epoch and source/policy revalidation preserve explicit state invariants; crash and cancellation checks counter the normal path.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"fit": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E22", "E23", "E25", "E29"],
+							"rationale": "Approved immutable lookup plus task binding now fits the demonstrated low-wait use case without deleting authority from the cache key. Cold misses and finite catalog recall remain important limits; no exceptional whole-workload fit claimed."
+						}
+					}
+				},
+				"correctness": {
+					"criteria": {
+						"contracts": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E21", "E22", "E23", "E24", "E26"],
+							"rationale": "Within SDK wire/state contracts, final artifacts and independent audit satisfy their actual byte envelopes; legacy behavior and original rights are preserved. Full frozen bundles, small-public/large-private cases, invalid state/schema and source/epoch races are exercised. This scores observable contracts, not perfect semantic task coverage.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible.",
+							"anchor_support": "Final563 gates plus exact12-record/three-bundle replay,30-packet equivalence, retained negative authority matrix, capacity and migration regressions supply boundary/invalid/state support. Body-semantic and production limits are separate and explicit."
+						},
+						"edge_cases": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E10", "E12", "E21", "E24"],
+							"rationale": "Representative access, traversal, schema, revocation and byte boundaries are enforced and negatively tested.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"concurrency": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E11", "E12", "E21", "E24"],
+							"rationale": "Declared host-writer ordering, stale epochs, cancellations and atomic storage hold in the exercised core; no claim about an external queue deployment.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						}
+					}
+				},
+				"security": {
+					"criteria": {
+						"access": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E10", "E21", "E22", "E24"],
+							"rationale": "Origin resource/action identity remains strict while explicit scoped publication permits a new principal-owned binding. Foreign-origin audit, forged selections, epoch/approval/source changes, dependency forget and report execution bindings are checked.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible.",
+							"anchor_support": "Original6x9 access mutation matrix plus new positive cross-principal publication and negative origin/binding/audit/approval lifecycle tests trace SDK boundaries end to end. This is not attestation of the unconnected production wrapper."
+						},
+						"input_secrets": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E10", "E12", "E21", "E24"],
+							"rationale": "Untrusted evidence/data separation, structural markdown and path/digest protections have affirmative tests; no claim that semantic injection is eliminated.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"abuse": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E10", "E11", "E12", "E21", "E24"],
+							"rationale": "Call/byte/deadline quotas, persisted reservations and cancellation controls are enforced before I/O and on return.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						}
+					}
+				},
+				"reliability": {
+					"criteria": {
+						"failure": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E03", "E10", "E11", "E21", "E24"],
+							"rationale": "Failure outcomes are visible and required state survives; byte refusal and quota failures are not converted into success.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"recovery": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E11", "E12", "E21", "E24"],
+							"rationale": "Restart and uncertain worker settlement have concrete crash/replay checks under the documented host transaction contract.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"resilience": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E23", "E24", "E26"],
+							"rationale": "Single-copy artifact projection resolves the demonstrated ordinary envelope failure; saturation still refuses actual oversized bundles and unavailable/changed sources. Host quotas remain bounded. No dependency-outage/load fleet claim.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						}
+					}
+				},
+				"maintainability": {
+					"criteria": {
+						"clarity": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E01", "E07", "E21", "E24"],
+							"rationale": "Principal behavior and contracts can be traced, but large policy-bearing prompts/schema/build flow require multi-module changes; basic maintainability, not sustained excellence."
+						},
+						"change": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E12", "E15", "E21", "E24"],
+							"rationale": "Current shared host/ports and source-identity checks support local changes and reproducible regressions, including three new subjects without product branches.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"debt": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E07", "E08", "E13", "E21", "E24"],
+							"rationale": "Prompt/output layering and auto-reformulation debt are explicit and bounded; sustained maintenance cost and broad integration change history are not established."
+						}
+					}
+				},
+				"common_components": {
+					"criteria": {
+						"duplication": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E26"],
+							"rationale": "One public packet projection is shared by settle and delivery, with separately authorized audit; the formerly repeated Build/body transport is removed for new consumers. Internal generator/audit representations and compatibility paths still cost maintenance.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						},
+						"reuse": {
+							"status": "assessed",
+							"value": 4,
+							"confidence": "High",
+							"evidence_ids": ["E21", "E22", "E23", "E24", "E26"],
+							"rationale": "Existing inference/source/authority/transaction/budget and rendering mechanisms serve approved reuse, task CLI, measured consumer, frozen replay and packaged SDK without a new agent framework.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible.",
+							"anchor_support": "Actual current CLI/measurement and historical replay consumers pass the same projection/bundle contract; the final30 public packets equal the measured packets. Independent file connections, additive migration and packaged import countercheck shared behavior."
+						},
+						"abstraction": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E01", "E13", "E21", "E24"],
+							"rationale": "Injected ports and explicit transaction ownership support the real core/test/packaged consumers without imposing a new agent framework.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						}
+					}
+				},
+				"testing": {
+					"criteria": {
+						"risk_coverage": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "High",
+							"evidence_ids": ["E10", "E11", "E12", "E21", "E24"],
+							"rationale": "Important security, crash, rollback, quota and artifact boundaries are tested; real low-latency/host conditions remain outside coverage.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"quality": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "High",
+							"evidence_ids": ["E12", "E14", "E15", "E21", "E24"],
+							"rationale": "Negative controls and replay meaningfully detect violations, but LLM quality judgments still contain substantiated evidence-attribution mistakes.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"automation": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "High",
+							"evidence_ids": ["E12", "E13", "E21", "E24"],
+							"rationale": "One command reproduces fixed gates; actual CI/release automation is not demonstrated and is not proposed as work in this review."
+						}
+					}
+				},
+				"supply_chain": {
+					"criteria": {
+						"dependencies": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E12", "E13", "E21", "E24"],
+							"rationale": "Exact dependency versions and update/audit evidence exist; current scanner returns no reported advisories.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"build_release": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E12", "E13", "E21", "E24"],
+							"rationale": "Actual local artifacts/consumer checks enforce source and build fingerprints; production publishing/update is not exercised.",
+							"countercheck": "Current source and clean-snapshot fixed gates were checked separately from saved cloud observations. The nine-publication recall counterexample is retained; source fixture latency and SDK checks are not generalized to production authority, load or semantic quality."
+						},
+						"license": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E13", "E21", "E24"],
+							"rationale": "MIT and seed provenance/source omissions are declared with an identifiable manual responsibility boundary; exhaustive third-party rights diligence is not claimed."
+						}
+					}
+				},
+				"performance": {
+					"criteria": {
+						"budget": {
+							"status": "assessed",
+							"value": 1,
+							"confidence": "High",
+							"evidence_ids": ["E02", "E23", "E25", "E31"],
+							"rationale": "Compatible approved reuse meets3s in30/30 observations, a real improvement from0/3 fresh requests. A request distribution including unsupported goals still has unproven cold completion and unknown coverage; whole-workload3s is not met."
+						},
+						"hot_path": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E22", "E23", "E25"],
+							"rationale": "The reuse path performs one compact selection and zero body generation; packet size and I/O are bounded. This fits the small demonstrated library. Latest-first candidate cutoff misses an older eligible record; catalog growth and cold generation remain limits."
+						},
+						"measurement": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "High",
+							"evidence_ids": ["E23", "E24", "E25", "E31"],
+							"rationale": "Frozen suite records60 actual cloud choices, per-call timing/tokens, negative and pending outcomes, source validation and whole delivery. Replay/current-projection and cumulative-budget counterchecks exist. Six repeated scenarios and local source I/O do not establish a production distribution.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						}
+					}
+				},
+				"operability": {
+					"criteria": {
+						"signals": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E23", "E27", "E31"],
+							"rationale": "Public state, audit, selection assessment/receipt, held costs and phase timing expose ordinary delivery and miss outcomes. Saved evidence separates ready, pending and error, including all60 attempts; model attribution errors are retained.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						},
+						"lifecycle": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E09", "E12", "E13", "E21", "E24"],
+							"rationale": "Local SDK/pack/configuration and recovery are reproducible. Live host install/update/operating ownership remains outside this technical scope."
+						},
+						"interaction": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E23", "E24", "E26", "E29"],
+							"rationale": "Current public consumers retrieve a usable single bundle without duplicated internal data; compatible selections complete within3s and incompatible requests return an explicit generation path. SDK recovery/access tests hold; actual end-user deployment is unverified.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						}
+					}
+				}
+			}
+		},
+		"project": {
+			"dimensions": {
+				"problem": {
+					"criteria": {
+						"need": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Specific internal agent/SDK owner and recurring knowledge-to-SKILL task."
+						},
+						"impact": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Current measured wait and undeliverable bundles impose material workflow cost."
+						},
+						"validation": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Direct owner feedback establishes this internal need; no broad market validation."
+						}
+					}
+				},
+				"solution": {
+					"criteria": {
+						"mechanism": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E22", "E23"],
+							"rationale": "Pre-validated immutable Skill selection actually addresses low-wait reuse for registered applicable tasks; arbitrary new generation remains a different uncompleted path."
+						},
+						"experience": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E24", "E26", "E29"],
+							"rationale": "The target SDK owner has documented approval/selection/binding/delivery interfaces and exercised current consumer/replay paths to complete bundles. Real deployment onboarding/support cost remains unknown under adoption."
+						},
+						"outcomes": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E02", "E23", "E27"],
+							"rationale": "Observed useful-artifact completion and latency improve on the registered reuse path and reject unsuitable tasks. This is a prototype outcome, not a causal field-work or task-success advantage."
+						}
+					}
+				},
+				"differentiation": {
+					"criteria": {
+						"alternatives": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E22", "E23", "E30"],
+							"rationale": "Saved Skill retrieval, direct ContextStill retrieval and background stores are credible alternatives. This SDK is now a viable implementation option for explicit version/approval/binding needs, without demonstrated superiority."
+						},
+						"advantage": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No valid matched real-task superiority comparison after accounting for earlier judge disagreements."
+						},
+						"tradeoffs": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E22", "E23", "E25", "E29", "E30"],
+							"rationale": "The prototype trades preparation and approval/integration work for measured fast access while preserving source/authority lifecycle. That is a viable internal selection condition; unknown tasks and simple static retrieval may favor alternatives."
+						}
+					}
+				},
+				"novelty": {
+					"criteria": {
+						"prior_art": {
+							"status": "assessed",
+							"value": 1,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Packaging, retrieval, background compilation and provenance are established patterns; combination alone does not prove substantial novelty."
+						},
+						"substance": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No attributed outcome gain for the specifically novel combination."
+						},
+						"verification": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No independent reproducible advantage comparison for the claimed contribution."
+						}
+					}
+				},
+				"adoption": {
+					"criteria": {
+						"entry": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "Production onboarding/migration/support costs have not been observed."
+						},
+						"reach": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No repeatable user rollout/channel evidence."
+						},
+						"retention": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No sustained use or retained benefit evidence."
+						}
+					}
+				},
+				"defensibility": {
+					"criteria": {
+						"assets": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Reusable tested contracts, version/provenance handling and documented interfaces are maintainable assets."
+						},
+						"substitution": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No evidence of durable benefit against substitution under the actual time requirement."
+						},
+						"incentives": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "One authorized experimental fee cap does not establish sustained incentives/funding."
+						}
+					}
+				},
+				"execution": {
+					"criteria": {
+						"delivery": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": ["E21", "E23", "E24", "E29"],
+							"rationale": "Approved reuse, compact delivery, task binding and regression evidence are delivered. Cold3s, real host and sustained outcomes remain uncompleted rather than counted as delivery."
+						},
+						"focus": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E28", "E29", "E31"],
+							"rationale": "The revised scope reuses shared mechanisms, caps60 small calls within the existing cumulative15USD budget, preserves unknown costs and freezes conditions. Production dependencies and limits are reported instead of silently dropped.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						},
+						"feedback": {
+							"status": "assessed",
+							"value": 3,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E27", "E28", "E31"],
+							"rationale": "Direct owner feedback about incomplete output, grading, tokens and latency led to measured changes and a changed architecture, with old failures preserved and positive/negative acceptance evidence. Actual field benefits remain unknown.",
+							"countercheck": "Positive paths were checked against revoked/foreign/oversized/missing-reference cases and the catalog-growth counterexample; historical cold failures and real-host unknowns remain visible."
+						}
+					}
+				},
+				"timing": {
+					"criteria": {
+						"drivers": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "The internal owner has a current need and documented model/Skill/storage primitives are available."
+						},
+						"readiness": {
+							"status": "assessed",
+							"value": 1,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "The actual formal registry/host boundary remains unconnected in this repository."
+						},
+						"window": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "No credible launch window, staffing or external deadline basis."
+						}
+					}
+				},
+				"health": {
+					"criteria": {
+						"ownership": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Maintained repository, public contracts and owner-directed decisions identify responsibility within the prototype."
+						},
+						"activity": {
+							"status": "assessed",
+							"value": 2,
+							"confidence": "Medium",
+							"evidence_ids": [
+								"E01",
+								"E02",
+								"E03",
+								"E09",
+								"E12",
+								"E17",
+								"E18",
+								"E19"
+							],
+							"rationale": "Actual issue fixes, regression runs and current pinned dependency audit show stage-appropriate maintenance."
+						},
+						"governance": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "Long-term governance and sustained resources are not established."
+						}
+					}
+				},
+				"expansion": {
+					"criteria": {
+						"adjacency": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "New topic generation is not a validated adjacent user benefit."
+						},
+						"scalability": {
+							"status": "assessed",
+							"value": 1,
+							"confidence": "Medium",
+							"evidence_ids": ["E23", "E25", "E29"],
+							"rationale": "Transport failure is fixed, but ordinary9-record multi-environment catalog growth already hides a usable Skill in the default store. Cold miss coverage and production integration cost remain unestablished."
+						},
+						"path": {
+							"status": "unknown",
+							"value": null,
+							"unknown_reason": "A resourced expansion sequence is not approved or demonstrated; the proposed redesign remains a proposal."
+						}
+					}
+				}
+			}
+		}
+	}
+}
