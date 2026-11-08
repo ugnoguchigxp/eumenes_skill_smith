@@ -49,7 +49,9 @@ const suite = z
 		id: z.string().min(1),
 		tasks: z
 			.array(
-				scenarioTaskSchema.pick({ id: true, goal: true, acceptance: true }),
+				scenarioTaskSchema
+					.pick({ id: true, goal: true, acceptance: true })
+					.strip(),
 			)
 			.min(1)
 			.max(32),

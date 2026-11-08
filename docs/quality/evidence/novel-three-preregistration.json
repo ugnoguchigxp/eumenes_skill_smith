@@ -109,11 +109,16 @@
 		"examples/contextstill/recorded.ts": "1aede41aea1a468fd0c03fb7070e01bc88b6c703389459b0d0f0937649f34185",
 		"examples/contextstill/cloud-budget.ts": "dad43d40880d361acced83d94a3c28cd727315fbc2d16d7d9ceb81b39e0a256d",
 		"examples/contextstill/provider-schema.ts": "3656317cc474cafe90e3fa18e19bfea07fbddb2bd89ef74419ca7be46fc3d26b",
-		"examples/contextstill/generate-measured.ts": "b7b01e8fba042e0bb8aff9cceb057b86da42951186c4b60eed00f4ef4ea64b55",
+		"examples/contextstill/generate-measured.ts": "12a72cbce5994be690314827e15177c7ff1719bfbfefda976ab2fd4cbbd1357d",
 		"examples/contextstill/grade-saved-skills.ts": "c5a1a3b3a4911573897fbe68d4f0f78f05ad574f764b09566e846ca76b840f72",
 		"examples/contextstill/seed/knowledge.jsonl.gz": "f9791ff3d5586b284ef1091117f8b798754fa1975d8a7625f4df024789969d25",
 		"docs/quality/novel-three-suite-2026-11-08.json": "81ea165e79ade7a2e6795df80723bc280a48da024e440197e1c1a7e91938339c",
 		"docs/quality/novel-three-protocol-2026-11-08.md": "771645b01ac680c585ecde7ec430644c867f1da2fe5891c168fea3b263166930",
 		"docs/quality/cloud-eval-generation-settings.json": "eea8c866c922c385e5ced39e1d80a1c319ad50a7a56990f02d906b775b26415e"
+	},
+	"instrumentationCorrection": {
+		"beforeAnyModelCall": true,
+		"reason": "The public-view parser inherited strict unknown-key rejection and rejected judge-only metadata. Strip metadata from the public projection; original frozen goals, hidden criteria and product instructions unchanged.",
+		"journalPhysicalCallsAtCorrection": 1384
 	}
 }
