@@ -1,0 +1,69 @@
+{
+	"id": "first-generation-holdout-2026-11-09",
+	"provenance": "Frozen three new tasks and source targets absent from previous generation records. Same public fixture seed. Expected refs and withheld checks are for grading only.",
+	"tasks": [
+		{
+			"id": "websocket-replay-window",
+			"goal": "WebSocketで流す作業の進捗差分について、切断と再接続、同じイベントの再送、順序の逆転、保持期間を超えた差分が起きても、画面の進捗を重複させず復元できる設計・検証計画を書いてください。永続の状態と一時差分の境界、snapshotの取り直し、完了の判定を含めます。ライブラリ・永続ストア・既存APIは未提示です。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の目的と制約を保ち、実施順序と観測可能な合否、停止条件を示す。今回は計画のみとし未提示のAPI・設定や実行成功は断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_2qi7td2wsa3atqqbbbexch2ktq"],
+			"withheldChecks": [
+				{
+					"id": "core-invariants",
+					"text": "ストリームごとの安定したID/順序、重複除外、取り逃した区間と保持切れでの再同期、永続の完了状態を区別している。"
+				},
+				{
+					"id": "verification-boundaries",
+					"text": "スナップショットと再開点の一貫性、再接続時の競合や別ストリーム混入を観測し、ライブラリや実試験の成功を捏造しない。"
+				}
+			]
+		},
+		{
+			"id": "shared-json-contract",
+			"goal": "別プロセス間で受け渡す設定JSONに、TypeScript側の型とZodの実行時検証がずれて、意図しない設定が通る問題があります。共通契約へ移す手順と、正例・欠落・未知キー・境界値・旧バージョンを確認する計画を書いてください。ライブラリの版と実ファイル構成は未提示です。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の目的と制約を保ち、実施順序と観測可能な合否、停止条件を示す。今回は計画のみとし未提示のAPI・設定や実行成功は断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_3x7in2y2g2dpzwiwix5o4jxa5q"],
+			"withheldChecks": [
+				{
+					"id": "core-invariants",
+					"text": "送信側・受信側が共通契約を利用し、静的型と実行時検証の役割、検証前の副作用防止、未知キー・版の方針を区別する。"
+				},
+				{
+					"id": "verification-boundaries",
+					"text": "入力の誤通過と移行時の互換性を正負の例で確認し、未提示版のコマンドや実測値を断定しない。"
+				}
+			]
+		},
+		{
+			"id": "payment-webhook-finality",
+			"goal": "決済の成功画面を開くだけで注文が支払済みになる設計を直す計画を書いてください。決済サービスの通知を検証し、二重・遅延・逆順通知や、受信時の保存失敗を扱い、同じ注文に二度発送指示を出さない条件が必要です。外部決済サービスのSDK版、実際のDBや通知形式は未提示です。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の目的と制約を保ち、実施順序と観測可能な合否、停止条件を示す。今回は計画のみとし未提示のAPI・設定や実行成功は断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_cypqn4ptqjw46ekzkpomz6s6ku"],
+			"withheldChecks": [
+				{
+					"id": "core-invariants",
+					"text": "生の通知を所定の方法で検証し、画面遷移と決済の事実を分ける。注文・金額等の整合、重複と逆順、対象環境の区別を扱う。"
+				},
+				{
+					"id": "verification-boundaries",
+					"text": "保存失敗で通知を受理済みにせず、再送と発送の重複防止を状態更新や永続イベントと結び付け、合成試験と実連携確認を分ける。"
+				}
+			]
+		}
+	]
+}
