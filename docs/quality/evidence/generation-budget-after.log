@@ -1,0 +1,16 @@
+bun test v1.4.4 (38afee6c8)
+
+examples/contextstill/test/generation-budget.test.ts:
+(pass) selected external documents complete all source checks within 12 calls: sandbox-review:normal [711.62ms]
+(pass) selected external documents complete all source checks within 12 calls: sandbox-review:late-card [24.17ms]
+(pass) selected external documents complete all source checks within 12 calls: sandbox-review:version-change [13.13ms]
+(pass) selected external documents complete all source checks within 12 calls: sandbox-review:revoked [18.99ms]
+(pass) selected external documents complete all source checks within 12 calls: migration-readonly:normal [24.50ms]
+(pass) selected external documents complete all source checks within 12 calls: migration-readonly:late-card [23.95ms]
+(pass) selected external documents complete all source checks within 12 calls: migration-readonly:version-change [18.03ms]
+(pass) selected external documents complete all source checks within 12 calls: migration-readonly:revoked [22.31ms]
+
+ 8 pass
+ 0 fail
+ 34 expect() calls
+Ran 8 tests across 1 file. [903.00ms]

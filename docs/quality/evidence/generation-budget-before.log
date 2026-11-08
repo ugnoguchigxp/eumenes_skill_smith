@@ -1,0 +1,42 @@
+bun test v1.4.4 (38afee6c8)
+
+examples/contextstill/test/generation-budget.test.ts:
+71 | 					outputTokens: 4000,
+72 | 				},
+73 | 			);
+74 | 			try {
+75 | 				const result = await host.run();
+76 | 				expect(result.kind).toBe("ready");
+                             ^
+error: expect(received).toBe(expected)
+
+Expected: "ready"
+Received: "unavailable"
+
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/test/generation-budget.test.ts:76:25)
+(fail) selected external documents fit generation and delivery within 12 calls: sandbox-review [704.89ms]
+3 | 	constructor(public readonly code: string) {
+4 | 		super(code);
+5 | 	}
+6 | }
+7 | export function requireThat(ok: unknown, code: string): asserts ok {
+8 | 	if (!ok) throw new SkillSmithError(code);
+                    ^
+error: budget_exceeded
+ code: "budget_exceeded"
+
+      at requireThat (/Users/y.noguchi/Code/eumenes_skill_smith/src/service/identity.ts:8:17)
+      at reserve (/Users/y.noguchi/Code/eumenes_skill_smith/src/service/index.ts:285:3)
+      at transaction (bun:sqlite:447:27)
+      at reserve (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/host.ts:194:6)
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/src/service/build.ts:171:17)
+      at call (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/source.ts:70:18)
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/source.ts:140:10)
+      at <anonymous> (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/source.ts:181:37)
+      at async sourceOperation (/Users/y.noguchi/Code/eumenes_skill_smith/examples/contextstill/source-budget.ts:16:18)
+(fail) selected external documents fit generation and delivery within 12 calls: migration-readonly [25.98ms]
+
+ 0 pass
+ 2 fail
+ 1 expect() calls
+Ran 2 tests across 1 file. [791.00ms]

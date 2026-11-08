@@ -2,6 +2,10 @@
 
 ## 技術品質改善の実装契約 2026-11-08
 
+生成完了率の追加改善では、現行モードのactiveな外部カードは、モデルのdiscloseで要求された時点に本文を取得する。カード全体の順位と選択肢は保持し、取得時にはカードのref・版・scope・取得元との一致を検査する。開示後の本文は同じ生成内で再利用し、採用後と配達直前の外部再確認は省略しない。supersededの後継取得と明示的legacy再生は従来どおり。資料の選択の意味判断はモデルが行う。
+
+生成入力には現行モードだけoutputBudgetとsourceCallsの使用量を追加する。出力内容と最終JSON全体の容量を区別する。指示のdigestが変わるため旧生成・採点の記録を新しい結果として使わない。原因、固定回帰と実LLMの限界は[生成原因の記録](docs/quality/generation-diagnosis.md)を参照。
+
 結果・振り返り・workflow・候補管理は、通常取得と同じ元要求のprincipal/scope/authority epochを照合する。権限は操作別にbuild/report/manageを使い、report-onlyの正当な利用を保つ。AuthorityPortには元要求のsourceRefsに加えbuildRef・executionRef・根拠を渡す。scopeだけの利用記録や空の根拠で実行所有権を省略しない。暗黙の別主体への管理委譲は行わず、ホストが検証済みの元主体として明示的に操作を結び付ける。拒否は書込み前に行う。
 
 SQLiteの履歴参照は既存JSONの識別子をSQLで絞り、選択行だけをschema検証する。0001-initは変更せず追加索引migrationを使う。壊れたJSONの索引キーはNULLとし、無関係な行を解析しない。対象行の破損は従来どおりcorrupt_storageで拒否する。

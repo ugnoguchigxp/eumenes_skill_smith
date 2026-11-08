@@ -14,6 +14,7 @@ import {
 import { resolve, join } from "node:path";
 import {
 	digest,
+	INSTRUCTION_VERSION,
 	requestSchema,
 	type SkillArtifact,
 	type Ports,
@@ -144,6 +145,8 @@ const save = (name: string, value: unknown) => {
 };
 try {
 	const manifest = {
+		instructionVersion: INSTRUCTION_VERSION,
+		generationOnly: process.argv.includes("--generation-only"),
 		suiteDigest: digest(suite),
 		settingsDigest: digest(rawConfig),
 		sourceKind: "public-seed-derived-practical-plan-responses",
@@ -182,6 +185,10 @@ try {
 		[],
 	);
 	const failures = load<Record<string, string>>(join(out, "failures.json"), {});
+	const failedInputs = load<Record<string, InferenceTask>>(
+		join(out, "failed-inputs.json"),
+		{},
+	);
 	let fatal: string | null = null;
 	type Input = Parameters<Ports<unknown>["inference"]["complete"]>[0];
 	const inference = (
@@ -195,7 +202,11 @@ try {
 			providerSettings: {
 				provider: "saved-cloud-responses",
 				model: model.id,
-				generation: { adapter: "strict-schema.v4", sample: purpose },
+				generation: {
+					adapter: "strict-schema.v4",
+					sample: purpose,
+					reasoningEffort: model.reasoningEffort ?? null,
+				},
 			},
 		};
 		const replay = recordedInference(records, onTask, context, options);
@@ -217,6 +228,11 @@ try {
 						data.untrustedJudgeData.data.task.acceptance = task.withheldChecks;
 				}
 				const task = inferenceTask(input, context, options);
+				if (
+					purpose === "quality-judge" &&
+					process.argv.includes("--generation-only")
+				)
+					return replay.complete(input, signal);
 				if (failures[task.inputDigest]) throw Error(failures[task.inputDigest]);
 				if (!records.some((r) => r.inputDigest === task.inputDigest)) {
 					save("pending-input.json", task);
@@ -245,8 +261,10 @@ try {
 								? error.message
 								: "cloud_provider_failure";
 						failures[task.inputDigest] = code;
+						failedInputs[task.inputDigest] = task;
 						if (/^cloud_http_|^cloud_cost_/.test(code)) fatal = code;
 						save("failures.json", failures);
+						save("failed-inputs.json", failedInputs);
 						throw Error(code);
 					}
 					records.push({
@@ -339,8 +357,19 @@ try {
 			),
 		});
 		save("quality.json", { ...quality, identity });
+		save("generation.json", {
+			attempted: suite.tasks.length,
+			outcomes: quality.deliveryOutcomes,
+			errors: quality.statuses.filter((s) => s.status === "error"),
+			ready: quality.deliveryOutcomes.filter((s) => s.kind === "ready").length,
+			qualityGraded: !process.argv.includes("--generation-only"),
+			accountedUsd: budget.spent(),
+		});
 		if (fatal) throw Error(fatal);
-		if (!process.argv.includes("--quality-only")) {
+		if (
+			!process.argv.includes("--quality-only") &&
+			!process.argv.includes("--generation-only")
+		) {
 			const prepared = load<
 				Record<string, { body: string; usedRefs: string[] }>
 			>(join(out, "baseline.json"), {});

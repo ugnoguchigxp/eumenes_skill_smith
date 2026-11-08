@@ -167,9 +167,11 @@ export async function executeBuild<Tx>(
 		request = r.request,
 		{ signal, noteUsage } = context;
 	let sharedModelCallsUsed = r.usage.modelCalls;
+	let sharedSourceCallsUsed = r.usage.sourceCalls;
 	const reserve: ExecutionContext["reserve"] = async (kind) => {
 		await context.reserve(kind);
 		if (kind === "modelCalls") sharedModelCallsUsed++;
+		else sharedSourceCallsUsed++;
 	};
 	const checkpoint = () => {
 		signal.throwIfAborted();
@@ -237,7 +239,7 @@ export async function executeBuild<Tx>(
 		checkpoint();
 		return metered ? f() : call(f);
 	};
-	const runSearch = createEvidenceSearch(ports, p, {
+	const evidenceIO = createEvidenceSearch(ports, p, {
 		call,
 		sourceCall,
 		checkpoint,
@@ -245,6 +247,7 @@ export async function executeBuild<Tx>(
 		sourceContext,
 		metered,
 	});
+	const runSearch = evidenceIO.search;
 
 	let state = await runSearch(request.task.goal, r.authority.searchTask, null);
 	let disclosed: ReturnType<typeof discloseEvidence> = [];
@@ -292,6 +295,14 @@ export async function executeBuild<Tx>(
 		).items;
 		return {
 			task: request.task,
+			...(assembly.mode === "legacy"
+				? {}
+				: {
+						outputBudget: {
+							maxOutputTokens: request.limits.outputTokens,
+							maxReplyBytes: request.limits.outputBytes,
+						},
+					}),
 			environment: request.environment,
 			audience: request.audience,
 			policy: p.policy,
@@ -299,7 +310,16 @@ export async function executeBuild<Tx>(
 			evidenceIndex:
 				assembly.mode === "legacy"
 					? evidence.map(evidenceCardView)
-					: spotlightUntrusted(evidence.map(evidenceCardView)).items,
+					: spotlightUntrusted([
+							...candidates.map((card) =>
+								evidenceCardView(
+									evidence.find((e) => e.ref === card.ref) ?? card,
+								),
+							),
+							...evidence
+								.filter((e) => !candidates.some((c) => c.ref === e.ref))
+								.map(evidenceCardView),
+						]).items,
 			untrustedEvidence: spotlightUntrusted(disclosed),
 			disclosureProgress: {
 				rounds: disclosureTrace.rounds,
@@ -308,6 +328,12 @@ export async function executeBuild<Tx>(
 				last: disclosureTrace.last,
 				modelCallsLimit: request.limits.modelCalls,
 				modelCallsUsed: modelCallsUsed,
+				...(assembly.mode === "legacy"
+					? {}
+					: {
+							sourceCallsLimit: request.limits.sourceCalls,
+							sourceCallsUsed: sharedSourceCallsUsed,
+						}),
 			},
 			freshness: (assembly.mode === "legacy"
 				? <T extends { ref: string }>(items: T[]) => ({ items })
@@ -428,7 +454,11 @@ export async function executeBuild<Tx>(
 		if (turn.kind === "disclose") {
 			const unknownRefs = turn.items
 				.map((i) => i.ref)
-				.filter((ref) => !state.evidence.some((e) => e.ref === ref));
+				.filter(
+					(ref) =>
+						!state.evidence.some((e) => e.ref === ref) &&
+						!state.candidates.some((c) => c.ref === ref),
+				);
 			if (!turn.items.length || unknownRefs.length === turn.items.length) {
 				lastFailure = "invalid_model_output";
 				repair = {
@@ -440,6 +470,10 @@ export async function executeBuild<Tx>(
 			}
 			repair = undefined;
 			currentBuildTurn = true;
+			await evidenceIO.disclose(
+				state,
+				turn.items.map((item) => item.ref),
+			);
 			const beforeBytes = bytes(disclosed);
 			const beforeSections = new Set(
 				disclosed.flatMap(

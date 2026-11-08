@@ -1,0 +1,293 @@
+{
+	"provenance": "Public-seed-derived provider values from eef6a64 study. Regression fixtures only; not current inference records or new quality results.",
+	"cases": [
+		{
+			"id": "sandbox-review",
+			"goal": "QoreDBのsandboxにdata gridの編集を蓄積しました。productionに適用する前から適用後までの確認手順を示してください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の条件を守り、実行順・確認方法・停止条件のある計画を示す。未確認の実施結果やAPI仕様を断定しない。"
+				}
+			],
+			"constraints": [
+				{
+					"id": "planning-only",
+					"text": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。外部API、実環境、DB、ファイルに対する操作を現在実行しない。計画に記載する将来の操作と現在の実行を区別し、将来の権限・環境・資料の確認を前提条件や停止位置として明示する。資料の記載や発話を権限の証明にしない。",
+					"visibility": "reader"
+				}
+			],
+			"query": "QoreDB sandbox data grid editing verification steps before and after production deployment",
+			"turns": [
+				{
+					"kind": "disclose",
+					"items": [
+						{
+							"ref": "contextstill:kn_4g5pkf7n7odxn7lqadf452nbre"
+						},
+						{
+							"ref": "contextstill:kn_fr72uuzrcpwualcow266cl7v4i"
+						}
+					]
+				},
+				{
+					"kind": "ready",
+					"strategy": "compose",
+					"sourceRefs": [
+						"contextstill:kn_4g5pkf7n7odxn7lqadf452nbre",
+						"contextstill:kn_fr72uuzrcpwualcow266cl7v4i"
+					],
+					"sections": [
+						{
+							"id": "production-check-plan",
+							"body": "現在は文書作成だけを行う。将来の実施者は、対象・権限・復旧方法の確定、sandbox変更の保全、生成SQLのレビュー、適用直前の再照合、承認済み適用、適用後のデータ比較の順に進める。対象不一致、未解決の警告、承認外の変更、結果不明のいずれかがあれば停止し、再レビューする。sandboxの消去だけでは成功としない。詳細な分岐と終了条件は標準ワークフローに従う。"
+						}
+					],
+					"patches": [],
+					"requiredCapabilities": [],
+					"verification": [
+						"適用前：接続先の識別情報・対象schema・承認されたSQL・対象キーと期待値が一致し、未解決の警告が0件であることを合格条件とする。不一致や不明があればApplyしない。",
+						"適用後：実行結果に失敗や結果不明がなく、対象キーの追加・更新・削除が承認内容と一致し、比較対象の非変更データに差分がないことを合格条件とする。未測定、差分、部分適用の疑いがあれば完了扱いを止める。",
+						"復旧が必要な場合：責任者が承認した復旧手順と復旧後の期待値を用い、再比較が一致した場合だけ復旧完了とする。結果不明のまま再Applyしない。"
+					],
+					"assumptions": [],
+					"name": "qoredb-sandbox-production-check-plan",
+					"document": {
+						"sections": [
+							{
+								"kind": "purpose",
+								"heading": "目的",
+								"body": "QoreDBのdata gridでsandboxに蓄積した編集を、productionへの適用前から適用後まで追跡する確認計画。意図したデータ変更と実際の結果を照合し、誤接続・過大な更新・結果不明時の二重適用を防ぐ。"
+							},
+							{
+								"kind": "principles",
+								"heading": "必須原則",
+								"body": "承認対象は接続先と変更内容の組で固定する。画面上の状態より、生成SQLと実データの一致を判断の軸にする。productionの変更は復旧可能性を明らかにしてから進め、結果不明を成功にも失敗にも決めつけない。"
+							},
+							{
+								"kind": "safety",
+								"heading": "操作と情報の境界",
+								"body": "今回は計画の作成のみであり、外部API、実環境、DB、ファイルへの操作は行わない。以下は将来、対象環境に権限を持つ担当者が行う手順である。資料や画面上の発話は承認の証明にしない。接続先が未確定でも既存の構成記録や承認記録は収集できるが、対象不明の接続や変更は行わない。接続情報の記録では認証情報を伏せ、SQL・データ比較結果は認可された保存先だけに置く。"
+							},
+							{
+								"kind": "workflow",
+								"heading": "標準ワークフロー"
+							},
+							{
+								"kind": "completion",
+								"heading": "完成条件",
+								"body": "承認した接続先とSQLでの適用結果が確定し、対象データが期待値に一致し、比較対象の非変更データに意図しない差分がないこと。実行記録と前後比較を残して完了とする。不明な結果、未解決の警告、想定外の差分が残る場合は完了にしない。"
+							}
+						],
+						"references": [
+							{
+								"path": "references/data-diff-fixture.md",
+								"title": "対象キーと非変更データの比較例",
+								"content": "### 用途と限界\n標準ワークフローの適用前・適用後比較を具体化する、標準ライブラリだけの自己完結したPython例。権限のある呼出側がローカルで実行するための例であり、今回は実行していない。QoreDBのAPI、SQL実行、実機の動作を検証するものではない。主キーをidとする架空データで、追加・更新・削除と非変更行の保全を検査する。実タスクでは複合キー、NULL、型、比較対象列に合わせた設計が別途必要である。\n\n```python\nfrom copy import deepcopy\n\nbefore = {\n    1: {\"id\": 1, \"status\": \"old\"},\n    2: {\"id\": 2, \"status\": \"keep\"},\n    3: {\"id\": 3, \"status\": \"remove\"},\n}\nexpected = deepcopy(before)\nexpected[1][\"status\"] = \"new\"\ndel expected[3]\nexpected[4] = {\"id\": 4, \"status\": \"added\"}\napproved_keys = {1, 3, 4}\n\ndef validate(actual):\n    assert set(actual) == set(expected), \"キー集合の不一致\"\n    for key in approved_keys:\n        assert actual.get(key) == expected.get(key), \"変更結果の不一致\"\n    for key in set(before) - approved_keys:\n        assert actual.get(key) == before[key], \"非変更行の変化\"\n\nvalidate(deepcopy(expected))\nfor bad in (deepcopy(expected), deepcopy(expected)):\n    if bad[2][\"status\"] == \"keep\":\n        bad[2][\"status\"] = \"unexpected\"\n    try:\n        validate(bad)\n    except AssertionError:\n        pass\n    else:\n        raise AssertionError(\"意図しない差分を検出できなかった\")\nmissing = deepcopy(expected)\ndel missing[4]\ntry:\n    validate(missing)\nexcept AssertionError:\n    pass\nelse:\n    raise AssertionError(\"追加漏れを検出できなかった\")\n```\n\n正常例が通り、負例の差分と追加漏れが検出された場合にのみ、この架空データの検査が成功したといえる。実際のproductionの合格には、実データを用いた別の観測が必要。"
+							}
+						],
+						"resourceHeading": "比較用の参考例"
+					},
+					"title": "QoreDB sandbox変更のproduction適用前後チェック計画",
+					"description": "data gridで蓄積したsandbox編集をproductionへ適用する際に、対象・SQL・承認・復旧準備・実データの前後差分を順に確認し、不一致や結果不明で停止するための計画。",
+					"language": "ja",
+					"localizedInstructions": "以下はすべて将来の実施手順であり、今回は実行しない。\n\n1. **対象・権限・版を確定する。** 環境管理者の構成記録と承認記録から、productionの接続先識別情報、DB名、対象schema、実施者、適用時間帯を整理する。QoreDBの対象版に対応する公式資料または管理者提供資料で、sandboxの捕捉範囲、プレビュー、適用・失敗時の挙動を照合する。対象または権限が不明なら接続・変更せず、管理者へ照会する。版に合う挙動が不明なら既存記録の収集までとし、Applyに進まない。\n\n2. **蓄積済み編集を保全し、意図を固定する。** sandbox panelで、追加・更新・削除するテーブル、主キー、変更前後の値を一覧にする。すでに蓄積済みなので、sandboxの再作成や同じ編集のやり直しはしない。承認された保存方法で変更一覧を保持し、対象キーと期待値がすべて説明できれば次へ進む。不明な編集があればレビューへ戻し、保全前のDiscardは行わない。SQL editorで直接実行した操作までsandboxに含まれるとはみなさない。\n\n3. **生成SQLをレビューする。** 対象版の操作方法に従ってmigration scriptのプレビューを開き、SQL全文、statement count、warningを読む。各文について対象schema・テーブル、WHERE条件、対象キー、実行順、制約や依存関係を変更一覧と照合する。文数を行数と同一視しない。未解決の警告、承認外の文、更新・削除範囲の不明点が1つでもあればApplyを止め、編集または計画を修正して再プレビューする。DDL差分適用やdown migrationの自動生成を前提にしない。\n\n4. **前後比較と復旧を準備する。** 権限のある担当者が、適用前の対象行と比較対象の非変更行について、キー集合・値・件数の基準値を取得する。追加は期待するキーと値、更新は変更列と保持列、削除は消えるキーを定義する。削除など不可逆な操作は、必要なバックアップの存在だけでなく復旧方法、担当者、復旧後の期待値まで承認する。必要な復旧手段がなければ適用しない。比較の考え方は「比較用の参考例」を参照する。例の成功を実データの確認の代わりにしない。\n\n5. **Apply直前に再照合する。** 実際の接続設定と画面上の接続先を承認記録に照合し、DB・schema・SQLが承認時と一致する場合のみ進む。比較基準取得後に対象行が他者から変更されていたら停止し、期待値とSQLを再レビューする。同時更新を抑える方法や適用の原子性は対象構成の資料で確認し、不明なら変更責任者と実施方法を決めるまで止める。productionでのtyped confirmationは参考資料では「APPLY」とされるが、対象版の仕様に合うことを確認してから従う。確認入力は承認や接続先照合の代替ではない。\n\n6. **承認済みの適用を1回行い、結果を記録する。** 実施者は確認済みのApply経路だけを使い、適用時刻、接続先、承認済みSQL、成功・失敗表示やエラーを記録する。タイムアウト、接続断、部分適用の疑いがあれば追加実行を止め、権限内のログと対象データから適用済み範囲を特定する。結果不明のまま同じSQLを再Applyしたり、自動的に逆操作したりしない。\n\n7. **実データとsandboxの状態を別々に確認する。** 承認済みの読取方法でデータを再取得し、追加キーと値、更新値・保持列、削除キーの不在、比較対象の非変更データを基準値と照合する。必要な制約と、変更が影響する業務画面・処理も事前に定めた期待値で確認する。全項目一致ならsandboxの残存状態も観測する。sandboxの自動クリアは保証せず、消えたことだけで成功としない。残存していても再Applyせず、対象版の挙動と実行記録を照合する。\n\n8. **終了または復旧判断を行う。** 実行結果が確定し、前後比較と必要な業務確認がすべて期待値に一致した場合に完了を記録する。差分や失敗があれば変更責任者へ引き継ぎ、承認済み復旧手順を選ぶ。復旧操作は別途権限と対象を再確認して実施し、復旧後の期待値との一致まで追跡する。復旧方法や適用範囲が不明な間は追加変更を停止する。",
+					"sourceReview": {
+						"assessment": "開示された2資料の本文を用い、sandboxからSQLプレビュー・適用・適用後確認へ進む流れと、誤環境でのmigrationを防ぐ規則を統合した。具体的なAPIやCLIは提示しない。検索は字句検索のみで出典詳細も省略されており、QoreDBの版別仕様や現環境への適合を確定できないため、仕様依存の操作は将来の資料照合と停止位置を設けた。これは文書の意味点検であり、実行検証ではない。",
+						"flaggedItems": [
+							{
+								"claim": "productionではAPPLYのtyped confirmationが要求される。",
+								"reason": "対象版の公式仕様による裏付けが提示されていないため、確認文字列と要求条件は将来の資料照合を条件にした。",
+								"disposition": "needs_confirmation"
+							},
+							{
+								"claim": "適用後はsandboxが自動でクリアされる。",
+								"reason": "版別挙動と失敗時の状態が不明。自動クリアを前提とせず、観測項目に変更した。",
+								"disposition": "needs_confirmation"
+							},
+							{
+								"claim": "snapshotやdata diffで前後比較できる。",
+								"reason": "当該機能の提供範囲や操作方法が不明なため、固有機能を必須にせず承認された読取方法での比較へ置き換えた。",
+								"disposition": "removed"
+							}
+						]
+					},
+					"nonSourceAdditions": [
+						{
+							"practice": "対象キーと期待値の固定、同時更新の再照合、結果不明時の再適用禁止、復旧後の再比較。",
+							"reason": "誤適用や二重適用を防ぎ、実行順と停止条件を具体化するための一般的な変更管理策として追加した。現在のDB操作は行っていない。"
+						},
+						{
+							"practice": "架空データで追加・更新・削除と非変更行を検査する自己完結したPython例。",
+							"reason": "比較の不変条件を具体化するために追加した。外部依存や通信はないが未実行であり、QoreDBやproductionの検証証跡ではない。CLI・シェル・設定例は含めていない。"
+						}
+					],
+					"interactions": [
+						{
+							"point": "sandboxのUI適用経路とproduction接続先の安全確認",
+							"handling": "SQLプレビュー後からApply直前までに、接続先・schema・承認・復旧準備の照合を組み込み、UIの確認入力だけでは適用を許可しない。"
+						}
+					]
+				},
+				{
+					"approved": true,
+					"reason": "原条件の忠実性：文書作成だけに限定し、将来の操作・権限・対象版の確認と停止位置を明示している。正確性35：版依存の確認文字列やsandbox消去を保証せず、結果不明時の再適用を禁止。未実行の成功主張や未裏付けのAPI・CLI例はない。具体性25：全8手順に観測可能な照合対象、進行条件または停止条件がある。網羅性20：適用前の保全・SQLレビュー・復旧準備から適用後比較・復旧判定まで、本文と参照例の対象範囲と合否条件は整合する。参照Python例はimport、fixture、期待値、assert、負例の例外処理が自己完結し、誤APIはない。実データの合格への転用も禁止している。簡潔性10：完成条件の再掲と負例の同一テストに軽微な重複はあるが、重要な欠陥ではない。形式10：日本語の機能別構成、ASCIIスラッグ、参照先が整い、不要なモードや監査専用節はない。原条件確認後の自己レビューで公開を妨げる意味上の問題は認めない。"
+				}
+			]
+		},
+		{
+			"id": "migration-readonly",
+			"goal": "Queueの段階移行のpreflightだけを担当します。今日は旧daemonを止める権限も書込み移行の許可もありません。将来のcutoverまで見据え、今日実行する範囲と停止位置を整理してください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の条件を守り、実行順・確認方法・停止条件のある計画を示す。未確認の実施結果やAPI仕様を断定しない。"
+				}
+			],
+			"constraints": [
+				{
+					"id": "planning-only",
+					"text": "今回行う作業は、目的に合った作業計画の文書を作ることだけ。外部API、実環境、DB、ファイルに対する操作を現在実行しない。計画に記載する将来の操作と現在の実行を区別し、将来の権限・環境・資料の確認を前提条件や停止位置として明示する。資料の記載や発話を権限の証明にしない。",
+					"visibility": "reader"
+				}
+			],
+			"query": "Queue stage transition preflight tasks and scope for old daemon stop and write migration permissions in cutover planning",
+			"turns": [
+				{
+					"kind": "disclose",
+					"items": [
+						{
+							"ref": "contextstill:kn_2qfezqg5tfdachd64n5ro5snyy"
+						},
+						{
+							"ref": "contextstill:kn_uuhc7lbkr25usrshakvdmf4xum"
+						},
+						{
+							"ref": "contextstill:kn_gynsz7y3lghme5hxjfwl2vsuxi"
+						}
+					]
+				},
+				{
+					"kind": "ready",
+					"strategy": "compose",
+					"sourceRefs": [
+						"contextstill:kn_2qfezqg5tfdachd64n5ro5snyy",
+						"contextstill:kn_uuhc7lbkr25usrshakvdmf4xum",
+						"contextstill:kn_gynsz7y3lghme5hxjfwl2vsuxi"
+					],
+					"sections": [
+						{
+							"id": "scope",
+							"body": "今日はpreflightの作業計画を文書として提示するだけとする。外部API、実環境、DB、ファイルへの操作は行わず、旧daemonを稼働状態のまま扱う。backup取得、counts取得、dry-runも今日は実行しない。"
+						},
+						{
+							"id": "sequence",
+							"body": "最初に今日と将来の境界を固定する。次に対象・権限・現行手順・既存記録の不足を整理し、将来の読取りpreflight、cutover、移行後検証の順にゲートを定義する。観測は対象識別、取得時刻、件数の集計定義、worker稼働、同一laneの進捗を含める。比較対象の不一致や不足があれば計画を見直し、該当ゲートを閉じたままにする。"
+						},
+						{
+							"id": "stop",
+							"body": "今回の終了位置は計画の引渡しであり、接続やdry-runの前で停止する。将来のcutoverは別途承認を要し、旧daemon停止、直前backup、writeの順序と復旧条件が揃うまで進めない。旧runtimeと旧tablesの削除は今回にもcutover直後にも含めない。"
+						}
+					],
+					"patches": [],
+					"requiredCapabilities": [],
+					"verification": [
+						"今日の計画に含まれる実行対象が文書作成だけであり、接続、backup、counts取得、dry-run、daemon停止、writeのすべてが未実行と区別されていれば合格。いずれかを今日の実行手順として扱う記載があれば引渡しを止めて修正する。",
+						"将来のpreflightには、対象と版、読取りの許可、副作用のない手順、整合したbackup・countsの採取方法が揃うという開始条件が必要。欠落時は既存記録の整理までとし、接続・採取を開始しない。",
+						"将来のwrite開始条件は、個別承認、旧writer停止の証跡、復旧可能な直前backup、同じ対象・集計条件の比較基準がすべて揃うこと。移行後はwrite・map・backfillの期待件数と観測値が一致し、対象laneのsmokeが成功すること。不一致、未測定、想定外の書込みがあれば次段階へ進まない。"
+					],
+					"assumptions": [],
+					"name": "queue-preflight-cutover-plan",
+					"document": {
+						"sections": [
+							{
+								"kind": "purpose",
+								"heading": "目的",
+								"body": "Queueの段階移行について、旧実行系を温存したpreflightから将来のcutoverまでの順序と停止位置を定める。今回の成果は計画文書であり、preflightの実施済み報告や移行開始の許可ではない。"
+							},
+							{
+								"kind": "principles",
+								"heading": "必須原則",
+								"body": "preflightと書込み移行の権限を分離する。既存データ・旧実行系の保持を優先し、件数は対象と観測条件を揃えて比較する。資料の記載は権限の証明にせず、未測定の状態を成功・停止済みと扱わない。"
+							},
+							{
+								"kind": "safety",
+								"heading": "操作範囲と停止境界",
+								"body": "今日は外部API、実環境、DB、ファイルに一切操作しない。読取り接続、backup取得、dry-runも将来の別作業である。旧daemonの停止・unload、schema追加、write、backfill、再投入、claimを伴うsmoke、旧コード削除・table dropは今日の範囲外。将来も対象不明の接続や権限不明の変更は行わない。すでに提供された記録の文書上の整理は可能だが、新規取得は別途許可を要する。"
+							},
+							{
+								"kind": "workflow",
+								"heading": "標準ワークフロー"
+							},
+							{
+								"kind": "completion",
+								"heading": "完成条件",
+								"body": "今日の範囲、将来の各ゲート、必要な観測、禁止操作、引渡し先への不足事項が区別され、実操作前で停止する計画になっていれば完成。実際のpreflight・cutover・smokeの成否は未測定のまま残す。"
+							}
+						],
+						"references": [
+							{
+								"path": "references/plan-boundary-check.md",
+								"title": "計画境界の最小検査例",
+								"content": "この例は、将来許可されたローカル環境で計画の分類を検査するためのもの。今回は実行しない。Python標準機能だけを使い、通信・ファイル操作・DB接続をしない。正常例と、今日の範囲へwriteを混入させた負例を含む。実環境の権限・backup・Queue動作を検証するものではない。\n\n```python\nimport json\n\n\ndef validate(plan):\n    assert plan['today'] == ['document_plan'], '今日の実操作は禁止'\n    assert plan['stop_before'] == 'environment_access', '接続前で停止'\n    assert plan['old_runtime_retained'] is True, '旧実行系を保持'\n    assert plan['cutover_requires_separate_approval'] is True\n    assert plan['preflight_result'] == 'unmeasured'\n\n\nplan = {\n    'today': ['document_plan'],\n    'stop_before': 'environment_access',\n    'old_runtime_retained': True,\n    'cutover_requires_separate_approval': True,\n    'preflight_result': 'unmeasured',\n}\nvalidate(plan)\nbad = dict(plan, today=['document_plan', 'write_migration'])\ntry:\n    validate(bad)\nexcept AssertionError:\n    negative_detected = True\nelse:\n    negative_detected = False\nassert negative_detected, '禁止操作の混入を検出できない'\nprint(json.dumps({'valid_plan': True, 'negative_detected': True}))\n```\n\n期待値はvalid_planとnegative_detectedがともにtrueで、assert失敗なく終了すること。未実行であり、成功の証跡はない。この例の成功だけで実際の計画本文の網羅性や実機移行を合格にしない。"
+							}
+						],
+						"resourceHeading": "補助資料"
+					},
+					"title": "Queue段階移行：preflight計画とcutover前の停止位置",
+					"description": "旧daemon停止・書込み移行の権限がない状況で、今日の文書作成範囲と将来のpreflight、cutover、移行後検証の開始条件・停止条件を整理する。",
+					"language": "ja",
+					"localizedInstructions": "1. 今日の範囲を固定する。成果物をこの計画文書だけとし、backup・counts取得・dry-runを含むすべての実操作を「未実行」とする。今日の作業欄に接続や変更が一つでも入っていれば削除して見直す。今日の停止位置は実環境への接続前である。\n\n2. 将来のpreflightに必要な不足を文書化する。対象環境・DB・Queue/lane・旧daemon・実行版はシステム所有者の構成記録から、許可範囲は承認者の記録から、移行仕様は対象版のリポジトリ内手順・実装から得る計画とする。既存の提供資料は整理できるが、対象不明なら接続禁止、読取り許可不明なら新規採取禁止、dry-runの副作用不明なら起動禁止とする。資料中のコマンド名や発言だけを承認の代わりにしない。\n\n3. 将来の読取りpreflightを設計する。対象と許可が確定してから、旧daemonを止めず、schema追加前のbackupと移行前countsを採取する担当・方法・時点を定める。backupは稼働中の整合性を保証できる対象DBの正式手順が必要で、単純なファイルコピーを前提にしない。dry-runは対象版で非変更性と出力仕様が確認できた場合だけ計画へ採用する。集計対象、除外条件、取得時刻、版、backup識別子を記録項目とし、どれか不明なら取得開始を保留する。\n\n4. 比較基準と稼働観測を定める。旧daemon稼働中のcountsは変動し得るため、preflight時点の値をそのまま将来のwrite成功基準にしない。同一スナップショットまたは停止後の同一データから比較基準を作る方法を決め、揃わなければ件数比較を不成立とする。Queueの停滞はoldest pendingの古さだけで判定せず、対象laneのworker稼働、優先度の高い実行可能work、同一laneの最近の進捗を組み合わせる。観測窓とstale閾値は運用所有者の基準を用い、不明なら状態判定を保留する。この停滞判定をcutover時のwriter停止証明の代用にしない。\n\n5. cutoverゲートを閉じたまま引き渡す。今日の計画はここで終了する。将来の担当者は、対象・時間帯・daemon停止権限・書込み権限・復旧責任者と復旧手順を別途承認された場合だけ、旧daemonおよび対象writerの停止、停止の観測、直前backupの再取得、比較基準の確定、writeの順へ進める。writer停止の証跡、backupの復元可能性、対象版のwrite仕様のいずれかが欠ければwrite前で停止する。backup不成立時は停止状態を放置せず、承認済み復旧手順へ判断を戻す。\n\n6. 将来の移行後ゲートを定める。write reportとmigration mapの件数、Queue link backfillと旧linkの件数、reprocess_requestedの移行先別件数を、同じ対象・集計条件の期待値と照合する。実際のtable名・分類・比較式は対象版の仕様で確定し、未確定なら照合手順の実施を止める。smokeはclaimや書込みを伴い得る別操作として承認を取り、対象版で定義された全laneの成功を要求する。件数不一致、想定外の書込み、smoke失敗では次段階を止め、証跡を保持して復旧責任者へ渡す。旧runtimeと旧tablesは保持し、削除・dropはlive smoke、backup、dry-run/write report、backfill完了、旧参照のhistory-only化を満たした後の別承認作業とする。\n\n7. 計画を引き渡す前に範囲を点検する。今日の操作が文書作成のみであること、未取得の観測値と入手先が対応していること、各将来操作に開始条件と停止位置があることを合否基準とする。不足があれば計画を修正し、実行へ進まない。必要なら references/plan-boundary-check.md を将来の計画分類検査に用いるが、その検査を移行成功の証拠にはしない。",
+					"sourceReview": {
+						"assessment": "開示された3資料の全文を意味照合し、preflightで旧実行系を温存する方針、write直前の停止とbackup、移行後の件数・smoke検証、pending age単独判定の禁止を合成した。検索の縮退と出典詳細の欠落は未解消であり、対象実装・API・権限の確定根拠にはしない。計画作成には利用できるが、対象版への適合や実行結果は確認していない。取得時刻と本文更新時刻の整合も確証がなく、最新版保証には用いていない。",
+						"flaggedItems": [
+							{
+								"claim": "資料にあるbunの移行CLI、--write --backup、supervisor --onceの具体的構文と動作",
+								"reason": "対象版の実装・公式手順との照合証跡がなく、dry-runの非変更性や停止・backup失敗の伝播も未確認。実行可能コマンド例として採用しない。",
+								"disposition": "removed"
+							},
+							{
+								"claim": "特定table名、4キュー、移行先分類が実環境でも一致する",
+								"reason": "対象構成が提示されていない。本文では検証対象の意味を残し、実際の名前・lane数・比較式の確定を将来の開始条件とした。",
+								"disposition": "needs_confirmation"
+							},
+							{
+								"claim": "稼働中preflightのdry-run countsと後日のwrite countsはそのまま一致すべき",
+								"reason": "旧writerの継続動作による変化を考慮する必要がある。同一対象・スナップショットまたは停止後の基準で比較する形に限定した。",
+								"disposition": "removed"
+							}
+						]
+					},
+					"nonSourceAdditions": [
+						{
+							"practice": "今日の文書作成と将来の読取り・変更操作を分離し、不足事項ごとに入手先と禁止操作を対応させる。",
+							"reason": "依頼のplanning-only制約と権限境界を保つため。将来の承認が現在あるとは仮定していない。"
+						},
+						{
+							"practice": "稼働中backupの整合性、比較時点の統一、復旧責任者への引渡しをゲートに加える。",
+							"reason": "稼働中の件数変動とbackup不成立を成功扱いしないため。DB固有の手順や復元可能性は未検証であり、具体コマンドは追加していない。"
+						},
+						{
+							"practice": "自己完結したPythonの計画境界検査と禁止操作混入の負例を付ける。",
+							"reason": "入出力とassertの意味を静的に点検した補助例。ローカル実行はしておらず、依存取得・外部I/Oを含まない。実機動作の証跡ではない。"
+						}
+					],
+					"interactions": [
+						{
+							"point": "preflight温存方針とdry-run/write/backfill/smoke手順の接続",
+							"handling": "同じ一連の実行として扱わず、今日は計画のみ、将来の読取りpreflight、別承認のcutover、移行後検証に分割する。件数比較には観測時点を揃える条件を加える。"
+						},
+						{
+							"point": "Queue停滞診断とcutoverの停止確認の違い",
+							"handling": "pending ageだけでは停滞を断定しない。運用上の停滞診断はwriter停止の証拠ではなく、cutoverでは別途停止の観測を要求する。"
+						}
+					]
+				},
+				{
+					"approved": true,
+					"reason": "原条件の忠実性確認後、描画済み本文と全referenceを横断して自己レビューした。正確性35：今日は文書作成のみで、接続・採取・停止・writeを将来の別承認作業として区別し、権限を拡張していない。未確認のCLI構文は除外され、対象版・副作用・backup整合性の確認を進行条件としている。具体性25：各番号付き手順に、対象・許可・観測条件の充足や不足時の停止など観測可能な判定基準がある。網羅性20：preflight、writer停止、直前backup、比較基準、移行後件数・smoke、旧資産保持までのゲートが整合し、未測定を合格に転用していない。簡潔性10：境界条件に反復はあるが、安全上の再確認として許容範囲で、無関係な定型節はない。形式10：ASCIIスラッグ、日本語の見出し、機能別構成、参照経路は適切。補助Python例はimport・正常fixture・負例・期待値・assert・終了条件が静的に整合し、誤APIや外部操作はない。実行証跡はなく、本文も実行成功を主張していない。重要な矛盾・不可欠な欠落は認めない。"
+				}
+			]
+		}
+	]
+}

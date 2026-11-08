@@ -1,7 +1,9 @@
 import type { Evidence, EvidenceCard, Section } from "../contracts/types.js";
 
 /** Card view for progressive disclosure: metadata + section ids, no bodies. */
-export function evidenceCardView(e: Evidence): {
+export function evidenceCardView(
+	e: EvidenceCard & Pick<Partial<Evidence>, "sections" | "retrievedAt">,
+): {
 	ref: string;
 	version: Evidence["version"];
 	title: string;

@@ -70,7 +70,23 @@ export function createEvidenceSearch<Tx>(
 			? (requireThat(ports.source, "source_unavailable"),
 				ports.source.get(ref, signal, metered ? sourceContext : undefined))
 			: ports.registry.read(ref, r.authority, signal);
-	return async function runSearch(
+	async function readCard(card: SearchState["candidates"][number]) {
+		const document = parseEvidence(
+			await (card.external ? sourceCall : call)(() =>
+				read(card.ref, card.external),
+			),
+		);
+		requireThat(
+			document.ref === card.ref &&
+				digest(document.version) === digest(card.version) &&
+				document.external === card.external &&
+				document.scope === card.scope,
+			"source_revoked",
+		);
+		document.retrievedAt = ports.now();
+		return document;
+	}
+	async function runSearch(
 		queryLocal: string,
 		queryExternal: string | undefined,
 		state: SearchState | null,
@@ -152,6 +168,14 @@ export function createEvidenceSearch<Tx>(
 			if (!state || !state.candidates.some((c) => c.ref === card.ref))
 				cardsAdmitted++;
 			if (seenEvidence.has(card.ref)) continue;
+			// Modern external cards are already sufficient for the model to request disclosure.
+			// Keep legacy replay and successor discovery eager, without spending reads on unused active cards.
+			if (
+				ports.assemblyMode !== "legacy" &&
+				card.external &&
+				card.status === "active"
+			)
+				continue;
 			if (evidence.length >= request.limits.documents) {
 				// Evict a prior-only document to admit a new-round card.
 				if (!state || !newRoundRefs.has(card.ref)) continue;
@@ -160,19 +184,7 @@ export function createEvidenceSearch<Tx>(
 				const evicted = evidence.splice(evictAt, 1)[0]!;
 				seenEvidence.delete(evicted.ref);
 			}
-			const document = parseEvidence(
-				await (card.external ? sourceCall : call)(() =>
-					read(card.ref, card.external),
-				),
-			);
-			requireThat(
-				document.ref === card.ref &&
-					digest(document.version) === digest(card.version) &&
-					document.external === card.external &&
-					document.scope === card.scope,
-				"source_revoked",
-			);
-			document.retrievedAt = ports.now();
+			const document = await readCard(card);
 			evidence.push(document);
 			seenEvidence.add(document.ref);
 			documentsFetched++;
@@ -263,5 +275,21 @@ export function createEvidenceSearch<Tx>(
 			sourceNotices,
 			reSearch,
 		};
+	}
+	return {
+		search: runSearch,
+		async disclose(state: SearchState, refs: string[]) {
+			for (const ref of new Set(refs)) {
+				checkpoint();
+				if (state.evidence.some((e) => e.ref === ref)) continue;
+				const card = state.candidates.find((c) => c.ref === ref);
+				if (!card) continue;
+				requireThat(
+					state.evidence.length < request.limits.documents,
+					"context_budget_exceeded",
+				);
+				state.evidence.push(await readCard(card));
+			}
+		},
 	};
 }

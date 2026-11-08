@@ -4,6 +4,60 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createCloudBudget } from "../cloud-budget.js";
 
+test("output truncation retains its cause and reasoning usage without accepting partial JSON", async () => {
+	const dir = mkdtempSync(join(tmpdir(), "cloud-truncation-"));
+	try {
+		const budget = createCloudBudget({
+			baseUrl: "https://fixture.invalid/v1",
+			credential: "fixture",
+			maxUsd: 10,
+			journal: join(dir, "ledger.jsonl"),
+			fetch: async () =>
+				Response.json({
+					id: "truncated",
+					status: "incomplete",
+					incomplete_details: { reason: "max_output_tokens" },
+					usage: {
+						input_tokens: 10,
+						output_tokens: 100,
+						output_tokens_details: { reasoning_tokens: 30 },
+					},
+					output: [
+						{
+							type: "message",
+							content: [{ type: "output_text", text: '{"result":' }],
+						},
+					],
+				}),
+		});
+		await expect(
+			budget.complete(
+				{ id: "fixture-model", inputUsdPerMillion: 1, outputUsdPerMillion: 1 },
+				"build",
+				{
+					system: "Return JSON",
+					data: {},
+					schema: {},
+					deadlineAt: 1,
+					maxOutputTokens: 100,
+					requestRef: "request",
+				},
+				new AbortController().signal,
+			),
+		).rejects.toThrow("cloud_output_limit");
+		expect(budget.events()[0]).toMatchObject({
+			responseStatus: "incomplete",
+			incompleteReason: "max_output_tokens",
+			reasoningTokens: 30,
+			inputTokens: 10,
+			outputTokens: 100,
+		});
+		expect(budget.spent()).toBeCloseTo(0.00011);
+	} finally {
+		rmSync(dir, { recursive: true, force: true });
+	}
+});
+
 for (const failure of ["oversize", "missing-receipt"] as const) {
 	test(
 		"cloud response boundary rejects " +

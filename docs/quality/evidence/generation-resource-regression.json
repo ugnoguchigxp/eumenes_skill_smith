@@ -1,0 +1,190 @@
+{
+	"scope": "Historical provider values injected as regression fixtures, no current inference identities or new quality claim. Network and listeners forbidden.",
+	"results": [
+		{
+			"id": "backup-verify",
+			"kind": "error",
+			"code": "semantic_review_failed"
+		},
+		{
+			"id": "sandbox-review",
+			"kind": "unavailable",
+			"code": "context_budget_exceeded",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 8,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "review-injection",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 5,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "least-permissions",
+			"kind": "error",
+			"code": "semantic_review_failed"
+		},
+		{
+			"id": "cache-ownership",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 5,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "migration-readonly",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 11,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "permanent-queue",
+			"kind": "error",
+			"code": "historical_truncated_response_not_available"
+		},
+		{
+			"id": "jitter-tests",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 5,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "cache-disable",
+			"kind": "error",
+			"code": "semantic_review_failed"
+		},
+		{
+			"id": "rename-scope",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 6,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "queue-migration",
+			"kind": "error",
+			"code": "historical_truncated_response_not_available"
+		},
+		{
+			"id": "safe-diagnostics",
+			"kind": "error",
+			"code": "historical_truncated_response_not_available"
+		},
+		{
+			"id": "retry-control",
+			"kind": "error",
+			"code": "historical_truncated_response_not_available"
+		},
+		{
+			"id": "workspace-cache",
+			"kind": "ready",
+			"usage": {
+				"modelCalls": 4,
+				"sourceCalls": 5,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "permission-boundary",
+			"kind": "error",
+			"code": "historical_truncated_response_not_available"
+		},
+		{
+			"id": "backup-actual",
+			"kind": "needs_input",
+			"usage": {
+				"modelCalls": 2,
+				"sourceCalls": 2,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "unknown-sdk",
+			"kind": "needs_input",
+			"usage": {
+				"modelCalls": 2,
+				"sourceCalls": 2,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "payment-unknown",
+			"kind": "needs_input",
+			"usage": {
+				"modelCalls": 2,
+				"sourceCalls": 2,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "migration-counts",
+			"kind": "needs_input",
+			"usage": {
+				"modelCalls": 2,
+				"sourceCalls": 2,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		},
+		{
+			"id": "private-authority",
+			"kind": "needs_input",
+			"usage": {
+				"modelCalls": 2,
+				"sourceCalls": 2,
+				"inputTokens": 0,
+				"outputTokens": 0,
+				"reasoningTokens": null,
+				"cachedInputTokens": null
+			}
+		}
+	]
+}

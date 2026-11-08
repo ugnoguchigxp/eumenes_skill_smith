@@ -34,6 +34,7 @@ function assertBuilderData(value: unknown): void {
 	}
 }
 const buildKeys = new Set([
+	"outputBudget",
 	"task",
 	"environment",
 	"audience",

@@ -54,6 +54,9 @@ type Entry = {
 	purpose: string;
 	requestDigest: string;
 	responseId?: string;
+	responseStatus?: string;
+	incompleteReason?: string;
+	reasoningTokens?: number;
 };
 
 /** Eval-only direct text API. Caller exclusively owns journal; unknown costs retain the reservation. */
@@ -235,9 +238,29 @@ export function createCloudBudget(options: {
 						outputTokens: usage.output_tokens,
 						durationMs: performance.now() - started,
 						responseId: typeof result.id === "string" ? result.id : undefined,
+						responseStatus:
+							result.status === "completed" || result.status === "incomplete"
+								? result.status
+								: undefined,
+						incompleteReason:
+							result.incomplete_details?.reason === "max_output_tokens" ||
+							result.incomplete_details?.reason === "content_filter"
+								? result.incomplete_details.reason
+								: undefined,
+						reasoningTokens:
+							Number.isSafeInteger(
+								usage.output_tokens_details?.reasoning_tokens,
+							) && usage.output_tokens_details.reasoning_tokens >= 0
+								? usage.output_tokens_details.reasoning_tokens
+								: undefined,
 					});
 				}
-				if (result.status !== "completed") throw Error("cloud_incomplete");
+				if (result.status !== "completed")
+					throw Error(
+						result.incomplete_details?.reason === "max_output_tokens"
+							? "cloud_output_limit"
+							: "cloud_incomplete",
+					);
 				if (typeof result.id !== "string" || !result.id.length)
 					throw Error("cloud_receipt_missing");
 				const output = result.output
