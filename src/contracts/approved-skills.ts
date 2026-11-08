@@ -34,8 +34,25 @@ export const approvedSkillSchema = z.strictObject({
 	expiresAt: z.number().int().positive(),
 });
 export type ApprovedSkill = z.infer<typeof approvedSkillSchema>;
+export interface ApprovedSkillScan {
+	scope: string;
+	/** Local metadata retrieval query; not a semantic applicability verdict. */
+	query?: string;
+	environment: GuidanceRequest["environment"];
+	audience: GuidanceRequest["audience"];
+	now: number;
+	limit: number;
+	cursor?: string;
+}
+export interface ApprovedSkillPage {
+	records: ApprovedSkill[];
+	/** Null means the structurally compatible range is exhausted. */
+	nextCursor: string | null;
+}
 export interface ApprovedSkillStore<Tx> {
 	get(tx: Tx, ref: string): ApprovedSkill | null;
+	/** Structural filtering before paging. Final semantic applicability remains an LLM decision. */
+	scan?(tx: Tx, query: ApprovedSkillScan): ApprovedSkillPage;
 	list(tx: Tx, scope: string, limit: number): ApprovedSkill[];
 	put(tx: Tx, record: ApprovedSkill): void;
 	/** Host approval must bind the exact digest, publication scope and applicability statement. */
@@ -63,6 +80,7 @@ export interface PreparedSkillSelection {
 	request: GuidanceRequest;
 	authority: Authority;
 	candidates: ApprovedSkill[];
+	catalog: { scanned: number; exhausted: boolean };
 	digest: string;
 }
 export interface SelectedSkill {

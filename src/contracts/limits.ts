@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const defaultServiceLimits = {
+	approvedScanLimit: 256,
 	maxSubmitHorizonMs: 120_000,
 	buildTtlMs: 30 * 86_400_000,
 	pendingRetryAfterMs: 1_000,
@@ -15,6 +16,7 @@ export type ServiceLimits = {
 };
 
 export const serviceLimitsSchema = z.strictObject({
+	approvedScanLimit: z.number().int().min(1).max(4096),
 	maxSubmitHorizonMs: z.number().int().positive().max(86_400_000),
 	buildTtlMs: z
 		.number()

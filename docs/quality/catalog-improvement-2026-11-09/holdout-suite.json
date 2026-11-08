@@ -1,0 +1,69 @@
+{
+	"id": "catalog-holdout-2026-11-09",
+	"provenance": "Three new source references absent from both previous selected20 and novel3 provider records. Frozen before new generation or grading. Expected refs/checks are withheld from provider input by the existing public projection. Public ContextStill seed only. Planning documents, no production changes.",
+	"tasks": [
+		{
+			"id": "outbound-fetch-policy",
+			"goal": "ユーザー入力のURLをサーバーで取得する機能について、SSRFを防ぐ改修と検証の計画を作ってください。HTTP/HTTPS以外、URL内の認証情報、DNSが返す複数のIPv4/IPv6、localhost・内部ネットワーク・クラウドmetadata・IPv4 mapped IPv6を扱います。redirectの各段と実接続先でも同じ制約を保ち、DNS rebinding、時間と応答サイズの上限を含めてください。言語、DNS resolver、HTTP clientのAPIは未提示です。安全な合成試験と実接続で確かめる項目を分け、現在は計画だけ作ってください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "原条件を守り、順序・合否・停止条件と必要な実環境検証が分かる計画を示す。未知のAPIや検証成功を捏造しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_id3jvqsnxxaaolbscb3lacwwty"],
+			"withheldChecks": [
+				{
+					"id": "complete-target-validation",
+					"text": "URL構文だけで承認せず、DNSの全A/AAAAと実接続先を検査する。redirectごとに再検査し、再解決と接続の不一致、private/loopback/link-local/CGN/multicast/ULA、mapped addressの抜け道を扱う。"
+				},
+				{
+					"id": "bounded-and-honest",
+					"text": "時間・容量・redirect数等の有限な上限と拒否時の観測を計画する。合成モデルの成功を実HTTP clientのDNS/redirect/接続制御の成功と同一視せず、未確認なら停止する。"
+				}
+			]
+		},
+		{
+			"id": "configuration-import-shapes",
+			"goal": "JSONBに保存する画面設定のCSVインポート手順を整理する計画を作ってください。全設定のスナップショットCSVと、ScreenType・Path・Valueの行で一部だけ変えるCSVが混在しています。全量CSVは既存の正規JSON変換を経て対象ユーザーと画面別に反映し、差分CSVは既存行へのpath更新として扱いたいです。次のseedで変更が消えないようにしたい一方、無関係なユーザーや画面を更新してはいけません。実際のコマンドやDBスキーマは未提示です。現在は実行せず、形式判定、事前確認、反映、検証、停止・復旧の順を計画してください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "原条件を守り、順序・合否・停止条件と必要な実環境検証が分かる計画を示す。未知のAPIや検証成功を捏造しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_agkjo56fu66kkc2xgfy4wtpbsy"],
+			"withheldChecks": [
+				{
+					"id": "two-import-contracts",
+					"text": "全量とpath更新を同じ操作にしない。既存CSV→正規JSON変換を再利用し、既存JSONBを更新する差分方式と分ける。生成JSONの手編集を正規経路にしない。"
+				},
+				{
+					"id": "target-and-seed-consistency",
+					"text": "対象ユーザーの存在、画面・path集合と無関係対象の非変更を確認する。コマンド成功だけで合格にせず、DBの対象行と次回seedのalias/pathを照合し、未確定のコマンド/APIは断定しない。"
+				}
+			]
+		},
+		{
+			"id": "form-error-association",
+			"goal": "複数の入力項目があるWebフォームで、見えるラベルとエラー表示はあるのに支援技術から関連が分からない問題の改修計画を作ってください。各入力にlabelを正しく結び、エラーや補足はaria-describedbyなどで対象入力と関連付けます。エラーが出る・消える場合、入力が複数ある場合、IDの重複や参照切れを検証し、画面の見た目と支援技術向けの説明が食い違わないようにしたいです。特定フレームワークのAPIは未提示です。現在はコードを変更せず、DOM構造の確認、最小修正、静的検査、ブラウザとスクリーンリーダーでの確認を含む計画だけを作ってください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "原条件を守り、順序・合否・停止条件と必要な実環境検証が分かる計画を示す。未知のAPIや検証成功を捏造しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_alt47jpykgdcrqwod3tskeutzy"],
+			"withheldChecks": [
+				{
+					"id": "explicit-associations",
+					"text": "見た目の近接だけでなくlabelと入力、エラー説明と入力の参照関係を明示する。複数入力で正しい対応と一意ID、複数describedbyの既存説明、状態変化の参照切れを検証できる。"
+				},
+				{
+					"id": "verification-boundary",
+					"text": "静的DOM検査とブラウザ/支援技術の読み上げ確認を分ける。フレームワークAPIを捏造せず、スクリーンリーダーで実際に検証したと誤認させない。"
+				}
+			]
+		}
+	]
+}

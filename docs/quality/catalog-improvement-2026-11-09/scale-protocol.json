@@ -1,0 +1,19 @@
+{
+	"id": "catalog-scale-v1",
+	"frozenBeforeLive": true,
+	"levels": [9, 1000, 10000],
+	"repetitionsPerCasePerLevel": 3,
+	"baseSuite": "../low-latency-2026-11-08/selection-suite.json",
+	"compatibleCases": 3,
+	"incompatibleCases": 3,
+	"totalPaidAttempts": 54,
+	"readyTargetMs": 3000,
+	"attemptTimeoutMs": 8000,
+	"maxUsd": 15,
+	"journal": "artifacts/practical-2026-11-08/costs.jsonl",
+	"model": "gpt-4.1-mini",
+	"outputTokens": 256,
+	"scope": "Three real frozen reviewed artifacts plus synthetic storage/index distractors. Half the distractors use other environment IDs; half use the same environment with unrelated CSS metadata. Synthetic records are not new content-generation successes. Real cloud selection, durable SQLite binding and existing local source validation; all outcomes including misses/timeouts reported. Catalog construction excluded from request latency and reported separately.",
+	"retries": 0,
+	"warmupExcluded": 0
+}

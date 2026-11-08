@@ -1,8 +1,16 @@
+import { prepareApprovedCatalog } from "./approved-catalog.js";
+import {
+	available,
+	compatible,
+	checkArtifact,
+	publicationDigest,
+} from "./approved-publication.js";
+export { publicationDigest } from "./approved-publication.js";
+import { resolveServiceLimits } from "../contracts/limits.js";
 import { z } from "zod";
 import {
 	approvedSkillSchema,
 	skillSelectionSchema,
-	type ApprovedSkill,
 	type PreparedSkillSelection,
 	type SelectedSkill,
 } from "../contracts/approved-skills.js";
@@ -10,12 +18,8 @@ import { authoritySchema, requestSchema } from "../contracts/schema.js";
 import type { Authority, Build, Usage } from "../contracts/types.js";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
 import { skillSelectionInstructions } from "../instructions/selection.js";
-import { artifactDigest, bytes, digest, requireThat } from "./identity.js";
-import {
-	renderSkillMarkdown,
-	skillBundleDigest,
-	validateSkillMarkdownFormat,
-} from "./skill-markdown.js";
+import { bytes, digest, requireThat } from "./identity.js";
+import { renderSkillMarkdown, skillBundleDigest } from "./skill-markdown.js";
 
 export interface ReuseBuild {
 	template: Build;
@@ -31,43 +35,6 @@ const noUsage = (): Usage => ({
 	reasoningTokens: null,
 	cachedInputTokens: null,
 });
-export function publicationDigest(r: Omit<ApprovedSkill, "digest">) {
-	return digest({
-		ref: r.ref,
-		scope: r.scope,
-		approvalRef: r.approvalRef,
-		applicability: r.applicability,
-		artifact: r.artifact,
-		template: r.template,
-		expiresAt: r.expiresAt,
-	});
-}
-function checkArtifact(r: ApprovedSkill) {
-	const a = r.artifact;
-	validateSkillMarkdownFormat(a.content, a.name);
-	requireThat(
-		a.path === `${a.name}/SKILL.md` && a.digest === artifactDigest(a.content),
-		"artifact_mismatch",
-	);
-	const paths = new Set<string>();
-	for (const f of a.files) {
-		requireThat(
-			f.path.startsWith(a.name + "/") &&
-				/^references\/[a-z0-9]+(?:-[a-z0-9]+)*\.md$/.test(
-					f.path.slice(a.name.length + 1),
-				) &&
-				!paths.has(f.path) &&
-				f.digest === artifactDigest(f.content),
-			"artifact_mismatch",
-		);
-		paths.add(f.path);
-	}
-	requireThat(
-		a.bundleDigest === skillBundleDigest(a, a.files),
-		"artifact_mismatch",
-	);
-	requireThat(r.digest === publicationDigest(r), "publication_mismatch");
-}
 export function createApprovedSkillOperations<Tx>(
 	p: Ports<Tx>,
 	usable: (tx: Tx, b: Build, auth: Authority) => boolean,
@@ -79,51 +46,11 @@ export function createApprovedSkillOperations<Tx>(
 	) => import("../contracts/types.js").Reply,
 ) {
 	const repo = p.repository;
+	const limits = resolveServiceLimits(p.limits);
 	const issued = new WeakMap<SelectedSkill, string>();
-	function available(tx: Tx, r: ApprovedSkill, auth: Authority) {
-		checkArtifact(r);
-		return (
-			r.scope === auth.scope &&
-			r.expiresAt > p.now() &&
-			!repo.blocked(tx, r.ref) &&
-			!repo.blocked(tx, r.template.ref) &&
-			!!p.approvedSkills?.approvalCurrent(tx, r) &&
-			p.authority.valid(tx, auth, [
-				r.ref,
-				...r.template.content.dependencies.map((d) => d.ref),
-			]) &&
-			p.policy.current(tx, r.template.content.policy.version) &&
-			p.registry.current(
-				tx,
-				auth,
-				r.template.content.dependencies
-					.filter((d) => !d.external)
-					.map((d) => d.version),
-			)
-		);
-	}
-	function compatible(
-		r: ApprovedSkill,
-		request: PreparedSkillSelection["request"],
-	) {
-		const env = r.template.content.environment;
-		return (
-			env.id === request.environment.id &&
-			digest(env.policy) === digest(request.environment.policy) &&
-			r.template.content.audience === request.audience &&
-			r.template.content.decision.requiredCapabilities.every((id) => {
-				const capability = env.capabilities.find((c) => c.id === id);
-				return (
-					capability &&
-					request.environment.capabilities.some(
-						(c) => digest(c) === digest(capability),
-					)
-				);
-			})
-		);
-	}
 	function selectionDigest(s: Omit<PreparedSkillSelection, "digest">) {
 		return digest({
+			catalog: s.catalog,
 			request: s.request,
 			authority: s.authority,
 			candidates: s.candidates.map((c) => ({ ref: c.ref, digest: c.digest })),
@@ -133,7 +60,7 @@ export function createApprovedSkillOperations<Tx>(
 		const mark = b.publication;
 		if (!mark) return true;
 		const r = p.approvedSkills?.get(tx, mark.ref);
-		return !!r && r.digest === mark.digest && available(tx, r, auth);
+		return !!r && r.digest === mark.digest && available(p, tx, r, auth);
 	}
 	function artifact(
 		read: <T>(op: (tx: Tx) => T) => T,
@@ -221,10 +148,19 @@ export function createApprovedSkillOperations<Tx>(
 			"permission_denied",
 		);
 		requireThat(request.limits.deadlineAt > p.now(), "deadline_exceeded");
-		const candidates = (
-			p.approvedSkills?.list(tx, auth.scope, request.limits.candidates) ?? []
-		).filter((r) => available(tx, r, auth) && compatible(r, request));
-		const s = { request, authority: auth, candidates };
+		const { candidates, catalog } = prepareApprovedCatalog(
+			p,
+			tx,
+			request,
+			auth,
+			limits.approvedScanLimit,
+		);
+		const s = {
+			request,
+			authority: auth,
+			candidates,
+			catalog,
+		};
 		return structuredClone({ ...s, digest: selectionDigest(s) });
 	}
 	/** Public metadata only: private Build identifiers, origin principals and evaluation clauses stay internal. */
@@ -238,6 +174,7 @@ export function createApprovedSkillOperations<Tx>(
 			),
 		});
 		return {
+			catalog: s.catalog,
 			task: visibleTask(s.request.task),
 			environment: s.request.environment,
 			candidates: s.candidates.map((r) => ({
@@ -256,6 +193,7 @@ export function createApprovedSkillOperations<Tx>(
 		requireThat(selectionDigest(s) === s.digest, "selection_mismatch");
 		for (const candidate of s.candidates) checkArtifact(candidate);
 		context.signal.throwIfAborted();
+		requireThat(s.request.limits.deadlineAt > p.now(), "deadline_exceeded");
 		if (!s.candidates.length)
 			return {
 				preparedDigest: s.digest,
@@ -283,8 +221,26 @@ export function createApprovedSkillOperations<Tx>(
 			),
 		]);
 		const start = performance.now();
-		const out = await p.inference.complete(input, signal);
-		await context.noteUsage?.({ ...out, callKind: "selection" });
+		let out: Awaited<ReturnType<typeof p.inference.complete>>;
+		try {
+			out = await p.inference.complete(input, signal);
+		} catch (error) {
+			context.noteCall?.({
+				kind: "modelCalls",
+				operation: "skill_selection",
+				outcome: "error",
+				durationMs: performance.now() - start,
+			});
+			throw error;
+		}
+		await context.noteUsage?.({
+			receipt: out.receipt,
+			inputTokens: out.inputTokens,
+			outputTokens: out.outputTokens,
+			reasoningTokens: out.reasoningTokens,
+			cachedInputTokens: out.cachedInputTokens,
+			callKind: "selection",
+		});
 		context.noteCall?.({
 			kind: "modelCalls",
 			operation: "skill_selection",
@@ -343,7 +299,7 @@ export function createApprovedSkillOperations<Tx>(
 			r &&
 				chosen &&
 				r.digest === chosen.digest &&
-				available(tx, r, auth) &&
+				available(p, tx, r, auth) &&
 				compatible(r, s.request),
 			"publication_revoked",
 		);

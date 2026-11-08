@@ -1,3 +1,5 @@
+import { approvedSearchMigration } from "./approved-search.js";
+import { approvedCompatibilityIndex } from "./approved-query.js";
 import type { Database } from "bun:sqlite";
 import type { z } from "zod";
 import type { Repository } from "../contracts/ports.js";
@@ -58,6 +60,11 @@ CREATE TABLE knowledge_proposals(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,revisi
 		sql: `CREATE TABLE IF NOT EXISTS knowledge_approved_skills(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,data_json TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS knowledge_approved_scope ON knowledge_approved_skills(scope);`,
 	},
+	{
+		id: "knowledge/0004-approved-compatibility",
+		sql: approvedCompatibilityIndex,
+	},
+	{ id: "knowledge/0005-approved-search", sql: approvedSearchMigration },
 ] as const;
 function parseStored<T>(raw: string, schema: z.ZodType<T>): T {
 	let value: unknown;
