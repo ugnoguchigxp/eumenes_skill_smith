@@ -569,8 +569,15 @@ export async function executeBuild<Tx>(
 					rejectBodyRewrite: assembly.mode === "compact",
 				});
 				requireThat(
-					bytes(buildContent(p, candidate, state.evidence)) <=
-						request.limits.outputBytes,
+					bytes(
+						request.delivery === "artifact"
+							? renderSkillMarkdown(
+									buildContent(p, candidate, state.evidence),
+									undefined,
+									ports.skillMarkdown,
+								)
+							: buildContent(p, candidate, state.evidence),
+					) <= request.limits.outputBytes,
 					"context_budget_exceeded",
 				);
 			} catch (error) {
@@ -674,8 +681,15 @@ export async function executeBuild<Tx>(
 				rejectBodyRewrite: assembly.mode === "compact",
 			});
 			requireThat(
-				bytes(buildContent(p, reviewed, state.evidence)) <=
-					request.limits.outputBytes,
+				bytes(
+					request.delivery === "artifact"
+						? renderSkillMarkdown(
+								buildContent(p, reviewed, state.evidence),
+								undefined,
+								ports.skillMarkdown,
+							)
+						: buildContent(p, reviewed, state.evidence),
+				) <= request.limits.outputBytes,
 				"context_budget_exceeded",
 			);
 		}

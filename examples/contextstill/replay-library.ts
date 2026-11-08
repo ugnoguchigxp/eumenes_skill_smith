@@ -19,11 +19,21 @@ import {
 import { recordedInference } from "./recorded.js";
 import { createExampleHost } from "./host.js";
 
-export async function replayLibrary(root: string, directory: string) {
+export async function replayLibrary(
+	root: string,
+	directory: string,
+	recordsPath?: string,
+) {
 	const json = (p: string) => JSON.parse(readFileSync(join(root, p), "utf8"));
 	const suite = json("docs/quality/novel-three-suite-2026-11-08.json");
 	const config = json("docs/quality/cloud-eval-generation-settings.json");
-	const records = json("artifacts/novel-three-2026-11-08/records.json");
+	const records = JSON.parse(
+		readFileSync(
+			recordsPath ??
+				join(root, "artifacts/novel-three-2026-11-08/records.json"),
+			"utf8",
+		),
+	);
 	const seed = join(directory, "seed.sqlite");
 	seedDatabase({ destination: seed });
 	const fixture = new ContextStillFixture(seed, "bm25");
@@ -94,48 +104,7 @@ export async function replayLibrary(root: string, directory: string) {
 			},
 		);
 		try {
-			const write = <T>(op: () => T) => host.db.transaction(op)();
-			const pending = write(() =>
-				host.service.submit(host.db, host.request, host.authority),
-			);
-			if (pending.kind !== "pending" || !pending.requestRef)
-				throw Error("expected_pending");
-			const ref = pending.requestRef;
-			const prepared = write(() =>
-				host.service.prepare(host.db, ref, 0, host.authority),
-			);
-			if (!prepared) throw Error("not_prepared");
-			const result = await host.service.execute(prepared, {
-				signal: new AbortController().signal,
-				reserve: async (kind) => {
-					write(() =>
-						host.service.reserve(host.db, prepared, kind, host.authority),
-					);
-				},
-			});
-			if (
-				!write(() =>
-					host.service.settle(host.db, prepared, result, host.authority),
-				)
-			)
-				throw Error("settlement_failed");
-			const row = sqliteRepository.request(host.db, ref)!;
-			if (row.outcome?.kind !== "ready") throw Error("expected_stored_ready");
-			const build = sqliteRepository.build(host.db, row.outcome.buildRef)!;
-			const delivered = await host.service.getSkillDelivery(
-				ref,
-				host.authority,
-				(op) => op(host.db),
-				new AbortController().signal,
-				{
-					signal: new AbortController().signal,
-					reserve: async (kind) => {
-						write(() =>
-							host.service.reserveDelivery(host.db, ref, host.authority, kind),
-						);
-					},
-				},
-			);
+			const delivered = await host.runDelivery();
 			if (delivered.kind !== "ready")
 				throw Error(
 					"single_copy_delivery_failed:" +
@@ -143,6 +112,10 @@ export async function replayLibrary(root: string, directory: string) {
 						":" +
 						JSON.stringify(delivered),
 				);
+			const ref = delivered.requestRef;
+			const row = sqliteRepository.request(host.db, ref)!;
+			if (row.outcome?.kind !== "ready") throw Error("expected_stored_ready");
+			const build = sqliteRepository.build(host.db, row.outcome.buildRef)!;
 			deliveries.push({
 				taskId: task.id,
 				kind: delivered.kind,

@@ -245,7 +245,7 @@ try {
 					constraints,
 					assemblyMode: "baseline",
 				});
-				const reply = await host.run();
+				const reply = await host.runDelivery();
 				const durationMs = performance.now() - start;
 				timings.push({
 					taskId: task.id,

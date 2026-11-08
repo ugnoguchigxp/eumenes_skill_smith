@@ -1,0 +1,6 @@
+{
+	"verified": true,
+	"liveReadyPackets": 30,
+	"finalProjectionIdentical": true,
+	"scope": "Exact final public projection against all frozen ready replies; no new cloud calls. Does not rerun timing."
+}

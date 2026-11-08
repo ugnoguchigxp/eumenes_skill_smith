@@ -172,6 +172,51 @@ export function createExampleHost(
 		[];
 	const service = createSkillSmith(ports);
 	const write = <T>(op: () => T) => db.transaction(op)();
+	async function buildRequest(artifact = false) {
+		const pending = write(() =>
+			artifact
+				? service.submitArtifact(db, request, authority)
+				: service.submit(db, request, authority),
+		);
+		if (pending.kind !== "pending" || !pending.requestRef)
+			throw new Error("example_expected_pending");
+		const prepared = write(() =>
+			service.prepare(db, pending.requestRef!, 0, authority),
+		);
+		if (!prepared) throw new Error("example_not_prepared");
+		const result = await service.execute(prepared, {
+			signal: new AbortController().signal,
+			noteCall: (call) => callLedger.push(call),
+			reserve: async (kind) => {
+				write(() => service.reserve(db, prepared, kind, authority));
+			},
+			noteUsage: async (observed) => {
+				write(() =>
+					service.noteUsage(db, prepared, authority, {
+						inputTokens: observed.inputTokens,
+						outputTokens: observed.outputTokens,
+						reasoningTokens: observed.reasoningTokens,
+						cachedInputTokens: observed.cachedInputTokens,
+					}),
+				);
+			},
+		});
+		write(() => service.settle(db, prepared, result, authority));
+		return pending.requestRef;
+	}
+	function deliveryContext(ref: string) {
+		return ports.assemblyMode === "legacy"
+			? undefined
+			: {
+					signal: new AbortController().signal,
+					reserve: async (kind: "modelCalls" | "sourceCalls") => {
+						write(() => service.reserveDelivery(db, ref, authority, kind));
+					},
+					noteCall: (
+						call: import("../../src/contracts/ports.js").CallObservation,
+					) => callLedger.push(call),
+				};
+	}
 	return {
 		callLedger,
 		ports,
@@ -180,53 +225,26 @@ export function createExampleHost(
 		authority,
 		request,
 		close: () => db.close(),
+		/** Compatibility lane used by historical evaluations. */
 		async run() {
-			const pending = write(() => service.submit(db, request, authority));
-			if (pending.kind !== "pending" || !pending.requestRef)
-				throw new Error("example_expected_pending");
-			const prepared = write(() =>
-				service.prepare(db, pending.requestRef!, 0, authority),
-			);
-			if (!prepared) throw new Error("example_not_prepared");
-			const result = await service.execute(prepared, {
-				signal: new AbortController().signal,
-				noteCall: (call) => callLedger.push(call),
-				reserve: async (kind) => {
-					write(() => service.reserve(db, prepared, kind, authority));
-				},
-				noteUsage: async (observed) => {
-					write(() =>
-						service.noteUsage(db, prepared, authority, {
-							inputTokens: observed.inputTokens,
-							outputTokens: observed.outputTokens,
-							reasoningTokens: observed.reasoningTokens,
-							cachedInputTokens: observed.cachedInputTokens,
-						}),
-					);
-				},
-			});
-			write(() => service.settle(db, prepared, result, authority));
+			const ref = await buildRequest();
 			return service.getSkillValidated(
-				pending.requestRef,
+				ref,
 				authority,
 				(op) => op(db),
 				new AbortController().signal,
-				ports.assemblyMode === "legacy"
-					? undefined
-					: {
-							signal: new AbortController().signal,
-							reserve: async (kind) => {
-								write(() =>
-									service.reserveDelivery(
-										db,
-										pending.requestRef!,
-										authority,
-										kind,
-									),
-								);
-							},
-							noteCall: (call) => callLedger.push(call),
-						},
+				deliveryContext(ref),
+			);
+		},
+		/** Current public artifact consumer: body and resources appear once. */
+		async runDelivery() {
+			const ref = await buildRequest(true);
+			return service.getSkillDelivery(
+				ref,
+				authority,
+				(op) => op(db),
+				new AbortController().signal,
+				deliveryContext(ref),
 			);
 		},
 	};

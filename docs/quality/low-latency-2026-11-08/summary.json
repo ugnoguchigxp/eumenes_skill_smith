@@ -1,0 +1,103 @@
+{
+	"complete": true,
+	"implementationCommit": "f455f97314f72617c6c04424216994e0a62e83e8",
+	"model": "gpt-4.1-mini",
+	"allAttempts": {
+		"attempts": 60,
+		"correct": 60,
+		"ready": 30,
+		"usableReadyWithin3000Ms": 30,
+		"meanMs": 1480.055215966666,
+		"medianMs": 1510.6445210000038,
+		"p95Ms": 1986.539542000006,
+		"maxMs": 2744.243959
+	},
+	"compatible": {
+		"attempts": 30,
+		"correct": 30,
+		"ready": 30,
+		"usableReadyWithin3000Ms": 30,
+		"meanMs": 1737.363122266666,
+		"medianMs": 1690.3348119999973,
+		"p95Ms": 2504.611,
+		"maxMs": 2744.243959
+	},
+	"incompatible": {
+		"attempts": 30,
+		"correct": 30,
+		"ready": 0,
+		"usableReadyWithin3000Ms": 0,
+		"meanMs": 1222.747309666666,
+		"medianMs": 1169.7561869999954,
+		"p95Ms": 1865.7153749999998,
+		"maxMs": 1948.8986250000016
+	},
+	"tokens": {
+		"inputTokens": {
+			"knownTotal": 121490,
+			"knownCalls": 60,
+			"missingCalls": 0
+		},
+		"outputTokens": {
+			"knownTotal": 7638,
+			"knownCalls": 60,
+			"missingCalls": 0
+		},
+		"reasoningTokens": {
+			"knownTotal": 0,
+			"knownCalls": 60,
+			"missingCalls": 0
+		},
+		"cachedInputTokens": {
+			"knownTotal": 14976,
+			"knownCalls": 60,
+			"missingCalls": 0
+		}
+	},
+	"cost": {
+		"spentBefore": 13.474359400000008,
+		"accountedUsd": 13.535176200000002,
+		"incrementalUsd": 0.06081679999999423,
+		"capUsd": 15,
+		"knownPriceEstimateUsd": 9.006289199999996,
+		"heldUnknownReservationsUsd": 4.528887,
+		"unknownCalls": 23
+	},
+	"deliveryRegression": {
+		"results": [
+			{
+				"taskId": "timezone-daily-boundary",
+				"kind": "ready",
+				"bytes": 11480,
+				"limit": 32768,
+				"bundleDigest": "6c80bb2411e46b985c587c23aa9ae4b9ae298889b0fb0967045a737a22005686"
+			},
+			{
+				"taskId": "asciidoc-opaque-roundtrip",
+				"kind": "ready",
+				"bytes": 9809,
+				"limit": 32768,
+				"bundleDigest": "3ff64cfe81c1c3b6c697e6d62b9435a31f1a029998e4cd4f5e48c75003b93452"
+			},
+			{
+				"taskId": "keyboard-ime-focus",
+				"kind": "ready",
+				"bytes": 11765,
+				"limit": 32768,
+				"bundleDigest": "c3c0b740e076eb810f39644636fb9ee982264ee49f049948d1257613f2c455d7"
+			}
+		],
+		"matchedReplayCalls": 12,
+		"networkGenerationCalls": 0
+	},
+	"scope": "Actual cloud selection plus durable SQLite task binding, local public fixture version validation and full artifact retrieval. Fixed replay business clock. Not a production Eumenes/ContextStill network benchmark or cold generation.",
+	"limitations": [
+		"Three development artifacts; six task cases repeated ten times, not sixty independent topics.",
+		"Pending is 30/60 overall; only 30/60 overall requests received a usable skill.",
+		"Prior generation and review were performed before measurement. Cold detailed generation remains unproven at three seconds.",
+		"Source version I/O is local fixture only. Production owner approval, source and host integrations are not exercised.",
+		"Reference content remains the exact previously graded 98/98/94 artifacts; no new body-quality grade is invented.",
+		"p95 uses nearest rank on thirty positive attempts; no population-wide SLO or load-capacity guarantee.",
+		"Cached input and reasoning tokens are already included in input/output; do not add them again."
+	]
+}

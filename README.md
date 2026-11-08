@@ -66,12 +66,12 @@ JavaScript、型宣言、package metadata、LICENSE、READMEだけを梱包し�
 
 ### 最終SKILLの受け渡し
 
-`service.getSkillValidated(ref, authority, read, signal)` がreadyの場合、`skill` に主ファイルの `name/path/content/digest`、参照ファイルの `files`、全体の `bundleDigest` が返ります。全ファイルを一組として扱います。`get` / `getValidated` は内部のJSONと状態を扱う互換入口です。
+推奨する公開入口は`service.getSkillDelivery(ref, authority, read, signal, context)`です。`skillsmith.delivery.v1`は本文を一度だけ返し、内部Buildは別途認可される監査参照へ分離します。readyの`skill`に主ファイルと全references、digest、bundleDigestが届きます。承認済みSKILLの保存・LLM選択・タスク結付けは[利用契約](docs/approved-skills.md)を参照してください。既存get系は互換入口として保持します。
 
 ```ts
 // リポジトリの例で提供するwriter。コアtgzには同梱しない。
 import { writeSkillArtifact } from "./examples/contextstill/skill-output.js";
-const reply = await service.getSkillValidated(ref, authority, read, signal);
+const reply = await service.getSkillDelivery(ref, authority, read, signal, context);
 if (reply.kind === "ready") {
   const mainFile = writeSkillArtifact(outputDir, reply.skill);
   // mainFileと同じSkillディレクトリに全referencesが保存される。

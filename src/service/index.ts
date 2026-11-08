@@ -1,12 +1,9 @@
+import { skillDeliveryPacket } from "./skill-delivery.js";
 import { createApprovedSkillOperations } from "./approved-skills.js";
 import type { ReuseBuild } from "./approved-skills.js";
 import type { SkillDelivery } from "../contracts/approved-skills.js";
 import { requestAuthorized } from "./authority.js";
-import {
-	renderSkillMarkdown,
-	skillBundleDigest,
-	type SkillReply,
-} from "./skill-markdown.js";
+import { renderSkillMarkdown, type SkillReply } from "./skill-markdown.js";
 import {
 	CONTRACT,
 	authoritySchema,
@@ -442,12 +439,20 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			},
 		};
 		if (
-			bytes({
-				contractVersion: CONTRACT,
-				requestRef: row.ref,
-				kind: "ready",
-				build,
-			}) > row.request.limits.outputBytes
+			bytes(
+				row.request.delivery === "artifact"
+					? skillDeliveryPacket(
+							row.ref,
+							build,
+							renderSkillMarkdown(content, undefined, p.skillMarkdown),
+						)
+					: {
+							contractVersion: CONTRACT,
+							requestRef: row.ref,
+							kind: "ready",
+							build,
+						},
+			) > row.request.limits.outputBytes
 		) {
 			finish(tx, row, { kind: "unavailable", code: "context_budget_exceeded" });
 			return true;
@@ -578,22 +583,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			const skill = result.build.publication
 				? approved.artifact(read, result.build, auth)
 				: renderSkillMarkdown(result.build.content, undefined, p.skillMarkdown);
-			const packet: SkillDelivery = {
-				contractVersion: "skillsmith.delivery.v1",
-				kind: "ready",
-				requestRef: ref,
-				auditRef: result.build.ref,
-				skill: {
-					...skill,
-					files: skill.files ?? [],
-					bundleDigest:
-						skill.bundleDigest ?? skillBundleDigest(skill, skill.files ?? []),
-				},
-				publicationRef: result.build.publication?.ref,
-				dependencyVersions: result.build.content.dependencies.map(
-					(d) => d.version,
-				),
-			};
+			const packet = skillDeliveryPacket(ref, result.build, skill);
 			return read((tx) => {
 				const row = repo.request(tx, ref);
 				requireThat(
@@ -622,7 +612,14 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		read: <T>(op: (tx: Tx) => T) => T,
 		signal: AbortSignal,
 		context?: ExecutionContext,
+		maxAuditBytes = 32768,
 	): Promise<Reply> {
+		requireThat(
+			Number.isSafeInteger(maxAuditBytes) &&
+				maxAuditBytes >= 256 &&
+				maxAuditBytes <= 131072,
+			"invalid_audit_limit",
+		);
 		const ref = read((tx) => {
 			const b = repo.build(tx, buildRef);
 			return b && usable(tx, b, auth) ? b.requestRef : null;
@@ -633,7 +630,22 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				kind: "rejected",
 				code: "permission_denied",
 			};
-		return getValidated(ref, auth, read, signal, context);
+		const result = await getValidatedInternal(
+			ref,
+			auth,
+			read,
+			signal,
+			context,
+			false,
+		);
+		return bytes(result) <= maxAuditBytes
+			? result
+			: {
+					contractVersion: CONTRACT,
+					kind: "unavailable",
+					requestRef: ref,
+					code: "context_budget_exceeded",
+				};
 	}
 	/** Final artifact boundary; legacy JSON transport remains unchanged. */
 	async function getSkillValidated(
@@ -735,6 +747,12 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 	);
 	return {
 		...approved.operations,
+		submitArtifact: (tx: Tx, input: unknown, authority: Authority) =>
+			submitInternal(
+				tx,
+				{ ...requestSchema.parse(input), delivery: "artifact" },
+				authority,
+			),
 		getSkillDelivery,
 		getSkillAudit,
 		submit,

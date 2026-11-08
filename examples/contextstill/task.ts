@@ -30,7 +30,9 @@ const host = createExampleHost(
 	recordedInference(records, (t) => tasks.push(t)),
 );
 try {
-	const reply = await host.run().catch((e: Error) => ({ kind: e.message }));
+	const reply = await host
+		.runDelivery()
+		.catch((e: Error) => ({ kind: e.message }));
 	const skillFile =
 		reply.kind === "ready" && "skill" in reply
 			? writeSkillArtifact(

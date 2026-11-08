@@ -473,3 +473,64 @@ test("partial bundles and altered catalog statements cannot be selected", async 
 	);
 	expect(f.modelCalls()).toBe(1);
 });
+
+test("artifact generation capacity excludes private audit duplication while legacy limits stay strict", async () => {
+	const f = fixture();
+	f.request.task.acceptance.push({
+		id: "detailed-audit",
+		text: "x".repeat(4000),
+	});
+	f.request.limits.outputBytes = 2048;
+	const submitted = f.write(() =>
+		f.service.submitArtifact(f.db, f.request, f.auth),
+	);
+	const work = await f.run(submitted.requestRef!);
+	expect(work.settle()).toBe(true);
+	const delivery = await f.service.getSkillDelivery(
+		submitted.requestRef!,
+		f.auth,
+		f.read,
+		signal(),
+	);
+	expect(delivery.kind).toBe("ready");
+	expect(Buffer.byteLength(JSON.stringify(delivery))).toBeLessThanOrEqual(2048);
+	expect(
+		(
+			await f.service.getValidated(
+				submitted.requestRef!,
+				f.auth,
+				f.read,
+				signal(),
+			)
+		).kind,
+	).toBe("unavailable");
+	if (delivery.kind !== "ready") throw Error("ready_required");
+	expect(
+		(await f.service.getSkillAudit(delivery.auditRef, f.auth, f.read, signal()))
+			.kind,
+	).toBe("ready");
+	expect(
+		(
+			await f.service.getSkillAudit(
+				delivery.auditRef,
+				f.auth,
+				f.read,
+				signal(),
+				undefined,
+				2048,
+			)
+		).kind,
+	).toBe("unavailable");
+});
+
+test("artifact capacity rejects actual oversized bundles before storing ready", async () => {
+	const f = fixture();
+	f.request.limits.outputBytes = 256;
+	const submitted = f.write(() =>
+		f.service.submitArtifact(f.db, f.request, f.auth),
+	);
+	await expect(f.run(submitted.requestRef!)).rejects.toThrow(
+		"context_budget_exceeded",
+	);
+	expect(f.db.query("SELECT ref FROM knowledge_builds").all()).toHaveLength(0);
+});

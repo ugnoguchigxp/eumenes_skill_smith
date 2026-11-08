@@ -21,6 +21,8 @@ export const requestSchema = z
 	.strictObject({
 		contractVersion: z.literal(CONTRACT),
 		requestId: id,
+		/** Opt-in wire capacity: artifact bundle instead of internal Build JSON. */
+		delivery: z.literal("artifact").optional(),
 		task: z.strictObject({
 			goal: text,
 			acceptance: z.array(clause).min(1).max(32),

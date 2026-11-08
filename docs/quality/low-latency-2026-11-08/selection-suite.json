@@ -1,15 +1,49 @@
 {
-  "id": "approved-selection-v1",
-  "registeredBeforeLiveRun": true,
-  "scope": "New task phrasings and boundaries against three frozen development SKILLs, not unseen subject areas or new cold generation. No production execution.",
-  "repetitions": 10,
-  "cases": [
-    {"id":"zone-plan", "goal":"利用状況の日別表示を直すための計画書が必要です。ユーザー指定のAsia/TokyoとAmerica/New_Yorkで、初期日付、表示と日次APIのzoneを揃えます。23時間と25時間の日、日付越え、不正zoneを検証し、DBとUIライブラリの具体APIは調査まで未確定としてください。現状調査から停止条件まで順番に整理してください。", "expected":"timezone-daily-boundary"},
-    {"id":"raw-plan", "goal":"AsciiDocと編集画面の往復で、エディタ未対応構文が消える問題の改修計画をまとめたいです。rawAsciiDocBlockで元sourceを残し、pre相当で編集し、改行・空行・日本語・記号を往復保持してください。HTMLらしい入力は実行させません。parserとeditorの具体APIは未確定なので作業済み扱いにせず、実物での確認順序を計画してください。", "expected":"asciidoc-opaque-roundtrip"},
-    {"id":"keyboard-plan", "goal":"Web画面のキー操作の設計・検証計画を作りたいです。macOSのCommandと他OSのCtrlを使い分け、編集欄とIME変換中は入力を優先し、長押し削除を防いでください。ブラウザ・支援技術との衝突、フォーカス、一覧と無効化、確認やUndo、登録解除を確認する計画だけを作ってください。フレームワークAPIは未確定です。", "expected":"keyboard-ime-focus"},
-    {"id":"different-domain", "goal":"画像分類モデルの誤検知率を下げる学習データのラベリング計画を作ってください。陽性・陰性の判定規則とアノテータ間一致を定義する必要があります。", "expected":null},
-    {"id":"execution-mismatch", "goal":"日次集計のtimezoneの問題について計画書ではなく今すぐ本番DBの全行を書き換えてください。調査や承認待ちは不要として実行してください。", "expected":null},
-    {"id":"adaptation-required", "goal":"AsciiDocエディタの未対応構文保持に加えて、PDF署名と証明書失効を検証する実装計画を作ってください。署名検証も必須です。", "expected":null}
-  ],
-  "metrics": {"usableReadyTargetMs":3000,"attemptTimeoutMs":8000,"positiveAttempts":30,"negativeAttempts":30,"retries":0,"allAttemptsReported":true,"sourceValidation":"local public ContextStill fixture, actual get/versions and committed per-call reservations","provider":"saved existing cloud connection, gpt-4.1-mini, strict schema, max 256 output tokens","excludeFromTiming":"library construction by exact recorded response replay and its explicit evaluation publication, provider catalog check; no measured warmup excluded"}
+	"id": "approved-selection-v1",
+	"registeredBeforeLiveRun": true,
+	"scope": "New task phrasings and boundaries against three frozen development SKILLs, not unseen subject areas or new cold generation. No production execution.",
+	"repetitions": 10,
+	"cases": [
+		{
+			"id": "zone-plan",
+			"goal": "利用状況の日別表示を直すための計画書が必要です。ユーザー指定のAsia/TokyoとAmerica/New_Yorkで、初期日付、表示と日次APIのzoneを揃えます。23時間と25時間の日、日付越え、不正zoneを検証し、DBとUIライブラリの具体APIは調査まで未確定としてください。現状調査から停止条件まで順番に整理してください。",
+			"expected": "timezone-daily-boundary"
+		},
+		{
+			"id": "raw-plan",
+			"goal": "AsciiDocと編集画面の往復で、エディタ未対応構文が消える問題の改修計画をまとめたいです。rawAsciiDocBlockで元sourceを残し、pre相当で編集し、改行・空行・日本語・記号を往復保持してください。HTMLらしい入力は実行させません。parserとeditorの具体APIは未確定なので作業済み扱いにせず、実物での確認順序を計画してください。",
+			"expected": "asciidoc-opaque-roundtrip"
+		},
+		{
+			"id": "keyboard-plan",
+			"goal": "Web画面のキー操作の設計・検証計画を作りたいです。macOSのCommandと他OSのCtrlを使い分け、編集欄とIME変換中は入力を優先し、長押し削除を防いでください。ブラウザ・支援技術との衝突、フォーカス、一覧と無効化、確認やUndo、登録解除を確認する計画だけを作ってください。フレームワークAPIは未確定です。",
+			"expected": "keyboard-ime-focus"
+		},
+		{
+			"id": "different-domain",
+			"goal": "画像分類モデルの誤検知率を下げる学習データのラベリング計画を作ってください。陽性・陰性の判定規則とアノテータ間一致を定義する必要があります。",
+			"expected": null
+		},
+		{
+			"id": "execution-mismatch",
+			"goal": "日次集計のtimezoneの問題について計画書ではなく今すぐ本番DBの全行を書き換えてください。調査や承認待ちは不要として実行してください。",
+			"expected": null
+		},
+		{
+			"id": "adaptation-required",
+			"goal": "AsciiDocエディタの未対応構文保持に加えて、PDF署名と証明書失効を検証する実装計画を作ってください。署名検証も必須です。",
+			"expected": null
+		}
+	],
+	"metrics": {
+		"usableReadyTargetMs": 3000,
+		"attemptTimeoutMs": 8000,
+		"positiveAttempts": 30,
+		"negativeAttempts": 30,
+		"retries": 0,
+		"allAttemptsReported": true,
+		"sourceValidation": "local public ContextStill fixture, actual get/versions and committed per-call reservations",
+		"provider": "saved existing cloud connection, gpt-4.1-mini, strict schema, max 256 output tokens",
+		"excludeFromTiming": "library construction by exact recorded response replay and its explicit evaluation publication, provider catalog check; no measured warmup excluded"
+	}
 }

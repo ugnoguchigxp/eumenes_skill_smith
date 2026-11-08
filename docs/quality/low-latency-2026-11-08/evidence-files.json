@@ -1,0 +1,13 @@
+{
+	"sha256": {
+		"docs/quality/low-latency-2026-11-08/audit.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+		"docs/quality/low-latency-2026-11-08/evidence.tgz": "1b2bc799305fb61b1ff41816c1924b4267e97e2dc4c0cd53402965d5323e040c",
+		"docs/quality/low-latency-2026-11-08/packet-equivalence.json": "9849bf8793a5d617ca262e876731bb2c6bb967ee06b187f22b721cb624f79582",
+		"docs/quality/low-latency-2026-11-08/results.md": "828645cbdc8c78869025be37da758ae0b154c98461a44b7b429228032af7af83",
+		"docs/quality/low-latency-2026-11-08/selection-suite.json": "99c1b98270408105d68a80c5718c4e2e9d24a282c5f3c9e66082c6cb72651994",
+		"docs/quality/low-latency-2026-11-08/summarize.py": "ae0a11df194fedc2b0847147cd040ee7b0c2c7347b51b3a08c4024f65216871b",
+		"docs/quality/low-latency-2026-11-08/summary.json": "cf3d89c84c5e1150485d1ce0022af0dddee6e2376d031ba019f49c0717f58cb9",
+		"docs/quality/low-latency-2026-11-08/verification.json": "b8b760fd0e385caff26da7162ed2c57e67ab08de1ed17b3d185c96f2e25881f0",
+		"docs/quality/low-latency-2026-11-08/verify.log": "8934b708178c9ab69a889a63b92a99146ef8072974aed1b11a458f2cb9bf2802"
+	}
+}

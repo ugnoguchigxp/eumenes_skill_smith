@@ -1,5 +1,11 @@
 # SkillSmithとEumenesの接続契約
 
+## 承認済みSKILLの高速配達 2026-11-08
+
+`getSkillDelivery`の単一本文契約、SQLiteでの承認済みpublication保存、LLM選択、タスク別Buildへの結付けを追加した。[接続と承認の詳細](docs/approved-skills.md)を参照。既存get系・厳密キャッシュ・job生成・意味レビュー・結果の元主体検査を維持する。承認callbackはホストの所有domainで正確なdigest・scope・適用条件・失効を照合する。
+
+今回の読取り再照合時のEumenesは`40b9630c4dbae20ad3837fdd7e5397c721300ae5`で、作業ツリーには別作業の11項目の差分がある。capabilitiesの公開入口はpackage検索とenabled revisionの本文取得を提供するが、Skill単体の検索・正式公開承認・外部資料版の一括検査との接続は未完了。本体のコード・設定・DB・サーバーは変更していない。新しいSQLite実装はSkillSmith側のadapterであり、本体への配置済みという意味ではない。
+
 ## 技術品質改善の実装契約 2026-11-08
 
 生成完了率の追加改善では、現行モードのactiveな外部カードは、モデルのdiscloseで要求された時点に本文を取得する。カード全体の順位と選択肢は保持し、取得時にはカードのref・版・scope・取得元との一致を検査する。開示後の本文は同じ生成内で再利用し、採用後と配達直前の外部再確認は省略しない。supersededの後継取得と明示的legacy再生は従来どおり。資料の選択の意味判断はモデルが行う。
