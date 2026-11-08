@@ -407,6 +407,15 @@ export const buildSchema = z.strictObject({
 	expiresAt: z.number().int().positive(),
 	usage: usageSchema,
 	revoked: z.boolean(),
+	publication: z
+		.strictObject({
+			ref: id,
+			digest: id,
+			selectionDigest: id,
+			receipt: id,
+			assessment: text,
+		})
+		.optional(),
 	/** Generator compatibility; absent on legacy rows. */
 	generator: z
 		.strictObject({

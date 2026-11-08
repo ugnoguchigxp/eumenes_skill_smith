@@ -68,6 +68,13 @@ export interface Build {
 	expiresAt: number;
 	usage: Usage;
 	revoked: boolean;
+	publication?: {
+		ref: string;
+		digest: string;
+		selectionDigest: string;
+		receipt: string;
+		assessment: string;
+	};
 	generator?: { instructions: string; contractVersion: "skillsmith.v1" };
 }
 export type Outcome =

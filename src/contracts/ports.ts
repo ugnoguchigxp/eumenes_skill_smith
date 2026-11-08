@@ -61,6 +61,8 @@ export interface Repository<Tx> {
 }
 export interface Ports<Tx> {
 	repository: Repository<Tx>;
+	/** Optional approved immutable publications. Omission keeps existing generation behavior. */
+	approvedSkills?: import("./approved-skills.js").ApprovedSkillStore<Tx>;
 	authority: {
 		valid(tx: Tx, authority: Authority, sourceRefs: string[]): boolean;
 	};
@@ -148,7 +150,12 @@ export interface ObservedUsage {
 	cachedInputTokens?: number | null;
 	receipt?: string;
 	callKind:
-		"build" | "reflection" | "workflow" | "delivery_validate" | "reformulation";
+		| "build"
+		| "reflection"
+		| "workflow"
+		| "delivery_validate"
+		| "reformulation"
+		| "selection";
 }
 export interface CallObservation {
 	/** Monotonic elapsed time of this physical call; never includes payload text. */

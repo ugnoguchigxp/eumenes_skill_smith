@@ -53,6 +53,11 @@ CREATE TABLE knowledge_proposals(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,revisi
 					")",
 			].join(";\n") + ";",
 	},
+	{
+		id: "knowledge/0003-approved-skills",
+		sql: `CREATE TABLE IF NOT EXISTS knowledge_approved_skills(ref TEXT PRIMARY KEY,scope TEXT NOT NULL,data_json TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS knowledge_approved_scope ON knowledge_approved_skills(scope);`,
+	},
 ] as const;
 function parseStored<T>(raw: string, schema: z.ZodType<T>): T {
 	let value: unknown;
@@ -216,6 +221,7 @@ export const sqliteRepository: Repository<Database> = {
 		db.query("INSERT OR IGNORE INTO knowledge_revoked VALUES(?)").run(ref);
 		db.query("DELETE FROM knowledge_requests WHERE ref=?").run(ref);
 		db.query("DELETE FROM knowledge_builds WHERE ref=?").run(ref);
+		db.query("DELETE FROM knowledge_approved_skills WHERE ref=?").run(ref);
 		db.query("DELETE FROM knowledge_proposals WHERE ref=?").run(ref);
 		db.query("DELETE FROM knowledge_reflections WHERE ref=?").run(ref);
 		const executions = db
@@ -353,3 +359,5 @@ export const sqliteRepository: Repository<Database> = {
 			);
 	},
 };
+
+export { sqliteApprovedSkills } from "./approved-skills.js";

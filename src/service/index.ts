@@ -1,5 +1,12 @@
+import { createApprovedSkillOperations } from "./approved-skills.js";
+import type { ReuseBuild } from "./approved-skills.js";
+import type { SkillDelivery } from "../contracts/approved-skills.js";
 import { requestAuthorized } from "./authority.js";
-import { renderSkillMarkdown, type SkillReply } from "./skill-markdown.js";
+import {
+	renderSkillMarkdown,
+	skillBundleDigest,
+	type SkillReply,
+} from "./skill-markdown.js";
 import {
 	CONTRACT,
 	authoritySchema,
@@ -69,6 +76,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			b.expiresAt > p.now() &&
 			generatorOk &&
 			presentationOk &&
+			(!b.publication || approved.current(tx, b, auth)) &&
 			p.policy.current(tx, b.content.policy.version) &&
 			p.registry.current(
 				tx,
@@ -82,6 +90,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		row: RequestRecord,
 		auth: Authority,
 		validatedDigest?: string,
+		enforceBudget = true,
 	): Reply {
 		if (!valid(tx, row, auth))
 			return {
@@ -105,7 +114,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 					code: "external_validation_required",
 				};
 			const ready: Reply = { ...base, kind: "ready", build };
-			return bytes(ready) <= row.request.limits.outputBytes
+			return !enforceBudget || bytes(ready) <= row.request.limits.outputBytes
 				? ready
 				: { ...base, kind: "unavailable", code: "context_budget_exceeded" };
 		}
@@ -120,7 +129,12 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			retryAfterMs: limits.pendingRetryAfterMs,
 		};
 	}
-	function submit(tx: Tx, input: unknown, authority: Authority): Reply {
+	function submitInternal(
+		tx: Tx,
+		input: unknown,
+		authority: Authority,
+		reuse?: ReuseBuild,
+	): Reply {
 		const request = requestSchema.parse(input),
 			auth = authoritySchema.parse(authority);
 		requireThat(
@@ -191,7 +205,32 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			: repo.cached(tx, auth.scope, key);
 		// External dependency builds may be cached; delivery still revalidates
 		// via getValidated before a ready reply is returned to the client.
-		if (cached && cached.key === key && usable(tx, cached, auth))
+		if (reuse) {
+			const content = {
+				...structuredClone(reuse.template.content),
+				task: request.task,
+				environment: request.environment,
+				audience: request.audience,
+			};
+			const build: Build = {
+				...structuredClone(reuse.template),
+				ref: p.id(),
+				requestRef: row.ref,
+				key,
+				content,
+				digest: contentDigest(content),
+				createdAt: p.now(),
+				expiresAt: reuse.expiresAt,
+				usage: reuse.usage,
+				publication: reuse.publication,
+			};
+			repo.putBuild(tx, build);
+			repo.link(tx, build.ref, row.ref);
+			repo.link(tx, build.ref, reuse.publication.ref);
+			for (const e of content.dependencies) repo.link(tx, build.ref, e.ref);
+			row.usage = reuse.usage;
+			row.outcome = { kind: "ready", buildRef: build.ref };
+		} else if (cached && cached.key === key && usable(tx, cached, auth))
 			row.outcome = { kind: "ready", buildRef: cached.ref };
 		else if (!row.waitingParent)
 			row.jobRef = p.jobs.enqueue(tx, {
@@ -207,6 +246,9 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		])
 			repo.link(tx, row.ref, ref);
 		return reply(tx, row, auth);
+	}
+	function submit(tx: Tx, input: unknown, authority: Authority): Reply {
+		return submitInternal(tx, input, authority);
 	}
 	function activate(
 		tx: Tx,
@@ -441,13 +483,15 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 					code: "request_unavailable",
 				};
 	}
-	async function getValidated(
+	async function getValidatedInternal(
 		ref: string,
 		auth: Authority,
 		read: <T>(op: (tx: Tx) => T) => T,
 		signal: AbortSignal,
 		context?: ExecutionContext,
+		enforceBudget = true,
 	): Promise<Reply> {
+		signal.throwIfAborted();
 		const snapshot = read((tx) => {
 			const row = repo.request(tx, ref);
 			if (!row || !valid(tx, row, auth) || row.outcome?.kind !== "ready")
@@ -496,13 +540,100 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		return read((tx) => {
 			const row = repo.request(tx, ref);
 			return row
-				? reply(tx, row, auth, snapshot.digest)
+				? reply(tx, row, auth, snapshot.digest, enforceBudget)
 				: {
 						contractVersion: CONTRACT,
 						kind: "rejected",
 						code: "request_unavailable",
 					};
 		});
+	}
+	const getValidated = (
+		ref: string,
+		auth: Authority,
+		read: <T>(op: (tx: Tx) => T) => T,
+		signal: AbortSignal,
+		context?: ExecutionContext,
+	) => getValidatedInternal(ref, auth, read, signal, context);
+	/** Single-copy public artifact. Internal audit remains behind getValidated authorization. */
+	async function getSkillDelivery(
+		ref: string,
+		auth: Authority,
+		read: <T>(op: (tx: Tx) => T) => T,
+		signal: AbortSignal,
+		context?: ExecutionContext,
+	): Promise<SkillDelivery> {
+		const result = await getValidatedInternal(
+			ref,
+			auth,
+			read,
+			signal,
+			context,
+			false,
+		);
+		if (result.kind !== "ready")
+			return { ...result, contractVersion: "skillsmith.delivery.v1" };
+		try {
+			signal.throwIfAborted();
+			const skill = result.build.publication
+				? approved.artifact(read, result.build, auth)
+				: renderSkillMarkdown(result.build.content, undefined, p.skillMarkdown);
+			const packet: SkillDelivery = {
+				contractVersion: "skillsmith.delivery.v1",
+				kind: "ready",
+				requestRef: ref,
+				auditRef: result.build.ref,
+				skill: {
+					...skill,
+					files: skill.files ?? [],
+					bundleDigest:
+						skill.bundleDigest ?? skillBundleDigest(skill, skill.files ?? []),
+				},
+				publicationRef: result.build.publication?.ref,
+				dependencyVersions: result.build.content.dependencies.map(
+					(d) => d.version,
+				),
+			};
+			return read((tx) => {
+				const row = repo.request(tx, ref);
+				requireThat(
+					row && valid(tx, row, auth) && usable(tx, result.build, auth),
+					"permission_denied",
+				);
+				requireThat(
+					bytes(packet) <= row.request.limits.outputBytes,
+					"context_budget_exceeded",
+				);
+				return packet;
+			});
+		} catch (error) {
+			return {
+				contractVersion: "skillsmith.delivery.v1",
+				requestRef: ref,
+				kind: "unavailable",
+				code: failureCode(error),
+			};
+		}
+	}
+	/** Resolve the public audit reference without widening private-origin access. */
+	async function getSkillAudit(
+		buildRef: string,
+		auth: Authority,
+		read: <T>(op: (tx: Tx) => T) => T,
+		signal: AbortSignal,
+		context?: ExecutionContext,
+	): Promise<Reply> {
+		const ref = read((tx) => {
+			const b = repo.build(tx, buildRef);
+			return b && usable(tx, b, auth) ? b.requestRef : null;
+		});
+		if (!ref)
+			return {
+				contractVersion: CONTRACT,
+				kind: "rejected",
+				code: "permission_denied",
+			};
+		return getValidated(ref, auth, read, signal, context);
 	}
 	/** Final artifact boundary; legacy JSON transport remains unchanged. */
 	async function getSkillValidated(
@@ -518,11 +649,13 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		try {
 			final = {
 				...result,
-				skill: renderSkillMarkdown(
-					result.build.content,
-					undefined,
-					p.skillMarkdown,
-				),
+				skill: result.build.publication
+					? approved.artifact(read, result.build, auth)
+					: renderSkillMarkdown(
+							result.build.content,
+							undefined,
+							p.skillMarkdown,
+						),
 			};
 		} catch (error) {
 			return {
@@ -595,7 +728,15 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			pending: [...new Set(queue)].filter((r) => !seen.has(r)),
 		};
 	}
+	const approved = createApprovedSkillOperations(
+		p,
+		usable,
+		(tx, input, auth, reuse) => submitInternal(tx, input, auth, reuse),
+	);
 	return {
+		...approved.operations,
+		getSkillDelivery,
+		getSkillAudit,
 		submit,
 		activate,
 		prepare,

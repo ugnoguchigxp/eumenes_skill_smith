@@ -22,3 +22,5 @@ export type {
 	SkillMarkdownOptions,
 	SkillReply,
 } from "./service/skill-markdown.js";
+
+export * from "./contracts/approved-skills.js";

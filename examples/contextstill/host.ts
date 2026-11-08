@@ -174,6 +174,7 @@ export function createExampleHost(
 	const write = <T>(op: () => T) => db.transaction(op)();
 	return {
 		callLedger,
+		ports,
 		db,
 		service,
 		authority,
