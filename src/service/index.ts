@@ -289,6 +289,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		ref: string,
 		epoch: number,
 		auth: Authority,
+		jobRef?: string,
 	): Prepared | null {
 		const row = repo.request(tx, ref);
 		if (
@@ -296,6 +297,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			!valid(tx, row, auth) ||
 			row.outcome ||
 			row.epoch !== epoch ||
+			(jobRef !== undefined && row.jobRef !== jobRef) ||
 			row.waitingParent
 		)
 			return null;
@@ -476,12 +478,15 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		ref: string,
 		auth: Authority,
 		code: string,
-		kind: "unavailable" | "cancelled" = "unavailable",
+		kind: "unavailable" | "cancelled" | "expired" = "unavailable",
 		notifyJob = true,
+		job?: { jobRef: string; epoch: number },
 	) {
 		const row = repo.request(tx, ref);
 		if (!row || !valid(tx, row, auth)) return false;
 		if (row.outcome) return false;
+		if (job && (row.jobRef !== job.jobRef || row.epoch !== job.epoch))
+			return false;
 		row.epoch++;
 		// Publish domain termination in the same writer before notifying a queue that may call back.
 		finish(tx, row, { kind, code });
@@ -777,13 +782,24 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		bindUse,
 		forget,
 		execute: (s: Prepared, c: ExecutionContext) => executeBuild(p, s, c),
-		cancel: (
+		cancel: (tx: Tx, ref: string, auth: Authority) =>
+			terminate(tx, ref, auth, "user_cancelled", "cancelled"),
+		/** A host-owned terminal queue event can arrive without an in-memory Prepared. */
+		finishBuildJob: (
 			tx: Tx,
-			ref: string,
+			job: { requestRef: string; jobRef: string; epoch: number },
 			auth: Authority,
-			origin: "caller" | "job" = "caller",
+			outcome: { kind: "unavailable" | "cancelled" | "expired"; code: string },
 		) =>
-			terminate(tx, ref, auth, "user_cancelled", "cancelled", origin !== "job"),
+			terminate(
+				tx,
+				job.requestRef,
+				auth,
+				outcome.code,
+				outcome.kind,
+				false,
+				job,
+			),
 		reserveDelivery,
 		noteUsage,
 		fail: (

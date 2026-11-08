@@ -212,6 +212,73 @@ try {
 	);
 	results.falseSettlement = { jobState: failed.state, domainState: "rejected" };
 	f.setReceipts(true);
+	const interrupted = await store.write((tx: typeof f.db) =>
+		service.submitArtifact(
+			tx,
+			{
+				...structuredClone(f.request),
+				requestId: "interrupt-real-queue",
+				task: { ...f.request.task, goal: "Interrupted compatibility request" },
+			},
+			auth,
+		),
+	);
+	const interruptedRef = interrupted.requestRef!;
+	const interruptedJob = store.read(
+		(tx: typeof f.db) => sqliteRepository.request(tx, interruptedRef)!.jobRef!,
+	);
+	const previousQueue = queue;
+	const previousComplete = f.ports.inference.complete;
+	const entered = Promise.withResolvers<void>();
+	const release = Promise.withResolvers<void>();
+	f.ports.inference.complete = async (...args) => {
+		entered.resolve();
+		await release.promise;
+		return previousComplete(...args);
+	};
+	try {
+		await previousQueue.tick();
+		await Promise.race([
+			entered.promise,
+			Bun.sleep(2000).then(() => {
+				throw Error("fixture_inference_not_entered");
+			}),
+		]);
+		// Recover a real running queue record with a fresh handler and no in-memory Prepared.
+		service = attach();
+		assert((await queue.recover()) === 1, "expected_one_interrupted_job");
+		const jobState = store.read((tx: typeof f.db) =>
+			queue.getInTransaction(tx, interruptedJob),
+		).state;
+		const domain = store.read((tx: typeof f.db) =>
+			service.get(tx, interruptedRef, auth),
+		);
+		const reserved = store.read((tx: typeof f.db) =>
+			sqliteRepository.request(tx, interruptedRef)!,
+		).usage.modelCalls;
+		assert(
+			jobState === "interrupted" &&
+				domain.kind === "unavailable" &&
+				domain.code === "backend_restarted" &&
+				reserved === 1,
+			"interruption_not_applied",
+		);
+		results.runningRecovery = {
+			jobState,
+			domainState: domain.kind,
+			code: domain.code,
+			reserved,
+		};
+	} finally {
+		f.ports.inference.complete = previousComplete;
+		release.resolve();
+		await previousQueue.close();
+	}
+	assert(
+		store.read((tx: typeof f.db) => service.get(tx, interruptedRef, auth))
+			.kind === "unavailable",
+		"late_response_changed_interrupted_request",
+	);
 	await store.write((tx: typeof f.db) =>
 		service.forget(tx, [delivered.auditRef], 1),
 	);

@@ -12,7 +12,8 @@ export const buildJobPayloadSchema = z.strictObject({
 type Payload = z.infer<typeof buildJobPayloadSchema>;
 type Service<Tx> = ReturnType<typeof createSkillSmith<Tx>>;
 type Input = { prepared: Prepared; authority: Authority };
-type Claim = { scope: string; subjectRef: string | null; payload: Payload };
+type Job = { jobId: string; subjectRef: string | null; payload: Payload };
+type Claim = Job & { scope: string };
 type Outcome =
 	| { type: "success"; result: Executed }
 	| { type: "failed" | "interrupted" | "retry"; errorCode: string }
@@ -35,7 +36,7 @@ export interface BuildJobHandler<Tx> {
 		input: Input | null,
 		outcome: Outcome,
 	): "applied" | "stale" | { status: "failed"; errorCode: string };
-	cancelInTransaction(tx: Tx, job: { payload: Payload }, reason: string): void;
+	cancelInTransaction(tx: Tx, job: Job, reason: string): void;
 }
 /** Public Eumenes queue operations; no domain-owned tables are accessed here. */
 export interface BuildQueue<Tx> {
@@ -89,6 +90,26 @@ export function createBuildJobHandler<Tx>(options: {
 	authorityFor: (tx: Tx, requestRef: string) => Authority | null;
 }): BuildJobHandler<Tx> {
 	const { service, write, authorityFor } = options;
+	function terminal(
+		tx: Tx,
+		job: Job & { scope?: string },
+		outcome: Parameters<Service<Tx>["finishBuildJob"]>[3],
+	) {
+		const parsed = buildJobPayloadSchema.safeParse(job.payload);
+		if (!parsed.success || job.subjectRef !== parsed.data.requestRef)
+			return false;
+		const auth = authorityFor(tx, parsed.data.requestRef);
+		return (
+			!!auth &&
+			(job.scope === undefined || auth.scope === job.scope) &&
+			service.finishBuildJob(
+				tx,
+				{ ...parsed.data, jobRef: job.jobId },
+				auth,
+				outcome,
+			)
+		);
+	}
 	return {
 		kind: BUILD_JOB_KIND,
 		payloadVersions: [1],
@@ -108,6 +129,7 @@ export function createBuildJobHandler<Tx>(options: {
 				claim.payload.requestRef,
 				claim.payload.epoch,
 				auth,
+				claim.jobId,
 			);
 			return prepared
 				? { status: "ready", input: { prepared, authority: auth } }
@@ -130,8 +152,30 @@ export function createBuildJobHandler<Tx>(options: {
 			});
 		},
 		classify: () => "fail",
-		settleInTransaction(tx, _claim, input, outcome) {
-			if (!input) return "stale";
+		settleInTransaction(tx, claim, input, outcome) {
+			if (!input) {
+				if (outcome.type === "success" || outcome.type === "retry")
+					return "stale";
+				const expired = outcome.type === "expired";
+				return terminal(
+					tx,
+					claim,
+					expired
+						? { kind: "expired", code: "deadline_exceeded" }
+						: { kind: "unavailable", code: outcome.errorCode },
+				)
+					? "applied"
+					: "stale";
+			}
+			const row = input.prepared.record;
+			if (
+				claim.jobId !== row.jobRef ||
+				claim.scope !== input.authority.scope ||
+				claim.subjectRef !== row.ref ||
+				claim.payload.requestRef !== row.ref ||
+				claim.payload.epoch !== row.epoch
+			)
+				return "stale";
 			if (outcome.type === "success")
 				return service.settle(
 					tx,
@@ -154,9 +198,8 @@ export function createBuildJobHandler<Tx>(options: {
 				? "applied"
 				: "stale";
 		},
-		cancelInTransaction(tx, { payload }) {
-			const auth = authorityFor(tx, payload.requestRef);
-			if (auth) service.cancel(tx, payload.requestRef, auth, "job");
+		cancelInTransaction(tx, job) {
+			terminal(tx, job, { kind: "cancelled", code: "user_cancelled" });
 		},
 	};
 }
