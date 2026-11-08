@@ -1,0 +1,20 @@
+{
+	"scope": "Hypothetical packet size using exact frozen artifacts. Not an implemented endpoint, authenticated certificate or delivery success result. Original failed replies remain failed.",
+	"rows": [
+		{
+			"taskId": "timezone-daily-boundary",
+			"candidatePublicBytes": 11514,
+			"limitBytes": 32768
+		},
+		{
+			"taskId": "asciidoc-opaque-roundtrip",
+			"candidatePublicBytes": 9843,
+			"limitBytes": 32768
+		},
+		{
+			"taskId": "keyboard-ime-focus",
+			"candidatePublicBytes": 11799,
+			"limitBytes": 32768
+		}
+	]
+}

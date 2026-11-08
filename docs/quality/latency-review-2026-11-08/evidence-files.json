@@ -1,0 +1,66 @@
+{
+	"snapshot": "d0952b661ba8ee0599bf8dc187684235b4381799",
+	"files": [
+		{
+			"path": "docs/quality/latency-review-2026-11-08/assessment-and-plan.md",
+			"sha256": "2e977a5c6764e1787761a85792594a60cb8ff7c9732679c26bf718418910f60f",
+			"bytes": 24058
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/audit.log",
+			"sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+			"bytes": 3
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/cache-probe.json",
+			"sha256": "a43fe8f0cd711c182d503dbd8651904dc34d383293b7b3f543ba9a39f048407f",
+			"bytes": 4812
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/consistency-check.json",
+			"sha256": "55483c6c37af64c572523ff6398bf8683ba90a1f28aac85960cc91793fd03359",
+			"bytes": 881
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/delivery-size-design.json",
+			"sha256": "a6e2af7c7c3a4e4a4c74027d8487f60478dd8caf21c3716ddece88c5a00801ac",
+			"bytes": 521
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/derive-latency.py",
+			"sha256": "28af9f985a9080130f8666c3eefa69c1e329fce500e45462d7be8c217aeaaabc",
+			"bytes": 3336
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/latency-analysis.json",
+			"sha256": "045ee1f6b53e11f9144c59dfc7588a677eece07b874a1804f06a1f3f9a650af1",
+			"bytes": 3569
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/probe-cache.mjs",
+			"sha256": "3ba60db91c8d6531fc81c49dc1e200d45a97404447216bcf0063728db4776687",
+			"bytes": 6709
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/review.json",
+			"sha256": "4c8e81602b3a8a16411f5d8006d4c6efde65832396ae3ac8e354fc584a273a43",
+			"bytes": 47062
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/score-summary.json",
+			"sha256": "9c835f0169a7214d8ed67af41a8026b1860f3e53680e642c0184ebb889ac0640",
+			"bytes": 6677
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/verification.json",
+			"sha256": "106541136947593e438a9818490819d1813571e24695e8dcd10538102e518848",
+			"bytes": 9096
+		},
+		{
+			"path": "docs/quality/latency-review-2026-11-08/verify.log",
+			"sha256": "85fb1f67673ab44ac1da093bbd72f1d31aaf16cc731fba7169564c230535dbc7",
+			"bytes": 48340
+		}
+	],
+	"scope": "Review, calculations, offline cache probe and isolated fixed-test logs. No production source changes, DB, credentials, new paid inference, or implemented low-latency endpoint."
+}

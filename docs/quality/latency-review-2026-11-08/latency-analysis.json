@@ -1,0 +1,116 @@
+{
+	"sampleCount": 3,
+	"measurement": "Recorded client HTTP durations include provider processing, queueing and network; not a decode-only GPU benchmark. Tiny differences include local work, reservation and parsing.",
+	"meanWallSeconds": 58.743681652333336,
+	"meanPhaseSeconds": {
+		"query": 1.340223624999999,
+		"disclose": 2.428979194333329,
+		"ready": 47.573044083000006,
+		"semantic-review": 7.312828472000004
+	},
+	"phasePercentOfWall": {
+		"query": 2.2814770666434123,
+		"disclose": 4.134877362145803,
+		"ready": 80.98410372804813,
+		"semantic-review": 12.448706424769231
+	},
+	"allApiPercentOfWall": 99.84916458160656,
+	"localAndOtherMeanSeconds": 0.08860627800000172,
+	"meanBodyOutputTokens": 3819.3333333333335,
+	"effectiveBodyOutputTokensPerSecond": 80.28355988046083,
+	"unchangedBodyOptimisticFloorSeconds": 47.573044083000006,
+	"requiredSpeedupToThreeSeconds": 19.581227217444443,
+	"requiredSpeedupToTwoSeconds": 29.371840826166668,
+	"sameMeasuredRateThreeSecondOutputCeilingIgnoringAllOtherWork": 240.8506796413825,
+	"hypotheticalHalfOutputBodySecondsIgnoringAllOtherWork": 23.786522041500003,
+	"readyWithinThreeSeconds": 0,
+	"deliveryReady": 1,
+	"newUsedBodyScoreMean": 96.66666666666667,
+	"cacheProbe": "cache-probe.json: local exact-goal reuse only; not a remote production SLO",
+	"semanticCacheCoverageExample": {
+		"equation": "P(ready_and_correct_within_3s) = H * P_fast + (1-H) * P_cold",
+		"assumptions": "Hypothetical target arithmetic only: P_fast=0.99 and P_cold=0, both unmeasured in the actual host.",
+		"desiredFraction": 0.95,
+		"requiredH": 0.9595959595959596
+	},
+	"fieldSizes": [
+		{
+			"taskId": "timezone-daily-boundary",
+			"postDecodeValueBytes": 12822,
+			"fieldBytes": {
+				"kind": 7,
+				"strategy": 9,
+				"sourceRefs": 91,
+				"sections": 263,
+				"patches": 2,
+				"requiredCapabilities": 2,
+				"verification": 421,
+				"assumptions": 2,
+				"name": 32,
+				"document": 4701,
+				"title": 74,
+				"description": 207,
+				"language": 4,
+				"localizedInstructions": 4804,
+				"sourceReview": 1040,
+				"nonSourceAdditions": 622,
+				"interactions": 293
+			},
+			"inputSystemBytes": 14651,
+			"inputSchemaBytes": 5825,
+			"inputDataBytes": 16712
+		},
+		{
+			"taskId": "asciidoc-opaque-roundtrip",
+			"postDecodeValueBytes": 11769,
+			"fieldBytes": {
+				"kind": 7,
+				"strategy": 9,
+				"sourceRefs": 91,
+				"sections": 671,
+				"patches": 2,
+				"requiredCapabilities": 2,
+				"verification": 745,
+				"assumptions": 2,
+				"name": 35,
+				"document": 3536,
+				"title": 64,
+				"description": 215,
+				"language": 4,
+				"localizedInstructions": 3955,
+				"sourceReview": 1092,
+				"nonSourceAdditions": 831,
+				"interactions": 260
+			},
+			"inputSystemBytes": 14651,
+			"inputSchemaBytes": 5825,
+			"inputDataBytes": 13792
+		},
+		{
+			"taskId": "keyboard-ime-focus",
+			"postDecodeValueBytes": 13077,
+			"fieldBytes": {
+				"kind": 7,
+				"strategy": 7,
+				"sourceRefs": 46,
+				"sections": 304,
+				"patches": 2,
+				"requiredCapabilities": 2,
+				"verification": 471,
+				"assumptions": 2,
+				"name": 27,
+				"document": 4192,
+				"title": 62,
+				"description": 205,
+				"language": 4,
+				"localizedInstructions": 5738,
+				"sourceReview": 1175,
+				"nonSourceAdditions": 601
+			},
+			"inputSystemBytes": 14651,
+			"inputSchemaBytes": 5825,
+			"inputDataBytes": 24052
+		}
+	],
+	"limits": "Output-rate extrapolation is illustrative, not a forecast for smaller outputs or another model. No TTFT or concurrency measurement. Post-decode JSON field sizes are byte counts, not token attribution or exact provider wire size."
+}

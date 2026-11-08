@@ -1,0 +1,29 @@
+{
+	"snapshot": "d0952b661ba8ee0599bf8dc187684235b4381799",
+	"sourceUnchanged": true,
+	"reviewProfile": "library",
+	"technicalScore": 63.7,
+	"projectScore": null,
+	"confirmedFindings": {
+		"Critical": 0,
+		"High": 2,
+		"Medium": 2,
+		"Low": 1
+	},
+	"newPaidModelCalls": 0,
+	"cumulativeAccountedUsd": 13.474359400000008,
+	"reviewEvidenceCoverage": {
+		"technical": 100.0,
+		"project": 63.3
+	},
+	"checks": [
+		"rubric validator/calculator",
+		"score/report arithmetic",
+		"source fingerprint equality",
+		"isolated verify532 and audit",
+		"offline cache200 with no added inference",
+		"paraphrase miss retained",
+		"no new paid budget events"
+	],
+	"limits": "Current technical score covers the declared library/prototype scope and changed latency requirement; it is not a production certification. Proposed fast paths and draft DTO are not implemented or measured in the real host."
+}
