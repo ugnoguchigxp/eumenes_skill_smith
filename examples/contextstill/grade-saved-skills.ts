@@ -117,12 +117,13 @@ async function main() {
 		maxUsd: number;
 		judge: CloudModel;
 	};
-	if (config.maxUsd !== 15) throw Error("budget_contract_changed");
+	if (![15, 20].includes(config.maxUsd)) throw Error("budget_contract_changed");
 	const materials = JSON.parse(
 		readFileSync(arg("--inputs"), "utf8"),
 	) as Material[];
 	const out = arg("--out"),
 		journal = arg("--journal");
+	if (!existsSync(journal)) throw Error("existing_cumulative_journal_required");
 	mkdirSync(out, { recursive: true, mode: 0o700 });
 	const save = (name: string, value: unknown) => {
 		const file = join(out, name);

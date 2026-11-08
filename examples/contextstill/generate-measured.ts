@@ -67,7 +67,7 @@ const config = JSON.parse(readFileSync(settingsPath, "utf8")) as {
 	outputTokens: number;
 	taskConstraints: unknown;
 };
-if (config.maxUsd !== 15 || config.outputTokens !== 4000)
+if (![15, 20].includes(config.maxUsd) || config.outputTokens !== 4000)
 	throw Error("generation_contract_changed");
 const constraints = requestSchema.shape.task.shape.constraints.parse(
 	config.taskConstraints,
@@ -167,7 +167,7 @@ try {
 					try {
 						const answer = await budget.complete(
 							model,
-							"novel:" + taskId + ":" + sample,
+							suite.id + ":" + taskId + ":" + sample,
 							input,
 							AbortSignal.any([
 								signal,
