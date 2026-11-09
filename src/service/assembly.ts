@@ -6,6 +6,7 @@ import type {
 import {
 	compactModelTurnSchema,
 	legacyModelTurnSchema,
+	leanModelTurnSchema,
 	modelTurnSchema,
 } from "../contracts/schema.js";
 import {
@@ -28,6 +29,7 @@ export type AssemblyProfile = {
 	turnSchema:
 		| typeof modelTurnSchema
 		| typeof compactModelTurnSchema
+		| typeof leanModelTurnSchema
 		| typeof legacyModelTurnSchema;
 };
 
@@ -53,7 +55,7 @@ export function resolveAssembly(
 			mode,
 			instructions: leanBuildInstructions,
 			instructionVersion: LEAN_INSTRUCTION_VERSION,
-			turnSchema: modelTurnSchema,
+			turnSchema: leanModelTurnSchema,
 		};
 	return {
 		mode: "baseline",

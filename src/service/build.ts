@@ -14,6 +14,7 @@ import {
 import {
 	CONTRACT,
 	compactReadySchema,
+	leanDocumentSchema,
 	skillDocumentSchema,
 	skillPresentationSchema,
 	legacyModelTurnSchema,
@@ -662,7 +663,7 @@ export async function executeBuild<Tx>(
 					.strictObject({
 						localizedInstructions:
 							skillPresentationSchema.shape.localizedInstructions,
-						document: skillDocumentSchema,
+						document: lean ? leanDocumentSchema : skillDocumentSchema,
 					})
 					.optional(),
 			})

@@ -303,6 +303,30 @@ export const modelTurnSchema = z.discriminatedUnion("kind", [
 	...controlTurns,
 ]);
 export type ModelTurn = z.infer<typeof modelTurnSchema>;
+/** Encode the document projection as provider-visible shape constraints. */
+const leanHeading = z.string().trim().min(1).max(128);
+export const leanDocumentSchema = skillDocumentSchema.safeExtend({
+	sections: z
+		.array(
+			z.discriminatedUnion("kind", [
+				z.strictObject({
+					kind: z.enum(["purpose", "modes", "principles", "safety"]),
+					heading: leanHeading,
+					body: text,
+				}),
+				z.strictObject({
+					kind: z.enum(["workflow", "completion"]),
+					heading: leanHeading,
+				}),
+			]),
+		)
+		.min(2)
+		.max(6),
+});
+export const leanModelTurnSchema = z.discriminatedUnion("kind", [
+	currentReady.extend({ document: leanDocumentSchema }),
+	...controlTurns,
+]);
 export const coverageSchema = z.enum([
 	"sufficient",
 	"partial",
