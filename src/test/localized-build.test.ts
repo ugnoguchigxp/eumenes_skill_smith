@@ -13,6 +13,7 @@ import {
 	semanticReviewInstructions,
 	disclosureInstructions,
 	INSTRUCTION_VERSION,
+	leanReviewInstructions,
 } from "../instructions/build.js";
 import { digest } from "../service/identity.js";
 import {
@@ -81,6 +82,73 @@ function currentFixture() {
 	};
 	return { f, inputs };
 }
+
+test("lean builds with two model calls and reviews the exact delivered bundle", async () => {
+	const f = fixture({ assemblyMode: "lean", external: true });
+	f.ports.registry.search = async () => [];
+	const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
+	const file = {
+		path: "references/example.md",
+		title: "照合例",
+		content: "```python\nassert sorted([2, 1]) == [1, 2]\n```",
+	};
+	f.ports.inference.complete = async (input) => {
+		inputs.push(input);
+		return {
+			value:
+				input.system === leanReviewInstructions
+					? { approved: true, reason: "照合済み" }
+					: {
+							...current,
+							sourceRefs: ["external:1"],
+							document: {
+								...current.document,
+								resourceHeading: "参照",
+								references: [file],
+							},
+						},
+			receipt: "receipt",
+			inputTokens: 1,
+			outputTokens: 1,
+		};
+	};
+	try {
+		const pending = f.write(() =>
+			f.service.submitArtifact(f.db, f.request, f.auth),
+		);
+		const work = await f.run(pending.requestRef!);
+		expect(work.settle()).toBe(true);
+		const packet = await f.service.getSkillDelivery(
+			pending.requestRef!,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		if (packet.kind !== "ready") throw Error("expected_validated_bundle");
+		expect(inputs).toHaveLength(2);
+		expect(inputs[0]!.data).toMatchObject({
+			untrustedEvidence: { items: [{ ref: "external:1", untrusted: true }] },
+		});
+		expect(inputs[1]!.data).toMatchObject({
+			untrustedReview: {
+				items: [{ artifact: packet.skill.content, files: packet.skill.files }],
+			},
+		});
+		expect(JSON.stringify(inputs[1]!.data)).not.toContain(
+			'"localizedInstructions"',
+		);
+		f.setSourceValid(false);
+		const revoked = await f.service.getSkillDelivery(
+			pending.requestRef!,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect(revoked.kind).not.toBe("ready");
+	} finally {
+		f.dispose();
+	}
+});
 
 test("current digest changes while initial disclosure payload stays archived", async () => {
 	const { f, inputs } = currentFixture();

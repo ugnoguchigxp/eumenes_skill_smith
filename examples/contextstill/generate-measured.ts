@@ -18,6 +18,7 @@ import {
 	type Ports,
 	type SkillArtifact,
 } from "../../src/index.js";
+import { LEAN_INSTRUCTION_VERSION } from "../../src/instructions/build.js";
 import { scenarioTaskSchema } from "../../src/eval/scenario-score.js";
 import { createCloudBudget, type CloudModel } from "./cloud-budget.js";
 import { savedCloud } from "./saved-cloud.js";
@@ -66,9 +67,13 @@ const config = JSON.parse(readFileSync(settingsPath, "utf8")) as {
 	connectionId: string;
 	outputTokens: number;
 	taskConstraints: unknown;
+	assemblyMode?: "baseline" | "lean";
 };
 if (![15, 20].includes(config.maxUsd) || config.outputTokens !== 4000)
 	throw Error("generation_contract_changed");
+const assemblyMode = config.assemblyMode ?? "baseline";
+if (assemblyMode !== "baseline" && assemblyMode !== "lean")
+	throw Error("invalid_assembly_mode");
 const constraints = requestSchema.shape.task.shape.constraints.parse(
 	config.taskConstraints,
 );
@@ -103,7 +108,8 @@ try {
 	const startingEvents = budget.events().map((e) => e.id);
 	save("manifest.json", {
 		version: "measured-generation.v1",
-		instructionVersion: INSTRUCTION_VERSION,
+		instructionVersion:
+			assemblyMode === "lean" ? LEAN_INSTRUCTION_VERSION : INSTRUCTION_VERSION,
 		suiteDigest: digest(rawSuite),
 		settingsDigest: digest(config),
 		inputTokens: "provider usage only, unknown stays null",
@@ -114,7 +120,7 @@ try {
 		documents: 8,
 		providerDeadlineMs: 120000,
 		workers: 1,
-		assemblyMode: "baseline",
+		assemblyMode,
 		evidenceSupply: "natural",
 		searchProfile: "bm25",
 		startingAccountedUsd: budget.spent(),
@@ -243,7 +249,7 @@ try {
 					documents: 8,
 					outputTokens: config.outputTokens,
 					constraints,
-					assemblyMode: "baseline",
+					assemblyMode,
 				});
 				const reply = await host.runDelivery();
 				const durationMs = performance.now() - start;

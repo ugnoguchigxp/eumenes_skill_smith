@@ -9,6 +9,7 @@ import { renderSkillMarkdown, checkLocalizedHost } from "./skill-markdown.js";
 import {
 	semanticReviewInstructions,
 	disclosureInstructions,
+	leanReviewInstructions,
 } from "../instructions/build.js";
 import {
 	CONTRACT,
@@ -388,9 +389,59 @@ export async function executeBuild<Tx>(
 	let lastFailure = "invalid_model_output";
 	let reSearchUsed = false;
 	const assembly = resolveAssembly(ports.assemblyMode ?? "baseline");
+	const lean = assembly.mode === "lean";
+	if (lean) {
+		// Reserve room for validation after build and at delivery. Rank limits reads,
+		// while the model can still disclose other candidates and determines applicability.
+		const eligible = state.candidates
+			.filter(
+				(c) =>
+					c.status === "active" &&
+					c.complete &&
+					(c.scope === "shared" || c.scope === r.authority.scope),
+			)
+			.slice(0, 2);
+		for (const { ref } of eligible) {
+			if (!state.evidence.some((e) => e.ref === ref)) {
+				if (
+					state.evidence.length >= request.limits.documents ||
+					sharedSourceCallsUsed + 4 >= request.limits.sourceCalls
+				)
+					break;
+				try {
+					await evidenceIO.disclose(state, [ref]);
+				} catch (error) {
+					checkpoint();
+					if (
+						error instanceof SkillSmithError &&
+						!["source_revoked", "source_contract_violation"].includes(
+							error.code,
+						)
+					)
+						throw error;
+					continue;
+				}
+			}
+			const doc = state.evidence.find((e) => e.ref === ref);
+			if (doc?.status !== "active" || !doc.complete) continue;
+			const packet = discloseEvidence([doc], [{ ref }], true);
+			// Keep overlarge documents available for explicit section disclosure.
+			if (
+				bytes([...disclosed, ...packet]) <=
+				Math.min(16_384, request.limits.inputBytes / 4)
+			) {
+				disclosed.push(...packet);
+				disclosureTrace.disclosedRefs.push(ref);
+				disclosureTrace.disclosedSectionIds.push(
+					...(doc.sections ?? []).map((s) => ref + "#" + s.id),
+				);
+			}
+		}
+	}
 	let currentBuildTurn = assembly.mode !== "baseline";
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
+		if (lean && sharedModelCallsUsed + 1 >= request.limits.modelCalls) break;
 		modelCallsUsed = sharedModelCallsUsed + 1;
 		const turnSchema = currentBuildTurn
 			? assembly.turnSchema
@@ -624,8 +675,13 @@ export async function executeBuild<Tx>(
 			const artifact = renderSkillMarkdown(
 				buildContent(p, reviewed, state.evidence),
 			);
+			const {
+				localizedInstructions: _instructions,
+				document,
+				...auditDecision
+			} = reviewed;
 			const input = {
-				system: semanticReviewInstructions,
+				system: lean ? leanReviewInstructions : semanticReviewInstructions,
 				data: {
 					originalTask: request.task,
 					reviewPlan: [
@@ -644,7 +700,12 @@ export async function executeBuild<Tx>(
 					untrustedReview: spotlightUntrusted([
 						{
 							ref: "review",
-							decision: reviewed,
+							decision: lean
+								? {
+										...auditDecision,
+										provisionalNotice: document?.provisionalNotice,
+									}
+								: reviewed,
 							sources: state.evidence.filter((e) =>
 								reviewed.sourceRefs.includes(e.ref),
 							),

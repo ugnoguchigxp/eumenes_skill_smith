@@ -1,0 +1,26 @@
+{
+	"id": "first-generation-known-ssrf-regression",
+	"tasks": [
+		{
+			"id": "outbound-fetch-policy",
+			"goal": "ユーザー入力のURLをサーバーで取得する機能について、SSRFを防ぐ改修と検証の計画を作ってください。HTTP/HTTPS以外、URL内の認証情報、DNSが返す複数のIPv4/IPv6、localhost・内部ネットワーク・クラウドmetadata・IPv4 mapped IPv6を扱います。redirectの各段と実接続先でも同じ制約を保ち、DNS rebinding、時間と応答サイズの上限を含めてください。言語、DNS resolver、HTTP clientのAPIは未提示です。安全な合成試験と実接続で確かめる項目を分け、現在は計画だけ作ってください。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "原条件を守り、順序・合否・停止条件と必要な実環境検証が分かる計画を示す。未知のAPIや検証成功を捏造しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_id3jvqsnxxaaolbscb3lacwwty"],
+			"withheldChecks": [
+				{
+					"id": "complete-target-validation",
+					"text": "URL構文だけで承認せず、DNSの全A/AAAAと実接続先を検査する。redirectごとに再検査し、再解決と接続の不一致、private/loopback/link-local/CGN/multicast/ULA、mapped addressの抜け道を扱う。"
+				},
+				{
+					"id": "bounded-and-honest",
+					"text": "時間・容量・redirect数等の有限な上限と拒否時の観測を計画する。合成モデルの成功を実HTTP clientのDNS/redirect/接続制御の成功と同一視せず、未確認なら停止する。"
+				}
+			]
+		}
+	]
+}

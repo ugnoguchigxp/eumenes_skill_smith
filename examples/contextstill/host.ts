@@ -17,7 +17,7 @@ export type ExampleHostOptions = {
 	/** Task context supplied by the evaluation host; defaults remain wiring-only. */
 	constraints?: GuidanceRequest["task"]["constraints"];
 	/** Current baseline by default with injected inference; legacy is archival/wiring-only. */
-	assemblyMode?: "baseline" | "compact" | "legacy";
+	assemblyMode?: Ports<Database>["assemblyMode"];
 };
 
 /** Standalone wiring example. Fixed model/authority/jobs are test doubles, not Eumenes adapters. */

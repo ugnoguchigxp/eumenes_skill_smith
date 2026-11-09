@@ -14,10 +14,12 @@ import {
 	compactBuildInstructions,
 	COMPACT_INSTRUCTION_VERSION,
 	INSTRUCTION_VERSION,
+	leanBuildInstructions,
+	LEAN_INSTRUCTION_VERSION,
 } from "../instructions/build.js";
 import { digest, requireThat } from "./identity.js";
 
-export type AssemblyMode = "baseline" | "compact" | "legacy";
+export type AssemblyMode = "baseline" | "compact" | "lean" | "legacy";
 
 export type AssemblyProfile = {
 	mode: AssemblyMode;
@@ -45,6 +47,13 @@ export function resolveAssembly(
 			instructions: compactBuildInstructions,
 			instructionVersion: COMPACT_INSTRUCTION_VERSION,
 			turnSchema: compactModelTurnSchema,
+		};
+	if (mode === "lean")
+		return {
+			mode,
+			instructions: leanBuildInstructions,
+			instructionVersion: LEAN_INSTRUCTION_VERSION,
+			turnSchema: modelTurnSchema,
 		};
 	return {
 		mode: "baseline",

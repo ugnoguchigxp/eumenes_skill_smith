@@ -84,3 +84,15 @@ export const compactBuildInstructions =
 export const COMPACT_INSTRUCTION_VERSION =
 	"build.compact." +
 	digest(compactBuildInstructions + semanticReviewInstructions);
+
+export const leanBuildInstructions = `${buildInstructions}
+短い生成経路の出力規則。最初から untrustedEvidence に全文がある資料はその場で検討し、再開示しない。必要な別資料だけ disclose する。候補順は適合の証明ではない。readyの全JSONには本文、最小の実行可能例、監査項目を含む。上限の約半分を目安に、固有の行動、合否、停止条件、参照例を優先し、同じ情報を次の欄へ転載しない。
+・localizedInstructions は手順と分岐。document の purpose/principles/safety はそれぞれ役割の異なる短文。completion の body は空にし、合否は verification に一度だけ書く。ホストが読者向け制約と verification を追記する。原文制約を逐語で再掲しない。異なる出力言語へ訳す必要がある場合だけ localizedHost を使う。
+・sections や patches は適用差分だけ。本文を複製しない。sourceReview.assessment は出典の適否と限界を短い一文で記し、個別の疑義は flaggedItems、根拠外の追加は nonSourceAdditions に一度だけ記す。点数や審査経緯は書かない。監査の claim/理由を省略する代わりに短くする。
+・reference は主要な不変条件を検出する最小の自己完結例を優先し、正例と意味のある負例、期待値、assert、適用限界を含める。本文の説明を繰り返さず、コードや環境の証拠を創作しない。短さのために必須条件や安全性を削らない。`;
+
+export const leanReviewInstructions = `${semanticReviewInstructions}
+全本文と全参照は artifact と files に一度だけ入っている。decision は照合用の判断・出典・監査情報。全観点を評価し、reason は判定と最重要根拠を短い一文で返す。観点名、配点、資料本文、検証手順は反復しない。修正は従来の全条件を満たす場合に限り返す。`;
+
+export const LEAN_INSTRUCTION_VERSION =
+	"build.lean." + digest(leanBuildInstructions + leanReviewInstructions);
