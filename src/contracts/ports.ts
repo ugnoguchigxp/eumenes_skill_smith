@@ -123,7 +123,7 @@ export interface Ports<Tx> {
 			reasoningTokens?: number | null;
 			cachedInputTokens?: number | null;
 		}>;
-		validReceipt(tx: Tx, receipt: string): boolean;
+		validReceipt(tx: Tx, receipt: string, requestRef?: string): boolean;
 	};
 	policy: {
 		resolve(tx: Tx, request: GuidanceRequest, authority: Authority): Policy;

@@ -302,7 +302,7 @@ export function createApprovedSkillOperations<Tx>(
 		requireThat(
 			decision.kind === "selected" &&
 				selected.receipt &&
-				selectionInference().validReceipt(tx, selected.receipt),
+				selectionInference().validReceipt(tx, selected.receipt, s.digest),
 			"selection_unavailable",
 		);
 		const chosen = s.candidates.find((r) => r.ref === decision.ref),
@@ -352,7 +352,7 @@ export function createApprovedSkillOperations<Tx>(
 		requireThat(
 			selected.decision.kind === "miss" &&
 				(selected.receipt
-					? selectionInference().validReceipt(tx, selected.receipt)
+					? selectionInference().validReceipt(tx, selected.receipt, s.digest)
 					: s.candidates.length === 0),
 			"selection_unavailable",
 		);

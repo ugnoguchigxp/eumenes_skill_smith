@@ -256,7 +256,7 @@ export function createResultOperations<Tx>(
 					"report",
 					s.report.input.evidence,
 				) &&
-				p.inference.validReceipt(tx, result.receipt),
+				p.inference.validReceipt(tx, result.receipt, s.reflection.ref),
 			"stale_result",
 		);
 		if (row.outcome === "completed") return repo.proposal(tx, row.proposalRef!);
@@ -579,7 +579,7 @@ export function createResultOperations<Tx>(
 					"report",
 					s.evidence,
 				) &&
-				p.inference.validReceipt(tx, result.receipt),
+				p.inference.validReceipt(tx, result.receipt, s.executionRef),
 			"stale_result",
 		);
 		const current = repo.report(tx, auth.scope, s.executionRef);

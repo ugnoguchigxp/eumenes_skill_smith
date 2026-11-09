@@ -400,7 +400,10 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			finish(tx, row, { kind: "expired", code: "deadline_exceeded" });
 			return false;
 		}
-		if (!result.receipt || !p.inference.validReceipt(tx, result.receipt)) {
+		if (
+			!result.receipt ||
+			!p.inference.validReceipt(tx, result.receipt, row.ref)
+		) {
 			finish(tx, row, { kind: "rejected", code: "receipt_revoked" });
 			return false;
 		}

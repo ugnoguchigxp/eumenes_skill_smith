@@ -32,3 +32,7 @@ export {
 	createBuildJobHandler,
 } from "./integration/queue.js";
 export type { BuildQueue, BuildJobHandler } from "./integration/queue.js";
+export {
+	createEumenesInference,
+	type EumenesControl,
+} from "./integration/eumenes-inference.js";
