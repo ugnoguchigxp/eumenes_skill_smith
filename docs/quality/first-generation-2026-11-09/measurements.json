@@ -1,0 +1,1695 @@
+{
+	"runs": [
+		{
+			"lane": "baseline",
+			"snapshot": "87516e549be7f4ac6166b99d331b8cbdb4442464",
+			"instructionVersion": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b",
+			"preparationMs": 4740.7789999999995,
+			"attempted": 3,
+			"ready": 1,
+			"timingCaptured": 3,
+			"complete": false,
+			"tasks": [
+				{
+					"taskId": "websocket-replay-window",
+					"startedAt": "2026-11-08T23:57:35.451Z",
+					"endedAt": "2026-11-08T23:58:33.508Z",
+					"durationMs": 58056.617667,
+					"status": "error",
+					"code": "cloud_output_limit",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "websocket-replay-window",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "1cda5572e4e434cf3da6e817d7ff87529d9a27b468b3b96a95f64c38b975387c",
+							"startedAt": "2026-11-08T23:57:35.456Z",
+							"durationMs": 1492.3089579999996,
+							"receipt": "resp_036f35f1390311df016af10c7022a887d0a278f455c81dbed3",
+							"status": "completed",
+							"inputTokens": 302,
+							"outputTokens": 45,
+							"reasoningTokens": 0,
+							"costUsd": 0.00019280000000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "disclose",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "12c983f93b52082bf6dce8a8ea5af462f786e1ec488773a9a56b106a2afadbb9",
+							"startedAt": "2026-11-08T23:57:37.003Z",
+							"durationMs": 2592.9042500000005,
+							"receipt": "resp_0920f432272b411a016af10c712acc87d09fa7a17f90e47684",
+							"status": "completed",
+							"inputTokens": 4665,
+							"outputTokens": 80,
+							"reasoningTokens": 0,
+							"costUsd": 0.01013,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "draft",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "97e16a3b9802e26812e086b6a826ebaf007653edcba11ac961e94f6cbaff05d8",
+							"startedAt": "2026-11-08T23:57:39.600Z",
+							"durationMs": 53904.981,
+							"status": "error",
+							"code": "cloud_output_limit",
+							"inputTokens": 10714,
+							"outputTokens": 4000,
+							"reasoningTokens": 195,
+							"costUsd": 0.061428,
+							"incompleteReason": "max_output_tokens",
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": null
+						}
+					],
+					"tokens": {
+						"inputTokens": 15681,
+						"outputTokens": 4125,
+						"reasoningTokens": 195,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 1
+					},
+					"costUsd": 0.0717508,
+					"selectedSources": null,
+					"grade": null
+				},
+				{
+					"taskId": "shared-json-contract",
+					"startedAt": "2026-11-08T23:58:33.526Z",
+					"endedAt": "2026-11-08T23:59:35.865Z",
+					"durationMs": 62338.665875,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "shared-json-contract",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "69fe514ff814043e9736bfa3f4442c8e55ec20575015af90130e27020b32b336",
+							"startedAt": "2026-11-08T23:58:33.529Z",
+							"durationMs": 1736.0921249999956,
+							"receipt": "resp_070d5defd92927b9016af10caa144087d088b44cc4c3f40cf7",
+							"status": "completed",
+							"inputTokens": 277,
+							"outputTokens": 38,
+							"reasoningTokens": 0,
+							"costUsd": 0.00017160000000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "disclose",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "dfb8af4c5b6ea10aef3e02e40cb7f759389ca81871b9d765b65385f996130bed",
+							"startedAt": "2026-11-08T23:58:35.298Z",
+							"durationMs": 2054.7966250000027,
+							"receipt": "resp_07e06185aeaa6874016af10cab6c5487d08706b137b472539b",
+							"status": "completed",
+							"inputTokens": 4702,
+							"outputTokens": 54,
+							"reasoningTokens": 0,
+							"costUsd": 0.009944,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1081
+						},
+						{
+							"phase": "ready",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "452a3b67022b008df81f035d37b4bb2f10dfe310e53433f5b25e2ea8b8a37ffa",
+							"startedAt": "2026-11-08T23:58:37.365Z",
+							"durationMs": 52463.762749999994,
+							"receipt": "resp_01907a84d8f67886016af10cad857887d09d1fc3c5bcc6ad09",
+							"status": "completed",
+							"inputTokens": 10099,
+							"outputTokens": 3801,
+							"reasoningTokens": 101,
+							"costUsd": 0.058208,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 4759
+						},
+						{
+							"phase": "review",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "ccc41be1457257ac14df4716c73cded7a71c29d54c2969708c9c4ec3668f1aeb",
+							"startedAt": "2026-11-08T23:59:29.852Z",
+							"durationMs": 5993.688624999995,
+							"receipt": "resp_0f53e964bf618cff016af10ce1fa7887d09b853915e0d6d2b2",
+							"status": "completed",
+							"inputTokens": 9523,
+							"outputTokens": 351,
+							"reasoningTokens": 43,
+							"costUsd": 0.022556,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 24601,
+						"outputTokens": 4244,
+						"reasoningTokens": 144,
+						"cachedInputTokens": 5840
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0908796,
+					"selectedSources": ["contextstill:kn_3x7in2y2g2dpzwiwix5o4jxa5q"],
+					"grade": {
+						"total": 99,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 10,
+							"coverage": 10,
+							"concision": 9,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-85050a8b2a86"
+					},
+					"skillPath": "skills/baseline/shared-json-contract-migration/SKILL.md",
+					"bundleDigest": "65dddfe9b000a09c66accc2e26c4bb38c6c06f3f67bd4d8734bdb214c65dfd72"
+				},
+				{
+					"taskId": "payment-webhook-finality",
+					"startedAt": "2026-11-08T23:59:35.872Z",
+					"endedAt": "2026-11-08T23:59:47.383Z",
+					"durationMs": 11510.097249999992,
+					"status": "needs_input",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "payment-webhook-finality",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "cbbf9a37c9df1cedb8fac5b9a59386c000b0d62395f54331ac6ddcdd4f80c4ed",
+							"startedAt": "2026-11-08T23:59:35.874Z",
+							"durationMs": 1177.380707999997,
+							"receipt": "resp_06712698e93bee96016af10ce80d2087d0b9ca73f227722751",
+							"status": "completed",
+							"inputTokens": 281,
+							"outputTokens": 41,
+							"reasoningTokens": 0,
+							"costUsd": 0.000178,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "re_search",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "5ddcf04bde6befaab2a14b54ee6254cb12576360ceb9d896b1c18ab9ab096cc3",
+							"startedAt": "2026-11-08T23:59:37.079Z",
+							"durationMs": 4094.7208329999994,
+							"receipt": "resp_03b6ad70ca9eb800016af10ce93f5487d0b1c463a9c2102aff",
+							"status": "completed",
+							"inputTokens": 4674,
+							"outputTokens": 158,
+							"reasoningTokens": 11,
+							"costUsd": 0.010928,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1081
+						},
+						{
+							"phase": "needs_input",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "862c64da651a96842e248000c45b59ea3186bad2c50a8518600d5c806954299d",
+							"startedAt": "2026-11-08T23:59:41.223Z",
+							"durationMs": 6153.565540999989,
+							"receipt": "resp_0063194283b07de9016af10ced8ba087d09372e280d91e2bfe",
+							"status": "completed",
+							"inputTokens": 4933,
+							"outputTokens": 254,
+							"reasoningTokens": 64,
+							"costUsd": 0.012406,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1081
+						}
+					],
+					"tokens": {
+						"inputTokens": 9888,
+						"outputTokens": 453,
+						"reasoningTokens": 75,
+						"cachedInputTokens": 2162
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.023511999999999998,
+					"selectedSources": null,
+					"grade": null
+				}
+			]
+		},
+		{
+			"lane": "lean",
+			"snapshot": "84da2166e5176d0a9e7710f65dc20cb64f968ee2",
+			"instructionVersion": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041",
+			"preparationMs": 2281.078084,
+			"attempted": 3,
+			"ready": 3,
+			"timingCaptured": 3,
+			"complete": true,
+			"tasks": [
+				{
+					"taskId": "websocket-replay-window",
+					"startedAt": "2026-11-09T00:00:40.499Z",
+					"endedAt": "2026-11-09T00:01:39.323Z",
+					"durationMs": 58823.691417,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "websocket-replay-window",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "1cda5572e4e434cf3da6e817d7ff87529d9a27b468b3b96a95f64c38b975387c",
+							"startedAt": "2026-11-09T00:00:40.504Z",
+							"durationMs": 1227.0975829999998,
+							"receipt": "resp_0398ac9799c741fc016af10d28a1a887d0b43322f0bcccb6ef",
+							"status": "completed",
+							"inputTokens": 302,
+							"outputTokens": 27,
+							"reasoningTokens": 0,
+							"costUsd": 0.000164,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "104a1b1f97db2847fc8359335e5b94fbada0b8f487c6d37dafaef482d6cefea4",
+							"startedAt": "2026-11-09T00:00:41.780Z",
+							"durationMs": 51729.072458,
+							"receipt": "resp_0b09744551ed706d016af10d29ef6087d0acda0dd2fa7420d2",
+							"status": "completed",
+							"inputTokens": 10967,
+							"outputTokens": 3707,
+							"reasoningTokens": 115,
+							"costUsd": 0.059004,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "review",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "d55e5ffdc866f692c72a7299985c46739794f63ad6f4523cb361142846e4b645",
+							"startedAt": "2026-11-09T00:01:33.522Z",
+							"durationMs": 5776.076166999999,
+							"receipt": "resp_04f43379b8e3db18016af10d5da4f887d0b6acb36ccade8ea0",
+							"status": "completed",
+							"inputTokens": 7444,
+							"outputTokens": 224,
+							"reasoningTokens": 73,
+							"costUsd": 0.017128,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 18713,
+						"outputTokens": 3958,
+						"reasoningTokens": 188,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.076296,
+					"selectedSources": [
+						"contextstill:kn_klwgn7v7kadq4dc7nmbd2ry7hi",
+						"contextstill:kn_fqnibhsasjxd555vaicmhm4ocm"
+					],
+					"grade": {
+						"total": 98,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 10,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-b121bf2e64ca"
+					},
+					"skillPath": "skills/lean/websocket-progress-recovery-plan/SKILL.md",
+					"bundleDigest": "5fe6ca3a1d0596a89c69956ebf9a84f744cf8eb9c038387353b78eb9e8b9c531"
+				},
+				{
+					"taskId": "shared-json-contract",
+					"startedAt": "2026-11-09T00:01:39.334Z",
+					"endedAt": "2026-11-09T00:02:34.604Z",
+					"durationMs": 55268.871999999996,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "shared-json-contract",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "69fe514ff814043e9736bfa3f4442c8e55ec20575015af90130e27020b32b336",
+							"startedAt": "2026-11-09T00:01:39.336Z",
+							"durationMs": 925.0374169999996,
+							"receipt": "resp_0ba1173b203649a6016af10d63804c87d08b0d327d51644c0b",
+							"status": "completed",
+							"inputTokens": 277,
+							"outputTokens": 43,
+							"reasoningTokens": 0,
+							"costUsd": 0.00017960000000000003,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "730b0fc203fa2dd519632e41adad0e8593bbaba3d50e5234f421dbf230a3972a",
+							"startedAt": "2026-11-09T00:01:40.295Z",
+							"durationMs": 50143.372666,
+							"receipt": "resp_0fa8d021749f7313016af10d64797487d0882e16b90515e32d",
+							"status": "completed",
+							"inputTokens": 11226,
+							"outputTokens": 3592,
+							"reasoningTokens": 135,
+							"costUsd": 0.058372,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 5171
+						},
+						{
+							"phase": "review",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "c74b48c6ea22b99b870ac7f049f6577d9e3458079947a4327fdf7b4c6a54d459",
+							"startedAt": "2026-11-09T00:02:30.461Z",
+							"durationMs": 4126.881583000009,
+							"receipt": "resp_031030098974b18d016af10d96976087d08bd1b26151128adf",
+							"status": "completed",
+							"inputTokens": 6910,
+							"outputTokens": 192,
+							"reasoningTokens": 38,
+							"costUsd": 0.01574,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1662
+						}
+					],
+					"tokens": {
+						"inputTokens": 18413,
+						"outputTokens": 3827,
+						"reasoningTokens": 173,
+						"cachedInputTokens": 6833
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0742916,
+					"selectedSources": ["contextstill:kn_3x7in2y2g2dpzwiwix5o4jxa5q"],
+					"grade": {
+						"total": 95.5,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 9,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-2a9670982560"
+					},
+					"skillPath": "skills/lean/shared-config-json-contract-plan/SKILL.md",
+					"bundleDigest": "4d2b57afcb04e64f731b15bebd05ca33129eb7c75f7012101335daaaf3950ed1"
+				},
+				{
+					"taskId": "payment-webhook-finality",
+					"startedAt": "2026-11-09T00:02:34.617Z",
+					"endedAt": "2026-11-09T00:03:41.092Z",
+					"durationMs": 66474.09224999999,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "payment-webhook-finality",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "cbbf9a37c9df1cedb8fac5b9a59386c000b0d62395f54331ac6ddcdd4f80c4ed",
+							"startedAt": "2026-11-09T00:02:34.619Z",
+							"durationMs": 928.619875000004,
+							"receipt": "resp_06efe53f8c8889e8016af10d9abcf487d0bf33c5de5661d211",
+							"status": "completed",
+							"inputTokens": 281,
+							"outputTokens": 35,
+							"reasoningTokens": 0,
+							"costUsd": 0.0001684,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "74ce6d06107a2768b862c69bba1885441c00697674cbdce70507ebf249a8cec2",
+							"startedAt": "2026-11-09T00:02:35.596Z",
+							"durationMs": 59225.46670800001,
+							"receipt": "resp_0a0005f2bbd389d6016af10d9bbd4c87d0b493de8a8c54e10d",
+							"status": "completed",
+							"inputTokens": 11150,
+							"outputTokens": 3725,
+							"reasoningTokens": 204,
+							"costUsd": 0.05955,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 5171
+						},
+						{
+							"phase": "review",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "075dd33b01f413964cb6c27388bcb2f7836f83dda15bc386a470b7d9995b47ae",
+							"startedAt": "2026-11-09T00:03:34.840Z",
+							"durationMs": 6237.282042000006,
+							"receipt": "resp_0054b645171869a3016af10dd6fa6087d0afe74fb7f3ca4601",
+							"status": "completed",
+							"inputTokens": 7290,
+							"outputTokens": 240,
+							"reasoningTokens": 97,
+							"costUsd": 0.01698,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1662
+						}
+					],
+					"tokens": {
+						"inputTokens": 18721,
+						"outputTokens": 4000,
+						"reasoningTokens": 301,
+						"cachedInputTokens": 6833
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0766984,
+					"selectedSources": ["contextstill:kn_wiav4hiriepn5izzmo5p3ysomq"],
+					"grade": {
+						"total": 98,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 10,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-a588dc06d9a7"
+					},
+					"skillPath": "skills/lean/verified-payment-fulfillment-plan/SKILL.md",
+					"bundleDigest": "62263ff56ef85864c7db179f1e248139172fbeb69318dead06bebd31f13a9643"
+				}
+			]
+		},
+		{
+			"lane": "ssrf",
+			"snapshot": "84da2166e5176d0a9e7710f65dc20cb64f968ee2",
+			"instructionVersion": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041",
+			"preparationMs": 2078.6346249999997,
+			"attempted": 1,
+			"ready": 0,
+			"timingCaptured": 1,
+			"complete": false,
+			"tasks": [
+				{
+					"taskId": "outbound-fetch-policy",
+					"startedAt": "2026-11-09T00:03:43.232Z",
+					"endedAt": "2026-11-09T00:04:50.022Z",
+					"durationMs": 66788.93000000001,
+					"status": "error",
+					"code": "semantic_review_failed",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "outbound-fetch-policy",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "a52a84f91d369e3a9c7fdc1c38b2e8e21fa66b97bfd31b6108fc4f752489de09",
+							"startedAt": "2026-11-09T00:03:43.238Z",
+							"durationMs": 1347.6179579999998,
+							"receipt": "resp_0b57dd0987e53338016af10ddf8be087d0b0d6010b28273d4a",
+							"status": "completed",
+							"inputTokens": 343,
+							"outputTokens": 46,
+							"reasoningTokens": 0,
+							"costUsd": 0.0002108,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "bdf9249c22b89abfc051ce5b6f2b7a4a22ff1990d30f4ec585e610d45467ae6e",
+							"startedAt": "2026-11-09T00:03:44.613Z",
+							"durationMs": 57734.069124999995,
+							"receipt": "resp_0edba4a5347f6571016af10de0cd4c87d08a1476abc391216b",
+							"status": "completed",
+							"inputTokens": 11069,
+							"outputTokens": 3771,
+							"reasoningTokens": 166,
+							"costUsd": 0.059848,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 5171
+						},
+						{
+							"phase": "review",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "3ae68227a27d0afb56fc2230c434d2a23d3a446cc9f11bb11625eb67c02798be",
+							"startedAt": "2026-11-09T00:04:42.380Z",
+							"durationMs": 7636.822,
+							"receipt": "resp_033f023e3d8496ea016af10e1a84b487d0b6a8fdd33cc0aec4",
+							"status": "completed",
+							"inputTokens": 7623,
+							"outputTokens": 339,
+							"reasoningTokens": 101,
+							"costUsd": 0.018636,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1662
+						}
+					],
+					"tokens": {
+						"inputTokens": 19035,
+						"outputTokens": 4156,
+						"reasoningTokens": 267,
+						"cachedInputTokens": 6833
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0786948,
+					"selectedSources": [
+						"contextstill:kn_id3jvqsnxxaaolbscb3lacwwty",
+						"contextstill:kn_j6ntfdwxw5e4wzkpphss5kkkwa"
+					],
+					"grade": null
+				}
+			]
+		},
+		{
+			"lane": "fast",
+			"snapshot": "df68133cd68b257fa9162425c085fe0d8ab7a685",
+			"instructionVersion": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041",
+			"preparationMs": 2109.125333,
+			"attempted": 3,
+			"ready": 0,
+			"timingCaptured": 3,
+			"complete": false,
+			"tasks": [
+				{
+					"taskId": "websocket-replay-window",
+					"startedAt": "2026-11-09T00:05:24.840Z",
+					"endedAt": "2026-11-09T00:06:05.264Z",
+					"durationMs": 40423.509333999995,
+					"status": "error",
+					"code": "invalid_model_output",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "websocket-replay-window",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "1cda5572e4e434cf3da6e817d7ff87529d9a27b468b3b96a95f64c38b975387c",
+							"startedAt": "2026-11-09T00:05:24.845Z",
+							"durationMs": 962.5727499999998,
+							"receipt": "resp_0dcc52085ad60ed3016af10e44f9ec87d0a3f915793e17a5a2",
+							"status": "completed",
+							"inputTokens": 302,
+							"outputTokens": 43,
+							"reasoningTokens": 0,
+							"costUsd": 0.00018960000000000003,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "7667a30bea590674bdb618c2f079458ad8327ee3e9c380baa2972e06dcfa4f61",
+							"startedAt": "2026-11-09T00:05:25.858Z",
+							"durationMs": 18544.287042,
+							"receipt": "resp_09174d104b2922cf016af10e46085487d09a912cb7ffed62de",
+							"status": "completed",
+							"inputTokens": 10859,
+							"outputTokens": 2997,
+							"reasoningTokens": 0,
+							"costUsd": 0.009138799999999999,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "websocket-replay-window",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "fedfb2bba544c57a56d2bc64fa6203696e026bc7e55065c52823d9ad2643e19b",
+							"startedAt": "2026-11-09T00:05:44.415Z",
+							"durationMs": 20845.441959,
+							"receipt": "resp_03ed9b46ec263f7a016af10e58c9e087d0bc323d9fda96adaa",
+							"status": "completed",
+							"inputTokens": 10900,
+							"outputTokens": 3178,
+							"reasoningTokens": 0,
+							"costUsd": 0.0094448,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 22061,
+						"outputTokens": 6218,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.018773199999999997,
+					"selectedSources": [
+						"contextstill:kn_klwgn7v7kadq4dc7nmbd2ry7hi",
+						"contextstill:kn_jipfdeudmm6rzw4mlhpyxkq5le"
+					],
+					"grade": null
+				},
+				{
+					"taskId": "shared-json-contract",
+					"startedAt": "2026-11-09T00:06:05.275Z",
+					"endedAt": "2026-11-09T00:06:43.680Z",
+					"durationMs": 38404.83349999999,
+					"status": "error",
+					"code": "invalid_model_output",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "shared-json-contract",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "69fe514ff814043e9736bfa3f4442c8e55ec20575015af90130e27020b32b336",
+							"startedAt": "2026-11-09T00:06:05.277Z",
+							"durationMs": 792.3760830000028,
+							"receipt": "resp_0166a85cd5fa56b0016af10e6d647487d0b46ad9032dcb0cda",
+							"status": "completed",
+							"inputTokens": 277,
+							"outputTokens": 47,
+							"reasoningTokens": 0,
+							"costUsd": 0.000186,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "5ee9fdb594a2ec41fc544badf6e136692ddc8256b4d0065d262ca45d4359a672",
+							"startedAt": "2026-11-09T00:06:06.119Z",
+							"durationMs": 17743.354083,
+							"receipt": "resp_0b198fd1af5061b1016af10e6e43a087d0938e006a254e7b49",
+							"status": "completed",
+							"inputTokens": 11059,
+							"outputTokens": 2925,
+							"reasoningTokens": 0,
+							"costUsd": 0.0091036,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "shared-json-contract",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "f153bc24b3d7348ec4a847b1ef272a4ceee1cb9f6be71274a2dafc4455c7c60c",
+							"startedAt": "2026-11-09T00:06:23.869Z",
+							"durationMs": 19808.051333000003,
+							"receipt": "resp_08a1881b3cf38e4c016af10e800e4c87d089aba507c222376f",
+							"status": "completed",
+							"inputTokens": 11100,
+							"outputTokens": 3081,
+							"reasoningTokens": 0,
+							"costUsd": 0.0093696,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 22436,
+						"outputTokens": 6053,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0186592,
+					"selectedSources": [
+						"contextstill:kn_y5qtud4kqbsknnsk6l7b65swmu",
+						"contextstill:kn_3x7in2y2g2dpzwiwix5o4jxa5q"
+					],
+					"grade": null
+				},
+				{
+					"taskId": "payment-webhook-finality",
+					"startedAt": "2026-11-09T00:06:43.693Z",
+					"endedAt": "2026-11-09T00:07:26.508Z",
+					"durationMs": 42814.611000000004,
+					"status": "error",
+					"code": "invalid_model_output",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "payment-webhook-finality",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "cbbf9a37c9df1cedb8fac5b9a59386c000b0d62395f54331ac6ddcdd4f80c4ed",
+							"startedAt": "2026-11-09T00:06:43.695Z",
+							"durationMs": 798.9356669999979,
+							"receipt": "resp_0286a41f38532d58016af10e93d13887d0ac8051fdd1082389",
+							"status": "completed",
+							"inputTokens": 281,
+							"outputTokens": 36,
+							"reasoningTokens": 0,
+							"costUsd": 0.00017,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "83445af301348eb6f85e2f7458b7c940f944c6642da37a38b6b1196c55d8b8cc",
+							"startedAt": "2026-11-09T00:06:44.517Z",
+							"durationMs": 18968.422749999998,
+							"receipt": "resp_045a767e7e3cd1e5016af10e94ac7887d0a588bf299db0dc87",
+							"status": "completed",
+							"inputTokens": 10656,
+							"outputTokens": 3003,
+							"reasoningTokens": 0,
+							"costUsd": 0.009067200000000001,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 4992
+						},
+						{
+							"phase": "ready",
+							"taskId": "payment-webhook-finality",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "f6b9493e46a7d4085f4211e89c07d93f1d912c3e98954c0c9d12e2d9b5e4f127",
+							"startedAt": "2026-11-09T00:07:03.491Z",
+							"durationMs": 23012.543957999995,
+							"receipt": "resp_021955abd98a1ad9016af10ea7cdac87d08d33fc5d50a07553",
+							"status": "completed",
+							"inputTokens": 10697,
+							"outputTokens": 3094,
+							"reasoningTokens": 0,
+							"costUsd": 0.0092292,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 21634,
+						"outputTokens": 6133,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 4992
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0184664,
+					"selectedSources": [
+						"contextstill:kn_zcqk4ytypcyk5g4aunmgyhmh74",
+						"contextstill:kn_3n4na7afzvplxphxttx2id7ma4"
+					],
+					"grade": null
+				}
+			]
+		},
+		{
+			"lane": "ssrf-v2",
+			"snapshot": "8a8f470b069c3a2710c80d55dad5c6a375d56715",
+			"instructionVersion": "build.lean.5f35613790077a36ed5a1267f407fe689285a449ffa4aae096a2eaa3b1cee5cb",
+			"preparationMs": 2002.022292,
+			"attempted": 1,
+			"ready": 0,
+			"timingCaptured": 1,
+			"complete": false,
+			"tasks": [
+				{
+					"taskId": "outbound-fetch-policy",
+					"startedAt": "2026-11-09T00:07:43.057Z",
+					"endedAt": "2026-11-09T00:08:41.796Z",
+					"durationMs": 58738.198458,
+					"status": "error",
+					"code": "cloud_output_limit",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "outbound-fetch-policy",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "a52a84f91d369e3a9c7fdc1c38b2e8e21fa66b97bfd31b6108fc4f752489de09",
+							"startedAt": "2026-11-09T00:07:43.062Z",
+							"durationMs": 940.541541,
+							"receipt": "resp_0f573b181bc839ff016af10ecf32d087d0b2a971a50de68b35",
+							"status": "completed",
+							"inputTokens": 343,
+							"outputTokens": 47,
+							"reasoningTokens": 0,
+							"costUsd": 0.00021240000000000004,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "draft",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "e0935124f1a7fa36ee7df32187a23b0c4b3498042d783429b3e11a01b98e6cd4",
+							"startedAt": "2026-11-09T00:07:44.037Z",
+							"durationMs": 57757.081083,
+							"status": "error",
+							"code": "cloud_output_limit",
+							"inputTokens": 11202,
+							"outputTokens": 4000,
+							"reasoningTokens": 168,
+							"costUsd": 0.062404,
+							"incompleteReason": "max_output_tokens",
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": null
+						}
+					],
+					"tokens": {
+						"inputTokens": 11545,
+						"outputTokens": 4047,
+						"reasoningTokens": 168,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 1
+					},
+					"costUsd": 0.0626164,
+					"selectedSources": null,
+					"grade": null
+				}
+			]
+		},
+		{
+			"lane": "followup-fast",
+			"snapshot": "8a8f470b069c3a2710c80d55dad5c6a375d56715",
+			"instructionVersion": "build.lean.5f35613790077a36ed5a1267f407fe689285a449ffa4aae096a2eaa3b1cee5cb",
+			"preparationMs": 1966.4020409999998,
+			"attempted": 2,
+			"ready": 0,
+			"timingCaptured": 2,
+			"complete": false,
+			"tasks": [
+				{
+					"taskId": "signing-key-rotation",
+					"startedAt": "2026-11-09T00:08:43.837Z",
+					"endedAt": "2026-11-09T00:09:11.528Z",
+					"durationMs": 27690.912375,
+					"status": "error",
+					"code": "invalid_model_output",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "signing-key-rotation",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "03399b7b00f47eb10154cb566e1f97b20d6bdbc4220451a8355d9d39f38e375f",
+							"startedAt": "2026-11-09T00:08:43.843Z",
+							"durationMs": 943.3262500000003,
+							"receipt": "resp_00b17cda41d01ca9016af10f0bf9d087d08e06857744295005",
+							"status": "completed",
+							"inputTokens": 304,
+							"outputTokens": 39,
+							"reasoningTokens": 0,
+							"costUsd": 0.000184,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "signing-key-rotation",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "0264e17d1a1fedcda5f393b8016101014a471311acfddc88381555b3f8aabff7",
+							"startedAt": "2026-11-09T00:08:44.823Z",
+							"durationMs": 14720.543334,
+							"receipt": "resp_071ca3f327866d83016af10f0cfd7087d0bf0d55cf3e79e2dc",
+							"status": "completed",
+							"inputTokens": 11241,
+							"outputTokens": 2137,
+							"reasoningTokens": 0,
+							"costUsd": 0.0079156,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "signing-key-rotation",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "9b0bcb90e7db8b816a03bd6e326738063770241d73f289ddc7d5c3095307ad69",
+							"startedAt": "2026-11-09T00:08:59.556Z",
+							"durationMs": 11968.221374999997,
+							"receipt": "resp_0463c1270339cd30016af10f1bbb7c87d0a5c42f0946bde0cc",
+							"status": "completed",
+							"inputTokens": 11296,
+							"outputTokens": 1941,
+							"reasoningTokens": 0,
+							"costUsd": 0.007624000000000001,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 22841,
+						"outputTokens": 4117,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0157236,
+					"selectedSources": [
+						"contextstill:kn_nksopcmeoj56rna7wuxezupyza",
+						"contextstill:kn_ov5cwbgrc3xkutnxipfptz6ucq"
+					],
+					"grade": null
+				},
+				{
+					"taskId": "conditional-panel-testing",
+					"startedAt": "2026-11-09T00:09:11.541Z",
+					"endedAt": "2026-11-09T00:09:45.646Z",
+					"durationMs": 34105.643375,
+					"status": "error",
+					"code": "invalid_model_output",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "conditional-panel-testing",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "f055ceb68681a4b4a74b38521cff0fd3d56d67a6dcb7b22ede7c8eed887e0d22",
+							"startedAt": "2026-11-09T00:09:11.543Z",
+							"durationMs": 1050.0404579999995,
+							"receipt": "resp_09a87feda5b55c7d016af10f27aa4487d08d07a8d424cef43c",
+							"status": "completed",
+							"inputTokens": 276,
+							"outputTokens": 38,
+							"reasoningTokens": 0,
+							"costUsd": 0.00017120000000000001,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "conditional-panel-testing",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "130ee4b6666145773a3160aadb825979e1f1cc5eb1fa8c1c579deaa17f2fa499",
+							"startedAt": "2026-11-09T00:09:12.615Z",
+							"durationMs": 18257.817,
+							"receipt": "resp_0e7ad7d5d6669c2c016af10f28c45c87d0a1b3cf3cfebd96d3",
+							"status": "completed",
+							"inputTokens": 11231,
+							"outputTokens": 2844,
+							"reasoningTokens": 0,
+							"costUsd": 0.009042800000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "conditional-panel-testing",
+							"sample": "quality-build",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "d76491c867362802fecd82d481adbd8739cf3bbb449d3132ebd3b92fc5d2745d",
+							"startedAt": "2026-11-09T00:09:30.882Z",
+							"durationMs": 14759.302541999998,
+							"receipt": "resp_0b25c9816b5b34a6016af10f3b0cf887d0bea484d4af58c6e8",
+							"status": "completed",
+							"inputTokens": 11286,
+							"outputTokens": 2364,
+							"reasoningTokens": 0,
+							"costUsd": 0.008296800000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 22793,
+						"outputTokens": 5246,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.017510800000000003,
+					"selectedSources": [
+						"contextstill:kn_6g6b7m5wuqbk6e4exbe3srkzzq",
+						"contextstill:kn_h7g67yrq2m562wlfst2vxodyae"
+					],
+					"grade": null
+				}
+			]
+		},
+		{
+			"lane": "ssrf-v3",
+			"snapshot": "98a98b341c03e0fef4ef78fe58698afef89360c8",
+			"instructionVersion": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847",
+			"preparationMs": 1849.753125,
+			"attempted": 1,
+			"ready": 1,
+			"timingCaptured": 1,
+			"complete": true,
+			"tasks": [
+				{
+					"taskId": "outbound-fetch-policy",
+					"startedAt": "2026-11-09T00:10:57.863Z",
+					"endedAt": "2026-11-09T00:12:06.503Z",
+					"durationMs": 68639.77345800001,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "outbound-fetch-policy",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "a52a84f91d369e3a9c7fdc1c38b2e8e21fa66b97bfd31b6108fc4f752489de09",
+							"startedAt": "2026-11-09T00:10:57.869Z",
+							"durationMs": 920.1237499999997,
+							"receipt": "resp_0c1c64a041e9a8ec016af10f91fa7887d08f1e976eb037093d",
+							"status": "completed",
+							"inputTokens": 343,
+							"outputTokens": 48,
+							"reasoningTokens": 0,
+							"costUsd": 0.00021400000000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "bdd9a477ca4d0b8087d95d5e66de6e124887dc03351130b068daa2630ebc7afd",
+							"startedAt": "2026-11-09T00:10:58.846Z",
+							"durationMs": 54223.456958,
+							"receipt": "resp_0b68ea2f6897d697016af10f92ffe087d081f30bea32e2a632",
+							"status": "completed",
+							"inputTokens": 10925,
+							"outputTokens": 3829,
+							"reasoningTokens": 120,
+							"costUsd": 0.06014,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "review",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "e90508b870f48c046c30ad1c512942e52d2e7bc3eec2759d582aac206528a272",
+							"startedAt": "2026-11-09T00:11:53.102Z",
+							"durationMs": 13372.569292000007,
+							"receipt": "resp_0053b1189aba6987016af10fc939fc87d0b8d80bd8a7313864",
+							"status": "completed",
+							"inputTokens": 8136,
+							"outputTokens": 885,
+							"reasoningTokens": 89,
+							"costUsd": 0.025122,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 19404,
+						"outputTokens": 4762,
+						"reasoningTokens": 209,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.085476,
+					"selectedSources": [
+						"contextstill:kn_id3jvqsnxxaaolbscb3lacwwty",
+						"contextstill:kn_j6ntfdwxw5e4wzkpphss5kkkwa"
+					],
+					"grade": {
+						"total": 99,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 10,
+							"coverage": 10,
+							"concision": 9,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"complete-target-validation": "met",
+							"bounded-and-honest": "met"
+						},
+						"gradePacketId": "firstgen-20e8bcf37735"
+					},
+					"skillPath": "skills/ssrf-v3/ssrf-fetch-hardening-plan/SKILL.md",
+					"bundleDigest": "4470e41f8f4d579bcb88eac5d9fb178b12140ce6f46b885c4a011f755f2851b4"
+				}
+			]
+		},
+		{
+			"lane": "followup-final",
+			"snapshot": "98a98b341c03e0fef4ef78fe58698afef89360c8",
+			"instructionVersion": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847",
+			"preparationMs": 2021.9428750000002,
+			"attempted": 2,
+			"ready": 2,
+			"timingCaptured": 2,
+			"complete": true,
+			"tasks": [
+				{
+					"taskId": "signing-key-rotation",
+					"startedAt": "2026-11-09T00:12:08.598Z",
+					"endedAt": "2026-11-09T00:13:11.155Z",
+					"durationMs": 62556.437167,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "signing-key-rotation",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "03399b7b00f47eb10154cb566e1f97b20d6bdbc4220451a8355d9d39f38e375f",
+							"startedAt": "2026-11-09T00:12:08.604Z",
+							"durationMs": 989.6675,
+							"receipt": "resp_0dfaac24c9a9261e016af10fd8b67c87d0a443cf0174c6bbe9",
+							"status": "completed",
+							"inputTokens": 304,
+							"outputTokens": 42,
+							"reasoningTokens": 0,
+							"costUsd": 0.0001888,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "signing-key-rotation",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "659e5cca76de037b1468de5246b04ae48415137ba1e0d38a60c5d95cb4e8e87b",
+							"startedAt": "2026-11-09T00:12:09.636Z",
+							"durationMs": 48348.844083,
+							"receipt": "resp_0b75b29ee64865a1016af10fd9f88487d0a5969cd6de84b45c",
+							"status": "completed",
+							"inputTokens": 10896,
+							"outputTokens": 3444,
+							"reasoningTokens": 96,
+							"costUsd": 0.056232,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 5185
+						},
+						{
+							"phase": "review",
+							"taskId": "signing-key-rotation",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "1c9e05c2bb104c146ee9816f9308c63a6a7e5c1e972577cc74d5f2b469dbd045",
+							"startedAt": "2026-11-09T00:12:58.002Z",
+							"durationMs": 13139.169791,
+							"receipt": "resp_0607d699353d1561016af1100a1ff487d082669204e218cebc",
+							"status": "completed",
+							"inputTokens": 7978,
+							"outputTokens": 937,
+							"reasoningTokens": 74,
+							"costUsd": 0.025326,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1935
+						}
+					],
+					"tokens": {
+						"inputTokens": 19178,
+						"outputTokens": 4423,
+						"reasoningTokens": 170,
+						"cachedInputTokens": 7120
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.08174680000000001,
+					"selectedSources": [
+						"contextstill:kn_nksopcmeoj56rna7wuxezupyza",
+						"contextstill:kn_qy23igki37dxzvuotmsyyyzzkq"
+					],
+					"grade": {
+						"total": 95.5,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 9,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-697fe6b5a415"
+					},
+					"skillPath": "skills/followup-final/staged-jwks-key-rotation/SKILL.md",
+					"bundleDigest": "7b31b5ca8fb142ba8096689125a09cdeedb8ac02b64cd91ecbfddbafdae25639"
+				},
+				{
+					"taskId": "conditional-panel-testing",
+					"startedAt": "2026-11-09T00:13:11.164Z",
+					"endedAt": "2026-11-09T00:14:11.687Z",
+					"durationMs": 60522.357041,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "conditional-panel-testing",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "f055ceb68681a4b4a74b38521cff0fd3d56d67a6dcb7b22ede7c8eed887e0d22",
+							"startedAt": "2026-11-09T00:13:11.166Z",
+							"durationMs": 1054.2538340000028,
+							"receipt": "resp_0f181c6bab98c5d9016af11017469087d09a47e0d67c3dada0",
+							"status": "completed",
+							"inputTokens": 276,
+							"outputTokens": 40,
+							"reasoningTokens": 0,
+							"costUsd": 0.0001744,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "conditional-panel-testing",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "fee5d2b587444083aca96844abcd3b32735bd3ba715b71e0f65f1da35d6395cf",
+							"startedAt": "2026-11-09T00:13:12.275Z",
+							"durationMs": 47979.739665999994,
+							"receipt": "resp_0de5576939f8217c016af110186c6487d0ad4e485d2d39c4ca",
+							"status": "completed",
+							"inputTokens": 10800,
+							"outputTokens": 3311,
+							"reasoningTokens": 298,
+							"costUsd": 0.05471,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 5185
+						},
+						{
+							"phase": "review",
+							"taskId": "conditional-panel-testing",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "3d852886b96ff742eddf484bb41c6928f4942d45baa439ca36f130066457ff75",
+							"startedAt": "2026-11-09T00:14:00.261Z",
+							"durationMs": 11419.940125000008,
+							"receipt": "resp_0bdb26e85bc3b015016af11048706487d09f9e4eedc8d7ad11",
+							"status": "completed",
+							"inputTokens": 6995,
+							"outputTokens": 716,
+							"reasoningTokens": 46,
+							"costUsd": 0.02115,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 1935
+						}
+					],
+					"tokens": {
+						"inputTokens": 18071,
+						"outputTokens": 4067,
+						"reasoningTokens": 344,
+						"cachedInputTokens": 7120
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.0760344,
+					"selectedSources": ["contextstill:kn_xtwzk66xkuypnxpli44fqx2g3q"],
+					"grade": {
+						"total": 95.5,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 9,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"core-invariants": "met",
+							"verification-boundaries": "met"
+						},
+						"gradePacketId": "firstgen-c6dfdae3f5b5"
+					},
+					"skillPath": "skills/followup-final/react-delayed-panel-test-plan/SKILL.md",
+					"bundleDigest": "d5d093cdf2e818549c51be9874f3f089a04541618f9601abcedb444466fcba49"
+				}
+			]
+		},
+		{
+			"lane": "sol-fast",
+			"snapshot": "6300d5bc29500ef18f8c18dc28d7ca4f5bb86788",
+			"instructionVersion": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847",
+			"preparationMs": 2143.261916,
+			"attempted": 1,
+			"ready": 1,
+			"timingCaptured": 1,
+			"complete": true,
+			"tasks": [
+				{
+					"taskId": "outbound-fetch-policy",
+					"startedAt": "2026-11-09T00:14:40.065Z",
+					"endedAt": "2026-11-09T00:15:30.344Z",
+					"durationMs": 50279.33925,
+					"status": "ready",
+					"operations": [
+						{
+							"phase": "query",
+							"taskId": "outbound-fetch-policy",
+							"sample": "reformulation",
+							"model": "gpt-4.1-mini",
+							"inputDigest": "a52a84f91d369e3a9c7fdc1c38b2e8e21fa66b97bfd31b6108fc4f752489de09",
+							"startedAt": "2026-11-09T00:14:40.071Z",
+							"durationMs": 750.010166,
+							"receipt": "resp_07a1fe8bb6774fcf016af11070305087d0b544201a5d402e2d",
+							"status": "completed",
+							"inputTokens": 343,
+							"outputTokens": 45,
+							"reasoningTokens": 0,
+							"costUsd": 0.00020920000000000002,
+							"incompleteReason": null,
+							"requestedServiceTier": null,
+							"responseServiceTier": null,
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "ready",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "b418d0e7687c85ec4e287134ae63fd7b7531998d72491da0136ed03df076d45b",
+							"startedAt": "2026-11-09T00:14:40.853Z",
+							"durationMs": 38344.877583,
+							"receipt": "resp_0af82c36c355108c016af1107100e887d09fb5112ec48fc54b",
+							"status": "completed",
+							"inputTokens": 10927,
+							"outputTokens": 3596,
+							"reasoningTokens": 70,
+							"costUsd": 0.115628,
+							"incompleteReason": null,
+							"requestedServiceTier": "fast",
+							"responseServiceTier": "fast",
+							"cachedInputTokens": 0
+						},
+						{
+							"phase": "review",
+							"taskId": "outbound-fetch-policy",
+							"sample": "quality-build",
+							"model": "gpt-6.1-sol",
+							"inputDigest": "4307cb5d9eea32c543ddb9783bef08dce6bcf71e75d4d985fcc4cfc6b2e1dbcb",
+							"startedAt": "2026-11-09T00:15:19.213Z",
+							"durationMs": 11103.546332999998,
+							"receipt": "resp_02231acac21c87f5016af110975aac87d0b1a45db4b3bda57a",
+							"status": "completed",
+							"inputTokens": 8182,
+							"outputTokens": 946,
+							"reasoningTokens": 93,
+							"costUsd": 0.051648,
+							"incompleteReason": null,
+							"requestedServiceTier": "fast",
+							"responseServiceTier": "fast",
+							"cachedInputTokens": 0
+						}
+					],
+					"tokens": {
+						"inputTokens": 19452,
+						"outputTokens": 4587,
+						"reasoningTokens": 163,
+						"cachedInputTokens": 0
+					},
+					"missingTokenObservations": {
+						"inputTokens": 0,
+						"outputTokens": 0,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"costUsd": 0.1674852,
+					"selectedSources": [
+						"contextstill:kn_id3jvqsnxxaaolbscb3lacwwty",
+						"contextstill:kn_j6ntfdwxw5e4wzkpphss5kkkwa"
+					],
+					"grade": {
+						"total": 98,
+						"dimensions": {
+							"correctness": 10,
+							"actionability": 10,
+							"coverage": 10,
+							"concision": 8,
+							"format": 10
+						},
+						"criteria": {
+							"usable-plan": "met",
+							"complete-target-validation": "met",
+							"bounded-and-honest": "met"
+						},
+						"gradePacketId": "firstgen-e3294767b82b"
+					},
+					"skillPath": "skills/sol-fast/ssrf-fetch-hardening-plan/SKILL.md",
+					"bundleDigest": "1d80dae1f2e7ebfcb9c2ac9f7d2b99506efb862733d0bea7d653b1fb05ac7333"
+				}
+			]
+		}
+	],
+	"usage": {
+		"generationTokens": {
+			"inputTokens": 324467,
+			"outputTokens": 74416,
+			"reasoningTokens": 2397,
+			"cachedInputTokens": 47733
+		},
+		"gradingTokens": {
+			"inputTokens": 79343,
+			"outputTokens": 5885,
+			"reasoningTokens": 0,
+			"cachedInputTokens": 0
+		},
+		"generationUsd": 1.0546152,
+		"gradingUsd": 0.20576599999999998,
+		"turnUsd": 1.2603811999999999,
+		"knownCumulativeUsd": 11.584020799999976,
+		"heldReservations": 23,
+		"heldUsd": 4.528887,
+		"accountedUsd": 16.112907799999977,
+		"capUsd": 20
+	},
+	"verification": {
+		"snapshot": "6300d5bc29500ef18f8c18dc28d7ca4f5bb86788",
+		"core": 415,
+		"examples": 176,
+		"failed": 0,
+		"bun": "1.4.4",
+		"platforms": ["macOS arm64", "Linux arm64"],
+		"hostProbe": "eumenes-inference-delivery.json",
+		"liveProbe": "live-contract.json"
+	}
+}

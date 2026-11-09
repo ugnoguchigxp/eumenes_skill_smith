@@ -1,5 +1,7 @@
 # 承認済みSKILLの選択・配達
 
+初回生成に `Ports.assemblyMode: "lean"` を選ぶと、候補本文の先読みと、本文・監査を分ける生成を利用できます。意味審査と最終配達の版確認は引き続き必要です。ホストごとに明示選択する方式で、生成指示の版が異なる承認済み登録は互換として扱いません。[初回生成の実測と接続範囲](quality/first-generation-2026-11-09/results.md)を参照してください。
+
 `skillsmith.delivery.v1`は本文を一度だけ返す公開契約です。既存の`get`、`getValidated`、`getSkillValidated`は互換入口として保持します。`getSkillDelivery`は主ファイル、全references、digest、bundleDigest、requestRef、auditRef、依存版だけを返します。`submitArtifact`（またはrequestの`delivery: "artifact"`）で新方式を指定した生成は、実際に返す応答全体へ容量上限を適用し、分割欠落を許可しません。指定しない旧生成は内部JSONの従来の容量判定も保持します。`getSkillAudit(auditRef, ...)`は別途、元要求のprincipal・scope・epochと現在性を検査します。監査には独立した最大bytes（既定32KB、明示指定は256〜131072）を適用し、小さい公開応答の上限へ内部記録を重ねません。
 
 ## 保存と承認

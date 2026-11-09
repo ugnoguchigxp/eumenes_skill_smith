@@ -1,0 +1,353 @@
+{
+	"archiveSha256": "c5c6157b8ece3bdd7325c78f3751e3cac819056e50fe7947a61cb657e1a1fb99",
+	"files": {
+		"first-generation-baseline-2026-11-09/api-timings.json": {
+			"bytes": 3731,
+			"sha256": "d4f01b2af8d1f94f563ce8a4b1cb6ffa2e93a4c75d4f65c8e6845c61ef5d7eee"
+		},
+		"first-generation-baseline-2026-11-09/budget.json": {
+			"bytes": 5873,
+			"sha256": "7c6da8f1f568b8db4485b3f3dd85c91f86800d37c026a84f70dd2af266945937"
+		},
+		"first-generation-baseline-2026-11-09/complete.json": {
+			"bytes": 79,
+			"sha256": "77edc6d9261d84f44824d92b55c9ab870f474909bf0531c7381ee04091b27485"
+		},
+		"first-generation-baseline-2026-11-09/failed-inputs.json": {
+			"bytes": 49659,
+			"sha256": "c0c0a0dc1687872acea3efb18837e559336314c43aa6a8549ff8ebe7584ea1ce"
+		},
+		"first-generation-baseline-2026-11-09/incomplete-responses.json": {
+			"bytes": 14206,
+			"sha256": "a5ebddbacb37c22699b80181576e2bb36c4d79ee7d3e5767c5351fd45d848076"
+		},
+		"first-generation-baseline-2026-11-09/manifest.json": {
+			"bytes": 78474,
+			"sha256": "77367cdfe57beda19e64f4bc308e4b3b925ed353163a26b3e8d44827ae66e8dd"
+		},
+		"first-generation-baseline-2026-11-09/outcomes.json": {
+			"bytes": 16645,
+			"sha256": "349b3bf0f2d82bee3898723d825568b5816d8b8be3ca58c4bd6c0a2d7e7c6cbb"
+		},
+		"first-generation-baseline-2026-11-09/records.json": {
+			"bytes": 202107,
+			"sha256": "63c8a0daf6356d84878841e18ca6e5a9074db9ace8d673f157fca13d25c05ae7"
+		},
+		"first-generation-baseline-2026-11-09/skills.json": {
+			"bytes": 10461,
+			"sha256": "32f1b9f2fe0949e241bb3fde074255b1f6d0ab2ab82620a4f18f59e62b20a9c3"
+		},
+		"first-generation-baseline-2026-11-09/timings.json": {
+			"bytes": 759,
+			"sha256": "2fa821455e26954f2b39c3b08ecf29f3fa2e0f993ca18bf7f200d287439057e1"
+		},
+		"first-generation-costs.jsonl": {
+			"bytes": 42828,
+			"sha256": "86a485a76ea18e3d33f12be21976959d8f78c587ae4c5266dab79d9f0a29f7b4"
+		},
+		"first-generation-fast-2026-11-09/api-timings.json": {
+			"bytes": 3396,
+			"sha256": "fa677a5c828d8fbef02e3d3678be71afcac0a0498336cd82fc2b8d89b8e642de"
+		},
+		"first-generation-fast-2026-11-09/budget.json": {
+			"bytes": 5270,
+			"sha256": "eddba8700508fc9c8086712e3c487a2aadb088e746a2b7ce411c267b4ea0de63"
+		},
+		"first-generation-fast-2026-11-09/complete.json": {
+			"bytes": 79,
+			"sha256": "a1fdcdef85dbc75757528c349ad972df7692c05487df6a3204642ee4d4c2ad7c"
+		},
+		"first-generation-fast-2026-11-09/manifest.json": {
+			"bytes": 79443,
+			"sha256": "43b0ea5c7f924fa7591a0d8a5cb59d462eca72f35fab30a200badbb5b6771ce4"
+		},
+		"first-generation-fast-2026-11-09/outcomes.json": {
+			"bytes": 4809,
+			"sha256": "c78221c54162d8ef072563e812474f72f4a78779f37e43cf56530836a10709a6"
+		},
+		"first-generation-fast-2026-11-09/records.json": {
+			"bytes": 384474,
+			"sha256": "d4ddf20d5e44c108b8250205d6ef933196f3c97c8a4aaa3018802f15b0b2365e"
+		},
+		"first-generation-fast-2026-11-09/timings.json": {
+			"bytes": 840,
+			"sha256": "797d9e692b5e3ecf1d1c107d6e7ca3a3a50c5f7b3bafeb124ac85d7ec6ed6d40"
+		},
+		"first-generation-followup-fast-2026-11-09/api-timings.json": {
+			"bytes": 2264,
+			"sha256": "b87d81283f6178ccea466391ad489d15e5df293373db160ceb051146d6b1c7df"
+		},
+		"first-generation-followup-fast-2026-11-09/budget.json": {
+			"bytes": 3624,
+			"sha256": "84f96752f8bc3e02bb8f5ee31b4254b169745aa1b9431294a37a15a870a1a0aa"
+		},
+		"first-generation-followup-fast-2026-11-09/complete.json": {
+			"bytes": 79,
+			"sha256": "d10e47edfe489cf8fe7511ab02e35a5c4bbc2d6d104e2cae75b348c4b3862416"
+		},
+		"first-generation-followup-fast-2026-11-09/manifest.json": {
+			"bytes": 79928,
+			"sha256": "824a316faf77122f253173e2261d3c6e7d7c3933a2dfc5394b68fe1f54cf46db"
+		},
+		"first-generation-followup-fast-2026-11-09/outcomes.json": {
+			"bytes": 3201,
+			"sha256": "4c4873f87e91a5d2fcd4a8e17c6b358af7bdbb1f61b6cb786bb6c5721dec0206"
+		},
+		"first-generation-followup-fast-2026-11-09/records.json": {
+			"bytes": 254508,
+			"sha256": "fe68a12487378ba5e370069e4954e95ae7186c540374f0156e2df164f4d1b4a1"
+		},
+		"first-generation-followup-fast-2026-11-09/timings.json": {
+			"bytes": 579,
+			"sha256": "7ca627fc161ef7ddc0f4fcd4902dba03aa7aef8ba1b71474e7dd3547cebaa4c7"
+		},
+		"first-generation-followup-final-2026-11-09/api-timings.json": {
+			"bytes": 2254,
+			"sha256": "1b9f5df7419c287ce4060b28452af71546be22be72c55cba1532a6c4845a4237"
+		},
+		"first-generation-followup-final-2026-11-09/budget.json": {
+			"bytes": 3569,
+			"sha256": "0766a68a920f0b386386f7927224eea1a91e954e2929d4a19b5805b7881322d3"
+		},
+		"first-generation-followup-final-2026-11-09/complete.json": {
+			"bytes": 78,
+			"sha256": "269b504fcdfcfdfe5d0d53113b4045bd43bc90faf175bdca342a259d2f1c7d28"
+		},
+		"first-generation-followup-final-2026-11-09/manifest.json": {
+			"bytes": 80324,
+			"sha256": "3f62a01207d5b48a426fcf19aafe88abc7b212a18297872b12e22929abc3a837"
+		},
+		"first-generation-followup-final-2026-11-09/outcomes.json": {
+			"bytes": 26074,
+			"sha256": "0e6116cc1fadbb375774f701ba208cc4942f0c856d81f0f1add40943eb421da7"
+		},
+		"first-generation-followup-final-2026-11-09/records.json": {
+			"bytes": 199876,
+			"sha256": "7d48cbf34d95bae4e8b0440443495f51e011f37a0d2534d72474208c0747fe3c"
+		},
+		"first-generation-followup-final-2026-11-09/skills.json": {
+			"bytes": 20822,
+			"sha256": "cb32e0cf88eb6b3359557a85e75c6d95a765e92d9d57a6e6b8f4ca5c4965ce16"
+		},
+		"first-generation-followup-final-2026-11-09/timings.json": {
+			"bytes": 506,
+			"sha256": "d114feb381cc73ca3e5ee058b0963c2db625fbd8ae520398982139c308246292"
+		},
+		"first-generation-grade-materials/examples.json": {
+			"bytes": 3178,
+			"sha256": "aaaed36ac93fb69e2100eedb4d1a18f2b21f8ce4a5e4f3e8ec776ce4ba271446"
+		},
+		"first-generation-grade-materials/index.json": {
+			"bytes": 1480,
+			"sha256": "788e87cf98fa219258a566812407085465f119edb8fb0b4f123220fc9d8cba36"
+		},
+		"first-generation-grade-materials/inspected.json": {
+			"bytes": 545,
+			"sha256": "d733a855da730e042d5a45f9131e7e5b9dad492f149cce557f28fd618acd649d"
+		},
+		"first-generation-grade-materials/materials.json": {
+			"bytes": 131338,
+			"sha256": "3d668df1076e80d3ac307ae0a302f76f28caf8767d1994c814f013e853f07644"
+		},
+		"first-generation-grades-2026-11-09/budget.json": {
+			"bytes": 59,
+			"sha256": "710e8cdd0a6ffcd113e21614bcd0be00995231ed82297539409433d19d869d68"
+		},
+		"first-generation-grades-2026-11-09/complete.json": {
+			"bytes": 57,
+			"sha256": "f4d77157db91aaa1c9de9b5675fb723608f8a265113e58b9925bf6e20833a655"
+		},
+		"first-generation-grades-2026-11-09/manifest.json": {
+			"bytes": 7826,
+			"sha256": "7bd6be8f885b01217cec90c7a0ba722a96f15885297d349d19ef23cc3de6e004"
+		},
+		"first-generation-grades-2026-11-09/records.json": {
+			"bytes": 436306,
+			"sha256": "3df4e333ea56a4242ba585e95f7aa025e2f1631f4c83170ae364c7108f970bcf"
+		},
+		"first-generation-lean-2026-11-09/api-timings.json": {
+			"bytes": 3392,
+			"sha256": "07ecf4a44d1a1d81aadc411af252d3bbc9ad0401cf9a22ac1385b63e10751797"
+		},
+		"first-generation-lean-2026-11-09/budget.json": {
+			"bytes": 5242,
+			"sha256": "0775ec38045a058a7c1fb9047251ba4a5ac906b4f5f26b25d626a5dce95c50f5"
+		},
+		"first-generation-lean-2026-11-09/complete.json": {
+			"bytes": 78,
+			"sha256": "07ab7971e6a66e32d2b4d973eaf19420f08930a1b513ee5d558dd8a9442d9d10"
+		},
+		"first-generation-lean-2026-11-09/manifest.json": {
+			"bytes": 78916,
+			"sha256": "87ff991b532795002c2229396d167f79db096a7254ce21a686a2a465bcff41e8"
+		},
+		"first-generation-lean-2026-11-09/outcomes.json": {
+			"bytes": 40216,
+			"sha256": "a7928e380d239a852cde6094ae62200ead58e246d7d16ded90c525f38f66673f"
+		},
+		"first-generation-lean-2026-11-09/records.json": {
+			"bytes": 290968,
+			"sha256": "eaa06def6a5f7a149952a00d753adc0f89fcc0979db035487d793e99a952535b"
+		},
+		"first-generation-lean-2026-11-09/skills.json": {
+			"bytes": 32609,
+			"sha256": "6b40916c6ffccbf991c479ed4598408e39237c463af86eb55b85eed4be1b62d8"
+		},
+		"first-generation-lean-2026-11-09/timings.json": {
+			"bytes": 715,
+			"sha256": "4fc3c54719fe2b58a454fa282560a6637ef4a5dffb22a6e3b1caded47d1459d4"
+		},
+		"first-generation-sol-fast-2026-11-09/api-timings.json": {
+			"bytes": 1121,
+			"sha256": "d7b82dd846c9e682aa457ddf2324226b5026b4c7854d6c1ae136d9d42827867e"
+		},
+		"first-generation-sol-fast-2026-11-09/budget.json": {
+			"bytes": 1964,
+			"sha256": "51c2d5cc56f41a4bb85a22e33881a0b31cbd48e18c748c8e99cdf3324a9387c9"
+		},
+		"first-generation-sol-fast-2026-11-09/complete.json": {
+			"bytes": 78,
+			"sha256": "1f4472db5ef46fe6971a87faad429df961738cdb76e5354f969c1777db288d1b"
+		},
+		"first-generation-sol-fast-2026-11-09/manifest.json": {
+			"bytes": 80588,
+			"sha256": "a665609b2d5ce2818cee08cbe1c7c28d80581b742aa0c68e0e372c55e49c2ba6"
+		},
+		"first-generation-sol-fast-2026-11-09/outcomes.json": {
+			"bytes": 15235,
+			"sha256": "c514a3757eadd699ccc7a66b3b6379556fe10ffbef823591ecbd4afb3585699a"
+		},
+		"first-generation-sol-fast-2026-11-09/records.json": {
+			"bytes": 104701,
+			"sha256": "3ab10d8d112cc3838e2e241ed0e1c4ee849aab55e6927b96bf100b5143615ea6"
+		},
+		"first-generation-sol-fast-2026-11-09/skills.json": {
+			"bytes": 12352,
+			"sha256": "0e91737793946df491d642edc928d4a32a47461c02f0a8a5c0361cac8446e271"
+		},
+		"first-generation-sol-fast-2026-11-09/timings.json": {
+			"bytes": 296,
+			"sha256": "6dbd7fd824e3d43ac96b59b52b953beedac82d403cb38561304cb6cd34643140"
+		},
+		"first-generation-ssrf-2026-11-09/api-timings.json": {
+			"bytes": 1125,
+			"sha256": "b51742f578bf771b47bd4ee6ae47db075b6e336616184d97c9904f849df13b38"
+		},
+		"first-generation-ssrf-2026-11-09/budget.json": {
+			"bytes": 1794,
+			"sha256": "1f06849ef5ecd8c7f91e8febc1bb066547e40886d0a32e873fa8a2979171d4bf"
+		},
+		"first-generation-ssrf-2026-11-09/complete.json": {
+			"bytes": 79,
+			"sha256": "b3821d8bc1d49f8c5e4650a54273854566ece24f2dc716337e9ef226f246e2c1"
+		},
+		"first-generation-ssrf-2026-11-09/manifest.json": {
+			"bytes": 79312,
+			"sha256": "620abe3f6e414f54b0a8419b0d68e12aff28eb232a1b3a39a367bbc0f380a48f"
+		},
+		"first-generation-ssrf-2026-11-09/outcomes.json": {
+			"bytes": 1624,
+			"sha256": "e13c83019e31a79adc43253fb4b01c7295cb895dbabd43c0f81012c2eb601f7a"
+		},
+		"first-generation-ssrf-2026-11-09/records.json": {
+			"bytes": 98562,
+			"sha256": "ae8fd58c76f717ad7a04d643efeca37c48508e9cc4adc281549a1dc779aa1385"
+		},
+		"first-generation-ssrf-2026-11-09/timings.json": {
+			"bytes": 348,
+			"sha256": "615c072f6d7bbd775614c9bd0b32c8bd846a5fbf6767c520f9bcbcbbffb894e7"
+		},
+		"first-generation-ssrf-v2-2026-11-09/api-timings.json": {
+			"bytes": 700,
+			"sha256": "87876a2a958bf11e3dadd681936098528d44aa6540ead60f950f61f42154c473"
+		},
+		"first-generation-ssrf-v2-2026-11-09/budget.json": {
+			"bytes": 1293,
+			"sha256": "0a3b073b6bb9cf4c9e3f2492c79213e0fab2ee3166e6cc4f605766d7304fcf55"
+		},
+		"first-generation-ssrf-v2-2026-11-09/complete.json": {
+			"bytes": 79,
+			"sha256": "b3821d8bc1d49f8c5e4650a54273854566ece24f2dc716337e9ef226f246e2c1"
+		},
+		"first-generation-ssrf-v2-2026-11-09/failed-inputs.json": {
+			"bytes": 52092,
+			"sha256": "26a1dc6476800efd2c92025dd400dc2a985f8bbac02d58a043a30507793dd0aa"
+		},
+		"first-generation-ssrf-v2-2026-11-09/incomplete-responses.json": {
+			"bytes": 14238,
+			"sha256": "51a2a4363fc8fa0a40bf9a64f17ec1bb0820dbd64670498cd855dd2d5e82e107"
+		},
+		"first-generation-ssrf-v2-2026-11-09/manifest.json": {
+			"bytes": 79840,
+			"sha256": "d83f4c35f09a05e94b7417c2bdc540619793dc3774932d12a4add776e0cc7e15"
+		},
+		"first-generation-ssrf-v2-2026-11-09/outcomes.json": {
+			"bytes": 1062,
+			"sha256": "72c70e8dfc0cdb14de75f83843666c42bcf076c80fd3b1f1dbd8f5cb1477b3c2"
+		},
+		"first-generation-ssrf-v2-2026-11-09/records.json": {
+			"bytes": 2489,
+			"sha256": "e35058f6f50a17b5ecb134ff9d88c8bf8bf470c884c868281bbb042cbca91c64"
+		},
+		"first-generation-ssrf-v2-2026-11-09/timings.json": {
+			"bytes": 325,
+			"sha256": "41108325638ab28fc8c6a335cf31c0402ad1c3994ecf61655b6fe617998ce75c"
+		},
+		"first-generation-ssrf-v3-2026-11-09/api-timings.json": {
+			"bytes": 1128,
+			"sha256": "4e23d8590b2b1f3cc2de0080c263044e1ef9e87c7dad5f62164e15f67ff18e59"
+		},
+		"first-generation-ssrf-v3-2026-11-09/budget.json": {
+			"bytes": 1812,
+			"sha256": "7d3706691fc341f68a31158317e15b7195578b33023985e847abbf86fef6f24b"
+		},
+		"first-generation-ssrf-v3-2026-11-09/complete.json": {
+			"bytes": 78,
+			"sha256": "1f4472db5ef46fe6971a87faad429df961738cdb76e5354f969c1777db288d1b"
+		},
+		"first-generation-ssrf-v3-2026-11-09/manifest.json": {
+			"bytes": 80192,
+			"sha256": "ae9d4c3a3e8bdb0cc43b87276943a6bc8e2d65827e0da2a8e3dca575ca97fac6"
+		},
+		"first-generation-ssrf-v3-2026-11-09/outcomes.json": {
+			"bytes": 14953,
+			"sha256": "07d04058c855b3f5d75cb924181755efff5acb8c35912b000300b8e5c3424642"
+		},
+		"first-generation-ssrf-v3-2026-11-09/records.json": {
+			"bytes": 104476,
+			"sha256": "0c1e213c0e73f6bd8184c983b3934d697a8e29b57f23bdd1bc65d21cd63d0416"
+		},
+		"first-generation-ssrf-v3-2026-11-09/skills.json": {
+			"bytes": 12079,
+			"sha256": "c4d50ac96c0e1393267963488db641e7bf2da7111e28a31014d777a9b1293b7d"
+		},
+		"first-generation-ssrf-v3-2026-11-09/timings.json": {
+			"bytes": 296,
+			"sha256": "68458c0fcdb814a7cd71cf10728b8b3befcaff8c72d4da1abb76baa1d1a2a9ac"
+		},
+		"verification/audit.json": {
+			"bytes": 3,
+			"sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+		},
+		"verification/eumenes-inference-delivery.json": {
+			"bytes": 540,
+			"sha256": "1872e233c1685fd2964cfa14ad50e529dce91eef3c3d530aee2a40b30ae52135"
+		},
+		"verification/host-probe.log": {
+			"bytes": 6339,
+			"sha256": "f8e7861fa5cfdcbed256ba2436055940c0efefb6d9781d5fcf8d4b5069e42170"
+		},
+		"verification/linux-verify.log": {
+			"bytes": 66452,
+			"sha256": "843ad247cd7fb97b6368cfa1ac1ee7e899fce70508a6273891d3488dc9548e04"
+		},
+		"verification/live-contract.json": {
+			"bytes": 849,
+			"sha256": "1436a94e95b2397d6f4c1333723e8574c190a5dfffd7ca4f984a4d38fd58b86f"
+		},
+		"verification/macos-verify.log": {
+			"bytes": 53486,
+			"sha256": "8cf8c06edba0c5f861898a86d14beb408871646b7fdf2660b2dfa9b841b0893d"
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"observedOn": "2026-11-09",
+	"eumenes": {
+		"checkoutCommit": "40b9630c4dbae20ad3837fdd7e5397c721300ae5",
+		"liveEndpoint": "http://127.0.0.1:8787",
+		"getJobList": 401,
+		"getCapabilityList": 401,
+		"deliveryVerifiedInLiveService": false,
+		"scope": "Read-only unauthenticated probe. The response does not establish whether any delivery job or route exists behind authentication."
+	},
+	"contextStill": {
+		"liveVersion": "0.1.0",
+		"liveEndpoint": "http://127.0.0.1:39172/mcp",
+		"liveToolsListCompleted": true,
+		"searchKnowledge": true,
+		"getKnowledge": false,
+		"v2CheckoutCommit": "dd365e96115903626254a3d445ed5e097210a194",
+		"v2ListenerReachable": false,
+		"v2Scope": "Static public contract review. Search cards omit revision. Get exposes updatedAt and evidenceTruncated, but can truncate item texts without a completeness marker."
+	}
+}
