@@ -160,6 +160,41 @@ test("lean builds with two model calls and reviews the exact delivered bundle", 
 	}
 });
 
+test("lean approval without the source and additions audit cannot publish", async () => {
+	const f = fixture({ assemblyMode: "lean" });
+	const {
+		sourceReview: _sourceReview,
+		nonSourceAdditions: _additions,
+		...draft
+	} = current;
+	f.ports.inference.complete = async ({ system }) => ({
+		value:
+			system === leanReviewInstructions
+				? { approved: true, reason: "承認" }
+				: draft,
+		receipt: "receipt",
+		inputTokens: 1,
+		outputTokens: 1,
+	});
+	try {
+		const pending = f.write(() =>
+			f.service.submitArtifact(f.db, f.request, f.auth),
+		);
+		await expect(f.run(pending.requestRef!)).rejects.toThrow(
+			"semantic_review_failed",
+		);
+		const delivery = await f.service.getSkillDelivery(
+			pending.requestRef!,
+			f.auth,
+			f.read,
+			new AbortController().signal,
+		);
+		expect(delivery.kind).toBe("pending");
+	} finally {
+		f.dispose();
+	}
+});
+
 test("current digest changes while initial disclosure payload stays archived", async () => {
 	const { f, inputs } = currentFixture();
 	const result = await ready(f);
