@@ -1,0 +1,19 @@
+{
+	"hostCommit": "40b9630c4dbae20ad3837fdd7e5397c721300ae5",
+	"queueState": "completed",
+	"delivery": "ready",
+	"bundleDigest": "a935c929781640473bef5d6f55d584a245092a73f21be84d7ce70f8a7e677019",
+	"usage": {
+		"modelCalls": 2,
+		"sourceCalls": 2,
+		"inputTokens": 140,
+		"outputTokens": 60,
+		"reasoningTokens": null,
+		"cachedInputTokens": null
+	},
+	"transportCalls": 2,
+	"strictOutputRequests": 2,
+	"crossRequestReceiptRefused": true,
+	"revokedReceiptRefused": true,
+	"provider": "injected fixed responses in actual host inference transport"
+}

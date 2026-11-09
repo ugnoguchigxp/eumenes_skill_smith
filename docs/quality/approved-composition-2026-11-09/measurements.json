@@ -1,0 +1,3140 @@
+{
+	"testedSource": "5759a048202bc57ff0416c53a48edd11a5e11c55",
+	"phases": {
+		"cold": {
+			"manifest": {
+				"version": "measured-generation.v1",
+				"instructionVersion": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847",
+				"suiteDigest": "3f58332dce980ce12a61f4390e1ec0d11ac8091ca71c639c4a924c0d20787a4b",
+				"settingsDigest": "cb47346c01e1b8664866d91ca53356f46510a8435aa427f735e4f47fb9d816c4",
+				"inputTokens": "provider usage only, unknown stays null",
+				"outputTokens": 4000,
+				"modelCalls": 4,
+				"sourceCalls": 12,
+				"candidates": 8,
+				"documents": 8,
+				"providerDeadlineMs": 120000,
+				"workers": 1,
+				"assemblyMode": "lean",
+				"evidenceSupply": "natural",
+				"searchProfile": "bm25",
+				"startingAccountedUsd": 1.2603812,
+				"startingEventIds": [
+					"74d6a868-364d-466f-9ea7-4df0c7ed1125",
+					"e4a8b09b-a17f-45b2-bf5d-6a600e8328b5",
+					"49a1b3e0-dc81-4b0c-9591-7dc677a365ad",
+					"ba287728-398a-46c8-bbb0-0702bcfa1848",
+					"ea0bcb97-da34-4ba0-89cb-8cafd74842ed",
+					"c06bdaee-4837-431f-9d73-6b79e72aa445",
+					"601d6343-8399-4c55-a822-57169d6d555c",
+					"116a347f-5138-4e5d-a357-84e06ad361d5",
+					"0f7da1a9-8cba-441b-8443-8b50ed46f4de",
+					"cd43a5fc-aae1-4450-897c-c7e3851c35fb",
+					"966c468f-d0dc-4f59-aef2-b35009b78a0f",
+					"f9b14a11-5c82-4532-adf4-43c6bd0fc4f7",
+					"0a485f46-bb4a-4a56-b9c6-5c0e270809ef",
+					"f5dce2ac-cb2b-4000-9b16-16290477a8aa",
+					"141cac66-8f4f-40f7-a1e1-6074d1a09f02",
+					"71f83c50-84b1-4de1-8504-b692eda80366",
+					"a958492e-ea0e-4858-814a-bdacae436fa7",
+					"0f329b63-be2b-4c31-ba12-f33950537793",
+					"52a109d3-e284-4fb2-a55e-e4e34771e609",
+					"c3c86ed7-d176-4c98-af81-625596e55183",
+					"d9515e34-ff58-43c7-b85f-526bc5bf3d34",
+					"7a395620-db5c-4c1c-9d27-bf7356eb48ce",
+					"bda76a9a-4a30-41a9-b15c-acf4a35b1654",
+					"3a566b75-1684-47a8-8323-44dce9661303",
+					"1a2f6f8b-88da-4885-8a51-24b21fffef23",
+					"4209e145-b553-474d-9f34-4c18448e5ecb",
+					"ad7e1bd2-9f57-4423-9e8b-2c843713ee3b",
+					"7dae54d7-a317-4619-b385-fb6b0f7a7995",
+					"40dbe7d1-b013-4084-8a87-6c37f6d6b9d9",
+					"edec0ca7-8500-4b2a-81eb-2726dd3adfaf",
+					"aeff4c59-cf0d-4477-87e6-1799ce7e9027",
+					"72422ab6-87c7-41cc-aa08-e1a195460f75",
+					"4f696156-af40-4c76-bb55-85704ff3f7d5",
+					"3add0e02-b4f0-4838-8eeb-f795d19271ad",
+					"ee149d81-888b-48ad-9db1-6316cc62cd31",
+					"54b49e22-09c0-4cc9-8759-e94d8f273607",
+					"262d1851-d5d4-47c3-b0f6-b47560812e9f",
+					"237424ac-034e-4b79-93a1-a0179f20ba92",
+					"68d7b9bc-e238-4949-b3b3-90fee8fcd941",
+					"c2086674-14a6-4a7c-94dd-dd2ca631e8c1",
+					"9b01d7d8-3ef1-40f4-80fe-77c6eb2d78dc",
+					"ead9ab56-12ca-421e-aefc-94229a3afb7d",
+					"14465fc0-0fab-4a0b-8ba5-1d989e9dfd48",
+					"2882e1a7-db8f-429c-938b-5fd918193147",
+					"3ec2bbd3-4dd8-4d25-a705-1eecdfcb0678",
+					"3f6e763f-8317-483c-beb9-17c5551d466e",
+					"87cf0762-db68-47f0-87e3-a9daddc0fed6",
+					"87520670-61c8-462e-aa5d-3294e220ea60",
+					"b13b9b23-2fc7-4760-82e1-e9761058704c",
+					"db4f90c7-a0a4-4983-b7de-c4d700e375bc",
+					"13571aca-b628-492f-baa4-df1f2568874b",
+					"b8a20a90-e9d4-4297-9303-8ae87e781487",
+					"9d0e5fda-c6ce-4b52-b3ea-c1b097ba0c06",
+					"36d99fce-2da7-4cd0-9504-099510e0691e",
+					"0fdb5857-3be1-4afb-96d4-bec2c9733692",
+					"69a8415d-5e1c-47fc-b7d4-4e4d43436a1d",
+					"81d1e4c6-15ca-4600-8699-caa628513d3d",
+					"809ecf6e-fe43-49c9-a5dc-7452e43ddaac",
+					"9689c535-bbce-48ac-9a65-8cf6bc1da214"
+				],
+				"generatedAt": "2026-11-09T00:39:04.498Z",
+				"timing": "performance.now; host creation through validated delivery; preparation and judging separate; no streaming/TTFT measurement",
+				"hiddenCriteriaInBuilder": false,
+				"retryPolicy": "one fresh execution per task; no cross-run inference reuse or retry"
+			},
+			"rows": [
+				{
+					"taskId": "checkout-release-two-gates",
+					"startedAt": "2026-11-09T00:39:05.194Z",
+					"endedAt": "2026-11-09T00:40:11.419Z",
+					"durationMs": 66224.77641600001,
+					"status": "ready",
+					"modelCalls": 3,
+					"inputTokens": 18952,
+					"outputTokens": 4318,
+					"costUsd": 0.0802848,
+					"modelStages": [
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:reformulation",
+							"costUsd": 0.0001788,
+							"inputTokens": 279,
+							"outputTokens": 42,
+							"durationMs": 2225.3882499999995,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:quality-build",
+							"costUsd": 0.055262,
+							"inputTokens": 10786,
+							"outputTokens": 3369,
+							"durationMs": 49013.925166,
+							"responseStatus": "completed",
+							"reasoningTokens": 147
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:quality-build",
+							"costUsd": 0.024844,
+							"inputTokens": 7887,
+							"outputTokens": 907,
+							"durationMs": 14874.572,
+							"responseStatus": "completed",
+							"reasoningTokens": 61
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"startedAt": "2026-11-09T00:40:11.421Z",
+					"endedAt": "2026-11-09T00:41:13.871Z",
+					"durationMs": 62450.173624999996,
+					"status": "ready",
+					"modelCalls": 4,
+					"inputTokens": 31598,
+					"outputTokens": 4523,
+					"costUsd": 0.107672,
+					"modelStages": [
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:reformulation",
+							"costUsd": 0.00017,
+							"inputTokens": 277,
+							"outputTokens": 37,
+							"durationMs": 1051.7735840000096,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:quality-build",
+							"costUsd": 0.02273,
+							"inputTokens": 10970,
+							"outputTokens": 79,
+							"durationMs": 2529.1964579999913,
+							"responseStatus": "completed",
+							"reasoningTokens": 29
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:quality-build",
+							"costUsd": 0.059834,
+							"inputTokens": 11527,
+							"outputTokens": 3678,
+							"durationMs": 48313.545958,
+							"responseStatus": "completed",
+							"reasoningTokens": 121
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:quality-build",
+							"costUsd": 0.024938,
+							"inputTokens": 8824,
+							"outputTokens": 729,
+							"durationMs": 10448.563125,
+							"responseStatus": "completed",
+							"reasoningTokens": 34
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"startedAt": "2026-11-09T00:41:13.874Z",
+					"endedAt": "2026-11-09T00:42:19.603Z",
+					"durationMs": 65729.85375000001,
+					"status": "ready",
+					"modelCalls": 4,
+					"inputTokens": 31345,
+					"outputTokens": 4633,
+					"costUsd": 0.1083536,
+					"modelStages": [
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:reformulation",
+							"costUsd": 0.00015160000000000003,
+							"inputTokens": 259,
+							"outputTokens": 30,
+							"durationMs": 698.9039170000033,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:quality-build",
+							"costUsd": 0.02262,
+							"inputTokens": 10840,
+							"outputTokens": 94,
+							"durationMs": 2945.098874999996,
+							"responseStatus": "completed",
+							"reasoningTokens": 15
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:quality-build",
+							"costUsd": 0.06161,
+							"inputTokens": 12165,
+							"outputTokens": 3728,
+							"durationMs": 50749.05758299999,
+							"responseStatus": "completed",
+							"reasoningTokens": 148
+						},
+						{
+							"model": "gpt-6.1-sol",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:quality-build",
+							"costUsd": 0.023972,
+							"inputTokens": 8081,
+							"outputTokens": 781,
+							"durationMs": 11227.68429200002,
+							"responseStatus": "completed",
+							"reasoningTokens": 51
+						}
+					]
+				}
+			],
+			"costUsd": 0.2963104
+		},
+		"fast-final": {
+			"manifest": {
+				"suiteDigest": "3f58332dce980ce12a61f4390e1ec0d11ac8091ca71c639c4a924c0d20787a4b",
+				"model": "gpt-4.1",
+				"initialUsd": 16.409218199999984,
+				"repeats": 3,
+				"approvals": [
+					{
+						"ref": "approved:websocket-replay-window",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "5fe6ca3a1d0596a89c69956ebf9a84f744cf8eb9c038387353b78eb9e8b9c531",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:payment-webhook-finality",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "62263ff56ef85864c7db179f1e248139172fbeb69318dead06bebd31f13a9643",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:shared-json-contract",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "4d2b57afcb04e64f731b15bebd05ca33129eb7c75f7012101335daaaf3950ed1",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:configuration-import-shapes",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "dfe5a3aba2f461b772c7732a276307934fbf3a14441dba21eefb690a4e14cf34",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					},
+					{
+						"ref": "approved:conditional-panel-testing",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "d5d093cdf2e818549c51be9874f3f089a04541618f9601abcedb444466fcba49",
+						"instructions": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847"
+					},
+					{
+						"ref": "approved:form-error-association",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "891916eb203109dbe54be572f137dfc79aba6a1232fa09cbd05762d110d11492",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					}
+				],
+				"scope": "Pre-approved parts imported from archived review and checked against delivered bytes. Public seed source validation, real cloud selection, new SQLite binding. No live host routing or real task execution."
+			},
+			"rows": [
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 1459.3827500000002,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "各受入ゲートの計画文書として独立実施順・停止条件・成功判定に対応済み。進捗通知は発送の証拠に利用せず、目的に合致。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 6.927666000000045,
+						"selection": 1438.237834
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 78,
+					"costUsd": 0.00786,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1",
+							"costUsd": 0.00786,
+							"inputTokens": 3618,
+							"outputTokens": 78,
+							"durationMs": 1435.0607499999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 3357.485709,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV検証・範囲分離計画を独立に網羅。各手順はplanning-only・停止条件・合否判定・適用順等を明記し、相互干渉や接続を前提とせず実行可能。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 3.4750420000000304,
+						"selection": 3343.816125
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 94,
+					"costUsd": 0.007988,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1",
+							"costUsd": 0.007988,
+							"inputTokens": 3618,
+							"outputTokens": 94,
+							"durationMs": 3341.498958,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:1",
+					"kind": "ready",
+					"durationMs": 1006.5614999999998,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "両画面の計画を独立順で網羅可能。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 3.034708000000137,
+						"selection": 994.7973329999995
+					},
+					"modelCalls": 1,
+					"inputTokens": 3596,
+					"outputTokens": 44,
+					"costUsd": 0.007544,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1",
+							"costUsd": 0.007544,
+							"inputTokens": 3596,
+							"outputTokens": 44,
+							"durationMs": 993.1265830000002,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:1",
+					"kind": "ready",
+					"durationMs": 1493.0859579999997,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "個別に再接続カーソル・発送確定の計画化と、これらを単一DBトランザクションの下で競合・再試行を扱う方針を計画に盛り込める。ただし両者の一貫手順や状態ブリッジは実装層で留意が要る。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 2.8262919999997393,
+						"selection": 1480.4243330000008
+					},
+					"modelCalls": 1,
+					"inputTokens": 3539,
+					"outputTokens": 113,
+					"costUsd": 0.007982,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1",
+							"costUsd": 0.007982,
+							"inputTokens": 3539,
+							"outputTokens": 113,
+							"durationMs": 1478.3504169999997,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1200.664541,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "進捗WebSocketの再接続・復旧と決済Webhookの冪等発送判定を、別個の受入ゲートとして段階的・独立に検証計画する構成が適合。両計画とも機能検証の目的・停止条件・計画のみの範囲を満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 3.0198330000002898,
+						"selection": 1186.8606249999993
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 108,
+					"costUsd": 0.0081,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2",
+							"costUsd": 0.0081,
+							"inputTokens": 3618,
+							"outputTokens": 108,
+							"durationMs": 1183.805624999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1372.6274580000008,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV取込の運用計画を独立作成し、契約の互換性・適用順序とCSV範囲・合否停止条件を網羅。双方とも計画のみで、環境や権限要件、検証手順と停止条件も明記し、前提を越えない。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 4.734540999999808,
+						"selection": 1334.5149170000004
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 109,
+					"costUsd": 0.008108,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2",
+							"costUsd": 0.008108,
+							"inputTokens": 3618,
+							"outputTokens": 109,
+							"durationMs": 1330.2451250000013,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:2",
+					"kind": "ready",
+					"durationMs": 905.8922919999986,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "各SKILLが対応範囲を独立に満たす"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 4.911624999998821,
+						"selection": 869.9436249999999
+					},
+					"modelCalls": 1,
+					"inputTokens": 3596,
+					"outputTokens": 43,
+					"costUsd": 0.007536,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2",
+							"costUsd": 0.007536,
+							"inputTokens": 3596,
+							"outputTokens": 43,
+							"durationMs": 866.3249580000011,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:2",
+					"kind": "ready",
+					"durationMs": 1221.4794160000001,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "WebSocketカーソル更新計画と決済Webhook物理化計画を順に組み合わせれば、両操作の原子的トランザクション化と競合対応手順の計画が満たされる。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 4.072250000001077,
+						"selection": 1190.871083
+					},
+					"modelCalls": 1,
+					"inputTokens": 3539,
+					"outputTokens": 82,
+					"costUsd": 0.007734,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2",
+							"costUsd": 0.007734,
+							"inputTokens": 3539,
+							"outputTokens": 82,
+							"durationMs": 1187.0311669999992,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1733.2117500000004,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両要件を分離した受入口で計画対応。進捗の再接続復元・順序欠落や、Webhook重複・順序逆転配送冪等性の独立検証を網羅。環境・実サービス未定も計画のみで適合。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 3.610624999999345,
+						"selection": 1702.8825410000009
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 99,
+					"costUsd": 0.008028,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3",
+							"costUsd": 0.008028,
+							"inputTokens": 3618,
+							"outputTokens": 99,
+							"durationMs": 1699.2225420000013,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1468.1324999999997,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "共通JSON契約移行と対象限定CSV設定の独立計画を両立。各計画が別手順・停止条件を明記し、範囲外テナントや誤更新防止・契約適用順・互換性判定もカバー。計画のみで実環境操作や連結は行わない。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 5.517708999999741,
+						"selection": 1433.8320000000022
+					},
+					"modelCalls": 1,
+					"inputTokens": 3618,
+					"outputTokens": 110,
+					"costUsd": 0.008116,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3",
+							"costUsd": 0.008116,
+							"inputTokens": 3618,
+							"outputTokens": 110,
+							"durationMs": 1429.1562089999989,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1866.4522910000014,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "遅延表示パネルの状態検証計画と、フォームのラベル・エラー関連付け確認計画が各受入れ条件を独立に満たし、手順は干渉しない。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 5.023250000002008,
+						"selection": 1839.1473330000008
+					},
+					"modelCalls": 1,
+					"inputTokens": 3596,
+					"outputTokens": 78,
+					"costUsd": 0.007816,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3",
+							"costUsd": 0.007816,
+							"inputTokens": 3596,
+							"outputTokens": 78,
+							"durationMs": 1835.2648340000014,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:3",
+					"kind": "ready",
+					"durationMs": 1284.7364589999997,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両方の原子的トランザクション計画を含め、再接続カーソル・発送確定の一貫性、競合や再試行の観点を実施順に組み合わせて扱える。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 3.5774170000004233,
+						"selection": 1254.711374999999
+					},
+					"modelCalls": 1,
+					"inputTokens": 3539,
+					"outputTokens": 84,
+					"costUsd": 0.00775,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3",
+							"costUsd": 0.00775,
+							"inputTokens": 3539,
+							"outputTokens": 84,
+							"durationMs": 1251.0982919999988,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				}
+			],
+			"costUsd": 0.094562
+		},
+		"reviewed": {
+			"manifest": {
+				"suiteDigest": "3f58332dce980ce12a61f4390e1ec0d11ac8091ca71c639c4a924c0d20787a4b",
+				"additionalNegativeDigest": "fc842dcda7bd2ac235b37454d017ec5f56238336b328f5008b75d248e826b2c9",
+				"model": "gpt-4.1",
+				"reviewer": "gpt-4.1-mini",
+				"initialUsd": 16.503780199999984,
+				"repeats": 3,
+				"approvals": [
+					{
+						"ref": "approved:websocket-replay-window",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "5fe6ca3a1d0596a89c69956ebf9a84f744cf8eb9c038387353b78eb9e8b9c531",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:payment-webhook-finality",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "62263ff56ef85864c7db179f1e248139172fbeb69318dead06bebd31f13a9643",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:shared-json-contract",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "4d2b57afcb04e64f731b15bebd05ca33129eb7c75f7012101335daaaf3950ed1",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:configuration-import-shapes",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "dfe5a3aba2f461b772c7732a276307934fbf3a14441dba21eefb690a4e14cf34",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					},
+					{
+						"ref": "approved:conditional-panel-testing",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "d5d093cdf2e818549c51be9874f3f089a04541618f9601abcedb444466fcba49",
+						"instructions": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847"
+					},
+					{
+						"ref": "approved:form-error-association",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "891916eb203109dbe54be572f137dfc79aba6a1232fa09cbd05762d110d11492",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					}
+				],
+				"scope": "Pre-approved parts imported from archived review and checked against delivered bytes. Public seed source validation, real cloud selection, new SQLite binding. No live host routing or real task execution."
+			},
+			"rows": [
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 3107.2764590000006,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "WebSocket進捗再接続・復元プランと決済Webhook重複・順序逆転と発送冪等プランが、独立した受入ゲートごとの検証計画として合致。いずれも計画作成のみで、サービス名や値の未定義・証拠要件を含んでいない条件下、無関係項目を参照せず原制約を満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 11.766791999999896,
+						"selection": 3077.616708
+					},
+					"modelCalls": 2,
+					"inputTokens": 10470,
+					"outputTokens": 153,
+					"costUsd": 0.0110728,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:selection",
+							"costUsd": 0.0083,
+							"inputTokens": 3618,
+							"outputTokens": 133,
+							"durationMs": 2013.54175,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:review",
+							"costUsd": 0.0027728,
+							"inputTokens": 6852,
+							"outputTokens": 20,
+							"durationMs": 1052.263292,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2488.7107499999993,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "共通JSON契約移行とCSV設定インポートの独立検証にそれぞれ特化した計画。適用順序・互換性・停止条件も合致、CSV範囲/誤処理防止も両立。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 4.938291999999819,
+						"selection": 2460.8214579999994
+					},
+					"modelCalls": 2,
+					"inputTokens": 10317,
+					"outputTokens": 118,
+					"costUsd": 0.0106612,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:selection",
+							"costUsd": 0.007932,
+							"inputTokens": 3618,
+							"outputTokens": 87,
+							"durationMs": 1232.463917,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:review",
+							"costUsd": 0.0027292,
+							"inputTokens": 6699,
+							"outputTokens": 31,
+							"durationMs": 1209.1608749999996,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2174.412458,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "遅延パネルとフォーム各計画が独立に合致"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 3.0305829999997513,
+						"selection": 2147.7535830000006
+					},
+					"modelCalls": 2,
+					"inputTokens": 10319,
+					"outputTokens": 78,
+					"costUsd": 0.0102876,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:selection",
+							"costUsd": 0.007544,
+							"inputTokens": 3596,
+							"outputTokens": 44,
+							"durationMs": 1059.2203750000008,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:review",
+							"costUsd": 0.0027436000000000006,
+							"inputTokens": 6723,
+							"outputTokens": 34,
+							"durationMs": 1077.069458,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:1",
+					"kind": "ready",
+					"durationMs": 2921.122041999999,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両計画を合わせれば、再接続カーソルと決済Webhookによる発送確定を単一原子トランザクションで扱う設計・競合・再試行を、目的に沿った計画として順序立てて記載できる。どちらも計画策定用途かつ現行作業制約を満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 2.684332999999242,
+						"selection": 2888.8056670000005
+					},
+					"modelCalls": 2,
+					"inputTokens": 10274,
+					"outputTokens": 152,
+					"costUsd": 0.0107512,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:selection",
+							"costUsd": 0.007998,
+							"inputTokens": 3539,
+							"outputTokens": 115,
+							"durationMs": 1610.533207999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:review",
+							"costUsd": 0.0027532,
+							"inputTokens": 6735,
+							"outputTokens": 37,
+							"durationMs": 1271.047375,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:1",
+					"kind": "miss",
+					"durationMs": 1163.5563750000001,
+					"choice": {
+						"kind": "miss",
+						"reason": "一括確定・取消しとサービス間障害検証を両立する計画手順をカバーする候補がない"
+					},
+					"stages": {
+						"catalog": 4.978791999999885,
+						"selection": 1158.5745420000003
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 42,
+					"costUsd": 0.007482,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:1:selection",
+							"costUsd": 0.007482,
+							"inputTokens": 3573,
+							"outputTokens": 42,
+							"durationMs": 1153.3808329999993,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 2218.6406669999997,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "二つの計画が独立した進捗復旧・発送冪等処理ゲートを網羅。作業は計画策定のみで、各ゲートの停止条件や未提示API・設定への依存にも対応し、進捗通知と発送証拠の分離要件を満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 10.252249999999549,
+						"selection": 2179.8298749999994
+					},
+					"modelCalls": 2,
+					"inputTokens": 10470,
+					"outputTokens": 140,
+					"costUsd": 0.0108728,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:selection",
+							"costUsd": 0.008076,
+							"inputTokens": 3618,
+							"outputTokens": 105,
+							"durationMs": 1280.1333749999994,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:review",
+							"costUsd": 0.0027968000000000003,
+							"inputTokens": 6852,
+							"outputTokens": 35,
+							"durationMs": 879.356667,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 2244.3874159999978,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV取込計画を独立に作成でき、各々が運用時の範囲・停止条件・合否判定を明示し、planning-onlyも満たす。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 5.478832999999213,
+						"selection": 2218.9074579999997
+					},
+					"modelCalls": 2,
+					"inputTokens": 10317,
+					"outputTokens": 111,
+					"costUsd": 0.010586,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:selection",
+							"costUsd": 0.007852,
+							"inputTokens": 3618,
+							"outputTokens": 77,
+							"durationMs": 1116.5084159999988,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:review",
+							"costUsd": 0.0027340000000000003,
+							"inputTokens": 6699,
+							"outputTokens": 34,
+							"durationMs": 1083.4709169999987,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1937.551916999997,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "2手順を独立した計画で網羅します。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 2.606791999998677,
+						"selection": 1909.2263329999987
+					},
+					"modelCalls": 2,
+					"inputTokens": 10319,
+					"outputTokens": 79,
+					"costUsd": 0.0102764,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:selection",
+							"costUsd": 0.007528,
+							"inputTokens": 3596,
+							"outputTokens": 42,
+							"durationMs": 1141.2121249999982,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:review",
+							"costUsd": 0.0027484000000000002,
+							"inputTokens": 6723,
+							"outputTokens": 37,
+							"durationMs": 759.8349159999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:2",
+					"kind": "ready",
+					"durationMs": 2077.376,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両方の状態をトランザクションで原子更新し、通知・競合・再試行・停止条件、実行順序を計画できる。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 4.462833999998111,
+						"selection": 2044.2604580000007
+					},
+					"modelCalls": 2,
+					"inputTokens": 10274,
+					"outputTokens": 105,
+					"costUsd": 0.0103816,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:selection",
+							"costUsd": 0.00763,
+							"inputTokens": 3539,
+							"outputTokens": 69,
+							"durationMs": 1093.749832999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:review",
+							"costUsd": 0.0027516,
+							"inputTokens": 6735,
+							"outputTokens": 36,
+							"durationMs": 934.460791999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:2",
+					"kind": "miss",
+					"durationMs": 1032.956459000001,
+					"choice": {
+						"kind": "miss",
+						"reason": "両サービスを新設するプロトコルで一括確定・取消しし、部分障害時の検証も含む運用手順という要件を満たす計画は見当たらない"
+					},
+					"stages": {
+						"catalog": 5.05487500000163,
+						"selection": 1027.8979999999974
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 61,
+					"costUsd": 0.007634,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:2:selection",
+							"costUsd": 0.007634,
+							"inputTokens": 3573,
+							"outputTokens": 61,
+							"durationMs": 1024.163875000002,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 2057.800374999999,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "進捗通知と決済Webhook発送の各ゲートに対応、どちらも計画書のみで検証内容や停止条件も明示済み。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 11.573207999997976,
+						"selection": 2026.2303749999992
+					},
+					"modelCalls": 2,
+					"inputTokens": 10470,
+					"outputTokens": 101,
+					"costUsd": 0.0105608,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:selection",
+							"costUsd": 0.007764,
+							"inputTokens": 3618,
+							"outputTokens": 66,
+							"durationMs": 1033.3919999999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:review",
+							"costUsd": 0.0027968000000000003,
+							"inputTokens": 6852,
+							"outputTokens": 35,
+							"durationMs": 984.7351659999986,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 2245.1850830000003,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV設定インポートを独立に計画し、検証・停止条件も双方の要件をカバー。両者の接続や一方による更新範囲逸脱を前提としないため本件に適合。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 2.9717080000009446,
+						"selection": 2210.491124999997
+					},
+					"modelCalls": 2,
+					"inputTokens": 10317,
+					"outputTokens": 130,
+					"costUsd": 0.010706,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:selection",
+							"costUsd": 0.007964,
+							"inputTokens": 3618,
+							"outputTokens": 91,
+							"durationMs": 1213.5490830000017,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:review",
+							"costUsd": 0.0027420000000000005,
+							"inputTokens": 6699,
+							"outputTokens": 39,
+							"durationMs": 985.0971250000002,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1883.854792000002,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "両要件に対応する計画を独立に組み合わせ可能"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 4.870667000002868,
+						"selection": 1853.246916
+					},
+					"modelCalls": 2,
+					"inputTokens": 10319,
+					"outputTokens": 79,
+					"costUsd": 0.0102956,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:selection",
+							"costUsd": 0.007552,
+							"inputTokens": 3596,
+							"outputTokens": 45,
+							"durationMs": 902.7401249999966,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:review",
+							"costUsd": 0.0027436000000000006,
+							"inputTokens": 6723,
+							"outputTokens": 34,
+							"durationMs": 933.2412919999988,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:3",
+					"kind": "ready",
+					"durationMs": 2110.533459000002,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両方の計画で再接続カーソルと発送確定のそれぞれを網羅、共通DBトランザクションや競合・再試行の観点がそろう。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 4.3978750000023865,
+						"selection": 2077.412666999997
+					},
+					"modelCalls": 2,
+					"inputTokens": 10274,
+					"outputTokens": 113,
+					"costUsd": 0.0104584,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:selection",
+							"costUsd": 0.00771,
+							"inputTokens": 3539,
+							"outputTokens": 79,
+							"durationMs": 1289.7782080000034,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1-mini",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:review",
+							"costUsd": 0.0027484000000000002,
+							"inputTokens": 6735,
+							"outputTokens": 34,
+							"durationMs": 770.8941249999989,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:3",
+					"kind": "miss",
+					"durationMs": 954.4228330000005,
+					"choice": {
+						"kind": "miss",
+						"reason": "サービス間一括確定・取消しの協調プロトコル策定と部分障害検証の具体計画が該当手順にない"
+					},
+					"stages": {
+						"catalog": 5.423917000000074,
+						"selection": 948.9977910000016
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 47,
+					"costUsd": 0.007522,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:3:selection",
+							"costUsd": 0.007522,
+							"inputTokens": 3573,
+							"outputTokens": 47,
+							"durationMs": 945.0846669999992,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				}
+			],
+			"costUsd": 0.1495484
+		},
+		"grounded": {
+			"manifest": {
+				"suiteDigest": "3f58332dce980ce12a61f4390e1ec0d11ac8091ca71c639c4a924c0d20787a4b",
+				"additionalNegatives": [
+					"fc842dcda7bd2ac235b37454d017ec5f56238336b328f5008b75d248e826b2c9",
+					"b28c306c3595054701deb92f0f63d73efda5014ae3f2391a63daf563f16b2efe"
+				],
+				"model": "gpt-4.1",
+				"reviewer": "gpt-4.1",
+				"initialUsd": 16.653328599999984,
+				"repeats": 3,
+				"approvals": [
+					{
+						"ref": "approved:websocket-replay-window",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "5fe6ca3a1d0596a89c69956ebf9a84f744cf8eb9c038387353b78eb9e8b9c531",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:payment-webhook-finality",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "62263ff56ef85864c7db179f1e248139172fbeb69318dead06bebd31f13a9643",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:shared-json-contract",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "4d2b57afcb04e64f731b15bebd05ca33129eb7c75f7012101335daaaf3950ed1",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:configuration-import-shapes",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "dfe5a3aba2f461b772c7732a276307934fbf3a14441dba21eefb690a4e14cf34",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					},
+					{
+						"ref": "approved:conditional-panel-testing",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "d5d093cdf2e818549c51be9874f3f089a04541618f9601abcedb444466fcba49",
+						"instructions": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847"
+					},
+					{
+						"ref": "approved:form-error-association",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "891916eb203109dbe54be572f137dfc79aba6a1232fa09cbd05762d110d11492",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					}
+				],
+				"scope": "Pre-approved parts imported from archived review and checked against delivered bytes. Public seed source validation, real cloud selection, new SQLite binding. No live host routing or real task execution."
+			},
+			"rows": [
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2702.777541,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "ECのリリース判定に必要なWebSocket進捗再接続・復元検証と決済Webhook重複・順序逆転対応および発送冪等性の2独立ゲートの計画を、目的に沿って個別に示せます。進捗通知を発送の証拠に使わず独立して計画できます。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 16.05187500000011,
+						"selection": 2671.3801660000004
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 148,
+					"costUsd": 0.024154,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:selection",
+							"costUsd": 0.008172,
+							"inputTokens": 3618,
+							"outputTokens": 117,
+							"durationMs": 1611.703125,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 1047.8605419999994,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2053.425792,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV独立運用の二工程計画に適合。各停止条件・合否判定も両対応。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 3.9793330000002243,
+						"selection": 2039.1486669999995
+					},
+					"modelCalls": 2,
+					"inputTokens": 11612,
+					"outputTokens": 91,
+					"costUsd": 0.023952,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:selection",
+							"costUsd": 0.007724,
+							"inputTokens": 3618,
+							"outputTokens": 61,
+							"durationMs": 1125.4862080000003,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:review",
+							"costUsd": 0.016228,
+							"inputTokens": 7994,
+							"outputTokens": 30,
+							"durationMs": 907.3586250000008,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2375.2780000000002,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "両方の独立手順の計画を分離して満たす。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 2.687084000000141,
+						"selection": 2362.851958
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 77,
+					"costUsd": 0.02379,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:selection",
+							"costUsd": 0.007568,
+							"inputTokens": 3596,
+							"outputTokens": 47,
+							"durationMs": 1284.9046250000001,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 1070.1572909999995,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:1",
+					"kind": "miss",
+					"durationMs": 3456.6424580000003,
+					"choice": {
+						"kind": "miss",
+						"reason": "再接続カーソルと発送確定を原子的に共有トランザクションで更新する具体的な設計手順、さらにそれが競合・再試行（例：分散ロック・一意制約・ロールバック・再実行）の観点でどう担保されるかが両手順間の一貫した関係として文書内で説明された記述が見当たりません。各ワークフローや計画はあるが、それぞれのatomicityや排他制御の連携が明示的に示されていません。"
+					},
+					"stages": {
+						"catalog": 2.9192499999990105,
+						"selection": 3453.719667000001
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 234,
+					"costUsd": 0.024808,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:selection",
+							"costUsd": 0.007782,
+							"inputTokens": 3539,
+							"outputTokens": 88,
+							"durationMs": 1762.0244579999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:review",
+							"costUsd": 0.017026,
+							"inputTokens": 7929,
+							"outputTokens": 146,
+							"durationMs": 1682.5949999999993,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:1",
+					"kind": "miss",
+					"durationMs": 1071.8156659999986,
+					"choice": {
+						"kind": "miss",
+						"reason": "一括確定・取消しを独立サービス間で連携する運用や部分障害の検証を扱う計画がカタログに存在しない"
+					},
+					"stages": {
+						"catalog": 10.023332999999184,
+						"selection": 1061.7896249999994
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 49,
+					"costUsd": 0.007538,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:1:selection",
+							"costUsd": 0.007538,
+							"inputTokens": 3573,
+							"outputTokens": 49,
+							"durationMs": 1056.974542,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:1",
+					"kind": "miss",
+					"durationMs": 2899.050000000001,
+					"choice": {
+						"kind": "miss",
+						"reason": "パネルの要求世代とフォームのレコードIDを結び付け、古い応答が現レコードのエラーに反映されない具体的な受理条件および並行再現手順（ownership）が示されていません。各状態や閉鎖後の遅延応答・UI検証は詳細に記載されていますが、『世代とIDの結合による古い応答の排除』に対応する具体的検証フローや受理条件が見つかりません。"
+					},
+					"stages": {
+						"catalog": 7.4679159999996045,
+						"selection": 2891.5787920000002
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 252,
+					"costUsd": 0.025088,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:1:selection",
+							"costUsd": 0.00816,
+							"inputTokens": 3600,
+							"outputTokens": 120,
+							"durationMs": 1271.8520420000004,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:1:review",
+							"costUsd": 0.016928,
+							"inputTokens": 7936,
+							"outputTokens": 132,
+							"durationMs": 1604.4481660000001,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1995.4353340000016,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両ゲートごとに独立した計画を網羅。進捗の再接続・冪等性の検証と決済Webhook・発送の冪等ゲート計画を満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 7.547209000000294,
+						"selection": 1957.7829999999994
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 111,
+					"costUsd": 0.023858,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:selection",
+							"costUsd": 0.007876,
+							"inputTokens": 3618,
+							"outputTokens": 80,
+							"durationMs": 1009.6783329999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 929.4177090000012,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 2091.7322920000006,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSVインポートを独立に運用計画化し、計画のみ記述・検証基準や停止条件・範囲制御も満たす。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 4.904291999999259,
+						"selection": 2065.6790830000027
+					},
+					"modelCalls": 2,
+					"inputTokens": 11612,
+					"outputTokens": 103,
+					"costUsd": 0.024048,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:selection",
+							"costUsd": 0.00782,
+							"inputTokens": 3618,
+							"outputTokens": 73,
+							"durationMs": 1262.1827919999996,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:review",
+							"costUsd": 0.016228,
+							"inputTokens": 7994,
+							"outputTokens": 30,
+							"durationMs": 787.5684169999986,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1918.8137499999975,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "2手順を独立して計画書として成立。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 3.1386249999995925,
+						"selection": 1895.4844999999987
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 71,
+					"costUsd": 0.023742,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:selection",
+							"costUsd": 0.00752,
+							"inputTokens": 3596,
+							"outputTokens": 41,
+							"durationMs": 1007.2340000000004,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 875.383084000001,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:2",
+					"kind": "miss",
+					"durationMs": 3546.312334000002,
+					"choice": {
+						"kind": "miss",
+						"reason": "要求された「再接続カーソルと発送確定を原子的に更新する共有トランザクション」と両機能を同一トランザクションで扱う具体的な設計・実装計画（情報・順序の統合や制御）の存在が、いずれの記載にも確認できません。両者が個別に論じられているのみで、その橋渡し・組み合わせに必要な具体的実装案が未記載です。"
+					},
+					"stages": {
+						"catalog": 2.536667000000307,
+						"selection": 3543.7730420000007
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 279,
+					"costUsd": 0.025168,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:selection",
+							"costUsd": 0.008318,
+							"inputTokens": 3539,
+							"outputTokens": 155,
+							"durationMs": 1348.4465830000008,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:review",
+							"costUsd": 0.01685,
+							"inputTokens": 7929,
+							"outputTokens": 124,
+							"durationMs": 2176.1816249999974,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:2",
+					"kind": "miss",
+					"durationMs": 908.4284579999985,
+					"choice": {
+						"kind": "miss",
+						"reason": "一括確定・取消しの相互運用や部分障害検証の運用計画例が該当SKILLに存在しない"
+					},
+					"stages": {
+						"catalog": 10.17870799999946,
+						"selection": 898.245167000001
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 45,
+					"costUsd": 0.007506,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:2:selection",
+							"costUsd": 0.007506,
+							"inputTokens": 3573,
+							"outputTokens": 45,
+							"durationMs": 893.820832999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:2",
+					"kind": "ready",
+					"durationMs": 2981.9146250000013,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "遅延表示パネル応答世代・レコード間誤結合の遮断条件、現在フォームの入力・エラー関連の静的・動的検証、どちらも計画手順と計測・停止条件、外部操作制約順守で両要件を明確に担保します。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 8.42137499999808,
+						"selection": 2952.269417000003
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 132,
+					"costUsd": 0.024128,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:2:selection",
+							"costUsd": 0.008016,
+							"inputTokens": 3600,
+							"outputTokens": 102,
+							"durationMs": 1930.478833000001,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:2:review",
+							"costUsd": 0.016112,
+							"inputTokens": 7936,
+							"outputTokens": 30,
+							"durationMs": 1012.7620830000014,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1987.4813749999994,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両ゲートを分離し再接続・進捗復元計画とWebhook重複・順序逆転・発送冪等性検証計画を順に満たす構成。目的の検証観点とplanning-only制約の下で適合。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 4.108374999999796,
+						"selection": 1955.9091670000016
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 126,
+					"costUsd": 0.023978,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:selection",
+							"costUsd": 0.007996,
+							"inputTokens": 3618,
+							"outputTokens": 95,
+							"durationMs": 1166.359042,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 771.5214999999989,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1782.751750000003,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSV取込の計画を独立に満たし、現行・新規の確認やテナント範囲・停止条件も明示されて適合します。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 4.581084000001283,
+						"selection": 1749.4084580000017
+					},
+					"modelCalls": 2,
+					"inputTokens": 11612,
+					"outputTokens": 104,
+					"costUsd": 0.024056,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:selection",
+							"costUsd": 0.007828,
+							"inputTokens": 3618,
+							"outputTokens": 74,
+							"durationMs": 997.9886249999981,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:review",
+							"costUsd": 0.016228,
+							"inputTokens": 7994,
+							"outputTokens": 30,
+							"durationMs": 735.0470419999983,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1964.953207999999,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "どちらも独立に対応計画を満たす手順"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 4.675833000001148,
+						"selection": 1932.7584169999973
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 73,
+					"costUsd": 0.023758,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:selection",
+							"costUsd": 0.007536,
+							"inputTokens": 3596,
+							"outputTokens": 43,
+							"durationMs": 971.5207079999964,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 946.3520419999986,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:3",
+					"kind": "miss",
+					"durationMs": 2780.9812079999974,
+					"choice": {
+						"kind": "miss",
+						"reason": "再接続カーソル（WebSocket側）と発送確定（Webhook側）を『原子的に更新する共有トランザクション』の実装計画や、両者の関係・競合・再試行手順を記載した具体的な計画（例：同一トランザクション内で両値を更新する手順や優先順位、障害発生時の巻き戻し、再試行の記述）が現テキストに見当たりません。どちらも単独側の設計手順は綿密に記されていますが、『共有トランザクションで結合』されていることを明記"
+					},
+					"stages": {
+						"catalog": 4.703458000003593,
+						"selection": 2776.2731249999997
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 220,
+					"costUsd": 0.024696,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:selection",
+							"costUsd": 0.00751,
+							"inputTokens": 3539,
+							"outputTokens": 54,
+							"durationMs": 1055.5147910000014,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:review",
+							"costUsd": 0.017186,
+							"inputTokens": 7929,
+							"outputTokens": 166,
+							"durationMs": 1706.3485419999997,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:3",
+					"kind": "miss",
+					"durationMs": 1566.5222080000021,
+					"choice": {
+						"kind": "miss",
+						"reason": "両サービスの一括確定・取消しや片方のみ失敗検証、テナント別CSV運用を網羅する運用計画を満たす候補がない"
+					},
+					"stages": {
+						"catalog": 10.32179200000246,
+						"selection": 1556.1959579999966
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 54,
+					"costUsd": 0.007578,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:3:selection",
+							"costUsd": 0.007578,
+							"inputTokens": 3573,
+							"outputTokens": 54,
+							"durationMs": 1550.678875000005,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:3",
+					"kind": "miss",
+					"durationMs": 3183.117917000003,
+					"choice": {
+						"kind": "miss",
+						"reason": "パネルの要求世代とフォームのレコードIDを結び付け、古い応答が現レコードのエラーに反映されないことを明言した具体的な受理条件や、複数レコードをまたいだパネル応答競合の並行手順がSKILL内に存在しません。パネルやフォーム単独の検証計画や一般的な経路分離は記載されていますが、要求世代やレコードID紐付けの記述、及び実際にその組み合わせで古い応答による誤表示抑止およびその再現を検証する流れは示されてい"
+					},
+					"stages": {
+						"catalog": 9.60975000000326,
+						"selection": 3173.5059579999943
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 235,
+					"costUsd": 0.024952,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:3:selection",
+							"costUsd": 0.007744,
+							"inputTokens": 3600,
+							"outputTokens": 68,
+							"durationMs": 1289.8432919999977,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:3:review",
+							"costUsd": 0.017208,
+							"inputTokens": 7936,
+							"outputTokens": 167,
+							"durationMs": 1868.0042499999981,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				}
+			],
+			"costUsd": 0.386798
+		},
+		"owner": {
+			"manifest": {
+				"suiteDigest": "3f58332dce980ce12a61f4390e1ec0d11ac8091ca71c639c4a924c0d20787a4b",
+				"additionalNegatives": [
+					"fc842dcda7bd2ac235b37454d017ec5f56238336b328f5008b75d248e826b2c9",
+					"b28c306c3595054701deb92f0f63d73efda5014ae3f2391a63daf563f16b2efe"
+				],
+				"model": "gpt-4.1",
+				"reviewer": "gpt-4.1",
+				"initialUsd": 17.040126599999983,
+				"repeats": 3,
+				"compositionApprovals": [
+					"75d06a4beec231a3c46a8beec4c59cabefc84926a3d81e0b678a6a1b0dd38665",
+					"75234cb5e0fdb0e01afaa81ea97a74fa41ac315a29d21bf480f2d5ec5356f7f8",
+					"d9a2603322c41ad3334aa856df8fba3973fbe0a938425ecad1d30e2a6d4c4392"
+				],
+				"approvals": [
+					{
+						"ref": "approved:websocket-replay-window",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "5fe6ca3a1d0596a89c69956ebf9a84f744cf8eb9c038387353b78eb9e8b9c531",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:payment-webhook-finality",
+						"group": "checkout-release-two-gates",
+						"bundleDigest": "62263ff56ef85864c7db179f1e248139172fbeb69318dead06bebd31f13a9643",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:shared-json-contract",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "4d2b57afcb04e64f731b15bebd05ca33129eb7c75f7012101335daaaf3950ed1",
+						"instructions": "build.lean.b82f7b44591020b711dfed2838cfce2634f84a6953c5555fb6ae727562dfc041"
+					},
+					{
+						"ref": "approved:configuration-import-shapes",
+						"group": "settings-release-two-gates",
+						"bundleDigest": "dfe5a3aba2f461b772c7732a276307934fbf3a14441dba21eefb690a4e14cf34",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					},
+					{
+						"ref": "approved:conditional-panel-testing",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "d5d093cdf2e818549c51be9874f3f089a04541618f9601abcedb444466fcba49",
+						"instructions": "build.lean.1dcf4f254a5e96b3ede4ad26e3d6ac9a5c7041cd8ad5b40966d776404635e847"
+					},
+					{
+						"ref": "approved:form-error-association",
+						"group": "admin-ui-two-gates",
+						"bundleDigest": "891916eb203109dbe54be572f137dfc79aba6a1232fa09cbd05762d110d11492",
+						"instructions": "build.9aee4ecf27520de0401771db8f2ffe21ed785c737a0a35b6ed392c9a38d5a31b"
+					}
+				],
+				"scope": "Pre-approved parts imported from archived review and checked against delivered bytes. Public seed source validation, real cloud selection, new SQLite binding. No live host routing or real task execution."
+			},
+			"rows": [
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:1",
+					"kind": "ready",
+					"durationMs": 2763.552,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "要求された2ゲート(進捗復元・発送冪等性)ごとの計画作成を、それぞれ適切なPLANNING-ONLY手順で独立に満たします。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 10.52820799999995,
+						"selection": 2712.1399169999995
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 107,
+					"costUsd": 0.023826,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:selection",
+							"costUsd": 0.007844,
+							"inputTokens": 3618,
+							"outputTokens": 76,
+							"durationMs": 1842.4232920000002,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:1:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 853.878459,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:1",
+					"kind": "rejected",
+					"durationMs": 1999.0338340000008,
+					"code": "composition_not_approved",
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:configuration-import-shapes",
+							"approved:shared-json-contract"
+						],
+						"assessment": "二つの計画を分離・併記し、CSVの対象範囲・異常時保護、JSON契約と適用順・停止を個別に満たす。"
+					},
+					"stages": {
+						"catalog": 4.410750000000007,
+						"selection": 1981.4998750000004
+					},
+					"modelCalls": 2,
+					"inputTokens": 11613,
+					"outputTokens": 102,
+					"costUsd": 0.024042,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:selection",
+							"costUsd": 0.007812,
+							"inputTokens": 3618,
+							"outputTokens": 72,
+							"durationMs": 1019.7157500000003,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:1:review",
+							"costUsd": 0.01623,
+							"inputTokens": 7995,
+							"outputTokens": 30,
+							"durationMs": 943.7407910000002,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:1",
+					"kind": "ready",
+					"durationMs": 1989.8181669999994,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "各々が対応手順の計画書を提供、独立実施可"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 8.19904200000019,
+						"selection": 1959.412875
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 76,
+					"costUsd": 0.023782,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:selection",
+							"costUsd": 0.00756,
+							"inputTokens": 3596,
+							"outputTokens": 46,
+							"durationMs": 1007.1157080000003,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:1:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 933.5441250000003,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:1",
+					"kind": "miss",
+					"durationMs": 3252.3404579999988,
+					"choice": {
+						"kind": "miss",
+						"reason": "再接続カーソルと発送確定を原子的に共有トランザクションで更新する手順、その競合・再試行の方法が両者を一体として扱う具体的作業計画または検証仕様として書かれていません。WebSocketカーソル・進捗とWebhook決済発送の設計や予定はそれぞれ独立して書かれており、同一の永続トランザクション内に統合する例やその再試行・排他・整合要件の一体的記載がありません。"
+					},
+					"stages": {
+						"catalog": 4.581707999999708,
+						"selection": 3247.7561669999996
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 251,
+					"costUsd": 0.024944,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:selection",
+							"costUsd": 0.007934,
+							"inputTokens": 3539,
+							"outputTokens": 107,
+							"durationMs": 1773.1394170000003,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:1:review",
+							"costUsd": 0.01701,
+							"inputTokens": 7929,
+							"outputTokens": 144,
+							"durationMs": 1462.869166999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:1",
+					"kind": "miss",
+					"durationMs": 1058.491666,
+					"choice": {
+						"kind": "miss",
+						"reason": "一括確定・取消しや部分障害の検証を扱う運用プロトコルの作成を満たす計画が該当カタログには存在しません。"
+					},
+					"stages": {
+						"catalog": 7.663833000000523,
+						"selection": 1050.8252499999999
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 55,
+					"costUsd": 0.007586,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:1:selection",
+							"costUsd": 0.007586,
+							"inputTokens": 3573,
+							"outputTokens": 55,
+							"durationMs": 1045.5424170000006,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:1",
+					"kind": "rejected",
+					"durationMs": 2646.980292,
+					"code": "composition_not_approved",
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "遅延応答の無効化とラベル・エラーの関連付け両方を将来作業の計画として網羅。どちらも状態管理・受理条件・検証観点を計画段階で扱い、環境や動作の仮定を明示可能。二つを順に実施すれば、要求世代やレコードの分離、現在表示中のエラー帰属の検証方法を計画として示せる。"
+					},
+					"stages": {
+						"catalog": 10.653125000000728,
+						"selection": 2625.7659590000003
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 169,
+					"costUsd": 0.024424,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:1:selection",
+							"costUsd": 0.008312,
+							"inputTokens": 3600,
+							"outputTokens": 139,
+							"durationMs": 1564.910582999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:1:review",
+							"costUsd": 0.016112,
+							"inputTokens": 7936,
+							"outputTokens": 30,
+							"durationMs": 1044.762166999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 2132.6355829999975,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "進捗復元と発送冪等性を独立ゲートとして分離検証する計画。各手順がplanning-onlyと目的要件に対応し、実サービス未提示条件も満たす。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 6.843791999999667,
+						"selection": 2093.3106659999994
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 110,
+					"costUsd": 0.02385,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:selection",
+							"costUsd": 0.007868,
+							"inputTokens": 3618,
+							"outputTokens": 79,
+							"durationMs": 1120.5138750000006,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:2:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 956.3657500000008,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:2",
+					"kind": "ready",
+					"durationMs": 2368.482791000002,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行と独立したCSV運用計画を両立。計画のみ、各作業の合否や停止条件も別々に満たす。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 3.6482080000023416,
+						"selection": 2354.9002919999984
+					},
+					"modelCalls": 2,
+					"inputTokens": 11612,
+					"outputTokens": 98,
+					"costUsd": 0.024008,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:selection",
+							"costUsd": 0.00778,
+							"inputTokens": 3618,
+							"outputTokens": 68,
+							"durationMs": 1624.8017919999984,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:2:review",
+							"costUsd": 0.016228,
+							"inputTokens": 7994,
+							"outputTokens": 30,
+							"durationMs": 723.2312920000004,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:2",
+					"kind": "ready",
+					"durationMs": 1895.3070000000007,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "二画面・独立検査計画としてそれぞれ対応。"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 2.863499999999476,
+						"selection": 1880.7645000000011
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 74,
+					"costUsd": 0.023766,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:selection",
+							"costUsd": 0.007544,
+							"inputTokens": 3596,
+							"outputTokens": 44,
+							"durationMs": 980.106416999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:2:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 894.0672080000004,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:2",
+					"kind": "miss",
+					"durationMs": 2931.9542919999985,
+					"choice": {
+						"kind": "miss",
+						"reason": "再接続カーソルと発送確定を原子的に更新する単一共有トランザクション、及びその競合・再試行方法を明示した手順（両者の原子的関係）が記載された具体的作業計画・検証仕様が見当たりません。両要素が個別には計画と検証fixtureで論じられていますが、それらを単一の共有データベーストランザクションで原子的に結びつけ、競合時や再試行時の停止位置・判断根拠を説明する一連の操作手順や合格条件記述が示されていません"
+					},
+					"stages": {
+						"catalog": 2.942749999998341,
+						"selection": 2929.0085839999992
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 219,
+					"costUsd": 0.024688,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:selection",
+							"costUsd": 0.00751,
+							"inputTokens": 3539,
+							"outputTokens": 54,
+							"durationMs": 1091.9610829999983,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:2:review",
+							"costUsd": 0.017178,
+							"inputTokens": 7929,
+							"outputTokens": 165,
+							"durationMs": 1826.3582500000011,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:2",
+					"kind": "miss",
+					"durationMs": 933.947791999999,
+					"choice": {
+						"kind": "miss",
+						"reason": "該当する共通プロトコル設計・障害検証計画を一括提供するSKILLがカタログに存在しない"
+					},
+					"stages": {
+						"catalog": 9.005249999998341,
+						"selection": 924.9412080000002
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 45,
+					"costUsd": 0.007506,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:2:selection",
+							"costUsd": 0.007506,
+							"inputTokens": 3573,
+							"outputTokens": 45,
+							"durationMs": 921.226749999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:2",
+					"kind": "miss",
+					"durationMs": 3227.1605830000008,
+					"choice": {
+						"kind": "miss",
+						"reason": "パネルの要求世代とフォームのレコードIDの結び付け、および古い応答が現レコードのエラーに反映されないようにする受理条件やその並行再現手順について、実施計画やワークフロー内に具体的な同一レコード性管理または応答適用条件の策定（世代/IDの合致判定や応答競合の具体対策）が明示されていません。関連する並行性や再現シナリオも記述されていないため、ownership条件を満たす記載が不足しています。"
+					},
+					"stages": {
+						"catalog": 3.2458330000008573,
+						"selection": 3223.912957999997
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 247,
+					"costUsd": 0.025048,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:2:selection",
+							"costUsd": 0.007944,
+							"inputTokens": 3600,
+							"outputTokens": 93,
+							"durationMs": 1213.4718749999993,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:2:review",
+							"costUsd": 0.017104,
+							"inputTokens": 7936,
+							"outputTokens": 154,
+							"durationMs": 2000.4547920000005,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "checkout-release-two-gates",
+					"attempt": "checkout-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 2117.850542,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:websocket-replay-window",
+							"approved:payment-webhook-finality"
+						],
+						"assessment": "両ゲートを独立に検証する計画を満たし、進捗通知を発送証拠とせず要件通り。"
+					},
+					"compositionRefs": [
+						"approved:websocket-replay-window",
+						"approved:payment-webhook-finality"
+					],
+					"stages": {
+						"catalog": 4.4927499999976135,
+						"selection": 2091.350709000002
+					},
+					"modelCalls": 2,
+					"inputTokens": 11485,
+					"outputTokens": 96,
+					"costUsd": 0.023738,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:selection",
+							"costUsd": 0.007756,
+							"inputTokens": 3618,
+							"outputTokens": 65,
+							"durationMs": 1197.665832999999,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:checkout-release-two-gates:3:review",
+							"costUsd": 0.015982,
+							"inputTokens": 7867,
+							"outputTokens": 31,
+							"durationMs": 880.8735419999975,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "settings-release-two-gates",
+					"attempt": "settings-release-two-gates:3",
+					"kind": "ready",
+					"durationMs": 1962.4492089999985,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:shared-json-contract",
+							"approved:configuration-import-shapes"
+						],
+						"assessment": "JSON契約移行とCSVインポートを独立に計画し、契約・互換性順序とCSVの範囲・不正防止の運用計画をそれぞれ分離して満たす。"
+					},
+					"compositionRefs": [
+						"approved:shared-json-contract",
+						"approved:configuration-import-shapes"
+					],
+					"stages": {
+						"catalog": 3.4561670000002778,
+						"selection": 1939.403875
+					},
+					"modelCalls": 2,
+					"inputTokens": 11612,
+					"outputTokens": 111,
+					"costUsd": 0.024112,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:selection",
+							"costUsd": 0.007884,
+							"inputTokens": 3618,
+							"outputTokens": 81,
+							"durationMs": 1187.562332999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:settings-release-two-gates:3:review",
+							"costUsd": 0.016228,
+							"inputTokens": 7994,
+							"outputTokens": 30,
+							"durationMs": 739.2393329999977,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "admin-ui-two-gates",
+					"attempt": "admin-ui-two-gates:3",
+					"kind": "ready",
+					"durationMs": 2001.9116249999934,
+					"choice": {
+						"kind": "composed",
+						"refs": [
+							"approved:conditional-panel-testing",
+							"approved:form-error-association"
+						],
+						"assessment": "両目標に独立した計画を網羅し順序も分かる"
+					},
+					"compositionRefs": [
+						"approved:conditional-panel-testing",
+						"approved:form-error-association"
+					],
+					"stages": {
+						"catalog": 2.7433339999988675,
+						"selection": 1978.5364159999954
+					},
+					"modelCalls": 2,
+					"inputTokens": 11587,
+					"outputTokens": 78,
+					"costUsd": 0.023798,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:selection",
+							"costUsd": 0.007576,
+							"inputTokens": 3596,
+							"outputTokens": 48,
+							"durationMs": 1034.8089580000014,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:admin-ui-two-gates:3:review",
+							"costUsd": 0.016222,
+							"inputTokens": 7991,
+							"outputTokens": 30,
+							"durationMs": 931.7450830000016,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-transaction-bridge",
+					"attempt": "missing-transaction-bridge:3",
+					"kind": "miss",
+					"durationMs": 3098.918832999996,
+					"choice": {
+						"kind": "miss",
+						"reason": "再接続カーソルと発送確定を“原子的”にまとめて共有トランザクションとして更新する実装手順（関係性、排他性、同一ロジック内での同時更新）が計画上で示されておらず、両パートが別設計や別の手順として記載されている。カーソル管理と決済Webhookの発送確定をトランザクションとして結び付ける運用例も含まれない。"
+					},
+					"stages": {
+						"catalog": 3.278542000000016,
+						"selection": 3095.6376249999958
+					},
+					"modelCalls": 2,
+					"inputTokens": 11468,
+					"outputTokens": 202,
+					"costUsd": 0.024552,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:selection",
+							"costUsd": 0.007678,
+							"inputTokens": 3539,
+							"outputTokens": 75,
+							"durationMs": 1105.3370419999992,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-transaction-bridge:3:review",
+							"costUsd": 0.016874,
+							"inputTokens": 7929,
+							"outputTokens": 127,
+							"durationMs": 1978.918666999998,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-atomic-config-rollback",
+					"attempt": "missing-atomic-config-rollback:3",
+					"kind": "miss",
+					"durationMs": 921.023457999996,
+					"choice": {
+						"kind": "miss",
+						"reason": "一括確定・取消し運用と部分障害検証を共通プロトコルで示す候補なし"
+					},
+					"stages": {
+						"catalog": 7.636040999997931,
+						"selection": 913.3832919999986
+					},
+					"modelCalls": 1,
+					"inputTokens": 3573,
+					"outputTokens": 39,
+					"costUsd": 0.007458,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-atomic-config-rollback:3:selection",
+							"costUsd": 0.007458,
+							"inputTokens": 3573,
+							"outputTokens": 39,
+							"durationMs": 909.8803750000006,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				},
+				{
+					"taskId": "missing-ui-commit-guard",
+					"attempt": "missing-ui-commit-guard:3",
+					"kind": "miss",
+					"durationMs": 4205.103083000002,
+					"choice": {
+						"kind": "miss",
+						"reason": "パネル要求世代とフォームのレコードID関連付け、ならびに古い応答が新しいレコードのエラーに反映されないという“具体的な受理条件”や、“並行再現手順”がどこにも記載されていません。各機能単独の検証や一般的な観測指針はあるが、複数世代の競合や他レコードへの誤反映防止に関する具体的仕様や検証計画の記述が存在しません。"
+					},
+					"stages": {
+						"catalog": 7.377749999999651,
+						"selection": 4197.719208000002
+					},
+					"modelCalls": 2,
+					"inputTokens": 11536,
+					"outputTokens": 249,
+					"costUsd": 0.025064,
+					"modelStages": [
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:3:selection",
+							"costUsd": 0.008112,
+							"inputTokens": 3600,
+							"outputTokens": 114,
+							"durationMs": 2719.5704169999954,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						},
+						{
+							"model": "gpt-4.1",
+							"purpose": "approved-composition-holdout-2026-11-09:missing-ui-commit-guard:3:review",
+							"costUsd": 0.016952,
+							"inputTokens": 7936,
+							"outputTokens": 135,
+							"durationMs": 1465.1102080000055,
+							"responseStatus": "completed",
+							"reasoningTokens": 0
+						}
+					]
+				}
+			],
+			"costUsd": 0.386192
+		}
+	},
+	"grading": {
+		"calls": 6,
+		"inputTokens": 81203,
+		"outputTokens": 4657,
+		"costUsd": 0.199662,
+		"syntheticPythonPassed": [
+			"38d0ba8d89e8d7a-0-0.py",
+			"3d3b1a7394727dc-0-0.py",
+			"3d3b1a7394727dc-1-0.py",
+			"3e79d75956f3cde-0-0.py",
+			"9d1126bf2e4e4d2-0-0.py",
+			"9d1126bf2e4e4d2-1-0.py",
+			"ada2196f50a5945-0-0.py",
+			"fd0050899fa7e30-0-0.py",
+			"fd0050899fa7e30-1-0.py"
+		]
+	},
+	"cost": {
+		"priorAccountedUsd": 16.1129078,
+		"newAccountedUsd": 1.5130728,
+		"totalAccountedUsd": 17.6259806,
+		"maxUsd": 20,
+		"previousUnsettledReservationsUsd": 4.528887,
+		"coldJournalReconciled": true
+	}
+}
