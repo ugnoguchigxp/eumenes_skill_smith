@@ -63,8 +63,16 @@ export interface Ports<Tx> {
 	repository: Repository<Tx>;
 	/** Optional approved immutable publications. Omission keeps existing generation behavior. */
 	approvedSkills?: import("./approved-skills.js").ApprovedSkillStore<Tx>;
+	/** Exact version combinations accepted for already approved, immutable bundles. */
+	approvedDeliveryCompatibility?: readonly {
+		instructions: string;
+		rendererVersion: string;
+		sourceExtractorVersion: string;
+	}[];
 	/** Independent route for the short applicability decision; omission preserves the injected default. */
 	selectionInference?: Ports<Tx>["inference"];
+	/** Optional dedicated semantic gate over the exact assembled bundle. */
+	compositionReviewInference?: Ports<Tx>["inference"];
 	authority: {
 		valid(tx: Tx, authority: Authority, sourceRefs: string[]): boolean;
 	};

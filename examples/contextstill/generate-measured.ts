@@ -62,6 +62,7 @@ if (new Set(suite.tasks.map((t) => t.id)).size !== suite.tasks.length)
 	throw Error("duplicate_task_id");
 const config = JSON.parse(readFileSync(settingsPath, "utf8")) as {
 	maxUsd: number;
+	minimumAccountedUsd?: number;
 	builder: CloudModel;
 	executor: CloudModel;
 	connectionId: string;
@@ -106,6 +107,11 @@ try {
 		},
 	});
 	const startingEvents = budget.events().map((e) => e.id);
+	if (
+		!Number.isFinite(config.minimumAccountedUsd ?? 0) ||
+		budget.spent() + 1e-9 < (config.minimumAccountedUsd ?? 0)
+	)
+		throw Error("journal_missing_previous_evaluation");
 	save("manifest.json", {
 		version: "measured-generation.v1",
 		instructionVersion:

@@ -12,7 +12,7 @@ import { requireThat } from "../service/identity.js";
 export function sqliteApprovedSkills(
 	approval: Pick<
 		ApprovedSkillStore<Database>,
-		"authorizePublication" | "approvalCurrent"
+		"authorizePublication" | "approvalCurrent" | "compositionCurrent"
 	>,
 ): ApprovedSkillStore<Database> {
 	const parse = (raw: { data_json: string }) => {
@@ -94,6 +94,7 @@ ORDER BY ${search ? "matches.match_rank," : ""} knowledge_approved_skills.rowid 
 		const page = rows.slice(0, query.limit);
 		return {
 			records: page.map(parse),
+			...(search ? { ranked: true as const } : {}),
 			nextCursor:
 				rows.length > query.limit
 					? search

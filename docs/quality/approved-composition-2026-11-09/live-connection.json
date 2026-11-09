@@ -1,0 +1,23 @@
+{
+	"observedOn": "2026-11-09",
+	"eumenes": {
+		"endpoint": "http://127.0.0.1:8787",
+		"checkoutCommit": "40b9630c4dbae20ad3837fdd7e5397c721300ae5",
+		"authenticatedReads": {
+			"/api/jobs": { "status": 200, "mentionsSkillSmith": false },
+			"/api/capabilities": { "status": 200, "mentionsSkillSmith": false },
+			"/api/skillsmith/delivery": { "status": 404 },
+			"/api/skill-smith/delivery": { "status": 404 }
+		},
+		"deployedDeliveryVerified": false
+	},
+	"contextStill": {
+		"endpoint": "http://127.0.0.1:39172/mcp",
+		"version": "0.1.0",
+		"initializeStatus": 200,
+		"toolsListStatus": 200,
+		"searchKnowledge": true,
+		"getKnowledge": false,
+		"requiredContract": "A ref-addressable read and currentness check that expose the exact version and whether the document is complete."
+	}
+}

@@ -154,6 +154,48 @@ test("empty lexical matches retain structurally compatible paraphrase candidates
 	expect(prepared.candidates.map((c) => c.ref)).toEqual([f.original.ref]);
 });
 
+test("a revoked lexical hit cannot hide the structural fallback", async () => {
+	const f = await catalog();
+	f.ports.approvedSkills!.approvalCurrent = (_tx, r) =>
+		r.ref === f.original.ref;
+	f.add(100, (r) => {
+		r.template.content.task.goal = "Configure keyboard firmware";
+		r.applicability = "Configure a keyboard";
+	});
+	const result = f.service.prepareSkillSelection(
+		f.db,
+		{
+			...f.request,
+			task: { ...f.request.task, goal: "keyboard" },
+		},
+		f.auth,
+	);
+	expect(result.candidates.map((r) => r.ref)).toEqual([f.original.ref]);
+	expect(result.catalog.exhausted).toBe(true);
+});
+
+test("a full ranked range leaves space for compatible nonmatching candidates", async () => {
+	const f = await catalog();
+	f.request.limits.candidates = 3;
+	for (let i = 0; i < 12; i++)
+		f.add(i, (r) => {
+			r.template.content.task.goal = "Configure keyboard firmware";
+			r.applicability = "Configure a keyboard";
+		});
+	// A recent nonmatching publication must have a chance even in a dense topic.
+	const other = f.add(100, () => {});
+	const result = f.service.prepareSkillSelection(
+		f.db,
+		{
+			...f.request,
+			task: { ...f.request.task, goal: "keyboard" },
+		},
+		f.auth,
+	);
+	expect(result.candidates).toHaveLength(3);
+	expect(result.candidates.map((r) => r.ref)).toContain(other.ref);
+});
+
 test("catalog query punctuation cannot change SQL or expand scope", async () => {
 	const f = await catalog();
 	f.write(() => {

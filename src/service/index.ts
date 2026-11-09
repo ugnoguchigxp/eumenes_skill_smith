@@ -62,6 +62,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			: assembly.mode === "legacy";
 		const presentationOk =
 			assembly.mode === "legacy" ||
+			!!b.publication?.composition ||
 			(b.content.decision.localizedInstructions !== undefined &&
 				b.content.decision.document !== undefined);
 		return (
@@ -71,7 +72,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 			!repo.blocked(tx, b.ref) &&
 			b.scope === auth.scope &&
 			b.expiresAt > p.now() &&
-			generatorOk &&
+			(!!b.publication || generatorOk) &&
 			presentationOk &&
 			(!b.publication || approved.current(tx, b, auth)) &&
 			p.policy.current(tx, b.content.policy.version) &&
@@ -204,7 +205,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		// External dependency builds may be cached; delivery still revalidates
 		// via getValidated before a ready reply is returned to the client.
 		if (reuse) {
-			const content = {
+			const content = reuse.assembled?.content ?? {
 				...structuredClone(reuse.template.content),
 				task: request.task,
 				environment: request.environment,
@@ -222,9 +223,19 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 				usage: reuse.usage,
 				publication: reuse.publication,
 			};
+			if (reuse.assembled)
+				requireThat(
+					bytes(
+						skillDeliveryPacket(row.ref, build, reuse.assembled.artifact),
+					) <= request.limits.outputBytes,
+					"context_budget_exceeded",
+				);
 			repo.putBuild(tx, build);
 			repo.link(tx, build.ref, row.ref);
-			repo.link(tx, build.ref, reuse.publication.ref);
+			for (const member of reuse.publication.composition?.parts ?? [
+				reuse.publication,
+			])
+				repo.link(tx, build.ref, member.ref);
 			for (const e of content.dependencies) repo.link(tx, build.ref, e.ref);
 			row.usage = reuse.usage;
 			row.outcome = { kind: "ready", buildRef: build.ref };

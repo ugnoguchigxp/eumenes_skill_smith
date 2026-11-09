@@ -29,6 +29,8 @@ export const approvedSkillSchema = z.strictObject({
 	digest: id,
 	approvalRef: id,
 	applicability: z.string().trim().min(1).max(2000),
+	/** Host-attested set of independently composable, ordered procedures. */
+	compositionGroup: id.optional(),
 	artifact: skillArtifactSchema,
 	template: buildSchema,
 	expiresAt: z.number().int().positive(),
@@ -46,8 +48,14 @@ export interface ApprovedSkillScan {
 }
 export interface ApprovedSkillPage {
 	records: ApprovedSkill[];
-	/** Null means the structurally compatible range is exhausted. */
+	/** Null means the current range is exhausted. Ranked stores also support a query-free scan. */
 	nextCursor: string | null;
+	ranked?: true;
+}
+export interface ApprovedComposition {
+	request: Pick<GuidanceRequest, "task" | "environment" | "audience">;
+	parts: { ref: string; digest: string }[];
+	bundleDigest: string;
 }
 export interface ApprovedSkillStore<Tx> {
 	get(tx: Tx, ref: string): ApprovedSkill | null;
@@ -63,16 +71,33 @@ export interface ApprovedSkillStore<Tx> {
 	): boolean;
 	/** Owner domain verifies approval validity; a boolean supplied by a caller is not approval. */
 	approvalCurrent(tx: Tx, record: ApprovedSkill): boolean;
+	/** Host-owned approval of the exact ordered bundle and applicability to this task. */
+	compositionCurrent?(
+		tx: Tx,
+		authority: Authority,
+		composition: ApprovedComposition,
+	): boolean;
 }
+const selected = z.strictObject({
+	kind: z.literal("selected"),
+	ref: id,
+	assessment: z.string().min(1).max(1000),
+});
+const miss = z.strictObject({
+	kind: z.literal("miss"),
+	reason: z.string().min(1).max(1000),
+});
+export const singleSkillSelectionSchema = z.discriminatedUnion("kind", [
+	selected,
+	miss,
+]);
 export const skillSelectionSchema = z.discriminatedUnion("kind", [
+	selected,
+	miss,
 	z.strictObject({
-		kind: z.literal("selected"),
-		ref: id,
+		kind: z.literal("composed"),
+		refs: z.array(id).min(2).max(3),
 		assessment: z.string().min(1).max(1000),
-	}),
-	z.strictObject({
-		kind: z.literal("miss"),
-		reason: z.string().min(1).max(1000),
 	}),
 ]);
 export type SkillSelection = z.infer<typeof skillSelectionSchema>;
@@ -87,6 +112,7 @@ export interface SelectedSkill {
 	preparedDigest: string;
 	decision: SkillSelection;
 	receipt: string | null;
+	compositionReview?: { receipt: string; bundleDigest: string };
 	usage: Usage;
 }
 type DeliveryStatus<T> = T extends { contractVersion: string }
@@ -100,6 +126,7 @@ export type SkillDelivery =
 			requestRef: string;
 			auditRef: string;
 			publicationRef?: string;
+			compositionRefs?: string[];
 			skill: SkillArtifact;
 			dependencyVersions: z.infer<typeof versionRefSchema>[];
 	  };
@@ -116,6 +143,7 @@ export const skillDeliverySchema = z.discriminatedUnion("kind", [
 		requestRef: id,
 		auditRef: id,
 		publicationRef: id.optional(),
+		compositionRefs: z.array(id).min(2).max(3).optional(),
 		skill: skillArtifactSchema,
 		dependencyVersions: z.array(versionRefSchema).max(8),
 	}),

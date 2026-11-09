@@ -1,7 +1,10 @@
 import { test, expect } from "bun:test";
 import { z } from "zod";
 import { baselineTurnSchema } from "../../../src/eval/index.js";
-import { providerSchema, decodeProviderValue } from "../provider-schema.js";
+import {
+	providerSchema,
+	decodeProviderValue,
+} from "../../../src/integration/provider-schema.js";
 
 test("unsupported provider lookaround stays enforced by the original host schema", () => {
 	const original = z.string().regex(/^(?!bad$)[a-z]+$/);

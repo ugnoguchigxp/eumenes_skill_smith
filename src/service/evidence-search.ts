@@ -48,6 +48,21 @@ type SearchState = {
 	}[];
 };
 
+function matchesCard(
+	document: Evidence,
+	card: SearchState["candidates"][number],
+) {
+	return (
+		document.ref === card.ref &&
+		digest(document.version) === digest(card.version) &&
+		document.status === card.status &&
+		document.complete === card.complete &&
+		document.external === card.external &&
+		document.scope === card.scope &&
+		document.supersededBy === card.supersededBy
+	);
+}
+
 /** Search/refresh evidence under the caller's existing execution budget. */
 export function createEvidenceSearch<Tx>(
 	ports: Ports<Tx>,
@@ -76,13 +91,7 @@ export function createEvidenceSearch<Tx>(
 				read(card.ref, card.external),
 			),
 		);
-		requireThat(
-			document.ref === card.ref &&
-				digest(document.version) === digest(card.version) &&
-				document.external === card.external &&
-				document.scope === card.scope,
-			"source_revoked",
-		);
+		requireThat(matchesCard(document, card), "source_revoked");
 		document.retrievedAt = ports.now();
 		return document;
 	}
@@ -100,12 +109,16 @@ export function createEvidenceSearch<Tx>(
 			),
 		);
 		const externalUsed = !!(ports.source && r.authority.searchTask);
+		// The model can refine the registry query. The authorized public query
+		// is immutable for the duration of this execution.
+		const externalQuery =
+			state && ports.assemblyMode !== "legacy" ? undefined : queryExternal;
 		const reported =
-			externalUsed && queryExternal
+			externalUsed && externalQuery
 				? sourceSearchSchema.safeParse(
 						await sourceCall(() =>
 							ports.source!.search(
-								queryExternal,
+								externalQuery,
 								request.limits.candidates,
 								signal,
 								metered ? sourceContext : undefined,
@@ -114,7 +127,7 @@ export function createEvidenceSearch<Tx>(
 					)
 				: null;
 		requireThat(!reported || reported.success, "source_contract_violation");
-		const sourceSearch = reported?.data;
+		const sourceSearch = reported?.data ?? state?.sourceSearch;
 		const external = sourceSearch?.cards ?? [];
 		requireThat(
 			external.every((c) => c.external) &&
@@ -144,9 +157,11 @@ export function createEvidenceSearch<Tx>(
 		const newRoundRefs = new Set(
 			combined.map((c) => c.ref).filter((ref) => candidateRefs.has(ref)),
 		);
-		let evidence = (state?.evidence ?? []).filter((e) =>
-			candidateRefs.has(e.ref),
-		);
+		const cardsByRef = new Map(candidates.map((card) => [card.ref, card]));
+		let evidence = (state?.evidence ?? []).filter((e) => {
+			const card = cardsByRef.get(e.ref);
+			return card && matchesCard(e, card);
+		});
 		// If documents are full, free slots by dropping prior-only evidence first.
 		if (state && evidence.length >= request.limits.documents) {
 			const keepNew = evidence.filter((e) => newRoundRefs.has(e.ref));
@@ -171,9 +186,9 @@ export function createEvidenceSearch<Tx>(
 			// Modern external cards are already sufficient for the model to request disclosure.
 			// Keep legacy replay and successor discovery eager, without spending reads on unused active cards.
 			if (
-				ports.assemblyMode !== "legacy" &&
-				card.external &&
-				card.status === "active"
+				card.status === "active" &&
+				(ports.assemblyMode === "lean" ||
+					(ports.assemblyMode !== "legacy" && card.external))
 			)
 				continue;
 			if (evidence.length >= request.limits.documents) {
@@ -189,7 +204,11 @@ export function createEvidenceSearch<Tx>(
 			seenEvidence.add(document.ref);
 			documentsFetched++;
 		}
-		const successors = state?.successors ? [...state.successors] : [];
+		const retained = new Set(
+			evidence.filter((e) => state?.evidence.includes(e)).map((e) => e.ref),
+		);
+		const successors =
+			state?.successors.filter((s) => retained.has(s.ref)) ?? [];
 		const seen = new Set(evidence.map((e) => e.ref));
 		for (let i = 0; i < evidence.length; i++) {
 			const e = evidence[i]!;
@@ -260,7 +279,7 @@ export function createEvidenceSearch<Tx>(
 		if (state)
 			reSearch.push({
 				query: queryLocal,
-				externalQuery: queryExternal ?? null,
+				externalQuery: externalQuery ?? null,
 				cardsAdded,
 				cardsAdmitted,
 				documentsFetched,

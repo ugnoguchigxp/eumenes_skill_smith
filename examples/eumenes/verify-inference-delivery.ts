@@ -132,15 +132,22 @@ try {
 	];
 	let transportCalls = 0;
 	inference = hostInference.createInference(store, settings, {
-		fetch: async (url: URL | Request | string) => {
+		fetch: async (url: URL | Request | string, init?: RequestInit) => {
 			check(
 				String(url).startsWith("http://127.0.0.1:19999/v1/"),
 				"unexpected_transport",
 			);
+			const format = JSON.parse(String(init?.body)).response_format;
+			check(
+				format?.type === "json_schema" &&
+					format.json_schema?.strict === true &&
+					format.json_schema?.schema?.required?.[0] === "result",
+				"strict_output_contract_missing",
+			);
 			const next = responses[transportCalls++];
 			check(next, "extra_model_call");
 			return Response.json({
-				choices: [{ message: { content: JSON.stringify(next) } }],
+				choices: [{ message: { content: JSON.stringify({ result: next }) } }],
 				usage: { prompt_tokens: 70, completion_tokens: 30 },
 			});
 		},
@@ -157,6 +164,7 @@ try {
 		control: inference,
 		read: (operation) => store.read(operation),
 		write: (operation) => store.write(operation),
+		structuredOutput: true,
 	});
 	let lastReceipt: string | undefined;
 	const service = createSkillSmith<Tx>({
@@ -255,6 +263,7 @@ try {
 		bundleDigest: packet.skill.bundleDigest,
 		usage: row.usage,
 		transportCalls,
+		strictOutputRequests: transportCalls,
 		crossRequestReceiptRefused: true,
 		revokedReceiptRefused: true,
 		provider: "injected fixed responses in actual host inference transport",

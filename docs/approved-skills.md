@@ -1,6 +1,6 @@
 # 承認済みSKILLの選択・配達
 
-初回生成に `Ports.assemblyMode: "lean"` を選ぶと、候補本文の先読みと、本文・監査を分ける生成を利用できます。意味審査と最終配達の版確認は引き続き必要です。ホストごとに明示選択する方式で、生成指示の版が異なる承認済み登録は互換として扱いません。[初回生成の実測と接続範囲](quality/first-generation-2026-11-09/results.md)を参照してください。
+初回生成に `Ports.assemblyMode: "lean"` を選ぶと、資料枠を残した先読みと、本文・監査を分ける生成を利用できます。意味審査と最終配達の版確認は引き続き必要です。生成指示の版が異なる承認済み登録を配達する場合、ホストは互換性を検証した `instructions`・`rendererVersion`・`sourceExtractorVersion` の組を `Ports.approvedDeliveryCompatibility` に指定します。指定がない版には現在の生成指示の一致が必要です。既存の承認・失効・権限・資料版は各配達で照合します。承認済みの登録に結び付いていない過去の生成は現在の指示版で検査します。[初回生成の実測と接続範囲](quality/first-generation-2026-11-09/results.md)
 
 `skillsmith.delivery.v1`は本文を一度だけ返す公開契約です。既存の`get`、`getValidated`、`getSkillValidated`は互換入口として保持します。`getSkillDelivery`は主ファイル、全references、digest、bundleDigest、requestRef、auditRef、依存版だけを返します。`submitArtifact`（またはrequestの`delivery: "artifact"`）で新方式を指定した生成は、実際に返す応答全体へ容量上限を適用し、分割欠落を許可しません。指定しない旧生成は内部JSONの従来の容量判定も保持します。`getSkillAudit(auditRef, ...)`は別途、元要求のprincipal・scope・epochと現在性を検査します。監査には独立した最大bytes（既定32KB、明示指定は256〜131072）を適用し、小さい公開応答の上限へ内部記録を重ねません。
 
@@ -40,8 +40,8 @@ const publication = write(tx => service.publishSkill(tx, {
 ## 利用の手順
 
 1. `prepareSkillSelection`で現在の依頼・権限と候補をスナップショット化する。
-2. `selectSkill`をtransaction外で一回実行する。本文生成を行わず、InferencePortでrefと短い適用判断、またはmissを返す。選択専用の`Ports.selectionInference`を指定すると、推論とreceiptの照合にそのportを使う。省略時は既存の`Ports.inference`を使う。
-3. selectedの場合だけ、writer内の`bindSkillSelection`で再照合する。新利用者のrequestとBuildを保存し、元の厳密キャッシュキーを維持する。
+2. `selectSkill`をtransaction外で一回実行する。InferencePortが候補と短い適用判断、またはmissを返す。`Ports.selectionInference`を指定すると、推論とreceiptの照合にそのportを使う。省略時は既存の`Ports.inference`を使う。部品を組み合わせる場合は、組み上げた本文と全参照の審査にもう一回の推論を使う。
+3. selectedまたはcomposedの場合は、writer内の`bindSkillSelection`で再照合する。新利用者のrequestとBuildを保存し、元の厳密キャッシュキーを維持する。
 4. `getSkillDelivery`で外部資料版も再確認し、本文とreferencesを実際に取得してからreadyとして扱う。
 5. missなら`submitAfterSkillMiss`へ渡す。直近に不適合と判定された承認済み本文を、厳密キャッシュから再配達しない。利用できる新規生成済みの厳密キャッシュがなければ既存の生成jobを登録する。pendingは利用可能なSKILLの配達成功に含めない。
 
@@ -52,7 +52,7 @@ const selection = await service.selectSkill(prepared, {
   reserve: hostCommittedReservation,
   noteUsage: hostPersistObservedUsage,
 });
-if (selection.decision.kind === "selected") {
+if (selection.decision.kind !== "miss") {
   const accepted = write(tx =>
     service.bindSkillSelection(tx, prepared, selection, authority));
   const packet = await service.getSkillDelivery(
@@ -69,9 +69,17 @@ PreparedとSelectedは信頼されたホスト内の処理間データです。�
 
 LLMは候補の原目的・制約と現在の受入条件を照合します。用途の追加、未確認条件、計画から実操作への変更はmissです。意味判定をキーワードや類似度の閾値へ移しません。コードはscope、policy、environment、必要能力の版一致、approval、epoch、source、expiry、bundleの整合性を強制します。選択指示の版が変わると、旧版で結び付けた再利用結果は再選択が必要になります。
 
-SQLiteの`ApprovedSkillStore.scan`はscope、環境、受け手、方針、能力版、期限を候補数の制限前に絞ります。名前、適用範囲、元の目的を文字列索引で順位付けし、一致がなければ構造条件に合う新しい順で取得します。承認や失効で除外した候補はページを進めて補います。走査上限は既定256件、最大4096件です。候補枠が埋まる前に走査上限に達した場合は`catalog_scan_limit`を返します。`catalog.exhausted`は取得経路の候補を読み切ったかを示すもので、言い換えや同一テーマの登録が多い場合の網羅性は保証しません。既存の`list`のみのstoreも使用できますが、同じ絞り込みや補充は利用できません。
+SQLiteの`ApprovedSkillStore.scan`はscope、環境、受け手、方針、能力版、期限を候補数の制限前に絞ります。名前、適用範囲、元の目的を文字列索引で順位付けし、残した候補枠を構造条件に合う新しい順で補います。少数の語句一致や取り消された語句一致だけで走査終了とせず、重複と失効を除きます。走査上限は既定256件、最大4096件です。候補枠が埋まる前に走査上限に達した場合は`catalog_scan_limit`を返します。`catalog.exhausted`は構造条件に合う範囲を読み切ったかを示します。既存の`list`のみのstoreも使用できます。
 
 共有のために元のBuild認可は弱めません。新しい依頼は別のrequest/Buildになり、`bindUse`と`reportResult`も従来の実行所有権検査を使います。利用条件は新しいタスク結付けに保持し、本文の安定した制約を削除・昇格させません。内部Buildのtask欄は現在の依頼、配達する不変bundleはpublicationの正本です。再描画による無承認の本文変更を避けます。
+
+## 承認済み部品の組み合わせ
+
+独立した手順として再利用できる登録に、ホスト承認を得て同じ `compositionGroup` を指定します。選択が単一の完成品で全条件を満たせる場合はそちらを優先します。組み合わせでは2〜3本の本文と参照ファイルを使用し、LLMが不足を埋めるための新しい手順を書き足すことはありません。同名で内容が異なる参照、版の異なる同じ依存、結合で参照先が変わり得るMarkdown構造は拒否します。
+
+ホストは `assembleApprovedParts` で配達内容をプレビューし、依頼の目的・受入条件・制約、環境、受け手、部品の順序・版、完成bundleのdigestに対する承認を所有します。`ApprovedSkillStore.compositionCurrent` を実装するとこの経路を有効にできます。評価fixtureは固定した条件とdigestを照合します。実運用でもモデルの出力をそのまま承認に使わず、承認を所有するシステムへ照合します。
+
+組み合わせには2回のモデル呼び出し枠が必要です。選択後、`compositionReviewInference`（省略時は選択用の推論）が実際の本文と全参照に照らし、すべての受入条件に根拠を割り当てます。結付けは選択と審査の受領証を照合し、組み合わせ全体への承認を確認します。承認不足の `composition_not_approved` では結付けを作らず、ホストは追加承認か通常の生成へ進めます。配達では全ての部品と組み合わせの承認を再確認し、readyの `compositionRefs` に部品の順序を返します。
 
 ## 失効と更新
 

@@ -7,7 +7,11 @@ import {
 	existsSync,
 } from "node:fs";
 import { digest, type Ports } from "../../src/index.js";
-import { providerSchema, decodeProviderValue } from "./provider-schema.js";
+import {
+	strictProviderSchema,
+	strictSchemaInstructions,
+	decodeProviderValue,
+} from "../../src/integration/provider-schema.js";
 
 export type CloudModel = {
 	id: string;
@@ -155,21 +159,14 @@ export function createCloudBudget(options: {
 				...(model.reasoningEffort
 					? { reasoning: { effort: model.reasoningEffort } }
 					: {}),
-				instructions:
-					input.system +
-					"\nReturn the result in the provider schema's result field. Optional fields use null when omitted.",
+				instructions: input.system + "\n" + strictSchemaInstructions,
 				input: JSON.stringify({ data: input.data, schema: input.schema }),
 				text: {
 					format: {
 						type: "json_schema",
 						name: "skillsmith",
 						strict: true,
-						schema: {
-							type: "object",
-							properties: { result: providerSchema(input.schema) },
-							required: ["result"],
-							additionalProperties: false,
-						},
+						schema: strictProviderSchema(input.schema),
 					},
 				},
 				max_output_tokens: input.maxOutputTokens,

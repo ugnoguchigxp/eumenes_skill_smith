@@ -443,6 +443,17 @@ export const buildSchema = z.strictObject({
 			selectorVersion: id.optional(),
 			receipt: id,
 			assessment: text,
+			composition: z
+				.strictObject({
+					version: id,
+					parts: z
+						.array(z.strictObject({ ref: id, digest: id }))
+						.min(2)
+						.max(3),
+					bundleDigest: id,
+					reviewReceipt: id,
+				})
+				.optional(),
 		})
 		.optional(),
 	/** Generator compatibility; absent on legacy rows. */

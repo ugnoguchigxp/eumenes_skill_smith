@@ -396,18 +396,20 @@ export async function executeBuild<Tx>(
 	if (lean) {
 		// Reserve room for validation after build and at delivery. Rank limits reads,
 		// while the model can still disclose other candidates and determines applicability.
-		const eligible = state.candidates
-			.filter(
-				(c) =>
-					c.status === "active" &&
-					c.complete &&
-					(c.scope === "shared" || c.scope === r.authority.scope),
-			)
-			.slice(0, 2);
-		for (const { ref } of eligible) {
+		const eligible = state.candidates.filter(
+			(c) =>
+				c.status === "active" &&
+				c.complete &&
+				(c.scope === "shared" || c.scope === r.authority.scope),
+		);
+		const prefetchLimit =
+			state.candidates.length > request.limits.documents
+				? request.limits.documents - 1
+				: request.limits.documents;
+		for (const { ref } of eligible.slice(0, 2)) {
 			if (!state.evidence.some((e) => e.ref === ref)) {
 				if (
-					state.evidence.length >= request.limits.documents ||
+					state.evidence.length >= prefetchLimit ||
 					sharedSourceCallsUsed + 4 >= request.limits.sourceCalls
 				)
 					break;
@@ -502,7 +504,19 @@ export async function executeBuild<Tx>(
 			reSearchUsed = true;
 			repair = undefined;
 			// Local registry may use the model query; external SourcePort must keep TrustedContext.searchTask only.
+			const previousEvidence = state.evidence;
 			state = await runSearch(turn.query, r.authority.searchTask, state);
+			const retained = new Set(
+				state.evidence
+					.filter((e) => previousEvidence.includes(e))
+					.map((e) => e.ref),
+			);
+			disclosed = disclosed.filter((item) => retained.has(item.ref));
+			disclosureTrace.disclosedRefs = disclosed.map((item) => item.ref);
+			disclosureTrace.disclosedSectionIds = disclosed.flatMap((item) =>
+				(item.sections ?? []).map((section) => item.ref + "#" + section.id),
+			);
+			disclosureTrace.last = null;
 			continue;
 		}
 		if (turn.kind === "disclose") {

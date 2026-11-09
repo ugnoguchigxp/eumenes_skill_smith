@@ -16,6 +16,7 @@ export function publicationDigest(r: Omit<ApprovedSkill, "digest">) {
 		scope: r.scope,
 		approvalRef: r.approvalRef,
 		applicability: r.applicability,
+		...(r.compositionGroup ? { compositionGroup: r.compositionGroup } : {}),
 		artifact: r.artifact,
 		template: r.template,
 		expiresAt: r.expiresAt,
@@ -56,7 +57,13 @@ export function available<Tx>(
 	checkArtifact(r);
 	const assembly = resolveAssembly(p.assemblyMode ?? "baseline");
 	const generatorOk = r.template.generator
-		? r.template.generator.instructions === assembly.instructionVersion
+		? r.template.generator.instructions === assembly.instructionVersion ||
+			p.approvedDeliveryCompatibility?.some(
+				(version) =>
+					version.instructions === r.template.generator?.instructions &&
+					version.rendererVersion === r.artifact.rendererVersion &&
+					version.sourceExtractorVersion === r.artifact.sourceExtractorVersion,
+			)
 		: assembly.mode === "legacy";
 	return (
 		generatorOk &&

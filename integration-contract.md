@@ -2,11 +2,11 @@
 
 ## Eumenes推論と受領証の接続試験 2026-11-09
 
-`createEumenesInference({control, read, write})` は本体の公開 `captureUserControlInTransaction`、`executeControl`、`usageOfInTransaction`、`validateReceiptInTransaction` に接続する。キュー・要求保存と同じストアを指定する。推論を実行する前に本体writerで制御要求を確定し、処理はwriterの外で行う。モデルのルートは本体の設定で決まる。返ったJSONはSkillSmithの既存schemaで検査する。
+`createEumenesInference({control, read, write})` は本体の公開 `captureUserControlInTransaction`、`executeControl`、`usageOfInTransaction`、`validateReceiptInTransaction` に接続する。キュー・要求保存と同じストアを指定する。推論を実行する前に本体writerで制御要求を確定し、処理はwriterの外で行う。モデルのルートは本体の設定で決まる。厳密なJSON Schemaを扱える経路では `structuredOutput: true` を指定できる。クラウド計測と共通の形式に変換し、返った値をSkillSmithの既存schemaで検査する。完成した応答のJSON解析に失敗した場合も受領証と取得済み使用量を記録する。
 
 受領証のrequest ID・attempt IDは本体の保存記録で照合し、要求に対応するsubjectと現在の認可を確認する。使用量は同じ受領証の記録から取得し、欠測はnullのまま扱う。ホストの試験は `bun examples/eumenes/verify-inference-delivery.ts EUMENES_CHECKOUT OUTPUT_JSON`。一時DBと固定のモデル応答・資料・認可を使い、本体の推論・ジョブ・保存を組み合わせて本文と参照の配達、別依頼・取消済み受領証の拒否を確認する。
 
-稼働中のEumenesのジョブ一覧・機能一覧は認証が必要で、稼働中のContextStill v1には版指定の本文取得操作が公開されていない。製品へつなぐには、公開検索と本文取得で同じ資料版を照合でき、切り詰め・失効を判別できる契約、認証済みの検証利用者、本体の登録が必要。確認済みの範囲は[試験記録](docs/quality/first-generation-2026-11-09/results.md)に残す。
+稼働中のEumenesでは既存の認証でジョブ一覧と機能一覧を取得できた。SkillSmithの登録は見つからず、確認した配達先は404だった。稼働中のContextStill v1では検索が利用でき、版に紐づく本文取得と完全性の確認ができる操作が必要。本体への登録と資料の公開契約がそろった段階で稼働環境の全ファイル配達を検証する。[稼働環境の確認結果](docs/quality/approved-composition-2026-11-09/live-connection.json)
 
 ## Eumenesジョブ接続試験 2026-11-09
 

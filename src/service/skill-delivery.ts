@@ -19,7 +19,13 @@ export function skillDeliveryPacket(
 			bundleDigest:
 				skill.bundleDigest ?? skillBundleDigest(skill, skill.files ?? []),
 		},
-		publicationRef: build.publication?.ref,
+		...(build.publication?.composition
+			? {
+					compositionRefs: build.publication.composition.parts.map(
+						(p) => p.ref,
+					),
+				}
+			: { publicationRef: build.publication?.ref }),
 		dependencyVersions: build.content.dependencies.map((d) => d.version),
 	};
 }

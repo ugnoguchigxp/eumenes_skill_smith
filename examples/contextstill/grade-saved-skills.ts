@@ -115,6 +115,7 @@ async function main() {
 	const config = JSON.parse(readFileSync(arg("--settings"), "utf8")) as {
 		connectionId: string;
 		maxUsd: number;
+		minimumAccountedUsd?: number;
 		judge: CloudModel;
 	};
 	if (![15, 20].includes(config.maxUsd)) throw Error("budget_contract_changed");
@@ -167,6 +168,11 @@ async function main() {
 			journal,
 			maxUsd: config.maxUsd,
 		});
+		if (
+			!Number.isFinite(config.minimumAccountedUsd ?? 0) ||
+			budget.spent() + 1e-9 < (config.minimumAccountedUsd ?? 0)
+		)
+			throw Error("journal_missing_previous_evaluation");
 		type Record = {
 			id: string;
 			input: unknown;

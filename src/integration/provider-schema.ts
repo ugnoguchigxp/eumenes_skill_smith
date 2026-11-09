@@ -1,5 +1,17 @@
 /** Mechanical OpenAI strict-schema bridge: root object, required properties, nullable optional fields. */
 type Schema = Record<string, unknown>;
+export const strictSchemaInstructions =
+	"Return the result in the provider schema's result field. Optional fields use null when omitted.";
+
+export function strictProviderSchema(schema: Schema) {
+	return {
+		type: "object",
+		properties: { result: providerSchema(schema) },
+		required: ["result"],
+		additionalProperties: false,
+	};
+}
+
 export function providerSchema(schema: Schema): Schema {
 	const out: Schema = {};
 	for (const [key, value] of Object.entries(schema)) {

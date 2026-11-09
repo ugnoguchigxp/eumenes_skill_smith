@@ -80,3 +80,78 @@ test("re-search keeps first-round warnings for a retained external card", async 
 	]);
 	expect(seen[1].search.external.degraded).toContain("index_cold");
 });
+
+test("lean re-search reuses the public lookup and removes stale local disclosures", async () => {
+	const f = fixture({ assemblyMode: "lean", external: true });
+	f.request.limits.modelCalls = 4;
+	f.request.limits.sourceCalls = 16;
+	let generation = 0,
+		publicSearches = 0;
+	const next = () => ({
+		...card("local"),
+		version: { ...card("local").version, generation },
+	});
+	const sourceSearch = f.ports.source!.search;
+	f.ports.source!.search = async (...args) => {
+		publicSearches++;
+		return sourceSearch(...args);
+	};
+	f.ports.registry.search = async () => {
+		generation++;
+		return [next()];
+	};
+	f.ports.registry.read = async () => ({
+		...next(),
+		body: "version " + generation,
+	});
+	const seen: any[] = [];
+	f.ports.inference.complete = async ({ data }) => {
+		seen.push(data);
+		return answer(
+			seen.length === 1
+				? { kind: "re_search", query: "local refresh" }
+				: seen.length === 2
+					? { kind: "disclose", items: [{ ref: "local" }] }
+					: { kind: "needs_input", missing: ["missing"] },
+		);
+	};
+	await f.run(f.submit().requestRef!);
+	expect(publicSearches).toBe(1);
+	expect(
+		seen[0].untrustedEvidence.items.find((e: any) => e.ref === "local").body,
+	).toBe("version 1");
+	expect(
+		seen[1].evidenceIndex.find((e: any) => e.ref === "local").version
+			.generation,
+	).toBe(2);
+	expect(
+		seen[1].untrustedEvidence.items.some((e: any) => e.ref === "local"),
+	).toBe(false);
+	expect(
+		seen[2].untrustedEvidence.items.find((e: any) => e.ref === "local").body,
+	).toBe("version 2");
+});
+
+test("lean with one document slot leaves the read to the model when choices compete", async () => {
+	const f = fixture({ assemblyMode: "lean" });
+	f.request.limits.documents = 1;
+	f.request.limits.modelCalls = 3;
+	f.ports.registry.search = async () => [card("first"), card("second")];
+	const reads: string[] = [];
+	f.ports.registry.read = async (ref) => {
+		reads.push(ref);
+		return {
+			...card(ref),
+			body: ref === "first" ? "過剰".repeat(2000) : "chosen",
+		};
+	};
+	let turn = 0;
+	f.ports.inference.complete = async () =>
+		answer(
+			turn++ === 0
+				? { kind: "disclose", items: [{ ref: "second" }] }
+				: { kind: "needs_input", missing: ["missing"] },
+		);
+	await f.run(f.submit().requestRef!);
+	expect(reads).toEqual(["second"]);
+});

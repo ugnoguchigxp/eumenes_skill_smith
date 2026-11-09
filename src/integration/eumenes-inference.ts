@@ -1,5 +1,10 @@
 import type { Ports } from "../contracts/ports.js";
 import { digest, requireThat } from "../service/identity.js";
+import {
+	decodeProviderValue,
+	strictProviderSchema,
+	strictSchemaInstructions,
+} from "./provider-schema.js";
 
 type Receipt = {
 	requestId: string;
@@ -22,6 +27,7 @@ export interface EumenesControl<Tx> {
 			deadline: number;
 			maxOutputTokens: number;
 			route: "subagent";
+			structuredOutput?: true;
 		},
 	): string;
 	executeControl(
@@ -39,8 +45,10 @@ export function createEumenesInference<Tx>(options: {
 	control: EumenesControl<Tx>;
 	read: <T>(operation: (tx: Tx) => T) => T;
 	write: <T>(operation: (tx: Tx) => T) => Promise<T>;
+	/** Enable only when the host route supports strict provider schemas. */
+	structuredOutput?: boolean;
 }): Ports<Tx>["inference"] {
-	const { control, read, write } = options;
+	const { control, read, write, structuredOutput } = options;
 	return {
 		async complete(input, signal) {
 			signal.throwIfAborted();
@@ -52,6 +60,7 @@ export function createEumenesInference<Tx>(options: {
 					deadline: input.deadlineAt,
 					maxOutputTokens: input.maxOutputTokens,
 					route: "subagent",
+					...(structuredOutput ? { structuredOutput: true as const } : {}),
 				});
 			});
 			signal.throwIfAborted();
@@ -60,8 +69,12 @@ export function createEumenesInference<Tx>(options: {
 				[{ role: "user", content: JSON.stringify(input.data) }],
 				signal,
 				{
-					instructions: input.system,
-					outputSchema: input.schema,
+					instructions: structuredOutput
+						? input.system + "\n" + strictSchemaInstructions
+						: input.system,
+					outputSchema: structuredOutput
+						? strictProviderSchema(input.schema)
+						: input.schema,
 				},
 			);
 			signal.throwIfAborted();
@@ -74,9 +87,14 @@ export function createEumenesInference<Tx>(options: {
 			const usage = read((tx) => control.usageOfInTransaction(tx, answer));
 			let value: unknown;
 			try {
-				value = JSON.parse(answer.value);
+				const decoded = JSON.parse(answer.value);
+				value = structuredOutput
+					? decodeProviderValue(decoded?.result, input.schema)
+					: decoded;
 			} catch {
-				requireThat(false, "invalid_model_output");
+				// The runtime still rejects this value against its schema. Preserve
+				// the completed receipt and its usage so rejection is metered.
+				value = undefined;
 			}
 			return {
 				value,

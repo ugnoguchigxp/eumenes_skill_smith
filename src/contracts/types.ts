@@ -75,6 +75,12 @@ export interface Build {
 		selectorVersion?: string;
 		receipt: string;
 		assessment: string;
+		composition?: {
+			version: string;
+			parts: { ref: string; digest: string }[];
+			bundleDigest: string;
+			reviewReceipt: string;
+		};
 	};
 	generator?: { instructions: string; contractVersion: "skillsmith.v1" };
 }

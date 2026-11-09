@@ -1,0 +1,104 @@
+{
+	"id": "approved-composition-holdout-2026-11-09",
+	"protocol": "Fixed before inference. New combinations of independently scored, frozen procedures. Only goal and acceptance are passed to selectors/builders. Require all withheld checks and no critical or major content issues. Grade complete artifacts independently with the same rubric. Separately measure a required bridging action as a negative case.",
+	"tasks": [
+		{
+			"id": "checkout-release-two-gates",
+			"goal": "ECのリリース判定用に、注文画面のWebSocket進捗の再接続復元と、決済Webhookの重複・順序逆転に対する発送の冪等性を、それぞれ独立した受入ゲートとして検証する計画を作ってください。画面の進捗通知を発送の証拠に使いません。実サービス名や設定値は未提示です。",
+			"acceptance": [
+				{
+					"id": "progress",
+					"text": "WebSocket進捗の再接続、順序と欠落の扱い、復元の合否を計画する。"
+				},
+				{
+					"id": "fulfillment",
+					"text": "決済Webhookの真正性・重複・順序逆転と、発送の一度だけの確定を別ゲートとして検証する。"
+				}
+			],
+			"withheldChecks": [
+				{
+					"id": "progress-boundary",
+					"text": "再接続のカーソル、再生可能範囲と欠落時の復元、重複・順序逆転の負例がある。"
+				},
+				{
+					"id": "fulfillment-boundary",
+					"text": "通知受信と正当な決済確認・発送の確定を分け、通知の重複・順序逆転で重複発送しない合否と停止条件がある。"
+				},
+				{
+					"id": "independent",
+					"text": "画面通知を発送確定の証拠に転用せず、ゲートを独立に扱う。今回の実環境操作・成功や未提示の固有APIを断定しない。"
+				}
+			],
+			"parts": ["websocket-replay-window", "payment-webhook-finality"]
+		},
+		{
+			"id": "settings-release-two-gates",
+			"goal": "設定基盤のリリース前に、共通JSON契約の移行と、別バッチで行うCSV設定インポートの二つについて独立に確認できる運用計画を作ってください。後者はテナントの範囲と不正行での書き込み防止が重要です。CSVと契約移行の接続や同じ格納先は前提にしません。",
+			"acceptance": [
+				{
+					"id": "schema",
+					"text": "既存と新規のJSON設定の契約・互換性の確認、適用順序と停止条件を示す。"
+				},
+				{
+					"id": "csv",
+					"text": "CSVの妥当性、設定の対象範囲、異常行で他テナントや既存の設定を更新しない合否を示す。"
+				}
+			],
+			"withheldChecks": [
+				{
+					"id": "contract",
+					"text": "契約の正本、既存/新規の読書き・互換の段階、検証と切戻しまたは停止の境界を示す。"
+				},
+				{
+					"id": "import",
+					"text": "CSVの構造・不正入力、対象テナント、検査と適用の境界、混在する異常行での書込み保護が観測できる。"
+				},
+				{
+					"id": "separation",
+					"text": "両手順を独立に扱い、同じ格納先や変換経路、実行成功を捏造しない。"
+				}
+			],
+			"parts": ["shared-json-contract", "configuration-import-shapes"]
+		},
+		{
+			"id": "admin-ui-two-gates",
+			"goal": "管理画面の変更をレビューします。詳細画面の遅延表示パネルの状態遷移と、別画面の設定フォームのラベル・エラーの関連付けを、独立した二つの手順で確認する計画を作ってください。DOMやテストライブラリの版はまだ提示されていません。",
+			"acceptance": [
+				{
+					"id": "panel",
+					"text": "遅延表示パネルについて成功・取得中・失敗・再試行・閉じた後の遅延応答の合否を観測できる。"
+				},
+				{
+					"id": "form",
+					"text": "フォームのラベルとエラー説明が対応する入力に結び付くことを検査できる。"
+				}
+			],
+			"withheldChecks": [
+				{
+					"id": "observable",
+					"text": "固定時間待機に依存せず、利用者が観測する状態と、閉じた後に古い応答を無視する負例を分けて検証する。"
+				},
+				{
+					"id": "accessible",
+					"text": "ラベルと入力の一意な関連付け、エラー時の説明と対象フィールド、修正後の状態を検証できる。"
+				},
+				{
+					"id": "separate",
+					"text": "別画面の確認を混同せず、実DOMやライブラリ版や実行成功を断定しない。"
+				}
+			],
+			"parts": ["conditional-panel-testing", "form-error-association"]
+		}
+	],
+	"negative": {
+		"id": "missing-transaction-bridge",
+		"goal": "WebSocketの再接続カーソルの更新と決済Webhookによる発送確定を、新しい共有データベース上の単一トランザクションに結び付ける実装手順を作ってください。",
+		"acceptance": [
+			{
+				"id": "bridge",
+				"text": "再接続カーソルと発送確定を原子的に更新する共有トランザクションと、競合・再試行時の実装手順が必要。"
+			}
+		],
+		"expected": "miss"
+	}
+}

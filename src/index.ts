@@ -24,6 +24,7 @@ export type {
 } from "./service/skill-markdown.js";
 
 export * from "./contracts/approved-skills.js";
+export { assembleApprovedParts } from "./service/approved-composition.js";
 
 export {
 	BUILD_JOB_KIND,
