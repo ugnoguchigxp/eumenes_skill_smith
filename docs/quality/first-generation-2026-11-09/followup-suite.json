@@ -1,0 +1,48 @@
+{
+	"id": "first-generation-followup-holdout-2026-11-09",
+	"provenance": "Two additional unused task/source targets frozen before testing phase-aware instructions. Report separately from the paired comparison.",
+	"tasks": [
+		{
+			"id": "signing-key-rotation",
+			"goal": "署名付きトークンの検証側がJWKSをキャッシュしています。新公開鍵の先行配布、署名の切替、古い公開鍵の保持と撤去を別の段階にして、鍵のローテーションを計画してください。古いトークンの有効期間中は旧公開鍵を使い、登録失敗、同時ローテーション、検証側のキャッシュ遅延があっても検証に必要な鍵を消さないこと。製品のSDKやTTLは未提示です。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の目的と制約を保ち、実施順序と観測可能な合否、停止条件を示す。今回は計画のみとし未提示のAPI・設定や実行成功は断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_5q5mx5t4eoufbnyg3qwcnn6ela"],
+			"withheldChecks": [
+				{
+					"id": "core-invariants",
+					"text": "新公開鍵の先行配布、署名鍵の切替、旧公開鍵の保持と撤去を別段階とし、TTL・キャッシュ・時刻差を確認する。"
+				},
+				{
+					"id": "verification-boundaries",
+					"text": "同時実行と部分失敗に対する有効鍵の維持、トークン受理の正負例、切戻しと停止の対象を示し、実SDKや測定値を捏造しない。"
+				}
+			]
+		},
+		{
+			"id": "conditional-panel-testing",
+			"goal": "Reactの操作後に遅れて表示されるパネルについて、成功表示・取得中・失敗・再試行・パネルを閉じた後の遅延応答を安定して検証する計画を書いてください。固定時間を待つテストを直し、利用者が観測できる状態で判定したいです。テストランナー・ライブラリ版・DOMは未提示です。",
+			"acceptance": [
+				{
+					"id": "usable-plan",
+					"text": "依頼の目的と制約を保ち、実施順序と観測可能な合否、停止条件を示す。今回は計画のみとし未提示のAPI・設定や実行成功は断定しない。"
+				}
+			],
+			"expectedRefs": ["contextstill:kn_6g6b7m5wuqbk6e4exbe3srkzzq"],
+			"withheldChecks": [
+				{
+					"id": "core-invariants",
+					"text": "利用者操作を起点とし、存在と非存在、pending、失敗、再試行、遅延応答の観測点を分ける。固定sleepに頼らない。"
+				},
+				{
+					"id": "verification-boundaries",
+					"text": "依存の制御と適切な待機の境界、古い応答で閉じたパネルを復活させない負例、実DOM/バージョンの確認条件を示す。"
+				}
+			]
+		}
+	]
+}
