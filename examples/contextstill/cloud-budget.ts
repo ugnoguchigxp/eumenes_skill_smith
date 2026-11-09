@@ -14,6 +14,8 @@ export type CloudModel = {
 	inputUsdPerMillion: number;
 	outputUsdPerMillion: number;
 	reasoningEffort?: "low" | "medium" | "high";
+	/** Rates above are the effective prices for this tier. */
+	serviceTier?: "fast";
 };
 type Input = Parameters<Ports<unknown>["inference"]["complete"]>[0];
 async function readJSON(response: Response, signal: AbortSignal) {
@@ -57,6 +59,8 @@ type Entry = {
 	responseStatus?: string;
 	incompleteReason?: string;
 	reasoningTokens?: number;
+	requestedServiceTier?: "fast";
+	responseServiceTier?: "fast" | "priority" | "default";
 };
 
 /** Eval-only direct text API. Caller exclusively owns journal; unknown costs retain the reservation. */
@@ -136,6 +140,8 @@ export function createCloudBudget(options: {
 				].every((value) => Number.isFinite(value) && value >= 0)
 			)
 				throw Error("invalid_cloud_budget");
+			if (model.serviceTier !== undefined && model.serviceTier !== "fast")
+				throw Error("invalid_cloud_service_tier");
 			if (
 				!Number.isSafeInteger(input.maxOutputTokens) ||
 				input.maxOutputTokens < 1 ||
@@ -167,7 +173,7 @@ export function createCloudBudget(options: {
 					},
 				},
 				max_output_tokens: input.maxOutputTokens,
-				service_tier: "default",
+				service_tier: model.serviceTier ?? "default",
 				store: false,
 			});
 			const bytes = Buffer.byteLength(body);
@@ -189,6 +195,9 @@ export function createCloudBudget(options: {
 				id: crypto.randomUUID(),
 				reservedUsd,
 				model: model.id,
+				...(model.serviceTier
+					? { requestedServiceTier: model.serviceTier }
+					: {}),
 				purpose,
 				requestDigest: digest(input),
 			};
@@ -246,6 +255,13 @@ export function createCloudBudget(options: {
 						outputTokens: usage.output_tokens,
 						durationMs: performance.now() - started,
 						responseId: typeof result.id === "string" ? result.id : undefined,
+						...(model.serviceTier &&
+						["fast", "priority", "default"].includes(result.service_tier)
+							? {
+									responseServiceTier:
+										result.service_tier as Entry["responseServiceTier"],
+								}
+							: {}),
 						responseStatus:
 							result.status === "completed" || result.status === "incomplete"
 								? result.status

@@ -165,6 +165,9 @@ try {
 								adapter: "strict-schema.v4",
 								sample,
 								reasoningEffort: model.reasoningEffort ?? null,
+								...(model.serviceTier
+									? { serviceTier: model.serviceTier }
+									: {}),
 							},
 						},
 					});
