@@ -85,7 +85,7 @@ export const sourceReviewSchema = z.strictObject({
 		)
 		.max(16),
 });
-const nonSourceAdditions = z
+export const nonSourceAdditionsSchema = z
 	.array(z.strictObject({ practice: text, reason: text }))
 	.max(16);
 /** ASCII content slugs, never paths; body language is judged by inference. */
@@ -169,7 +169,7 @@ export const skillPresentationSchema = z.strictObject({
 	localizedInstructions: text,
 	localizedHost: z.array(clause).max(96).optional(),
 	sourceReview: sourceReviewSchema.optional(),
-	nonSourceAdditions: nonSourceAdditions.optional(),
+	nonSourceAdditions: nonSourceAdditionsSchema.optional(),
 	domainAnchors: z
 		.array(z.strictObject({ term: text, documentPointer: text }))
 		.min(1)
@@ -224,7 +224,7 @@ const storedReady = legacyReady
 			skillPresentationSchema.shape.localizedInstructions.optional(),
 		localizedHost: skillPresentationSchema.shape.localizedHost,
 		sourceReview: sourceReviewSchema.optional(),
-		nonSourceAdditions: nonSourceAdditions.optional(),
+		nonSourceAdditions: nonSourceAdditionsSchema.optional(),
 		domainAnchors: z
 			.array(z.strictObject({ term: text, documentPointer: text }))
 			.min(1)
@@ -256,7 +256,7 @@ const currentReady = legacyReady.extend({
 	document: skillDocumentSchema,
 	assumptions: scopedAssumptions,
 	sourceReview: sourceReviewSchema,
-	nonSourceAdditions,
+	nonSourceAdditions: nonSourceAdditionsSchema,
 });
 export const decisionSchema = z.discriminatedUnion("kind", [
 	storedReady,
@@ -324,7 +324,9 @@ export const leanDocumentSchema = skillDocumentSchema.safeExtend({
 		.max(6),
 });
 export const leanModelTurnSchema = z.discriminatedUnion("kind", [
-	currentReady.extend({ document: leanDocumentSchema }),
+	currentReady
+		.omit({ sourceReview: true, nonSourceAdditions: true })
+		.extend({ document: leanDocumentSchema }),
 	...controlTurns,
 ]);
 export const coverageSchema = z.enum([

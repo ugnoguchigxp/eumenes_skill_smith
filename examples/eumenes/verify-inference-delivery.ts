@@ -120,9 +120,15 @@ try {
 			resourceHeading: "参照",
 		},
 	};
+	const { sourceReview, nonSourceAdditions, ...body } = draft;
 	const responses = [
-		draft,
-		{ approved: true, reason: "正本の照合と保留条件を確認した。" },
+		body,
+		{
+			approved: true,
+			reason: "正本の照合と保留条件を確認した。",
+			sourceReview,
+			nonSourceAdditions,
+		},
 	];
 	let transportCalls = 0;
 	inference = hostInference.createInference(store, settings, {

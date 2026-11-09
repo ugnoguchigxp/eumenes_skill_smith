@@ -92,14 +92,20 @@ test("lean builds with two model calls and reviews the exact delivered bundle", 
 		title: "照合例",
 		content: "```python\nassert sorted([2, 1]) == [1, 2]\n```",
 	};
+	const { sourceReview, nonSourceAdditions, ...draft } = current;
 	f.ports.inference.complete = async (input) => {
 		inputs.push(input);
 		return {
 			value:
 				input.system === leanReviewInstructions
-					? { approved: true, reason: "照合済み" }
+					? {
+							approved: true,
+							reason: "照合済み",
+							sourceReview,
+							nonSourceAdditions,
+						}
 					: {
-							...current,
+							...draft,
 							sourceRefs: ["external:1"],
 							document: {
 								...current.document,
@@ -117,6 +123,10 @@ test("lean builds with two model calls and reviews the exact delivered bundle", 
 			f.service.submitArtifact(f.db, f.request, f.auth),
 		);
 		const work = await f.run(pending.requestRef!);
+		expect(work.result.decision).toMatchObject({
+			sourceReview,
+			nonSourceAdditions,
+		});
 		expect(work.settle()).toBe(true);
 		const packet = await f.service.getSkillDelivery(
 			pending.requestRef!,

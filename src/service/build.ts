@@ -15,6 +15,8 @@ import {
 	CONTRACT,
 	compactReadySchema,
 	leanDocumentSchema,
+	sourceReviewSchema,
+	nonSourceAdditionsSchema,
 	skillDocumentSchema,
 	skillPresentationSchema,
 	legacyModelTurnSchema,
@@ -655,22 +657,30 @@ export async function executeBuild<Tx>(
 	checkpoint();
 	requireThat(decision, lastFailure);
 	if (decision.kind === "ready" && assembly.mode !== "legacy") {
-		const reviewSchema = z
+		const reason = z.string().min(1).max(2000);
+		const correction = z
 			.strictObject({
-				approved: z.boolean(),
-				reason: z.string().min(1).max(2000),
-				correction: z
-					.strictObject({
-						localizedInstructions:
-							skillPresentationSchema.shape.localizedInstructions,
-						document: lean ? leanDocumentSchema : skillDocumentSchema,
-					})
-					.optional(),
+				localizedInstructions:
+					skillPresentationSchema.shape.localizedInstructions,
+				document: lean ? leanDocumentSchema : skillDocumentSchema,
 			})
-			.refine(
-				(r) => !r.approved || !r.correction,
-				"approved_correction_conflict",
-			);
+			.optional();
+		const reviewSchema = lean
+			? z.discriminatedUnion("approved", [
+					z.strictObject({
+						approved: z.literal(true),
+						reason,
+						sourceReview: sourceReviewSchema,
+						nonSourceAdditions: nonSourceAdditionsSchema,
+					}),
+					z.strictObject({ approved: z.literal(false), reason, correction }),
+				])
+			: z
+					.strictObject({ approved: z.boolean(), reason, correction })
+					.refine(
+						(r) => !r.approved || !r.correction,
+						"approved_correction_conflict",
+					);
 		let reviewed = decision;
 		for (let reviewRound = 0; reviewRound < 2; reviewRound++) {
 			const artifact = renderSkillMarkdown(
@@ -730,7 +740,14 @@ export async function executeBuild<Tx>(
 			const result = reviewSchema.safeParse(answer.value);
 			requireThat(result.success, "semantic_review_failed");
 			if (result.data.approved) {
-				decision = reviewed;
+				decision =
+					"sourceReview" in result.data
+						? {
+								...reviewed,
+								sourceReview: result.data.sourceReview,
+								nonSourceAdditions: result.data.nonSourceAdditions,
+							}
+						: reviewed;
 				break;
 			}
 			requireThat(
