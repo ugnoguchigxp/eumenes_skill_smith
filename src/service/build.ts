@@ -15,6 +15,7 @@ import {
 import {
 	CONTRACT,
 	compactReadySchema,
+	compactReviewCorrectionSchema,
 	leanDocumentSchema,
 	sourceReviewSchema,
 	nonSourceAdditionsSchema,
@@ -702,7 +703,7 @@ export async function executeBuild<Tx>(
 			.strictObject({
 				localizedInstructions:
 					skillPresentationSchema.shape.localizedInstructions,
-				document: lean || compact ? leanDocumentSchema : skillDocumentSchema,
+				document: lean ? leanDocumentSchema : skillDocumentSchema,
 			})
 			.optional();
 		const auditedApproval = z.strictObject({
@@ -719,7 +720,11 @@ export async function executeBuild<Tx>(
 			: compact
 				? z.discriminatedUnion("approved", [
 						z.strictObject({ approved: z.literal(true), reason }),
-						z.strictObject({ approved: z.literal(false), reason, correction }),
+						z.strictObject({
+							approved: z.literal(false),
+							reason,
+							correction: compactReviewCorrectionSchema.optional(),
+						}),
 					])
 				: z
 						.strictObject({ approved: z.boolean(), reason, correction })
@@ -790,7 +795,7 @@ export async function executeBuild<Tx>(
 						},
 					]),
 				},
-				schema: z.toJSONSchema(reviewSchema),
+				schema: z.toJSONSchema(reviewSchema, { io: "input" }),
 				deadlineAt: request.limits.deadlineAt,
 				maxOutputTokens: request.limits.outputTokens,
 				requestRef: r.ref,

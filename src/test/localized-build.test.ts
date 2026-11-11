@@ -204,7 +204,14 @@ test.each(["approve", "invalid", "two-corrections"] as const)(
 							localizedInstructions:
 								current.localizedInstructions +
 								` 差異を${inputs.length}件照合する。`,
-							document: current.document,
+							document: {
+								principles: {
+									heading: "必須原則",
+									body: "根拠と対象を対応付ける。",
+								},
+								workflow: { heading: "手順" },
+								completion: { heading: "確認" },
+							},
 						},
 					};
 			}

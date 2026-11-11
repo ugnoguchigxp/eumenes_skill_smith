@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { z } from "zod";
 import { digest } from "../index.js";
 import {
 	COMPACT_INSTRUCTION_VERSION,
@@ -11,6 +12,7 @@ import {
 import {
 	compactModelTurnSchema,
 	compactReadySchema,
+	compactReviewCorrectionSchema,
 	decisionSchema,
 	modelTurnSchema,
 } from "../contracts/schema.js";
@@ -117,6 +119,34 @@ test("baseline decisionSchema rejects coverage; compact accepts coverage and exp
 			exploration: { targetAndVersion: "only" },
 		}).success,
 	).toBe(false);
+});
+
+test("compact review exposes the required correction sections to the provider", () => {
+	const correction = {
+		localizedInstructions: "対象を読み取りで確認する。",
+		document: {
+			principles: { heading: "原則", body: "対象と根拠を対応付ける。" },
+			completion: { heading: "確認" },
+		},
+	};
+	const schema = z.toJSONSchema(compactReviewCorrectionSchema, { io: "input" });
+	expect(schema).toMatchObject({
+		properties: {
+			document: { required: ["principles", "workflow", "completion"] },
+		},
+	});
+	expect(compactReviewCorrectionSchema.safeParse(correction).success).toBe(
+		false,
+	);
+	const normalized = compactReviewCorrectionSchema.parse({
+		...correction,
+		document: { ...correction.document, workflow: { heading: "手順" } },
+	});
+	expect(normalized.document.sections.map(({ kind }) => kind)).toEqual([
+		"principles",
+		"workflow",
+		"completion",
+	]);
 });
 
 test("reuse with non-empty sections still fails structural check", () => {

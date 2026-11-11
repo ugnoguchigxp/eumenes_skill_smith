@@ -337,6 +337,56 @@ export const leanDocumentSchema = skillDocumentSchema.safeExtend({
 		.min(2)
 		.max(6),
 });
+const correctionSection = z.strictObject({ heading: leanHeading, body: text });
+const correctionHeading = z.strictObject({ heading: leanHeading });
+const correctionInstructions =
+	skillPresentationSchema.shape.localizedInstructions;
+export const compactReviewCorrectionSchema = z
+	.strictObject({
+		localizedInstructions: correctionInstructions,
+		document: z.strictObject({
+			purpose: correctionSection.optional(),
+			modes: correctionSection.optional(),
+			principles: correctionSection,
+			safety: correctionSection.optional(),
+			workflow: correctionHeading,
+			completion: correctionHeading,
+			resources: z
+				.strictObject({
+					heading: leanHeading,
+					files: skillDocumentSchema.shape.references.min(1),
+				})
+				.optional(),
+			provisionalNotice: skillDocumentSchema.shape.provisionalNotice,
+		}),
+	})
+	.transform(({ localizedInstructions, document }) => {
+		const { purpose, modes, principles, safety, workflow, completion } =
+			document;
+		const { resources, provisionalNotice } = document;
+		return {
+			localizedInstructions,
+			document: {
+				sections: [
+					...(purpose ? [{ kind: "purpose", ...purpose }] : []),
+					...(modes ? [{ kind: "modes", ...modes }] : []),
+					{ kind: "principles", ...principles },
+					...(safety ? [{ kind: "safety", ...safety }] : []),
+					{ kind: "workflow", ...workflow },
+					{ kind: "completion", ...completion },
+				],
+				references: resources?.files ?? [],
+				...(resources ? { resourceHeading: resources.heading } : {}),
+				...(provisionalNotice ? { provisionalNotice } : {}),
+			},
+		};
+	})
+	.pipe(
+		z.strictObject({
+			localizedInstructions: correctionInstructions,
+			document: leanDocumentSchema,
+		}),
+	);
 export const leanModelTurnSchema = z.discriminatedUnion("kind", [
 	currentReady
 		.omit({ sourceReview: true, nonSourceAdditions: true })
