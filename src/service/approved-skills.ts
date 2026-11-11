@@ -413,7 +413,10 @@ export function createApprovedSkillOperations<Tx>(
 				...(s.exploration && {
 					language: r.template.content.decision.language,
 				}),
-				originalTask: visibleTask(r.template.content.task),
+				originalTask: visibleTask({
+					...r.template.content.task,
+					situation: undefined,
+				}),
 				requiredCapabilities: r.template.content.decision.requiredCapabilities,
 				...(r.compositionGroup ? { compositionGroup: r.compositionGroup } : {}),
 			})),
