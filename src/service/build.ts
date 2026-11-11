@@ -394,20 +394,20 @@ export async function executeBuild<Tx>(
 	let reSearchUsed = false;
 	const assembly = resolveAssembly(ports.assemblyMode ?? "baseline");
 	const lean = assembly.mode === "lean";
-	if (lean) {
+	if (lean || assembly.mode === "compact") {
 		// Reserve room for validation after build and at delivery. Rank limits reads,
 		// while the model can still disclose other candidates and determines applicability.
 		const eligible = state.candidates.filter(
 			(c) =>
 				c.status === "active" &&
-				c.complete &&
+				(c.complete || c.revisionOnly) &&
 				(c.scope === "shared" || c.scope === r.authority.scope),
 		);
 		const prefetchLimit =
 			state.candidates.length > request.limits.documents
 				? request.limits.documents - 1
 				: request.limits.documents;
-		for (const { ref } of eligible.slice(0, 2)) {
+		for (const { ref } of eligible.slice(0, lean ? 2 : 1)) {
 			if (!state.evidence.some((e) => e.ref === ref)) {
 				if (
 					state.evidence.length >= prefetchLimit ||
@@ -447,7 +447,11 @@ export async function executeBuild<Tx>(
 	let currentBuildTurn = assembly.mode !== "baseline";
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
-		if (lean && sharedModelCallsUsed + 1 >= request.limits.modelCalls) break;
+		if (
+			(lean || assembly.mode === "compact") &&
+			sharedModelCallsUsed + 1 >= request.limits.modelCalls
+		)
+			break;
 		modelCallsUsed = sharedModelCallsUsed + 1;
 		const turnSchema = currentBuildTurn
 			? assembly.turnSchema
