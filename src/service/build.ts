@@ -667,7 +667,10 @@ export async function executeBuild<Tx>(
 					instruction:
 						"前回の出力は構造検査で拒否された（" +
 						error.code +
-						"）。元の目的・制約を保ちschemaに従い、この違反を解消して返す。",
+						"）。元の目的・制約を保ちschemaに従い、この違反を解消して返す。" +
+						(compact && error.code === "required_condition_missing"
+							? "mandatory=true かつ resolved=false の前提がある。今回の成果物に不可欠なら needs_input、後で手順を使うときの条件なら本文に検査と停止条件を記す。未確認の事実を解決済みにしない。"
+							: ""),
 				};
 				continue;
 			}

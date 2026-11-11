@@ -65,6 +65,7 @@ const compactGuidance = `
 coverage で充足を表す: sufficient / partial / absent / unclear。意味判断はモデルが行う。
 sufficient: 開示済みの単一 Skill が目的をカバーするとき reuse。sections と patches は空。題名だけで適用範囲を確定しない（例: 「Use 4-Space Indentation」は Python 限定であり、リポジトリ全体の任意言語への適用を題名だけでは証明しない）。
 partial: 開示済みの1資料に使える手順や確認方法があり、今回の状況に合わせる必要があるなら adapt。既成Skillに限らず、適用範囲が明確な完全版の事例を土台にできる。sourceRefs はその1件。安定した section ID への patches か、不足を補う1件以上の短い sections のどちらかを返す。もう一方は空配列。適用条件と未検証の範囲を明記し、開示済み本文を sections に再掲しない。
+公開事例を現在の状況に適用する手順候補では、事例が示した観測や判断を引き継ぐ。利用者の環境で再現したとは書かず、担当が実行前に確かめる観測、結果ごとの分岐、停止条件を本文に入れる。現場へのアクセス、現場の正確なパスや実測値は、候補の作成に不可欠な場合に限って assumptions の mandatory=true にする。mandatory=true かつ resolved=false の前提が実際に残る場合は kind=needs_input とし、ready を返さない。実行時に確かめる条件を解決済みに変更しない。
 absent: 開示済みの資料に今回の作業へ適用できる手順がなく、根拠が探索開始にしか使えない。長い独自 Skill を発明せず exploration の固定欄だけを埋める（targetAndVersion, officialSources, firstSafeObservation, isolatedExperiment, passStopConditions, unresolvedAssumptions）。strategy は provisional。sections と patches は空。最終作業の成功や専用コマンドの発明を検証済みと書かない。無関係な近い候補を公式根拠として採用しない。検索集合に無いことは世界に存在しない証明ではない。
 unclear: 題名だけでは判断できないが当たっていそうなカードがある。先に disclose する。未読の妥当な候補があるのに exploration へ飛ばない。
 探索開始自体に必須の対象・権限・能力が無いときは needs_input か unavailable。必須の未解決前提を外して ready 率を上げない。
