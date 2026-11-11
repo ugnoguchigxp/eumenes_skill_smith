@@ -2,7 +2,9 @@
 
 Eumenesの会話・作業担当へ、今回の目的と制約に合う実行用Skillを渡すTypeScriptライブラリです。正式Skill・経験の検索、LLMによる適用・差分・合成、保存済みの開始予約、実行結果と改善候補を扱います。
 
-Eumenesの認証済みAPIに、ContextStillの公開MCPを使う検索・取得とSKILL配達を組み込みました。Eumenesの保存・ジョブにはホストのSQLiteを使います。隔離環境で[日本語探索SKILLの実クラウド計測](docs/quality/eumenes-contextstill-2026-11-11/results.md)を実施しました。[ローカルの評価用ContextStill](examples/contextstill/README.md)も利用できます。会話・作業担当への受渡しは後続段階です。
+**導入済み（2026-11-11）。** 稼働中のEumenesの認証済みAPIとContextStill v2の公開MCPを接続し、実資料の検索・本文取得と版・省略有無の照合を確認しました。日本語の探索SKILLは、選択専用のクラウド接続に切り替えた直後の初回が4.662秒、続く3題が1.129〜1.761秒でした。[稼働環境での確認結果](docs/quality/eumenes-contextstill-2026-11-11/live-deployment.md)
+
+Eumenesの保存・ジョブにはホストのSQLiteを使います。[ローカルの評価用ContextStill](examples/contextstill/README.md)も利用できます。会話・作業担当への受渡しは後続段階です。
 
 ## はじめに
 

@@ -18,7 +18,7 @@ ContextStill `dd365e9` のMCPを一時DBとHonoのプロセス内呼出しで確
 2. SkillSmithは外部の検索カードを版付きの候補として扱い、本文が必要な候補だけ取得する。候補のハンドルと版を取得結果に照合し、省略された資料を完全な手順として採用しない。採用した本文と根拠の公開内容をハッシュで固定し、確定・配達時に現在の版、失効、省略、ハッシュを再検査する。本文を先読みして全候補のハッシュを作る方式ではなく、既存の取得回数と取消・期限の境界で処理する。
 3. Eumenesでは `knowledge` の公開操作へ登録し、既存のwriter・ジョブ・推論と接続する。MCPへ送る検索文はホストが外部送信を許可した `searchTask` に限定する。承認済みSKILLや固定探索SKILLの配達に、外部MCPの呼出しは追加しない。
 
-ContextStill側は `ef415db` で既存のMCP操作に版と本文の省略フラグを追加した。Eumenesの認証済みAPIは `/api/knowledge/search`、`/api/knowledge/sources/:ref`、`/api/knowledge/skills` を公開する。実クラウド推論を使った隔離結合試験で、日本語4題に0.918〜1.348秒で固定SKILLが配達された。受入範囲はEumenesのHTTP入口からSKILL全文の取得まで。稼働サービスの更新、会話への公開、正式SKILLの公開承認は後続段階とする。[実測](docs/quality/eumenes-contextstill-2026-11-11/results.md)
+ContextStill側は `ef415db` で既存のMCP操作に版と本文の省略フラグを追加した。Eumenesの認証済みAPIは `/api/knowledge/search`、`/api/knowledge/sources/:ref`、`/api/knowledge/skills` を公開する。実クラウド推論を使った隔離結合試験で、日本語4題に0.918〜1.348秒で固定SKILLが配達された。受入範囲はEumenesのHTTP入口からSKILL全文の取得まで。この隔離結合試験に続き、稼働中のEumenesとContextStill v2で認証付き検索・本文取得・探索SKILL配達を確認した。会話への公開と正式SKILLの公開承認は後続段階とする。[隔離環境の実測](docs/quality/eumenes-contextstill-2026-11-11/results.md) · [稼働環境の実測](docs/quality/eumenes-contextstill-2026-11-11/live-deployment.md)
 
 ## Eumenes推論と受領証の接続試験 2026-11-09
 

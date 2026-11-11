@@ -1,0 +1,97 @@
+{
+	"deployedOn": "2026-11-11",
+	"commits": {
+		"contextStill": "ef415db3a043115f9d48034b2af29f6a1462e8df",
+		"eumenes": "c00fc373a5cfda8fe028cb4ffd9e7a426b79253a"
+	},
+	"scope": "Running Eumenes HTTP API and ContextStill v2 MCP over loopback, live saved cloud inference",
+	"source": {
+		"searchStatus": 200,
+		"found": 4,
+		"searchMs": 57.857833,
+		"reads": [
+			{
+				"revision": "2",
+				"readStatus": 200,
+				"durationMs": 2.8147089999999935,
+				"complete": true,
+				"contentTruncated": false,
+				"evidenceTruncated": false,
+				"publicBytes": 2577
+			},
+			{
+				"revision": "2",
+				"readStatus": 200,
+				"durationMs": 2.1341249999999974,
+				"complete": true,
+				"contentTruncated": false,
+				"evidenceTruncated": false,
+				"publicBytes": 1539
+			}
+		]
+	},
+	"defaultRouteTrial": [
+		{
+			"taskId": "thumbnail-fit-on-rotation",
+			"status": 200,
+			"durationMs": 9464.9,
+			"kind": "ready",
+			"exactJapanese": true,
+			"providerMs": 9400.867,
+			"model": "gpt-6-luna",
+			"inputTokens": 8459,
+			"outputTokens": 219
+		}
+	],
+	"selectedResourceTrials": [
+		{
+			"taskId": "png-alpha-preview",
+			"status": 200,
+			"durationMs": 4662.474,
+			"kind": "ready",
+			"exactJapanese": true,
+			"providerMs": 4595.299,
+			"model": "gpt-4.1",
+			"inputTokens": 505,
+			"outputTokens": 27
+		},
+		{
+			"taskId": "xml-namespace-pretty-print",
+			"status": 200,
+			"durationMs": 1128.592,
+			"kind": "ready",
+			"exactJapanese": true,
+			"model": "gpt-4.1",
+			"inputTokens": 510,
+			"outputTokens": 29,
+			"providerMs": 1083.288
+		},
+		{
+			"taskId": "spreadsheet-duration-display",
+			"status": 200,
+			"durationMs": 1760.85,
+			"kind": "ready",
+			"exactJapanese": true,
+			"model": "gpt-4.1",
+			"inputTokens": 498,
+			"outputTokens": 27,
+			"providerMs": 1726.849
+		},
+		{
+			"taskId": "vector-path-join-preview",
+			"status": 200,
+			"durationMs": 1444.655,
+			"kind": "ready",
+			"exactJapanese": true,
+			"model": "gpt-4.1",
+			"inputTokens": 522,
+			"outputTokens": 27,
+			"providerMs": 1382.644
+		}
+	],
+	"savedCloudBudget": {
+		"addedUsd": 0.00495,
+		"accountedUsd": 18.5365666,
+		"capUsd": 20
+	}
+}
