@@ -80,10 +80,13 @@ search.externalのwarnings・degraded・truncatedは検索元の未信頼な申�
 `.trim();
 export const compactBuildInstructions =
 	compactGuidance + "\n" + localizationInstructions.trimStart();
+export const compactReviewInstructions = `${semanticReviewInstructions}
+対象は安全な探索・確認にも使える手順候補である。利用者が求める成果物の合否と、その後に担当が行う実機作業の合否を分けて審査する。読み取り手順と隔離した確認例の依頼では、対象に未実行であること自体を差し戻し理由にせず、限界と停止条件が示されているかを検査する。
+全観点を点検したうえで、reason には結論と根拠を短く書く。本文または参照だけで直せる重要な不備なら、approved=false と correction に修正した localizedInstructions と document の両方を返す。既存の根拠・目的・能力・合否を変えないと直せない場合は、修正を付けずに差し戻す。approved=true の場合は修正を返さない。`;
 /** Cache-facing identity for the compact path only. */
 export const COMPACT_INSTRUCTION_VERSION =
 	"build.compact." +
-	digest(compactBuildInstructions + semanticReviewInstructions);
+	digest(compactBuildInstructions + compactReviewInstructions);
 
 export const leanBuildInstructions = `${buildInstructions}
 短い生成経路の出力規則。最初から untrustedEvidence に全文がある資料はその場で検討し、再開示しない。必要な別資料だけ disclose する。候補順は適合の証明ではない。readyの全JSONには本文、最小の実行可能例、監査項目を含む。上限の約半分を目安に、固有の行動、合否、停止条件、参照例を優先し、同じ情報を次の欄へ転載しない。

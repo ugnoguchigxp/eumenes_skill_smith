@@ -8,6 +8,7 @@ import { z } from "zod";
 import { renderSkillMarkdown, checkLocalizedHost } from "./skill-markdown.js";
 import {
 	semanticReviewInstructions,
+	compactReviewInstructions,
 	disclosureInstructions,
 	leanReviewInstructions,
 } from "../instructions/build.js";
@@ -394,7 +395,8 @@ export async function executeBuild<Tx>(
 	let reSearchUsed = false;
 	const assembly = resolveAssembly(ports.assemblyMode ?? "baseline");
 	const lean = assembly.mode === "lean";
-	if (lean || assembly.mode === "compact") {
+	const compact = assembly.mode === "compact";
+	if (lean || compact) {
 		// Reserve room for validation after build and at delivery. Rank limits reads,
 		// while the model can still disclose other candidates and determines applicability.
 		const eligible = state.candidates.filter(
@@ -448,7 +450,7 @@ export async function executeBuild<Tx>(
 	for (let attempt = 0; attempt < request.limits.modelCalls; attempt++) {
 		checkpoint();
 		if (
-			(lean || assembly.mode === "compact") &&
+			(lean || compact) &&
 			sharedModelCallsUsed + 1 >= request.limits.modelCalls
 		)
 			break;
@@ -684,23 +686,30 @@ export async function executeBuild<Tx>(
 				document: lean ? leanDocumentSchema : skillDocumentSchema,
 			})
 			.optional();
+		const auditedApproval = z.strictObject({
+			approved: z.literal(true),
+			reason,
+			sourceReview: sourceReviewSchema,
+			nonSourceAdditions: nonSourceAdditionsSchema,
+		});
 		const reviewSchema = lean
 			? z.discriminatedUnion("approved", [
-					z.strictObject({
-						approved: z.literal(true),
-						reason,
-						sourceReview: sourceReviewSchema,
-						nonSourceAdditions: nonSourceAdditionsSchema,
-					}),
+					auditedApproval,
 					z.strictObject({ approved: z.literal(false), reason, correction }),
 				])
-			: z
-					.strictObject({ approved: z.boolean(), reason, correction })
-					.refine(
-						(r) => !r.approved || !r.correction,
-						"approved_correction_conflict",
-					);
+			: compact
+				? z.discriminatedUnion("approved", [
+						z.strictObject({ approved: z.literal(true), reason }),
+						z.strictObject({ approved: z.literal(false), reason, correction }),
+					])
+				: z
+						.strictObject({ approved: z.boolean(), reason, correction })
+						.refine(
+							(r) => !r.approved || !r.correction,
+							"approved_correction_conflict",
+						);
 		let reviewed = decision;
+		let repairReview = false;
 		for (let reviewRound = 0; reviewRound < 2; reviewRound++) {
 			const artifact = renderSkillMarkdown(
 				buildContent(p, reviewed, state.evidence),
@@ -711,9 +720,19 @@ export async function executeBuild<Tx>(
 				...auditDecision
 			} = reviewed;
 			const input = {
-				system: lean ? leanReviewInstructions : semanticReviewInstructions,
+				system: lean
+					? leanReviewInstructions
+					: compact
+						? compactReviewInstructions
+						: semanticReviewInstructions,
 				data: {
 					originalTask: request.task,
+					...(repairReview
+						? {
+								repair:
+									"前回の審査結果は形式違反のため未採用。全観点を審査し、schemaに合う結果を返す。",
+							}
+						: {}),
 					reviewPlan: [
 						{ phase: "canonical-faithfulness" },
 						{
@@ -730,12 +749,13 @@ export async function executeBuild<Tx>(
 					untrustedReview: spotlightUntrusted([
 						{
 							ref: "review",
-							decision: lean
-								? {
-										...auditDecision,
-										provisionalNotice: document?.provisionalNotice,
-									}
-								: reviewed,
+							decision:
+								lean || compact
+									? {
+											...auditDecision,
+											provisionalNotice: document?.provisionalNotice,
+										}
+									: reviewed,
 							sources: state.evidence.filter((e) =>
 								reviewed.sourceRefs.includes(e.ref),
 							),
@@ -757,16 +777,26 @@ export async function executeBuild<Tx>(
 			receipt = answer.receipt;
 
 			const result = reviewSchema.safeParse(answer.value);
-			requireThat(result.success, "semantic_review_failed");
+			if (!result.success) {
+				if (
+					compact &&
+					reviewRound === 0 &&
+					sharedModelCallsUsed < request.limits.modelCalls
+				) {
+					repairReview = true;
+					continue;
+				}
+				throw new SkillSmithError(
+					compact ? "semantic_review_invalid_output" : "semantic_review_failed",
+				);
+			}
 			if (result.data.approved) {
-				decision =
-					"sourceReview" in result.data
-						? {
-								...reviewed,
-								sourceReview: result.data.sourceReview,
-								nonSourceAdditions: result.data.nonSourceAdditions,
-							}
-						: reviewed;
+				if (lean) {
+					const { sourceReview, nonSourceAdditions } = auditedApproval.parse(
+						result.data,
+					);
+					decision = { ...reviewed, sourceReview, nonSourceAdditions };
+				} else decision = reviewed;
 				break;
 			}
 			requireThat(

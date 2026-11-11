@@ -6,6 +6,7 @@ import {
 	buildInstructions,
 	semanticReviewInstructions,
 	compactBuildInstructions,
+	compactReviewInstructions,
 } from "../instructions/build.js";
 import {
 	compactModelTurnSchema,
@@ -28,7 +29,7 @@ test("baseline buildInstructions and INSTRUCTION_VERSION stay unchanged by compa
 	);
 	expect(COMPACT_INSTRUCTION_VERSION).toBe(
 		"build.compact." +
-			digest(compactBuildInstructions + semanticReviewInstructions),
+			digest(compactBuildInstructions + compactReviewInstructions),
 	);
 	expect(COMPACT_INSTRUCTION_VERSION).not.toBe(INSTRUCTION_VERSION);
 	expect(compactBuildInstructions).not.toBe(buildInstructions);

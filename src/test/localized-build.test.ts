@@ -14,6 +14,7 @@ import {
 	disclosureInstructions,
 	INSTRUCTION_VERSION,
 	leanReviewInstructions,
+	compactReviewInstructions,
 } from "../instructions/build.js";
 import { digest } from "../service/identity.js";
 import {
@@ -160,78 +161,85 @@ test("lean builds with two model calls and reviews the exact delivered bundle", 
 	}
 });
 
-test("compact adapts a revision-only source with one build and one review", async () => {
-	const f = fixture({ assemblyMode: "compact", external: true });
-	f.request.limits.modelCalls = 2;
-	f.ports.registry.search = async () => [];
-	const source = f.ports.source!;
-	const search = source.search;
-	source.search = async (...args) => {
-		const result = await search(...args);
-		return {
-			...result,
-			cards: result.cards.map((card) => ({
-				...card,
-				complete: false,
-				revisionOnly: true,
-				version: { ...card.version, digest: "revision-only" },
-			})),
+test.each([false, true])(
+	"compact adapts a revision-only source and repairs invalid review when needed (%s)",
+	async (invalidReview) => {
+		const f = fixture({ assemblyMode: "compact", external: true });
+		f.request.limits.modelCalls = invalidReview ? 3 : 2;
+		f.ports.registry.search = async () => [];
+		const source = f.ports.source!;
+		const search = source.search;
+		source.search = async (...args) => {
+			const result = await search(...args);
+			return {
+				...result,
+				cards: result.cards.map((card) => ({
+					...card,
+					complete: false,
+					revisionOnly: true,
+					version: { ...card.version, digest: "revision-only" },
+				})),
+			};
 		};
-	};
-	const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
-	f.ports.inference.complete = async (input) => {
-		inputs.push(input);
-		return {
-			value:
-				input.system === semanticReviewInstructions
-					? { approved: true, reason: "test double" }
-					: {
-							...current,
-							coverage: "partial",
-							strategy: "adapt",
-							sourceRefs: ["external:1"],
-							sections: [{ id: "delta", body: "版の違いも記録する。" }],
-						},
-			receipt: "receipt",
-			inputTokens: 1,
-			outputTokens: 1,
+		const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
+		f.ports.inference.complete = async (input) => {
+			inputs.push(input);
+			return {
+				value:
+					input.system === compactReviewInstructions
+						? invalidReview && inputs.length === 2
+							? { approved: "invalid" }
+							: { approved: true, reason: "test double" }
+						: {
+								...current,
+								coverage: "partial",
+								strategy: "adapt",
+								sourceRefs: ["external:1"],
+								sections: [{ id: "delta", body: "版の違いも記録する。" }],
+							},
+				receipt: "receipt",
+				inputTokens: 1,
+				outputTokens: 1,
+			};
 		};
-	};
-	try {
-		const pending = f.write(() =>
-			f.service.submitArtifact(f.db, f.request, f.auth),
-		);
-		const work = await f.run(pending.requestRef!);
-		expect(inputs).toHaveLength(2);
-		expect(inputs[0]!.data).toMatchObject({
-			untrustedEvidence: {
-				items: [
-					{ ref: "external:1", untrusted: true, body: expect.any(String) },
-				],
-			},
-		});
-		expect(work.result.decision).toMatchObject({ strategy: "adapt" });
-		expect(work.settle()).toBe(true);
-		const packet = await f.service.getSkillDelivery(
-			pending.requestRef!,
-			f.auth,
-			f.read,
-			new AbortController().signal,
-		);
-		if (packet.kind !== "ready") throw Error("expected_validated_bundle");
-		expect(packet.skill.content).toContain(current.localizedInstructions);
-		f.setSourceValid(false);
-		const revoked = await f.service.getSkillDelivery(
-			pending.requestRef!,
-			f.auth,
-			f.read,
-			new AbortController().signal,
-		);
-		expect(revoked.kind).not.toBe("ready");
-	} finally {
-		f.dispose();
-	}
-});
+		try {
+			const pending = f.write(() =>
+				f.service.submitArtifact(f.db, f.request, f.auth),
+			);
+			const work = await f.run(pending.requestRef!);
+			expect(inputs).toHaveLength(invalidReview ? 3 : 2);
+			if (invalidReview)
+				expect(inputs[2]!.data).toMatchObject({ repair: expect.any(String) });
+			expect(inputs[0]!.data).toMatchObject({
+				untrustedEvidence: {
+					items: [
+						{ ref: "external:1", untrusted: true, body: expect.any(String) },
+					],
+				},
+			});
+			expect(work.result.decision).toMatchObject({ strategy: "adapt" });
+			expect(work.settle()).toBe(true);
+			const packet = await f.service.getSkillDelivery(
+				pending.requestRef!,
+				f.auth,
+				f.read,
+				new AbortController().signal,
+			);
+			if (packet.kind !== "ready") throw Error("expected_validated_bundle");
+			expect(packet.skill.content).toContain(current.localizedInstructions);
+			f.setSourceValid(false);
+			const revoked = await f.service.getSkillDelivery(
+				pending.requestRef!,
+				f.auth,
+				f.read,
+				new AbortController().signal,
+			);
+			expect(revoked.kind).not.toBe("ready");
+		} finally {
+			f.dispose();
+		}
+	},
+);
 
 test("lean approval without the source and additions audit cannot publish", async () => {
 	const f = fixture({ assemblyMode: "lean" });
