@@ -32,7 +32,7 @@ export interface EumenesControl<Tx> {
 	): string;
 	executeControl(
 		id: string,
-		messages: { role: "user"; content: string }[],
+		messages: { role: "system" | "user"; content: string }[],
 		signal: AbortSignal,
 		contract: { instructions: string; outputSchema: unknown },
 	): Promise<Receipt & { toolCalls?: unknown[] }>;
@@ -64,14 +64,18 @@ export function createEumenesInference<Tx>(options: {
 				});
 			});
 			signal.throwIfAborted();
+			const instructions = structuredOutput
+				? input.system + "\n" + strictSchemaInstructions
+				: input.system;
 			const answer = await control.executeControl(
 				id,
-				[{ role: "user", content: JSON.stringify(input.data) }],
+				[
+					{ role: "system", content: instructions },
+					{ role: "user", content: JSON.stringify(input.data) },
+				],
 				signal,
 				{
-					instructions: structuredOutput
-						? input.system + "\n" + strictSchemaInstructions
-						: input.system,
+					instructions,
 					outputSchema: structuredOutput
 						? strictProviderSchema(input.schema)
 						: input.schema,

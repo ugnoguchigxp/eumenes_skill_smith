@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { Ports, ExecutionContext } from "../contracts/ports.js";
-import type { Evidence, Prepared } from "../contracts/types.js";
+import type { Evidence, EvidenceCard, Prepared } from "../contracts/types.js";
 import { evidenceSchema, sourceSearchSchema } from "../contracts/schema.js";
 import { digest, requireThat, SkillSmithError } from "./identity.js";
 
@@ -12,16 +12,7 @@ function parseEvidence(raw: unknown): Evidence {
 }
 
 type SearchState = {
-	candidates: {
-		ref: string;
-		version: Evidence["version"];
-		title: string;
-		status: Evidence["status"];
-		complete: boolean;
-		external: boolean;
-		scope: string;
-		supersededBy?: string;
-	}[];
+	candidates: EvidenceCard[];
 	evidence: Evidence[];
 	successors: {
 		ref: string;
@@ -54,12 +45,16 @@ function matchesCard(
 ) {
 	return (
 		document.ref === card.ref &&
-		digest(document.version) === digest(card.version) &&
 		document.status === card.status &&
-		document.complete === card.complete &&
 		document.external === card.external &&
 		document.scope === card.scope &&
-		document.supersededBy === card.supersededBy
+		(card.revisionOnly
+			? document.version.id === card.version.id &&
+				document.version.version === card.version.version &&
+				document.version.generation === card.version.generation
+			: digest(document.version) === digest(card.version) &&
+				document.complete === card.complete &&
+				document.supersededBy === card.supersededBy)
 	);
 }
 

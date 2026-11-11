@@ -1,0 +1,60 @@
+{
+	"scope": "Eumenes authenticated Hono HTTP, host inference and storage, ContextStill MCP in process",
+	"inference": "saved cloud model through metered evaluation transport",
+	"mcp": {
+		"calls": 7,
+		"searchRevision": "1",
+		"updatedRevision": "2",
+		"clippedRejectedAsDependency": true,
+		"fastPathCalls": 0
+	},
+	"modelCalls": 4,
+	"rows": [
+		{
+			"taskId": "animated-gif-frame-delay",
+			"durationMs": 1043.440333,
+			"status": 200,
+			"kind": "ready",
+			"exactJapanese": true,
+			"inputTokens": 652,
+			"outputTokens": 30,
+			"providerMs": 1023.0109589999997
+		},
+		{
+			"taskId": "markdown-table-line-break",
+			"durationMs": 1348.2286669999994,
+			"status": 200,
+			"kind": "ready",
+			"exactJapanese": true,
+			"inputTokens": 651,
+			"outputTokens": 32,
+			"providerMs": 1340.4135420000002
+		},
+		{
+			"taskId": "wav-metadata-track",
+			"durationMs": 1168.8287499999997,
+			"status": 200,
+			"kind": "ready",
+			"exactJapanese": true,
+			"inputTokens": 642,
+			"outputTokens": 31,
+			"providerMs": 1160.2341670000005
+		},
+		{
+			"taskId": "vector-grid-snap",
+			"durationMs": 918.0728329999993,
+			"status": 200,
+			"kind": "ready",
+			"exactJapanese": true,
+			"inputTokens": 656,
+			"outputTokens": 32,
+			"providerMs": 910.4970410000005
+		}
+	],
+	"cost": {
+		"startingUsd": 18.52541459999998,
+		"accountedUsd": 18.53161659999998,
+		"addedUsd": 0.0062019999999982645,
+		"capUsd": 20
+	}
+}

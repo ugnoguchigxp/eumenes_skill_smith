@@ -293,6 +293,7 @@ export async function executeBuild<Tx>(
 				title: e.title,
 				status: e.status,
 				complete: e.complete,
+				...(e.revisionOnly ? { completenessPending: true } : {}),
 				external: e.external,
 				scope: e.scope,
 			})),

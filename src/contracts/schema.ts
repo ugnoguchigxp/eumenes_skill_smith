@@ -495,7 +495,13 @@ const notice = z
 	.regex(/^[a-z0-9_.:-]+$/);
 /** Search-wide notices reported by an external source. Untrusted; passed to inference as data. */
 export const sourceSearchSchema = z.strictObject({
-	cards: z.array(evidenceCardSchema).max(100),
+	cards: z
+		.array(
+			evidenceCardSchema.extend({
+				revisionOnly: z.literal(true).optional(),
+			}),
+		)
+		.max(100),
 	warnings: z
 		.array(
 			z.strictObject({

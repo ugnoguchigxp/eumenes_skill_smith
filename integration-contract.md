@@ -1,5 +1,25 @@
 # SkillSmithとEumenesの接続契約
 
+## ContextStill v2とEumenesへの組み込み前確認 2026-11-11
+
+本番の外部知識はContextStill公開MCPの `search_knowledge` と `get_knowledge` を使う。評価用の公開知識コピーはfixtureとして残す。EumenesのSQLiteは、要求、承認済みSKILL、生成物、ジョブ、失効の永続化に使う。Eumenesの組み込み先と段階別の完了条件は[計画P4〜P5](plan.md#8-p4-eumenesの基盤へ組み込む)にある。
+
+ContextStill `dd365e9` のMCPを一時DBとHonoのプロセス内呼出しで確認した。サーバー版は `2.0.0-alpha.0`、検索と取得の応答契約はどちらも `v1`。両ツールが一覧にあり、実際の検索・取得・撤回後の `not_found` を確認した。MCPの関連試験4件も通過した。
+
+| 検査 | 観測結果 |
+| --- | --- |
+| 検索した項目の版 | 検索カードに版がない。同じハンドルの本文末尾を変更して再検索してもカードは同一だった |
+| 取得した本文の完全性 | 根拠リンクが空の項目で8,001文字の本文が8,000文字になった。取得応答の `evidenceTruncated` は `false` だった |
+| Eumenesのジョブ・推論・配達 | `4ed26d7` の作業ツリーで既存の隔離結合試験を実行した。固定応答でジョブ完了と全ファイル配達を確認し、別要求の受領証と失効済み受領証を拒否した |
+
+### 公開MCP契約とEumenesの接続
+
+1. ContextStillは、検索カードと取得応答に項目の同じ `revision` を公開する。検索ではカードの内容と同じ読取り時点の版を返す。取得では本文・手順・条件などが省略された場合を `contentTruncated` で明示し、根拠の `evidenceTruncated` も維持する。既存MCPクライアントを保つため、既存フィールドと操作名を維持する。
+2. SkillSmithは外部の検索カードを版付きの候補として扱い、本文が必要な候補だけ取得する。候補のハンドルと版を取得結果に照合し、省略された資料を完全な手順として採用しない。採用した本文と根拠の公開内容をハッシュで固定し、確定・配達時に現在の版、失効、省略、ハッシュを再検査する。本文を先読みして全候補のハッシュを作る方式ではなく、既存の取得回数と取消・期限の境界で処理する。
+3. Eumenesでは `knowledge` の公開操作へ登録し、既存のwriter・ジョブ・推論と接続する。MCPへ送る検索文はホストが外部送信を許可した `searchTask` に限定する。承認済みSKILLや固定探索SKILLの配達に、外部MCPの呼出しは追加しない。
+
+ContextStill側は `ef415db` で既存のMCP操作に版と本文の省略フラグを追加した。Eumenesの認証済みAPIは `/api/knowledge/search`、`/api/knowledge/sources/:ref`、`/api/knowledge/skills` を公開する。実クラウド推論を使った隔離結合試験で、日本語4題に0.918〜1.348秒で固定SKILLが配達された。受入範囲はEumenesのHTTP入口からSKILL全文の取得まで。稼働サービスの更新、会話への公開、正式SKILLの公開承認は後続段階とする。[実測](docs/quality/eumenes-contextstill-2026-11-11/results.md)
+
 ## Eumenes推論と受領証の接続試験 2026-11-09
 
 `createEumenesInference({control, read, write})` は本体の公開 `captureUserControlInTransaction`、`executeControl`、`usageOfInTransaction`、`validateReceiptInTransaction` に接続する。キュー・要求保存と同じストアを指定する。推論を実行する前に本体writerで制御要求を確定し、処理はwriterの外で行う。モデルのルートは本体の設定で決まる。厳密なJSON Schemaを扱える経路では `structuredOutput: true` を指定できる。クラウド計測と共通の形式に変換し、返った値をSkillSmithの既存schemaで検査する。完成した応答のJSON解析に失敗した場合も受領証と取得済み使用量を記録する。

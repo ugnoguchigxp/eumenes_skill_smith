@@ -25,12 +25,14 @@ export interface EvidenceCard {
 	status: "active" | "superseded" | "retracted";
 	complete: boolean;
 	external: boolean;
+	/** External search advertises a revision. Content identity is established at disclosure. */
+	revisionOnly?: true;
 	/** Host labels these, not the source document. */
 	scope: string;
 	/** Successor ref from the same origin, for superseded items. */
 	supersededBy?: string;
 }
-export interface Evidence extends EvidenceCard {
+export interface Evidence extends Omit<EvidenceCard, "revisionOnly"> {
 	body: string;
 	sections?: Section[];
 	retrievedAt?: number;

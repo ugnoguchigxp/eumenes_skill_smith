@@ -37,3 +37,4 @@ export {
 	createEumenesInference,
 	type EumenesControl,
 } from "./integration/eumenes-inference.js";
+export { createContextStillSource } from "./integration/contextstill-source.js";

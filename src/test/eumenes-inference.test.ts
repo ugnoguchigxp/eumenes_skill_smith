@@ -13,7 +13,11 @@ test("host uses the same strict envelope and meters completed malformed output",
 			structuredOutput = input.structuredOutput;
 			return "request";
 		},
-		async executeControl(requestId, _messages, _signal, contract) {
+		async executeControl(requestId, messages, _signal, contract) {
+			expect(messages).toEqual([
+				{ role: "system", content: contract.instructions },
+				{ role: "user", content: "{}" },
+			]);
 			sent = contract.outputSchema;
 			return { requestId, attemptId: "attempt", value };
 		},
