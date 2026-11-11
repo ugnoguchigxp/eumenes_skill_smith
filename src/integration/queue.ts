@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Authority, Executed, Prepared } from "../contracts/types.js";
-import type { Ports } from "../contracts/ports.js";
+import type { CallObservation, Ports } from "../contracts/ports.js";
 import type { createSkillSmith } from "../service/index.js";
 import { requireThat } from "../service/identity.js";
 
@@ -88,8 +88,9 @@ export function createBuildJobHandler<Tx>(options: {
 	service: Service<Tx>;
 	write: <T>(op: (tx: Tx) => T) => Promise<T>;
 	authorityFor: (tx: Tx, requestRef: string) => Authority | null;
+	observeCall?: (requestRef: string, call: CallObservation) => void;
 }): BuildJobHandler<Tx> {
-	const { service, write, authorityFor } = options;
+	const { service, write, authorityFor, observeCall } = options;
 	function terminal(
 		tx: Tx,
 		job: Job & { scope?: string },
@@ -138,6 +139,9 @@ export function createBuildJobHandler<Tx>(options: {
 		execute(input, { signal }) {
 			return service.execute(input.prepared, {
 				signal,
+				...(observeCall
+					? { noteCall: (call) => observeCall(input.prepared.record.ref, call) }
+					: {}),
 				reserve: async (kind) => {
 					await write((tx) =>
 						service.reserve(tx, input.prepared, kind, input.authority),

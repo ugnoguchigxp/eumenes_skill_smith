@@ -1,17 +1,22 @@
 import { expect, test } from "bun:test";
 import { z } from "zod";
-import { createEumenesInference, type EumenesControl } from "../index.js";
+import {
+	createEumenesInference,
+	digest,
+	type EumenesControl,
+} from "../index.js";
 
 test("host uses the same strict envelope and meters completed malformed output", async () => {
-	let subject: string;
+	const subjects = new Map<string, string>();
 	let structuredOutput: true | undefined;
 	let sent: unknown;
 	let value = '{"result":{"action":"keep","note":null}}';
 	const control: EumenesControl<null> = {
 		captureUserControlInTransaction(_tx, input) {
-			subject = input.subject;
+			const id = `request-${subjects.size}`;
+			subjects.set(id, input.subject);
 			structuredOutput = input.structuredOutput;
-			return "request";
+			return id;
 		},
 		async executeControl(requestId, messages, _signal, contract) {
 			expect(messages).toEqual([
@@ -22,8 +27,8 @@ test("host uses the same strict envelope and meters completed malformed output",
 			return { requestId, attemptId: "attempt", value };
 		},
 		validateReceiptInTransaction: () => true,
-		usageOfInTransaction: () => ({
-			subject,
+		usageOfInTransaction: (_tx, { requestId }) => ({
+			subject: subjects.get(requestId) ?? "",
 			inputTokens: 21,
 			outputTokens: 7,
 			cacheReadTokens: 0,
@@ -60,6 +65,13 @@ test("host uses the same strict envelope and meters completed malformed output",
 	expect(port.validReceipt(null, ready.receipt, "other")).toBe(false);
 	value = '{"result":';
 	const invalid = await port.complete(input, signal);
+	expect(new Set(subjects.values()).size).toBe(2);
+	expect(port.validReceipt(null, ready.receipt, input.requestRef)).toBe(true);
+	expect(port.validReceipt(null, invalid.receipt, input.requestRef)).toBe(true);
+	subjects.set("legacy", "skillsmith:" + digest(input.requestRef));
+	expect(
+		port.validReceipt(null, '["legacy","attempt"]', input.requestRef),
+	).toBe(true);
 	expect(schema.safeParse(invalid.value).success).toBe(false);
 	expect(invalid).toMatchObject({
 		inputTokens: 21,

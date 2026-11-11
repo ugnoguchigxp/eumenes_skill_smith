@@ -18,6 +18,11 @@ type Usage = {
 	cacheReadTokens: number | null;
 };
 
+function inferenceSubject(requestRef: string, invocation?: string) {
+	const request = "skillsmith:" + digest(requestRef);
+	return invocation ? `${request}-${invocation}` : request;
+}
+
 /** The public control and receipt operations of the Eumenes inference domain. */
 export interface EumenesControl<Tx> {
 	captureUserControlInTransaction(
@@ -52,7 +57,10 @@ export function createEumenesInference<Tx>(options: {
 	return {
 		async complete(input, signal) {
 			signal.throwIfAborted();
-			const subject = "skillsmith:" + digest(input.requestRef);
+			// The host reuses control rows for the same subject. A new stage needs
+			// its own capture, deadline and metering while keeping the request binding.
+			const invocation = crypto.randomUUID();
+			const subject = inferenceSubject(input.requestRef, invocation);
 			const id = await write((tx) => {
 				signal.throwIfAborted();
 				return control.captureUserControlInTransaction(tx, {
@@ -102,7 +110,11 @@ export function createEumenesInference<Tx>(options: {
 			}
 			return {
 				value,
-				receipt: JSON.stringify([answer.requestId, answer.attemptId]),
+				receipt: JSON.stringify([
+					answer.requestId,
+					answer.attemptId,
+					invocation,
+				]),
 				inputTokens: usage?.inputTokens ?? null,
 				outputTokens: usage?.outputTokens ?? null,
 				cachedInputTokens: usage?.cacheReadTokens ?? null,
@@ -118,15 +130,16 @@ export function createEumenesInference<Tx>(options: {
 			}
 			if (
 				!Array.isArray(pair) ||
-				pair.length !== 2 ||
+				(pair.length !== 2 && pair.length !== 3) ||
 				typeof pair[0] !== "string" ||
-				typeof pair[1] !== "string"
+				typeof pair[1] !== "string" ||
+				(pair.length === 3 && (typeof pair[2] !== "string" || !pair[2]))
 			)
 				return false;
 			const receipt = { requestId: pair[0], attemptId: pair[1], value: "" };
 			return (
 				control.usageOfInTransaction(tx, receipt)?.subject ===
-					"skillsmith:" + digest(requestRef) &&
+					inferenceSubject(requestRef, pair[2]) &&
 				control.validateReceiptInTransaction(tx, receipt)
 			);
 		},
