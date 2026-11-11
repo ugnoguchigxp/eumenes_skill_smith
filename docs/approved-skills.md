@@ -40,7 +40,7 @@ const publication = write(tx => service.publishSkill(tx, {
 ## 利用の手順
 
 1. `prepareSkillSelection`で現在の依頼・権限と候補をスナップショット化する。
-2. `selectSkill`をtransaction外で一回実行する。InferencePortが候補と短い適用判断、またはmissを返す。`Ports.selectionInference`を指定すると、推論とreceiptの照合にそのportを使う。省略時は既存の`Ports.inference`を使う。部品を組み合わせる場合は、組み上げた本文と全参照の審査にもう一回の推論を使う。
+2. `selectSkill`をtransaction外で一回実行する。InferencePortが候補と短い適合理由、またはmissを返す。`Ports.selectionInference`を指定すると、推論とreceiptの照合にそのportを使う。省略時は既存の`Ports.inference`を使う。部品を組み合わせる場合は、組み上げた本文と全参照の審査にもう一回の推論を使う。
 3. selectedまたはcomposedの場合は、writer内の`bindSkillSelection`で再照合する。新利用者のrequestとBuildを保存し、元の厳密キャッシュキーを維持する。
 4. `getSkillDelivery`で外部資料版も再確認し、本文とreferencesを実際に取得してからreadyとして扱う。
 5. missなら`submitAfterSkillMiss`へ渡す。直近に不適合と判定された承認済み本文を、厳密キャッシュから再配達しない。利用できる新規生成済みの厳密キャッシュがなければ既存の生成jobを登録する。pendingは利用可能なSKILLの配達成功に含めない。
@@ -68,6 +68,8 @@ if (selection.decision.kind !== "miss") {
 PreparedとSelectedは信頼されたホスト内の処理間データです。外部のcallerへ丸ごと公開せず、LLM入力にも`skillSelectionInput`の公開投影だけを使います。元のprivate Build、principal、評価専用条件はLLM入力へ含めません。Selectedは同じサービスで発行したものだけを結び付け、改変・別receiptへの付替え・JSONでの偽造を拒否します。クラッシュ後に選択中のオブジェクトを復元してbindしません。完了済みのrequest/Build/publicationは永続化され、通常取得で再開できます。未完了を自動で成功へ変更せず、ホストの明示的な新しい選択試行として計測します。
 
 LLMは候補の原目的・制約と現在の受入条件を照合します。用途の追加、未確認条件、計画から実操作への変更はmissです。意味判定をキーワードや類似度の閾値へ移しません。コードはscope、policy、environment、必要能力の版一致、approval、epoch、source、expiry、bundleの整合性を強制します。選択指示の版が変わると、旧版で結び付けた再利用結果は再選択が必要になります。
+
+配達したSKILLは、呼び出し側が作業に使える手順の候補です。呼び出し側は本文を読み、対象の版、観測した状況、利用者の許可範囲を照合して、手順の採否と次の作業を判断します。
 
 SQLiteの`ApprovedSkillStore.scan`はscope、環境、受け手、方針、能力版、期限を候補数の制限前に絞ります。名前、適用範囲、元の目的を文字列索引で順位付けし、残した候補枠を構造条件に合う新しい順で補います。少数の語句一致や取り消された語句一致だけで走査終了とせず、重複と失効を除きます。走査上限は既定256件、最大4096件です。候補枠が埋まる前に走査上限に達した場合は`catalog_scan_limit`を返します。`catalog.exhausted`は構造条件に合う範囲を読み切ったかを示します。既存の`list`のみのstoreも使用できます。
 
