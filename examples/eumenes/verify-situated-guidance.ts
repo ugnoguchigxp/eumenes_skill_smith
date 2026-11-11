@@ -12,6 +12,7 @@ import {
 	createCloudBudget,
 	type CloudModel,
 } from "../contextstill/cloud-budget.js";
+import { digest } from "../../src/index.js";
 import { savedCloud } from "../contextstill/saved-cloud.js";
 
 function check(condition: unknown, code: string): asserts condition {
@@ -96,6 +97,7 @@ try {
 		const resourceId = crypto.randomUUID();
 		let mode: "ready" | "miss" | "stale" = "ready";
 		let sentSituation: Record<string, unknown> | undefined;
+		let report = "";
 		let providerCalls = 0;
 		let started = 0;
 		let durationMs = 0;
@@ -132,8 +134,8 @@ try {
 					);
 					check(data.task.goal === item.goal, "goal_changed");
 					check(
-						JSON.stringify(data.task.situation) ===
-							JSON.stringify(sentSituation),
+						digest(data.task.situation) ===
+							digest({ ...sentSituation, report }),
 						"situation_not_forwarded",
 					);
 					check(!("publicSearchTask" in data), "unexpected_public_search");
@@ -141,7 +143,7 @@ try {
 						mode === "ready"
 							? {
 									kind: "explore",
-									language: "ja",
+									language: "en",
 									assessment: "Safe read-only observation is available.",
 								}
 							: { kind: "miss", reason: "No authorized observation target." };
@@ -183,6 +185,19 @@ try {
 					result = JSON.parse(toolResult.slice("TOOL_RESULT=".length));
 					return { action: "reply", text: "SKILLの参照結果を確認しました。" };
 				}
+				const candidate = messages.find(({ content }) =>
+					content.startsWith("GUIDANCE_CANDIDATES="),
+				);
+				check(
+					candidate &&
+						JSON.parse(candidate.content.slice("GUIDANCE_CANDIDATES=".length))
+							.candidates[0]?.content === expected,
+					"initial_japanese_candidate_missing",
+				);
+				check(
+					messages.at(-1)?.content.includes(report),
+					"original_report_missing",
+				);
 				check(
 					messages[0]?.content.includes("get_guidance"),
 					"tool_not_registered",
@@ -204,6 +219,7 @@ try {
 						goal: item.goal,
 						acceptance: [{ id: "explore", text: item.acceptance }],
 						situation: sentSituation,
+						skillLanguage: "ja",
 					},
 				};
 			},
@@ -244,10 +260,12 @@ try {
 				delete measurement.inputTokens;
 				delete measurement.outputTokens;
 				const before = providerCalls;
+				report = mode === "miss" ? item.miss : item.goal + " " + item.ready;
 				const response = await host.request("/api/runs", {
 					requestId: crypto.randomUUID(),
 					conversationId: "main",
-					text: mode === "miss" ? item.miss : item.goal + " " + item.ready,
+					text: report,
+					guidanceLanguage: "ja",
 				});
 				check(response.status === 202, "turn_not_accepted");
 				const run = await response.json();
@@ -284,8 +302,7 @@ try {
 						(value?.kind === "ready" &&
 							value.exploration &&
 							value.skill.content === expected &&
-							JSON.stringify(value.situation) ===
-								JSON.stringify(sentSituation)),
+							digest(value.situation) === digest({ ...sentSituation, report })),
 					"wrong_skill",
 				);
 				check(

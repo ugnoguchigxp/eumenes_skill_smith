@@ -534,6 +534,8 @@ export function createApprovedSkillOperations<Tx>(
 			requestRef: s.digest,
 		});
 		let decision = schema.parse(out.value);
+		if (decision.kind === "explore" && s.request.task.skillLanguage)
+			decision = { ...decision, language: s.request.task.skillLanguage };
 		let compositionReview: SelectedSkill["compositionReview"];
 		if (decision.kind === "composed") {
 			const parts = decision.refs.map((ref) => {

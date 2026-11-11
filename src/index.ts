@@ -25,6 +25,10 @@ export type {
 
 export * from "./contracts/approved-skills.js";
 export { assembleApprovedParts } from "./service/approved-composition.js";
+export {
+	fixedExplorationCandidate,
+	FIXED_EXPLORATION_REF,
+} from "./service/fixed-exploration.js";
 
 export {
 	BUILD_JOB_KIND,

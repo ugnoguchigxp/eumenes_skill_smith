@@ -19,6 +19,7 @@ const visibility = z.enum(["reader", "environment", "evaluation"]);
 const clause = z.strictObject({ id, text, visibility: visibility.optional() });
 export const guidanceSituationSchema = z.strictObject({
 	revision: id,
+	report: text.optional(),
 	lastAttempt: z
 		.strictObject({
 			action: z.string().trim().min(1).max(1000),
@@ -36,6 +37,7 @@ export const requestSchema = z
 		delivery: z.literal("artifact").optional(),
 		task: z.strictObject({
 			goal: text,
+			skillLanguage: z.enum(["ja", "en"]).optional(),
 			situation: guidanceSituationSchema.optional(),
 			acceptance: z.array(clause).min(1).max(32),
 			constraints: z.array(clause).max(32),

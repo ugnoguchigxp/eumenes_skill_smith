@@ -8,6 +8,7 @@ import type { ExplorationLanguage } from "../contracts/approved-skills.js";
 import { assembleSkillBody } from "./skill-document.js";
 import { renderSkillMarkdown } from "./skill-markdown.js";
 import { requireThat } from "./identity.js";
+import { explorationLanguageSchema } from "../contracts/approved-skills.js";
 
 /** Authored once. Task facts come from the separate request when a reader uses the SKILL. */
 const workflow = `### Establish what can be checked
@@ -128,6 +129,34 @@ const japanese = {
 } satisfies ReadyDecision;
 
 export const FIXED_EXPLORATION_REF = "skillsmith:fixed-exploration";
+
+/** The authored reference itself, for hosts that show it as an unassessed candidate. */
+export function fixedExplorationCandidate(language: ExplorationLanguage) {
+	const version = {
+		id: FIXED_EXPLORATION_REF,
+		version: "1",
+		digest: FIXED_EXPLORATION_REF,
+		generation: 0,
+	};
+	return fixedExploration(
+		{
+			task: {
+				goal: "Explore an unfamiliar task",
+				acceptance: [],
+				constraints: [],
+				references: [],
+			},
+			environment: {
+				id: FIXED_EXPLORATION_REF,
+				capabilities: [],
+				policy: version,
+			},
+			audience: "worker",
+		},
+		{ version, body: "", alreadyPresent: true },
+		explorationLanguageSchema.parse(language),
+	).artifact;
+}
 
 export function fixedExploration(
 	request: Pick<GuidanceRequest, "task" | "environment" | "audience">,
