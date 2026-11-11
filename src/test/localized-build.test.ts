@@ -161,11 +161,12 @@ test("lean builds with two model calls and reviews the exact delivered bundle", 
 	}
 });
 
-test.each([false, true])(
-	"compact adapts a revision-only source and repairs invalid review when needed (%s)",
-	async (invalidReview) => {
+test.each(["approve", "invalid", "two-corrections"] as const)(
+	"compact adapts a revision-only source within its review budget (%s)",
+	async (review) => {
 		const f = fixture({ assemblyMode: "compact", external: true });
-		f.request.limits.modelCalls = invalidReview ? 3 : 2;
+		const calls = { approve: 2, invalid: 3, "two-corrections": 4 }[review];
+		f.request.limits.modelCalls = calls;
 		f.ports.registry.search = async () => [];
 		const source = f.ports.source!;
 		const search = source.search;
@@ -184,31 +185,38 @@ test.each([false, true])(
 		const inputs: Parameters<typeof f.ports.inference.complete>[0][] = [];
 		f.ports.inference.complete = async (input) => {
 			inputs.push(input);
-			return {
-				value:
-					input.system === compactReviewInstructions
-						? invalidReview && inputs.length === 2
-							? { approved: "invalid" }
-							: { approved: true, reason: "test double" }
-						: {
-								...current,
-								coverage: "partial",
-								strategy: "adapt",
-								sourceRefs: ["external:1"],
-								sections: [{ id: "delta", body: "版の違いも記録する。" }],
-							},
-				receipt: "receipt",
-				inputTokens: 1,
-				outputTokens: 1,
+			let value: unknown = {
+				...current,
+				coverage: "partial",
+				strategy: "adapt",
+				sourceRefs: ["external:1"],
+				sections: [{ id: "delta", body: "版の違いも記録する。" }],
 			};
+			if (input.system === compactReviewInstructions) {
+				value = { approved: true, reason: "test double" };
+				if (review === "invalid" && inputs.length === 2)
+					value = { approved: "invalid" };
+				if (review === "two-corrections" && inputs.length < calls)
+					value = {
+						approved: false,
+						reason: `照合指摘${inputs.length}`,
+						correction: {
+							localizedInstructions:
+								current.localizedInstructions +
+								` 差異を${inputs.length}件照合する。`,
+							document: current.document,
+						},
+					};
+			}
+			return { value, receipt: "receipt", inputTokens: 1, outputTokens: 1 };
 		};
 		try {
 			const pending = f.write(() =>
 				f.service.submitArtifact(f.db, f.request, f.auth),
 			);
 			const work = await f.run(pending.requestRef!);
-			expect(inputs).toHaveLength(invalidReview ? 3 : 2);
-			if (invalidReview)
+			expect(inputs).toHaveLength(calls);
+			if (review === "invalid")
 				expect(inputs[2]!.data).toMatchObject({ repair: expect.any(String) });
 			expect(inputs[0]!.data).toMatchObject({
 				untrustedEvidence: {
@@ -227,6 +235,12 @@ test.each([false, true])(
 			);
 			if (packet.kind !== "ready") throw Error("expected_validated_bundle");
 			expect(packet.skill.content).toContain(current.localizedInstructions);
+			if (review === "two-corrections") {
+				expect(inputs[3]!.data).toMatchObject({
+					untrustedReview: { items: [{ previousFinding: "照合指摘3" }] },
+				});
+				expect(packet.skill.content).toContain("差異を3件照合する。");
+			}
 			f.setSourceValid(false);
 			const revoked = await f.service.getSkillDelivery(
 				pending.requestRef!,

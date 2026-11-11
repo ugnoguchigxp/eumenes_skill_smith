@@ -163,6 +163,20 @@ export function buildContent(
 	return content;
 }
 
+function reviewIssueCode(issue?: z.ZodIssue) {
+	if (!issue) return "invalid_review_output";
+	const code =
+		issue.code === "custom" &&
+		[
+			"skill_document_sections_invalid",
+			"skill_document_section_body_invalid",
+			"skill_document_references_invalid",
+		].includes(issue.message)
+			? issue.message
+			: issue.code;
+	return [code, ...issue.path].join(".").slice(0, 128);
+}
+
 export async function executeBuild<Tx>(
 	ports: Ports<Tx>,
 	p: Prepared,
@@ -714,8 +728,12 @@ export async function executeBuild<Tx>(
 							"approved_correction_conflict",
 						);
 		let reviewed = decision;
-		let repairReview = false;
-		for (let reviewRound = 0; reviewRound < 2; reviewRound++) {
+		let repairReview: string | undefined;
+		let previousFinding: string | undefined;
+		const reviewLimit = compact
+			? Math.min(3, request.limits.modelCalls - sharedModelCallsUsed)
+			: 2;
+		for (let reviewRound = 0; reviewRound < reviewLimit; reviewRound++) {
 			const artifact = renderSkillMarkdown(
 				buildContent(p, reviewed, state.evidence),
 			);
@@ -735,7 +753,9 @@ export async function executeBuild<Tx>(
 					...(repairReview
 						? {
 								repair:
-									"前回の審査結果は形式違反のため未採用。全観点を審査し、schemaに合う結果を返す。",
+									"前回の審査結果は形式違反のため未採用（" +
+									repairReview +
+									"）。全観点を審査し、schemaに合う結果を返す。",
 							}
 						: {}),
 					reviewPlan: [
@@ -754,6 +774,7 @@ export async function executeBuild<Tx>(
 					untrustedReview: spotlightUntrusted([
 						{
 							ref: "review",
+							...(previousFinding ? { previousFinding } : {}),
 							decision:
 								lean || compact
 									? {
@@ -786,19 +807,15 @@ export async function executeBuild<Tx>(
 						: parsed.data.correction
 							? "correction"
 							: "rejected";
-				const issue = parsed.error.issues[0];
-				return [issue?.code, ...(issue?.path ?? [])].join(".").slice(0, 128);
+				return reviewIssueCode(parsed.error.issues[0]);
 			});
 			receipt = answer.receipt;
 
 			const result = reviewSchema.safeParse(answer.value);
+			const anotherReview = reviewRound + 1 < reviewLimit;
 			if (!result.success) {
-				if (
-					compact &&
-					reviewRound === 0 &&
-					sharedModelCallsUsed < request.limits.modelCalls
-				) {
-					repairReview = true;
+				if (compact && anotherReview && !repairReview) {
+					repairReview = reviewIssueCode(result.error.issues[0]);
 					continue;
 				}
 				throw new SkillSmithError(
@@ -815,9 +832,10 @@ export async function executeBuild<Tx>(
 				break;
 			}
 			requireThat(
-				reviewRound === 0 && result.data.correction,
+				anotherReview && result.data.correction,
 				"semantic_review_failed",
 			);
+			if (compact) previousFinding = result.data.reason;
 			reviewed = { ...reviewed, ...result.data.correction };
 			checkLocalizedHost(request.task, reviewed);
 			checkDecision(reviewed, state.evidence, p, {

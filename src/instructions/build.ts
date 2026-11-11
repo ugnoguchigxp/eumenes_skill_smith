@@ -84,7 +84,9 @@ export const compactBuildInstructions =
 export const compactReviewInstructions = `${semanticReviewInstructions}
 対象は安全な探索・確認にも使える手順候補である。利用者が求める成果物の合否と、その後に担当が行う実機作業の合否を分けて審査する。読み取り手順と隔離した確認例の依頼では、対象に未実行であること自体を差し戻し理由にせず、限界と停止条件が示されているかを検査する。
 全観点を点検したうえで、reason には結論と根拠を短く書く。本文または参照だけで直せる重要な不備なら、approved=false と correction に修正した localizedInstructions と document の両方を返す。既存の根拠・目的・能力・合否を変えないと直せない場合は、修正を付けずに差し戻す。approved=true の場合は修正を返さない。
-修正する document.sections は kind ごとに一つまでとし、principles・workflow・completion を各1件含める。workflow と completion には kind と heading だけを返す。手順や停止条件は localizedInstructions に、その他の機能別節の内容は各節の body に書く。references を返す場合は重複しない path と resourceHeading が必要。省略可能な欄に空文字を入れない。`;
+修正する document.sections は kind ごとに一つまでとし、principles・workflow・completion を各1件含める。workflow と completion には kind と heading だけを返す。手順や停止条件は localizedInstructions に、その他の機能別節の内容は各節の body に書く。references を返す場合は重複しない path と resourceHeading が必要。省略可能な欄に空文字を入れない。
+形式修正の skill_document_sections_invalid は workflow または completion の欠落か kind の重複、skill_document_section_body_invalid は節の body の有無、skill_document_references_invalid は参照の path の重複か resourceHeading の欠落を示す。
+previousFinding がある場合、今回描画された本文と全参照を再点検し、前回の指摘が解消されたかを確認する。元の審査基準は維持する。必須条件をすべて満たすなら承認し、単なる好みの言い換えを修正の条件にしない。`;
 /** Cache-facing identity for the compact path only. */
 export const COMPACT_INSTRUCTION_VERSION =
 	"build.compact." +
