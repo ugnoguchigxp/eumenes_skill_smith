@@ -201,6 +201,7 @@ export async function executeBuild<Tx>(
 	const complete = async (
 		input: Parameters<Ports<Tx>["inference"]["complete"]>[0],
 		operation: "build" | "semantic-review",
+		validationOf?: (value: unknown) => string,
 	) => {
 		await reserve("modelCalls");
 		checkpoint();
@@ -230,6 +231,7 @@ export async function executeBuild<Tx>(
 			operation,
 			outcome: "ok",
 			durationMs,
+			validationCode: validationOf?.(answer.value),
 			receipt: answer.receipt,
 			inputTokens: answer.inputTokens,
 			outputTokens: answer.outputTokens,
@@ -686,7 +688,7 @@ export async function executeBuild<Tx>(
 			.strictObject({
 				localizedInstructions:
 					skillPresentationSchema.shape.localizedInstructions,
-				document: lean ? leanDocumentSchema : skillDocumentSchema,
+				document: lean || compact ? leanDocumentSchema : skillDocumentSchema,
 			})
 			.optional();
 		const auditedApproval = z.strictObject({
@@ -776,7 +778,17 @@ export async function executeBuild<Tx>(
 				bytes(input) <= request.limits.inputBytes,
 				"context_budget_exceeded",
 			);
-			const answer = await complete(input, "semantic-review");
+			const answer = await complete(input, "semantic-review", (value) => {
+				const parsed = reviewSchema.safeParse(value);
+				if (parsed.success)
+					return parsed.data.approved
+						? "approved"
+						: parsed.data.correction
+							? "correction"
+							: "rejected";
+				const issue = parsed.error.issues[0];
+				return [issue?.code, ...(issue?.path ?? [])].join(".").slice(0, 128);
+			});
 			receipt = answer.receipt;
 
 			const result = reviewSchema.safeParse(answer.value);

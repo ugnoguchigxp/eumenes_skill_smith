@@ -180,6 +180,8 @@ export interface CallObservation {
 	kind: "modelCalls" | "sourceCalls";
 	operation: string;
 	outcome: "ok" | "error";
+	/** Optional host-validated classification, never an output value. */
+	validationCode?: string;
 	receipt?: string;
 	inputTokens?: number | null;
 	outputTokens?: number | null;
