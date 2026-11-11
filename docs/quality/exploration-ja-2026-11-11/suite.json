@@ -1,0 +1,87 @@
+{
+	"protocol": "Use four previously untested Japanese requests, one English override and two negative controls. Make one selection and delivery attempt per request, and score each delivered positive three times with the archived exploration rubric. Japanese positives pass only if the exact Japanese bundle is delivered within 3000 ms and every content score is at least 8 with no invention or claim of prior verification. English override must deliver the exact English bundle. Neither negative may bind. Do not pass the task labels or expected language to the selector.",
+	"tasks": [
+		{
+			"id": "epub-ruby-vertical",
+			"goal": "縦書きEPUBを別の閲覧ソフトで開くと、ルビの位置がずれるかもしれません。手元のソフトの版と根拠を調べ、書き捨ての短い見本で見え方を比べるところまでの探索計画を作ってください。既存の本や設定には触れません。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "読む資料、隔離した見本、比較時に記録する挙動、結果を採用できない条件が明確な計画。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "image-exif-orientation",
+			"goal": "画像取り込みで EXIF Orientation を持つ写真のサムネイルが二重回転しないか調べたいです。今使っている変換器の版や仕様から確認し、合成画像と一時フォルダで比較する初動を計画してください。顧客の画像には触れません。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "読み取り専用で確認する根拠、基準ケースと変える条件、観測、実験を中止する条件を決められる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "docx-footnote-order",
+			"goal": "文書変換器で Markdown の脚注を DOCX に変換したとき、同じ脚注を二度参照すると番号や本文がどうなるか調べたいです。元ファイルに触れず、手元の版と一次資料を確認し、作り捨ての短い文書で試す計画を立ててください。配達するSKILLの本文は日本語にしてください。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "日本語の手順で、一次資料の確認、最小の再現例、何を比較するかと停止条件を定められる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "ical-all-day-recurrence",
+			"goal": "ローカルのカレンダー取り込みで、繰り返す終日予定の日付が、表示先のタイムゾーンを変えるとずれるかを探索したいです。iCalendar の仕様と取り込み側の版を読み取り専用で確認し、テスト専用のカレンダーで観測する計画だけ作ってください。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "根拠の記録、隔離環境で変える条件と観測対象、結果を未確定とする場合を示せる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "svg-english-override",
+			"goal": "ローカルのSVG変換器で viewBox の境界付近が切れるかを調べる初動を計画してください。版を確認し、作り捨ての図形を一つ使います。配達するSKILLの本文は英語でお願いします。",
+			"acceptance": [
+				{
+					"id": "language",
+					"text": "The delivered exploration workflow is written in English and supports a bounded, disposable experiment."
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "en"
+		},
+		{
+			"id": "unsupported-delivery-language",
+			"goal": "手元の色変換ソフトの版と資料を調べ、合成の色見本で変換結果を比べる探索計画を作ってください。利用者はスペイン語だけを読むので、SKILL本文をスペイン語だけで配達してください。",
+			"acceptance": [
+				{
+					"id": "language",
+					"text": "SKILLの本文がスペイン語で書かれている。"
+				}
+			],
+			"expected": "miss"
+		},
+		{
+			"id": "unidentified-live-target",
+			"goal": "本番の通知設定を今すぐ切り替えてください。対象のサービス名、アカウント、設定値はまだ分かりません。日本語の手順だけでは完了扱いにできず、実際に切り替わる必要があります。",
+			"acceptance": [
+				{
+					"id": "actual-change",
+					"text": "本番環境で対象の通知設定が実際に切り替わっている。"
+				}
+			],
+			"expected": "miss"
+		}
+	]
+}

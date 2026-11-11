@@ -85,7 +85,9 @@ SQLiteの`ApprovedSkillStore.scan`はscope、環境、受け手、方針、能�
 
 ホストは `createSkillSmith({ ...ports, explorationFallback: true })` で有効にできます。通常の `prepareSkillSelection` → `selectSkill` → `bindSkillSelection` → `getSkillDelivery` を使います。モデルは適合する承認済み手順を優先します。評価した候補では条件を満たせず、依頼が安全な探索を許すと判断した場合は `explore` を返します。対象や必要な権限が不明で観測に進めない依頼や、検証済みの専用手順が必須の依頼は `miss` になります。
 
-`explore` を結び付けると、配達には `exploration: true` と組み込みの英語SKILLが含まれます。利用側は元の依頼・制約をSKILLと一緒に渡します。本文は対象と版の確認、一次資料の調査、隔離実験の計画、観測と停止条件を指示します。本文への方針の挿入が必要な場合、方針が失効した場合、または選択の受領証が無効になった場合は配達を止めます。探索の結果は元の依頼に結び付き、別の依頼では適用を選び直します。[未使用課題での検証](quality/exploration-fallback-2026-11-11/results.md)
+`explore` の選択結果には `language`（`en` または `ja`）が含まれます。モデルは本文の言語指定を優先し、指定がなければ依頼の記述言語を選びます。どちらの言語も依頼を満たせなければ `miss` になります。結び付け後は対応する組み込みSKILLを `exploration: true` とともに配達します。
+
+利用側は元の依頼・制約をSKILLと一緒に渡します。本文は対象と版の確認、一次資料の調査、隔離実験の計画、観測と停止条件を指示します。本文への方針の挿入が必要な場合、方針が失効した場合、または選択の受領証が無効になった場合は配達を止めます。探索の結果は元の依頼に結び付き、別の依頼では適用を選び直します。[英語課題の検証](quality/exploration-fallback-2026-11-11/results.md) · [日本語課題の検証](quality/exploration-ja-2026-11-11/results.md)
 
 ## 失効と更新
 

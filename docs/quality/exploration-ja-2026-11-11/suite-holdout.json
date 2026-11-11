@@ -1,0 +1,53 @@
+{
+	"protocol": "Use four previously untested Japanese requests. Make one selection and delivery attempt per request and score each delivery three times with the archived exploration rubric. Pass only if every request receives the exact Japanese bundle within 3000 ms and every score is at least 8 with no invention or claim of prior verification. Do not pass task labels or expected language to the selector.",
+	"tasks": [
+		{
+			"id": "webvtt-overlapping-cues",
+			"goal": "字幕プレビューで WebVTT の字幕が時間的に重なると、片方が消える場合があります。現在のプレーヤーの版と仕様を確認し、手書きの短い字幕とテスト用動画で調べる計画を作ってください。製品の字幕や再生設定は変えません。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "根拠の確認方法、比較する入力、記録する表示結果、結論を保留する条件が分かる探索計画。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "zip-japanese-filenames",
+			"goal": "手元の二つの ZIP 展開ツールで、日本語を含むファイル名の表示が食い違うことがあります。版と一次資料を確認し、空のファイルだけを入れた使い捨ての書庫と一時フォルダで、どの条件で差が出るか調べる計画をお願いします。SKILLは日本語で書いてください。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "元データに触れず、基準と比較対象、観測箇所、判断を止める条件を記録できる日本語の手順。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "obj-normals-import",
+			"goal": "OBJを取り込むと、角のある面が滑らかに表示されることがあります。ローカルの3Dビューワーについて、取り込み時の法線の扱いを仕様と小さな合成メッシュで確認したいです。いまは切り分けの手順を計画する段階です。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "版と根拠の確認、隔離した再現例、基準との比較方法、観測結果が判断材料にならない場合を示す。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "geotiff-nodata-resampling",
+			"goal": "社内の地図画像変換で GeoTIFF の欠損値が縮小後の画素に混ざるか気になっています。手元の変換ツールの版と一次資料を調べ、実地図を使わずに小さな合成ラスタで見分ける計画を作ってください。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "読み取りから始め、条件を一つ変える隔離実験、比較する値、停止条件を計画としてまとめる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		}
+	]
+}

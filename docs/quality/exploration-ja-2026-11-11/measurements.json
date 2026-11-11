@@ -1,0 +1,2140 @@
+{
+	"sourceSha256": {
+		"initial": {
+			"src/service/fixed-exploration.ts": "b967b22348e1430b01c34f4397ac7ab637ab8e3ed4c10240f82d1f13464c5b60",
+			"src/service/approved-skills.ts": "7239fd397c161e07df25aa3005495decc6b37a1699743e9c118379b183b1b0d1",
+			"src/instructions/selection.ts": "07c6e4f5724e8577037c66508c53dbbfa62d327820e85bd117d8cfe52efc0c26",
+			"src/contracts/approved-skills.ts": "22455c3aab8b3b74fa6754dc6a219b78bcb5e96fbabfe122a74c059f2fd5d1d9",
+			"examples/contextstill/verify-exploration-fallback.ts": "4189e9914e42ac1ab63d63f354c458806e9e1b95b4ca31fcd7d98ed2e2929459"
+		},
+		"revised": {
+			"src/service/fixed-exploration.ts": "79e29fb51d550d83674461231d2ac927572666113a583ff53d5f34f97b96bb20",
+			"src/service/approved-skills.ts": "7239fd397c161e07df25aa3005495decc6b37a1699743e9c118379b183b1b0d1",
+			"src/instructions/selection.ts": "12b5bec5cc7b15a887ad0ede478d6322049eda437ec5970b48e7643555759ddb",
+			"src/contracts/approved-skills.ts": "22455c3aab8b3b74fa6754dc6a219b78bcb5e96fbabfe122a74c059f2fd5d1d9",
+			"examples/contextstill/verify-exploration-fallback.ts": "0f9aca9f7417652cad4dacbb422b355b359acd77b9020a0a86d710946ff412bd"
+		},
+		"final": {
+			"src/service/fixed-exploration.ts": "79e29fb51d550d83674461231d2ac927572666113a583ff53d5f34f97b96bb20",
+			"src/service/approved-skills.ts": "4361d7ef353d485171a1700370df5f2a30ae64b50777e92ab2c63a92fabb4831",
+			"src/instructions/selection.ts": "e18017967bf82341354c7ba6dfdd0a90cbee5181a2ce971e0bb53bd1bd3e007a",
+			"src/contracts/approved-skills.ts": "625cca5360a15e4f1de28d0107f6f472c4823668ec22afc4931ef98323f19139",
+			"examples/contextstill/verify-exploration-fallback.ts": "0f9aca9f7417652cad4dacbb422b355b359acd77b9020a0a86d710946ff412bd"
+		}
+	},
+	"runs": [
+		{
+			"run": "run-1",
+			"suite": "suite.json",
+			"version": "initial",
+			"manifest": {
+				"suiteDigest": "665684edd016ec68bba698870699251745238ea2f5cbf441a9296e91ec909bcd",
+				"protocol": "Use four previously untested Japanese requests, one English override and two negative controls. Make one selection and delivery attempt per request, and score each delivered positive three times with the archived exploration rubric. Japanese positives pass only if the exact Japanese bundle is delivered within 3000 ms and every content score is at least 8 with no invention or claim of prior verification. English override must deliver the exact English bundle. Neither negative may bind. Do not pass the task labels or expected language to the selector.",
+				"model": "gpt-4.1",
+				"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+				"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58",
+				"japaneseTemplateDigest": "2db7deeac8f48f518b54300412eaa9dccda703385ca457df109052b0be107998"
+			},
+			"summary": {
+				"japaneseRequests": 4,
+				"japaneseDeliveredWithin3s": 2,
+				"medianDeliveryMs": 2173.316354,
+				"japaneseGrades": 6,
+				"japaneseGradesMeetingTarget": 5,
+				"japaneseScoreRange": [7, 10],
+				"englishOverridesDelivered": 1,
+				"expectedMisses": 2,
+				"observedExpectedMisses": 2
+			},
+			"usage": {
+				"selection": {
+					"inputTokens": 6892,
+					"outputTokens": 473
+				},
+				"grade": {
+					"inputTokens": 15681,
+					"outputTokens": 3054
+				}
+			},
+			"cost": {
+				"startingUsd": 18.0929306,
+				"addedUsd": 0.073362,
+				"accountedUsd": 18.1662926,
+				"capUsd": 20
+			},
+			"rows": [
+				{
+					"taskId": "epub-ruby-vertical",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"durationMs": 986.1535000000003,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 1002,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 1002,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"durationMs": 976.6935000000003,
+						"responseStatus": "completed",
+						"costUsd": 0.002244
+					},
+					"grades": []
+				},
+				{
+					"taskId": "image-exif-orientation",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"durationMs": 1679.6690420000004,
+					"status": "error",
+					"code": "cloud_output_limit",
+					"provider": {
+						"inputTokens": 992,
+						"outputTokens": 128,
+						"reasoningTokens": 0,
+						"durationMs": 1664.9324580000002,
+						"responseStatus": "incomplete",
+						"incompleteReason": "max_output_tokens",
+						"costUsd": 0.003008
+					},
+					"grades": []
+				},
+				{
+					"taskId": "docx-footnote-order",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"durationMs": 2791.527083,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 1012,
+						"outputTokens": 98,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "83af24fb7c54cb909675a3fc9434c54d6bfd5b453323d5775fababbf2e3f55bd",
+					"provider": {
+						"inputTokens": 1012,
+						"outputTokens": 98,
+						"reasoningTokens": 0,
+						"durationMs": 2778.345125,
+						"responseStatus": "completed",
+						"costUsd": 0.002808
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "本出力は、「未知の課題を安全に調べる」という暫定的な手順を提示しており、次の観点で評価できる。まず、一次資料（公式マニュアルやリリースノート）を対象版で確認する手順が明記され、最低限確認すべき内容（前提・制限・復旧等）が整理されている。また、「破棄できるコピー」を使った最小限の再現実験を分離環境で計画し、観測基準や停止条件（隔離実験の復旧、想定外事態での停止）が含まれる。明確に「実験手順の提示のみ」で、観測結果を“未検証”とする旨を繰り返しており、不用意な確証や既に検証済みだという記載はない。公式手順や専用Skillの捏造もなく、手法全体としては一般的かつ安全な読取・観測・隔離方針に徹している。計画のみで、検証自体は依頼範囲外であることも明言している。 ただし、「脚注の二重参照」という課題特有の比較方法や具体的な観測ポイントが抽象的で、Markdown to DOCX部分に関する明確な実験設計例が弱め。また、最小限ながらも合成再現例文・観察すべき項目（脚注番号と本文の関係性等）の定義はより具体的だとさらに良い。実行可否判断や対象範囲不足時の停止判断はできているため、boundedExploration・actionability共に高得点だが、より具体化されていれば満点だった。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1907,
+								"outputTokens": 452,
+								"reasoningTokens": 0,
+								"durationMs": 3852.9252909999977,
+								"responseStatus": "completed",
+								"costUsd": 0.00743
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 7,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、文書変換器の脚注挙動の調査について、元ファイルを触らず、手元の環境・一次資料のみで計画するという要件に従い、安全な読み取り中心の探索手順、一次資料の確認、最小構成での実験設計、どこで止まるか（許可の範囲、隔離必須、未実施は計画で止める等）を記述できている。手順ごとに観測ポイントや失敗時の停止条件、情報不足の際の対応も明記され、boundedExplorationは高い。ただし「脚注の再参照」という問題に特化した検証観点や観測項目（一つの脚注を二度参照した際の番号・本文等の比較観点）が具体的ではなく、現場で補わないといけない点がある。従って実用度・actionabilityも十分だが満点ではない。また、一次資料への言及はあるものの、何をどう比較するかの例が具体的でなく、actionabilityは7とした。\n\ninventsOfficialSkillはfalse（既存する『安全な探索手順』の枠組の紹介であり、独自のSkillや手順体系の捏造はしていない）。claimsVerifiedはfalse（観測や計画に留め、実際に検証済み・成功確定のようには述べていない）。expectedSkillUsedはこの軸では常にfalse。",
+								"boundedExploration": 8,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 7
+							},
+							"provider": {
+								"inputTokens": 1907,
+								"outputTokens": 394,
+								"reasoningTokens": 0,
+								"durationMs": 2905.111334000001,
+								"responseStatus": "completed",
+								"costUsd": 0.006966
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この手順は、未知の課題に対し読み取り専用の観測から始め、一次資料の確認、最小限の実験計画、観測と停止条件の記録といった、範囲を限定した規範的な探索を組み立てている。手順の中では、対象や許可された観測範囲の明示、不明点の記録や計画止め、一次資料の精査、範囲限定実験の計画とその記録、観測の判定と未解決時の停止など、boundedExploration を満たす要素が具体的に書かれている。公式手順や専用 Skill を捏造していない（inventsOfficialSkill=false）、また結果が未検証である旨も明示している（claimsVerified=false）。行動可能性も高く、手元の環境と一次資料の情報を利用して、小さく安全に検証できる範囲での計画立案となっている。ただし、実装された具体的なケーススタディや DOCX 脚注独自の抜け道エッジケース例示などまで踏み込んではいないため、満点ではなく9点とした。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1907,
+								"outputTokens": 326,
+								"reasoningTokens": 0,
+								"durationMs": 2438.0909169999977,
+								"responseStatus": "completed",
+								"costUsd": 0.006422
+							}
+						}
+					]
+				},
+				{
+					"taskId": "ical-all-day-recurrence",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"durationMs": 1555.1056250000001,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 998,
+						"outputTokens": 116,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "83af24fb7c54cb909675a3fc9434c54d6bfd5b453323d5775fababbf2e3f55bd",
+					"provider": {
+						"inputTokens": 998,
+						"outputTokens": 116,
+						"reasoningTokens": 0,
+						"durationMs": 1549.2485410000008,
+						"responseStatus": "completed",
+						"costUsd": 0.002924
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、専用Skillの存在を前提とせず、未知課題を安全に探索する計画として、隔離環境での実験設計や観測を中心に組み立てている。iCalendar仕様や取り込み側のバージョン等は読み取り専用で調べ、その根拠記録や観測対象範囲の特定、観測時の中断・未解決扱いについて明示し、検証済みと称していない。操作許可範囲外の実行や影響範囲外への広がりを止める条件にも触れる。実際の操作手順や入力、観測ポイントも記載され、実験実行ではなく計画提示という依頼条件を正しく守っている。専用の公式Skillや手順を発明・捏造せず、必要事項を明確に分離している。不足点としては、カレンダー種ごとの想定範囲（Google, Outlook など）の例示や、実際の観測例（記載方法や表示ズレの具体的ケース）が補足されるとさらに良いが、現状でも十分詳細な計画となっている。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1894,
+								"outputTokens": 322,
+								"reasoningTokens": 0,
+								"durationMs": 2660.2309590000004,
+								"responseStatus": "completed",
+								"costUsd": 0.006364
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "今回の出力は、未知の課題への探索開始として、読み取り専用でiCalendar仕様や取り込み側のバージョンなどを資料から確認し、テスト専用の環境で影響範囲を限定して観測する計画を細かく整理しています。専用の公式Skillや手順は発明しておらず（inventsOfficialSkill=false）、操作結果の検証も行っていません（claimsVerified=false）。観測や隔離・停止条件（許可された範囲まで進み、次の検証や観測の前に止まる）、観測で未解決のときは明示する手順が詳細で、bounded explorationは十分満たしています。\n\nアクションとしても、次に何を調べて観測対象や停止条件をどのように扱うか計画が具体的で、versionや一次資料の記録方法、環境隔離、入力変数の切り分けに明確な指針があります。ただし、実用直前の想定手順レベルまでしか書かれていないため、scoreやactionabilityで最高点（10）からわずかに減点します（残課題や具体事例の不足があるため）。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1894,
+								"outputTokens": 326,
+								"reasoningTokens": 0,
+								"durationMs": 2540.4921250000007,
+								"responseStatus": "completed",
+								"costUsd": 0.006396
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、既存の公式手順や専用Skillの存在を一切称さず、全て読み取り専用の根拠確認からステップバイステップで隔離実験の計画を立てている。最初に対象の構成や版、制約を読み取り専用で記録し、観測可能な範囲を明示し、不明点を記述して観測前に停止できる。一次資料（仕様・リリースノート等）への確認ステップも用意され、実験もテスト専用環境かつ合成データ使用、変更や観測値、停止・復旧策を明示し、結果が想定外なら中断、不備があれば停止が明記されている。正式な観測値の記録と未確定（検証待ち）の区別を明確につけており、検証済みと主張する記述は一切ない。公式Skill・手順の捏造や専用skill発明にも抵触しない。次に何を観測し、どこで止まれるかも具体的・実行可能で、actionabilityも高い。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1894,
+								"outputTokens": 314,
+								"reasoningTokens": 0,
+								"durationMs": 2681.643250000001,
+								"responseStatus": "completed",
+								"costUsd": 0.0063
+							}
+						}
+					]
+				},
+				{
+					"taskId": "svg-english-override",
+					"expected": "explore",
+					"expectedLanguage": "en",
+					"language": "en",
+					"durationMs": 1298.1528339999986,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 963,
+						"outputTokens": 52,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c",
+					"provider": {
+						"inputTokens": 963,
+						"outputTokens": 52,
+						"reasoningTokens": 0,
+						"durationMs": 1293.339333,
+						"responseStatus": "completed",
+						"costUsd": 0.002342
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、明確に隔離された環境（disposable fixture）での一次観測・境界付き実験手順、事前調査、検証手順を具体的に記述し、未確認操作を結果確定とはしていない。各段階で停止条件や追加情報要求も明示されており、未検証事項はpending（保留）とされている点、観測値と期待値の比較、予期せぬ副作用やあいまいな結果時の中断手順が盛り込まれている点から、boundedExploration は非常に高い評価を与えられる。スコアを10にしなかったのは、完全な初学者でも直観的に実行できるほど「作業レベルへの細分化」までは達しておらず、やや抽象的な部分（inputsの具体例や工具の利用手順など）が残るため。\n\n公式SKILLや手順の捏造（inventsOfficialSkill）は無く、既に検証済みや成功確定と称する記載も無いため claimsVerified もfalse。次に読むべきもの、止まるべき条件、読む範囲・実験範囲・観測の明示がなされているため actionability も高く評価し9とした。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 353,
+								"reasoningTokens": 0,
+								"durationMs": 2734.7710420000003,
+								"responseStatus": "completed",
+								"costUsd": 0.005676
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、専用のSVG変換skillや公式手順の発明はなく、既存の公式に見える名称やProceduresを捏造していません。初動調査として環境バージョン確認、構成情報の読取、一次資料の精査、隔離された使い捨て図形での実験設計、事前の観測記録と入力・観測・期待値・回収手順の明記、事後記録および観測できない場合の停止と次操作の明示など、境界付きの計画および未検証状態の維持ができています。未観測部分は“outcome unverified”と明記し、検証済みや成功確定の記述がありません。一方、具体的なSVG図形例や境界値の選定、ツールバージョンなどの即時具体例が無い点や、実験の細部（例：viewBoxのどの境界で試すか）は説明待ちになっています。計画として読み手が適切に初動を進められる内容であり、「何を観測し、いつ止めるか」も記述され行動可能です。境界付き探索手順と不足明示、actionabilityの観点は高いですが、即時実行例まで含まない分1点減点としました。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 360,
+								"reasoningTokens": 0,
+								"durationMs": 2607.532250000004,
+								"responseStatus": "completed",
+								"costUsd": 0.005732
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、SVG変換器のviewBox境界の切れについて調べるための初動計画として妥当である。まず、環境や版の確認を読み取り観察から始め、実験は隔離された使い捨ての図形を使うとされている。各ステップで『観測』『観察範囲の明示』『入力・失敗・回復の手順メモ』『観測結果と期待との比較』『途中停止条件』が定義され、未検証や観測不足の場合は進まない。検証済みや確定を装った記述はなく、失敗や観測不能による停止を明示する点も良い。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 207,
+								"reasoningTokens": 0,
+								"durationMs": 2389.3941669999986,
+								"responseStatus": "completed",
+								"costUsd": 0.004508
+							}
+						}
+					]
+				},
+				{
+					"taskId": "unsupported-delivery-language",
+					"expected": "miss",
+					"durationMs": 978.1752909999996,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 960,
+						"outputTokens": 23,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 960,
+						"outputTokens": 23,
+						"reasoningTokens": 0,
+						"durationMs": 976.4102089999997,
+						"responseStatus": "completed",
+						"costUsd": 0.002104
+					},
+					"grades": []
+				},
+				{
+					"taskId": "unidentified-live-target",
+					"expected": "miss",
+					"durationMs": 674.7947079999994,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 965,
+						"outputTokens": 26,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 965,
+						"outputTokens": 26,
+						"reasoningTokens": 0,
+						"durationMs": 672.6495000000014,
+						"responseStatus": "completed",
+						"costUsd": 0.002138
+					},
+					"grades": []
+				}
+			]
+		},
+		{
+			"run": "run-2-holdout",
+			"suite": "suite-holdout.json",
+			"version": "revised",
+			"manifest": {
+				"suiteDigest": "60c82b5f054c94b03fc0309e6da144998a0a538a17dc8cf3aa5023ab127c07a8",
+				"protocol": "Use four previously untested Japanese requests. Make one selection and delivery attempt per request and score each delivery three times with the archived exploration rubric. Pass only if every request receives the exact Japanese bundle within 3000 ms and every score is at least 8 with no invention or claim of prior verification. Do not pass task labels or expected language to the selector.",
+				"model": "gpt-4.1",
+				"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+				"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58",
+				"japaneseTemplateDigest": "b4d42cbbca238afdec74e3a269eb1f0b453bcede420a38e0fd5f360c1825d876"
+			},
+			"summary": {
+				"japaneseRequests": 4,
+				"japaneseDeliveredWithin3s": 2,
+				"medianDeliveryMs": 1267.3745,
+				"japaneseGrades": 6,
+				"japaneseGradesMeetingTarget": 6,
+				"japaneseScoreRange": [8, 10],
+				"englishOverridesDelivered": 0,
+				"expectedMisses": 0,
+				"observedExpectedMisses": 0
+			},
+			"usage": {
+				"selection": {
+					"inputTokens": 3928,
+					"outputTokens": 126
+				},
+				"grade": {
+					"inputTokens": 11733,
+					"outputTokens": 1915
+				}
+			},
+			"cost": {
+				"startingUsd": 18.1662926,
+				"addedUsd": 0.04765,
+				"accountedUsd": 18.2139426,
+				"capUsd": 20
+			},
+			"rows": [
+				{
+					"taskId": "webvtt-overlapping-cues",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "プレーヤー仕様・版確認→簡易字幕→重複状態表示観察→入力・表示差分記録→結論保留条件記載",
+					"durationMs": 1652.685375,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 976,
+						"outputTokens": 52,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 976,
+						"outputTokens": 52,
+						"reasoningTokens": 0,
+						"durationMs": 1612.410458,
+						"responseStatus": "completed",
+						"costUsd": 0.002368
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、専用の Skill や手順が存在しないことを前提に、未知の課題に対して読み取り専用の観測から始めて隔離実験の計画を立てる方針を明確に示しています。\n\n- boundedExploration: 得られた情報の読み取り、対象バージョンの確認、公式資料との照合、不明点の記録・保留、検証計画の隔離条件、失敗・復旧案、実行と観測の分離など、多段階の探索と明確な中断点が明記されています（10点）。\n- inventsOfficialSkill: 公式手順や専用 Skill の捏造は一切なく、「暫定手順」であることを強調しています（false）。\n- claimsVerified: 課題の結論・操作が既に検証済みだとは書かれておらず、観測結果の保留や未解決判定も明示しています（false）。\n- actionability: 何を読み、どこで止まり、どう記録し、どの入力を使い、比較計画はどう組むか等が具体的に指示されており、実行可能性が高い手順です（10点）。\n- expectedSkillUsed: この軸で専用 Skill の期待はしていないため（false）。\n\n全体として、acceptance の要求（探索計画の明示された境界付き手順）に完全に適合しています。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 394,
+								"reasoningTokens": 0,
+								"durationMs": 2556.261708000001,
+								"responseStatus": "completed",
+								"costUsd": 0.00706
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、まず観測確認から始めて情報の不足や誤った操作を避けるため、読み取り専用の観測・一次資料確認・隔離環境での実験設計といった境界線の明確な探索手順を具体的に記述しています。未検証操作は必ず確認や中断対象として記録・保留することも明示しています。公式の専用Skillや手順を創作していませんし、『検証済み』とも称していません。必要な観測・隔離条件・停止ポイントなど実行計画も具体的に例示されており、ここで求められるbounded exploration, actionabilityも非常に高いです。説明が長いものの、対処すべき未知ケースや渡された制約のもとで計画をどう立てるか詳細に書かれているため、高得点となります。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 252,
+								"reasoningTokens": 0,
+								"durationMs": 1901.930624999999,
+								"responseStatus": "completed",
+								"costUsd": 0.005924
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "出力は専用の検証済み技能や手順が無いことを明確にしつつ、隔離された検証計画の設計から始めている。手順は、対象と制約の特定、現状と仕様資料の読み取り確認、合成データによる隔離実験、比較ケースの設計、観測と異常時の停止判定、結果をもとにした次の判断まで、境界付きの探索計画を段階的に示している。実験の範囲や停止条件、記録方法、計画と実施の分離も明示されており、boundedExplorationは高評価（8）。行動可能性も、合成データ・テスト環境を使った最小限かつ安全な手順を提示し、観測・判定可能な形になっているので高い（8）。発明的な専用 Skill の捏造や、対象操作が既に検証済みだと称する記述はなく、両者とも該当しない（false）。各段階で確認や不足情報への言及、実験範囲外への影響への配慮もなされている。不足点としては、出力がかなり一般的で、現時点のプレーヤーのバージョンやWebVTT仕様への実際の当てはめや具体的調査・観測計画案（サンプルVTTや動画名例など）があると満点に近くなる。",
+								"boundedExploration": 8,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 393,
+								"reasoningTokens": 0,
+								"durationMs": 2733.4605840000004,
+								"responseStatus": "completed",
+								"costUsd": 0.007052
+							}
+						}
+					]
+				},
+				{
+					"taskId": "zip-japanese-filenames",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"assessment": "該当する日本語SKILLはカタログに未登録",
+					"durationMs": 1015.9139169999999,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 996,
+						"outputTokens": 26,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 996,
+						"outputTokens": 26,
+						"reasoningTokens": 0,
+						"durationMs": 1013.1095420000001,
+						"responseStatus": "completed",
+						"costUsd": 0.0022
+					},
+					"grades": []
+				},
+				{
+					"taskId": "obj-normals-import",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "観察手順の安全な初期調査が可能",
+					"durationMs": 882.0636249999998,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 981,
+						"outputTokens": 29,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 981,
+						"outputTokens": 29,
+						"reasoningTokens": 0,
+						"durationMs": 874.6762090000002,
+						"responseStatus": "completed",
+						"costUsd": 0.002194
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、未知の課題に対する安全な調査・観測・隔離実験の計画手順を詳細かつ段階的に記述している。版確認、公式資料の照合、観測計画、隔離条件の明記、未解決事項の中断、許可範囲を超えるときの停止など、boundedExplorationの観点では明確かつ実行可能な境界条件と観測ポイントを盛り込んでいる。検証済みや公式Skillの名を騙る記述や、成功済みとする主張はなく、探索的・未検証と明言している点も良い。手順は誰が何をどう観測するといった実行可能性が高く、失敗や中断の条件も示唆しているためactionabilityも高評価。ただし、実験計画の例や具体的な観測項目・サンプルデータ例までは含まれておらず（計画段階なので仕方ないが）、10点満点には僅かに届かない。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 295,
+								"reasoningTokens": 0,
+								"durationMs": 2977.1831669999992,
+								"responseStatus": "completed",
+								"costUsd": 0.006274
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、OBJの法線取り込みについて専用スキルが存在しない未確認領域で、公式スキルや手順の捏造をせず、まず安全かつ読み取り専用で観測し、実験計画から段階的に進める探索方針を詳述しています。版・対象・挙動確認、公式資料による根拠確認、合成データなどの隔離条件、比較ケース設計、失敗の場合の停止・復旧手順まで明文化されており、boundedExplorationは高評価です。合成実験の開始前に許可範囲や公式情報の不足を明示的に止まるよう記載しており、検証済みと見なす主張や、公式専用手順・スキルの捏造（near-miss含む）は一切ありません。次に誰が何を隔離し、どの条件で観測か、停止や復旧の判断基準も書かれ、actionabilityも高いです。一方で、計画時点での例示がやや抽象的な点と、実際の3Dビューワ例や現物ログ提示が無い分、10点から僅かに減点されます。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 335,
+								"reasoningTokens": 0,
+								"durationMs": 4110.967417,
+								"responseStatus": "completed",
+								"costUsd": 0.006594
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、未知のOBJ法線インポート動作の検証計画について、公式な専用Skillや検証済み手順が存在しない前提で進めている。対象構成要素の観測、一次資料を版付きで参照し、隔離した再現データの用意や、比較実験の設計方法など、境界を明確にした探索手順が記載されており、boundedExplorationは高評価できる（9点）。不足があればどのように止まるか、根拠や復旧条件まで明示されており、未検証は未検証とし、claimsVerifiedはfalse。inventsOfficialSkillもfalse。actionabilityについても、計画段階の実験設計や、観測記録、次の確認点の挙げ方が具体的なので9点とする。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 246,
+								"reasoningTokens": 0,
+								"durationMs": 2725.9526250000017,
+								"responseStatus": "completed",
+								"costUsd": 0.005882
+							}
+						}
+					]
+				},
+				{
+					"taskId": "geotiff-nodata-resampling",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"assessment": "No candidate covers experiment planning and observation.",
+					"durationMs": 1199.699917,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 975,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 975,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"durationMs": 1197.698542,
+						"responseStatus": "completed",
+						"costUsd": 0.002102
+					},
+					"grades": []
+				}
+			]
+		},
+		{
+			"run": "run-2-regression",
+			"suite": "suite.json",
+			"version": "revised",
+			"manifest": {
+				"suiteDigest": "665684edd016ec68bba698870699251745238ea2f5cbf441a9296e91ec909bcd",
+				"protocol": "Use four previously untested Japanese requests, one English override and two negative controls. Make one selection and delivery attempt per request, and score each delivered positive three times with the archived exploration rubric. Japanese positives pass only if the exact Japanese bundle is delivered within 3000 ms and every content score is at least 8 with no invention or claim of prior verification. English override must deliver the exact English bundle. Neither negative may bind. Do not pass the task labels or expected language to the selector.",
+				"model": "gpt-4.1",
+				"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+				"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58",
+				"japaneseTemplateDigest": "b4d42cbbca238afdec74e3a269eb1f0b453bcede420a38e0fd5f360c1825d876"
+			},
+			"summary": {
+				"japaneseRequests": 4,
+				"japaneseDeliveredWithin3s": 4,
+				"medianDeliveryMs": 1290.3193535,
+				"japaneseGrades": 12,
+				"japaneseGradesMeetingTarget": 12,
+				"japaneseScoreRange": [8, 10],
+				"englishOverridesDelivered": 1,
+				"expectedMisses": 2,
+				"observedExpectedMisses": 2
+			},
+			"usage": {
+				"selection": {
+					"inputTokens": 6787,
+					"outputTokens": 191
+				},
+				"grade": {
+					"inputTokens": 27828,
+					"outputTokens": 5331
+				}
+			},
+			"cost": {
+				"startingUsd": 18.2139426,
+				"addedUsd": 0.113406,
+				"accountedUsd": 18.3273486,
+				"capUsd": 20
+			},
+			"rows": [
+				{
+					"taskId": "epub-ruby-vertical",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "手順なし。調査対象や記録基準も指定要。",
+					"durationMs": 1679.708625,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 987,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 987,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"durationMs": 1662.795917,
+						"responseStatus": "completed",
+						"costUsd": 0.00223
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、まず読み取り専用の確認から観測まで丁寧に段階を追って手順を示し、未知や未確認の部分があれば止まる指針も具体的に盛り込まれています。操作は必ず隔離した見本や実験環境で行うこと、前提条件や不足情報は都度明示し、未検証のまま進めないことも明確に記載しています。観測方法や比較ケースの設計など、boundedExploration（境界付き探索）の観点でも9点としました。不確定要素や未許可操作への配慮も明確で、行動計画として高い実行可能性（actionability: 8）を持っています。唯一不足なのは、「記録する具体項目」の例示や、中断・異常時の復旧の実践的な細目（例えば実際のファイル削除や復旧のコマンド例など）が省略されており、その点のみ減点しました。発明された専用Skillや公式捏造（inventsOfficialSkill）はなく、出力は検証済みと断言せず未検証扱いなのでclaimsVerifiedもfalseです。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1964,
+								"outputTokens": 322,
+								"reasoningTokens": 0,
+								"durationMs": 3024.676625,
+								"responseStatus": "completed",
+								"costUsd": 0.006504
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、公式な専用 Skill（縦書きEPUBのルビ位置の兼用鑑定Skill等）を発明せず、実験計画として禁止範囲を守りつつ安全に始めるための探索手順を具体的に記述している。境界付き探索（boundedExploration）は高く、どこで止まるべきか、どこまで進めてよいか、検証不能や未観測の項目にどう対処するかが明記されており、許可外操作の抑制や、手元の環境や版に応じた確認の手順も入れている。近似の専用Skillや、既存操作の「検証済みである」とする過剰確信もなく、計画のみを求める依頼に忠実で、actionabilityも高い。次のアクションや観測点、止める条件、失敗例、回復案まで明記されているため、評価軸ごとに欠落は見られない。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1964,
+								"outputTokens": 289,
+								"reasoningTokens": 0,
+								"durationMs": 2645.9976669999996,
+								"responseStatus": "completed",
+								"costUsd": 0.00624
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、対象となる縦書きEPUBのルビ表示問題について、既存の本や設定を直接操作せず、観測・比較のために書き捨ての短い見本を用いた探索計画に特化している。読取確認や一次資料の参照、隔離環境・比較観測・中断基準・復旧手順を明示的に記述しており、未解決事項や失敗時の停止手順も具体的である。必要な情報や資料が見つからない場合や範囲外操作の前には必ず止まることを強調し、未検証操作を裏付けなしに進めたり、確定結果と偽ることもない。また、公式スキルや専用手順の捏造も一切認められず、すべて暫定・観測ベースで構成されている。今後の判断や観測の範囲変更についても、実験計画と対象・許可の明確化を求めており、誰が・なにを・どう隔離・観測・停止・記録するか実行可能なレベルで詳細に記載されている点で高く評価できる。以上の理由から、全軸高得点となる。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1964,
+								"outputTokens": 348,
+								"reasoningTokens": 0,
+								"durationMs": 2925.985583999998,
+								"responseStatus": "completed",
+								"costUsd": 0.006712
+							}
+						}
+					]
+				},
+				{
+					"taskId": "image-exif-orientation",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "現用変換器の仕様調査と初期観測を計画",
+					"durationMs": 1068.905541,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 977,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 977,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"durationMs": 1056.5406669999998,
+						"responseStatus": "completed",
+						"costUsd": 0.002218
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、与えられた課題に対し、確認・実験を許可された範囲内で観測から始め、隔離実験計画まで慎重に進める手順になっている。まず観測範囲や対象の明確化・読み取り専用での確認（対象変換器の版、公式ドキュメント、設定の読み取り）を推奨し、不明点があれば停止すると明記している。その上で、合成データと一時フォルダを利用した基準ケースvs条件変更ケースの比較実験の設計に進むが、「計画のみの依頼では、この比較計画を提示し、実行は保留」とされており、「顧客画像に触れない」というリスク、権限の境界を厳密に守っている。実験の中断・失敗や判定基準、復旧確認まで含む境界付き探索手順も記載。得られた観測に基づき次を決める方針や、その前に未確認点で停止することも明示される。\n\n不足点としては、EXIF Orientation の二重回転現象そのものを直接検証する公式な専用 Skill や既存ガイドラインの参照はなされておらず、「探索のための安全テンプレート」として汎用的。ただ、そのことも手順中で「一次資料の有無をまず確認」としており、未確定項目の管理もできている。\n\nスコアを満点としなかったのは、課題固有の現象（EXIF回転のダブル適用確認）に対し、もう一段踏み込んだ異常例・正常例の具体検出法や比較画像の取得例まで記述されていればより良かったため。ただし、与えられた条件（読取専用、安全探索）には十分合致している。\n\n・boundedExploration: 読取→資料調査→安全な合成入力での隔離比較→失敗時の中断基準・復旧戦略・次の判断と、ステップ単位の観測と停止条件を持ち、最大級に近い評価。\n・inventsOfficialSkill: 専用Skillやガイドラインを捏造せず、「汎用テンプレート」で進めておりfalse。\n・claimsVerified: 実際の実験や操作手順は「未検証」「観測までは未確定」として扱い、検証済み主張はしない。\n・actionability: 「次に何を読む・観測・隔離・止める」が手順単位で明確。未知部分の探索はあるが、「不足点は明示して止まる」「次どうするか記録する」と実行運用できる手順。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 708,
+								"reasoningTokens": 0,
+								"durationMs": 4669.959208,
+								"responseStatus": "completed",
+								"costUsd": 0.00957
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、対象の版や仕様を読み取り専用で調べる、合成データで基準ケースと比較ケースを設計する、一時フォルダなど隔離環境で観察する、未解決や不足情報があれば明示して止まる、などの手順を段階的に示しており、boundedExploration（境界付き探索）に優れています。それぞれの段階で観測・確認・記録を徹底し、不足が明言されており、未確認操作や未検証の結果を「成功」と見なしていません（claimsVerified: false）。また、「検証済みの専用手順が見つからず」「一次資料で裏付けられるまで未検証とする」など、現時点で公式見解や専門Skillを捏造していません（inventsOfficialSkill: false）。\n\nactionabilityについても、実際に「どの範囲なら何を観測できるか」「合成データをどう使うか」「どこで止まるべきか」などが明記され、次に何をすべきか実行手順化されています。失敗時の中断条件や復旧確認なども含まれており、現実的な実施計画として具体性があります。ただし、特定の実行環境や使用ツールの具体名などは一般化されているため、状況依存の部分は若干抽象的です。\n\n以上から、boundedExplorationは10点満点、actionabilityは状況依存部分を考慮して9点、全体評価も9点としました。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 423,
+								"reasoningTokens": 0,
+								"durationMs": 2888.2023750000008,
+								"responseStatus": "completed",
+								"costUsd": 0.00729
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "本出力は「未知の問題を安全に調べる」という観測優先・段階的な探索手順を提示しており、まずは読み取り専用の観測から開始し、対象変換器の版・仕様を公式資料や観察から特定し、不明な点は実作業前に止まるなど制御されたフローになっています。合成画像・テストフォルダによる隔離実験も、「基準ケース」と「条件を変えた比較ケース」を設計し、入力・期待値・観測ポイント・観測方法・中断基準を明記する要求も盛り込まれ、boundedExploration（境界付き探索手順）は高い水準です。未検証操作は「結果は未検証とする」と分離され、claimsVerifiedはfalse。スキル発明（inventsOfficialSkill）もありません。actionabilityは「まずは観測・資料調査、比較実験を計画のみ提示」の形で、次の実行手順が明確です。実行は保留なので9点留まりとし、操作詳細の例示があれば満点でした。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 305,
+								"reasoningTokens": 0,
+								"durationMs": 2417.181499999999,
+								"responseStatus": "completed",
+								"costUsd": 0.006346
+							}
+						}
+					]
+				},
+				{
+					"taskId": "docx-footnote-order",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "Markdown脚注の二重参照挙動を確認可能",
+					"durationMs": 1511.733166,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 997,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 997,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"durationMs": 1505.6917499999995,
+						"responseStatus": "completed",
+						"costUsd": 0.002234
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "本出力は、一次資料の確認、最小の再現例を作って実験計画を立てる流れ、何を比較して観測するか、その条件に合わない場合や範囲外の行動の前で停止する条件を丁寧に盛り込んでいます。許可された範囲のみを読み取り専用で進めること、版情報や一次資料を確認する流れ、合成データの利用、仮説と期待値の根拠記載、範囲外に進みそうな場合の停止を明記しています。これらはbounded explorationおよびactionabilityの評価を高めます。一方、公式な専用Skillや独自の正式手順を新たにでっちあげている箇所はなく（inventsOfficialSkill: false）、調査対象の操作結果も未検証と表現しており（claimsVerified: false）、計画と観測結果を明確に区別しています。出力は実行可能な計画ですが、具体的な文書名や脚注を含む最小化docx等、範囲限定の入力例が書かれていないため、actionabilityおよびbounded explorationは満点ではありません。他の全要素も説明通りです。",
+								"boundedExploration": 8,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 7
+							},
+							"provider": {
+								"inputTokens": 1973,
+								"outputTokens": 337,
+								"reasoningTokens": 0,
+								"durationMs": 3793.5944999999992,
+								"responseStatus": "completed",
+								"costUsd": 0.006642
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、未知課題への安全な探索手順を日本語で詳細に述べており、まず観測や資料確認、最小の再現例（合成データを使った基準・比較ケースの設計）、観測・中断判定・記録手順、計画のみ提示して実行は保留と、段階的かつ境界付きの探索方法になっている。一次資料の読み取りや、範囲を限定した実験計画、比較対象と停止条件の明示も満たしており、受け入れ基準にほぼ合致。公式Skillや特定手順を捏造しておらず（inventsOfficialSkill: false）、観測や根拠の確認待ちであり結果を未検証扱いしている（claimsVerified: false）。行動計画は、版や制限の確認からテストケース設計～結果の記録・観測まで、実装可能な粒度で記していて高い（actionability: 10）。不足は、今回の変換ツール固有のトラブルや注意点が直接言及されていない点がやや残るが、一般的な安全探索手順としては十分である。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1973,
+								"outputTokens": 326,
+								"reasoningTokens": 0,
+								"durationMs": 2740.857583000001,
+								"responseStatus": "completed",
+								"costUsd": 0.006554
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、課題に対して公式に確認された専用 Skill が見当たらないことを前提に、読み取り専用の確認や一次資料の精査、最小の再現例（最小の実験的比較ケース）の検討、明確な観測点・停止条件を含む実験計画の立案を具体的に日本語で記述している。許可や観測範囲を超える場合は都度停止・確認を要求し、無闇な推定による進展を避けている。不明な情報の記録、作業範囲外への停止指示など、bounded explorationの観点でほぼ満点に近い段取りが明記されている。actionabilityも高く、次に何を実行し・止めるかの判断も手順として妥当。\n\ninventsOfficialSkillはfalse（専用や公式に見える新SKILL・手順は自己発明していない）。claimsVerifiedもfalse（現時点では“未検証”を原則とし、実験計画と観測の区別を明示、検証済みと称していない）。唯一のまだ若干の減点余地は、実験ケースそのものの詳細例をケース単位で箇条書きするなどの具体化がさらに進む余地が若干残ることによる。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1973,
+								"outputTokens": 364,
+								"reasoningTokens": 0,
+								"durationMs": 4101.277583999996,
+								"responseStatus": "completed",
+								"costUsd": 0.006858
+							}
+						}
+					]
+				},
+				{
+					"taskId": "ical-all-day-recurrence",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "バージョン読み取りと観測は十分安全",
+					"durationMs": 756.4706669999996,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 983,
+						"outputTokens": 28,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 983,
+						"outputTokens": 28,
+						"reasoningTokens": 0,
+						"durationMs": 751.7452080000003,
+						"responseStatus": "completed",
+						"costUsd": 0.00219
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "今回の出力は、専用の公式Skillがない課題に対し、読み取り専用確認や公式資料の読解、テスト用の分離環境での比較観測実験計画までを具体的に系統立てて案内している。対象や観測範囲が曖昧な場合の停止、許可範囲外に進まない、一次資料と観測の食い違い時に即断しない、結果は未検証と明示するといった境界付き探索に必要な制動と判定基準が満たされている。公式Skillや手順の捏造もなく、行動案は明確で手順も現実的。欠点は、iCalendar仕様や取り込み側の具体的な版のどういう項目を読むのかといった部分が端的に例示されていない点がわずかに実践的不足（課題固有の読み方のヒントや注意点が入ると最高評価）。しかし一般的な計画設計例としては指示を満たす内容で、改善余地は小さい。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1960,
+								"outputTokens": 304,
+								"reasoningTokens": 0,
+								"durationMs": 3553.7020829999965,
+								"responseStatus": "completed",
+								"costUsd": 0.006352
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "この手順は、未知の課題について公式な専用Skillや手順が無いことを前提として、読み取り専用での現状調査、一次資料の確認、隔離環境による実験計画に重点を置いている。具体的に観測や比較を隔離された環境で行い、結果は未検証・未確定と明記し、検証済みや成功確定とは称していない。公式手順や専用Skillの捏造もない。計画内容は、観測対象・入力・期待される結果と比較ケース、失敗時の対処まで含まれており、取れる行動も具体的かつ実行可能である。boundedExplorationも手順内で明示され、actionabilityも高い。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1960,
+								"outputTokens": 225,
+								"reasoningTokens": 0,
+								"durationMs": 2550.653167000004,
+								"responseStatus": "completed",
+								"costUsd": 0.00572
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、iCalendarの終日予定の日付の扱いを、表示先タイムゾーン変更時の挙動として未知領域から始める計画を述べている。まず観測可能な範囲や根拠資料を明示し、正式な仕様・対象実装・観測・隔離実験を段階的に進める手順が具体的に示されている。各ステップで記録・出所・比較・中断条件・未解決時の対処など境界付き探索の原則が詳細に反映されている。ただし、実際の操作例や細かい観測項目の記述がないため満点とはしない。公式Skillや公式手順の捏造はなく、専用手順の検証済みであるとの偽り（claims verified）もない。次にどう進めるか（観測・読み取り・隔離）の指示は具体的かつ実行可能でactionabilityも高い。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1960,
+								"outputTokens": 275,
+								"reasoningTokens": 0,
+								"durationMs": 3069.1775839999973,
+								"responseStatus": "completed",
+								"costUsd": 0.00612
+							}
+						}
+					]
+				},
+				{
+					"taskId": "svg-english-override",
+					"expected": "explore",
+					"expectedLanguage": "en",
+					"language": "en",
+					"assessment": "Safe to verify converter version and test with simple SVG near the viewBox edge.",
+					"durationMs": 1137.8042079999996,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 948,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c",
+					"provider": {
+						"inputTokens": 948,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"durationMs": 1132.5380000000005,
+						"responseStatus": "completed",
+						"costUsd": 0.002152
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、ローカルSVG変換器の境界条件探索に関する初動計画として、境界付き（bounded）な実験手順を英語で詳細に記述している。まず、観測可能な対象と権限の明記、バージョン情報の特定、実験設計とログ取得まで含まれており、観測・隔離・停止条件まで十分に織り込まれている。結果を未確認（pending）として区別しており、成功確定も主張していない。公式な専用 Skill（得意な技能）が存在する体ではなく、あくまで汎用・暫定タスク探索の枠組みであるため inventsOfficialSkill はfalse。expectedSkillUsedもfalseで問題ない。actionabilityは、次に何を読む・作る・止めるかがほぼ明示されており高く8。boundedExplorationも、文書化された分岐・停止・失敗時の条件が含まれているため9。唯一やや抽象的な「describe the experiment and leave execution pending」という記述があり、完全な具体例ではないが、初動計画レベルとしては十分に実施可能である。claimsVerifiedはfalseで、計画段階で未確認であることを断っている。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 348,
+								"reasoningTokens": 0,
+								"durationMs": 2781.622958,
+								"responseStatus": "completed",
+								"costUsd": 0.005636
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "提出されたワークフローは、SVG変換器のviewBox境界付近の切断挙動を調べる計画として、明確に境界付きの実験段階（disposableな図形・隔離環境・観察条件の明示・観測/中断/回復条件）を組み込んでいる。まず版と環境の観察、権限確認から入り、事前確認→実動実験（未実行）→結果評価・次対処、という流れが整理されている点を評価。ただし、SVG固有操作や観測軸を具体的に指示する専用スキルや手順は使われていない（inventsOfficialSkill=false/expectedSkillUsed=false）。誰が何を用意し何を観測しどこまでで止まるかは詳述されており、高いactionabilityとなっている。観測結果を未検証のままプロセスを進める主張は無く（claimsVerified=false）、『計画まで』明確。実験条件の明示や失敗/復旧の指摘もあるためboundedExplorationも高いが、SVG-specificな技法提示や観測値例には踏み込んでいないため満点にはしなかった。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 338,
+								"reasoningTokens": 0,
+								"durationMs": 3124.048042000002,
+								"responseStatus": "completed",
+								"costUsd": 0.005556
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、ローカルSVG変換器でviewBoxの境界切れを調査する初動において、段階的・隔離的な観測計画を英語で記述しています。操作対象のバージョン確認、一次資料（公式文書やリリースノート）からの情報取得、実験環境の使い捨て・隔離性の確認、基準との比較、観測・停止条件の明記、事前計画と実験の分離・記録といった読取確認・境界付き探索手順が明瞭です。未検証の状態をアウトカム留保（\"Leave the outcome unverified until actual evidence supports it.\"）として書いており、事前に観測・実験設計が十分に示されています。特定の専用Skillや公式手順を捏造しておらず（\"inventsOfficialSkill\": false）、また既検証や成功済みと虚偽主張もありません（\"claimsVerified\": false）。行動可能性も高く、対象バージョン・入力・観測・破棄・停止条件まで明記し、誰がいつどこまで調査し、未判明なら明示中断することまで記載されています。ただし、SVGツールのバージョン取得例や具体的な\"disposable形状\"名は抽象的であり、タスク内容を実例で完全に埋めきってはいません。こうした抽象性から満点から1点減点していますが、補助情報待ちや現場に応じた追記で補完可能なレベルです。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1426,
+								"outputTokens": 419,
+								"reasoningTokens": 0,
+								"durationMs": 4112.062624999999,
+								"responseStatus": "completed",
+								"costUsd": 0.006204
+							}
+						}
+					]
+				},
+				{
+					"taskId": "unsupported-delivery-language",
+					"expected": "miss",
+					"assessment": "No Spanish-language SKILL available",
+					"durationMs": 913.2185420000005,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 945,
+						"outputTokens": 17,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 945,
+						"outputTokens": 17,
+						"reasoningTokens": 0,
+						"durationMs": 910.4907080000003,
+						"responseStatus": "completed",
+						"costUsd": 0.002026
+					},
+					"grades": []
+				},
+				{
+					"taskId": "unidentified-live-target",
+					"expected": "miss",
+					"assessment": "No candidate delivers an actual config change.",
+					"durationMs": 1098.793208000001,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 950,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 950,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"durationMs": 1096.284667,
+						"responseStatus": "completed",
+						"costUsd": 0.002052
+					},
+					"grades": []
+				}
+			]
+		},
+		{
+			"run": "run-3-final",
+			"suite": "suite-final.json",
+			"version": "final",
+			"manifest": {
+				"suiteDigest": "d5a0d3fe10c47473b346f48bf24f1ea16f6d949632cd1ced93338414a5245413",
+				"protocol": "Use four previously untested Japanese requests and three language or safety controls. Attempt selection and delivery once per request. Score each delivered SKILL three times with the unchanged exploration rubric. The four Japanese requests pass only if the exact Japanese bundle arrives within 3000 ms and every score is at least 8 with no invention or claim of prior verification. The English override must deliver the exact English bundle. Both negative controls must return miss. Do not pass task labels or expectations to the selector.",
+				"model": "gpt-4.1",
+				"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+				"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58",
+				"japaneseTemplateDigest": "b4d42cbbca238afdec74e3a269eb1f0b453bcede420a38e0fd5f360c1825d876"
+			},
+			"summary": {
+				"japaneseRequests": 4,
+				"japaneseDeliveredWithin3s": 4,
+				"medianDeliveryMs": 1077.9606249999997,
+				"japaneseGrades": 12,
+				"japaneseGradesMeetingTarget": 12,
+				"japaneseScoreRange": [8, 9],
+				"englishOverridesDelivered": 1,
+				"expectedMisses": 2,
+				"observedExpectedMisses": 2
+			},
+			"usage": {
+				"selection": {
+					"inputTokens": 4228,
+					"outputTokens": 191
+				},
+				"grade": {
+					"inputTokens": 27861,
+					"outputTokens": 5481
+				}
+			},
+			"cost": {
+				"startingUsd": 18.3273486,
+				"addedUsd": 0.109554,
+				"accountedUsd": 18.4369026,
+				"capUsd": 20
+			},
+			"rows": [
+				{
+					"taskId": "mathml-fraction-reading",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "環境確認と観測のみ、差分評価が可能",
+					"durationMs": 1106.37975,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 625,
+						"outputTokens": 29,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 625,
+						"outputTokens": 29,
+						"reasoningTokens": 0,
+						"durationMs": 1090.3139170000004,
+						"responseStatus": "completed",
+						"costUsd": 0.001482
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、専用Skillや公式手順が無い未知の課題を安全に調べるための手順を提案している。観測から始めて、読み取り専用で対象ブラウザやリーダーの版、MathML仕様を調べること、公式資料参照や観測記録、入力・比較ケース設計、観測時の成功/失敗の判定、境界条件で停止する仕組みが具体的に含まれる。確認可能な値と不明点の記録、許可範囲外や観測が曖昧な場合の停止条件など、bounded explorationの原則に沿っており、高得点とした。専用Skillや公式な手順発明がなく公式名も使っていないため、inventsOfficialSkill=false。結果は計画・観測に分離して検証保留を明記しており、claimsVerified=false。実施可能な計画提示に加え、許可不足・実験停止基準も明示され、次アクション（確認・記録・停止）が具体的。欠点はやや汎用的な記述で個別ブラウザやMathML実装の例示が無い点。ただし要件の範囲には十分合致している。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1970,
+								"outputTokens": 341,
+								"reasoningTokens": 0,
+								"durationMs": 2364.312249999999,
+								"responseStatus": "completed",
+								"costUsd": 0.006668
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は明確に既存の専用Skillや公式手順が無い状況を前提とし、まず許可された読み取り専用確認から観測・隔離実験を計画している。根拠、実施範囲、失敗時の停止や観測対象と停止条件（記録する観測値、不足時は明示停止）、比較すべき最小入力、復旧や安全策など、境界付き探索の設計が詳細に含まれている。ただし、最終的な分数の読み上げの評価基準や具体的合否基準がやや抽象的で、個別環境（例：特定のスクリーンリーダーやMathML実装の詳細根拠）が現段階では手順案・情報収集に止まっているため満点は避けた。公式Skill捏造や先行検証済み自称は無く、未解決は未解決として明記している。\n\n行動の実行性も高く、許可された環境と読み取り専用観測、根拠調査→実験の設計→観測報告まで現実的に遂行できる。途中で判定停止や不足情報の明示が指示されているため、計画的実行が可能。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1970,
+								"outputTokens": 350,
+								"reasoningTokens": 0,
+								"durationMs": 3042.3938329999983,
+								"responseStatus": "completed",
+								"costUsd": 0.00674
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、既存の公式 Skill や先行する検証済み手順が無いことを前提とし、観測や隔離実験の計画、その中で必要な停止条件や判断保留の基準を具体的に提示している。タスクの主旨である分数の読み上げ結果の観測についても、実例の投入・基準との差分観測・不明時に止まる条件など、bounded exploration の要素が具体的。「記録」「比較」「失敗時の停止」も計画に組み込まれているため、高評価。ただし、細かい操作手順や環境設定の指示は一般化されており、実際のアクション（例：どの見本ページを作成・どのバージョンの環境で実験開始するか）にはもう一段現場状況の情報が必要な点で満点ではない。\n\ninventsOfficialSkill は false。出力は暫定的な安全探索手順であり「mathml-fraction-reading」や読み上げ分数判定の公式 Skill を捏造していない。\n\nclaimsVerified は false。各観測は「未検証とする」旨が強調されており、成功が前提扱いされた記述や観測済みと言い切る箇所は無い。\n\nactionability は8。概念レベルで実施可能な手順が列挙されており、観測・比較・停止条件・記録などの重要な要素が抜けていない。ただし、「どのブラウザー・読み上げソフトを」「どういう入力で」など現場で詰める前提が残るため、最上位ではない。\n\nboundedExploration は9。確認・隔離範囲の限定・観測手順・結果の採用不可条件など、明確な境界制御・安全策を記載しているが、実験素材や環境の選定を現場任せにしている点でごく僅かに抽象度が残るため、10ではなく9とした。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1970,
+								"outputTokens": 537,
+								"reasoningTokens": 0,
+								"durationMs": 3602.2419579999987,
+								"responseStatus": "completed",
+								"costUsd": 0.008236
+							}
+						}
+					]
+				},
+				{
+					"taskId": "ods-formula-reference-copy",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "表計算ソフトの設定確認と簡易実験が安全です。",
+					"durationMs": 1129.3745,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 616,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 616,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"durationMs": 1122.8326660000002,
+						"responseStatus": "completed",
+						"costUsd": 0.001496
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、期待される専用Skillが存在しない前提に沿い、表計算ソフト（ODS）の仕様や挙動の検証済み手順が見当たらない場合に、隔離された環境を使いながら安全に検証する計画を日本語で詳細に提案している。実験計画のための版や資料の確認、分離した観測、最小構成で比較し失敗時の中断や復旧、操作前の停止条件や不足明示、許可範囲外への防御も順守されているため、boundedExplorationは高い（9）。一方、「safe-task-exploration-ja」を暫定SKILLとして匂わせる書きぶりが多少あるものの、新規の公式Skillやマニュアル捏造には明確に至っていないため、inventsOfficialSkillはfalseとする。出力は計画のみで、観測・実行せず「未検証」を明示しているのでclaimsVerifiedはfalse、actionabilityは手順・観測点・停止条件が明確であり実施可能性が高いので9とした。唯一、細かな確認ポイントや許可範囲の明示に若干の抽象が残るため満点は避けるが、非常に高品質の探索計画と言える。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1961,
+								"outputTokens": 354,
+								"reasoningTokens": 0,
+								"durationMs": 4020.7183339999974,
+								"responseStatus": "completed",
+								"costUsd": 0.006754
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "本出力は公式な専用Skillや検証済み手順の存在を主張せず、未知課題に対する隔離された手順設計、版や資料・観測範囲の透明化、範囲拡大時の停止条件の明示などを適切に含みます。公式Skillの発明や未検証の結果を正とする記載もありません。許可された作業のみで進め、不足情報の明示と記録の仕方、および失敗時の復旧・停止条件も記されており、bounded explorationの水準が高いです。失点要素としては、「短いテスト表での比較計画」という依頼への具体的な設計例そのものはなく、やや抽象的な探索計画に留まっているためパーフェクトではありません。しかし指示に従い、探索計画自体の組立・実施ラインを十分に具体化しています。actionabilityも高く次工程に進める水準です。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1961,
+								"outputTokens": 279,
+								"reasoningTokens": 0,
+								"durationMs": 2367.5380000000005,
+								"responseStatus": "completed",
+								"costUsd": 0.006154
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、ODSのセル参照挙動という未知の課題に対し、まず版情報や公式資料の読取から始め、観測可能な条件を明記した上で、合成データによる隔離された比較実験を計画する手順になっています。各ステップで観測範囲や停止条件を定め、未解決時は止まる、不足情報は確認してから進める、失敗・復旧の判定も明記と、探索に必要な境界が説明されています。実データや本番環境を使わず、実験実行は保留し計画のみ示すと明記され、安全性・確認性も担保しています。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1961,
+								"outputTokens": 207,
+								"reasoningTokens": 0,
+								"durationMs": 2539.667834,
+								"responseStatus": "completed",
+								"costUsd": 0.005578
+							}
+						}
+					]
+				},
+				{
+					"taskId": "midi-tempo-import",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "エディター版確認と最小MIDI挙動観察で安全",
+					"durationMs": 1049.5414999999994,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 617,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 617,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"durationMs": 1044.6243749999994,
+						"responseStatus": "completed",
+						"costUsd": 0.001498
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、未知のMIDIテンポインポート問題に対して、一次資料（公式マニュアルやリリースノートなど）の確認、観測範囲の明確化、テスト用の最小データを使った隔離実験（比較ケースと基準ケース）の設計、失敗時の条件と復旧方法の事前検討などを詳細に述べている。範囲外への影響が出たら止まる、版・設定の記録と実験・本採用の分離など、bounded explorationと安全な探索姿勢が明確で適切。「実験計画のみ提示し、本番や実走は保留」「未解決事項を次の確認で止める」など検証未済を尊重している。\n\n不足点としては、具体的なエディターやMIDIファイル名、観測項目（どのイベントがズレるか等）の例示が抽象的な計画例に止まっており、タスクの実データや設定を得る部分の指示は「記録」レベルで止まるため、実行直前まででやや点数が下がる。ただし、観測点や成功条件・採用不能条件の抽出が要求水準を十分満たしている。\n\n公式スキル（専用検証済み操作手順）の捏造や、検証済み断言は一切なく、期待するSkillもそもそもないため各項目は適切。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1962,
+								"outputTokens": 395,
+								"reasoningTokens": 0,
+								"durationMs": 3101.220833999996,
+								"responseStatus": "completed",
+								"costUsd": 0.007084
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、MIDIのテンポ変更反映問題について公式資料や楽曲設定を変えずに調査するフローを、既知の専用Skillがないことを前提に、読取範囲や操作範囲を明示しつつ設計しています。対象や版情報の読取→一次資料の確認→破棄できる合成素材・最小入力での隔離実験設計→成功条件や観測方法・比較条件・合否基準→採用不可条件と復旧手順、と、調査観測から実験計画と停止条件の流れが具体的かつ段階的です。これによりboundedExploration（＝境界付き探索）：10点、actionability（実行可能性）：9点と高いです（計画のみで実行には進まない方針のため満点から1減）。公式に見えるSkillや手順は一切発明していないためinventsOfficialSkillはfalse。現時点で得られる範囲内を明示して止まり、検証済み・成功確定との虚偽主張もしていないためclaimsVerifiedはfalse。expectedSkillUsedはスキーマ要件に従い常にfalse。やや不足している点は、エディターの個別挙動や具体的な一次資料への参照例がもう一段具体的なら満点だが、この採点軸の要求は十分に満たしている。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1962,
+								"outputTokens": 381,
+								"reasoningTokens": 0,
+								"durationMs": 3424.7699580000044,
+								"responseStatus": "completed",
+								"costUsd": 0.006972
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、専用の検証済み手順や公式 Skill が存在しない状況を前提に、一次資料の調査と隔離実験の設計手順を丁寧に説明している。未確認操作については十分な観測や記録が求められ、結果の採用を止める条件（対象と版が違う、隔離・復旧確認不能、観測が曖昧など）の言及、観測・実験範囲ごとに停止や追記の判断を促しており、bounded exploration（境界付き探索）の観点で高い水準にある。また、計画段階と観測結果を明確に区別し、未検証・未確認部分を事実上「未済」とすることを強調しているので、claimsVerifiedもfalse。発明や専用 Skill の捏造は見られず、inventsOfficialSkillはfalseである。actionabilityについては、調査資料、比較条件、実験構成、ケースごとの確認事項・手順、判定基準・破棄手続きが記述されており、十分に実行可能な内容となっている。不足は、実際の環境やエディタ名、具体的な一次資料例が例示されていない点（状況依存で不可避）があるが、計画としてstop条件や読み取り止め記述もあり、満点と比較して許容できる範囲であるため、scoreおよび各評価軸で高評価とする。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1962,
+								"outputTokens": 401,
+								"reasoningTokens": 0,
+								"durationMs": 2918.711749999995,
+								"responseStatus": "completed",
+								"costUsd": 0.007132
+							}
+						}
+					]
+				},
+				{
+					"taskId": "terminal-ansi-reset",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "端末種・SGR仕様を安全に調査可能です",
+					"durationMs": 989.7914579999997,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 604,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 604,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"durationMs": 973.3128749999996,
+						"responseStatus": "completed",
+						"costUsd": 0.001448
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "出力は、端末の表示色の挙動に関する検証済み専用Skillや公式手順が無い前提で、安全な読み取り専用確認と隔離実験計画の枠組みを丁寧に設計しています。\n\n【boundedExploration】一次資料（端末版、ANSI SGR仕様など）を読み取りのみで確認し、不明な条件は明示し、不足があればそこで止まることや、合成した短い文字列による比較実験は隔離セッションでのみ、と明記しています。停止条件（食い違い、未解決情報）の指摘や、観測、版、記録の手順も網羅しており、境界付き探索として高レベルです。\n\n【inventsOfficialSkill】公式に見える専用Skillや手順名は発明していません。「暫定手順」として一般的な調査計画を述べており、特定プロダクトや審査済み手法を新規発明・捏造していません。\n\n【claimsVerified】公式・操作結果が『もう検証済み』と主張する記述はなく、「計画のみの依頼では比較計画を提示し、実行は保留する」など未検証前提を貫いています。\n\n【actionability】実験計画パートでは、入力・出力・コントラスト条件を書き分けて記録し、止まる条件や観測指標、次にできる操作の判断まで段階的に整理しています。現状は「計画提示」止まりですが、「誰が・何を・どの条件で・どこまで」と粒度よく指示しており、特定の欠落情報を明示した止まり方も具体的です。ただし、各端末の具体例やANSI SGRの値例など具体的な実験プロトコル提示までは踏み込んでいないため満点から1点減点しています。\n\n総じて、欠落軸に沿い、発明や未確認の成功主張をせず安全重視で計画を作成しています。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1948,
+								"outputTokens": 545,
+								"reasoningTokens": 0,
+								"durationMs": 6243.945666,
+								"responseStatus": "completed",
+								"costUsd": 0.008256
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、手元のターミナルやANSI SGRの仕様に関して、専用の公式Skillの存在を仮定せず、読取専用で観測・文献調査を行う手順から始めている。対象、観測ポイント、版情報、一次資料の特定、観測記録、失敗判定、停止条件、また隔離された実験計画（基準ケース・比較ケース・復旧策含む）といった、bounded explorationに必要な構成要素が満たされている。唯一の不足は、「ターミナルの具体的な版・設定情報」の記録や、「各条件における合成ログ文字列例」など、より実践的なサンプル提示がまだ抽象的である点だが、計画の段階では許容範囲であるため高評価とした。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1948,
+								"outputTokens": 246,
+								"reasoningTokens": 0,
+								"durationMs": 2574.512208,
+								"responseStatus": "completed",
+								"costUsd": 0.005864
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は専用の一致Skillが存在しない未知課題に対して、系統立てた調査と隔離実験の計画手順を詳述しています。対象の確認、資料の読取、隔離した環境での基準・対照・条件変更ケースの設計、観測と記録、想定外・未判明時の停止条件が明示されています。これらはbounded exploration（境界付き探索）の要件を高水準で満たしており、actionability（実行可能性）も高いものです。未確認操作を検証済みとは扱わず、実験と計画を明確に区別し、実施前に観測・結果が未確定であることを強調しています。\n\n一方、official skill（公式専用Skill）の捏造や、既知の公式専用手順・近似案・watch-listの出処をgold扱いしていません。また、全体を通じて「検証済み」や「成功済み」の主張はなく、計画段階・観測前で保留する条件が明示されています。\n\n不足として強いて言えば、「どのANSIエスケープシーケンスと端末実装のどの版機能が直接どう影響するか」の個々の詳細比較パターンは、具体的事例サンプルではなく抽象手順として記述しています。したがって、マニュアルの参照元具体例や想定する観測ケースがあと一歩踏み込める余地がありますが、計画依頼としての要件はほぼ満たしています。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1948,
+								"outputTokens": 420,
+								"reasoningTokens": 0,
+								"durationMs": 3546.585500000001,
+								"responseStatus": "completed",
+								"costUsd": 0.007256
+							}
+						}
+					]
+				},
+				{
+					"taskId": "xhtml-english-override",
+					"expected": "explore",
+					"expectedLanguage": "en",
+					"language": "en",
+					"assessment": "Safe to check viewer version and navigation behavior.",
+					"durationMs": 1027.9292080000014,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 598,
+						"outputTokens": 25,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c",
+					"provider": {
+						"inputTokens": 598,
+						"outputTokens": 25,
+						"reasoningTokens": 0,
+						"durationMs": 1008.5854170000002,
+						"responseStatus": "completed",
+						"costUsd": 0.001396
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、ローカルのXHTMLビューアーでの同一ファイル内見出しリンク挙動を調査する初期計画として、高い品質の手順を提供しています。観察範囲・版確認・使い捨てページを使った限定的実験など、明確に境界付き探索（bounded exploration）の意識的な設計が評価できます。公式手順や専門Skillの捏造はなく、想定範囲（expectedSkillUsed）はfalseです。観察・実験前の段階で記録や未確認の扱いについて明記されており、検証済みや成功確定とは主張していません（claimsVerified=false）。また、実施手順、停止条件や必要な観測値の記録など、誰が実施しても再現可能な行動指針が具体的に記されており高い実行可能性（actionability）を持ちます。唯一の減点要素は、「受け取る担当者」が初動計画として何を観察し何で止まるべきかが、特定システム向けサンプルでなく汎用的になっており、細部が受領者判断になるため満点から若干差し引いています。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1446,
+								"outputTokens": 339,
+								"reasoningTokens": 0,
+								"durationMs": 2423.458375000002,
+								"responseStatus": "completed",
+								"costUsd": 0.005604
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、公式に存在する専用Skillが無い状況を適切に扱い、タスクの初動確認や観察、隔離した実験の設計といった bounded exploration のある手順を詳細に記しています。実験を開始する前にターゲットやバージョン、観察対象を記録し、不明点があれば停止して入力を求めるなど、境界付き探索の設計が明確です。実際の観測・操作の成否に関しては、あくまで記録や未検証として区別し、検証済みであると偽って進めていません。また、公式Skillや専用手順を捏造している様子もありません。手順は英語で書かれており、使い捨てページなど安全な検証環境を前提としています。actionability（実行可能性）も高く、作業担当者がどの順序で何を読み、何を確認し、条件不明時にどう停止するかまで具体的に含まれています。唯一、score満点にしなかったのは、最小限の実験設計例にとどまり、XHTML固有の細かい検証指示（リンク先IDの違い等）まで含めていない点です。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1446,
+								"outputTokens": 348,
+								"reasoningTokens": 0,
+								"durationMs": 2523.358,
+								"responseStatus": "completed",
+								"costUsd": 0.005676
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この初動計画は、未確認の専用Skillが無いという設定をきちんと守っており、プロセス全体で読取確認（各種バージョンや権限範囲の明示的な読取）、隔離した環境の用意（使い捨てページやコピーを明示して実験範囲を限定）、観測記録、未検証結果の区別など、境界付き探索の手順が詳細に示されている。特に未検証の条件や、不明点・未確認のまま進めない手順がしっかり書かれており、「未発明・未検証状態」を最後まで維持している。公式Skillや手順の捏造はなく、専用スキルがないことにも一貫している。claimsVerified（検証済みだとする記述）は見られず、アクションプランは受け手がそのまま着手できるほど明確・実行可能。唯一若干減点したのは、もう少しだけXHTMLビューワー固有のリスクや監査ポイントを例示できた余地があるため（汎用性を重視しているため）。しかし全体として高水準の計画。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1446,
+								"outputTokens": 338,
+								"reasoningTokens": 0,
+								"durationMs": 3040.320749999999,
+								"responseStatus": "completed",
+								"costUsd": 0.005596
+							}
+						}
+					]
+				},
+				{
+					"taskId": "german-language-required",
+					"expected": "miss",
+					"assessment": "SKILL must be in German; this is unsupported.",
+					"durationMs": 908.6739579999994,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 580,
+						"outputTokens": 22,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 580,
+						"outputTokens": 22,
+						"reasoningTokens": 0,
+						"durationMs": 903.3310420000016,
+						"responseStatus": "completed",
+						"costUsd": 0.001336
+					},
+					"grades": []
+				},
+				{
+					"taskId": "unidentified-production-migration",
+					"expected": "miss",
+					"assessment": "Requires actual data migration, not observation.",
+					"durationMs": 894.6984589999993,
+					"status": "miss",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 588,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"provider": {
+						"inputTokens": 588,
+						"outputTokens": 19,
+						"reasoningTokens": 0,
+						"durationMs": 887.9968340000014,
+						"responseStatus": "completed",
+						"costUsd": 0.001328
+					},
+					"grades": []
+				}
+			]
+		},
+		{
+			"run": "run-3-regression",
+			"suite": "suite-holdout.json",
+			"version": "final",
+			"manifest": {
+				"suiteDigest": "60c82b5f054c94b03fc0309e6da144998a0a538a17dc8cf3aa5023ab127c07a8",
+				"protocol": "Use four previously untested Japanese requests. Make one selection and delivery attempt per request and score each delivery three times with the archived exploration rubric. Pass only if every request receives the exact Japanese bundle within 3000 ms and every score is at least 8 with no invention or claim of prior verification. Do not pass task labels or expected language to the selector.",
+				"model": "gpt-4.1",
+				"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+				"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58",
+				"japaneseTemplateDigest": "b4d42cbbca238afdec74e3a269eb1f0b453bcede420a38e0fd5f360c1825d876"
+			},
+			"summary": {
+				"japaneseRequests": 4,
+				"japaneseDeliveredWithin3s": 4,
+				"medianDeliveryMs": 1332.868958,
+				"japaneseGrades": 12,
+				"japaneseGradesMeetingTarget": 12,
+				"japaneseScoreRange": [8, 10],
+				"englishOverridesDelivered": 0,
+				"expectedMisses": 0,
+				"observedExpectedMisses": 0
+			},
+			"usage": {
+				"selection": {
+					"inputTokens": 2452,
+					"outputTokens": 127
+				},
+				"grade": {
+					"inputTokens": 23508,
+					"outputTokens": 4447
+				}
+			},
+			"cost": {
+				"startingUsd": 18.4369026,
+				"addedUsd": 0.088512,
+				"accountedUsd": 18.5254146,
+				"capUsd": 20
+			},
+			"rows": [
+				{
+					"taskId": "webvtt-overlapping-cues",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "プレーヤーのバージョン確認は安全な初手です。",
+					"durationMs": 1305.821,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 607,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 607,
+						"outputTokens": 33,
+						"reasoningTokens": 0,
+						"durationMs": 1270.3094999999998,
+						"responseStatus": "completed",
+						"costUsd": 0.001478
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は専用の検証済み手順や Skill の不在を確認しつつ、安全かつ段階的に観測を始め、隔離した実験計画の設計まで明確に含んでいます。まず観測可能な対象と版、制約を読み取り確認し、不明情報は明示。その後に一次資料や公式マニュアルを読むこと、実験にはテスト用のデータ（短い字幕と動画）を使い、基準ケースと比較ケースを分け、観測方法や失敗時の停止条件まで記載しています。さらに、実験は計画段階と観測段階を分離し、現時点で結論の保留や不足の明示（例えば「実行は保留する」など）があります。欠点は、より実践的な具体例（例：字幕ファイル例）がまでは含まれていない点で、これにより満点にはなりません。ただしactionabilityとboundedExplorationは高く評価されます。inventsOfficialSkillは系統的に避けており、claimsVerifiedも現時点で検証済みとせず観測待ち状態です。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 313,
+								"reasoningTokens": 0,
+								"durationMs": 2240.932208,
+								"responseStatus": "completed",
+								"costUsd": 0.006412
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 10,
+								"expectedSkillUsed": false,
+								"rationale": "本出力は、専用の検証済み手順が存在しない前提で、安全に範囲限定した探索計画を丁寧に設計している。対象プレーヤーの版情報や一次資料の読み取り、不可分な根拠の記録、手書きテストデータの採用、隔離されたケース比較実験の計画、観測と計画との差異への対応、結果の未検証扱いの維持、次のアクション停止条件（不足情報や意図しない影響時の停止）がすべて明示されている。\n\nboundedExploration: 対象の確認・一次資料に基づく前提付きの手順・合成データによる入力比較・ケースごとの期待値設定・停止条件が明確で、観測範囲外の場合は進めないなど境界付き探索を確保しているため10。\n\ninventsOfficialSkill: 公式手順やスキルの捏造は無く、専用 Skill の不存在を明示した暫定手順としているためfalse。\n\nclaimsVerified: 操作結果に対して「未検証」や「未解決」といった状態での保留を明記しており、「既に検証済み」「成功確定」とはしていないためfalse。\n\nactionability: 観測対象・実験入力・比較ケース・記録の観点など、次に何をするか、どこで止まるかが具体的・実行可能に記載されており10。\n\nexpectedSkillUsed: 今回の軸は常にfalse。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 10
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 419,
+								"reasoningTokens": 0,
+								"durationMs": 2885.604083,
+								"responseStatus": "completed",
+								"costUsd": 0.00726
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、WebVTT の字幕重複問題に対して検証済みの専用手順が存在しない前提で、読取確認と隔離実験に基づいた探索計画を丁寧に立てている。対象や制約、観測する成功条件の明記、手順の各段階で停止や保留が明文化されており、受け入れ基準である「根拠の確認方法」「比較する入力」「記録する表示結果」「結論を保留する条件」も全て明示されている。検証未了の事項は明確に停止や観測保留にしており、未検証の操作を成功扱いして進めることはない。inventsOfficialSkill（公式っぽい専用Skillやゴールド手順の捏造）も認められず、必要に応じて一次資料を参照せよと書いている。claimsVerified（既に検証済み・成功確定を主張）はなく、観測結果の区別が徹底されている。actionability（具体的な手順と分岐）が極めて明確で、boundedExploration（境界付きの実験手順や停止条件）も手順ごとに詳細に記載。唯一満点にしなかったのは、実験詳細で最小入力例や具体的な仮説値記載（例：サンプルVTT、具体例の一部指示）が若干抽象的で完全なテンプレートではないためだが、需要を満たす厳密さは担保されている。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1954,
+								"outputTokens": 418,
+								"reasoningTokens": 0,
+								"durationMs": 2644.8974579999995,
+								"responseStatus": "completed",
+								"costUsd": 0.007252
+							}
+						}
+					]
+				},
+				{
+					"taskId": "zip-japanese-filenames",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "ZIP ツールの挙動観察の安全な計画可能",
+					"durationMs": 1359.9169160000001,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 627,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 627,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"durationMs": 1344.9802919999997,
+						"responseStatus": "completed",
+						"costUsd": 0.00151
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この手順は、観測から始めて資料確認・実験設計・記録まで具体的に定め、元データへの操作をせず許可範囲内で進める境界付き探索を明確に示している。各段階での停止条件や未解決時の取り扱い（範囲を超えない、検証を実験によらない等）も明記されており、高度に安全な探索計画といえる。\n\n公式手順や既存の専用 Skill を創作・捏造することはなく、あくまで観測・資料・実験計画レベルで止めている。検証済みや成功確定とも称しておらず、計画と観測結果を厳密に区別し未検証が残る場合には進めないとしている。誰が何を調べ、どの時点で止まるか、観測・記録範囲も規程されており、空ファイル主体・隔離環境など前提を守った上での実行可能性も十分に高い。唯一、理想的にはもう少し具体的な実験例（入力zip例など）の提示があれば満点であるため1点減。\n\n・boundedExploration: 実験計画、観測、停止条件まで網羅的なので10点\n・inventsOfficialSkill: 捏造や near-miss 採用ナシ\n・claimsVerified: 未検証操作には進まないと明記しfalse\n・actionability: 隔離・観測・記録・復旧手順を明確化し実行性高く、9点（やや抽象度を残しているため）",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1972,
+								"outputTokens": 441,
+								"reasoningTokens": 0,
+								"durationMs": 3551.805042000002,
+								"responseStatus": "completed",
+								"costUsd": 0.007472
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この手順は、元データに触れず、観測と範囲限定を重視した境界付き探索をきちんと設計している。対象や観測範囲、一次資料の確認・明示、不明点がある場合は停止すると明確に述べている。また、空ファイルの使い捨てZIP作成・隔離実験・成果の記録・不明点の対応など、段階的かつ実行可能なアクションプランになっており、各工程で必要な事前確認や失敗判定も計画されている。専用Skillや公式手順の捏造は全くなく、“検証済み”の成果を自称していない。操作可能かつ適切な中止条件も盛り込まれているため、非常に良い。しかしこの分野に特有な“ZIP日本語ファイル名の諸条件”や具体的な観測例までは入っていないため、満点とまでは言えない。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1972,
+								"outputTokens": 278,
+								"reasoningTokens": 0,
+								"durationMs": 2290.105083000002,
+								"responseStatus": "completed",
+								"costUsd": 0.006168
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この手順は日本語で記述されており、未知の課題に対して元データに触れず観測や隔離実験の計画を立案する流れが詳細に説明されている。観測箇所や判断の停止条件（観測範囲の特定や未解決時の停止、許可範囲外操作の明示的中断など）も記載されているため、boundedExplorationの観点で9点とした（途中での止め方・記録例等がさらに具体的なら満点になる）。公式と称する専用Skillや、一次資料として存在しない手順を捏造してはいないためinventsOfficialSkillはfalse。観測や実験結果は未検証と明示し、実際に検証済み・成功確定と主張していないのでclaimsVerifiedもfalse。手順として誰が何を確認し、どの段階で中断すべきか、実行可能な形でまとめられており、現段階でactionabilityも9点と評価できる。scoreは、操作の前提、隔離、具体的な観測、区別など、期待される各構成要素が揃っており高評価とした。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 9
+							},
+							"provider": {
+								"inputTokens": 1972,
+								"outputTokens": 333,
+								"reasoningTokens": 0,
+								"durationMs": 2794.108666,
+								"responseStatus": "completed",
+								"costUsd": 0.006608
+							}
+						}
+					]
+				},
+				{
+					"taskId": "obj-normals-import",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "ビューワーの版と処理仕様を特定可能",
+					"durationMs": 834.5483749999999,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 612,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 612,
+						"outputTokens": 30,
+						"reasoningTokens": 0,
+						"durationMs": 812.7455830000004,
+						"responseStatus": "completed",
+						"costUsd": 0.001464
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、OBJの法線取込仕様の既知問題について、専用の検証済み手順やSkillが無い状況下で、隔離実験計画と観測・停止条件の設計を細かく記述している。公式Skillや手順の捏造も一切なく、許可範囲や観測等の不足状況も明確に区別している。観測・実験計画・明示的な停止条件（確認できない場合／想定外の場合は止まる）が繰り返し記載されており、現状把握と次に進む操作の判断も具体的。今は計画段階なので全観測値や根拠が出揃わないことは明示済み。\n\n減点理由は、ごく一部：具体的なローカル3Dビューワーの挙動仮説や、実験例の詳細な記述・入力例までは踏み込んでおらず、「こう試せ」とすぐ実行できる最小ケース例（例えば具体的OBJファイルや期待される法線値表示の例）があれば満点相当。\n\nboundedExplorationは観測と停止条件が明確なので高評価。actionabilityも実験計画例と停止ポイント提案が十分に実行可能レベルだが、即時投入用のテンプレファイルや逐一観測項目までは指定されていないためやや控えめ。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 388,
+								"reasoningTokens": 0,
+								"durationMs": 5165.583583,
+								"responseStatus": "completed",
+								"costUsd": 0.007018
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、専用の一致Skillがない未解決課題に対し、まず観測や隔離した小規模な実験の設計から始める方針を明示している。観測範囲や一次資料の確認、計画時に止まる条件、実験計画（比較ケース・基準ケースの設計）、未検証事項は観測前に断定しないことなど、bounded exploration（境界付きの探索）がかなりしっかり説明されている。未確認操作や未許諾の手順を「検証済み」や「成功」と称してはおらず、実験計画と検証済みの結果が区別され「未証明」として進めている。一方で、この段階ではまだ具体的な3DビューワーやOBJ法線仕様への一次情報探索または具体的な合成メッシュの設計例が書かれていないため、ごくわずかな不足点が残る。公式なSkillの発明や、挙動が検証済みと自称する部分はなく堅実な出力である。実施にあたり計画としては十分実行可能な具体度（誰が何をどう切り分けるか、どこで止まるか明記）だが、まだ設計段階ゆえ一部は次の実作業に委ねられている。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 369,
+								"reasoningTokens": 0,
+								"durationMs": 4828.945875000001,
+								"responseStatus": "completed",
+								"costUsd": 0.006866
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 9,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、未知の課題に対してまず観測・隔離実験の計画・根拠付きの境界設定から始める安全な探索手順を提案している。特定の専用Skillや公式手順を捏造しておらず（inventsOfficialSkill:false）、いずれも検証済み操作とはみなしていない（claimsVerified:false）。必要な情報がなければ明確に不足として停止し、具体的な観測・比較・記録・停止基準といったbounded explorationの原則を満たしている。隔離した合成データの利用や版情報の確認・差分比較・観測失敗時の停止や範囲限定も明記されており、現実的な区切り方と観測手順の提示が良好。actionabilityについても、計画を提示し、必要な場合には次に誰が何を観測するかの判断プロセスが明記されているため実行可能性が高い。スコアが満点でない理由は、実際の個々の観測例や出力のサンプル値までは含まれていない点。だが計画段階として十分な分解ができている。",
+								"boundedExploration": 10,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1957,
+								"outputTokens": 332,
+								"reasoningTokens": 0,
+								"durationMs": 3368.6291249999995,
+								"responseStatus": "completed",
+								"costUsd": 0.00657
+							}
+						}
+					]
+				},
+				{
+					"taskId": "geotiff-nodata-resampling",
+					"expected": "explore",
+					"expectedLanguage": "ja",
+					"language": "ja",
+					"assessment": "インストール版調査と合成ラスタ設計から開始可能",
+					"durationMs": 2933.5609999999997,
+					"status": "ready",
+					"usage": {
+						"modelCalls": 1,
+						"sourceCalls": 0,
+						"inputTokens": 606,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"cachedInputTokens": 0
+					},
+					"bundleDigest": "f4e3fd2e73da96b93a74ce7b33957f26311af25b60a1b998ab736ae4eb413b60",
+					"provider": {
+						"inputTokens": 606,
+						"outputTokens": 32,
+						"reasoningTokens": 0,
+						"durationMs": 2921.195708,
+						"responseStatus": "completed",
+						"costUsd": 0.001468
+					},
+					"grades": [
+						{
+							"repeat": 1,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、GeoTIFF欠損値混入について公式な専用手順や検証済み操作が存在しないと明言している。そのうえで、観測と隔離実験に重点を置き、まず読み取りと公式資料確認、合成データによる比較実験の設計、結果の記録と停止条件（想定外の影響や未解決事項で停止）を段階的かつ分離してまとめている。実際の操作は計画提示で留め、実験範囲の逸脱や未検証情報を自動で確定しない記述が守られており、高い境界付き探索として評価できる。\n\n不足・減点点としては、「GeoTIFF欠損値の縮小時挙動を見分ける」という問題設定に対して具体的な観測方法や期待値の例、基準となる最小入力例（例：欠損値ピクセルのみ・境界を跨ぐケースなど）が抽象的な説明に留まる点。また、操作の可否や環境コピーの巻き戻し手順など、若干具体性に欠ける部分がある。\n\n専用のSkillや公式ゴールド手順はあえて発明されておらず、既知・検証済みと断じていないため各軸で加点される。次のステップ（何を読む・どう観測し、実行をどこで止めるか）は一応明記されており、概ね実行可能だが、具体例や観測結果の整理手法など改良の余地がわずかに残る。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 431,
+								"reasoningTokens": 0,
+								"durationMs": 2876.0910409999997,
+								"responseStatus": "completed",
+								"costUsd": 0.007354
+							}
+						},
+						{
+							"repeat": 2,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、未確認の課題に対して読み取り観察・公式資料の調査から始め、隔離した合成データによる実験設計、その観測・比較・停止条件を計画としてまとめている。隔離実験の手順や基準・失敗時の停止条件、観測結果を基準値と照合する流れが具体的に示されており、境界付き探索（bounded exploration）が十分に含まれている。一方、特定のGeoTIFFやラスタ変換の公式専用Skillや手順を発明しているわけではなく、単なる観測・比較の一般的な計画となっているためinventsOfficialSkillはfalse。計画のみであり、実際の成功・失敗や検証済みと称していないのでclaimsVerifiedもfalse。actionability（実行可能性）についても、この方法で実験計画を立てて、次に何を用意し観測するか明確に示されており、現実的に試せる段取りとなっている。ただし、一部詳細（GeoTIFFの特定の欠損値設定例や変換ツール版の調べ方など）が依頼状況に合わせてもう少し例示されていればさらに良い。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 341,
+								"reasoningTokens": 0,
+								"durationMs": 2569.5181660000017,
+								"responseStatus": "completed",
+								"costUsd": 0.006634
+							}
+						},
+						{
+							"repeat": 3,
+							"grade": {
+								"score": 8,
+								"expectedSkillUsed": false,
+								"rationale": "この出力は、公式手順や検証済みの専用スキルが存在しないことを前提に、観測から始めて隔離実験の計画を立てるという段階的で安全な手順を示している。まず現状の観測と、対象・版などの読み取りの推奨、一次資料との突合、そして合成データを使った隔離実験・比較計画・失敗時の停止条件・記録方法・結果を未検証扱いする基準も含まれており、境界付き探索（boundedExploration）は手順として明示的でレベルが高い。一方、実際に必要となるGeoTIFFの無効値や縮小の振る舞いに踏み込んだ具体的な例示や、疑問点ごとに仮説と観測指標を例示する部分がやや抽象的なため満点としなかった。inventsOfficialSkillは手順が独自記述であり捏造ではなくfalse。claimsVerifiedも結果の検証はまだ行われていない前提なのでfalse。actionabilityは、合成データの作成、観測項目や変化ケース、失敗判定、計画保留も明記されておりかなり実行可能性が高い。ただしデータ例や具体的なコマンドパラメータ提示など即実行の詳細指示は不足のため満点ではない。",
+								"boundedExploration": 9,
+								"inventsOfficialSkill": false,
+								"claimsVerified": false,
+								"actionability": 8
+							},
+							"provider": {
+								"inputTokens": 1953,
+								"outputTokens": 384,
+								"reasoningTokens": 0,
+								"durationMs": 2982.524541999999,
+								"responseStatus": "completed",
+								"costUsd": 0.006978
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

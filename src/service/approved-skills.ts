@@ -16,7 +16,9 @@ import {
 import {
 	approvedSkillSchema,
 	composedSkillSelectionSchema,
+	explorationLanguageSchema,
 	explorationSelectionSchema,
+	fixedExplorationSelectionSchema,
 	skillSelectionSchema,
 	singleSkillSelectionSchema,
 	type ApprovedComposition,
@@ -30,7 +32,9 @@ import {
 	skillSelectionInstructions,
 	composedSkillSelectionInstructions,
 	compositionReviewInstructions,
+	composedExplorationSelectionInstructions,
 	explorationSelectionInstructions,
+	fixedExplorationSelectionInstructions,
 } from "../instructions/selection.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
 import { renderSkillMarkdown, skillBundleDigest } from "./skill-markdown.js";
@@ -39,6 +43,12 @@ import {
 	FIXED_EXPLORATION_REF,
 	fixedExploration,
 } from "./fixed-exploration.js";
+
+// Selector versions from c205160, when the only fixed exploration SKILL was English.
+const englishOnlyExplorationVersion =
+	"61cbc900d70118b6ecb578b1c4d62077995df65bc012b1ad9c889b04bc722a29";
+const englishOnlyCompositionExplorationVersion =
+	"a52af6afd554f761633c59f0933cb88edb3202119d97e54f7fc922d4846190bc";
 
 export interface ReuseBuild {
 	template: Pick<Build, "scope" | "revoked" | "content" | "generator">;
@@ -95,12 +105,23 @@ export function createApprovedSkillOperations<Tx>(
 		compositionReviewInstructions,
 	]);
 	const explorationSelectorVersion = digest([
-		selectorVersion,
+		fixedExplorationSelectionInstructions,
 		explorationSelectionInstructions,
 	]);
 	const compositionExplorationVersion = digest([
+		composedExplorationSelectionInstructions,
+		compositionReviewInstructions,
+	]);
+	const compositionVersions = new Set([
 		compositionSelectorVersion,
-		explorationSelectionInstructions,
+		compositionExplorationVersion,
+		englishOnlyCompositionExplorationVersion,
+	]);
+	const selectionVersions = new Set([
+		selectorVersion,
+		explorationSelectorVersion,
+		englishOnlyExplorationVersion,
+		...compositionVersions,
 	]);
 	const limits = resolveServiceLimits(p.limits);
 	const issued = new WeakMap<SelectedSkill, string>();
@@ -171,19 +192,15 @@ export function createApprovedSkillOperations<Tx>(
 	}
 	function currentParts(tx: Tx, b: Build, auth: Authority) {
 		const mark = b.publication;
-		if (!mark) return null;
+		if (!mark?.selectorVersion) return null;
 		const composition = mark.composition;
 		if (
 			composition
-				? (mark.selectorVersion !== compositionSelectorVersion &&
-						mark.selectorVersion !== compositionExplorationVersion) ||
+				? !compositionVersions.has(mark.selectorVersion) ||
 					composition.version !== COMPOSITION_VERSION ||
 					composition.parts[0]?.ref !== mark.ref ||
 					composition.parts[0]?.digest !== mark.digest
-				: mark.selectorVersion !== selectorVersion &&
-					mark.selectorVersion !== compositionSelectorVersion &&
-					mark.selectorVersion !== explorationSelectorVersion &&
-					mark.selectorVersion !== compositionExplorationVersion
+				: !selectionVersions.has(mark.selectorVersion)
 		)
 			return null;
 		if (
@@ -211,13 +228,19 @@ export function createApprovedSkillOperations<Tx>(
 	function current(tx: Tx, b: Build, auth: Authority) {
 		const mark = b.publication;
 		if (mark?.exploration) {
+			const language = b.content.decision.language;
 			return (
 				!!p.explorationFallback &&
 				p.assemblyMode !== "legacy" &&
 				!mark.composition &&
 				mark.ref === FIXED_EXPLORATION_REF &&
+				explorationLanguageSchema.safeParse(language).success &&
 				(mark.selectorVersion === explorationSelectorVersion ||
-					mark.selectorVersion === compositionExplorationVersion) &&
+					mark.selectorVersion === compositionExplorationVersion ||
+					(language === "en" &&
+						(mark.selectorVersion === englishOnlyExplorationVersion ||
+							mark.selectorVersion ===
+								englishOnlyCompositionExplorationVersion))) &&
 				!repo.blocked(tx, mark.ref) &&
 				selectionInference().validReceipt(
 					tx,
@@ -239,6 +262,7 @@ export function createApprovedSkillOperations<Tx>(
 				const { artifact, content } = fixedExploration(
 					b.content,
 					b.content.policy,
+					explorationLanguageSchema.parse(b.content.decision.language),
 				);
 				requireThat(
 					artifact.bundleDigest === b.publication.digest &&
@@ -386,6 +410,9 @@ export function createApprovedSkillOperations<Tx>(
 				ref: r.ref,
 				applicability: r.applicability,
 				name: r.artifact.name,
+				...(s.exploration && {
+					language: r.template.content.decision.language,
+				}),
 				originalTask: visibleTask(r.template.content.task),
 				requiredCapabilities: r.template.content.decision.requiredCapabilities,
 				...(r.compositionGroup ? { compositionGroup: r.compositionGroup } : {}),
@@ -411,10 +438,13 @@ export function createApprovedSkillOperations<Tx>(
 			return selected;
 		}
 		const composed = canSelectComposition(s);
+		const fixedOnly = s.exploration && s.candidates.length === 0;
 		const schema = s.exploration
-			? composed
-				? skillSelectionSchema
-				: explorationSelectionSchema
+			? fixedOnly
+				? fixedExplorationSelectionSchema
+				: composed
+					? skillSelectionSchema
+					: explorationSelectionSchema
 			: composed
 				? composedSkillSelectionSchema
 				: singleSkillSelectionSchema;
@@ -485,13 +515,17 @@ export function createApprovedSkillOperations<Tx>(
 			return out;
 		}
 		const data = skillSelectionInput(s);
-		const system = composed
-			? composedSkillSelectionInstructions
-			: skillSelectionInstructions;
+		const system = s.exploration
+			? fixedOnly
+				? fixedExplorationSelectionInstructions
+				: composed
+					? composedExplorationSelectionInstructions
+					: explorationSelectionInstructions
+			: composed
+				? composedSkillSelectionInstructions
+				: skillSelectionInstructions;
 		const out = await infer(selectionInference(), "skill_selection", {
-			system: s.exploration
-				? system + "\n" + explorationSelectionInstructions
-				: system,
+			system,
 			data,
 			schema: z.toJSONSchema(schema),
 			requestRef: s.digest,
@@ -593,7 +627,7 @@ export function createApprovedSkillOperations<Tx>(
 		if (decision.kind === "explore") {
 			const policy = s.exploration && explorationPolicy(tx, s.request, auth);
 			requireThat(policy, "exploration_unavailable");
-			const assembled = fixedExploration(s.request, policy);
+			const assembled = fixedExploration(s.request, policy, decision.language);
 			return submit(tx, s.request, auth, {
 				template: {
 					content: assembled.content,

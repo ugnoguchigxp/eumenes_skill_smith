@@ -20,6 +20,10 @@ import {
 } from "../../src/index.js";
 import { sqliteApprovedSkills } from "../../src/sqlite/index.js";
 import {
+	explorationLanguageSchema,
+	type ExplorationLanguage,
+} from "../../src/contracts/approved-skills.js";
+import {
 	ARCHIVED_ABSENT_JUDGE_INSTRUCTIONS,
 	archivedAbsentJudgeOutputSchema,
 	archivedAbsentJudgeSchema,
@@ -45,6 +49,7 @@ const suite = z
 				goal: z.string(),
 				acceptance: z.array(z.object({ id: z.string(), text: z.string() })),
 				expected: z.enum(["explore", "miss"]),
+				expectedLanguage: explorationLanguageSchema.optional(),
 			}),
 		),
 	})
@@ -89,13 +94,24 @@ try {
 			accountedUsd: budget.spent(),
 			events: budget.events().filter((event) => !startIds.has(event.id)),
 		});
-	const priorTemplate = readFileSync(arg("--template"), "utf8");
+	const templates = {
+		en: readFileSync(arg("--template"), "utf8"),
+		ja: process.argv.includes("--ja-template")
+			? readFileSync(arg("--ja-template"), "utf8")
+			: undefined,
+	};
+	if (
+		suite.tasks.some((task) => task.expectedLanguage === "ja") &&
+		!templates.ja
+	)
+		throw Error("japanese_template_required");
 	save("manifest.json", {
 		suiteDigest: digest(suite),
 		protocol: suite.protocol,
 		model: model.id,
 		judgeDigest: digest(ARCHIVED_ABSENT_JUDGE_INSTRUCTIONS),
-		templateDigest: digest(priorTemplate),
+		templateDigest: digest(templates.en),
+		japaneseTemplateDigest: templates.ja && digest(templates.ja),
 	});
 	const receipts = new Map<string, string>();
 	let taskId = "";
@@ -143,6 +159,9 @@ try {
 	const rows: {
 		taskId: string;
 		expected: string;
+		expectedLanguage?: ExplorationLanguage;
+		language?: ExplorationLanguage;
+		assessment?: string;
 		durationMs: number;
 		status: string;
 		code?: string;
@@ -170,6 +189,8 @@ try {
 			const start = performance.now();
 			let status = "error",
 				code: string | undefined,
+				assessment: string | undefined,
+				language: ExplorationLanguage | undefined,
 				usage: Usage | undefined,
 				skill: (typeof rows)[number]["skill"];
 			try {
@@ -181,7 +202,13 @@ try {
 				const selection = await service.selectSkill(prepared, context);
 				status = selection.decision.kind;
 				usage = selection.usage;
+				assessment =
+					selection.decision.kind === "miss"
+						? selection.decision.reason
+						: selection.decision.assessment;
 				if (selection.decision.kind !== "miss") {
+					if (selection.decision.kind === "explore")
+						language = selection.decision.language;
 					const accepted = host.db.transaction(() =>
 						service.bindSkillSelection(host.db, prepared, selection, authority),
 					)();
@@ -196,7 +223,11 @@ try {
 					);
 					status = packet.kind;
 					if (packet.kind === "ready") {
-						if (!packet.exploration || packet.skill.content !== priorTemplate)
+						if (
+							!packet.exploration ||
+							!language ||
+							packet.skill.content !== templates[language]
+						)
 							throw Error("unexpected_artifact");
 						skill = packet.skill;
 					} else if ("code" in packet) code = packet.code;
@@ -210,6 +241,12 @@ try {
 			rows.push({
 				taskId,
 				expected: task.expected,
+				expectedLanguage:
+					task.expected === "explore"
+						? (task.expectedLanguage ?? "en")
+						: undefined,
+				language,
+				assessment,
 				durationMs,
 				status,
 				code,
@@ -218,7 +255,9 @@ try {
 			});
 			save("delivery.json", rows);
 			saveUsage();
-			console.log(JSON.stringify({ taskId, durationMs, status, code, usage }));
+			console.log(
+				JSON.stringify({ taskId, durationMs, status, language, code, usage }),
+			);
 		}
 	} finally {
 		host.close();

@@ -142,12 +142,20 @@ async function approvedPair(fileCollision = false) {
 test("an approved match keeps its exact artifact with the exploration fallback offered", async () => {
 	const { f, parts, request } = await approvedPair();
 	const service = createSkillSmith({ ...f.ports, explorationFallback: true });
-	f.ports.inference.complete = async () =>
-		answer({
+	f.ports.inference.complete = async ({ data }) => {
+		expect(data).toMatchObject({
+			candidates: expect.arrayContaining(
+				parts.map(({ ref }) =>
+					expect.objectContaining({ ref, language: "en" }),
+				),
+			),
+		});
+		return answer({
 			kind: "selected",
 			ref: parts[0]!.ref,
 			assessment: "This approved procedure fits.",
 		});
+	};
 	const prepared = service.prepareSkillSelection(f.db, request, f.auth);
 	expect(prepared.exploration).toBe(true);
 	expect(prepared.candidates).toHaveLength(2);

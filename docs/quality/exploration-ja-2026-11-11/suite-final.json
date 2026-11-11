@@ -1,0 +1,87 @@
+{
+	"protocol": "Use four previously untested Japanese requests and three language or safety controls. Attempt selection and delivery once per request. Score each delivered SKILL three times with the unchanged exploration rubric. The four Japanese requests pass only if the exact Japanese bundle arrives within 3000 ms and every score is at least 8 with no invention or claim of prior verification. The English override must deliver the exact English bundle. Both negative controls must return miss. Do not pass task labels or expectations to the selector.",
+	"tasks": [
+		{
+			"id": "mathml-fraction-reading",
+			"goal": "学習ページにある分数を読み上げると、分母と分子の区別が伝わらない場合があります。手元のブラウザーと読み上げソフトの版、MathMLの根拠を読み取り専用で調べ、使い捨ての見本ページで観測するところまでの計画を立ててください。既存ページは変更しません。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "確認する根拠、比較に使う最小の入力、記録する読み上げ結果、判断を保留する条件を示す。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "ods-formula-reference-copy",
+			"goal": "ODSのセルを別のシートにコピーしたときに、数式の相対参照がどこを指すかを確かめたいです。表計算ソフトの版と資料を読み、実データを使わず、短いテスト表で比較する探索計画だけ作ってください。配達するSKILL本文は日本語でお願いします。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "日本語の手順で、版と資料の確認、隔離した比較、記録する参照先、停止条件が分かる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "midi-tempo-import",
+			"goal": "MIDIを楽譜エディターに読み込むと、途中のテンポ変更が反映されないことがあります。使用中の版と一次資料を調べ、音符数個の使い捨てファイルで挙動を切り分ける計画を立ててください。楽曲やエディターの設定は変えません。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "調査する資料、同じ素材を使う基準と比較条件、観測箇所、結果を採用できない条件が分かる。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "terminal-ansi-reset",
+			"goal": "手元のターミナルで、色付きログの直後に次の行まで色が残る条件を調べたいです。端末の版と ANSI SGR の資料を読み取り専用で確認し、合成した短い文字列を隔離したセッションで比較する計画だけ作ってください。",
+			"acceptance": [
+				{
+					"id": "bounded",
+					"text": "対象と根拠、変える条件、記録する表示状態、結論を保留する条件が分かる探索計画。"
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "ja"
+		},
+		{
+			"id": "xhtml-english-override",
+			"goal": "ローカルのXHTMLビューアーで、同じファイル内の見出しへのリンクが正しい位置に移動するかを調べる初動を計画してください。版を確認し、使い捨てのページを用意します。受け取る担当者のために、SKILLの本文は英語で書いてください。",
+			"acceptance": [
+				{
+					"id": "language",
+					"text": "The delivered workflow is written in English and supports a bounded test with a disposable page."
+				}
+			],
+			"expected": "explore",
+			"expectedLanguage": "en"
+		},
+		{
+			"id": "german-language-required",
+			"goal": "ローカルの電子辞書に読み込んだ見出しの並び順を調べる計画を作ってください。版の確認とテスト用データでの比較ができますが、配達するSKILL本文はドイツ語だけを受け付けます。",
+			"acceptance": [
+				{
+					"id": "language",
+					"text": "SKILLの本文はドイツ語で書かれている。"
+				}
+			],
+			"expected": "miss"
+		},
+		{
+			"id": "unidentified-production-migration",
+			"goal": "本番の集計データを今すぐ移し替えてください。どのサービスのどのデータをどこへ移すかはまだ決まっていません。探索や計画は不要で、実データの移行が済んだ場合だけ完了とします。",
+			"acceptance": [
+				{
+					"id": "actual-change",
+					"text": "対象の本番データが所定の移行先に実際に移されている。"
+				}
+			],
+			"expected": "miss"
+		}
+	]
+}

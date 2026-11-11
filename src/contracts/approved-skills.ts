@@ -91,27 +91,37 @@ export const singleSkillSelectionSchema = z.discriminatedUnion("kind", [
 	selected,
 	miss,
 ]);
+export const explorationLanguageSchema = z.enum(["en", "ja"]);
+export type ExplorationLanguage = z.infer<typeof explorationLanguageSchema>;
 const explore = z.strictObject({
 	kind: z.literal("explore"),
+	language: explorationLanguageSchema,
+	assessment: z.string().min(1).max(64),
+});
+export const fixedExplorationSelectionSchema = z.discriminatedUnion("kind", [
+	explore,
+	miss,
+]);
+const composed = z.strictObject({
+	kind: z.literal("composed"),
+	refs: z.array(id).min(2).max(3),
 	assessment: z.string().min(1).max(1000),
 });
 export const explorationSelectionSchema = z.discriminatedUnion("kind", [
 	selected,
-	miss,
 	explore,
+	miss,
 ]);
 export const composedSkillSelectionSchema = z.discriminatedUnion("kind", [
 	selected,
 	miss,
-	z.strictObject({
-		kind: z.literal("composed"),
-		refs: z.array(id).min(2).max(3),
-		assessment: z.string().min(1).max(1000),
-	}),
+	composed,
 ]);
 export const skillSelectionSchema = z.discriminatedUnion("kind", [
-	...composedSkillSelectionSchema.options,
+	selected,
+	composed,
 	explore,
+	miss,
 ]);
 export type SkillSelection = z.infer<typeof skillSelectionSchema>;
 export interface PreparedSkillSelection {
