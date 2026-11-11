@@ -75,6 +75,7 @@ export interface Build {
 		selectorVersion?: string;
 		receipt: string;
 		assessment: string;
+		exploration?: true;
 		composition?: {
 			version: string;
 			parts: { ref: string; digest: string }[];

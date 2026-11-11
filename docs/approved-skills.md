@@ -81,6 +81,12 @@ SQLiteの`ApprovedSkillStore.scan`はscope、環境、受け手、方針、能�
 
 組み合わせには2回のモデル呼び出し枠が必要です。選択後、`compositionReviewInference`（省略時は選択用の推論）が実際の本文と全参照に照らし、すべての受入条件に根拠を割り当てます。結付けは選択と審査の受領証を照合し、組み合わせ全体への承認を確認します。承認不足の `composition_not_approved` では結付けを作らず、ホストは追加承認か通常の生成へ進めます。配達では全ての部品と組み合わせの承認を再確認し、readyの `compositionRefs` に部品の順序を返します。
 
+## 固定の探索SKILL
+
+ホストは `createSkillSmith({ ...ports, explorationFallback: true })` で有効にできます。通常の `prepareSkillSelection` → `selectSkill` → `bindSkillSelection` → `getSkillDelivery` を使います。モデルは適合する承認済み手順を優先します。評価した候補では条件を満たせず、依頼が安全な探索を許すと判断した場合は `explore` を返します。対象や必要な権限が不明で観測に進めない依頼や、検証済みの専用手順が必須の依頼は `miss` になります。
+
+`explore` を結び付けると、配達には `exploration: true` と組み込みの英語SKILLが含まれます。利用側は元の依頼・制約をSKILLと一緒に渡します。本文は対象と版の確認、一次資料の調査、隔離実験の計画、観測と停止条件を指示します。本文への方針の挿入が必要な場合、方針が失効した場合、または選択の受領証が無効になった場合は配達を止めます。探索の結果は元の依頼に結び付き、別の依頼では適用を選び直します。[未使用課題での検証](quality/exploration-fallback-2026-11-11/results.md)
+
 ## 失効と更新
 
 publicationは元buildとapprovalRefへ依存リンクを持ち、結付けBuildはpublicationへリンクします。`forget`は根の失効を先に確定するため、消去が分割されても全依存先を直ちに配達不能にします。残りのpendingはホストが既存queueで消去します。承認失効、資料更新、方針変更、期限切れでもreadyを返しません。生成中の旧版を新しい承認版として代用しません。

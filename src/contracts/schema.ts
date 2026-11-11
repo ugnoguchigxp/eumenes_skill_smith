@@ -443,6 +443,7 @@ export const buildSchema = z.strictObject({
 			selectorVersion: id.optional(),
 			receipt: id,
 			assessment: text,
+			exploration: z.literal(true).optional(),
 			composition: z
 				.strictObject({
 					version: id,

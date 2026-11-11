@@ -1,0 +1,27 @@
+{
+	"connectionId": "7ce026e0-6d24-4547-b79d-3b09c24027fb",
+	"maxUsd": 20,
+	"builder": {
+		"id": "gpt-6.1-sol",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 10,
+		"reasoningEffort": "low"
+	},
+	"executor": {
+		"id": "gpt-4.1-mini",
+		"inputUsdPerMillion": 0.4,
+		"outputUsdPerMillion": 1.6
+	},
+	"judge": {
+		"id": "gpt-4.1",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 8
+	},
+	"outputTokens": 4000,
+	"pricingSource": "https://developers.openai.com/api/docs/pricing",
+	"taskConstraints": [],
+	"assemblyMode": "baseline",
+	"searchProfile": "handle",
+	"reformulate": false,
+	"minimumAccountedUsd": 17.6259806
+}

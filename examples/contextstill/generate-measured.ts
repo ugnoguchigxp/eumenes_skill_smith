@@ -24,7 +24,7 @@ import { createCloudBudget, type CloudModel } from "./cloud-budget.js";
 import { savedCloud } from "./saved-cloud.js";
 import { inferenceTask } from "./recorded.js";
 import { seedDatabase } from "./seed.js";
-import { ContextStillFixture } from "./database.js";
+import { ContextStillFixture, type SearchProfile } from "./database.js";
 import { createFixtureSource } from "./source.js";
 import { createMcpHandler } from "./mcp.js";
 import {
@@ -69,12 +69,17 @@ const config = JSON.parse(readFileSync(settingsPath, "utf8")) as {
 	outputTokens: number;
 	taskConstraints: unknown;
 	assemblyMode?: "baseline" | "lean";
+	searchProfile?: SearchProfile;
+	reformulate?: boolean;
 };
 if (![15, 20].includes(config.maxUsd) || config.outputTokens !== 4000)
 	throw Error("generation_contract_changed");
 const assemblyMode = config.assemblyMode ?? "baseline";
 if (assemblyMode !== "baseline" && assemblyMode !== "lean")
 	throw Error("invalid_assembly_mode");
+const searchProfile = config.searchProfile ?? "bm25";
+if (searchProfile !== "bm25" && searchProfile !== "handle")
+	throw Error("invalid_search_profile");
 const constraints = requestSchema.shape.task.shape.constraints.parse(
 	config.taskConstraints,
 );
@@ -128,7 +133,8 @@ try {
 		workers: 1,
 		assemblyMode,
 		evidenceSupply: "natural",
-		searchProfile: "bm25",
+		searchProfile,
+		...(config.reformulate === false ? { reformulate: false } : {}),
 		startingAccountedUsd: budget.spent(),
 		startingEventIds: startingEvents,
 		generatedAt: new Date().toISOString(),
@@ -140,7 +146,7 @@ try {
 	});
 	const dbPath = join(out, "seed.sqlite");
 	seedDatabase({ destination: dbPath });
-	const fixture = new ContextStillFixture(dbPath, "bm25");
+	const fixture = new ContextStillFixture(dbPath, searchProfile);
 	try {
 		const token = crypto.randomUUID();
 		const plain = createFixtureSource(createMcpHandler(fixture, token), token);
@@ -236,14 +242,17 @@ try {
 		}
 		for (const task of suite.tasks) {
 			activeTaskId = task.id;
-			const source = createAutoReformulatingSource(
-				plain,
-				createReformulatingSource(
-					plain,
-					inference(task.id, "reformulation", config.executor),
-					{ deadlineAt: 1_700_000_120_000 },
-				),
-			);
+			const source =
+				config.reformulate === false
+					? plain
+					: createAutoReformulatingSource(
+							plain,
+							createReformulatingSource(
+								plain,
+								inference(task.id, "reformulation", config.executor),
+								{ deadlineAt: 1_700_000_120_000 },
+							),
+						);
 			const model = inference(task.id, "quality-build", config.builder);
 			const startedAt = new Date().toISOString(),
 				start = performance.now();

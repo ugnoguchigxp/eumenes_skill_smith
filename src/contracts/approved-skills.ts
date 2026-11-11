@@ -91,7 +91,16 @@ export const singleSkillSelectionSchema = z.discriminatedUnion("kind", [
 	selected,
 	miss,
 ]);
-export const skillSelectionSchema = z.discriminatedUnion("kind", [
+const explore = z.strictObject({
+	kind: z.literal("explore"),
+	assessment: z.string().min(1).max(1000),
+});
+export const explorationSelectionSchema = z.discriminatedUnion("kind", [
+	selected,
+	miss,
+	explore,
+]);
+export const composedSkillSelectionSchema = z.discriminatedUnion("kind", [
 	selected,
 	miss,
 	z.strictObject({
@@ -100,12 +109,17 @@ export const skillSelectionSchema = z.discriminatedUnion("kind", [
 		assessment: z.string().min(1).max(1000),
 	}),
 ]);
+export const skillSelectionSchema = z.discriminatedUnion("kind", [
+	...composedSkillSelectionSchema.options,
+	explore,
+]);
 export type SkillSelection = z.infer<typeof skillSelectionSchema>;
 export interface PreparedSkillSelection {
 	request: GuidanceRequest;
 	authority: Authority;
 	candidates: ApprovedSkill[];
 	catalog: { scanned: number; exhausted: boolean };
+	exploration?: true;
 	digest: string;
 }
 export interface SelectedSkill {
@@ -127,6 +141,7 @@ export type SkillDelivery =
 			auditRef: string;
 			publicationRef?: string;
 			compositionRefs?: string[];
+			exploration?: true;
 			skill: SkillArtifact;
 			dependencyVersions: z.infer<typeof versionRefSchema>[];
 	  };
@@ -144,6 +159,7 @@ export const skillDeliverySchema = z.discriminatedUnion("kind", [
 		auditRef: id,
 		publicationRef: id.optional(),
 		compositionRefs: z.array(id).min(2).max(3).optional(),
+		exploration: z.literal(true).optional(),
 		skill: skillArtifactSchema,
 		dependencyVersions: z.array(versionRefSchema).max(8),
 	}),

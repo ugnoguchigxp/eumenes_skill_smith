@@ -155,6 +155,8 @@ export interface Ports<Tx> {
 	limits?: Partial<ServiceLimits>;
 	/** Omitted means baseline. Compact and lean are opt-in; legacy is for archived replay. */
 	assemblyMode?: "baseline" | "compact" | "lean" | "legacy";
+	/** Let the approved selector offer the bundled provisional exploration SKILL. */
+	explorationFallback?: boolean;
 	/** Final SKILL.md rendering only; deterministic source-body extraction (no model calls). */
 	skillMarkdown?: import("../service/skill-markdown.js").SkillMarkdownOptions;
 }

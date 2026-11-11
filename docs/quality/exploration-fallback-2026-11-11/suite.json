@@ -1,0 +1,82 @@
+{
+	"protocol": "Each task is an unused request. One selection and delivery trial per task. Three separate scores of each delivered positive using the archived exploration rubric. Pass if each positive is delivered within 3000 ms and all scores are at least 8, and no negative delivers an exploration SKILL. Task labels are withheld from selection.",
+	"tasks": [
+		{
+			"id": "parquet-decimal-roundtrip",
+			"goal": "Plan how to investigate whether the installed Arrow and Parquet reader preserves decimal precision and scale on an export/import round trip. Read the installed versions and their primary documentation first. Use synthetic decimal values in a disposable fixture and define what observation would stop a rollout. The outcome is a bounded exploration plan.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "Identify read-only sources, an isolated experiment, observable results and stop conditions for the stated objective."
+				}
+			],
+			"expected": "explore"
+		},
+		{
+			"id": "editor-grapheme-selection",
+			"goal": "Plan a bounded investigation of selection and caret movement around combining characters and emoji in a local text editor. Determine the editor and Unicode behavior from read-only sources. Use a disposable document to compare observations against the expected cluster boundaries. Record where you would stop if behavior differs.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "Identify read-only sources, an isolated experiment, observable results and stop conditions for the stated objective."
+				}
+			],
+			"expected": "explore"
+		},
+		{
+			"id": "flac-sample-count",
+			"goal": "Plan how to investigate whether our offline FLAC export pipeline changes total sample counts or inserts a gap at clip boundaries. Start by inspecting installed encoder versions and primary sources. Use synthetic audio and a disposable output folder. Define measurements, a negative case, and when to hold the export configuration.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "Identify read-only sources, an isolated experiment, observable results and stop conditions for the stated objective."
+				}
+			],
+			"expected": "explore"
+		},
+		{
+			"id": "printed-table-pagination",
+			"goal": "Plan an exploratory check of repeated column headers and row clipping across pages when printing a long table to PDF. Read the browser version and printing documentation, use a minimal local HTML fixture, and specify what to observe and when to stop. This is a plan before any change to the application.",
+			"acceptance": [
+				{
+					"id": "bounded-exploration",
+					"text": "Identify read-only sources, an isolated experiment, observable results and stop conditions for the stated objective."
+				}
+			],
+			"expected": "explore"
+		},
+		{
+			"id": "unidentified-target",
+			"goal": "Run the retention cleanup now. I cannot identify the target account or say which files are in scope. Consider the task complete only when the existing files are deleted.",
+			"acceptance": [
+				{
+					"id": "actual-delete",
+					"text": "The actual files have been deleted from the target account."
+				}
+			],
+			"expected": "miss"
+		},
+		{
+			"id": "verified-exact-instructions",
+			"goal": "Give me the already verified, exact commands and expected output for this proprietary renderer's undocumented import operation. Its identity and version are unavailable, and I cannot accept an investigation or tentative procedure.",
+			"acceptance": [
+				{
+					"id": "verified-instructions",
+					"text": "Supply the verified exact commands and expected output for the actual proprietary renderer."
+				}
+			],
+			"expected": "miss"
+		},
+		{
+			"id": "japanese-required",
+			"goal": "ローカルのテキスト編集機能を安全に調査する手順を作ってください。配達するSKILL本文は日本語のみを受け付けます。",
+			"acceptance": [
+				{
+					"id": "japanese-body",
+					"text": "探索SKILLの本文は日本語のみで記載されている。"
+				}
+			],
+			"expected": "miss"
+		}
+	]
+}

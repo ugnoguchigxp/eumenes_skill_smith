@@ -15,6 +15,8 @@ import {
 } from "./approved-composition.js";
 import {
 	approvedSkillSchema,
+	composedSkillSelectionSchema,
+	explorationSelectionSchema,
 	skillSelectionSchema,
 	singleSkillSelectionSchema,
 	type ApprovedComposition,
@@ -28,13 +30,18 @@ import {
 	skillSelectionInstructions,
 	composedSkillSelectionInstructions,
 	compositionReviewInstructions,
+	explorationSelectionInstructions,
 } from "../instructions/selection.js";
 import { bytes, digest, requireThat, SkillSmithError } from "./identity.js";
 import { renderSkillMarkdown, skillBundleDigest } from "./skill-markdown.js";
 import { createUsageTotals } from "./usage.js";
+import {
+	FIXED_EXPLORATION_REF,
+	fixedExploration,
+} from "./fixed-exploration.js";
 
 export interface ReuseBuild {
-	template: Build;
+	template: Pick<Build, "scope" | "revoked" | "content" | "generator">;
 	assembled?: ReturnType<typeof assembleApprovedParts>;
 	expiresAt: number;
 	publication: NonNullable<Build["publication"]>;
@@ -87,6 +94,14 @@ export function createApprovedSkillOperations<Tx>(
 		composedSkillSelectionInstructions,
 		compositionReviewInstructions,
 	]);
+	const explorationSelectorVersion = digest([
+		selectorVersion,
+		explorationSelectionInstructions,
+	]);
+	const compositionExplorationVersion = digest([
+		compositionSelectorVersion,
+		explorationSelectionInstructions,
+	]);
 	const limits = resolveServiceLimits(p.limits);
 	const issued = new WeakMap<SelectedSkill, string>();
 	function canSelectComposition(
@@ -122,14 +137,37 @@ export function createApprovedSkillOperations<Tx>(
 	}
 	function selectionDigest(s: Omit<PreparedSkillSelection, "digest">) {
 		return digest({
-			selectorVersion: canSelectComposition(s)
-				? compositionSelectorVersion
-				: selectorVersion,
+			selectorVersion: selectionVersion(s),
 			catalog: s.catalog,
 			request: s.request,
 			authority: s.authority,
 			candidates: s.candidates.map((c) => ({ ref: c.ref, digest: c.digest })),
 		});
+	}
+	function selectionVersion(s: Omit<PreparedSkillSelection, "digest">) {
+		if (canSelectComposition(s))
+			return s.exploration
+				? compositionExplorationVersion
+				: compositionSelectorVersion;
+		return s.exploration ? explorationSelectorVersion : selectorVersion;
+	}
+	function explorationPolicy(
+		tx: Tx,
+		request: PreparedSkillSelection["request"],
+		auth: Authority,
+	) {
+		if (
+			!p.explorationFallback ||
+			p.assemblyMode === "legacy" ||
+			repo.blocked(tx, FIXED_EXPLORATION_REF)
+		)
+			return null;
+		const policy = p.policy.resolve(tx, request, auth);
+		return policy.alreadyPresent &&
+			digest(policy.version) === digest(request.environment.policy) &&
+			p.policy.current(tx, policy.version)
+			? policy
+			: null;
 	}
 	function currentParts(tx: Tx, b: Build, auth: Authority) {
 		const mark = b.publication;
@@ -137,12 +175,15 @@ export function createApprovedSkillOperations<Tx>(
 		const composition = mark.composition;
 		if (
 			composition
-				? mark.selectorVersion !== compositionSelectorVersion ||
+				? (mark.selectorVersion !== compositionSelectorVersion &&
+						mark.selectorVersion !== compositionExplorationVersion) ||
 					composition.version !== COMPOSITION_VERSION ||
 					composition.parts[0]?.ref !== mark.ref ||
 					composition.parts[0]?.digest !== mark.digest
 				: mark.selectorVersion !== selectorVersion &&
-					mark.selectorVersion !== compositionSelectorVersion
+					mark.selectorVersion !== compositionSelectorVersion &&
+					mark.selectorVersion !== explorationSelectorVersion &&
+					mark.selectorVersion !== compositionExplorationVersion
 		)
 			return null;
 		if (
@@ -168,6 +209,23 @@ export function createApprovedSkillOperations<Tx>(
 		return parts;
 	}
 	function current(tx: Tx, b: Build, auth: Authority) {
+		const mark = b.publication;
+		if (mark?.exploration) {
+			return (
+				!!p.explorationFallback &&
+				p.assemblyMode !== "legacy" &&
+				!mark.composition &&
+				mark.ref === FIXED_EXPLORATION_REF &&
+				(mark.selectorVersion === explorationSelectorVersion ||
+					mark.selectorVersion === compositionExplorationVersion) &&
+				!repo.blocked(tx, mark.ref) &&
+				selectionInference().validReceipt(
+					tx,
+					mark.receipt,
+					mark.selectionDigest,
+				)
+			);
+		}
 		return !!currentParts(tx, b, auth);
 	}
 	function artifact(
@@ -176,6 +234,20 @@ export function createApprovedSkillOperations<Tx>(
 		auth: Authority,
 	) {
 		return read((tx) => {
+			if (b.publication?.exploration) {
+				requireThat(current(tx, b, auth), "publication_revoked");
+				const { artifact, content } = fixedExploration(
+					b.content,
+					b.content.policy,
+				);
+				requireThat(
+					artifact.bundleDigest === b.publication.digest &&
+						digest(content) === b.digest &&
+						digest(b.content) === b.digest,
+					"artifact_mismatch",
+				);
+				return artifact;
+			}
 			const parts = currentParts(tx, b, auth);
 			requireThat(parts, "publication_revoked");
 			const composition = b.publication?.composition;
@@ -288,6 +360,11 @@ export function createApprovedSkillOperations<Tx>(
 			authority: auth,
 			candidates,
 			catalog,
+			...(request.task.acceptance.some(
+				(clause) => clause.visibility !== "evaluation",
+			) && explorationPolicy(tx, request, auth)
+				? { exploration: true as const }
+				: {}),
 		};
 		return structuredClone({ ...s, digest: selectionDigest(s) });
 	}
@@ -323,7 +400,7 @@ export function createApprovedSkillOperations<Tx>(
 		for (const candidate of s.candidates) checkArtifact(candidate);
 		context.signal.throwIfAborted();
 		requireThat(s.request.limits.deadlineAt > p.now(), "deadline_exceeded");
-		if (!s.candidates.length) {
+		if (!s.candidates.length && !s.exploration) {
 			const selected: SelectedSkill = {
 				preparedDigest: s.digest,
 				decision: { kind: "miss", reason: "no_approved_candidate" },
@@ -334,7 +411,13 @@ export function createApprovedSkillOperations<Tx>(
 			return selected;
 		}
 		const composed = canSelectComposition(s);
-		const schema = composed ? skillSelectionSchema : singleSkillSelectionSchema;
+		const schema = s.exploration
+			? composed
+				? skillSelectionSchema
+				: explorationSelectionSchema
+			: composed
+				? composedSkillSelectionSchema
+				: singleSkillSelectionSchema;
 		const signal = AbortSignal.any([
 			context.signal,
 			AbortSignal.timeout(
@@ -402,10 +485,13 @@ export function createApprovedSkillOperations<Tx>(
 			return out;
 		}
 		const data = skillSelectionInput(s);
+		const system = composed
+			? composedSkillSelectionInstructions
+			: skillSelectionInstructions;
 		const out = await infer(selectionInference(), "skill_selection", {
-			system: composed
-				? composedSkillSelectionInstructions
-				: skillSelectionInstructions,
+			system: s.exploration
+				? system + "\n" + explorationSelectionInstructions
+				: system,
 			data,
 			schema: z.toJSONSchema(schema),
 			requestRef: s.digest,
@@ -504,6 +590,30 @@ export function createApprovedSkillOperations<Tx>(
 				selectionInference().validReceipt(tx, selected.receipt, s.digest),
 			"selection_unavailable",
 		);
+		if (decision.kind === "explore") {
+			const policy = s.exploration && explorationPolicy(tx, s.request, auth);
+			requireThat(policy, "exploration_unavailable");
+			const assembled = fixedExploration(s.request, policy);
+			return submit(tx, s.request, auth, {
+				template: {
+					content: assembled.content,
+					scope: auth.scope,
+					revoked: false,
+				},
+				assembled,
+				expiresAt: p.now() + limits.buildTtlMs,
+				usage: selected.usage,
+				publication: {
+					ref: FIXED_EXPLORATION_REF,
+					digest: assembled.artifact.bundleDigest,
+					selectorVersion: selectionVersion(s),
+					selectionDigest: s.digest,
+					receipt: selected.receipt,
+					assessment: decision.assessment,
+					exploration: true,
+				},
+			});
+		}
 		const refs = decision.kind === "composed" ? decision.refs : [decision.ref];
 		const parts = refs.map((ref) => {
 			const chosen = s.candidates.find((r) => r.ref === ref);
@@ -555,9 +665,7 @@ export function createApprovedSkillOperations<Tx>(
 			publication: {
 				ref: r.ref,
 				digest: r.digest,
-				selectorVersion: canSelectComposition(s)
-					? compositionSelectorVersion
-					: selectorVersion,
+				selectorVersion: selectionVersion(s),
 				receipt: selected.receipt,
 				assessment: decision.assessment,
 				...(assembly

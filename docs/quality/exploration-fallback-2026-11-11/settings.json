@@ -1,0 +1,11 @@
+{
+	"connectionId": "7ce026e0-6d24-4547-b79d-3b09c24027fb",
+	"maxUsd": 20,
+	"judge": {
+		"id": "gpt-4.1",
+		"inputUsdPerMillion": 2,
+		"outputUsdPerMillion": 8
+	},
+	"pricingSource": "https://developers.openai.com/api/docs/pricing",
+	"minimumAccountedUsd": 18.0101646
+}

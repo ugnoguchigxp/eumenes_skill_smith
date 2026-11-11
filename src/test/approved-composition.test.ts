@@ -139,6 +139,36 @@ async function approvedPair(fileCollision = false) {
 	};
 }
 
+test("an approved match keeps its exact artifact with the exploration fallback offered", async () => {
+	const { f, parts, request } = await approvedPair();
+	const service = createSkillSmith({ ...f.ports, explorationFallback: true });
+	f.ports.inference.complete = async () =>
+		answer({
+			kind: "selected",
+			ref: parts[0]!.ref,
+			assessment: "This approved procedure fits.",
+		});
+	const prepared = service.prepareSkillSelection(f.db, request, f.auth);
+	expect(prepared.exploration).toBe(true);
+	expect(prepared.candidates).toHaveLength(2);
+	const selected = await service.selectSkill(prepared, {
+		signal: signal(),
+		reserve: async () => {},
+	});
+	const bound = f.write(() =>
+		service.bindSkillSelection(f.db, prepared, selected, f.auth),
+	);
+	const packet = await service.getSkillDelivery(
+		bound.requestRef!,
+		f.auth,
+		f.read,
+		signal(),
+	);
+	if (packet.kind !== "ready") throw Error(JSON.stringify(packet));
+	expect(packet.skill).toEqual(parts[0]!.artifact);
+	expect(packet.exploration).toBeUndefined();
+});
+
 test("ordered approved parts deliver intact bodies, examples and audit under a compatible generator", async () => {
 	const { f, approvals, parts, request, setCompositionAllowed } =
 		await approvedPair();

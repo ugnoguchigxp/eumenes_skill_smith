@@ -1,0 +1,484 @@
+{
+	"manifest": {
+		"suiteDigest": "05370cdfa9a3ae64bd9d665a76f8e69368b7bd98e717cc9aed7683ec02864ac0",
+		"protocol": "Each task is an unused request. One selection and delivery trial per task. Three separate scores of each delivered positive using the archived exploration rubric. Pass if each positive is delivered within 3000 ms and all scores are at least 8, and no negative delivers an exploration SKILL. Task labels are withheld from selection.",
+		"model": "gpt-4.1",
+		"judgeDigest": "dcb460de4f7cc0f2e3616958dca05bcd19b9d846fb4b83937b2a88082d42f4b4",
+		"templateDigest": "3b9e205da3c89b997fa04d99a4aed76f910df7f8989de6b480459fa583005d58"
+	},
+	"sourceSha256": {
+		"src/service/fixed-exploration.ts": "78c229d409330f95453a9a6814c7e67519a165e61961c3943fdd4db11a3c8ba4",
+		"src/service/approved-skills.ts": "309b214574fa45940322dc375707e232d6662d8861e9538b77707c813012fdc1",
+		"src/service/skill-delivery.ts": "13935909a294a3b068d7a24db32e72526b399449ca5e867abaedcd58fbf7eca1",
+		"src/instructions/selection.ts": "de6a9c3679d25c2087289e4ebdc17c61d8f07a6cf2920a55929fb6efbf3cc8b2",
+		"src/contracts/approved-skills.ts": "f386ef2bacc8abc0da0852213665b0a0a12442e990a38c83bb538d0654e84e2c",
+		"examples/contextstill/verify-exploration-fallback.ts": "aed749c4ab25a3bc380551f00ce89ad6ffeb1baba8f4ce0ed2f084bca55f77ea"
+	},
+	"summary": {
+		"positivesDeliveredWithin3s": 4,
+		"negativeMisses": 3,
+		"gradesAtLeast8": 12,
+		"scoreRange": [8, 10],
+		"medianDeliveryMs": 1021.3461039999997
+	},
+	"rows": [
+		{
+			"taskId": "parquet-decimal-roundtrip",
+			"expected": "explore",
+			"durationMs": 1491.7752089999994,
+			"status": "ready",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 915,
+				"outputTokens": 58,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			},
+			"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c"
+		},
+		{
+			"taskId": "editor-grapheme-selection",
+			"expected": "explore",
+			"durationMs": 793.2977090000004,
+			"status": "ready",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 909,
+				"outputTokens": 29,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			},
+			"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c"
+		},
+		{
+			"taskId": "flac-sample-count",
+			"expected": "explore",
+			"durationMs": 1105.329667,
+			"status": "ready",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 913,
+				"outputTokens": 46,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			},
+			"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c"
+		},
+		{
+			"taskId": "printed-table-pagination",
+			"expected": "explore",
+			"durationMs": 937.3625409999995,
+			"status": "ready",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 913,
+				"outputTokens": 40,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			},
+			"bundleDigest": "fd2cd0450310dea304d7051f7363afd5f68ceb26cefde90a1037335ea45a5f3c"
+		},
+		{
+			"taskId": "unidentified-target",
+			"expected": "miss",
+			"durationMs": 859.6476250000014,
+			"status": "miss",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 878,
+				"outputTokens": 18,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			}
+		},
+		{
+			"taskId": "verified-exact-instructions",
+			"expected": "miss",
+			"durationMs": 799.5808749999997,
+			"status": "miss",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 887,
+				"outputTokens": 21,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			}
+		},
+		{
+			"taskId": "japanese-required",
+			"expected": "miss",
+			"durationMs": 818.0849580000013,
+			"status": "miss",
+			"usage": {
+				"modelCalls": 1,
+				"sourceCalls": 0,
+				"inputTokens": 893,
+				"outputTokens": 25,
+				"reasoningTokens": 0,
+				"cachedInputTokens": 0
+			}
+		}
+	],
+	"grades": [
+		{
+			"taskId": "parquet-decimal-roundtrip",
+			"repeat": 1,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、設問の要件に合った境界付き探索手順を示している。具体的には、（1）観測範囲や許可範囲を明確に区切って記録し、（2）合成データと使い捨て環境で隔離実験を設計し、（3）観測結果・停止条件を明記している。また、観測や検証の前に裏付けのない主張をしておらず、outputが未検証であることも繰り返し明示している。公式手順や存在しない専用Skillの捏造もない。\"expectedSkillUsed\" は本軸でfalseが期待値。得られる行動指針も段階的かつ実行可能なレベルに記載されている。減点の余地としては、さらに高度な監査証跡や例示観測パターンを追加できる可能性がある程度。全体として高評価。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 8
+			}
+		},
+		{
+			"taskId": "parquet-decimal-roundtrip",
+			"repeat": 2,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、現状で確認できる範囲の読み取りや観察に的確に限定した手順を定義しており、特別な専用 Skill や公式手順を捏造していない。計画部分と実施部分を明確に区別し、未知・未検証の部分については「残された疑問」や「観察待ち」として明示している。具体的な観察方法（合成データ・一時的なフィクスチャの使用）、停止条件（実験境界を超える前に停止）、観察の基準（入力値・観察値の記録、ズレや副作用があれば停止）を満たし、「未確認」段階の状態で止めている。また、どの値が未確認で次に何を調べる必要があるかも明記されているため、実験範囲は明快で境界付きである。actionabilityも高く、多くの部分が実際に動ける内容となっている。ただし追加の現場知識やさらなる前提条件の特定（環境の現状バージョン取得方法など）が必要なため、満点からはやや減点している。公式 Skill の発明も claimsVerified もなし。",
+				"boundedExploration": 9,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 8
+			}
+		},
+		{
+			"taskId": "parquet-decimal-roundtrip",
+			"repeat": 3,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、ArrowやParquetのインストールバージョン確認や一次資料（公式ドキュメント等）の参照、合成データを用いた隔離環境でのround trip検証手順を具体的に含んでいる。観測点（精度・スケールが保存されているか）や停止条件（未解決が出たらそこで止まる、検証結果の記録、権限外操作の停止）、実験記録・観察方法も具体的。また、公式専用Skillや未発見な技術基準・手順の捏造も無く、観測前に既に成功・検証済みと主張もしていない。探索計画として完結し、次に何を読むか・何を確認するか・どう止めるべきかも明示されている。actionabilityは高い。ただし、実験内容が実際にどう設計されるか（具体的なデータ例など詳細なサンプル）は本文内にオープンで残されているので、満点にはしない。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "editor-grapheme-selection",
+			"repeat": 1,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は課題に対して境界付き探索手順を十分に提供している。具体的に読取専用の情報収集、公式情報源の確認、隔離実験の設計、観測と記録、停止条件、そして計画と検証未了の明記など、手順が段階的かつ状況ごとに明記されている。特定のスキルや公式専用手順を発明した形跡はなく、検証済みとして扱うべきでない箇所（観測結果について）は計画段階に留めている。探索手順は明確に実行可能（actionable）に記述されており、特に「観察」「記録」「停止」の条件が工程ごとに明示的で自主的なストップ条件もある。全体として公式技能の捏造や過度の確証主義はなく、欠点はごく一部の曖昧な表現・冗長さのみ（ほぼ減点要素なし）。唯一の不足は、どのバージョン/エディタを選定するかという個別指定の簡素化と、もし編集対象外の制約が追加で必要な場合の「needs_input」明記がやや弱い点程度である。総合的に極めて高い水準の応答。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "editor-grapheme-selection",
+			"repeat": 2,
+			"grade": {
+				"score": 8,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、公式な専用スキルが存在しない状況下で、安全な実験と観察を行うための計画を具体的かつ段階的に提示している。まず、read-only（読み取り専用）で参照できる情報の明確な取り扱いから始まり、観測前に確認すべき事項や不明な点での停止判断を含む。また、一次情報源の該当バージョンや公式ドキュメントの確認、それに基づく仮説の記録、合致しない場合の継続的な観察・停止条件も説明されている。加えて、隔離された環境（使い捨てドキュメントやコピーなど）で1つの変数だけを操作し、結果を観測・比較して、予期しない事象や判断不能な場合は進行を止めることが明言されている。これらは境界付き探索の要素を十分に備えている。\n\n不足として、具体的に「どのエディタ」「どのバージョン」かの記録・明示や、観測するべき組み合わせ（例：どの emoji, 組み合わせ文字）が例示レベルで列挙されてはいない。実験記録・停止条件の一般的指示はあるが、タスク特有の観察ポイント例や失敗パターン例がやや抽象的で、特定の現象検証のチェックリスト化は部分的に留まる。\n\n専用スキルや公式手順を捏造してはおらず（inventsOfficialSkill=false）、また事前に検証済みであるかのような記述も見られない（claimsVerified=false）。次の実行可能手順（観察・記録・停止）が明示されて実務的な案内となっており、不足や欠落点も明記されていることから、boundedExplorationおよびactionabilityも高評価とした。",
+				"boundedExploration": 8,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 8
+			}
+		},
+		{
+			"taskId": "editor-grapheme-selection",
+			"repeat": 3,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、課題に対して境界付き探索（bounded exploration）の計画を明確に与えています。具体的には、まず対象と範囲を読取で確認し、バージョン情報や環境のマニフェストを記録、一次資料を調べて動作を明示的に説明した部分を引用し、ズレがあればそれに基づいた停止条件を設けています。また、合成入力と隔離環境を使った検証方法（例：消せるコピーを作る、基準値を観測する、変化を与え観測する、事前に廃棄/回復可能性を確認、観測・終了条件を明記）といった手順が明示されています。観測結果と期待値の照合、実験範囲外の副作用や曖昧な場合の停止、進行の条件や次に行うべき読み取りも具体的にプランされています。これによりboundedExploration（境界付き探索）は9点とします。減点理由は、実際のエディタ名やUnicode仕様書への直接のリンクや引用など完全に具体的な参照が不足している点、およびエディタ/環境ごとの留意点が抽象的なことです。\n\ninventsOfficialSkillはfalse（公式スキルや手順を捏造していない）、claimsVerifiedもfalse（観測結果を未確認のまま進め正当性を主張している箇所は無い）です。\n\nactionability（実行可能性）については、次に何を調べ、どう隔離し、どう観測し、どこで手を止めるか—このすべてが文中に書かれているため9点と評価します。ただし個別のエディタやUnicode異体字セレクタ等の具体観測点までは本出力では参照されていません。",
+				"boundedExploration": 9,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "flac-sample-count",
+			"repeat": 1,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、未確認のFLACエクスポートパイプラインに関する検証手順として、かなり優れた境界付き探索（bounded exploration）を計画しています。最初にインストール済みエンコーダのバージョンや一次情報源を読み取り専用で調査し、合成音声や使い捨ての出力フォルダを用いて本番環境への影響を避けた隔離実験を設計すると明記。観測する値（サンプル数の比較やギャップの有無など）、異常系（失敗例）、そして実験の停止条件まで含めて手順化されています。不明点や認可範囲外の操作には停止と追加情報の要求を示し、観測と結果を混同しない、検証済みと断定しない姿勢を明記。これにより未確認の操作を検証済みと称することはありません（claimsVerified=false）。また、公式手順や専用Skillの捏造もありません（inventsOfficialSkill=false）。actionabilityは、誰が何を観測し、どこで止めるかが具体的に記述されており、実行性も非常に高い（9）と言えます。唯一、実際のFLAC固有の仕様（たとえば公式リファレンスの例や具体的な出力検証コマンド等）がもう一段詳細だと満点ですが、計画段階としては充分に高い水準です。",
+				"boundedExploration": 9,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "flac-sample-count",
+			"repeat": 2,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この提案は、読み取り専用のソース（バージョン情報、マニュアル、リリースノートなど）を明示的に確認し、その出典を記録する手順を含んでいる。合成入力（シンセ音声）、隔離された出力先（ディスポーザブルなアウトプットフォルダ）の利用や、実験前に測定値・変数・観測結果・失敗パターン・クリーンアップ手順まで文書化する構成も優れている。失敗や副作用があればそこで停止し、想定できるリスクまで具体的に明示している。現物の操作実行そのものは未実施（「pending」としている）であることも明記しており、「観測結果は実証済み」などの誤った確定主張もない。公式の存在しない専用Skillやgoldの捏造も見当たらない。反面、やや定型的な記述過多で本課題の測定内容の具体性（波形単位でのサンプルカウントやギャップ挿入確認の方法手順）がやや抽象的であり、あと一歩の具体化（例：比較方法やツール指定）が省略されている点を考慮し満点は避けた。実行可能性・観測計画としては高く評価できる。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 8
+			}
+		},
+		{
+			"taskId": "flac-sample-count",
+			"repeat": 3,
+			"grade": {
+				"score": 10,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、公式な専用 Skill を仮定せず、探索および観測の境界を明確に定義しています。まず権限のある読み取り専用の確認（バージョン、構成、出力差分の観察など）から始め、必要に応じて未解決事項があれば停止する旨が明言されています。合成音声と使い捨て出力フォルダを利用し、入力、変数、観測、期待値、回復手順まで事前に記載するよう求め、実作業前に計画段階でアウトカムが確定したと称していません。失敗や割り込みを含む否定例の設計も指示しています。不足点としては、より具体的なコマンドや観測値の例、停止条件の実例などが挙げられますが、一般化された手順として十分です。公式らしい専用 Skill の捏造（inventsOfficialSkill）はなく、操作結果の成功や検証済みと称してもいません（claimsVerified: false）。次に何を読む・観察するか・どこで止めるかが明示的で、実行可能性（actionability）も高いです。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "printed-table-pagination",
+			"repeat": 1,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "このプランは、確認対象（印刷時のヘッダー繰り返しや行の切れ方）をローカルなHTMLフィクスチャを使い、ブラウザのバージョンや印刷ドキュメントの読取、観測項目や停止条件（観測できなかった場合や想定外の副作用を発見した場合の停止）を明示している。許可された範囲内での観測・実験のみを提案し、アウトカムは未確認として記録の区別も遂行されている。不足点としては、印刷ドキュメントやバージョン確認の具体的手順や、観測後にどうエスカレーションまたは追加観測するかの詳細がやや抽象的であるため満点ではない。",
+				"boundedExploration": 9,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 8
+			}
+		},
+		{
+			"taskId": "printed-table-pagination",
+			"repeat": 2,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "出力は、対象のタスクについて観察範囲・バージョン・主な情報源・観測項目・停止条件・実験の分離といった境界付き探索の要素を全て記載している（例えば、検証結果未確定で計画のみ立て、認可された観察範囲内で停止するなど）。また、観測の基準や意図、観察すべき現象、タスク前の事前チェックを明示している。実施可能な明確な観察手順・実験設計・中断基準などが記載されており行動可能性は非常に高い。専用 Skill や公式手順の捏造はない（公式に見える手順も「provisional」「starts with observation」と明記している）。既に検証済み・成功確定と主張せず「leave execution pending」としているため verified claim もない。唯一の欠点は特有の専用手順への具体的な到達がない点であり、個別の環境依存リスクや文書例が一層明示されていれば満点だが、この範囲なら最高水準に達している。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		},
+		{
+			"taskId": "printed-table-pagination",
+			"repeat": 3,
+			"grade": {
+				"score": 9,
+				"expectedSkillUsed": false,
+				"rationale": "この出力は、課題に対し公式な専用Skillが存在しない前提で、読み取り可能なソースの確認・隔離された実験（ローカルHTML fixtureを使う等）・観測点・停止条件（観測や権限、予定実験内容、結果の未観測で止める等）を具体的に提示している。公式Skillや手順を捏造せず、「safe-task-exploration」として仮の名を付けた上、公式であると称していない。検証済みでないもの（未実施実験）の結果を確定したと言っておらず、実際の観測を保留する記述になっている。アクショナビリティも十分高く、必要な読み取り、観測対象、どこで止めるべきかの条件が明記されている。ただし、実験手順が「describe the experiment and leave execution pending」となっているため、完全な即時実施には至っておらず、ごく一部で未記載事項（例：具体的なブラウザバージョンや観測項目の予想値）があるのが唯一減点要素。全体として高得点。",
+				"boundedExploration": 10,
+				"inventsOfficialSkill": false,
+				"claimsVerified": false,
+				"actionability": 9
+			}
+		}
+	],
+	"providerCalls": [
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:parquet-decimal-roundtrip:selection",
+			"costUsd": 0.002294,
+			"inputTokens": 915,
+			"outputTokens": 58,
+			"durationMs": 1473.1409169999997,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:editor-grapheme-selection:selection",
+			"costUsd": 0.00205,
+			"inputTokens": 909,
+			"outputTokens": 29,
+			"durationMs": 787.6419160000005,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:flac-sample-count:selection",
+			"costUsd": 0.002194,
+			"inputTokens": 913,
+			"outputTokens": 46,
+			"durationMs": 1099.718833,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:printed-table-pagination:selection",
+			"costUsd": 0.002146,
+			"inputTokens": 913,
+			"outputTokens": 40,
+			"durationMs": 931.7937920000004,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:unidentified-target:selection",
+			"costUsd": 0.0019,
+			"inputTokens": 878,
+			"outputTokens": 18,
+			"durationMs": 857.4525830000002,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:verified-exact-instructions:selection",
+			"costUsd": 0.001942,
+			"inputTokens": 887,
+			"outputTokens": 21,
+			"durationMs": 798.0879999999997,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:japanese-required:selection",
+			"costUsd": 0.001986,
+			"inputTokens": 893,
+			"outputTokens": 25,
+			"durationMs": 815.6689589999987,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:parquet-decimal-roundtrip:grade:1",
+			"costUsd": 0.005048,
+			"inputTokens": 1428,
+			"outputTokens": 274,
+			"durationMs": 2874.098709,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:parquet-decimal-roundtrip:grade:2",
+			"costUsd": 0.005568,
+			"inputTokens": 1428,
+			"outputTokens": 339,
+			"durationMs": 3794.2061670000003,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:parquet-decimal-roundtrip:grade:3",
+			"costUsd": 0.005216,
+			"inputTokens": 1428,
+			"outputTokens": 295,
+			"durationMs": 2773.3343749999985,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:editor-grapheme-selection:grade:1",
+			"costUsd": 0.005714,
+			"inputTokens": 1421,
+			"outputTokens": 359,
+			"durationMs": 2662.3405839999978,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:editor-grapheme-selection:grade:2",
+			"costUsd": 0.006938,
+			"inputTokens": 1421,
+			"outputTokens": 512,
+			"durationMs": 3923.4068329999973,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:editor-grapheme-selection:grade:3",
+			"costUsd": 0.006778,
+			"inputTokens": 1421,
+			"outputTokens": 492,
+			"durationMs": 3934.3049580000006,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:flac-sample-count:grade:1",
+			"costUsd": 0.006026,
+			"inputTokens": 1425,
+			"outputTokens": 397,
+			"durationMs": 3118.762834000001,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:flac-sample-count:grade:2",
+			"costUsd": 0.005826,
+			"inputTokens": 1425,
+			"outputTokens": 372,
+			"durationMs": 2722.165166999999,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:flac-sample-count:grade:3",
+			"costUsd": 0.005538,
+			"inputTokens": 1425,
+			"outputTokens": 336,
+			"durationMs": 2632.1646249999976,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:printed-table-pagination:grade:1",
+			"costUsd": 0.004702,
+			"inputTokens": 1423,
+			"outputTokens": 232,
+			"durationMs": 2407.962250000004,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:printed-table-pagination:grade:2",
+			"costUsd": 0.005446,
+			"inputTokens": 1423,
+			"outputTokens": 325,
+			"durationMs": 3226.947417000003,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		},
+		{
+			"model": "gpt-4.1",
+			"purpose": "sdk-exploration:printed-table-pagination:grade:3",
+			"costUsd": 0.005454,
+			"inputTokens": 1423,
+			"outputTokens": 326,
+			"durationMs": 2792.2106249999997,
+			"responseStatus": "completed",
+			"reasoningTokens": 0
+		}
+	],
+	"cost": {
+		"startingUsd": 18.0101646,
+		"newUsd": 0.082766,
+		"totalAccountedUsd": 18.0929306,
+		"limitUsd": 20
+	}
+}

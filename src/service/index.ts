@@ -242,6 +242,7 @@ export function createSkillSmith<Tx>(p: Ports<Tx>) {
 		} else if (
 			cached &&
 			cached.key === key &&
+			!cached.publication?.exploration &&
 			(!rejectPublishedCache || !cached.publication) &&
 			usable(tx, cached, auth)
 		)
